@@ -16,5 +16,9 @@ include (cg3/cinolib.pri)
 include (cg3/libigl.pri)
 include (cg3/viewer.pri)
 
+DISTFILES += \
+    $$PWD/LICENSE \
+    $$PWD/README.md
+
 
 INCLUDEPATH += $$PWD
