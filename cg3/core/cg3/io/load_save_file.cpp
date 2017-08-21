@@ -2,7 +2,7 @@
 
 namespace cg3 {
 
-inline void Common::ObjManager::manageColor(std::ofstream &fp, std::ofstream &fmtu, const Color &c, ColorMode colorMod, Color &actualColor, std::map<Color, std::string> &colors){
+inline void loadSave::ObjManager::manageColor(std::ofstream &fp, std::ofstream &fmtu, const Color &c, ColorMode colorMod, Color &actualColor, std::map<Color, std::string> &colors){
     std::string stringColor = "COLOR";
     if (c != actualColor) {
         std::map<Color, std::string>::iterator it = colors.find(c);
@@ -29,7 +29,7 @@ inline void Common::ObjManager::manageColor(std::ofstream &fp, std::ofstream &fm
     }
 }
 
-inline void Common::ObjManager::manageFileNames(const std::string &objfilename, std::string &mtufilename, std::string &mtufilenopath){
+inline void loadSave::ObjManager::manageFileNames(const std::string &objfilename, std::string &mtufilename, std::string &mtufilenopath){
     size_t lastindex = objfilename.find_last_of(".");
     assert(lastindex != objfilename.size());
     mtufilename = objfilename.substr(0, lastindex);
@@ -44,7 +44,7 @@ inline void Common::ObjManager::manageFileNames(const std::string &objfilename, 
     }
 }
 
-inline bool Common::ObjManager::loadMtlFile(const std::string &mtuFile, std::map<std::string, Color> &mapColors){
+inline bool loadSave::ObjManager::loadMtlFile(const std::string &mtuFile, std::map<std::string, Color> &mapColors){
     typedef boost::char_separator<char>     CharSeparator;
     typedef boost::tokenizer<CharSeparator> Tokenizer;
     typedef Tokenizer::iterator             TokenizerIterator;
@@ -88,7 +88,7 @@ inline bool Common::ObjManager::loadMtlFile(const std::string &mtuFile, std::map
 }
 
 template <typename T>
-inline Color Common::getColor(size_t baseIndex, const T arrayColors[], ColorMode colorMod){
+inline Color loadSave::getColor(size_t baseIndex, const T arrayColors[], ColorMode colorMod){
     Color c;
     if (std::is_same<T, int>::value || std::is_same<T, unsigned int>::value || std::is_same<T, char>::value || std::is_same<T, unsigned char>::value){
         if (colorMod == RGB){
@@ -111,7 +111,7 @@ inline Color Common::getColor(size_t baseIndex, const T arrayColors[], ColorMode
 }
 
 template <typename A, typename B, typename C , typename T , typename V , typename W>
-bool Common::saveMeshOnObj(const std::string& filename, size_t nVertices, size_t nFaces, const A vertices[], const B faces[], MeshType meshType, int modality, const C verticesNormals[], ColorMode colorMod, const T verticesColors[], const V faceColors[], const W polygonSizes[]) {
+bool loadSave::saveMeshOnObj(const std::string& filename, size_t nVertices, size_t nFaces, const A vertices[], const B faces[], MeshType meshType, int modality, const C verticesNormals[], ColorMode colorMod, const T verticesColors[], const V faceColors[], const W polygonSizes[]) {
     std::string objfilename, mtufilename, mtufilenopath;
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::ofstream fp, fmtu;
@@ -199,7 +199,7 @@ bool Common::saveMeshOnObj(const std::string& filename, size_t nVertices, size_t
 }
 
 template <typename A, typename B, typename C, typename T, typename V, typename W >
-inline bool Common::saveMeshOnPly(const std::string& filename, size_t nVertices, size_t nFaces, const A vertices[], const B faces[], MeshType meshType, int modality, const C verticesNormals[], ColorMode colorMod, const T verticesColors[], const V faceColors[], const W polygonSizes[]) {
+inline bool loadSave::saveMeshOnPly(const std::string& filename, size_t nVertices, size_t nFaces, const A vertices[], const B faces[], MeshType meshType, int modality, const C verticesNormals[], ColorMode colorMod, const T verticesColors[], const V faceColors[], const W polygonSizes[]) {
     std::string plyfilename;
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::ofstream fp;
@@ -304,7 +304,7 @@ inline bool Common::saveMeshOnPly(const std::string& filename, size_t nVertices,
 }
 
 template <typename T, typename V, typename C, typename W>
-bool Common::loadMeshFromObj(const std::string& filename, std::list<T>& coords, std::list<V>& faces, Common::MeshType & meshType, int &modality, std::list<C> &verticesNormals, std::list<Color> &verticesColors, std::list<Color> &faceColors, std::list<W> &faceSizes) {
+bool loadSave::loadMeshFromObj(const std::string& filename, std::list<T>& coords, std::list<V>& faces, loadSave::MeshType & meshType, int &modality, std::list<C> &verticesNormals, std::list<Color> &verticesColors, std::list<Color> &faceColors, std::list<W> &faceSizes) {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
 
     typedef boost::char_separator<char>     CharSeparator;
@@ -456,7 +456,7 @@ bool Common::loadMeshFromObj(const std::string& filename, std::list<T>& coords, 
 }
 
 template <typename T, typename V, typename C>
-bool Common::loadTriangleMeshFromObj(const std::string& filename, std::vector<T>& coords, std::vector<V>& triangles, int& modality, std::vector<C> &verticesNormals, std::vector<Color> &verticesColors, std::vector<Color> &triangleColors) {
+bool loadSave::loadTriangleMeshFromObj(const std::string& filename, std::vector<T>& coords, std::vector<V>& triangles, int& modality, std::vector<C> &verticesNormals, std::vector<Color> &verticesColors, std::vector<Color> &triangleColors) {
     std::list<T> dummyc;
     std::list<V> dummyt;
     MeshType meshType;
@@ -503,12 +503,12 @@ bool Common::loadTriangleMeshFromObj(const std::string& filename, std::vector<T>
 
 #ifdef CG3_WITH_EIGEN
 template <typename T, typename V, int ...A>
-bool Common::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles) {
+bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles) {
     std::list<T> dummyc;
     std::list<V> dummyt;
     MeshType meshType;
     std::list<unsigned int> faceSizes;
-    bool r = loadMeshFromObj(filename, dummyc, dummyt, meshType, Dummies::dummyInt, Dummies::dummyListDouble, Dummies::dummyListColor, Dummies::dummyListColor, faceSizes);
+    bool r = loadMeshFromObj(filename, dummyc, dummyt, meshType, dummies::dummyInt, dummies::dummyListDouble, dummies::dummyListColor, dummies::dummyListColor, faceSizes);
     if (r == true && meshType != TRIANGLE_MESH){
         std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
     }
@@ -538,7 +538,7 @@ bool Common::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<
 }
 
 template <typename T, typename V, typename C, typename W, typename X, int ...A>
-bool Common::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors){
+bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors){
     std::list<T> dummyc;
     std::list<V> dummyt;
     modality = 0;
@@ -633,7 +633,7 @@ bool Common::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<
 #endif
 
 template <typename T, typename V, typename C, typename W>
-bool Common::loadMeshFromPly(const std::string& filename, std::list<T>& coords, std::list<V>& faces, Common::MeshType& meshType, int& modality, std::list<C>& verticesNormals, std::list<Color>& verticesColors, std::list<Color>& faceColors, std::list<W>& faceSizes) {
+bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords, std::list<V>& faces, loadSave::MeshType& meshType, int& modality, std::list<C>& verticesNormals, std::list<Color>& verticesColors, std::list<Color>& faceColors, std::list<W>& faceSizes) {
     typedef boost::char_separator<char>     CharSeparator;
     typedef boost::tokenizer<CharSeparator> Tokenizer;
     typedef Tokenizer::iterator             TokenizerIterator;
@@ -892,12 +892,12 @@ bool Common::loadMeshFromPly(const std::string& filename, std::list<T>& coords, 
 
 #ifdef CG3_WITH_EIGEN
 template <typename T, typename V, int ...A>
-bool Common::loadTriangleMeshFromPly(const std::string& filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>& triangles) {
+bool loadSave::loadTriangleMeshFromPly(const std::string& filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>& triangles) {
     std::list<T> dummyc;
     std::list<V> dummyt;
     MeshType meshType;
     std::list<unsigned int> faceSizes;
-    bool r = loadMeshFromPly(filename, dummyc, dummyt, meshType, Dummies::dummyInt, Dummies::dummyListDouble, Dummies::dummyListColor, Dummies::dummyListColor, faceSizes);
+    bool r = loadMeshFromPly(filename, dummyc, dummyt, meshType, dummies::dummyInt, dummies::dummyListDouble, dummies::dummyListColor, dummies::dummyListColor, faceSizes);
     if (r == true && meshType != TRIANGLE_MESH){
         std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
     }
@@ -927,7 +927,7 @@ bool Common::loadTriangleMeshFromPly(const std::string& filename, Eigen::Matrix<
 }
 
 template <typename T, typename V, typename C, typename W, typename X, int ...A>
-bool Common::loadTriangleMeshFromPly(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors){
+bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors){
     std::list<T> dummyc;
     std::list<V> dummyt;
     modality = 0;

@@ -384,7 +384,7 @@ inline void BoundingBox::saveOnObj(const std::string& filename, const Color &c) 
         r, g, b,
         r, g, b
     };
-    Common::saveMeshOnObj(filename, 8, 6, v.data(), f.data(), Common::QUAD_MESH, Common::COLOR_FACES, Common::Dummies::dummyVectorDouble.data(), Common::RGB, Common::Dummies::dummyVectorFloat.data(), cl.data());
+    loadSave::saveMeshOnObj(filename, 8, 6, v.data(), f.data(), loadSave::QUAD_MESH, loadSave::COLOR_FACES, loadSave::dummies::dummyVectorDouble.data(), loadSave::RGB, loadSave::dummies::dummyVectorFloat.data(), cl.data());
 }
 
 /**
