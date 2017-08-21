@@ -192,9 +192,9 @@ void Dcel::saveOnObjFile(std::string fileNameObj) const {
 
     toStdVectors(vertices, verticesNormals, faces, faceSizes, faceColors);
 
-    Common::MeshType meshType = Common::POLYGON_MESH;
-    int mode = Common::NORMAL_VERTICES | Common::COLOR_FACES;
-    Common::saveMeshOnObj(fileNameObj, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), Common::RGB, Common::Dummies::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    loadSave::MeshType meshType = loadSave::POLYGON_MESH;
+    int mode = loadSave::NORMAL_VERTICES | loadSave::COLOR_FACES;
+    loadSave::saveMeshOnObj(fileNameObj, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), loadSave::RGB, loadSave::dummies::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
 /**
@@ -221,9 +221,9 @@ void Dcel::saveOnPlyFile(std::string fileNamePly) const {
 
     toStdVectors(vertices, verticesNormals, faces, faceSizes, faceColors);
 
-    Common::MeshType meshType = Common::POLYGON_MESH;
-    int mode = Common::NORMAL_VERTICES | Common::COLOR_FACES;
-    Common::saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), Common::RGB, Common::Dummies::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    loadSave::MeshType meshType = loadSave::POLYGON_MESH;
+    int mode = loadSave::NORMAL_VERTICES | loadSave::COLOR_FACES;
+    loadSave::saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), loadSave::RGB, loadSave::dummies::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
 /**
@@ -970,11 +970,11 @@ bool Dcel::loadFromFile(const std::string& filename) {
 bool Dcel::loadFromObjFile(const std::string& filename) {
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
-    Common::MeshType meshType;
+    loadSave::MeshType meshType;
     int mode;
     std::list<Color> vcolor, fcolor;
 
-    if (Common::loadMeshFromObj(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
+    if (loadSave::loadMeshFromObj(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
         clear();
         afterLoadFile(coords, faces, mode, vnorm,vcolor, fcolor, fsizes);
         return true;
@@ -1001,11 +1001,11 @@ bool Dcel::loadFromObjFile(const std::string& filename) {
 bool Dcel::loadFromPlyFile(const std::string& filename) {
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
-    Common::MeshType meshType;
+    loadSave::MeshType meshType;
     int mode;
     std::list<Color> vcolor, fcolor;
 
-    if (Common::loadMeshFromPly(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
+    if (loadSave::loadMeshFromPly(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
         clear();
         afterLoadFile(coords, faces, mode, vnorm,vcolor, fcolor, fsizes);
         return true;
@@ -1430,11 +1430,11 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
 
         vertices.push_back(vid);
 
-        if (mode & Common::NORMAL_VERTICES){
+        if (mode & loadSave::NORMAL_VERTICES){
             Vec3 norm(*(vnit++),*(vnit++),*(vnit++));
             vid->setNormal(norm);
         }
-        if (mode & Common::COLOR_VERTICES){
+        if (mode & loadSave::COLOR_VERTICES){
             /**
               @todo manage vertices color
               */
@@ -1494,7 +1494,7 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
         eid->setNext(first);
         first->setPrev(eid);
 
-        if (mode & Common::COLOR_FACES){
+        if (mode & loadSave::COLOR_FACES){
             Color c = *(fcit++);
             fid->setColor(c);
         }
@@ -1505,7 +1505,7 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
         fid->updateArea();
     }
 
-    if (! (mode & Common::NORMAL_VERTICES))
+    if (! (mode & loadSave::NORMAL_VERTICES))
         updateVertexNormals();
 }
 

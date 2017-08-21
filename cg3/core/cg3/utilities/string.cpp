@@ -6,7 +6,7 @@
 namespace cg3 {
 
 /**
- * @brief Common::toStringWithPrecision
+ * @brief toStringWithPrecision
  * @param value
  * @param precision
  * @link https://stackoverflow.com/questions/16605967/set-precision-of-stdto-string-when-converting-floating-point-values
@@ -20,7 +20,7 @@ std::string toStringWithPrecision(const T& value, unsigned int precision) {
 }
 
 /**
- * @brief Common::separateExtensionFromFilename
+ * @brief separateExtensionFromFilename
  * @param fullname
  * @param rawname
  * @param extension

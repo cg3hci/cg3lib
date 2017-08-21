@@ -63,7 +63,6 @@ Vec3 SimpleEigenMesh::getFaceNormal(unsigned int f) const {
 bool SimpleEigenMesh::isDegenerateTriangle(unsigned int f, double epsilon) const {
     assert(f < F.rows());
     return getFaceArea(f) <= epsilon;
-    //return (Common::epsilonEqual(getVertex(F(f,0)), getVertex(F(f,1)), epsilon) || Common::epsilonEqual(getVertex(F(f,0)), getVertex(F(f,2)), epsilon) || Common::epsilonEqual(getVertex(F(f,1)), getVertex(F(f,2)), epsilon));
 }
 
 void SimpleEigenMesh::removeDegenerateTriangles(double epsilon) {
@@ -76,19 +75,19 @@ void SimpleEigenMesh::removeDegenerateTriangles(double epsilon) {
 }
 
 bool SimpleEigenMesh::readFromObj(const std::string& filename) {
-    return Common::loadTriangleMeshFromObj(filename, V, F);
+    return loadSave::loadTriangleMeshFromObj(filename, V, F);
 }
 
 bool SimpleEigenMesh::readFromPly(const std::string& filename) {
-    return Common::loadTriangleMeshFromPly(filename, V, F);
+    return loadSave::loadTriangleMeshFromPly(filename, V, F);
 }
 
 bool SimpleEigenMesh::saveOnPly(const std::string& filename) const {
-    return Common::saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data());
+    return loadSave::saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
 bool SimpleEigenMesh::saveOnObj(const std::string& filename) const {
-    return Common::saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data());
+    return loadSave::saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
 void SimpleEigenMesh::translate(const Pointd& p) {

@@ -28,7 +28,7 @@ int binarySearch(const T &n, const std::vector<T> &v) {
 }
 
 /**
- * @brief Common::sortIndexes
+ * @brief sortIndexes
  *
  * returns the indices corrispondence of the v vector sorted.
  *

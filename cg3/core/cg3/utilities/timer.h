@@ -33,4 +33,4 @@ class Timer {
 
 #include "timer.cpp"
 
-#endif //COMMON_MODULE_TIMER_H
+#endif //CG3_TIMER_H

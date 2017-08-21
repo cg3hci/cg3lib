@@ -69,4 +69,4 @@ class SerializableObject {
 
 }
 
-#endif // COMMON_MODULE_SERIALIZABLE_OBJECT_H
+#endif // CG3_SERIALIZABLE_OBJECT_H

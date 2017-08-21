@@ -19,7 +19,7 @@
 #include <typeinfo>
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
-#endif //COMMON_WITH_EIGEN
+#endif //CG3_WITH_EIGEN
 #include <array>
 
 #include <type_traits> // To use 'std::integral_constant'.
@@ -93,7 +93,7 @@ namespace Serializer {
     template <typename T, int ...A> void serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile);
 
     template <typename T, int ...A> bool deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile);
-    #endif //COMMON_WITH_EIGEN
+    #endif //CG3_WITH_EIGEN
 
     template <typename T, unsigned long int ...A> void serialize(const std::array<T, A...> &a, std::ofstream& binaryFile);
 
