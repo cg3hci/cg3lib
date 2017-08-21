@@ -1,4 +1,4 @@
-#include "drawableeigenmesh.h"
+#include "drawable_eigenmesh.h"
 
 #ifdef __APPLE__
 #include <gl.h>

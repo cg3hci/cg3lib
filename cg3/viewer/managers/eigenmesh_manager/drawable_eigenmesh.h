@@ -2,7 +2,7 @@
 #define DRAWABLEEIGENMESH_H
 
 #include <cg3/viewer/interfaces/drawable_mesh.h>
-#include "../eigenmesh.h"
+#include "cg3/meshes/eigenmesh/eigenmesh.h"
 
 namespace cg3 {
 

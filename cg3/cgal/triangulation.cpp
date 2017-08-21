@@ -1,10 +1,10 @@
-#include "cgaltriangulation.h"
+#include "triangulation.h"
 
 #include <cg3/geometry/transformations.h>
 
 namespace cg3 {
 
-void CGALInterface::Triangulation::markDomains(
+void cgal::triangulation::markDomains(
         CDT& ct, CDT::Face_handle start, int index, std::list<CDT::Edge>& border) {
     if(start->info().nesting_level != -1){
         return;
@@ -28,7 +28,7 @@ void CGALInterface::Triangulation::markDomains(
     }
 }
 
-void CGALInterface::Triangulation::markDomains(CDT& cdt) {
+void cgal::triangulation::markDomains(CDT& cdt) {
     for(CDT::All_faces_iterator it = cdt.all_faces_begin(); it != cdt.all_faces_end(); ++it){
         it->info().nesting_level = -1;
     }
@@ -44,7 +44,7 @@ void CGALInterface::Triangulation::markDomains(CDT& cdt) {
     }
 }
 
-std::vector<std::array<Point2Dd, 3> > CGALInterface::Triangulation::triangulate(
+std::vector<std::array<Point2Dd, 3> > cgal::triangulation::triangulate(
         const std::vector<Point2Dd >& polygon,
         const std::vector<std::vector<Point2Dd > >& holes) {
 
@@ -94,7 +94,7 @@ std::vector<std::array<Point2Dd, 3> > CGALInterface::Triangulation::triangulate(
     return triangles;
 }
 
-std::vector<std::array<Pointd, 3> > CGALInterface::Triangulation::triangulate(
+std::vector<std::array<Pointd, 3> > cgal::triangulation::triangulate(
         const Vec3 &normal,
         const std::vector<Pointd>& polygon,
         const std::vector<std::vector<Pointd> >& holes,

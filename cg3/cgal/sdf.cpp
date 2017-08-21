@@ -1,9 +1,9 @@
-#include "cgalsdf.h"
+#include "sdf.h"
 
 namespace cg3 {
 
-std::vector<double> CGALInterface::SDF::getSDFMap(const CGALInterface::Utils::Polyhedron_3 &mesh) {
-    typedef std::map<Utils::Polyhedron_3::Facet_const_handle, double> Facet_double_map;
+std::vector<double> cgal::sdf::getSDFMap(const cgal::polyhedron::Polyhedron_3 &mesh) {
+    typedef std::map<polyhedron::Polyhedron_3::Facet_const_handle, double> Facet_double_map;
     Facet_double_map internal_map;
     boost::associative_property_map<Facet_double_map> sdf_property_map(internal_map);
 
@@ -26,7 +26,7 @@ std::vector<double> CGALInterface::SDF::getSDFMap(const CGALInterface::Utils::Po
     // save SDF values
     std::vector<double> sdfMap;
     sdfMap.reserve(mesh.size_of_facets());
-    for (Utils::Polyhedron_3::Facet_const_iterator facet_it = mesh.facets_begin();
+    for (polyhedron::Polyhedron_3::Facet_const_iterator facet_it = mesh.facets_begin();
          facet_it != mesh.facets_end(); ++facet_it) {
 
         // get SDF value
@@ -47,10 +47,10 @@ std::vector<double> CGALInterface::SDF::getSDFMap(const CGALInterface::Utils::Po
 //    face->setColor(Color(255*sdfMap.at(face), 255*sdfMap.at(face), 255*sdfMap.at(face)));
 //}
 
-std::map<const Dcel::Face*, double> CGALInterface::SDF::getSDFMap(const Dcel& dcel) {
+std::map<const Dcel::Face*, double> cgal::sdf::getSDFMap(const Dcel& dcel) {
     std::map<const Dcel::Face*, int> faceMap;
     std::map<const Dcel::Vertex*, int> vertexMap;
-    Utils::Polyhedron_3 mesh = Utils::getPolyhedronFromDcel(dcel, vertexMap, faceMap);
+    polyhedron::Polyhedron_3 mesh = polyhedron::getPolyhedronFromDcel(dcel, vertexMap, faceMap);
 
     // compute inverse map
     std::map<int, const Dcel::Face*> invFaceMap;
@@ -64,7 +64,7 @@ std::map<const Dcel::Face*, double> CGALInterface::SDF::getSDFMap(const Dcel& dc
     std::map<const Dcel::Face*, double> sdfMap;
 
     int fIndex = 0;
-    for (Utils::Polyhedron_3::Facet_const_iterator facet_it = mesh.facets_begin();
+    for (polyhedron::Polyhedron_3::Facet_const_iterator facet_it = mesh.facets_begin();
          facet_it != mesh.facets_end(); ++facet_it) {
 
         // get SDF value
@@ -83,8 +83,8 @@ std::map<const Dcel::Face*, double> CGALInterface::SDF::getSDFMap(const Dcel& dc
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
-std::vector<double> CGALInterface::SDF::getSDFMap(const SimpleEigenMesh &m) {
-    Utils::Polyhedron_3 mesh = Utils::getPolyhedronFromEigenMesh(m);
+std::vector<double> cgal::sdf::getSDFMap(const SimpleEigenMesh &m) {
+    polyhedron::Polyhedron_3 mesh = polyhedron::getPolyhedronFromEigenMesh(m);
     return getSDFMap(mesh);
 }
 #endif

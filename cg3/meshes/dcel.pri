@@ -33,6 +33,6 @@ SOURCES += \
     $$PWD/dcel/algorithms/dcel_algorithms.cpp
 
 #Note: QtCreator always shows this module included, however files included in it are compiled only if Viewer module is included
-CG3_VIEWER{
-    include ($$PWD/dcel/gui/dcelmanager.pri)
-}
+#CG3_VIEWER{
+#    include ($$PWD/dcel/gui/dcelmanager.pri)
+#}

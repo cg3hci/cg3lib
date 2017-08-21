@@ -1,8 +1,8 @@
-#include "cgalsigneddistances.h"
+#include "signed_distances.h"
 
 namespace cg3 {
 
-std::vector<double> CGALInterface::SignedDistances::getUnsignedDistances(
+std::vector<double> cgal::signedDistances::getUnsignedDistances(
         const std::vector<Pointd>& points, const AABBTree& tree) {
 
     std::vector<double> distances(points.size(), 0);

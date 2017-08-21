@@ -16,8 +16,8 @@
 
 namespace cg3 {
 
-namespace CGALInterface {
-    namespace Slicer {
+namespace cgal {
+    namespace slicer {
         typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
         typedef CGAL::Surface_mesh<K::Point_3> Mesh;
         typedef std::vector<K::Point_3> Polyline_type;
@@ -27,7 +27,7 @@ namespace CGALInterface {
         typedef CGAL::AABB_tree<AABB_traits>  AABB_tree;
 
         std::vector<std::vector<Pointd> > getPolylines(const std::string& inputOffFile, const Vec3& norm, double d);
-        std::vector<std::vector<Pointd> > getPolylines2(const Mesh& mesh, const Vec3& norm, double d);
+        std::vector<std::vector<Pointd> > getPolylines(const Mesh& mesh, const Vec3& norm, double d);
     }
 }
 

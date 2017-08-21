@@ -416,7 +416,7 @@ inline bool Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
     }
 }
 
-#ifdef COMMON_WITH_EIGEN
+#ifdef CG3_WITH_EIGEN
 /**
  * \~English
  * @brief Serializer::serialize
@@ -474,7 +474,7 @@ inline bool Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& bi
         return false;
     }
 }
-#endif //COMMON_WITH_EIGEN
+#endif //CG3_WITH_EIGEN
 
 /**
  * \~English

@@ -22,7 +22,7 @@
 
 namespace cg3 {
 
-namespace CGALInterface {
+namespace cgal {
 
     /**
      * @brief The AABBTree class

@@ -45,28 +45,28 @@ win32{
     LIBS += -lpthread
 }
 
-contains(DEFINES, COMMON_WITH_EIGEN){
+contains(DEFINES, CG3_WITH_EIGEN){
     DEFINES += CGAL_EIGEN3_ENABLED
 }
 
 HEADERS += \
-    $$PWD/cgal/aabbtree.h \
-    $$PWD/cgal/cgalinterface.h \
-    $$PWD/cgal/cgalsdf.h \
-    $$PWD/cgal/cgaltriangulation.h \
-    $$PWD/cgal/cgalboolean.h \
-    $$PWD/cgal/cgalholefilling.h \
-    $$PWD/cgal/cgalslicer.h \
-    $$PWD/cgal/cgalsigneddistances.h \
-    $$PWD/cgal/cgalutils.h
+    $$PWD/cgal/booleans2d.h \
+    $$PWD/cgal/cgal.h \
+    $$PWD/cgal/hole_filling.h \
+    $$PWD/cgal/sdf.h \
+    $$PWD/cgal/signed_distances.h \
+    $$PWD/cgal/slicer.h \
+    $$PWD/cgal/triangulation.h \
+    $$PWD/cgal/polyhedron.h \
+    $$PWD/cgal/aabb_tree.h
 
 SOURCES += \
-    $$PWD/cgal/aabbtree.cpp \
-    $$PWD/cgal/cgalsdf.cpp \
-    $$PWD/cgal/cgaltriangulation.cpp \
-    $$PWD/cgal/cgalboolean.cpp \
-    $$PWD/cgal/cgalholefilling.cpp \
-    $$PWD/cgal/cgalslicer.cpp \
-    $$PWD/cgal/cgalsigneddistances.cpp \
-    $$PWD/cgal/cgalutils.cpp
+    $$PWD/cgal/booleans2d.cpp \
+    $$PWD/cgal/hole_filling.cpp \
+    $$PWD/cgal/sdf.cpp \
+    $$PWD/cgal/signed_distances.cpp \
+    $$PWD/cgal/slicer.cpp \
+    $$PWD/cgal/triangulation.cpp \
+    $$PWD/cgal/polyhedron.cpp \
+    $$PWD/cgal/aabb_tree.cpp
 

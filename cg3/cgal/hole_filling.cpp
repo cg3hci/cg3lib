@@ -1,9 +1,9 @@
-#include "cgalholefilling.h"
+#include "hole_filling.h"
 
 #ifdef CGAL_EIGEN3_ENABLED
 namespace cg3 {
 
-void CGALInterface::HoleFilling::holeFillingFileOff(const std::string& input, const std::string& output) {
+void cgal::holeFilling::holeFillingFileOff(const std::string& input, const std::string& output) {
     std::ifstream sinput(input);
     Polyhedron poly;
     if ( !sinput || !(sinput >> poly) || poly.empty() ) {
@@ -18,7 +18,7 @@ void CGALInterface::HoleFilling::holeFillingFileOff(const std::string& input, co
     out << poly << std::endl;
 }
 
-void CGALInterface::HoleFilling::holeFilling(CGALInterface::HoleFilling::Polyhedron& poly) {
+void cgal::holeFilling::holeFilling(cgal::holeFilling::Polyhedron& poly) {
     // Incrementally fill the holes
     unsigned int nb_holes = 0;
     for(Halfedge_handle h : halfedges(poly))
@@ -45,9 +45,9 @@ void CGALInterface::HoleFilling::holeFilling(CGALInterface::HoleFilling::Polyhed
     std::cout << nb_holes << " holes have been filled" << std::endl;
 }
 
-#ifdef DCEL_DEFINED
-void CGALInterface::HoleFilling::holeFilling(Dcel& d) {
-    Polyhedron p = CGALInterface::Utils::getPolyhedronFromDcel(d);
+#ifdef CG3_DCEL_DEFINED
+void cgal::holeFilling::holeFilling(Dcel& d) {
+    Polyhedron p = cgal::polyhedron::getPolyhedronFromDcel(d);
     holeFilling(p);
     /** @todo p to d */
 }

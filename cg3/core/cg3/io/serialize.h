@@ -89,7 +89,7 @@ namespace Serializer {
 
     template <typename T1, typename T2, typename ...A> bool deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile);
 
-    #ifdef CG3_EIGEN
+    #ifdef CG3_WITH_EIGEN
     template <typename T, int ...A> void serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile);
 
     template <typename T, int ...A> bool deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile);

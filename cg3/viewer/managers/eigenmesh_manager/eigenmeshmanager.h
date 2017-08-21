@@ -4,7 +4,7 @@
 #include <QFrame>
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/utilities/loadersaver.h>
-#include "drawableeigenmesh.h"
+#include "drawable_eigenmesh.h"
 
 namespace Ui {
     class EigenMeshManager;

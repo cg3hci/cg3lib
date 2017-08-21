@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(checkBoxMapper, SIGNAL(mapped(int)), this, SLOT(checkBoxClicked(int)));
     connect(ui->glCanvas, SIGNAL(objectPicked(unsigned int)),
             this, SLOT(slotObjectPicked(unsigned int)));
-    connect(ui->glCanvas, SIGNAL(point2DClicked(Point2Dd)),
-            this, SLOT(slotPoint2DClicked(Point2Dd)));
+    connect(ui->glCanvas, SIGNAL(point2DClicked(cg3::Point2Dd)),
+            this, SLOT(slotPoint2DClicked(cg3::Point2Dd)));
 
     QVBoxLayout * layout = new QVBoxLayout(ui->scrollArea);
     ui->scrollArea->setLayout(layout);

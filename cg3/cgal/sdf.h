@@ -1,7 +1,7 @@
 #ifndef CG3_CGAL_SDF_H
 #define CG3_CGAL_SDF_H
 
-#include "cgalutils.h"
+#include "polyhedron.h"
 
 #ifdef  CG3_DCEL_DEFINED
 #include "cg3/meshes/dcel/dcel.h"
@@ -19,10 +19,10 @@
 
 namespace cg3 {
 
-namespace CGALInterface {
-    namespace SDF {
+namespace cgal {
+    namespace sdf {
 
-        std::vector<double> getSDFMap(const CGALInterface::Utils::Polyhedron_3& mesh);
+        std::vector<double> getSDFMap(const cgal::polyhedron::Polyhedron_3& mesh);
 
         #ifdef  CG3_DCEL_DEFINED
         std::map<const Dcel::Face*, double> getSDFMap(const Dcel& dcel);

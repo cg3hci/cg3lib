@@ -9,7 +9,7 @@
 
 #include <cg3/viewer/interfaces/drawable_mesh.h>
 #include <cg3/utilities/utils.h>
-#include "../dcel.h"
+#include <cg3/meshes/dcel/dcel.h>
 
 namespace cg3 {
 

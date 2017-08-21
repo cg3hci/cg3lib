@@ -11,8 +11,8 @@
 
 namespace cg3 {
 
-namespace CGALInterface {
-    namespace BooleanOperations2D {
+namespace cgal {
+    namespace booleans2d {
 
         typedef CGAL::Exact_predicates_exact_constructions_kernel Kernel;
         typedef Kernel::Point_2                                   Point_2;

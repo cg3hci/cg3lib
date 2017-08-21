@@ -21,8 +21,8 @@
 
 namespace cg3 {
 
-namespace CGALInterface {
-    namespace Utils {
+namespace cgal {
+    namespace polyhedron {
 
         typedef CGAL::Exact_predicates_inexact_constructions_kernel     Kernel;
         typedef CGAL::Polyhedron_3<Kernel>         Polyhedron_3;

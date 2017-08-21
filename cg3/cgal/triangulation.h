@@ -23,8 +23,8 @@
 
 namespace cg3 {
 
-namespace CGALInterface {
-    namespace Triangulation {
+namespace cgal {
+    namespace triangulation {
         struct FaceInfo2 {
                 FaceInfo2(){}
                 int nesting_level;

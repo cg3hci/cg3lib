@@ -7,7 +7,7 @@
 #include "dcel_vertex_iterators.h"
 #include <cg3/geometry/transformations.h>
 #ifdef CG3_CGAL_DEFINED
-#include <cg3/cgal/cgalinterface.h>
+#include <cg3/cgal/cgal.h>
 #endif
 
 namespace cg3 {
@@ -166,7 +166,7 @@ void Dcel::Face::getTriangulation(std::vector<std::array<const Dcel::Vertex*, 3>
         }
     }
 
-    std::vector<std::array<Pointd, 3> > trianglesP = CGALInterface::Triangulation::triangulate(parent->faceNormals[id], borderCoordinates, innerBorderCoordinates);
+    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulation::triangulate(parent->faceNormals[id], borderCoordinates, innerBorderCoordinates);
 
     triangles.clear();
     for (unsigned int i = 0; i < trianglesP.size(); ++i) {

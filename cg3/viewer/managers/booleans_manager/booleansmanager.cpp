@@ -4,7 +4,7 @@
 #include <QFileDialog>
 #include <cg3/utilities/utils.h>
 #include <cg3/geometry/transformations.h>
-#include "../algorithms/eigenmesh_algorithms.h"
+#include <cg3/meshes/eigenmesh/algorithms/eigenmesh_algorithms.h>
 
 using namespace cg3;
 

@@ -1,8 +1,8 @@
-#include "cgalboolean.h"
+#include "booleans2d.h"
 
 namespace cg3 {
 
-void CGALInterface::BooleanOperations2D::getCoordinates(
+void cgal::booleans2d::getCoordinates(
         const Point_2& p, double& x, double& y) {
 
     std::stringstream ss1;
@@ -15,7 +15,7 @@ void CGALInterface::BooleanOperations2D::getCoordinates(
     ss2 >> y;
 }
 
-std::vector<std::vector<Point2Dd> > CGALInterface::BooleanOperations2D::difference(
+std::vector<std::vector<Point2Dd> > cgal::booleans2d::difference(
         const std::vector<Point2Dd>& polygon1, const std::vector<Point2Dd>& polygon2) {
 
     std::vector<std::vector<Point2Dd> > result;
@@ -56,7 +56,7 @@ std::vector<std::vector<Point2Dd> > CGALInterface::BooleanOperations2D::differen
 
 }
 
-std::vector<std::vector<Point2Dd> > CGALInterface::BooleanOperations2D::intersection(
+std::vector<std::vector<Point2Dd> > cgal::booleans2d::intersection(
         const std::vector<Point2Dd>& polygon1, const std::vector<Point2Dd>& polygon2) {
 
     std::vector<std::vector<Point2Dd> > result;
@@ -97,7 +97,7 @@ std::vector<std::vector<Point2Dd> > CGALInterface::BooleanOperations2D::intersec
 }
 
 
-bool CGALInterface::BooleanOperations2D::doIntersect(const std::vector<Point2Dd> &polygon1, const std::vector<Point2Dd> &polygon2) {
+bool cgal::booleans2d::doIntersect(const std::vector<Point2Dd> &polygon1, const std::vector<Point2Dd> &polygon2) {
     Polygon_2 P1;
     for (unsigned int i = 0; i < polygon1.size(); ++i){
         P1.push_back(Point_2(polygon1[i].x(), polygon1[i].y()));

@@ -1,8 +1,8 @@
-#include "cgalslicer.h"
+#include "slicer.h"
 
 namespace cg3 {
 
-std::vector<std::vector<Pointd>> CGALInterface::Slicer::getPolylines(
+std::vector<std::vector<Pointd>> cgal::slicer::getPolylines(
         const std::string& inputOffFile, const Vec3& norm, double d) {
 
     std::ifstream input(inputOffFile.c_str());
@@ -13,11 +13,11 @@ std::vector<std::vector<Pointd>> CGALInterface::Slicer::getPolylines(
     }
     //std::vector< std::vector<Pointd> > result;
     //result = getPolylines2(mesh, norm, d);
-    return getPolylines2(mesh, norm, d);
+    return getPolylines(mesh, norm, d);
 }
 
 
-std::vector<std::vector<Pointd>> CGALInterface::Slicer::getPolylines2(
+std::vector<std::vector<Pointd>> cgal::slicer::getPolylines(
         const Mesh &mesh, const Vec3& norm, double d) {
 
     // Slicer constructor from the mesh

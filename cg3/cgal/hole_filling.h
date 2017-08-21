@@ -7,7 +7,7 @@
 #include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
 #include <CGAL/Polygon_mesh_processing/triangulate_hole.h>
 
-#include "cgalutils.h"
+#include "polyhedron.h"
 
 #ifdef DCEL_DEFINED
 #include <dcel/dcel.h>
@@ -19,8 +19,8 @@
 
 namespace cg3 {
 
-namespace CGALInterface {
-    namespace HoleFilling {
+namespace cgal {
+    namespace holeFilling {
 
         typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;
         typedef CGAL::Polyhedron_3<Kernel>     Polyhedron;
@@ -31,7 +31,7 @@ namespace CGALInterface {
         void holeFillingFileOff(const std::string& input, const std::string& output);
         void holeFilling(Polyhedron& poly);
 
-        #ifdef DCEL_DEFINED
+        #ifdef CG3_DCEL_DEFINED
         void holeFilling(Dcel & d);
         #endif
     }

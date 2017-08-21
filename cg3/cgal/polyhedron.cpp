@@ -1,9 +1,9 @@
-#include "cgalutils.h"
+#include "polyhedron.h"
 
 namespace cg3 {
 
 #ifdef  CG3_DCEL_DEFINED
-CGALInterface::Utils::Polyhedron_3 CGALInterface::Utils::getPolyhedronFromDcel(
+cgal::polyhedron::Polyhedron_3 cgal::polyhedron::getPolyhedronFromDcel(
         const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap,
         std::map<const Dcel::Face*, int>& faceMap) {
@@ -69,7 +69,7 @@ CGALInterface::Utils::Polyhedron_3 CGALInterface::Utils::getPolyhedronFromDcel(
     return mesh;
 }
 
-Dcel CGALInterface::Utils::getDcelFromPolyhedron(const CGALInterface::Utils::Polyhedron_3& poly) {
+Dcel cgal::polyhedron::getDcelFromPolyhedron(const cgal::polyhedron::Polyhedron_3& poly) {
     typedef typename HalfedgeDS::Vertex                PolyhedronVertex;
     typedef typename PolyhedronVertex::Point    PolyhedronPoint;
     Dcel d;
@@ -86,7 +86,7 @@ Dcel CGALInterface::Utils::getDcelFromPolyhedron(const CGALInterface::Utils::Pol
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
-CGALInterface::Utils::Polyhedron_3 CGALInterface::Utils::getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh) {
+cgal::polyhedron::Polyhedron_3 cgal::polyhedron::getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh) {
     class PolyhedronBuilder : public CGAL::Modifier_base<HalfedgeDS> {
     public:
         const SimpleEigenMesh* mesh;
