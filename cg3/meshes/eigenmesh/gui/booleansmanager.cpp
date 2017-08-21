@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <cg3/utilities/utils.h>
+#include <cg3/geometry/transformations.h>
 #include "../algorithms/eigenmesh_algorithms.h"
 
 using namespace cg3;
@@ -411,7 +412,7 @@ void BooleansManager::on_rotateButton_clicked() {
     lastAxis = axis;
     lastAngle = angle;
     Eigen::Matrix3d m;
-    Common::getRotationMatrix(axis, angle, m);
+    cg3::getRotationMatrix(axis, angle, m);
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->rotate(m);
     }
@@ -427,7 +428,7 @@ void BooleansManager::on_rotateButton_clicked() {
 
 void BooleansManager::on_undoRotateButton_clicked() {
     Eigen::Matrix3d m;
-    Common::getRotationMatrix(-lastAxis, lastAngle, m);
+    cg3::getRotationMatrix(-lastAxis, lastAngle, m);
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->rotate(m);
     }

@@ -1,5 +1,5 @@
-#ifndef CG3_TRIANGULATION_H
-#define CG3_TRIANGULATION_H
+#ifndef CG3_CGAL_TRIANGULATION_H
+#define CG3_CGAL_TRIANGULATION_H
 
 #include <cg3/utilities/utils.h>
 #include <cg3/geometry/point.h>
@@ -63,4 +63,4 @@ namespace CGALInterface {
 
 }
 
-#endif // CG3_TRIANGULATION_H
+#endif // CG3_CGAL_TRIANGULATION_H

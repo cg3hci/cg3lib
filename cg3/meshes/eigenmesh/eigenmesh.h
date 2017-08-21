@@ -53,7 +53,7 @@ class EigenMesh : public SimpleEigenMesh {
         void updateVerticesNormals();
         void updateFacesAndVerticesNormals();
 
-        virtual void removeDegenerateTriangles(double epsilon = EPSILON);
+        virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
 
         std::pair<int, int> getCommonVertices(unsigned int f1, unsigned int f2) const;
 
@@ -170,8 +170,8 @@ inline void EigenMesh::addFace(int t1, int t2, int t3) {
 
 inline void EigenMesh::removeFace(unsigned int f) {
     SimpleEigenMesh::removeFace(f);
-    Common::removeRowFromEigenMatrix(NF, f);
-    Common::removeRowFromEigenMatrix(CF, f);
+    cg3::removeRowFromEigenMatrix(NF, f);
+    cg3::removeRowFromEigenMatrix(CF, f);
 }
 
 inline Vec3 EigenMesh::getFaceNormal(unsigned int f) const {

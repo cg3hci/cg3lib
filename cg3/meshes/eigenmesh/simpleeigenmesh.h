@@ -7,7 +7,8 @@
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/bounding_box.h>
 #include <cg3/data_structures/color.h>
-#include <cg3/utilities/utils.h>
+#include <cg3/utilities/const.h>
+#include <cg3/utilities/eigen.h>
 
 #ifdef CINOLIB_DEFINED
 namespace cinolib {
@@ -71,8 +72,8 @@ class SimpleEigenMesh : public SerializableObject {
         virtual void addFace(const Eigen::VectorXi &f);
         virtual void addFace(int t1, int t2, int t3);
         virtual void removeFace(unsigned int f);
-        bool isDegenerateTriangle(unsigned int f, double epsilon = EPSILON) const;
-        virtual void removeDegenerateTriangles(double epsilon = EPSILON);
+        bool isDegenerateTriangle(unsigned int f, double epsilon = CG3_EPSILON) const;
+        virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
         template <typename T, int ...A> void setVerticesMatrix(const Eigen::Matrix<T, A...>& V);
         template <typename U, int ...A> void setFacesMatrix(const Eigen::Matrix<U, A...>& F);
 
@@ -265,7 +266,7 @@ inline void SimpleEigenMesh::addFace(int t1, int t2, int t3) {
 
 inline void SimpleEigenMesh::removeFace(unsigned int f) {
     assert(f < F.rows());
-    Common::removeRowFromEigenMatrix(F, f);
+    cg3::removeRowFromEigenMatrix(F, f);
 }
 
 

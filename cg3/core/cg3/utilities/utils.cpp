@@ -124,76 +124,6 @@ inline void Common::separateFilenameFromPath(const std::string &fullpath, std::s
     filename = fullpath.substr(lastindex, fullpath.size());
 }
 
-#ifdef CG3_WITH_EIGEN
-/**
- * \~English
- * @brief this function computes a rotation matrix given the axis of the rotation and the angle
- * @param[in] axis
- * @param[in] angle
- * @param[out] m
- */
-inline void Common::getRotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m) {
-    axis.normalize();
-    double cosa = cos(angle);
-    double sina = sin(angle);
-    m(0,0) = cosa + (axis.x() * axis.x())*(1-cosa);
-    m(0,1) = axis.x() * axis.y() * (1-cosa) - axis.z() * sina;
-    m(0,2) = axis.x() * axis.z() * (1-cosa) + axis.y() * sina;
-    m(1,0) = axis.y() * axis.x() * (1-cosa) + axis.z() * sina;
-    m(1,1) = cosa + (axis.y() * axis.y())*(1-cosa);
-    m(1,2) = axis.y() * axis.z() * (1-cosa) - axis.x() * sina;
-    m(2,0) = axis.z() * axis.x() * (1-cosa) - axis.y() * sina;
-    m(2,1) = axis.z() * axis.y() * (1-cosa) + axis.x() * sina;
-    m(2,2) = cosa + (axis.z() * axis.z())*(1-cosa);
-}
-
-/**
- * \~English
- * @brief this function computes a rotation matrix given the axis of the rotation and the angle
- * @param[in] axis
- * @param[out] angle
- * @return the rotation matrix
- */
-inline Eigen::Matrix3d Common::getRotationMatrix(Vec3 axis, double angle) {
-    Eigen::Matrix3d m;
-    axis.normalize();
-    double cosa = cos(angle);
-    double sina = sin(angle);
-    m(0,0) = cosa + (axis.x() * axis.x())*(1-cosa);
-    m(0,1) = axis.x() * axis.y() * (1-cosa) - axis.z() * sina;
-    m(0,2) = axis.x() * axis.z() * (1-cosa) + axis.y() * sina;
-    m(1,0) = axis.y() * axis.x() * (1-cosa) + axis.z() * sina;
-    m(1,1) = cosa + (axis.y() * axis.y())*(1-cosa);
-    m(1,2) = axis.y() * axis.z() * (1-cosa) - axis.x() * sina;
-    m(2,0) = axis.z() * axis.x() * (1-cosa) - axis.y() * sina;
-    m(2,1) = axis.z() * axis.y() * (1-cosa) + axis.x() * sina;
-    m(2,2) = cosa + (axis.z() * axis.z())*(1-cosa);
-    return m;
-}
-#endif
-
-/**
- * \~English
- * @brief this function computes a rotation matrix given the axis of the rotation and the angle
- * @param[in] axis
- * @param[in] angle
- * @param[out] m
- */
-inline void Common::getRotationMatrix(Vec3 axis, double angle, double m[][3]) {
-    axis.normalize();
-    double cosa = cos(angle);
-    double sina = sin(angle);
-    m[0][0] = cosa + (axis.x() * axis.x())*(1-cosa);
-    m[0][1] = axis.x() * axis.y() * (1-cosa) - axis.z() * sina;
-    m[0][2] = axis.x() * axis.z() * (1-cosa) + axis.y() * sina;
-    m[1][0] = axis.y() * axis.x() * (1-cosa) + axis.z() * sina;
-    m[1][1] = cosa + (axis.y() * axis.y())*(1-cosa);
-    m[1][2] = axis.y() * axis.z() * (1-cosa) - axis.x() * sina;
-    m[2][0] = axis.z() * axis.x() * (1-cosa) - axis.y() * sina;
-    m[2][1] = axis.z() * axis.y() * (1-cosa) + axis.x() * sina;
-    m[2][2] = cosa + (axis.z() * axis.z())*(1-cosa);
-}
-
 template<typename T>
 inline std::set<T> Common::setIntersection(const std::set<T> &a, const std::set<T> &b){
     std::set<T> intersect;
@@ -336,56 +266,6 @@ inline std::vector<size_t> Common::sortIndexes(const std::vector<T> &v) {
 
     return idx;
 }
-
-#ifdef CG3_WITH_EIGEN
-/**
- * @brief Common::eigenVectorToStdVector
- * @param v
- * @return
- * @link https://stackoverflow.com/questions/26094379/typecasting-eigenvectorxd-to-stdvector
- */
-template<typename T, int ...A>
-inline std::vector<T> Common::eigenVectorToStdVector(const Eigen::Matrix<T, A...>& ev) {
-    std::vector<T> stdv;
-    stdv.resize(ev.size());
-    Eigen::Matrix<T, A...>::Map(&stdv[0], ev.size()) = ev;
-    return stdv;
-}
-
-/**
- * @brief Common::removeRowFromEigenMatrix
- * @param m
- * @param row
- * @link https://stackoverflow.com/questions/13290395/how-to-remove-a-certain-row-or-column-while-using-eigen-library-c
- */
-template<typename T, int ...A>
-inline void Common::removeRowFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int row) {
-    unsigned int numRows = m.rows()-1;
-    unsigned int numCols = m.cols();
-
-    if( row < numRows )
-        m.block(row,0,numRows-row,numCols) = m.block(row+1,0,numRows-row,numCols);
-
-    m.conservativeResize(numRows,numCols);
-}
-
-/**
- * @brief Common::removeColumnFromEigenMatrix
- * @param m
- * @param column
- * @link https://stackoverflow.com/questions/13290395/how-to-remove-a-certain-row-or-column-while-using-eigen-library-c
- */
-template<typename T, int ...A>
-inline void Common::removeColumnFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int column) {
-    unsigned int numRows = m.rows();
-    unsigned int numCols = m.cols()-1;
-
-    if(column < numCols )
-        m.block(0,column,numRows,numCols-column) = m.block(0,column+1,numRows,numCols-column);
-
-    m.conservativeResize(numRows,numCols);
-}
-#endif
 
 inline bool Common::isCounterClockwise(const std::vector<Point2Dd>& polygon) {
     double sum = 0;

@@ -1,5 +1,7 @@
 #include "cgaltriangulation.h"
 
+#include <cg3/geometry/transformations.h>
+
 namespace cg3 {
 
 void CGALInterface::Triangulation::markDomains(
@@ -113,7 +115,7 @@ std::vector<std::array<Pointd, 3> > CGALInterface::Triangulation::triangulate(
         if (normal == -zAxis){
             axis = Vec3(1,0,0);
         }
-        Common::getRotationMatrix(axis, angle, r);
+        getRotationMatrix(axis, angle, r);
     }
     else {
         r[0][0] = r[1][1] = r[2][2] = 1;

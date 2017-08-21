@@ -1,5 +1,5 @@
-#ifndef CG3_SLICER_H
-#define CG3_SLICER_H
+#ifndef CG3_CGAL_SLICER_H
+#define CG3_CGAL_SLICER_H
 
 #include <cg3/utilities/utils.h>
 #include <cg3/geometry/point.h>
@@ -34,4 +34,4 @@ namespace CGALInterface {
 }
 
 
-#endif // CG3_SLICER_H
+#endif // CG3_CGAL_SLICER_H

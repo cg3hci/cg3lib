@@ -1,5 +1,5 @@
-#ifndef CG3_SDF_H
-#define CG3_SDF_H
+#ifndef CG3_CGAL_SDF_H
+#define CG3_CGAL_SDF_H
 
 #include "cgalutils.h"
 
@@ -38,4 +38,4 @@ namespace CGALInterface {
 
 }
 
-#endif // CG3_SDF_H
+#endif // CG3_CGAL_SDF_H

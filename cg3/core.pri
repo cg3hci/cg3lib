@@ -69,6 +69,7 @@ HEADERS += \
     $$PWD/core/cg3/geometry/line.h \
     $$PWD/core/cg3/geometry/plane.h \
     $$PWD/core/cg3/geometry/point.h \
+    $$PWD/core/cg3/geometry/transformations.h \
     $$PWD/core/cg3/geometry/2d/bounding_box2d.h \
     $$PWD/core/cg3/geometry/2d/point2d.h
 
@@ -80,6 +81,7 @@ SOURCES += \
 
 DISTFILES += \
     $$PWD/core/cg3/geometry/bounding_box.cpp \
+    $$PWD/core/cg3/geometry/transformations.cpp \
     $$PWD/core/cg3/geometry/2d/bounding_box2d.cpp
 
 #io
@@ -98,10 +100,13 @@ DISTFILES += \
 #utilities
 HEADERS += \
     $$PWD/core/cg3/utilities/comparators.h \
+    $$PWD/core/cg3/utilities/const.h \
+    $$PWD/core/cg3/utilities/eigen.h \
     $$PWD/core/cg3/utilities/timer.h \
     $$PWD/core/cg3/utilities/utils.h
 
 DISTFILES += \
+    $$PWD/core/cg3/utilities/eigen.cpp \
     $$PWD/core/cg3/timer.cpp \
     $$PWD/core/cg3/utils.cpp
 

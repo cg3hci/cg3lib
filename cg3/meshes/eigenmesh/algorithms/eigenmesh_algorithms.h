@@ -58,10 +58,10 @@ class EigenMeshAlgorithms {
         #endif
 
         static void removeUnreferencedVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I = dummyEigenVectorXi);
-        static void removeDuplicateVertices(SimpleEigenMesh &input, double epsilon = EPSILON);
-        static void removeDuplicateVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon = EPSILON);
-        static void removeDuplicateVertices(EigenMesh &input, double epsilon = EPSILON);
-        static void removeDuplicateVertices(EigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon = EPSILON);
+        static void removeDuplicateVertices(SimpleEigenMesh &input, double epsilon = CG3_EPSILON);
+        static void removeDuplicateVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon = CG3_EPSILON);
+        static void removeDuplicateVertices(EigenMesh &input, double epsilon = CG3_EPSILON);
+        static void removeDuplicateVertices(EigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon = CG3_EPSILON);
         static bool isEdgeManifold(const SimpleEigenMesh& input);
         static bool isVertexManifold(const SimpleEigenMesh& input, Eigen::Matrix<bool, Eigen::Dynamic, 1>& B = dummyEigenVectorXb);
         static std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);

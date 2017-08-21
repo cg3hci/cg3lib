@@ -1,5 +1,5 @@
-#ifndef CG3_AABBTREE_H
-#define CG3_AABBTREE_H
+#ifndef CG3_CGAL_AABBTREE_H
+#define CG3_CGAL_AABBTREE_H
 
 #include <cg3/geometry/bounding_box.h>
 
@@ -109,4 +109,4 @@ namespace CGALInterface {
 
 }
 
-#endif // CG3_AABBTREE_H
+#endif // CG3_CGAL_AABBTREE_H

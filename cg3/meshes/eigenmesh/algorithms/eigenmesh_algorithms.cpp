@@ -1,5 +1,6 @@
 #include "eigenmesh_algorithms.h"
 #include <cg3/utilities/utils.h>
+#include <cg3/geometry/transformations.h>
 
 #ifdef  CG3_LIBIGL_DEFINED
 #include <igl/decimate.h>
@@ -316,7 +317,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(const Pointd &p1, const Pointd
     Vec3 vcrss = vector.cross(Vec3(0,0,1));
     std::cerr << "ang: " << angv << "\n";
     std::cerr << "vcross: " << vcrss << "\n";
-    Eigen::Matrix3d rot = Common::getRotationMatrix(vcrss, -angv);
+    Eigen::Matrix3d rot = getRotationMatrix(vcrss, -angv);
     std::cerr << "rot: \n" << rot << "\n";
     SimpleEigenMesh circle;
     double dist = p1.dist(p2);
@@ -362,8 +363,8 @@ bool EigenMeshAlgorithms::isABox(const SimpleEigenMesh& mesh) {
     for (unsigned int i = 0; i < mesh.getNumberFaces() && isABox; i++){
         Vec3 n = mesh.getFaceNormal(i);
         bool found = false;
-        for (unsigned int a = 0; a < Common::AXIS.size() && !found; a++){
-            if (Common::epsilonEqual(n, Common::AXIS[a])){
+        for (unsigned int a = 0; a < cg3::AXIS.size() && !found; a++){
+            if (Common::epsilonEqual(n, cg3::AXIS[a])){
                 found = true;
                 if (init[a]){
                     if (! Common::epsilonEqual(coords[a], mesh.getVertex(mesh.getFace(i).x())[a%3]))

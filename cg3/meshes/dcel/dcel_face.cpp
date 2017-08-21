@@ -5,7 +5,7 @@
 
 #include "dcel_face_iterators.h"
 #include "dcel_vertex_iterators.h"
-#include <cg3/utilities/utils.h>
+#include <cg3/geometry/transformations.h>
 #ifdef CG3_CGAL_DEFINED
 #include <cg3/cgal/cgalinterface.h>
 #endif
@@ -286,7 +286,7 @@ Vec3 Dcel::Face::updateNormal() {
             if (normal == -zAxis){
                 v = Vec3(1,0,0);
             }
-            Common::getRotationMatrix(v, angle, r);
+            getRotationMatrix(v, angle, r);
         }
         else {
             r[0][0] = r[1][1] = r[2][2] = 1;
