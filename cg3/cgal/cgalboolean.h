@@ -1,0 +1,41 @@
+#ifndef CG3_BOOLEAN_H
+#define CG3_BOOLEAN_H
+
+#include <cg3/utilities/utils.h>
+#include <cg3/geometry/point.h>
+#include <cg3/geometry/2d/point2d.h>
+
+#include <CGAL/Exact_predicates_exact_constructions_kernel.h>
+#include <CGAL/Boolean_set_operations_2.h>
+#include <CGAL/Polygon_2.h>
+
+namespace cg3 {
+
+namespace CGALInterface {
+    namespace BooleanOperations2D {
+
+        typedef CGAL::Exact_predicates_exact_constructions_kernel Kernel;
+        typedef Kernel::Point_2                                   Point_2;
+        typedef CGAL::Polygon_2<Kernel>                           Polygon_2;
+        typedef CGAL::Polygon_with_holes_2<Kernel>                Polygon_with_holes_2;
+        typedef std::list<Polygon_with_holes_2>                   Pwh_list_2;
+
+        void getCoordinates(const Point_2&p, double &x, double &y);
+
+        std::vector< std::vector<Point2Dd > > difference(
+                const std::vector<Point2Dd > &polygon1,
+                const std::vector<Point2Dd > &polygon2);
+
+        std::vector<std::vector<Point2Dd > > intersection(
+                const std::vector<Point2Dd >& polygon1,
+                const std::vector<Point2Dd >& polygon2);
+
+        bool doIntersect(
+                const std::vector<Point2Dd >& polygon1,
+                const std::vector<Point2Dd >& polygon2);
+    }
+}
+
+}
+
+#endif // CG3_MODULE_BOOLEAN_H
