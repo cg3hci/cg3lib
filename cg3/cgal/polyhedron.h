@@ -1,5 +1,5 @@
-#ifndef CG3_CGAL_UTILS_H
-#define CG3_CGAL_UTILS_H
+#ifndef CG3_CGAL_POLYHEDRON_H
+#define CG3_CGAL_POLYHEDRON_H
 
 #include <fstream>
 #include <vector>
@@ -46,4 +46,4 @@ namespace cgal {
 
 }
 
-#endif // CG3_CGAL_UTILS_H
+#endif // CG3_CGAL_POLYHEDRON_H

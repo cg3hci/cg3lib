@@ -2,7 +2,7 @@
 #define DCEL_ALGORITHMS_H
 
 #include <cg3/meshes/dcel/dcel.h>
-#include <cg3/utilities/utils.h>
+#include <cg3/utilities/set.h>
 
 namespace cg3 {
 
@@ -96,7 +96,7 @@ std::vector< std::set<const Dcel::Face*> > DcelAlgorithms::getConnectedComponent
         const Dcel::Face* f = *(containedFaces.begin());
         std::set<const Dcel::Face*> cc = flood(f, comp);
         connectedComponents.push_back(cc);
-        containedFaces = Common::setDifference(containedFaces, cc);
+        containedFaces = setDifference(containedFaces, cc);
     }
     return connectedComponents;
 }

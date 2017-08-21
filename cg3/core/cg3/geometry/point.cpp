@@ -23,7 +23,7 @@ Point<T>::Point(const Eigen::VectorXd& v) : xCoord(v(0)), yCoord(v(1)), zCoord(v
 }
 #endif
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 template <class T>
 Point<T>::Point(const cinolib::vec3<T>& v) : xCoord(v.x()), yCoord(v.y()), zCoord(v.z()) {
 }

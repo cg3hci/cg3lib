@@ -1,5 +1,5 @@
-#ifndef DRAWABLEBOUNDINGBOX2D_H
-#define DRAWABLEBOUNDINGBOX2D_H
+#ifndef CG3_DRAWABLE_BOUNDINGBOX2D_H
+#define CG3_DRAWABLE_BOUNDINGBOX2D_H
 
 #include <cg3/geometry/2d/bounding_box2d.h>
 #include <cg3/data_structures/color.h>
@@ -35,4 +35,4 @@ class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject
 
 }
 
-#endif // DRAWABLEBOUNDINGBOX2D_H
+#endif // CG3_DRAWABLE_BOUNDINGBOX2D_H

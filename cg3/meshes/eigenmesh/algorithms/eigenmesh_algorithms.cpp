@@ -364,10 +364,10 @@ bool EigenMeshAlgorithms::isABox(const SimpleEigenMesh& mesh) {
         Vec3 n = mesh.getFaceNormal(i);
         bool found = false;
         for (unsigned int a = 0; a < cg3::AXIS.size() && !found; a++){
-            if (Common::epsilonEqual(n, cg3::AXIS[a])){
+            if (epsilonEqual(n, cg3::AXIS[a])){
                 found = true;
                 if (init[a]){
-                    if (! Common::epsilonEqual(coords[a], mesh.getVertex(mesh.getFace(i).x())[a%3]))
+                    if (! epsilonEqual(coords[a], mesh.getVertex(mesh.getFace(i).x())[a%3]))
                         isABox = false;
                 }
                 else {

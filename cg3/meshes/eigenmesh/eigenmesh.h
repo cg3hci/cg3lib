@@ -1,5 +1,5 @@
-#ifndef EIGENMESH_H
-#define EIGENMESH_H
+#ifndef CG3_EIGENMESH_H
+#define CG3_EIGENMESH_H
 
 #include "simpleeigenmesh.h"
 
@@ -205,4 +205,4 @@ inline void EigenMesh::updateFacesAndVerticesNormals() {
 
 }
 
-#endif // EIGENMESH_H
+#endif // CG3_EIGENMESH_H

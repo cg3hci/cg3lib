@@ -1,5 +1,5 @@
-#ifndef VIEWER_DRAWABLE_MESH_H
-#define VIEWER_DRAWABLE_MESH_H
+#ifndef CG3__DRAWABLE_MESH_H
+#define CG3__DRAWABLE_MESH_H
 
 #ifdef WIN32
 #include "windows.h"
@@ -15,7 +15,7 @@
 #include <Eigen/Core>
 #endif
 
-#include "../objects/objects.h"
+#include "../renderable_objects/renderable_objects.h"
 #include "drawable_object.h"
 
 namespace cg3 {
@@ -82,4 +82,4 @@ class DrawableMesh : public DrawableObject{
 };
 
 }
-#endif // VIEWER_DRAWABLE_MESH_H
+#endif // CG3_DRAWABLE_MESH_H

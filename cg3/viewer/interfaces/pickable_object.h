@@ -3,8 +3,8 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#ifndef VIEWER_PICKABLE_OBJECT_H
-#define VIEWER_PICKABLE_OBJECT_H
+#ifndef CG3_PICKABLE_OBJECT_H
+#define CG3_PICKABLE_OBJECT_H
 
 /**
  * \~English
@@ -36,4 +36,4 @@ class PickableObject
                                                      \~Italian @brief Draws all the pickable objects of the object */
 };
 
-#endif // VIEWER_PICKABLE_OBJECT_H
+#endif // CG3_PICKABLE_OBJECT_H

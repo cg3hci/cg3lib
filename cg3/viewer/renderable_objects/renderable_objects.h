@@ -1,5 +1,5 @@
-#ifndef VIEWER_OBJECTS_H
-#define VIEWER_OBJECTS_H
+#ifndef CG3_RENDERABLE_OBJECTS_H
+#define CG3_RENDERABLE_OBJECTS_H
 
 #ifdef WIN32
 #include "windows.h"
@@ -20,7 +20,7 @@
 
 namespace cg3 {
 
-namespace Viewer{
+namespace viewer{
 
 static inline void drawSphere(const Pointd& center, float radius, const QColor& color, int precision = 4);
 
@@ -44,4 +44,4 @@ static inline void drawBox(const Pointd &p0, const Pointd &p1, const Pointd &p2,
 
 #include "objects.cpp"
 
-#endif // VIEWER_OBJECTS_H
+#endif // CG3_RENDERABLE_OBJECTS_H

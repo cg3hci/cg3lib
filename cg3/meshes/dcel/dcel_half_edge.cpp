@@ -92,7 +92,7 @@ bool Dcel::HalfEdge::isConvex() const {
     dir1.normalize();
     Vec3 dir2 = (getToVertex()->getCoordinate() - getFromVertex()->getCoordinate());
     dir2.normalize();
-    return (Common::epsilonEqual(dir1, dir2));
+    return (epsilonEqual(dir1, dir2));
 }
 
 /******************

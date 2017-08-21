@@ -19,9 +19,9 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 #endif //EIGENMESH_DEFINED
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 #include <cinolib/meshes/trimesh/trimesh.h>
-#endif //CINOLIB_DEFINED
+#endif //CG3_CINOLIB_DEFINED
 
 namespace cg3 {
 
@@ -88,11 +88,11 @@ Dcel::Dcel(const cg3::EigenMesh& eigenMesh) {
 }
 #endif // CG3_EIGNEMESH_DEFINED
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 Dcel::Dcel(const cinolib::Trimesh& trimesh) {
     copyFrom(trimesh);
 }
-#endif //CINOLIB_DEFINED
+#endif //CG3_CINOLIB_DEFINED
 
 
 
@@ -1693,7 +1693,7 @@ void Dcel::copyFrom(const EigenMesh& eigenMesh) {
 }
 #endif // CG3_EIGENMESH_DEFINED
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 void Dcel::copyFrom(const cinolib::Trimesh& trimesh) {
     clear();
 
@@ -1782,6 +1782,6 @@ void Dcel::copyFrom(const cinolib::Trimesh& trimesh) {
         fid->updateArea();
     }
 }
-#endif //CINOLIB_DEFINED
+#endif //CG3_CINOLIB_DEFINED
 
 }

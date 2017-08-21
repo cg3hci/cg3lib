@@ -1,5 +1,5 @@
-#ifndef SIMPLEEIGENMESH_H
-#define SIMPLEEIGENMESH_H
+#ifndef CG3_SIMPLEEIGENMESH_H
+#define CG3_SIMPLEEIGENMESH_H
 
 #include <Eigen/Core>
 
@@ -10,7 +10,7 @@
 #include <cg3/utilities/const.h>
 #include <cg3/utilities/eigen.h>
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 namespace cinolib {
     class Trimesh;
 }
@@ -41,7 +41,7 @@ class SimpleEigenMesh : public SerializableObject {
         #ifdef TRIMESH_DEFINED
         template<typename T> SimpleEigenMesh(const Trimesh<T>& trimesh);
         #endif
-        #ifdef CINOLIB_DEFINED
+        #ifdef CG3_CINOLIB_DEFINED
         SimpleEigenMesh(const cinolib::Trimesh& trimesh);
         #endif
 
@@ -300,4 +300,4 @@ inline bool SimpleEigenMesh::deserialize(std::ifstream& binaryFile) {
 
 }
 
-#endif // SIMPLEEIGENMESH_H
+#endif // CG3_SIMPLEEIGENMESH_H

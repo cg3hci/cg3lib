@@ -4,8 +4,8 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#ifndef VIEWER_MAINWINDOW_H
-#define VIEWER_MAINWINDOW_H
+#ifndef CG3_MAINWINDOW_H
+#define CG3_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QDockWidget>
@@ -129,4 +129,4 @@ class MainWindow : public QMainWindow {
         cg3::DrawableDebugObjects* debugObjects;
 };
 
-#endif // VIEWER_MAINWINDOW_H
+#endif // CG3_MAINWINDOW_H

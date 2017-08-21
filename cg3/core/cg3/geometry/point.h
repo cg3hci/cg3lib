@@ -12,14 +12,14 @@
 
 #include "../io/serialize.h"
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable" //Doesn't work on gcc < 6.0
 #include <cinolib/geometry/vec3.h>
 #pragma GCC diagnostic pop
 #endif //__GNUC__
-#endif //CINOLIB_DEFINED
+#endif //CG3_CINOLIB_DEFINED
 
 namespace cg3 {
 
@@ -48,7 +48,7 @@ template <class T> class Point : SerializableObject {
         #ifdef CG3_WITH_EIGEN
         Point(const Eigen::VectorXd &v);
         #endif
-        #ifdef CINOLIB_DEFINED
+        #ifdef CG3_CINOLIB_DEFINED
         Point(const cinolib::vec3<T> &v);
         #endif
 

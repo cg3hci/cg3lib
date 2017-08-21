@@ -1,5 +1,5 @@
-#ifndef EIGENMESHALGORITHMS_H
-#define EIGENMESHALGORITHMS_H
+#ifndef CG3_EIGENMESH_ALGORITHMS_H
+#define CG3_EIGENMESH_ALGORITHMS_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -81,4 +81,4 @@ inline SimpleEigenMesh EigenMeshAlgorithms::makeBox(const Pointd &min, const Poi
 
 }
 
-#endif // EIGENMESHALGORITHMS_H
+#endif // CG3_EIGENMESH_ALGORITHMS_H

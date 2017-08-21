@@ -4,8 +4,8 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#ifndef VIEWER_GL_CANVAS_H
-#define VIEWER_GL_CANVAS_H
+#ifndef CG3_GL_CANVAS_H
+#define CG3_GL_CANVAS_H
 
 #ifdef WIN32
 #include "windows.h"
@@ -68,4 +68,4 @@ class GLcanvas : public QGLViewer {
         qglviewer::Vec orig, dir, selectedPoint;
 };
 
-#endif // VIEWER_GL_CANVAS_H
+#endif // CG3_GL_CANVAS_H

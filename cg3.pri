@@ -13,6 +13,7 @@ include (cg3/libigl.pri)
 include (cg3/meshes/dcel.pri)
 include (cg3/meshes/eigenmesh.pri)
 include (cg3/viewer.pri)
+include (cg3/cinolib.pri)
 
 
 

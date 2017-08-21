@@ -1,6 +1,6 @@
 #include "drawable_boundingbox2d.h"
 
-#include "../objects/objects.h"
+#include "../renderable_objects/renderable_objects.h"
 
 namespace cg3 {
 
@@ -31,10 +31,10 @@ double DrawableBoundingBox2D::sceneRadius() const {
 }
 
 void DrawableBoundingBox2D::drawEdges() const {
-    Viewer::drawLine(Pointd(min().x(), min().y(), thirdCoord), Pointd(max().x(), min().y(), thirdCoord), colorEdge, edgeWidth);
-    Viewer::drawLine(Pointd(max().x(), min().y(), thirdCoord), Pointd(max().x(), max().y(), thirdCoord), colorEdge, edgeWidth);
-    Viewer::drawLine(Pointd(max().x(), max().y(), thirdCoord), Pointd(min().x(), max().y(), thirdCoord), colorEdge, edgeWidth);
-    Viewer::drawLine(Pointd(min().x(), max().y(), thirdCoord), Pointd(min().x(), min().y(), thirdCoord), colorEdge, edgeWidth);
+    viewer::drawLine(Pointd(min().x(), min().y(), thirdCoord), Pointd(max().x(), min().y(), thirdCoord), colorEdge, edgeWidth);
+    viewer::drawLine(Pointd(max().x(), min().y(), thirdCoord), Pointd(max().x(), max().y(), thirdCoord), colorEdge, edgeWidth);
+    viewer::drawLine(Pointd(max().x(), max().y(), thirdCoord), Pointd(min().x(), max().y(), thirdCoord), colorEdge, edgeWidth);
+    viewer::drawLine(Pointd(min().x(), max().y(), thirdCoord), Pointd(min().x(), min().y(), thirdCoord), colorEdge, edgeWidth);
 }
 
 void DrawableBoundingBox2D::drawPoints() const {

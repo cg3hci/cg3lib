@@ -3,8 +3,8 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#ifndef PICKABLEDCEL_H
-#define PICKABLEDCEL_H
+#ifndef CG3_PICKABLE_DCEL_H
+#define CG3_PICKABLE_DCEL_H
 
 #include "../drawable_objects/drawable_dcel.h"
 #include <cg3/viewer/interfaces/pickable_object.h>
@@ -37,4 +37,4 @@ class PickableDcel : public DrawableDcel, public PickableObject
 
 }
 
-#endif // PICKABLEDCEL_H
+#endif // CG3_PICKABLE_DCEL_H

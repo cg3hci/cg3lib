@@ -1,5 +1,5 @@
-#ifndef VIEWER_DRAWABLE_DEBUG_OBJECTS_H
-#define VIEWER_DRAWABLE_DEBUG_OBJECTS_H
+#ifndef CG3_DRAWABLE_DEBUG_OBJECTS_H
+#define CG3_DRAWABLE_DEBUG_OBJECTS_H
 
 #include "../interfaces/drawable_object.h"
 #include <cg3/geometry/bounding_box.h>
@@ -54,4 +54,4 @@ class DrawableDebugObjects : public DrawableObject{
 
 }
 
-#endif // VIEWER_DRAWABLE_DEBUG_OBJECTS_H
+#endif // CG3_DRAWABLE_DEBUG_OBJECTS_H

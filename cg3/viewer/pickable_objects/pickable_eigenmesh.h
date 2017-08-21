@@ -1,5 +1,5 @@
-#ifndef PICKABLEEIGENMESH_H
-#define PICKABLEEIGENMESH_H
+#ifndef CG3_PICKABLE_EIGENMESH_H
+#define CG3_PICKABLE_EIGENMESH_H
 
 #include "../drawable_objects/drawable_eigenmesh.h"
 #include <cg3/viewer/interfaces/pickable_object.h>
@@ -28,4 +28,4 @@ protected:
 
 }
 
-#endif // PICKABLEEIGENMESH_H
+#endif // CG3_PICKABLE_EIGENMESH_H

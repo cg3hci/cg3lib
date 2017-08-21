@@ -1,5 +1,5 @@
-#ifndef DRAWABLEEIGENMESH_H
-#define DRAWABLEEIGENMESH_H
+#ifndef CG3_DRAWABLE_EIGENMESH_H
+#define CG3_DRAWABLE_EIGENMESH_H
 
 #include <cg3/viewer/interfaces/drawable_mesh.h>
 #include "cg3/meshes/eigenmesh/eigenmesh.h"
@@ -21,4 +21,4 @@ class DrawableEigenMesh : public EigenMesh, public DrawableMesh {
 
 }
 
-#endif // DRAWABLEEIGENMESH_H
+#endif // CG3_DRAWABLE_EIGENMESH_H

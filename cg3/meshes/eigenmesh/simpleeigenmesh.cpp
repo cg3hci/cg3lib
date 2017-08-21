@@ -10,7 +10,7 @@
 #include "trimesh/trimesh.h"
 #endif
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 #include <cinolib/meshes/trimesh/trimesh.h>
 #endif
 
@@ -39,7 +39,7 @@ SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel) {
 }
 #endif // CG3_DCEL_DEFINED
 
-#ifdef CINOLIB_DEFINED
+#ifdef CG3_CINOLIB_DEFINED
 SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh& trimesh) {
     resizeVertices(trimesh.num_vertices());
     resizeFaces(trimesh.num_triangles());

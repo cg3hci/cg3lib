@@ -61,7 +61,7 @@ void DcelAlgorithms::smartColoring(Dcel& d) {
 
     std::vector<Dcel::Face*> vectorFaces;
     getVectorFaces(vectorFaces, d);
-    std::map<Dcel::Face*, Color> mapColors = Common::smartColoring(vectorFaces, adjComp());
+    std::map<Dcel::Face*, Color> mapColors = smartColoring(vectorFaces, adjComp());
 
     for (std::pair<Dcel::Face*, Color> p : mapColors){
         (p.first)->setColor(p.second);

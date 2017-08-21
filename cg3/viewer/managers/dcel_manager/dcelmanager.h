@@ -3,8 +3,8 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#ifndef DCELMANAGER_H
-#define DCELMANAGER_H
+#ifndef CG3_DCELMANAGER_H
+#define CG3_DCELMANAGER_H
 
 #include <QFrame>
 #include <QColor>
@@ -55,7 +55,7 @@ class DcelManager : public QFrame {
         MainWindow& mainWindow; //puntatore alla mainWindow
         cg3::DrawableDcel* drawableDcel; //puntatore alla DrawableDcel gestita dal DcelManager
         int meshStackIndex; // indice identificativo del manager
-        cg3::Viewer::LoaderSaver dcells;
+        cg3::viewer::LoaderSaver dcells;
 };
 
-#endif // DCELMANAGER_H
+#endif // CG3_DCELMANAGER_H

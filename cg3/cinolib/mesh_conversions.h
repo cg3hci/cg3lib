@@ -1,24 +1,24 @@
-#ifndef MESHCONVERSIONS_H
-#define MESHCONVERSIONS_H
+#ifndef CG3_CINOLIB_MESH_CONVERSIONS_H
+#define CG3_CINOLIB_MESH_CONVERSIONS_H
 
 #include <cinolib/meshes/trimesh/trimesh.h>
 
-#ifdef EIGENMESH_DEFINED
-#include <eigenmesh/eigenmesh.h>
-#endif //EIGENMESH_DEFINED
+#ifdef CG3_EIGENMESH_DEFINED
+#include <cg3/meshes/eigenmesh/eigenmesh.h>
+#endif //CG3_EIGENMESH_DEFINED
 
-#ifdef DCEL_DEFINED
-#include <dcel/dcel.h>
-#endif //DCEL_DEFINED
+#ifdef CG3_DCEL_DEFINED
+#include <cg3/meshes/dcel/dcel.h>
+#endif //CG3_DCEL_DEFINED
 
 namespace MeshConversions {
-    #ifdef EIGENMESH_DEFINED
-    void eigenMeshToTrimesh(cinolib::Trimesh& m, const SimpleEigenMesh& simpleEigenMesh);
-    #endif //EIGENMESH_DEFINED
+    #ifdef CG3_EIGENMESH_DEFINED
+    void eigenMeshToTrimesh(cinolib::Trimesh& m, const cg3::SimpleEigenMesh& simpleEigenMesh);
+    #endif //CG3_EIGENMESH_DEFINED
 
-    #ifdef DCEL_DEFINED
-    void dcelToTrimesh(cinolib::Trimesh& m, const Dcel &d);
-    #endif //DCEL_DEFINED
+    #ifdef CG3_DCEL_DEFINED
+    void dcelToTrimesh(cinolib::Trimesh& m, const cg3::Dcel &d);
+    #endif //CG3_DCEL_DEFINED
 }
 
-#endif // MESHCONVERSIONS_H
+#endif // CG3_CINOLIB_MESH_CONVERSIONS_H

@@ -55,13 +55,20 @@ HEADERS += \
     $$PWD/core/cg3/data_structures/color.h \
     $$PWD/core/cg3/data_structures/arrays/array2d.h \
     $$PWD/core/cg3/data_structures/arrays/array3d.h \
-    $$PWD/core/cg3/data_structures/arrays/array4d.h
+    $$PWD/core/cg3/data_structures/arrays/array4d.h \
+    $$PWD/core/cg3/utilities/pair.h \
+    $$PWD/core/cg3/utilities/map.h \
+    $$PWD/core/cg3/geometry/2d/polygon2d.h
 
 SOURCES += \
     $$PWD/core/cg3/data_structures/color.cpp \
     $$PWD/core/cg3/data_structures/arrays/array2d.cpp \
     $$PWD/core/cg3/data_structures/arrays/array3d.cpp \
-    $$PWD/core/cg3/data_structures/arrays/array4d.cpp
+    $$PWD/core/cg3/data_structures/arrays/array4d.cpp \
+    $$PWD/core/cg3/utilities/pair.cpp \
+    $$PWD/core/cg3/utilities/map.cpp \
+    $$PWD/core/cg3/geometry/2d/polygon2d.cpp
+
 
 ##geometry
 HEADERS += \
@@ -102,11 +109,19 @@ HEADERS += \
     $$PWD/core/cg3/utilities/comparators.h \
     $$PWD/core/cg3/utilities/const.h \
     $$PWD/core/cg3/utilities/eigen.h \
+    $$PWD/core/cg3/utilities/set.h \
+    $$PWD/core/cg3/utilities/string.h \
+    $$PWD/core/cg3/utilities/system.h \
+    $$PWD/core/cg3/utilities/vector.h \
     $$PWD/core/cg3/utilities/timer.h \
     $$PWD/core/cg3/utilities/utils.h
 
 DISTFILES += \
     $$PWD/core/cg3/utilities/eigen.cpp \
+    $$PWD/core/cg3/utilities/set.cpp \
+    $$PWD/core/cg3/utilities/string.cpp \
+    $$PWD/core/cg3/utilities/system.cpp \
+    $$PWD/core/cg3/utilities/vector.cpp \
     $$PWD/core/cg3/timer.cpp \
     $$PWD/core/cg3/utils.cpp
 

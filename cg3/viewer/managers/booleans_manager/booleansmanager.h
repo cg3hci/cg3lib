@@ -1,5 +1,5 @@
-#ifndef BOOLEANSMANAGER_H
-#define BOOLEANSMANAGER_H
+#ifndef CG3_BOOLEANS_MANAGER_H
+#define CG3_BOOLEANS_MANAGER_H
 
 #include <QFrame>
 #include <cg3/viewer/mainwindow.h>
@@ -104,7 +104,7 @@ class BooleansManager : public QFrame {
         cg3::DrawableEigenMesh* result;
         cg3::Vec3 lastAxis;
         double lastAngle;
-        cg3::Viewer::LoaderSaver objls;
+        cg3::viewer::LoaderSaver objls;
 };
 
-#endif // BOOLEANSMANAGER_H
+#endif // CG3_BOOLEANS_MANAGER_H

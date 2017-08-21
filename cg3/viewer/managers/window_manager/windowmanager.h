@@ -4,8 +4,8 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#ifndef VIEWER_WINDOW_MANAGER_H
-#define VIEWER_WINDOW_MANAGER_H
+#ifndef CG3_WINDOW_MANAGER_H
+#define CG3_WINDOW_MANAGER_H
 
 #include <QFrame>
 #include <QColor>
@@ -41,4 +41,4 @@ class WindowManager : public QFrame {
         MainWindow& mainWindow;
 };
 
-#endif // VIEWER_WINDOW_MANAGER_H
+#endif // CG3_WINDOW_MANAGER_H

@@ -1,5 +1,5 @@
 #include "drawable_debugobjects.h"
-#include "../objects/objects.h"
+#include "../renderable_objects/renderable_objects.h"
 
 namespace cg3 {
 
@@ -13,13 +13,13 @@ DrawableDebugObjects::~DrawableDebugObjects(){
 void DrawableDebugObjects::draw() const {
     if (visible){
         for (unsigned int i = 0; i < debugSpheres.size(); i++){
-            Viewer::drawSphere(debugSpheres[i].center, debugSpheres[i].radius, debugSpheres[i].color, debugSpheres[i].precision);
+            viewer::drawSphere(debugSpheres[i].center, debugSpheres[i].radius, debugSpheres[i].color, debugSpheres[i].precision);
         }
         for (unsigned int i = 0; i < debugCylinders.size(); i++){
-            Viewer::drawCylinder(debugCylinders[i].a, debugCylinders[i].b, debugCylinders[i].radius, debugCylinders[i].radius, debugCylinders[i].color);
+            viewer::drawCylinder(debugCylinders[i].a, debugCylinders[i].b, debugCylinders[i].radius, debugCylinders[i].radius, debugCylinders[i].color);
         }
         for (unsigned int i = 0; i < debugLines.size(); i++){
-            Viewer::drawLine(debugLines[i].a, debugLines[i].b, debugLines[i].color, debugLines[i].width);
+            viewer::drawLine(debugLines[i].a, debugLines[i].b, debugLines[i].color, debugLines[i].width);
         }
     }
 }

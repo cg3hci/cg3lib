@@ -4,8 +4,8 @@
  * @copyright Marco Livesu 2014.
  */
 
-#ifndef VIEWER_DRAWABLE_OBJECT_H
-#define VIEWER_DRAWABLE_OBJECT_H
+#ifndef CG3_DRAWABLE_OBJECT_H
+#define CG3_DRAWABLE_OBJECT_H
 
 #include <float.h>
 #include <cg3/geometry/point.h>
@@ -52,4 +52,4 @@ class DrawableObject
 
 }
 
-#endif // VIEWER_DRAWABLE_OBJECT_H
+#endif // CG3_DRAWABLE_OBJECT_H

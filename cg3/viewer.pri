@@ -38,14 +38,14 @@ HEADERS += \
     $$PWD/viewer/glcanvas.h \
     $$PWD/viewer/mainwindow.h \
     $$PWD/viewer/managers/window_manager/windowmanager.h \
-    $$PWD/viewer/objects/objects.h \
     $$PWD/viewer/interfaces/drawable_object.h \
     $$PWD/viewer/interfaces/pickable_object.h \
     $$PWD/viewer/interfaces/drawable_mesh.h \
     $$PWD/viewer/utilities/loadersaver.h \
     $$PWD/viewer/utilities/consolestream.h \
     $$PWD/viewer/drawable_objects/drawable_boundingbox2d.h \
-    $$PWD/viewer/drawable_objects/drawable_debugobjects.h
+    $$PWD/viewer/drawable_objects/drawable_debugobjects.h \
+    $$PWD/viewer/renderable_objects/renderable_objects.h
 
 SOURCES += \
     $$PWD/viewer/glcanvas.cpp \
@@ -58,7 +58,7 @@ SOURCES += \
     $$PWD/viewer/drawable_objects/drawable_debugobjects.cpp
 
 DISTFILES += \
-    $$PWD/viewer/objects/objects.cpp
+    $$PWD/viewer/renderable_objects/objects.cpp
 
 FORMS += \
     $$PWD/viewer/mainwindow.ui \

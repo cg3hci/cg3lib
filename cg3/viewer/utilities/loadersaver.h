@@ -1,5 +1,5 @@
-#ifndef LOADERSAVER_H
-#define LOADERSAVER_H
+#ifndef CG3_LOADERSAVER_H
+#define CG3_LOADERSAVER_H
 
 #include <string>
 #include <list>
@@ -7,7 +7,7 @@
 
 namespace cg3 {
 
-namespace Viewer {
+namespace viewer {
 
 class LoaderSaver
 {
@@ -42,4 +42,4 @@ void LoaderSaver::addSupportedExtension(const std::string &ext1, Args... args) {
 
 }
 
-#endif // LOADERSAVER_H
+#endif // CG3_LOADERSAVER_H

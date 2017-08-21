@@ -4,8 +4,8 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#ifndef DRAWABLE_DCEL_H
-#define DRAWABLE_DCEL_H
+#ifndef CG3_DRAWABLE_DCEL_H
+#define CG3_DRAWABLE_DCEL_H
 
 #include <cg3/viewer/interfaces/drawable_mesh.h>
 #include <cg3/utilities/utils.h>
@@ -74,4 +74,4 @@ class DrawableDcel : public Dcel, public DrawableMesh {
 
 }
 
-#endif // DRAWABLE_DCEL_H
+#endif // CG3_DRAWABLE_DCEL_H

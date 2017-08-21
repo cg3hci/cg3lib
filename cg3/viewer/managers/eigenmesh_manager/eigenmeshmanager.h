@@ -1,5 +1,5 @@
-#ifndef EIGENMESHMANAGER_H
-#define EIGENMESHMANAGER_H
+#ifndef CG3_EIGENMESH_MANAGER_H
+#define CG3_EIGENMESH_MANAGER_H
 
 #include <QFrame>
 #include <cg3/viewer/mainwindow.h>
@@ -46,7 +46,7 @@ class EigenMeshManager : public QFrame
         Ui::EigenMeshManager *ui;
         MainWindow& mainWindow;
         cg3::DrawableEigenMesh* mesh;
-        cg3::Viewer::LoaderSaver objls;
+        cg3::viewer::LoaderSaver objls;
 };
 
 #endif // EIGENMESHMANAGER_H

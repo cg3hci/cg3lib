@@ -1,4 +1,4 @@
-#include "objects.h"
+#include "renderable_objects.h"
 
 namespace cg3 {
 
@@ -12,7 +12,7 @@ namespace cg3 {
  * @param color: color of the sphere
  * @param precision: precision of the rendered sphere (default: 4)
  */
-static inline void Viewer::drawSphere(const Pointd  & center,
+static inline void viewer::drawSphere(const Pointd  & center,
                    float         radius,
                    const QColor& color,
                    int precision) {
@@ -38,7 +38,7 @@ static inline void Viewer::drawSphere(const Pointd  & center,
  * @param c: color of the point
  * @param size: size of the point (default: 8)
  */
-static inline void Viewer::drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8) {
+static inline void viewer::drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8) {
     glEnable(GL_POINT_SMOOTH);
     glPointSize(size);
     glBegin(GL_POINTS);
@@ -62,7 +62,7 @@ static inline void Viewer::drawPoint2D(const Point2Dd& p, const QColor& c, int s
  * @param bottom_radius: radius at the "b" point
  * @param color: color of the cylinder
  */
-static inline void Viewer::drawCylinder(const Pointd  & a,
+static inline void viewer::drawCylinder(const Pointd  & a,
                      const Pointd  & b,
                      float         top_radius,
                      float         bottom_radius,
@@ -97,7 +97,7 @@ static inline void Viewer::drawCylinder(const Pointd  & a,
  * @param c: color of the line
  * @param width: width of the line (default: 3)
  */
-static inline void Viewer::drawLine(const Pointd &a, const Pointd &b, const QColor& c, int width) {
+static inline void viewer::drawLine(const Pointd &a, const Pointd &b, const QColor& c, int width) {
     glBegin(GL_LINES);
     glColor3f(c.redF(), c.greenF(), c.blueF());
     glLineWidth(width);
@@ -117,7 +117,7 @@ static inline void Viewer::drawLine(const Pointd &a, const Pointd &b, const QCol
  * @param c: color of the line
  * @param width: width of the line (default: 3)
  */
-static inline void Viewer::drawLine2D(const Point2Dd& a, const Point2Dd& b, const QColor& c, int width) {
+static inline void viewer::drawLine2D(const Point2Dd& a, const Point2Dd& b, const QColor& c, int width) {
 
     glLineWidth(width);
 
@@ -141,7 +141,7 @@ static inline void Viewer::drawLine2D(const Point2Dd& a, const Point2Dd& b, cons
  * @param c
  * @param width
  */
-static inline void Viewer::drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width) {
+static inline void viewer::drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width) {
     drawLine(min, Pointd(max.x(), min.y(), min.z()), c, width);
     drawLine(Pointd(max.x(), min.y(), min.z()), Pointd(max.x(), min.y(), max.z()), c, width);
     drawLine(Pointd(max.x(), min.y(), max.z()), Pointd(min.x(), min.y(), max.z()), c, width);
@@ -167,7 +167,7 @@ static inline void Viewer::drawBox(const Pointd &min, const Pointd& max, const Q
  * @param c
  * @param width
  */
-static inline void Viewer::drawBox(const std::vector<Pointd> &p, const QColor& c, int width) {
+static inline void viewer::drawBox(const std::vector<Pointd> &p, const QColor& c, int width) {
     drawLine(p[0], p[1], c, width);
     drawLine(p[1], p[2], c, width);
     drawLine(p[2], p[3], c, width);
@@ -184,7 +184,7 @@ static inline void Viewer::drawBox(const std::vector<Pointd> &p, const QColor& c
     drawLine(p[3], p[7], c, width);
 }
 
-static inline void Viewer::drawBox(const Pointd &p0, const Pointd &p1, const Pointd &p2, const Pointd &p3, const Pointd &p4, const Pointd &p5, const Pointd &p6, const Pointd &p7, const QColor& c, int width) {
+static inline void viewer::drawBox(const Pointd &p0, const Pointd &p1, const Pointd &p2, const Pointd &p3, const Pointd &p4, const Pointd &p5, const Pointd &p6, const Pointd &p7, const QColor& c, int width) {
     drawLine(p0, p1, c, width);
     drawLine(p1, p2, c, width);
     drawLine(p2, p3, c, width);

@@ -128,7 +128,7 @@ void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords,
             }
         }
         if (drawMode & DRAW_BOUNDINGBOX) {
-            Viewer::drawBox(min, max, QColor(0,0,0));
+            viewer::drawBox(min, max, QColor(0,0,0));
         }
     }
 }

@@ -1,11 +1,11 @@
 #include "loadersaver.h"
 
 #include <QFileDialog>
-#include <cg3/utilities/utils.h>
+#include <cg3/utilities/string.h>
 
 namespace cg3 {
 
-namespace Viewer {
+namespace viewer {
 
 LoaderSaver::LoaderSaver(const std::string &initialPath) : actualPath(initialPath) {}
 
@@ -42,7 +42,7 @@ std::string LoaderSaver::loadDialog(const std::string& windowName, std::string& 
         }
 
         std::string path, name;
-        Common::separateFilenameFromPath(filename.toStdString(), path, name);
+        separateFilenameFromPath(filename.toStdString(), path, name);
         actualPath = path;
     }
     return filename.toStdString();
@@ -68,7 +68,7 @@ std::string LoaderSaver::saveDialog(const std::string& windowName, std::string& 
         }
 
         std::string path, name;
-        Common::separateFilenameFromPath(filename.toStdString(), path, name);
+        separateFilenameFromPath(filename.toStdString(), path, name);
         actualPath = path;
 
     }

@@ -1,5 +1,5 @@
-#ifndef CG3_CGAL_SIGNEDDISTANCES_H
-#define CG3_CGAL_SIGNEDDISTANCES_H
+#ifndef CG3_CGAL_SIGNED_DISTANCES_H
+#define CG3_CGAL_SIGNED_DISTANCES_H
 
 #include <cg3/utilities/utils.h>
 #include <cg3/geometry/point.h>
@@ -19,4 +19,4 @@ namespace cgal {
 
 }
 
-#endif // CG3_CGAL_SIGNEDDISTANCES_H
+#endif // CG3_CGAL_SIGNED_DISTANCES_H

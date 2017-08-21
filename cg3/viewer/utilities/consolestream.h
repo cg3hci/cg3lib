@@ -1,5 +1,5 @@
-#ifndef CONSOLESTREAM_H
-#define CONSOLESTREAM_H
+#ifndef CG3_CONSOLESTREAM_H
+#define CG3_CONSOLESTREAM_H
 
 #include <streambuf>
 #include <QTextEdit>
@@ -40,4 +40,4 @@ private:
 
 };
 
-#endif // CONSOLESTREAM_H
+#endif // CG3_CONSOLESTREAM_H
