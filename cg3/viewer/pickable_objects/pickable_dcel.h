@@ -6,7 +6,7 @@
 #ifndef PICKABLEDCEL_H
 #define PICKABLEDCEL_H
 
-#include "drawable_dcel.h"
+#include "../drawable_objects/drawable_dcel.h"
 #include <cg3/viewer/interfaces/pickable_object.h>
 
 namespace cg3 {

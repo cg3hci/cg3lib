@@ -1,7 +1,7 @@
 #ifndef PICKABLEEIGENMESH_H
 #define PICKABLEEIGENMESH_H
 
-#include "drawable_eigenmesh.h"
+#include "../drawable_objects/drawable_eigenmesh.h"
 #include <cg3/viewer/interfaces/pickable_object.h>
 
 namespace cg3 {

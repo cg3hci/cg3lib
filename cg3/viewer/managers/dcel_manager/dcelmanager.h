@@ -8,7 +8,7 @@
 
 #include <QFrame>
 #include <QColor>
-#include "drawable_dcel.h"
+#include "../../drawable_objects/drawable_dcel.h"
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/utilities/loadersaver.h>
 
