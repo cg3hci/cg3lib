@@ -31,6 +31,7 @@ class EigenMesh : public SimpleEigenMesh {
         virtual void clear();
         virtual void addFace(const Eigen::VectorXi &f);
         virtual void addFace(int t1, int t2, int t3);
+        virtual void addVertex(const Pointd &p);
         virtual void removeFace(unsigned int f);
         virtual bool readFromObj(const std::string &filename);
         virtual bool readFromPly(const std::string &filename);
@@ -38,7 +39,11 @@ class EigenMesh : public SimpleEigenMesh {
         void setFaceColor(int red, int green, int blue, int f = -1);
         void setFaceColor(double red, double green, double blue, int f = -1);
         Vec3 getFaceNormal(unsigned int f) const;
+        void setVertexColor(const Color& c, int v = -1);
+        void setVertexColor(int red, int green, int blue, int v = -1);
+        void setVertexColor(double red, double green, double blue, int v = -1);
         Vec3 getVertexNormal(unsigned int v) const;
+        void setVertexNormal(const Vec3& n, unsigned int v);
         Color getFaceColor(unsigned int f) const;
         virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
         virtual BoundingBox getBoundingBox() const;
@@ -166,6 +171,16 @@ inline void EigenMesh::addFace(int t1, int t2, int t3) {
     CF.conservativeResize(F.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CF(F.rows()-1, i) = 0.5;
+}
+
+inline void EigenMesh::addVertex(const Pointd &p) {
+    SimpleEigenMesh::addVertex(p);
+    NV.conservativeResize(V.rows(), Eigen::NoChange);
+    for (unsigned int i = 0; i < 3; i++)
+        NV(V.rows()-1, i) = 0;
+    CV.conservativeResize(V.rows(), Eigen::NoChange);
+    for (unsigned int i = 0; i < 3; i++)
+        CV(V.rows()-1, i) = 0.5;
 }
 
 inline void EigenMesh::removeFace(unsigned int f) {

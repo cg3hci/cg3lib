@@ -16,6 +16,13 @@ include (cg3/cinolib.pri)
 include (cg3/libigl.pri)
 include (cg3/viewer.pri)
 
+FINAL_RELEASE {
+    unix:!macx{
+        QMAKE_CXXFLAGS_RELEASE -= -g -O2
+        QMAKE_CXXFLAGS += -O3 -DNDEBUG
+    }
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md

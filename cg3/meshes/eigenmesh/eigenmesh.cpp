@@ -120,7 +120,8 @@ void EigenMesh::setFaceColor(int red, int green, int blue, int f) {
 
 void EigenMesh::setFaceColor(double red, double green, double blue, int f) {
     if (f < 0){
-        CF.resize(F.rows(), 3);
+        if (CF.rows() != F.rows())
+            CF.resize(F.rows(), 3);
         for (unsigned int i = 0; i < CF.rows(); i++)
             CF.row(i) << red, green, blue;
     }
@@ -128,6 +129,32 @@ void EigenMesh::setFaceColor(double red, double green, double blue, int f) {
         assert(f < F.rows());
         CF.row(f) << red, green, blue;
     }
+}
+
+void EigenMesh::setVertexColor(const Color &c, int v) {
+    setVertexColor(c.redF(), c.greenF(), c.blueF(), v);
+}
+
+void EigenMesh::setVertexColor(int red, int green, int blue, int v) {
+    setVertexColor(red/255.0, green/255.0, blue/255.0, v);
+}
+
+void EigenMesh::setVertexColor(double red, double green, double blue, int v) {
+    if (v < 0){
+        if (CV.rows() != V.rows())
+            CV.resize(V.rows(), 3);
+        for (unsigned int i = 0; i < CV.rows(); i++)
+            CV.row(i) << red, green, blue;
+    }
+    else{
+        assert(v < V.rows());
+        CV.row(v) << red, green, blue;
+    }
+}
+
+void EigenMesh::setVertexNormal(const Vec3 &n, unsigned int v) {
+    assert(v < V.rows());
+    NV.row(v) << n.x(), n.y(), n.z();
 }
 
 BoundingBox EigenMesh::getBoundingBox() const {
