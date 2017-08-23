@@ -11,6 +11,8 @@ CONFIG(release, debug|release){
 include (cg3/core.pri)
 include (cg3/meshes/dcel.pri)
 include (cg3/meshes/eigenmesh.pri)
+include (cg3/data_structures.pri)
+include (cg3/algorithms.pri)
 include (cg3/cgal.pri)
 include (cg3/cinolib.pri)
 include (cg3/libigl.pri)
