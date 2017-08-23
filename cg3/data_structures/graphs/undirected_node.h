@@ -1,5 +1,5 @@
-#ifndef UNDIRECTEDNODE_H
-#define UNDIRECTEDNODE_H
+#ifndef CG3_UNDIRECTED_NODE_H
+#define CG3_UNDIRECTED_NODE_H
 
 #include <set>
 
@@ -90,4 +90,4 @@ unsigned int UndirectedNode<T>::sizeAdjacentNodes() const {
 
 }
 
-#endif // UNDIRECTEDNODE_H
+#endif // CG3_UNDIRECTED_NODE_H

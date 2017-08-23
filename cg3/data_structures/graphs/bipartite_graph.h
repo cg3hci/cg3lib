@@ -1,11 +1,11 @@
-#ifndef BIPARTITEGRAPH_H
-#define BIPARTITEGRAPH_H
+#ifndef CG3_BIPARTITE_GRAPH_H
+#define CG3_BIPARTITE_GRAPH_H
 
 #include <vector>
 #include <map>
 #include <assert.h>
 
-#include "undirectednode.h"
+#include "undirected_node.h"
 
 namespace cg3 {
 
@@ -76,7 +76,7 @@ class BipartiteGraph {
 
 }
 
-#include "bipartitegraphiterators.h"
+#include "bipartite_graph_iterators.h"
 
 namespace cg3 {
 
@@ -361,4 +361,4 @@ int BipartiteGraph<T1, T2>::getIdV(const T2& vNode) const{
 }
 
 }
-#endif // BIPARTITEGRAPH_H
+#endif // BIPARTITE_GRAPH_H

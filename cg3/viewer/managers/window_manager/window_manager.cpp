@@ -4,7 +4,7 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#include "windowmanager.h"
+#include "window_manager.h"
 #include "ui_windowmanager.h"
 
 #include <QColorDialog>

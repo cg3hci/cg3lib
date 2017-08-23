@@ -1,4 +1,4 @@
-#include "booleansmanager.h"
+#include "booleans_manager.h"
 #include "ui_booleansmanager.h"
 
 #include <QFileDialog>

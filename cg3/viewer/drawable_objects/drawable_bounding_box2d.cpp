@@ -1,4 +1,4 @@
-#include "drawable_boundingbox2d.h"
+#include "drawable_bounding_box2d.h"
 
 #include "../renderable_objects/renderable_objects.h"
 

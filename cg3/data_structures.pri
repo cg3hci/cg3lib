@@ -7,6 +7,6 @@ MODULES += CG3_DATA_SRUCTURES
 }
 
 HEADERS += \
-    $$PWD/data_structures/graphs/bipartitegraph.h \
-    $$PWD/data_structures/graphs/bipartitegraphiterators.h \
-    $$PWD/data_structures/graphs/undirectednode.h
+    $$PWD/data_structures/graphs/bipartite_graph.h \
+    $$PWD/data_structures/graphs/bipartite_graph_iterators.h \
+    $$PWD/data_structures/graphs/undirected_node.h

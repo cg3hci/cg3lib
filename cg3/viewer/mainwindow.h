@@ -27,7 +27,7 @@
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
 #include <cg3/geometry/bounding_box.h>
-#include "drawable_objects/drawable_debugobjects.h"
+#include "drawable_objects/drawable_debug_objects.h"
 #include <cg3/geometry/2d/point2d.h>
 
 namespace Ui {

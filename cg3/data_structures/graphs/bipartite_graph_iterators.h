@@ -1,7 +1,7 @@
-#ifndef BIPARTITEGRAPHITERATORS_H
-#define BIPARTITEGRAPHITERATORS_H
+#ifndef CG3_BIPARTITE_GRAPH_ITERATORS_H
+#define CG3_BIPARTITE_GRAPH_ITERATORS_H
 
-#include "bipartitegraph.h"
+#include "bipartite_graph.h"
 
 namespace cg3 {
 
@@ -429,4 +429,4 @@ BipartiteGraph<T1, T2>::VNodeRangeBasedIterator::VNodeRangeBasedIterator(const B
 
 }
 
-#endif // BIPARTITEGRAPHITERATORS_H
+#endif // CG3_BIPARTITE_GRAPH_ITERATORS_H

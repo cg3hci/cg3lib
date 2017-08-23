@@ -1,4 +1,4 @@
-#include "eigenmeshmanager.h"
+#include "eigenmesh_manager.h"
 #include "ui_eigenmeshmanager.h"
 
 #include <QFileDialog>

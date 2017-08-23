@@ -3,7 +3,7 @@
  * @copyright Alessandro Muntoni 2016.
  */
 
-#include "dcelmanager.h"
+#include "dcel_manager.h"
 #include "ui_dcelmanager.h"
 
 #include <QFileDialog>

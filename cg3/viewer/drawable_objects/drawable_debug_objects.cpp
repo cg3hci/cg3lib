@@ -1,4 +1,4 @@
-#include "drawable_debugobjects.h"
+#include "drawable_debug_objects.h"
 #include "../renderable_objects/renderable_objects.h"
 
 namespace cg3 {
