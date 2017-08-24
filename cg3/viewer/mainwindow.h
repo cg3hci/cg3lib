@@ -49,7 +49,7 @@ class MainWindow : public QMainWindow {
 
         void fitScene();
         void fitScene(const cg3::Pointd& center, double radius);
-        cg3::Point2Di getCanvasSize();
+        cg3::Point2Di getCanvasSize() const;
         void updateGlCanvas();
         void pushObj(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
         void deleteObj(const cg3::DrawableObject * obj, bool b = true);
@@ -59,6 +59,9 @@ class MainWindow : public QMainWindow {
         int getNumberVisibleObjects();
         void saveSnapshot();
         void drawAxis(bool);
+
+        void savePointOfView(std::string filename = "pov.pov");
+        void loadPointOfView(std::string filename = "pov.pov");
 
         void setFullScreen(bool);
         void setBackgroundColor(const QColor &);

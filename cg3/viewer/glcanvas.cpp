@@ -122,6 +122,43 @@ bool GLcanvas::isVisible(const DrawableObject* obj) {
     return false;
 }
 
+void GLcanvas::savePointOfView(const std::string &filename) {
+    qglviewer::Vec v = this->camera()->position();
+    qglviewer::Quaternion q = this->camera()->orientation();
+    std::ofstream file;
+    file.open(filename, std::ios::out | std::ios::binary);
+
+    Serializer::serialize(v.x, file);
+    Serializer::serialize(v.y, file);
+    Serializer::serialize(v.z, file);
+    Serializer::serialize(q[0], file);
+    Serializer::serialize(q[1], file);
+    Serializer::serialize(q[2], file);
+    Serializer::serialize(q[3], file);
+
+    file.close();
+}
+
+void GLcanvas::loadPointOfView(const std::string &filename) {
+    qglviewer::Vec v;
+    qglviewer::Quaternion q;
+    std::ifstream file;
+    file.open(filename, std::ios::in | std::ios::binary);
+
+    Serializer::deserialize(v.x, file);
+    Serializer::deserialize(v.y, file);
+    Serializer::deserialize(v.z, file);
+    Serializer::deserialize(q[0], file);
+    Serializer::deserialize(q[1], file);
+    Serializer::deserialize(q[2], file);
+    Serializer::deserialize(q[3], file);
+
+    file.close();
+
+    camera()->setPosition(v);
+    camera()->setOrientation(q);
+}
+
 void GLcanvas::fitScene() {
     Pointd sceneCenter(0,0,0);
     double sceneRadius = 0.0;

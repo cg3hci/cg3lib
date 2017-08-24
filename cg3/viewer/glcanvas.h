@@ -55,6 +55,8 @@ class GLcanvas : public QGLViewer {
         void deleteObj(const cg3::DrawableObject* obj);
         void setVisibility(const cg3::DrawableObject * obj, bool visible = true);
         bool isVisible(const cg3::DrawableObject* obj);
+        void savePointOfView(const std::string& filename);
+        void loadPointOfView(const std::string& filename);
 
     signals:
         void objectPicked(unsigned int);

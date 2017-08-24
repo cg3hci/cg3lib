@@ -9,6 +9,7 @@
 #include "dcel_iterators.h"
 #include <cg3/utilities/comparators.h>
 #include <cg3/utilities/utils.h>
+#include <cg3/utilities/const.h>
 #include <cg3/io/load_save_file.h>
 
 #ifdef  CG3_CGAL_DEFINED
@@ -1438,6 +1439,7 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
             /**
               @todo manage vertices color
               */
+            CG3_SUPPRESS_WARNING(vcolor);
         }
 
     }

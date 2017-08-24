@@ -5,8 +5,20 @@
 
 namespace cg3 {
 
+#ifdef CG3_LIBIGL_DEFINED
+namespace libigl {
+namespace internal {
+
+class EigenMeshLibIglAlgorithms;
+
+}
+}
+#endif
+
 class EigenMesh : public SimpleEigenMesh {
         friend class EigenMeshAlgorithms;
+        friend class libigl::internal::EigenMeshLibIglAlgorithms;
+
     public:
         EigenMesh();
         EigenMesh(const SimpleEigenMesh &m);

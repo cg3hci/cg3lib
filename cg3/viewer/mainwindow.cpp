@@ -59,7 +59,7 @@ void MainWindow::fitScene(const Pointd& center, double radius) {
     ui->glCanvas->fitScene(center, radius);
 }
 
-Point2Di MainWindow::getCanvasSize() {
+Point2Di MainWindow::getCanvasSize() const {
     return Point2Di(ui->glCanvas->width(), ui->glCanvas->height());
 }
 
@@ -177,6 +177,14 @@ void MainWindow::saveSnapshot() {
 void MainWindow::drawAxis(bool b) {
     ui->glCanvas->setAxisIsDrawn(b);
     ui->glCanvas->updateGL();
+}
+
+void MainWindow::savePointOfView(std::string filename) {
+    ui->glCanvas->savePointOfView(filename);
+}
+
+void MainWindow::loadPointOfView(std::string filename) {
+    ui->glCanvas->loadPointOfView(filename);
 }
 
 /**
@@ -365,5 +373,12 @@ void MainWindow::keyPressEvent(QKeyEvent * event){
             ui->console->show();
         else
             ui->console->hide();
+    }
+
+    if (event->matches(QKeySequence::Print)){ //ctrl+p
+        savePointOfView();
+    }
+    if (event->matches(QKeySequence::MoveToPreviousWord)){ //???
+        loadPointOfView();
     }
 }

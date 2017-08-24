@@ -8,6 +8,7 @@ exists($$(CINOLIB_HOME)){
     }
     INCLUDEPATH     += $$(CINOLIB_HOME) #-> link to cinolib
 
+    QMAKE_CXXFLAGS += -isystem $$(CINOLIB_HOME) #-> link to cinolib
 
     HEADERS += \
         $$PWD/cinolib/mesh_conversions.h

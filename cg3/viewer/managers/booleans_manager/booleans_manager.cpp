@@ -5,6 +5,7 @@
 #include <cg3/utilities/utils.h>
 #include <cg3/geometry/transformations.h>
 #include <cg3/meshes/eigenmesh/algorithms/eigenmesh_algorithms.h>
+#include <cg3/libigl/booleans.h>
 
 using namespace cg3;
 
@@ -237,7 +238,7 @@ void BooleansManager::on_intersectionButton_clicked() {
             delete result;
         }
         result = new DrawableEigenMesh();
-        EigenMeshAlgorithms::intersection(*result, *(meshes[0]), *(meshes[1]));
+        libigl::intersection(*result, *(meshes[0]), *(meshes[1]));
         mainWindow.pushObj(result, "Intersection");
         mainWindow.updateGlCanvas();
         setButtonsResultLoaded(true);
@@ -251,7 +252,7 @@ void BooleansManager::on_differenceButton_clicked() {
             delete result;
         }
         result = new DrawableEigenMesh();
-        EigenMeshAlgorithms::difference(*result, *(meshes[0]), *(meshes[1]));
+        libigl::difference(*result, *(meshes[0]), *(meshes[1]));
         mainWindow.pushObj(result, "Difference");
         mainWindow.updateGlCanvas();
         setButtonsResultLoaded(true);
@@ -265,7 +266,7 @@ void BooleansManager::on_unionButton_clicked() {
             delete result;
         }
         result = new DrawableEigenMesh();
-        EigenMeshAlgorithms::union_(*result, *(meshes[0]), *(meshes[1]));
+        libigl::union_(*result, *(meshes[0]), *(meshes[1]));
         mainWindow.pushObj(result, "Union");
         mainWindow.updateGlCanvas();
         setButtonsResultLoaded(true);
