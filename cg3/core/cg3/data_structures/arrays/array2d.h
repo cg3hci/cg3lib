@@ -47,6 +47,6 @@ std::ostream& operator<< (std::ostream& inputStream, const Array2D<T>& a);
 
 }
 
-#include "array2d.cpp"
+#include "array2d.tpp"
 
 #endif // CG3_ARRAY2D_H

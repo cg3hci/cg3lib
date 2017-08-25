@@ -1,5 +1,5 @@
-#ifndef CG3_REMOVE_DUPLICATE_VERTICES_H
-#define CG3_REMOVE_DUPLICATE_VERTICES_H
+#ifndef CG3_LIBIGL_REMOVE_DUPLICATE_VERTICES_H
+#define CG3_LIBIGL_REMOVE_DUPLICATE_VERTICES_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -16,4 +16,6 @@ void removeDuplicateVertices(EigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic
 
 }
 
-#endif // REMOVE_DUPLICATE_VERTICES_H
+#include "remove_duplicate_vertices.ipp"
+
+#endif // REMOVE_LIBIGL_DUPLICATE_VERTICES_H

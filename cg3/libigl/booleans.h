@@ -1,5 +1,5 @@
-#ifndef CG3_BOOLEANS_H
-#define CG3_BOOLEANS_H
+#ifndef CG3_LIBIGL_BOOLEANS_H
+#define CG3_LIBIGL_BOOLEANS_H
 
 #ifdef  CG3_CGAL_DEFINED
 
@@ -43,7 +43,9 @@ CSGTree union_(const CSGTree& m1, const SimpleEigenMesh& m2);
 
 }
 
+#include "booleans.ipp"
+
 #endif //CG3_CGAL_DEFINED
 
 
-#endif // CG3_BOOLEANS_H
+#endif // CG3_LIBIGL_BOOLEANS_H

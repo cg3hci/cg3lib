@@ -1,4 +1,5 @@
 #include "map.h"
+
 namespace cg3 {
 
 /**

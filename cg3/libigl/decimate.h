@@ -1,5 +1,5 @@
-#ifndef CG3_DECIMATE_H
-#define CG3_DECIMATE_H
+#ifndef CG3_LIBIGL_DECIMATE_H
+#define CG3_LIBIGL_DECIMATE_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -23,4 +23,6 @@ void decimateMesh(EigenMesh& m, int numberDesiredFaces);
 
 }
 
-#endif // CG3_DECIMATE_H
+#include "decimate.ipp"
+
+#endif // CG3_LIBIGL_DECIMATE_H

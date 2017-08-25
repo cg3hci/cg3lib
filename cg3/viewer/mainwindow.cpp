@@ -185,6 +185,7 @@ void MainWindow::savePointOfView(std::string filename) {
 
 void MainWindow::loadPointOfView(std::string filename) {
     ui->glCanvas->loadPointOfView(filename);
+    ui->glCanvas->updateGL();
 }
 
 /**
@@ -378,7 +379,7 @@ void MainWindow::keyPressEvent(QKeyEvent * event){
     if (event->matches(QKeySequence::Print)){ //ctrl+p
         savePointOfView();
     }
-    if (event->matches(QKeySequence::MoveToPreviousWord)){ //???
+    if (QKeySequence(event->key() | event->modifiers()) == QKeySequence(Qt::CTRL + Qt::Key_L)){ //ctrl+l
         loadPointOfView();
     }
 }

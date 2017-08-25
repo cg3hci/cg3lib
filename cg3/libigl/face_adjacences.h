@@ -1,5 +1,5 @@
-#ifndef CG3_FACE_ADJACENCES_H
-#define CG3_FACE_ADJACENCES_H
+#ifndef CG3_LIBIGL_FACE_ADJACENCES_H
+#define CG3_LIBIGL_FACE_ADJACENCES_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -13,4 +13,6 @@ Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m);
 
 }
 
-#endif // CG3_FACE_ADJACENCES_H
+#include "face_adjacences.ipp"
+
+#endif // CG3_LIBIGL_FACE_ADJACENCES_H

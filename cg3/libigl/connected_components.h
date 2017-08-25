@@ -1,5 +1,5 @@
-#ifndef CG3_CONNECTED_COMPONENTS_H
-#define CG3_CONNECTED_COMPONENTS_H
+#ifndef CG3_LIBIGL_CONNECTED_COMPONENTS_H
+#define CG3_LIBIGL_CONNECTED_COMPONENTS_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -13,4 +13,6 @@ std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);
 
 }
 
-#endif // CG3_CONNECTED_COMPONENTS_H
+#include "connected_components.ipp"
+
+#endif // CG3_LIBIGL_CONNECTED_COMPONENTS_H

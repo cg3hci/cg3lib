@@ -16,7 +16,7 @@ namespace cg3 {
  * @return l'indice di posizione dell'oggetto se è stato trovato, -1 altrimenti
  */
 template <typename T>
-int binarySearch(const T &n, const std::vector<T> &v) {
+inline int binarySearch(const T &n, const std::vector<T> &v) {
     int first = 0, last =v.size()-1, mid;
     while (first <= last){
         mid = (first + last) / 2;

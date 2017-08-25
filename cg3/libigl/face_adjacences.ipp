@@ -6,7 +6,7 @@ namespace cg3 {
 
 namespace libigl {
 
-Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m) {
+inline Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m) {
     return internal::EigenMeshLibIglAlgorithms::getFaceAdjacences(m);
 }
 

@@ -1,5 +1,5 @@
-#ifndef CG3_REMOVE_UNREFERENCED_VERTICES_H
-#define CG3_REMOVE_UNREFERENCED_VERTICES_H
+#ifndef CG3_LIBIGL_REMOVE_UNREFERENCED_VERTICES_H
+#define CG3_LIBIGL_REMOVE_UNREFERENCED_VERTICES_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -13,5 +13,7 @@ void removeUnreferencedVertices(SimpleEigenMesh &input);
 }
 
 }
+
+#include "remove_unreferenced_vertices.ipp"
 
 #endif // CG3_REMOVE_UNREFERENCED_VERTICES_H

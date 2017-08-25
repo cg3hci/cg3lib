@@ -47,6 +47,6 @@ class BoundingBox2D : public SerializableObject{
 
 }
 
-#include "bounding_box2d.cpp"
+#include "bounding_box2d.ipp"
 
 #endif // CG3_BOUNDINGBOX2D_H

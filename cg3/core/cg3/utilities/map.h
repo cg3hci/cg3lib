@@ -11,6 +11,6 @@ inline std::multimap<B,A> flipMap(const M<A,B,Args...> &src);
 
 }
 
-#include "map.cpp"
+#include "map.tpp"
 
 #endif // CG3_MAP_H

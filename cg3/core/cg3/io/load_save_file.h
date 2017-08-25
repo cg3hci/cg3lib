@@ -109,6 +109,6 @@ bool loadTriangleMeshFromPly(const std::string &filename, Eigen::Matrix<T, A...>
 
 }
 
-#include "load_save_file.cpp"
+#include "load_save_file.tpp"
 
 #endif // CG3_LOAD_SAVE_FILE_H

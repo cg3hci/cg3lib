@@ -19,6 +19,4 @@ void getRotationMatrix(Vec3 axis, double angle, double m[][3]);
 
 }
 
-#include "transformations.cpp"
-
 #endif // CG3_TRANSFORMATIONS_H

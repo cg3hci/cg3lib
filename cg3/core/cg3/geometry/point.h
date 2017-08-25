@@ -161,6 +161,6 @@ using Point3D = Point<T>; /**< \~English @brief alias of Point */
 
 }
 
-#include "point.cpp"
+#include "point.tpp"
 
 #endif // CG3_POINT_H

@@ -56,12 +56,12 @@ inline double truncate(double d, unsigned int numberOfDecimalDigitsToKeep) {
 
 
 template <typename T>
-bool isInBounds(const T& value, const T& low, const T& high) {
+inline bool isInBounds(const T& value, const T& low, const T& high) {
     return !(value < low) && !(high < value);
 }
 
 template <typename T, typename R, typename Comparator>
-bool isInBounds(const T& value, const R& low, const R& high, Comparator comp) {
+inline bool isInBounds(const T& value, const R& low, const R& high, Comparator comp) {
     return !comp(value, low) && !comp(high, value);
 }
 

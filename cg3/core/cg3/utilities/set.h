@@ -19,6 +19,6 @@ bool isSubset(const std::set<T> &a, const std::set<T> &b);
 
 }
 
-#include "set.cpp"
+#include "set.tpp"
 
 #endif // CG3_SET_H

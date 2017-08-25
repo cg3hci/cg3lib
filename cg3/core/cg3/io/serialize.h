@@ -102,6 +102,6 @@ namespace Serializer {
 
 }
 
-#include "serialize.cpp"
+#include "serialize.ipp"
 
 #endif // CG3_SERIALIZE_H

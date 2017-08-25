@@ -42,17 +42,19 @@ exists($$(LIBIGL_HOME)){
         $$PWD/libigl/libigl.h
 
     SOURCES += \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp \
-        $$PWD/libigl/is_edge_manifold.cpp \
-        $$PWD/libigl/is_vertex_manifold.cpp \
-        $$PWD/libigl/face_adjacences.cpp \
-        $$PWD/libigl/extract_manifold_patches.cpp \
-        $$PWD/libigl/booleans.cpp\
-        $$PWD/libigl/decimate.cpp \
-        $$PWD/libigl/remove_unreferenced_vertices.cpp \
-        $$PWD/libigl/connected_components.cpp \
-        $$PWD/libigl/remove_duplicate_vertices.cpp
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp
 }
+
+HEADERS += \
+    $$PWD/libigl/booleans.ipp \
+    $$PWD/libigl/connected_components.ipp \
+    $$PWD/libigl/decimate.ipp \
+    $$PWD/libigl/extract_manifold_patches.ipp \
+    $$PWD/libigl/face_adjacences.ipp \
+    $$PWD/libigl/is_edge_manifold.ipp \
+    $$PWD/libigl/is_vertex_manifold.ipp \
+    $$PWD/libigl/remove_duplicate_vertices.ipp \
+    $$PWD/libigl/remove_unreferenced_vertices.ipp
 
 
 

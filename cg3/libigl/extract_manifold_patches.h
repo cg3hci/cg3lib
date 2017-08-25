@@ -1,5 +1,5 @@
-#ifndef CG3_EXTRACT_MANIFOLD_PATCHES_H
-#define CG3_EXTRACT_MANIFOLD_PATCHES_H
+#ifndef CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_H
+#define CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -14,4 +14,6 @@ int extractManifoldPatches(const SimpleEigenMesh& m);
 
 }
 
-#endif // CG3_EXTRACT_MANIFOLD_PATCHES_H
+#include "extract_manifold_patches.ipp"
+
+#endif // CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_H

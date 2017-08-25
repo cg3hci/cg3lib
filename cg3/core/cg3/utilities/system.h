@@ -13,6 +13,6 @@ std::string executeCommand(const char* cmd);
 
 }
 
-#include "system.cpp"
+#include "system.ipp"
 
 #endif // CG3_SYSTEM_H

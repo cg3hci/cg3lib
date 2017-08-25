@@ -1,5 +1,5 @@
-#ifndef CG3_IS_VERTEX_MANIFOLD_H
-#define CG3_IS_VERTEX_MANIFOLD_H
+#ifndef CG3_LIBIGL_IS_VERTEX_MANIFOLD_H
+#define CG3_LIBIGL_IS_VERTEX_MANIFOLD_H
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
@@ -13,4 +13,6 @@ namespace libigl {
 
 }
 
-#endif // CG3_IS_VERTEX_MANIFOLD_H
+#include "is_vertex_manifold.ipp"
+
+#endif // CG3_LIBIGL_IS_VERTEX_MANIFOLD_H

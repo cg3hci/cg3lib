@@ -6,11 +6,11 @@ namespace cg3 {
 
 namespace libigl {
 
-void removeUnreferencedVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I) {
+inline void removeUnreferencedVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I) {
     internal::EigenMeshLibIglAlgorithms::removeUnreferencedVertices(input, I);
 }
 
-void removeUnreferencedVertices(SimpleEigenMesh &input) {
+inline void removeUnreferencedVertices(SimpleEigenMesh &input) {
     Eigen::VectorXi I;
     internal::EigenMeshLibIglAlgorithms::removeUnreferencedVertices(input, I);
 }

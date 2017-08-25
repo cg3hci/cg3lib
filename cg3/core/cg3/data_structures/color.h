@@ -69,6 +69,6 @@ class Color : SerializableObject {
 
 #endif
 
-#include "color.cpp"
+#include "color.ipp"
 
 #endif // CG3_COLOR_H

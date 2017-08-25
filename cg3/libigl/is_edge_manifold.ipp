@@ -6,7 +6,7 @@ namespace cg3 {
 
 namespace libigl {
 
-bool isEdgeManifold(const SimpleEigenMesh &input) {
+inline bool isEdgeManifold(const SimpleEigenMesh &input) {
     return internal::EigenMeshLibIglAlgorithms::isEdgeManifold(input);
 }
 

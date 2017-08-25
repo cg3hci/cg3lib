@@ -13,6 +13,6 @@ std::vector<size_t> sortIndexes(const std::vector<T> &v);
 
 }
 
-#include "vector.cpp"
+#include "vector.ipp"
 
 #endif // CG3_VECTOR_H

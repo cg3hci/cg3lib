@@ -45,6 +45,6 @@ template <class T> class Array3D : public SerializableObject{
 
 }
 
-#include "array3d.cpp"
+#include "array3d.tpp"
 
 #endif // CG3_ARRAY3D_H

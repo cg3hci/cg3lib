@@ -10,6 +10,6 @@ inline std::pair<B,A> flipPair(const std::pair<A,B> &p);
 
 }
 
-#include "pair.cpp"
+#include "pair.tpp"
 
 #endif // CG3_PAIR_H

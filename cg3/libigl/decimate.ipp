@@ -6,38 +6,38 @@ namespace cg3 {
 
 namespace libigl {
 
-SimpleEigenMesh decimateMesh(const SimpleEigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
+inline SimpleEigenMesh decimateMesh(const SimpleEigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
     return internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
 
-SimpleEigenMesh decimateMesh(const SimpleEigenMesh &m, int numberDesiredFaces) {
+inline SimpleEigenMesh decimateMesh(const SimpleEigenMesh &m, int numberDesiredFaces) {
     Eigen::VectorXi mapping;
     return internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
 
-EigenMesh decimateMesh(const EigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
+inline EigenMesh decimateMesh(const EigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
     return internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
 
-EigenMesh decimateMesh(const EigenMesh &m, int numberDesiredFaces) {
+inline EigenMesh decimateMesh(const EigenMesh &m, int numberDesiredFaces) {
     Eigen::VectorXi mapping;
     return internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
 
-void decimateMesh(SimpleEigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
+inline void decimateMesh(SimpleEigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
     internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
 
-void decimateMesh(SimpleEigenMesh &m, int numberDesiredFaces) {
+inline void decimateMesh(SimpleEigenMesh &m, int numberDesiredFaces) {
     Eigen::VectorXi mapping;
     internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
 
-void decimateMesh(EigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
+inline void decimateMesh(EigenMesh &m, int numberDesiredFaces, Eigen::VectorXi &mapping) {
     internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
 
-void decimateMesh(EigenMesh &m, int numberDesiredFaces) {
+inline void decimateMesh(EigenMesh &m, int numberDesiredFaces) {
     Eigen::VectorXi mapping;
     internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }

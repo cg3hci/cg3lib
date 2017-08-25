@@ -46,6 +46,6 @@ template <class T> class Array4D : public SerializableObject{
 
 }
 
-#include "array4d.cpp"
+#include "array4d.tpp"
 
 #endif // CG3_ARRAY4D_H

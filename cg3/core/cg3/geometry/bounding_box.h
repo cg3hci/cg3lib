@@ -138,6 +138,6 @@ typedef BoundingBox Box;
 
 }
 
-#include "bounding_box.cpp"
+#include "bounding_box.ipp"
 
 #endif // CG3_BOUNDING_BOX_H

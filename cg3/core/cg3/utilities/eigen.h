@@ -21,6 +21,6 @@ void removeColumnFromEigenMatrix(Eigen::Matrix<T, A...> &m, unsigned int column)
 
 }
 
-#include "eigen.cpp"
+#include "eigen.tpp"
 
 #endif // CG3_EIGEN_H
