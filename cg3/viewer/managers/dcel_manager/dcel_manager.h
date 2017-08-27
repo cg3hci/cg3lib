@@ -54,7 +54,6 @@ class DcelManager : public QFrame {
         Ui::DcelManager* ui; //puntatore al QFrame (da cui è possibile richiamare gli oggetti della ui)
         MainWindow& mainWindow; //puntatore alla mainWindow
         cg3::DrawableDcel* drawableDcel; //puntatore alla DrawableDcel gestita dal DcelManager
-        int meshStackIndex; // indice identificativo del manager
         cg3::viewer::LoaderSaver dcells;
 };
 

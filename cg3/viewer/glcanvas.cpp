@@ -122,12 +122,9 @@ bool GLcanvas::isVisible(const DrawableObject* obj) {
     return false;
 }
 
-void GLcanvas::savePointOfView(const std::string &filename) {
+void GLcanvas::serializePointOfView(std::ofstream &file) {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
-    std::ofstream file;
-    file.open(filename, std::ios::out | std::ios::binary);
-
     Serializer::serialize(v.x, file);
     Serializer::serialize(v.y, file);
     Serializer::serialize(v.z, file);
@@ -135,28 +132,45 @@ void GLcanvas::savePointOfView(const std::string &filename) {
     Serializer::serialize(q[1], file);
     Serializer::serialize(q[2], file);
     Serializer::serialize(q[3], file);
+}
+
+bool GLcanvas::deserializePointOfView(std::ifstream &file) {
+    qglviewer::Vec v;
+    qglviewer::Quaternion q;
+    if (
+    Serializer::deserialize(v.x, file) &&
+    Serializer::deserialize(v.y, file) &&
+    Serializer::deserialize(v.z, file) &&
+    Serializer::deserialize(q[0], file) &&
+    Serializer::deserialize(q[1], file) &&
+    Serializer::deserialize(q[2], file) &&
+    Serializer::deserialize(q[3], file) )  {
+        camera()->setPosition(v);
+        camera()->setOrientation(q);
+        return true;
+    }
+    return false;
+}
+
+void GLcanvas::savePointOfView(const std::string &filename) {
+    std::ofstream file;
+    file.open(filename, std::ios::out | std::ios::binary);
+
+    serializePointOfView(file);
 
     file.close();
 }
 
-void GLcanvas::loadPointOfView(const std::string &filename) {
-    qglviewer::Vec v;
-    qglviewer::Quaternion q;
+bool GLcanvas::loadPointOfView(const std::string &filename) {
+
     std::ifstream file;
     file.open(filename, std::ios::in | std::ios::binary);
 
-    Serializer::deserialize(v.x, file);
-    Serializer::deserialize(v.y, file);
-    Serializer::deserialize(v.z, file);
-    Serializer::deserialize(q[0], file);
-    Serializer::deserialize(q[1], file);
-    Serializer::deserialize(q[2], file);
-    Serializer::deserialize(q[3], file);
+    bool ok = deserializePointOfView(file);
 
     file.close();
 
-    camera()->setPosition(v);
-    camera()->setOrientation(q);
+    return ok;
 }
 
 void GLcanvas::fitScene() {

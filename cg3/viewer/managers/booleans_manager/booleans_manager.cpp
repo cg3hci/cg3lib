@@ -1,5 +1,5 @@
 #include "booleans_manager.h"
-#include "ui_booleansmanager.h"
+#include "ui_booleans_manager.h"
 
 #include <QFileDialog>
 #include <cg3/utilities/utils.h>

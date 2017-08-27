@@ -234,7 +234,7 @@
  * - Partendo da un half edge \c e, una serie di operazioni di next (3 se si ha una Dcel di triangoli) riporta all'half edge \c e, tutti questi half edge hanno la stessa faccia incidente.
  * - Partendo da un half edge \c e, una serie di operazioni di prev (3 se si ha una Dcel di triangoli) riporta all'half edge \c e, tutti questi half edge hanno la stessa faccia incidente.
  * - Il to vertex di un half edge corrisponde al from vertex del suo next;
- * - Il from vertex fi un half edge corrisponde al to vertex del suo prev.
+ * - Il from vertex di un half edge corrisponde al to vertex del suo prev.
  * - Partendo da un half edge \c e, una serie di operazioni di twin e next riporta all'half edge \c e.
  * - Partendo da un half edge \c e, una serie di operazioni di prev e twin riporta all'half edge \c e.
  * - Non esistono due vertici che hanno le stesse coordinate. \n

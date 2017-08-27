@@ -4,7 +4,7 @@
  */
 
 #include "dcel_manager.h"
-#include "ui_dcelmanager.h"
+#include "ui_dcel_manager.h"
 
 #include <QFileDialog>
 #include <QColorDialog>

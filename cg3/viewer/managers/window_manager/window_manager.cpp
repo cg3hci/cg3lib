@@ -5,7 +5,7 @@
  */
 
 #include "window_manager.h"
-#include "ui_windowmanager.h"
+#include "ui_window_manager.h"
 
 #include <QColorDialog>
 
