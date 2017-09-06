@@ -658,10 +658,9 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
     bool first = true;
 
 
-    if(!file.is_open())
-    {
+    if(!file.is_open()) {
         std::cerr << "ERROR : read() : could not open input file " << filename.c_str() << "\n";
-        assert(0);
+        return false;
     }
 
     //reading header
@@ -692,9 +691,16 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
                 std::string type = *(++token);
                 std::string name = *(++token);
                 p.name = unknown;
-                if (name == "x") p.name = x; if (name == "y") p.name = y; if (name == "z") p.name = z;
-                if (name == "nx") p.name = nx; if (name == "ny") p.name = ny; if (name == "nz") p.name = nz;
-                if (name == "red") p.name = red; if (name == "green") p.name = green; if (name == "blue") p.name = blue; if (name == "alpha") p.name = alpha;
+                if (name == "x") p.name = x;
+                if (name == "y") p.name = y;
+                if (name == "z") p.name = z;
+                if (name == "nx") p.name = nx;
+                if (name == "ny") p.name = ny;
+                if (name == "nz") p.name = nz;
+                if (name == "red") p.name = red;
+                if (name == "green") p.name = green;
+                if (name == "blue") p.name = blue;
+                if (name == "alpha") p.name = alpha;
                 if (type == "list") p.name = list;
                 if (p.name != unknown){
                     if (type == "float" || type == "double") p.type = FLOAT;
