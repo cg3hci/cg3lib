@@ -2,7 +2,7 @@ DEFINES += CG3_EIGENMESH_DEFINED
 CONFIG += CG3_EIGENMESH
 MODULES += CG3_EIGENMESH
 
-!contains(DEFINES, CG3_CORE_DEFINED){
+!contains(DEFINES, CG3_WITH_EIGEN){
     error(EigenMesh module requires cg3_core with eigen!)
 }
 

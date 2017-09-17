@@ -30,6 +30,8 @@ static inline void drawCylinder(const Pointd& a, const Pointd& b, float top_radi
 
 static inline void drawLine(const Pointd &a, const Pointd &b, const QColor& c, int width = 3);
 
+static inline void drawDashedLine(const Pointd &a, const Pointd &b, const QColor& c, int width = 3);
+
 static inline void drawLine2D(const Point2Dd&a, const Point2Dd& b, const QColor& c, int width = 3);
 
 static inline void drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width = 3);

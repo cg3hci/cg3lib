@@ -107,6 +107,31 @@ static inline void viewer::drawLine(const Pointd &a, const Pointd &b, const QCol
 }
 
 /**
+ * @brief Viewer::drawDashedLine
+ *
+ * Draws a dashed line with opengl that links the two points passed as parameters.
+ *
+ * @param a: first point of the dashed line
+ * @param b: second point of the dashed line
+ * @param c: color of the dashed line
+ * @param width: width of the dashed line (default: 3)
+ */
+static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, const QColor& c, int width) {
+    glPushAttrib(GL_ENABLE_BIT);
+
+    glColor3f(c.redF(), c.greenF(), c.blueF());
+    glLineWidth(width);
+    glLineStipple(1, 0xAAAA);
+    glEnable(GL_LINE_STIPPLE);
+    glBegin(GL_LINES);
+    glVertex3f(a.x(), a.y(), a.z());
+    glVertex3f(b.x(), b.y(), b.z());
+    glEnd();
+
+    glPopAttrib();
+}
+
+/**
  * @brief Viewer::drawLine2D
  *
  * Draws a line with opengl on the plane (z=0 if 3D).

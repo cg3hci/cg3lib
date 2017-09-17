@@ -3,7 +3,7 @@ CONFIG += CG3_DCEL
 MODULES += CG3_DCEL
 
 !contains(DEFINES, CG3_CORE_DEFINED){
-    error(dcel module requires cg3_core!)
+    error(Dcel module requires cg3_core!)
 }
 
 HEADERS += \
