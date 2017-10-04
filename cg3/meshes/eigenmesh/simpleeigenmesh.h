@@ -41,7 +41,10 @@ class EigenMeshAlgorithms;
 
 class SimpleEigenMesh : public SerializableObject {
         friend class EigenMeshAlgorithms;
+
+#ifdef CG3_LIBIGL_DEFINED
         friend class libigl::internal::EigenMeshLibIglAlgorithms;
+#endif
 
     public:
         SimpleEigenMesh();

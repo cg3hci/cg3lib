@@ -17,7 +17,10 @@ class EigenMeshLibIglAlgorithms;
 
 class EigenMesh : public SimpleEigenMesh {
         friend class EigenMeshAlgorithms;
+
+#ifdef CG3_LIBIGL_DEFINED
         friend class libigl::internal::EigenMeshLibIglAlgorithms;
+#endif
 
     public:
         EigenMesh();

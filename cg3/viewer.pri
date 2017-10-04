@@ -45,7 +45,6 @@ HEADERS += \
     $$PWD/viewer/renderable_objects/renderable_objects.h \
     $$PWD/viewer/drawable_objects/drawable_bounding_box2d.h \
     $$PWD/viewer/drawable_objects/drawable_debug_objects.h \
-    $$PWD/viewer/managers/booleans_manager/booleans_manager.h \
     $$PWD/viewer/managers/dcel_manager/dcel_manager.h \
     $$PWD/viewer/managers/eigenmesh_manager/eigenmesh_manager.h \
     $$PWD/viewer/managers/window_manager/window_manager.h
@@ -58,7 +57,6 @@ SOURCES += \
     $$PWD/viewer/utilities/consolestream.cpp \
     $$PWD/viewer/drawable_objects/drawable_bounding_box2d.cpp \
     $$PWD/viewer/drawable_objects/drawable_debug_objects.cpp \
-    $$PWD/viewer/managers/booleans_manager/booleans_manager.cpp \
     $$PWD/viewer/managers/dcel_manager/dcel_manager.cpp \
     $$PWD/viewer/managers/eigenmesh_manager/eigenmesh_manager.cpp \
     $$PWD/viewer/managers/window_manager/window_manager.cpp
@@ -68,7 +66,6 @@ DISTFILES += \
 
 FORMS += \
     $$PWD/viewer/mainwindow.ui \
-    $$PWD/viewer/managers/booleans_manager/booleans_manager.ui \
     $$PWD/viewer/managers/dcel_manager/dcel_manager.ui \
     $$PWD/viewer/managers/eigenmesh_manager/eigenmesh_manager.ui \
     $$PWD/viewer/managers/window_manager/window_manager.ui
@@ -98,11 +95,14 @@ CG3_EIGENMESH {
 
     CG3_CGAL {
         CG3_LIBIGL {
-            HEADERS +=
+            HEADERS +=  \
+                $$PWD/viewer/managers/booleans_manager/booleans_manager.h
 
-            SOURCES +=
+            SOURCES += \
+                $$PWD/viewer/managers/booleans_manager/booleans_manager.cpp
 
-            FORMS +=
+            FORMS += \
+                $$PWD/viewer/managers/booleans_manager/booleans_manager.ui \
         }
     }
 }
