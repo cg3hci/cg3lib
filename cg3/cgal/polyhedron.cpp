@@ -75,7 +75,8 @@ Dcel cgal::polyhedron::getDcelFromPolyhedron(const cgal::polyhedron::Polyhedron_
     Dcel d;
     for (Polyhedron_3::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit){
         PolyhedronPoint p = (*vit).point();
-        d.addVertex(p.x(), p.y(), p.z());
+        Pointd point(p.x(), p.y(), p.z());
+        d.addVertex(point);
     }
 
     //add faces to dcel

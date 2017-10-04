@@ -16,7 +16,7 @@ bool operator <(const QColor &c1, const QColor &c2);
 
 #else
 
-#include "serialize.h"
+#include "../io/serialize.h"
 
 namespace cg3 {
 
