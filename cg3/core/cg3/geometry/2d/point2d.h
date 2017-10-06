@@ -102,6 +102,6 @@ typedef Point2D<double> Vec2;
 
 }
 
-#include "point2d.cpp"
+#include "point2d.tpp"
 
 #endif // CG3_POINT2D_H

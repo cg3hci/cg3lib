@@ -211,7 +211,7 @@ inline double BoundingBox::diag() const {
 }
 
 inline bool BoundingBox::isValid() const {
-    return minCoord.x() < maxCoord.x() && minCoord.y() < maxCoord.y() && minCoord.z() < maxCoord.z();
+    return minCoord.x() <= maxCoord.x() && minCoord.y() <= maxCoord.y() && minCoord.z() <= maxCoord.z();
 }
 
 inline bool BoundingBox::isStrictlyIntern(const Pointd &p) const {

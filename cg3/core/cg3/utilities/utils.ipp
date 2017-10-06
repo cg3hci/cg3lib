@@ -44,6 +44,27 @@ inline bool epsilonEqual(const Point<T> &x, const Point<T> &v, double epsilon) {
     else return false;
 }
 
+/**
+ * \~English
+ * @brief This function computes an equality between two Point2D considering an epsilon offset
+ * @param[in] x: first Point parameter
+ * @param[in] v: second Point parameter
+ * @param[in] epsilon: offset for equality, default value 0.0000001
+ * @return true if the two Points are equals on the epsilon interval, false otherwise
+ *
+ * \~Italian
+ * @brief Questa funzione calcola l'uguaglianza tra due Point2D tenendo conto di un possibile offset pari a epsilon
+ * @param[in] x: primo parametro Point2D
+ * @param[in] v: secondo parametro Point2D
+ * @param[in] epsilon: offset di uguaglianza, valore di default 0.0000001
+ * @return true se i due Point2D sono uguali a meno del valore di epsilon, falso altrimenti
+ */
+template <typename T>
+inline bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilon) {
+    if ((epsilonEqual(x.x(), v.x(), epsilon)) && (epsilonEqual(x.y(), v.y(), epsilon))) return true;
+    else return false;
+}
+
 
 
 inline double truncate(double d, unsigned int numberOfDecimalDigitsToKeep) {
