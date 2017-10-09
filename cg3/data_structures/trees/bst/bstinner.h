@@ -88,7 +88,7 @@ public:
     }
 
 
-private:
+protected:
 
     /* Private nested classes */
 
