@@ -39,12 +39,22 @@ inline const T& Segment<T>::getP2() const {
     return p2;
 }
 
+template <class T>
+inline void Segment<T>::setP1(const T& p1) {
+    this->p1 = p1;
+}
+
+template <class T>
+inline void Segment<T>::setP2(const T& p2) {
+    this->p2 = p2;
+}
+
 
 
 template <class T>
 inline void Segment<T>::set(const T& p1, const T& p2) {
-    this->p1 = p1;
-    this->p2 = p2;
+    setP1(p1);
+    setP2(p2);
 }
 
 

@@ -9,7 +9,7 @@
 namespace cg3 {
 
 /**
- * @brief Axis-aligned bounding box
+ * @brief Axis-aligned bounding box for D-dimensional AABB tree
  */
 template <int D, class K, class T>
 class AABBTree<D,K,T>::AABB {

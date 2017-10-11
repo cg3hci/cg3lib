@@ -70,6 +70,9 @@ public:
 
     size_t getHeight();
 
+    void rangeQuery(const K& start, const K& end,
+                    std::vector<Iterator> &out);
+
 
 
     /* Iterators */
@@ -136,6 +139,18 @@ protected:
     void replaceSubtreeHelper(const Node* u, Node* v);
 
     size_t getHeightHelper(const Node* node);
+
+
+
+    /* Range query helpers */
+
+    void rangeQueryHelper(const K& start, const K& end,
+                          std::vector<Node*> &out);
+
+    Node* findSplitNodeHelper(const K& start, const K& end);
+
+    void reportSubTreeHelper(Node* node, std::vector<Node*>& out);
+
 
 
 

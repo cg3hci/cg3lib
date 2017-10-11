@@ -23,7 +23,6 @@ public:
     Iterator(AVLInner<K,T>::Node* node);
 
 
-
     /* Iterator operators */
 
     T& operator *() const;

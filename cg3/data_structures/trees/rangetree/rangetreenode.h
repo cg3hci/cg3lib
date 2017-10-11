@@ -15,7 +15,9 @@ namespace cg3 {
 template <class K, class T>
 class RangeTree<K,T>::Node {
 
-public:
+    friend class RangeTree<K,T>;
+
+private:
 
     /* Constructors/Destructor */
 
@@ -23,11 +25,6 @@ public:
     Node(const K& key);
 
     ~Node();
-
-
-    /* Methods */
-
-    inline bool isLeaf() const;
 
 
     /* Fields */
@@ -42,6 +39,13 @@ public:
     size_t height;
 
     RangeTree<K,T>* assRangeTree;
+
+
+    /* Private methods */
+
+    void init(const K& key, T* value);
+    inline bool isLeaf() const;
+
 };
 
 }

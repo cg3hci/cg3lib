@@ -9,13 +9,15 @@
 namespace cg3 {
 
 /**
- * @brief The node of the binary search tree
+ * @brief The node of the AVL binary search tree
  *
  */
 template <class K, class T>
 class AVLLeaf<K,T>::Node {
 
-public:
+    friend class AVLLeaf<K,T>;
+
+private:
 
     /* Constructors/Destructor */
 
@@ -23,11 +25,6 @@ public:
     Node(const K& key);
 
     ~Node();
-
-
-    /* Methods */
-
-    inline bool isLeaf() const;
 
 
     /* Fields */
@@ -40,6 +37,13 @@ public:
     Node* right;
 
     size_t height;
+
+
+    /* Private methods */
+
+    void init(const K& key, T* value);
+    inline bool isLeaf() const;
+
 };
 
 }

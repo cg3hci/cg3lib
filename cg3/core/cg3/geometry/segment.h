@@ -25,6 +25,10 @@ public:
     const T& getP1() const;
     const T& getP2() const;
 
+    /* Getters/setters */
+    void setP1(const T& p1);
+    void setP2(const T& p2);
+
     void set(const T& p1, const T& p2);
 
     /* Operator overrides */

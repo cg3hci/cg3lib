@@ -15,7 +15,9 @@ namespace cg3 {
 template <class K, class T>
 class BSTLeaf<K,T>::Node {
 
-public:
+    friend class BSTLeaf<K,T>;
+
+private:
 
     /* Constructors/Destructor */
 
@@ -23,11 +25,6 @@ public:
     Node(const K& key);
 
     ~Node();
-
-
-    /* Methods */
-
-    inline bool isLeaf() const;
 
 
     /* Fields */
@@ -38,6 +35,13 @@ public:
     Node* parent;
     Node* left;
     Node* right;
+
+
+    /* Private methods */
+
+    void init(const K& key, T* value);
+    inline bool isLeaf() const;
+
 };
 
 }

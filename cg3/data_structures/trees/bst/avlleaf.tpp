@@ -124,7 +124,7 @@ void AVLLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
 /**
  * @brief Insert in the BST a given value
  *
- * @param[in] key Value to be inserted
+ * @param[in] key Key/value to be inserted
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
@@ -298,7 +298,7 @@ size_t AVLLeaf<K,T>::getHeight()
  */
 template<class K, class T>
 void AVLLeaf<K,T>::rangeQuery(const K& start, const K& end,
-                                std::vector<Iterator> &out)
+                              std::vector<Iterator> &out)
 {
     std::vector<Node*> nodeOutput;
     this->rangeQueryHelper(start, end, nodeOutput);
@@ -754,6 +754,118 @@ size_t AVLLeaf<K,T>::getHeightHelper(const Node* node) {
 }
 
 
+
+/* --------- RANGE QUERY HELPERS --------- */
+
+/**
+ * @brief Find entries in the BST that are enclosed in a given range
+ *
+ * @param[in] start Starting value of the range
+ * @param[in] end End value of the range
+ * @param[out] out Vector of node with keys that are enclosed in the input range
+ */
+template <class K, class T>
+void AVLLeaf<K,T>::rangeQueryHelper(const K& start, const K& end,
+                                     std::vector<Node*> &out)
+{
+    //Find split node
+    Node* splitNode = findSplitNodeHelper(start, end);
+    if (splitNode == nullptr)
+        return;
+
+    //If the split node is a leaf
+    if (splitNode->isLeaf()) {
+        //Report the node if it is contained in the range
+        if (isGreaterOrEqual(splitNode->key, start) && isLessOrEqual(splitNode->key, end)) {
+            reportSubTreeHelper(splitNode, out);
+        }
+    }
+    //If the split node is not a leaf
+    else {
+        //Follow path from splitNode to start and report right subtrees
+        Node* vl = splitNode->left;
+        while (!vl->isLeaf()) {
+            if (isLess(start, vl->key)) {
+                reportSubTreeHelper(vl->right, out);
+                vl = vl->left;
+            }
+            else {
+                vl = vl->right;
+            }
+        }
+        //Report the node if it is contained in the range
+        if (isGreaterOrEqual(vl->key, start) && isLessOrEqual(vl->key, end)) {
+            reportSubTreeHelper(vl, out);
+        }
+
+        //Follow path from splitNode to end and report left subtrees
+        Node* vr = splitNode->right;
+        while (!vr->isLeaf()) {
+            if (isGreaterOrEqual(end, vr->key)) {
+                reportSubTreeHelper(vr->left, out);
+                vr = vr->right;
+            }
+            else {
+                vr = vr->left;
+            }
+        }
+        //Report the node if it is contained in the range
+        if (isGreaterOrEqual(vr->key, start) && isLessOrEqual(vr->key, end)) {
+            reportSubTreeHelper(vr, out);
+        }
+    }
+
+}
+
+/**
+ * @brief Find split node of the BST for a given range
+ *
+ * @param[in] start Starting value of the range
+ * @param[in] end End value of the range
+ * @return Split node of the BST. Returns nullptr if the tree is empty
+ */
+template <class K, class T>
+typename AVLLeaf<K,T>::Node* AVLLeaf<K,T>::findSplitNodeHelper(const K& start, const K& end) {
+    if (this->root == nullptr)
+        return nullptr;
+
+    Node* v = this->root;
+    //Follow path until a leaf is found
+    while (!v->isLeaf()) {
+        //If both path follow left subtree
+        if (isLess(start, v->key) && isLess(end, v->key)) {
+            v = v->left;
+        }
+        //If both path follow right subtree
+        else if (isGreaterOrEqual(start, v->key) && isGreaterOrEqual(end, v->key)) {
+            v = v->right;
+        }
+        else {
+            return v;
+        }
+    }
+
+    return v;
+}
+
+/**
+ * @brief Add to the output vector the entire subtree
+ *
+ * @param[in] node Root of the subtree
+ * @param[out] out Vector of output nodes
+ */
+template <class K, class T>
+void AVLLeaf<K,T>::reportSubTreeHelper(Node* node, std::vector<Node*>& out) {
+    if (node->isLeaf()) {
+        out.push_back(node);
+    }
+    else {
+        reportSubTreeHelper(node->left, out);
+        reportSubTreeHelper(node->right, out);
+    }
+}
+
+
 /* --------- AVL HELPERS --------- */
 
 /**
@@ -856,8 +968,8 @@ void AVLLeaf<K,T>::rebalanceHelper(Node* node) {
 /**
  * @brief Left rotation
  *
- * @param[in] node Node to be rotated
- * @return node New node in the position of the original node after the rotation
+ * @param[in] a Node to be rotated
+ * @return New node in the position of the original node after the rotation
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::Node* AVLLeaf<K,T>::leftRotate(Node* a) {
@@ -889,8 +1001,8 @@ typename AVLLeaf<K,T>::Node* AVLLeaf<K,T>::leftRotate(Node* a) {
 /**
  * @brief Right rotation
  *
- * @param[in] node Node to be rotated
- * @return node New node in the position of the original node after the rotation
+ * @param[in] a Node to be rotated
+ * @return New node in the position of the original node after the rotation
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::Node* AVLLeaf<K,T>::rightRotate(Node* a) {
@@ -920,117 +1032,6 @@ typename AVLLeaf<K,T>::Node* AVLLeaf<K,T>::rightRotate(Node* a) {
 }
 
 
-
-
-/* --------- RANGE QUERY HELPERS --------- */
-
-/**
- * @brief Find entries in the BST that are enclosed in a given range
- *
- * @param[in] start Starting value of the range
- * @param[in] end End value of the range
- * @param[out] out Vector of node with keys that are enclosed in the input range
- */
-template <class K, class T>
-void AVLLeaf<K,T>::rangeQueryHelper(const K& start, const K& end,
-                                     std::vector<Node*> &out)
-{
-    //Find split node
-    Node* splitNode = findSplitNodeHelper(start, end);
-    if (splitNode == nullptr)
-        return;
-
-    //If the split node is a leaf
-    if (splitNode->isLeaf()) {
-        //Report the node if it is contained in the range
-        if (isGreaterOrEqual(splitNode->key, start) && isLessOrEqual(splitNode->key, end)) {
-            reportSubTreeHelper(splitNode, out);
-        }
-    }
-    //If the split node is not a leaf
-    else {
-        //Follow path from splitNode to start and report right subtrees
-        Node* vl = splitNode->left;
-        while (!vl->isLeaf()) {
-            if (isLess(start, vl->key)) {
-                reportSubTreeHelper(vl->right, out);
-                vl = vl->left;
-            }
-            else {
-                vl = vl->right;
-            }
-        }
-        //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vl->key, start) && isLessOrEqual(vl->key, end)) {
-            reportSubTreeHelper(vl, out);
-        }
-
-        //Follow path from splitNode to end and report left subtrees
-        Node* vr = splitNode->right;
-        while (!vr->isLeaf()) {
-            if (isGreaterOrEqual(end, vr->key)) {
-                reportSubTreeHelper(vr->left, out);
-                vr = vr->right;
-            }
-            else {
-                vr = vr->left;
-            }
-        }
-        //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vr->key, start) && isLessOrEqual(vr->key, end)) {
-            reportSubTreeHelper(vr, out);
-        }
-    }
-
-}
-
-/**
- * @brief Find split node of the BST for a given range
- *
- * @param[in] start Starting value of the range
- * @param[in] end End value of the range
- * @return Split node of the BST. Returns nullptr if the tree is empty
- */
-template <class K, class T>
-typename AVLLeaf<K,T>::Node* AVLLeaf<K,T>::findSplitNodeHelper(const K& start, const K& end) {
-    if (this->root == nullptr)
-        return nullptr;
-
-    Node* v = this->root;
-    //Follow path until a leaf is found
-    while (!v->isLeaf()) {
-        //If both path follow left subtree
-        if (isLess(start, v->key) && isLess(end, v->key)) {
-            v = v->left;
-        }
-        //If both path follow right subtree
-        else if (isGreaterOrEqual(start, v->key) && isGreaterOrEqual(end, v->key)) {
-            v = v->right;
-        }
-        else {
-            return v;
-        }
-    }
-
-    return v;
-}
-
-/**
- * Add to the output vector the entire subtree
- *
- * @param[in] node Root of the subtree
- * @param[out] out Vector of output nodes
- */
-template <class K, class T>
-void AVLLeaf<K,T>::reportSubTreeHelper(Node* node, std::vector<Node*>& out) {
-    if (node->isLeaf()) {
-        out.push_back(node);
-    }
-    else {
-        reportSubTreeHelper(node->left, out);
-        reportSubTreeHelper(node->right, out);
-    }
-}
 
 
 

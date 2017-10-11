@@ -131,7 +131,7 @@ void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
 /**
  * @brief Insert in the BST a given value
  *
- * @param[in] key Value to be inserted
+ * @param[in] key Key/value to be inserted
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
@@ -900,8 +900,8 @@ void AABBTree<D,K,T>::rebalanceHelper(Node* node) {
 /**
  * @brief Left rotation
  *
- * @param[in] node Node to be rotated
- * @return node New node in the position of the original node after the rotation
+ * @param[in] a Node to be rotated
+ * @return New node in the position of the original node after the rotation
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::Node* AABBTree<D,K,T>::leftRotate(Node* a) {
@@ -936,8 +936,8 @@ typename AABBTree<D,K,T>::Node* AABBTree<D,K,T>::leftRotate(Node* a) {
 /**
  * @brief Right rotation
  *
- * @param[in] node Node to be rotated
- * @return node New node in the position of the original node after the rotation
+ * @param[in] a Node to be rotated
+ * @return New node in the position of the original node after the rotation
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::Node* AABBTree<D,K,T>::rightRotate(Node* a) {
@@ -1023,11 +1023,14 @@ void AABBTree<D,K,T>::updateAABBsHelper(Node* node) {
 
 
 /**
- * @brief Find elements for which the input bounding box overlaps with the one of the values
+ * @brief Find elements for which the input bounding box overlaps with the one of the values.
+ * Output can be filtered by another optional key overlap filter function.
  *
  * @param[in] node Starting node
  * @param[in] key Input key
+ * @param[in] aabb Axis-aligned bounding box of the key
  * @param[out] out Vector of iterators pointing to elements that overlap
+ * @param[in] keyOverlapChecker Key overlap filter function
  */
 template <int D, class K, class T>
 void AABBTree<D,K,T>::aabbOverlapQueryHelper(
@@ -1061,9 +1064,14 @@ void AABBTree<D,K,T>::aabbOverlapQueryHelper(
 }
 
 /**
- * @brief Check if the given bounding box overlaps with the one of the values
+ * @brief Check if the given bounding box overlaps with at least one of the values
+ * in the AABB tree. If the optional key overlap filter function is specified, then
+ * true is returned iff the bounding box overlaps and the filter function returns true.
  *
+ * @param[in] node Starting node
  * @param[in] key Input key
+ * @param[in] aabb Axis-aligned bounding box of the key
+ * @param[in] keyOverlapChecker Key overlap filter function
  * @return True if there is an overlapping bounding box in the stored values
  */
 template <int D, class K, class T>

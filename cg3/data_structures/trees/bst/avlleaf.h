@@ -139,17 +139,6 @@ protected:
 
 
 
-    /* AVL Helpers */
-
-    void updateHeightHelper(Node* node);
-
-    void rebalanceHelper(Node* node);
-
-    Node* leftRotate(Node* a);
-    Node* rightRotate(Node* a);
-
-
-
     /* Range query helpers */
 
     void rangeQueryHelper(const K& start, const K& end,
@@ -158,6 +147,17 @@ protected:
     Node* findSplitNodeHelper(const K& start, const K& end);
 
     void reportSubTreeHelper(Node* node, std::vector<Node*>& out);
+
+
+
+    /* AVL Helpers */
+
+    void updateHeightHelper(Node* node);
+
+    void rebalanceHelper(Node* node);
+
+    Node* leftRotate(Node* a);
+    Node* rightRotate(Node* a);
 
 
 

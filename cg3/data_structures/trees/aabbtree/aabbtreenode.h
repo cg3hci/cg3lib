@@ -9,13 +9,15 @@
 namespace cg3 {
 
 /**
- * @brief The node of the binary search tree
+ * @brief The node of a D-dimensional AABB tree
  *
  */
 template <int D, class K, class T>
 class AABBTree<D,K,T>::Node {
 
-public:
+    friend class AABBTree<D,K,T>;
+
+private:
 
     typedef AABBTree::AABB AABB;
 
@@ -27,9 +29,6 @@ public:
     ~Node();
 
 
-    /* Methods */
-
-    inline bool isLeaf() const;
     /* Fields */
 
     K key;
@@ -42,6 +41,13 @@ public:
     Node* right;
 
     size_t height;
+
+
+    /* Private methods */
+
+    void init(const K& key, T* value);
+    inline bool isLeaf() const;
+
 };
 
 }

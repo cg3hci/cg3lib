@@ -124,7 +124,7 @@ void BSTLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
 /**
  * @brief Insert in the BST a given value
  *
- * @param[in] key Value to be inserted
+ * @param[in] key Key/value to be inserted
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
@@ -298,7 +298,7 @@ size_t BSTLeaf<K,T>::getHeight()
  */
 template<class K, class T>
 void BSTLeaf<K,T>::rangeQuery(const K& start, const K& end,
-                                std::vector<Iterator> &out)
+                              std::vector<Iterator> &out)
 {
     std::vector<Node*> nodeOutput;
     this->rangeQueryHelper(start, end, nodeOutput);
@@ -846,7 +846,7 @@ typename BSTLeaf<K,T>::Node* BSTLeaf<K,T>::findSplitNodeHelper(const K& start, c
 }
 
 /**
- * Add to the output vector the entire subtree
+ * @brief Add to the output vector the entire subtree
  *
  * @param[in] node Root of the subtree
  * @param[out] out Vector of output nodes

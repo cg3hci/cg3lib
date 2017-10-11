@@ -123,7 +123,7 @@ void BSTInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
 /**
  * @brief Insert in the BST a given value
  *
- * @param[in] key Value to be inserted
+ * @param[in] key Key/value to be inserted
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
@@ -284,6 +284,27 @@ template <class K, class T>
 size_t BSTInner<K,T>::getHeight()
 {
     return getHeightHelper(this->root);
+}
+
+
+
+/**
+ * @brief Find entries in the BST that are enclosed in a given range
+ *
+ * @param[in] start Starting value of the range
+ * @param[in] end End value of the range
+ * @param[out] out Vector of iterators pointing to the
+ * elements enclosed in the input range
+ */
+template<class K, class T>
+void BSTInner<K,T>::rangeQuery(const K& start, const K& end,
+                               std::vector<Iterator> &out)
+{
+    std::vector<Node*> nodeOutput;
+    this->rangeQueryHelper(start, end, nodeOutput);
+    for (Node* node : nodeOutput) {
+        out.push_back(Iterator(node));
+    }
 }
 
 
@@ -672,6 +693,122 @@ size_t BSTInner<K,T>::getHeightHelper(const Node* node)
         return 1;
 
     return 1 + std::max(getHeightHelper(node->left), getHeightHelper(node->right));
+}
+
+
+
+
+/* --------- RANGE QUERY HELPERS --------- */
+
+/**
+ * @brief Find entries in the BST that are enclosed in a given range
+ *
+ * @param[in] start Starting value of the range
+ * @param[in] end End value of the range
+ * @param[out] out Vector of node with keys that are enclosed in the input range
+ */
+template <class K, class T>
+void BSTInner<K,T>::rangeQueryHelper(const K& start, const K& end,
+                                     std::vector<Node*> &out)
+{
+    //Find split node
+    Node* splitNode = findSplitNodeHelper(start, end);
+    if (splitNode == nullptr)
+        return;
+
+
+    //Report node if it is contained in the range
+    if (isGreaterOrEqual(splitNode->key, start) && isLessOrEqual(splitNode->key, end)) {
+        out.push_back(splitNode);
+    }
+
+    //Follow path from splitNode to start and report right subtrees
+    Node* vl = splitNode->left;
+    while (vl != nullptr) {
+        //Report node if it is contained in the range
+        if (isGreaterOrEqual(vl->key, start) && isLessOrEqual(vl->key, end)) {
+            out.push_back(vl);
+        }
+
+        //Report left child if it is contained in the range
+        if (isLess(start, vl->key)) {
+            reportSubTreeHelper(vl->right, out);
+            vl = vl->left;
+        }
+        //Go to right child
+        else {
+            vl = vl->right;
+        }
+    }
+
+    //Follow path from splitNode to end and report left subtrees
+    Node* vr = splitNode->right;
+    while (vr != nullptr) {
+
+        //Report node if it is contained in the range
+        if (isGreaterOrEqual(vr->key, start) && isLessOrEqual(vr->key, end)) {
+            out.push_back(vr);
+        }
+
+        //Report right child if it is contained in the range
+        if (isGreaterOrEqual(end, vr->key)) {
+            reportSubTreeHelper(vr->left, out);
+            vr = vr->right;
+        }
+        //Go to left child
+        else {
+            vr = vr->left;
+        }
+    }
+
+}
+
+/**
+ * @brief Find split node of the BST for a given range
+ *
+ * @param[in] start Starting value of the range
+ * @param[in] end End value of the range
+ * @return Split node of the BST. Returns nullptr if the tree is empty
+ */
+template <class K, class T>
+typename BSTInner<K,T>::Node* BSTInner<K,T>::findSplitNodeHelper(const K& start, const K& end) {
+    if (this->root == nullptr)
+        return nullptr;
+
+    Node* v = this->root;
+    //Follow path until a leaf is found
+    while (v != nullptr) {
+        //If both path follow left subtree
+        if (isLess(start, v->key) && isLess(end, v->key)) {
+            v = v->left;
+        }
+        //If both path follow right subtree
+        else if (isGreater(start, v->key) && isGreater(end, v->key)) {
+            v = v->right;
+        }
+        else {
+            return v;
+        }
+    }
+
+    return v;
+}
+
+/**
+ * @brief Add to the output vector the entire subtree
+ *
+ * @param[in] node Root of the subtree
+ * @param[out] out Vector of output nodes
+ */
+template <class K, class T>
+void BSTInner<K,T>::reportSubTreeHelper(Node* node, std::vector<Node*>& out) {
+    if (node == nullptr)
+        return;
+
+    out.push_back(node);
+
+    reportSubTreeHelper(node->left, out);
+    reportSubTreeHelper(node->right, out);
 }
 
 

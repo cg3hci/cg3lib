@@ -143,7 +143,7 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
 /**
  * @brief Insert in the range tree a given value
  *
- * @param[in] key Value to be inserted
+ * @param[in] key Key/value to be inserted
  * @return True if item has been inserted
  */
 template <class K, class T>
@@ -207,7 +207,7 @@ bool RangeTree<K,T>::erase(const K& key) {
  */
 template <class K, class T>
 void RangeTree<K,T>::rangeQuery(const K& start, const K& end,
-                                    std::vector<Iterator> &out)
+                                std::vector<Iterator> &out)
 {
     std::vector<Node*> nodeOutput;
     this->rangeQueryHelper(start, end, nodeOutput);
@@ -830,214 +830,6 @@ size_t RangeTree<K,T>::getHeightHelper(const Node* node)
 }
 
 
-/* --------- AVL HELPERS --------- */
-
-/**
- * @brief Update heights climbing on the parents
- *
- * @param[in] node Starting node
- */
-template <class K, class T>
-void RangeTree<K,T>::updateHeightHelper(Node* node) {
-    if (node != nullptr) {
-        bool done;
-        do {
-            //Update height
-            node->height = 1 + std::max(getHeightHelper(node->left),
-                                        getHeightHelper(node->right));
-
-            //Done flag
-            done = (node->parent == nullptr || node->height+1 == node->parent->height);
-
-            //Next parent
-            node = node->parent;
-        } while (!done);
-    }
-}
-
-/**
- * @brief Rebalance with rotations
- *
- * @param[in] node Starting node
- */
-template <class K, class T>
-void RangeTree<K,T>::rebalanceHelper(Node* node) {
-    //Null handler
-    if (node == nullptr)
-        return;
-
-    //Not balanced node
-    Node* n = node;
-    int balanceFactor = getHeightHelper(n->right) - getHeightHelper(n->left);
-
-    //Climb on parents to find the not balanced node
-    while (n != nullptr && balanceFactor >= -1 && balanceFactor <= 1) {
-        n = n->parent;
-
-        if (n != nullptr) {
-            //Compute balance factor
-            balanceFactor = getHeightHelper(n->right) - getHeightHelper(n->left);
-
-            assert(balanceFactor <= 2 && balanceFactor >= -2);
-        }
-    }
-
-
-    if (n != nullptr) {
-        assert(balanceFactor == 2 || balanceFactor == -2);
-        if (balanceFactor < -1) {
-            Node* leftleft = n->left->left;
-            Node* leftright = n->left->right;
-
-            //Left left case
-            if (getHeightHelper(leftleft) >= getHeightHelper(leftright)) {
-                n = rightRotate(n);
-            }
-            //Left right case
-            else {
-                n->left = leftRotate(n->left);
-                n = rightRotate(n);
-            }
-        }
-        else if (balanceFactor > 1) {
-            Node* rightright = n->right->right;
-            Node* rightleft = n->right->left;
-
-            //Right right case
-            if (getHeightHelper(rightright) >= getHeightHelper(rightleft)) {
-                n = leftRotate(n);
-            }
-            //Left right case
-            else {
-                n->right = rightRotate(n->right);
-                n = leftRotate(n);
-            }
-        }
-
-        //Set root
-        if (n->parent == nullptr) {
-            this->root = n;
-        }
-
-
-        //Update heights
-        updateHeightHelper(n);
-        //Rebalance parent
-        rebalanceHelper(n->parent);
-
-    }
-}
-
-
-/**
- * @brief Left rotation
- *
- * @param[in] node Node to be rotated
- * @return node New node in the position of the original node after the rotation
- */
-template <class K, class T>
-typename RangeTree<K,T>::Node* RangeTree<K,T>::leftRotate(RangeTree<K,T>::Node* a) {
-    Node* b = a->right;
-    b->parent = a->parent;
-    a->right = b->left;
-
-    if (a->right != nullptr)
-        a->right->parent = a;
-
-    b->left = a;
-    a->parent = b;
-
-    if (b->parent != nullptr) {
-        if (b->parent->right == a) {
-            b->parent->right = b;
-        }
-        else {
-            b->parent->left = b;
-        }
-    }
-
-    //Update heights
-    updateHeightHelper(a);
-
-
-    //Update associated trees
-    if (dim > 1) {
-        //Referencing subtrees
-        Node* c = b->right;
-        Node* aLeft = a->left;
-
-        if (aLeft != nullptr) {
-            //Insert aLeft into b associated tree
-            for (Iterator aLeftIt = aLeft->assRangeTree->begin(); aLeftIt != aLeft->assRangeTree->end(); aLeftIt++) {
-                Node* aLeftNode = aLeftIt.node;
-                insertIntoAssociatedTreeHelper(b, aLeftNode->key, *(aLeftNode->value));
-            }
-        }
-        //Erase c from a associated tree
-        for (Iterator cIt = c->assRangeTree->begin(); cIt != c->assRangeTree->end(); cIt++) {
-            Node* cNode = cIt.node;
-            eraseFromAssociatedTreeHelper(a, cNode->key);
-        }
-    }
-
-    return b;
-}
-
-/**
- * @brief Right rotation
- *
- * @param[in] node Node to be rotated
- * @return node New node in the position of the original node after the rotation
- */
-template <class K, class T>
-typename RangeTree<K,T>::Node* RangeTree<K,T>::rightRotate(RangeTree<K,T>::Node* a) {
-    Node* b = a->left;
-    b->parent = a->parent;
-    a->left = b->right;
-
-    if (a->left != nullptr)
-        a->left->parent = a;
-
-    b->right = a;
-    a->parent = b;
-
-    if (b->parent != nullptr) {
-        if (b->parent->right == a) {
-            b->parent->right = b;
-        }
-        else {
-            b->parent->left = b;
-        }
-    }
-
-    //Update heights
-    updateHeightHelper(a);
-
-
-    //Update associated trees
-    if (dim > 1) {
-        //Referencing subtrees
-        Node* c = b->left;
-        Node* aRight = a->right;
-
-        if (aRight != nullptr) {
-            //Insert aRight into b associated tree
-            for (Iterator aRightIt = aRight->assRangeTree->begin(); aRightIt != aRight->assRangeTree->end(); aRightIt++) {
-                Node* aRightNode = aRightIt.node;
-                insertIntoAssociatedTreeHelper(b, aRightNode->key, *(aRightNode->value));
-            }
-        }
-        //Erase c from a associated tree
-        for (Iterator cIt = c->assRangeTree->begin(); cIt != c->assRangeTree->end(); cIt++) {
-            Node* cNode = cIt.node;
-            eraseFromAssociatedTreeHelper(a, cNode->key);
-        }
-    }
-
-    return b;
-}
-
-
 
 
 /* --------- RANGE QUERY HELPERS --------- */
@@ -1155,6 +947,214 @@ void RangeTree<K,T>::reportSubtreeHelper(Node* node, std::vector<Node*>& out) {
 }
 
 
+/* --------- AVL HELPERS --------- */
+
+/**
+ * @brief Update heights climbing on the parents
+ *
+ * @param[in] node Starting node
+ */
+template <class K, class T>
+void RangeTree<K,T>::updateHeightHelper(Node* node) {
+    if (node != nullptr) {
+        bool done;
+        do {
+            //Update height
+            node->height = 1 + std::max(getHeightHelper(node->left),
+                                        getHeightHelper(node->right));
+
+            //Done flag
+            done = (node->parent == nullptr || node->height+1 == node->parent->height);
+
+            //Next parent
+            node = node->parent;
+        } while (!done);
+    }
+}
+
+/**
+ * @brief Rebalance with rotations
+ *
+ * @param[in] node Starting node
+ */
+template <class K, class T>
+void RangeTree<K,T>::rebalanceHelper(Node* node) {
+    //Null handler
+    if (node == nullptr)
+        return;
+
+    //Not balanced node
+    Node* n = node;
+    int balanceFactor = getHeightHelper(n->right) - getHeightHelper(n->left);
+
+    //Climb on parents to find the not balanced node
+    while (n != nullptr && balanceFactor >= -1 && balanceFactor <= 1) {
+        n = n->parent;
+
+        if (n != nullptr) {
+            //Compute balance factor
+            balanceFactor = getHeightHelper(n->right) - getHeightHelper(n->left);
+
+            assert(balanceFactor <= 2 && balanceFactor >= -2);
+        }
+    }
+
+
+    if (n != nullptr) {
+        assert(balanceFactor == 2 || balanceFactor == -2);
+        if (balanceFactor < -1) {
+            Node* leftleft = n->left->left;
+            Node* leftright = n->left->right;
+
+            //Left left case
+            if (getHeightHelper(leftleft) >= getHeightHelper(leftright)) {
+                n = rightRotate(n);
+            }
+            //Left right case
+            else {
+                n->left = leftRotate(n->left);
+                n = rightRotate(n);
+            }
+        }
+        else if (balanceFactor > 1) {
+            Node* rightright = n->right->right;
+            Node* rightleft = n->right->left;
+
+            //Right right case
+            if (getHeightHelper(rightright) >= getHeightHelper(rightleft)) {
+                n = leftRotate(n);
+            }
+            //Left right case
+            else {
+                n->right = rightRotate(n->right);
+                n = leftRotate(n);
+            }
+        }
+
+        //Set root
+        if (n->parent == nullptr) {
+            this->root = n;
+        }
+
+
+        //Update heights
+        updateHeightHelper(n);
+        //Rebalance parent
+        rebalanceHelper(n->parent);
+
+    }
+}
+
+
+/**
+ * @brief Left rotation
+ *
+ * @param[in] a Node to be rotated
+ * @return New node in the position of the original node after the rotation
+ */
+template <class K, class T>
+typename RangeTree<K,T>::Node* RangeTree<K,T>::leftRotate(RangeTree<K,T>::Node* a) {
+    Node* b = a->right;
+    b->parent = a->parent;
+    a->right = b->left;
+
+    if (a->right != nullptr)
+        a->right->parent = a;
+
+    b->left = a;
+    a->parent = b;
+
+    if (b->parent != nullptr) {
+        if (b->parent->right == a) {
+            b->parent->right = b;
+        }
+        else {
+            b->parent->left = b;
+        }
+    }
+
+    //Update heights
+    updateHeightHelper(a);
+
+
+    //Update associated trees
+    if (dim > 1) {
+        //Referencing subtrees
+        Node* c = b->right;
+        Node* aLeft = a->left;
+
+        if (aLeft != nullptr) {
+            //Insert aLeft into b associated tree
+            for (Iterator aLeftIt = aLeft->assRangeTree->begin(); aLeftIt != aLeft->assRangeTree->end(); aLeftIt++) {
+                Node* aLeftNode = aLeftIt.node;
+                insertIntoAssociatedTreeHelper(b, aLeftNode->key, *(aLeftNode->value));
+            }
+        }
+        //Erase c from a associated tree
+        for (Iterator cIt = c->assRangeTree->begin(); cIt != c->assRangeTree->end(); cIt++) {
+            Node* cNode = cIt.node;
+            eraseFromAssociatedTreeHelper(a, cNode->key);
+        }
+    }
+
+    return b;
+}
+
+/**
+ * @brief Right rotation
+ *
+ * @param[in] a Node to be rotated
+ * @return New node in the position of the original node after the rotation
+ */
+template <class K, class T>
+typename RangeTree<K,T>::Node* RangeTree<K,T>::rightRotate(RangeTree<K,T>::Node* a) {
+    Node* b = a->left;
+    b->parent = a->parent;
+    a->left = b->right;
+
+    if (a->left != nullptr)
+        a->left->parent = a;
+
+    b->right = a;
+    a->parent = b;
+
+    if (b->parent != nullptr) {
+        if (b->parent->right == a) {
+            b->parent->right = b;
+        }
+        else {
+            b->parent->left = b;
+        }
+    }
+
+    //Update heights
+    updateHeightHelper(a);
+
+
+    //Update associated trees
+    if (dim > 1) {
+        //Referencing subtrees
+        Node* c = b->left;
+        Node* aRight = a->right;
+
+        if (aRight != nullptr) {
+            //Insert aRight into b associated tree
+            for (Iterator aRightIt = aRight->assRangeTree->begin(); aRightIt != aRight->assRangeTree->end(); aRightIt++) {
+                Node* aRightNode = aRightIt.node;
+                insertIntoAssociatedTreeHelper(b, aRightNode->key, *(aRightNode->value));
+            }
+        }
+        //Erase c from a associated tree
+        for (Iterator cIt = c->assRangeTree->begin(); cIt != c->assRangeTree->end(); cIt++) {
+            Node* cNode = cIt.node;
+            eraseFromAssociatedTreeHelper(a, cNode->key);
+        }
+    }
+
+    return b;
+}
+
+
 
 
 
@@ -1197,10 +1197,10 @@ void RangeTree<K,T>::createAssociatedTreeHelper(Node *node)
 /**
  * @brief Insert into associated range tree key/value of the node
  *
- * @param[in] key Key of new node
- * @param[in] value Value of new node
  * @param[in] node Node for which the new node will be inserted into
  * its associated range tree
+ * @param[in] key Key of new node
+ * @param[in] value Value of new node
  */
 template<class K, class T>
 void RangeTree<K,T>::insertIntoAssociatedTreeHelper(Node* node, const K& key, const T& value)
@@ -1255,12 +1255,11 @@ void RangeTree<K,T>::eraseFromAssociatedTreeHelper(Node* node, const K& key)
 
 
 /**
- * @brief Insert into associated range trees the current key and value
- * climbing on parents (the input node is included)
+ * @brief Erase from associated range trees the current key climbing
+ * on parents (the input node is included)
  *
  * @param[in] node Node from which the climbing starts
  * @param[in] key Key of new node
- * @param[in] value Value of new node
  */
 template<class K, class T>
 void RangeTree<K,T>::eraseFromParentAssociatedTreesHelper(Node* node, const K& key)
