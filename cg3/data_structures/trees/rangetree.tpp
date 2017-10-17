@@ -764,22 +764,18 @@ void RangeTree<K,T>::clearHelper(Node*& rootNode) {
     if (rootNode == nullptr)
         return;
 
-    //Getting referencies
-    Node*& left = rootNode->left;
-    Node*& right = rootNode->right;
-
     if (rootNode->isLeaf()) {
         //Decreasing entries
         this->entries--;
     }
 
+    //Clear subtrees
+    this->clearHelper(rootNode->left);
+    this->clearHelper(rootNode->right);
+
     //Delete data
     delete rootNode;
     rootNode = nullptr;
-
-    //Clear subtrees
-    this->clearHelper(left);
-    this->clearHelper(right);
 }
 
 /**

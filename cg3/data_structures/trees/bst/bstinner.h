@@ -56,7 +56,7 @@ public:
     Iterator insert(const K& key, const T& value);
 
     bool erase(const K& key);
-    void erase(Iterator& it);
+    void erase(Iterator it);
 
     Iterator find(const K& key);
 

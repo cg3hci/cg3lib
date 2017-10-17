@@ -177,11 +177,9 @@ typename AABBTree<D,K,T>::Iterator AABBTree<D,K,T>::insert(
  * @param[in] it Iterator pointing to the node to be erased
  */
 template <int D, class K, class T>
-void AABBTree<D,K,T>::erase(Iterator& it) {
+void AABBTree<D,K,T>::erase(Iterator it) {
     //Save node to be deleted
     Node* node = it.getNode();
-
-    it++;
 
     this->eraseNodeHelper(node);
 }
@@ -732,22 +730,18 @@ void AABBTree<D,K,T>::clearHelper(Node*& rootNode) {
     if (rootNode == nullptr)
         return;
 
-    //Getting referencies
-    Node*& left = rootNode->left;
-    Node*& right = rootNode->right;
-
     if (rootNode->isLeaf()) {
         //Decreasing entries
         this->entries--;
     }
 
+    //Clear subtrees
+    this->clearHelper(rootNode->left);
+    this->clearHelper(rootNode->right);
+
     //Delete data
     delete rootNode;
     rootNode = nullptr;
-
-    //Clear subtrees
-    this->clearHelper(left);
-    this->clearHelper(right);
 }
 
 /**

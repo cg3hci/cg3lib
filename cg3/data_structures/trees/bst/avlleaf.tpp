@@ -170,11 +170,9 @@ typename AVLLeaf<K,T>::Iterator AVLLeaf<K,T>::insert(
  * @param[in] it Iterator pointing to the node to be erased
  */
 template <class K, class T>
-void AVLLeaf<K,T>::erase(Iterator& it) {
+void AVLLeaf<K,T>::erase(Iterator it) {
     //Save node to be deleted
     Node* node = it.getNode();
-
-    it++;
 
     this->eraseNodeHelper(node);
 }
@@ -692,22 +690,18 @@ void AVLLeaf<K,T>::clearHelper(Node*& rootNode) {
     if (rootNode == nullptr)
         return;
 
-    //Getting referencies
-    Node*& left = rootNode->left;
-    Node*& right = rootNode->right;
-
     if (rootNode->isLeaf()) {
         //Decreasing entries
         this->entries--;
     }
 
+    //Clear subtrees
+    this->clearHelper(rootNode->left);
+    this->clearHelper(rootNode->right);
+
     //Delete data
     delete rootNode;
     rootNode = nullptr;
-
-    //Clear subtrees
-    this->clearHelper(left);
-    this->clearHelper(right);
 }
 
 /**

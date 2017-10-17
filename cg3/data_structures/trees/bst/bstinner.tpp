@@ -169,11 +169,9 @@ typename BSTInner<K,T>::Iterator BSTInner<K,T>::insert(
  * @param[in] it Iterator pointing to the node to be erased
  */
 template <class K, class T>
-void BSTInner<K,T>::erase(Iterator& it) {
+void BSTInner<K,T>::erase(Iterator it) {
     //Save node to be deleted
     Node* node = it.getNode();
-
-    it++;
 
     this->eraseNodeHelper(node);
 }
@@ -630,20 +628,20 @@ void BSTInner<K,T>::clearHelper(Node*& rootNode) {
     if (rootNode == nullptr)
         return;
 
-    //Getting referencies
-    Node*& left = rootNode->left;
-    Node*& right = rootNode->right;
+    //Clear subtrees
+    this->clearHelper(rootNode->left);
+    this->clearHelper(rootNode->right);
+
+    //Decreasing entries
+    this->entries--;
 
     //Delete data
     delete rootNode;
     rootNode = nullptr;
 
-    //Decreasing entries
-    this->entries--;
-
-    //Clear subtrees
-    this->clearHelper(left);
-    this->clearHelper(right);
+    //If it is already empty
+    if (rootNode == nullptr)
+        return;
 }
 
 
