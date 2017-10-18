@@ -41,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ConsoleStream(std::cerr, this->ui->console);
     ConsoleStream::registerConsoleMessageHandler();
     showMaximized();
+
+    ui->glCanvas->setSnapshotQuality(100);
+    ui->glCanvas->setSnapshotFormat("PNG");
 }
 
 MainWindow::~MainWindow() {

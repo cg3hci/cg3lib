@@ -121,7 +121,7 @@ static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, cons
 
     glColor3f(c.redF(), c.greenF(), c.blueF());
     glLineWidth(width);
-    glLineStipple(1, 0xAAAA);
+    glLineStipple(1, 0x00FF);
     glEnable(GL_LINE_STIPPLE);
     glBegin(GL_LINES);
     glVertex3f(a.x(), a.y(), a.z());
