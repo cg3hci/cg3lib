@@ -102,6 +102,12 @@ inline void Array4D<T>::resize(unsigned long int x, unsigned long int y, unsigne
     sizeW = w;
 }
 
+template<class T>
+inline void Array4D<T>::clear() {
+    v.clear();
+    sizeX = sizeY = sizeZ = sizeW = 0;
+}
+
 template <class T>
 inline void Array4D<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serialize(sizeX, binaryFile);

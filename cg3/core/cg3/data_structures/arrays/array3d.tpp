@@ -90,6 +90,12 @@ inline void Array3D<T>::resize(unsigned long int x, unsigned long int y, unsigne
     sizeZ = z;
 }
 
+template<class T>
+inline void Array3D<T>::clear() {
+    v.clear();
+    sizeX = sizeY = sizeZ = 0;
+}
+
 template <class T>
 inline void Array3D<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serialize(sizeX, binaryFile);

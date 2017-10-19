@@ -33,6 +33,8 @@ template <class T> class Array4D : public SerializableObject{
         void resize (unsigned long int x, unsigned long int y, unsigned long int z, unsigned long int w);
         void resize (unsigned long int x, unsigned long int y, unsigned long int z, unsigned long int w, const T& value);
 
+        void clear();
+
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
         bool deserialize(std::ifstream& binaryFile);

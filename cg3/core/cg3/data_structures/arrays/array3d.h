@@ -32,6 +32,8 @@ template <class T> class Array3D : public SerializableObject{
         void resize (unsigned long int x, unsigned long int y, unsigned long int z);
         void resize (unsigned long int x, unsigned long int y, unsigned long int z, const T& value);
 
+        void clear();
+
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
         bool deserialize(std::ifstream& binaryFile);

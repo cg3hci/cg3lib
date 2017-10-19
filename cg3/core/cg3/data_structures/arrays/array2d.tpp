@@ -115,6 +115,12 @@ inline void Array2D<T>::resize(unsigned long int x, unsigned long int y, const T
     sizeY = y;
 }
 
+template<class T>
+inline void Array2D<T>::clear() {
+    v.clear();
+    sizeX = sizeY = 0;
+}
+
 template <class T>
 inline void Array2D<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serialize(sizeX, binaryFile);
