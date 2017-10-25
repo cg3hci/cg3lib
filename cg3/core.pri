@@ -109,21 +109,21 @@ HEADERS += \
     $$PWD/core/cg3/utilities/pair.h \
     $$PWD/core/cg3/utilities/set.h \
     $$PWD/core/cg3/utilities/string.h \
-    $$PWD/core/cg3/utilities/string.ipp \
     $$PWD/core/cg3/utilities/system.h \
-    $$PWD/core/cg3/utilities/system.ipp \
     $$PWD/core/cg3/utilities/timer.h \
-    $$PWD/core/cg3/utilities/timer.ipp \
     $$PWD/core/cg3/utilities/vector.h \
-    $$PWD/core/cg3/utilities/vector.ipp \
-    $$PWD/core/cg3/utilities/utils.h \
-    $$PWD/core/cg3/utilities/utils.ipp
+    $$PWD/core/cg3/utilities/utils.h
 
 SOURCES += \
     $$PWD/core/cg3/utilities/eigen.tpp \
     $$PWD/core/cg3/utilities/map.tpp \
     $$PWD/core/cg3/utilities/pair.tpp \
-    $$PWD/core/cg3/utilities/set.tpp
+    $$PWD/core/cg3/utilities/set.tpp \
+    $$PWD/core/cg3/utilities/string.ipp \
+    $$PWD/core/cg3/utilities/system.ipp \
+    $$PWD/core/cg3/utilities/timer.ipp \
+    $$PWD/core/cg3/utilities/vector.ipp \
+    $$PWD/core/cg3/utilities/utils.ipp
 
 
 INCLUDEPATH += $$PWD/core/
