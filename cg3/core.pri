@@ -56,12 +56,14 @@ HEADERS += \
     $$PWD/core/cg3/data_structures/color.ipp \
     $$PWD/core/cg3/data_structures/arrays/array2d.h \
     $$PWD/core/cg3/data_structures/arrays/array3d.h \
-    $$PWD/core/cg3/data_structures/arrays/array4d.h
+    $$PWD/core/cg3/data_structures/arrays/array4d.h \
+    $$PWD/core/cg3/geometry/geometryutils.h
 
 SOURCES += \
     $$PWD/core/cg3/data_structures/arrays/array2d.tpp \
     $$PWD/core/cg3/data_structures/arrays/array3d.tpp \
-    $$PWD/core/cg3/data_structures/arrays/array4d.tpp
+    $$PWD/core/cg3/data_structures/arrays/array4d.tpp \
+    $$PWD/core/cg3/geometry/geometryutils.ipp
 
 ##geometry
 HEADERS += \

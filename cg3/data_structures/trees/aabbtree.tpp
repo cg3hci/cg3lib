@@ -532,8 +532,8 @@ bool AABBTree<D,K,T>::insertNodeHelper(Node*& newNode) {
     node->parent = newParent;
 
     //Update heights and rebalance
-    updateHeightHelper(node);
-    rebalanceHelper(node);
+    updateHeightHelper(newParent);
+    rebalanceHelper(newParent);
 
     //Update AABBs
     updateAABBsHelper(node);

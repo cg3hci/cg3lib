@@ -500,8 +500,8 @@ bool AVLLeaf<K,T>::insertNodeHelper(Node*& newNode) {
     node->parent = newParent;
 
     //Update heights and rebalance
-    updateHeightHelper(node);
-    rebalanceHelper(node);
+    updateHeightHelper(newParent);
+    rebalanceHelper(newParent);
 
 
     //Increment entry number

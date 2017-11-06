@@ -557,8 +557,8 @@ bool RangeTree<K,T>::insertNodeHelper(
 
 
     //Update heights and rebalance
-    updateHeightHelper(node);
-    rebalanceHelper(node);
+    updateHeightHelper(newParent);
+    rebalanceHelper(newParent);
 
 
     //Increment entry number
