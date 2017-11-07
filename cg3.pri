@@ -16,7 +16,9 @@ include (cg3/algorithms.pri)
 include (cg3/cgal.pri)
 include (cg3/cinolib.pri)
 include (cg3/libigl.pri)
-include (cg3/viewer.pri)
+qt {
+    include (cg3/viewer.pri)
+}
 
 FINAL_RELEASE {
     unix:!macx{

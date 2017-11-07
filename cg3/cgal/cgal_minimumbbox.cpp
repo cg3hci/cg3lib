@@ -27,12 +27,12 @@ std::vector<Point2Dd> getMinRectangle2D(const Dcel* dcel) {
 std::vector<Point2Dd> getMinRectangle2D(
         const std::vector<Point2Dd>& points, bool isConvexHull)
 {
-    std::vector<CK_Point_2> convexHullPoints;
+    std::vector<CK_Point_2> cgalCHPoints;
 
     if (isConvexHull) {
         for (const Point2Dd p : points) {
             CK_Point_2 point(p.x(), p.y());
-            convexHullPoints.push_back(point);
+            cgalCHPoints.push_back(point);
         }
     }
     else {
@@ -44,13 +44,13 @@ std::vector<Point2Dd> getMinRectangle2D(
         }
 
         //Compute convex hull
-        CGAL::ch_graham_andrew(cgalPoints.begin(), cgalPoints.end(), std::back_inserter(convexHullPoints));
+        CGAL::ch_graham_andrew(cgalPoints.begin(), cgalPoints.end(), std::back_inserter(cgalCHPoints));
     }
 
     //Compute the minimal enclosing rectangle p_m
     CK_Polygon_2 p_m;
     CGAL::min_rectangle_2(
-        convexHullPoints.begin(), convexHullPoints.end(), std::back_inserter(p_m));
+        cgalCHPoints.begin(), cgalCHPoints.end(), std::back_inserter(p_m));
 
     std::vector<Point2Dd> rectanglePoints;
     for (CK_Polygon_2::Vertex_const_iterator it = p_m.vertices_begin(); it != p_m.vertices_end(); it++) {

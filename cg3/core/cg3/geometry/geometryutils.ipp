@@ -1,5 +1,6 @@
 #include "geometryutils.h"
 
+#include <numeric>
 
 namespace cg3 {
 
@@ -28,9 +29,22 @@ namespace cg3 {
      */
     template<typename T>
     inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
-        Point2D<T> s1 = segment.getP1();
-        Point2D<T> s2 = segment.getP2();
+        return isPointAtRight<T>(segment.getP1(), segment.getP2(), point);
+    }
 
+
+    /**
+     * @brief Check if a point is at the right of the line passing through the segment
+     *
+     * @param[in] s1 First point of the segment
+     * @param[in] s2 Second point of the segment
+     * @param[in] point Input point
+     * @return True if the point is at the right of the line passing through
+     * the segment, false otherwise
+     *
+     */
+    template<typename T>
+    inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point) {
         double m[3][3];
 
         m[0][0] = (double) s1.x();
@@ -45,7 +59,7 @@ namespace cg3 {
         m[2][1] = (double) point.y();
         m[2][2] = 1.0;
 
-        return determinant3x3(m) > 0;
+        return determinant3x3(m) > -std::numeric_limits<double>::epsilon();
     }
 
     /**

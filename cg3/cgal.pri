@@ -51,7 +51,6 @@ contains(DEFINES, CG3_WITH_EIGEN){
 
 HEADERS += \
     $$PWD/cgal/cgal.h \
-    $$PWD/cgal/cgal_convexhull.h \
     $$PWD/cgal/cgal_intersections.h \
     $$PWD/cgal/cgal_minimumbbox.h \
     $$PWD/cgal/cgal_aabbtree.h \
@@ -61,11 +60,11 @@ HEADERS += \
     $$PWD/cgal/cgal_sdf.h \
     $$PWD/cgal/cgal_signeddistances.h \
     $$PWD/cgal/cgal_slicer.h \
-    $$PWD/cgal/cgal_triangulation.h
+    $$PWD/cgal/cgal_triangulation.h \
+    $$PWD/cgal/cgal_convexhull.h
 
 SOURCES += \
     $$PWD/cgal/cgal_intersections.cpp \
-    $$PWD/cgal/cgal_convexhull.cpp \
     $$PWD/cgal/cgal_minimumbbox.cpp \
     $$PWD/cgal/cgal_aabbtree.cpp \
     $$PWD/cgal/cgal_booleans2d.cpp \
@@ -74,5 +73,6 @@ SOURCES += \
     $$PWD/cgal/cgal_sdf.cpp \
     $$PWD/cgal/cgal_signeddistances.cpp \
     $$PWD/cgal/cgal_slicer.cpp \
-    $$PWD/cgal/cgal_triangulation.cpp
+    $$PWD/cgal/cgal_triangulation.cpp \
+    $$PWD/cgal/cgal_convexhull.tpp
 

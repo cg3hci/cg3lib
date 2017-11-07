@@ -13,11 +13,15 @@
 namespace cg3 {
 namespace cgal {
 
-std::vector<Point2Dd> getConvexHull2D(
-        const std::vector<Point2Dd>& pointVec);
+template <class T = double, class InputContainer, class OutputContainer>
+void getConvexHull2D(
+        const InputContainer& points,
+        OutputContainer& convexHull);
 
 }
 }
 
+
+#include "cgal_convexhull.tpp"
 
 #endif // CG3_CGAL_CONVEXHULL_H

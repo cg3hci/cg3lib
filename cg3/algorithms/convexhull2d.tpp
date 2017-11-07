@@ -13,11 +13,6 @@ namespace cg3 {
 /* ----- FUNCTION DECLARATION ----- */
 
 template <class T, class Container>
-inline bool grahamScanStep(
-        Container& container,
-        typename Container::iterator& it1);
-
-template <class T, class Container>
 inline void grahamScanOnContainer(Container& list);
 
 
@@ -30,7 +25,7 @@ inline void grahamScanOnContainer(Container& list);
  * @param[out] convexHullPoints Points of the convex hull
  */
 template <class T = double, class InputContainer, class OutputContainer>
-void convexHull2D(const InputContainer& points, OutputContainer& convexHull) {
+void getConvexHull2D(const InputContainer& points, OutputContainer& convexHull) {
 
     //If there aren't more than 3 points, return the input points
     if (points.size() <= 3) {
@@ -69,38 +64,6 @@ void convexHull2D(const InputContainer& points, OutputContainer& convexHull) {
 
 /* ----- FUNCTIONS FOR GRAHAM SCAN ----- */
 
-/**
- * @brief Step of the Graham scan
- * Erase a point (the predecessor of the iterator) if it stays
- * at the right of the two neighbor points
- *
- * @param[out] container Current iterating container
- * @param[out] it Iterator to be processed
- * @return True if a point has been erased, false otherwise
- */
-template <class T, class Container>
-inline bool grahamScanStep(
-        Container& container,
-        typename Container::iterator& it1)
-{
-    typename Container::iterator it2 = it1;
-    it2--;
-    if (it2 == container.begin())
-        return false;
-
-    typename Container::iterator it3 = it2;
-    it3--;
-
-    const Segment<Point2D<T>> seg(*it1, *it2);
-    const Point2D<T>& point = *it3;
-
-    if (cg3::isPointAtRight(seg, point)) {
-        container.erase(it2);
-        return true;
-    }
-
-    return false;
-}
 
 /**
  * @brief Graham scan on a list of points (upper or lower)
@@ -109,11 +72,18 @@ inline bool grahamScanStep(
  */
 template <class T, class Container>
 inline void grahamScanOnContainer(Container& container) {
-    for (typename Container::iterator it = container.begin(); it != container.end(); it++) {
-        bool done = false;
-        while (it != container.begin() && !done) {
-            done = !grahamScanStep<T>(container, it);
+    typename Container::iterator it2 = container.end();
+    typename Container::iterator it3 = container.end();
+    for (typename Container::iterator it1 = container.begin(); it1 != container.end(); it1++) {
+        if (it2 != container.end() && it3 != container.end()) {
+            while (cg3::isPointAtRight(*it1, *it2, *it3) && it2 != container.begin()) {
+                container.erase(it2);
+                it2 = it3;
+                it3--;
+            }
         }
+        it3 = it2;
+        it2 = it1;
     }
 }
 

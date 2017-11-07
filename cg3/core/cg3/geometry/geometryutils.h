@@ -11,6 +11,9 @@ namespace cg3 {
     template<typename T>
     inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
 
+    template<typename T>
+    inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
+
     inline bool isPointLyingInTriangle(
             const Point2Dd& a,
             const Point2Dd& b,
