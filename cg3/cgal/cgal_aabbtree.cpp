@@ -1,4 +1,4 @@
-#include "aabb_tree.h"
+#include "cgal_aabbtree.h"
 #include <random>
 
 namespace cg3 {

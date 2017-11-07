@@ -1,7 +1,7 @@
 #ifndef CG3_CGAL_SDF_H
 #define CG3_CGAL_SDF_H
 
-#include "polyhedron.h"
+#include "cgal_polyhedron.h"
 
 #ifdef  CG3_DCEL_DEFINED
 #include "cg3/meshes/dcel/dcel.h"

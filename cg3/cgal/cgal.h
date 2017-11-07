@@ -3,10 +3,10 @@
 
 //This file should be deleted: use your single include in your project!
 
-#include "triangulation.h"
-#include "booleans2d.h"
-#include "hole_filling.h"
-#include "slicer.h"
-#include "signed_distances.h"
+#include "cgal_triangulation.h"
+#include "cgal_booleans2d.h"
+#include "cgal_holefilling.h"
+#include "cgal_slicer.h"
+#include "cgal_signeddistances.h"
 
 #endif // CG3_CGAL_CGALINTERFACE_H

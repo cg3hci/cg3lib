@@ -1,4 +1,4 @@
-#include "slicer.h"
+#include "cgal_slicer.h"
 
 namespace cg3 {
 

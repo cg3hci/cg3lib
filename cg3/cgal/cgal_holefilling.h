@@ -1,5 +1,5 @@
-#ifndef CG3_HOLEFILLING_H
-#define CG3_HOLEFILLING_H
+#ifndef CG3_CGAL_HOLEFILLING_H
+#define CG3_CGAL_HOLEFILLING_H
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polyhedron_3.h>
@@ -7,7 +7,7 @@
 #include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
 #include <CGAL/Polygon_mesh_processing/triangulate_hole.h>
 
-#include "polyhedron.h"
+#include "cgal_polyhedron.h"
 
 #ifdef DCEL_DEFINED
 #include <dcel/dcel.h>
@@ -40,4 +40,4 @@ namespace cgal {
 }
 #endif
 
-#endif // CG3_HOLEFILLING_H
+#endif // CG3_CGAL_HOLEFILLING_H

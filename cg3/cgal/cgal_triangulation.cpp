@@ -1,4 +1,4 @@
-#include "triangulation.h"
+#include "cgal_triangulation.h"
 
 #include <cg3/geometry/transformations.h>
 

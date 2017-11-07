@@ -1,4 +1,4 @@
-#include "signed_distances.h"
+#include "cgal_signeddistances.h"
 
 namespace cg3 {
 

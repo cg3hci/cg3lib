@@ -29,7 +29,7 @@ inline void grahamScanOnContainer(Container& list);
  * @param[in] points Points of the shape
  * @param[out] convexHullPoints Points of the convex hull
  */
-template <class T, class InputContainer, class OutputContainer>
+template <class T = double, class InputContainer, class OutputContainer>
 void convexHull2D(const InputContainer& points, OutputContainer& convexHull) {
 
     //If there aren't more than 3 points, return the input points

@@ -1,4 +1,4 @@
-#include "booleans2d.h"
+#include "cgal_booleans2d.h"
 
 namespace cg3 {
 

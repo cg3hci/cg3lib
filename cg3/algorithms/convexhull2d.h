@@ -5,7 +5,7 @@
 namespace cg3 {
 
 
-template <class T, class InputContainer, class OutputContainer>
+template <class T = double, class InputContainer, class OutputContainer>
 void convexHull2D(const InputContainer& container, OutputContainer& convexHull);
 
 

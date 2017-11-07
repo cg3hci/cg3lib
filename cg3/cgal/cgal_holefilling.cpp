@@ -1,4 +1,4 @@
-#include "hole_filling.h"
+#include "cgal_holefilling.h"
 
 #ifdef CGAL_EIGEN3_ENABLED
 namespace cg3 {

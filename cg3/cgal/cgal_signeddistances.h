@@ -1,11 +1,11 @@
-#ifndef CG3_CGAL_SIGNED_DISTANCES_H
-#define CG3_CGAL_SIGNED_DISTANCES_H
+#ifndef CG3_CGAL_SIGNEDDISTANCES_H
+#define CG3_CGAL_SIGNEDDISTANCES_H
 
 #include <cg3/utilities/utils.h>
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/2d/point2d.h>
 
-#include "aabb_tree.h"
+#include "cgal_aabbtree.h"
 
 #include <vector>
 
@@ -19,4 +19,4 @@ namespace cgal {
 
 }
 
-#endif // CG3_CGAL_SIGNED_DISTANCES_H
+#endif // CG3_CGAL_SIGNEDDISTANCES_H

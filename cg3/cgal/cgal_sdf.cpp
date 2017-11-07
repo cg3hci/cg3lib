@@ -1,4 +1,4 @@
-#include "sdf.h"
+#include "cgal_sdf.h"
 
 namespace cg3 {
 

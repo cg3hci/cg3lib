@@ -1,4 +1,4 @@
-#include "polyhedron.h"
+#include "cgal_polyhedron.h"
 
 namespace cg3 {
 

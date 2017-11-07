@@ -42,9 +42,7 @@ exists($$(LIBIGL_HOME)){
         $$PWD/libigl/libigl.h
 
     SOURCES += \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp
-
-    HEADERS += \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp \
         $$PWD/libigl/booleans.ipp \
         $$PWD/libigl/connected_components.ipp \
         $$PWD/libigl/decimate.ipp \
