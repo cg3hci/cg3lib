@@ -74,16 +74,24 @@ template <class T, class Container>
 inline void grahamScanOnContainer(Container& container) {
     typename Container::iterator it2 = container.end();
     typename Container::iterator it3 = container.end();
-    for (typename Container::iterator it1 = container.begin(); it1 != container.end(); it1++) {
-        if (it2 != container.end() && it3 != container.end()) {
-            while (cg3::isPointAtRight(*it1, *it2, *it3) && it2 != container.begin()) {
-                container.erase(it2);
-                it2 = it3;
-                it3--;
-            }
+
+    typename Container::iterator it1 = container.begin();
+
+    it3 = it1;
+    it1++;
+    it2 = it1;
+    it1++;
+
+    while (it1 != container.end()) {
+        while (cg3::isPointAtRight(*it1, *it2, *it3) && it2 != container.begin()) {
+            container.erase(it2);
+            it2 = it3;
+            it3--;
         }
+
         it3 = it2;
         it2 = it1;
+        it1++;
     }
 }
 

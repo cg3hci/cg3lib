@@ -18,20 +18,6 @@ namespace cg3 {
                 (m[0][0] * m[1][2] * m[2][1]);
     }
 
-    /**
-     * @brief Check if a point is at the right of the line passing through the segment
-     *
-     * @param[in] segment Input segment
-     * @param[in] point Input point
-     * @return True if the point is at the right of the line passing through
-     * the segment, false otherwise
-     *
-     */
-    template<typename T>
-    inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
-        return isPointAtRight<T>(segment.getP1(), segment.getP2(), point);
-    }
-
 
     /**
      * @brief Check if a point is at the right of the line passing through the segment
@@ -61,6 +47,23 @@ namespace cg3 {
 
         return determinant3x3(m) > -std::numeric_limits<double>::epsilon();
     }
+
+    /**
+     * @brief Check if a point is at the right of the line passing through the segment
+     *
+     * @param[in] segment Input segment
+     * @param[in] point Input point
+     * @return True if the point is at the right of the line passing through
+     * the segment, false otherwise
+     *
+     */
+    template<typename T>
+    inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
+        return isPointAtRight<T>(segment.getP1(), segment.getP2(), point);
+    }
+
+
+
 
     /**
      * @brief Check if a point lies in a triangle (endpoints included)
