@@ -19,8 +19,10 @@ exists($$(LIBIGL_HOME)){
         QMAKE_CXXFLAGS += -isystem $$(LIBIGL_HOME)/include/
 
         #newest versions of eigen are not supported by libigl
-        INCLUDEPATH -= /usr/include/eigen3
-        INCLUDEPATH += $$(LIBIGL_HOME)/external/nanogui/ext/eigen/
+        USE_LIBIGL_EIGEN {
+            INCLUDEPATH -= /usr/include/eigen3
+            INCLUDEPATH += $$(LIBIGL_HOME)/external/nanogui/ext/eigen/
+        }
 
         LIBIGL_STATIC {
             DEFINES += IGL_STATIC_LIBRARY

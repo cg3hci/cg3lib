@@ -116,6 +116,21 @@ inline void Array2D<T>::resize(unsigned long int x, unsigned long int y, const T
 }
 
 template<class T>
+inline void Array2D<T>::conservativeResize(unsigned long x, unsigned long y) {
+    std::vector<T> newVector(x*y);
+    for (unsigned int i = 0; i < sizeX || i < x; i++){
+        for (unsigned int j = 0; j < sizeY || j < y; j++){
+            int newIndex = j + y*i;
+            int oldIndex = getIndex(i,j);
+            newVector[newIndex] = v[oldIndex];
+        }
+    }
+    sizeX = x;
+    sizeY = y;
+    v = newVector;
+}
+
+template<class T>
 inline void Array2D<T>::clear() {
     v.clear();
     sizeX = sizeY = 0;

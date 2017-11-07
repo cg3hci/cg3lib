@@ -30,6 +30,7 @@ template <class T> class Array2D : public SerializableObject{
 
         void resize (unsigned long int x, unsigned long int y);
         void resize (unsigned long int x, unsigned long int y, const T& value);
+        void conservativeResize(unsigned long int x, unsigned long int y);
 
         void clear();
 

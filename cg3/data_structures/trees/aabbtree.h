@@ -237,6 +237,9 @@ protected:
 
 };
 
+template <class K, class T = K> using AABBTree2D = typename cg3::AABBTree<2, K, T>;
+template <class K, class T = K> using AABBTree3D = typename cg3::AABBTree<3, K, T>;
+
 }
 
 #include "aabbtree/aabbtreeaabb.h"
