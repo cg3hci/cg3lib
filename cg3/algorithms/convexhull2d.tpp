@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <set>
-#include <list>
 
 #include "cg3/geometry/2d/point2d.h"
 
@@ -12,52 +11,52 @@ namespace cg3 {
 
 /* ----- FUNCTION DECLARATION ----- */
 
-template <class T, class Container>
-inline void grahamScanOnContainer(Container& list);
+
+template <class T = double, class InputIterator, class OutputIterator>
+inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt);
 
 
 
 /* ----- IMPLEMENTATION OF GRAHAM SCAN ----- */
 
 /**
- * @brief Get the convex hull using Graham scan algorithm
- * @param[in] points Points of the shape
- * @param[out] convexHullPoints Points of the convex hull
+ * @brief Get the 2D convex hull using Graham scan algorithm on iterators of containers
+ * @param[in] first First iterator of the input container
+ * @param[in] end End iterator of the input container
+ * @param[out] outIt Output iterator for the container containing the convex hull
+ */
+template <class T = double, class InputIterator, class OutputIterator>
+void getConvexHull2D(const InputIterator first, const InputIterator end, OutputIterator outIt) {
+    //If the container is empty
+    if (first == end)
+        return;
+
+    //Sort the points
+    std::vector<Point2D<T>> sortedPoints(first, end);
+    std::sort(sortedPoints.begin(), sortedPoints.end());
+
+    //If the is composed by 1 points (or more than 1 of the same point)
+    if (*(sortedPoints.begin()) == *(sortedPoints.rbegin())) {
+        *outIt = *(sortedPoints.begin());
+        outIt++;
+
+        return;
+    }
+
+    //Graham scan on upper and lower convex hull
+    grahamScanOnContainer<T>(sortedPoints.begin(), sortedPoints.end(), outIt);
+    grahamScanOnContainer<T>(sortedPoints.rbegin(), sortedPoints.rend(), outIt);
+}
+
+
+/**
+ * @brief Get the 2D convex hull using Graham scan algorithm
+ * @param[in] points Container of the points of the shape
+ * @param[out] convexHull Output container for the convex hull
  */
 template <class T = double, class InputContainer, class OutputContainer>
 void getConvexHull2D(const InputContainer& points, OutputContainer& convexHull) {
-
-    //If there aren't more than 3 points, return the input points
-    if (points.size() <= 3) {
-        std::vector<Point2D<T>> sortedPoints(points.begin(), points.end());
-        std::sort(sortedPoints.begin(), sortedPoints.end());
-
-        convexHull = OutputContainer(sortedPoints.begin(), sortedPoints.end());
-    }
-    else {
-        //Initialize upper convex hull
-        std::list<Point2D<T>> upperConvexHull(points.begin(), points.end());
-        upperConvexHull.sort();
-
-        //Initialize lower convex hull, copying the upper
-        std::list<Point2D<T>> lowerConvexHull(upperConvexHull.begin(), upperConvexHull.end());
-
-        //Reverse the lower convex hull to get the opposite of the initialize upper
-        std::reverse(lowerConvexHull.begin(), lowerConvexHull.end());
-
-        //Graham scan on upper and lower convex hull
-        grahamScanOnContainer<T>(lowerConvexHull);
-        grahamScanOnContainer<T>(upperConvexHull);
-
-        //Delete endpoints from lower convex hull
-        lowerConvexHull.pop_back();
-        lowerConvexHull.pop_front();
-
-        //Concatenate upper and lower convex hull in the output list
-        upperConvexHull.splice(upperConvexHull.end(), lowerConvexHull);
-
-        convexHull = OutputContainer(upperConvexHull.begin(), upperConvexHull.end());
-    }
+    getConvexHull2D<T>(points.begin(), points.end(), std::back_inserter(convexHull));
 }
 
 
@@ -66,32 +65,87 @@ void getConvexHull2D(const InputContainer& points, OutputContainer& convexHull) 
 
 
 /**
- * @brief Graham scan on a list of points (upper or lower)
- *
+ * @brief Graham scan on a collection of points (upper or lower)
+ * @param[in] first First iterator of the input container
+ * @param[in] end End iterator of the input container
  * @param[out] container Container that contains the points
  */
-template <class T, class Container>
-inline void grahamScanOnContainer(Container& container) {
-    typename Container::iterator it2 = container.end();
-    typename Container::iterator it3 = container.end();
 
-    typename Container::iterator it1 = container.begin();
+template <class T = double, class InputIterator, class OutputIterator>
+inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt) {
+    //Iterators
+    InputIterator it1;
+    InputIterator it2;
+    InputIterator it3;
 
-    it3 = it1;
-    it1++;
-    it2 = it1;
-    it1++;
+    InputIterator last;
 
-    while (it1 != container.end()) {
-        while (cg3::isPointAtRight(*it1, *it2, *it3) && it2 != container.begin()) {
-            container.erase(it2);
-            it2 = it3;
-            it3--;
-        }
+    //Stack of iterator to the vector (it is going to be the output)
+    std::vector<InputIterator> stack;
 
-        it3 = it2;
-        it2 = it1;
+    //Last points to the last element of the collection
+    last = end;
+    last--;
+
+    assert(first != end);
+    assert(std::next(first) != end);
+    assert(*first != *last);
+
+    //Add first and last to the results
+    stack.push_back(last);
+    stack.push_back(first);
+
+    //Initializing t1
+    it1 = first;
+
+    //Skip points not at the left of first-last segment
+    do
+    {
         it1++;
+    } while (it1 != last && !cg3::isPointAtLeft(*first, *last, *it1));
+
+    if (it1 != last) {
+        //Initialize stack with the first element which could be in the convex hull
+        stack.push_back(it1);
+
+        it2 = it1;
+
+        //Iterator to stack, pointing to the previous element of the back element
+        typename std::vector<InputIterator>::reverse_iterator stackItR = stack.rbegin();
+        stackItR++;
+
+        it3 = *stackItR;
+
+        for (it1++; it1 != last; it1++) {
+            //Skip point for which last element is on the right of
+            //it1 - it2 segment
+            if (cg3::isPointAtLeft(*it1, *it2, *last)) {
+                while (!cg3::isPointAtLeft(*it2, *it3, *it1)) {
+                    //Pop from stack
+                    stack.pop_back();
+
+                    it2 = it3;
+
+                    stackItR = stack.rbegin();
+                    stackItR++;
+
+                    it3 = *stackItR;
+
+                    assert(stack.size() >= 2);
+                }
+
+                stack.push_back(it1);
+                it3 = it2;
+                it2 = it1;
+            }
+        }
+    }
+
+    typename std::vector<InputIterator>::iterator sIter = stack.begin();
+    for (++sIter;  sIter != stack.end(); ++sIter)
+    {
+        *outIt =  **sIter;
+        ++outIt;
     }
 }
 
