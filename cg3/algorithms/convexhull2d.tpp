@@ -124,6 +124,7 @@ inline void grahamScanOnContainer(const InputIterator first, const InputIterator
                     //Pop from stack
                     stack.pop_back();
 
+                    //Setting other iterators
                     it2 = it3;
 
                     stackItR = stack.rbegin();
@@ -134,6 +135,7 @@ inline void grahamScanOnContainer(const InputIterator first, const InputIterator
                     assert(stack.size() >= 2);
                 }
 
+                //Add to stack it1 and setting other iterators
                 stack.push_back(it1);
                 it3 = it2;
                 it2 = it1;
@@ -141,6 +143,7 @@ inline void grahamScanOnContainer(const InputIterator first, const InputIterator
         }
     }
 
+    //Writing on the output iterator the results
     typename std::vector<InputIterator>::iterator sIter = stack.begin();
     for (++sIter;  sIter != stack.end(); ++sIter)
     {

@@ -1,8 +1,8 @@
 /**
     @author Stefano Nuvoli
 */
-#ifndef CG3_AABBTREE_H
-#define CG3_AABBTREE_H
+#ifndef CG3_AVLINNER_H
+#define CG3_AVLINNER_H
 
 #include <vector>
 #include <utility>
@@ -13,58 +13,50 @@
 #include "includes/iterators/treereverseiterator.h"
 #include "includes/iterators/treeinsertiterator.h"
 
-#include "includes/nodes/aabbnode.h"
-
-#include "includes/aabbhelpers.h"
+#include "includes/nodes/avlnode.h"
 
 namespace cg3 {
 
 /**
- * @brief An autobalancing (AVL) AABB tree
+ * @brief An autobalancing AVL binary search tree
  *
- * No duplicates are allowed. It has been implemented as
- * a FAT AABB tree: the AABB of each node is the AABB
- * containing the entire childhood AABBs.
+ * Keys and values are saved in all nodes, not only in the leaves. The implementation
+ * is performed following "Introduction to Algorithms" (Cormen, 2011).
+ * No duplicates are allowed.
  */
-template <int D, class K, class T = K>
-class AABBTree
+template <class K, class T = K>
+class AVLInner
 {
 
 public:
 
     /* Typedefs */
 
-    typedef AABBNode<D,K,T> Node;
+    typedef AVLNode<K,T> Node;
 
     typedef LessComparatorType<K> LessComparator;
 
-    typedef AABBValueExtractorType<K> AABBValueExtractor;
-    typedef KeyOverlapCheckerType<K> KeyOverlapChecker;
+    typedef TreeGenericIterator<AVLInner<K,T>, Node> generic_iterator;
 
-    typedef TreeGenericIterator<AABBTree<D,K,T>, Node> generic_iterator;
+    typedef TreeIterator<AVLInner<K,T>, Node, T> iterator;
+    typedef TreeIterator<AVLInner<K,T>, Node, const T> const_iterator;
 
-    typedef TreeIterator<AABBTree<D,K,T>, Node, T> iterator;
-    typedef TreeIterator<AABBTree<D,K,T>, Node, const T> const_iterator;
+    typedef TreeReverseIterator<AVLInner<K,T>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<AVLInner<K,T>, Node, const T> const_reverse_iterator;
 
-    typedef TreeReverseIterator<AABBTree<D,K,T>, Node, T> reverse_iterator;
-    typedef TreeReverseIterator<AABBTree<D,K,T>, Node, const T> const_reverse_iterator;
-
-    typedef TreeInsertIterator<AABBTree<D,K,T>, K> insert_iterator;
+    typedef TreeInsertIterator<AVLInner<K,T>, K> insert_iterator;
 
 
 
     /* Constructors/destructor */
 
-    AABBTree(const AABBValueExtractor customAABBExtractor,
+    AVLInner(const LessComparator customComparator = &cg3::defaultComparator<K>);
+    AVLInner(const std::vector<std::pair<K,T>>& vec,
              const LessComparator customComparator = &cg3::defaultComparator<K>);
-    AABBTree(const std::vector<std::pair<K,T>>& vec,
-             const AABBValueExtractor customAABBExtractor,
-             const LessComparator customComparator = &cg3::defaultComparator<K>);
-    AABBTree(const std::vector<K>& vec,
-             const AABBValueExtractor customAABBExtractor,
+    AVLInner(const std::vector<K>& vec,
              const LessComparator customComparator = &cg3::defaultComparator<K>);
 
-    ~AABBTree();
+    ~AVLInner();
 
 
 
@@ -89,19 +81,8 @@ public:
 
     TreeSize getHeight();
 
-
     void rangeQuery(const K& start, const K& end,
                     std::vector<iterator> &out);
-
-
-    void aabbOverlapQuery(
-            const K& key,
-            std::vector<iterator>& out,
-            KeyOverlapChecker keyOverlapChecker = nullptr);
-
-    bool aabbOverlapCheck(
-            const K& key,
-            KeyOverlapChecker keyOverlapChecker = nullptr);
 
 
     /* Iterator Min/Max Next/Prev */
@@ -141,8 +122,6 @@ protected:
 
     const LessComparator lessComparator;
 
-    const AABBValueExtractor aabbValueExtractor;
-
 
 private:
 
@@ -155,9 +134,9 @@ private:
 }
 
 
-#include "aabbtree.tpp"
+#include "avlinner.tpp"
 
-#endif // CG3_AABBTREE_H
+#endif // CG3_AVLINNER_H
 
 
 

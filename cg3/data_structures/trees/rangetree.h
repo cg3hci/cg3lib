@@ -7,6 +7,16 @@
 #include <vector>
 #include <algorithm>
 
+#include "includes/treecommon.h"
+
+#include "includes/iterators/treeiterator.h"
+#include "includes/iterators/treereverseiterator.h"
+#include "includes/iterators/treeinsertiterator.h"
+
+#include "includes/nodes/rangetreenode.h"
+
+#include "includes/rangetreehelpers.h"
+
 
 namespace cg3 {
 
@@ -26,36 +36,39 @@ template <class K, class T = K>
 class RangeTree
 {
 
+
 public:
 
     /* Typedefs */
 
-    typedef bool (*LessComparator)(const K& key1, const K& key2);
-    typedef bool (*LessDimensionComparator)(const K& key1, const K& key2, const unsigned int dim);
+    typedef RangeTreeNode<K,T> Node;
+
+    typedef LessComparatorType<K> LessComparator;
+
+    typedef TreeGenericIterator<RangeTree<K,T>, Node> generic_iterator;
+
+    typedef TreeIterator<RangeTree<K,T>, Node, T> iterator;
+    typedef TreeIterator<RangeTree<K,T>, Node, const T> const_iterator;
+
+    typedef TreeReverseIterator<RangeTree<K,T>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<RangeTree<K,T>, Node, const T> const_reverse_iterator;
+
+    typedef TreeInsertIterator<RangeTree<K,T>, K> insert_iterator;
 
 
 
     /* Constructors/destructor */
 
-    RangeTree(unsigned int dim,
-              const LessDimensionComparator customDimensionComparator,
-              const LessComparator customComparator = &defaultComparator);
-    RangeTree(unsigned int dim,
+    RangeTree(const unsigned int dim,
+              const std::vector<LessComparator>& customComparators);
+    RangeTree(const unsigned int dim,
               const std::vector<std::pair<K,T>>& vec,
-              const LessDimensionComparator customDimensionComparator,
-              const LessComparator customComparator = &defaultComparator);
-    RangeTree(unsigned int dim,
+              const std::vector<LessComparator>& customComparators);
+    RangeTree(const unsigned int dim,
               const std::vector<K>& vec,
-              const LessDimensionComparator customDimensionComparator,
-              const LessComparator customComparator = &defaultComparator);
+              const std::vector<LessComparator>& customComparators);
 
     ~RangeTree();
-
-
-
-    /* Public nested classes */
-
-    class Iterator;
 
 
 
@@ -64,18 +77,13 @@ public:
     void construction(const std::vector<K>& vec);
     void construction(const std::vector<std::pair<K,T>>& vec);
 
-    bool insert(const K& key);
-    bool insert(const K& key, const T& value);
+    iterator insert(const K& key);
+    iterator insert(const K& key, const T& value);
 
     bool erase(const K& key);
 
-    Iterator find(const K& key);
+    iterator find(const K& key);
 
-    void rangeQuery(const K& start, const K& end,
-                    std::vector<Iterator> &out);
-
-    Iterator getMin();
-    Iterator getMax();
 
     size_t size();
     bool empty();
@@ -85,27 +93,38 @@ public:
     size_t getHeight();
 
 
+    void rangeQuery(
+            const K& start, const K& end,
+            std::vector<iterator> &out);
+
+
+    /* Iterator Min/Max Next/Prev */
+
+    iterator getMin();
+    iterator getMax();
+
+    generic_iterator getNext(const generic_iterator it);
+    generic_iterator getPrev(const generic_iterator it);
+
 
     /* Iterators */
 
-    Iterator begin();
-    const Iterator& end();
+    iterator begin();
+    iterator end();
 
+    const_iterator cbegin();
+    const_iterator cend();
 
+    reverse_iterator rbegin();
+    reverse_iterator rend();
 
-    /* Utilities */
+    const_reverse_iterator crbegin();
+    const_reverse_iterator crend();
 
-    //Comparators for pairs (needed for std::sort)
-    bool operator()(const std::pair<K,T> a, const std::pair<K,T> b) const
-    {
-        return isLess(a.first, b.first);
-    }
+    insert_iterator inserter();
+
 
 protected:
-
-    /* Protected nested classes */
-
-    class Node;
 
 
 
@@ -115,106 +134,15 @@ protected:
 
     size_t entries;
 
-    const Iterator endIterator;
-
     const unsigned int dim;
-    const LessDimensionComparator lessDimensionComparator;
     const LessComparator lessComparator;
 
+    const std::vector<LessComparator> customComparators;
 
 
+    /* Private methods */
 
-    /* Static helpers */
-
-    static Node* getSuccessorHelper(Node* node);
-    static Node* getPredecessorHelper(Node* node);
-
-    static Node* getMinimumHelper(Node* node);
-    static Node* getMaximumHelper(Node* node);
-
-
-
-    /* Helpers */
-
-    void initHelper();
-
-    void constructionBottomUpHelper(const std::vector<std::pair<K,T>>& sortedVec);
-
-    bool insertNodeHelper(Node*& node);
-
-    Node* findNodeHelper(const K& key) const;
-
-    void eraseNodeHelper(Node*& node);
-
-    void clearHelper(Node*& rootNode);
-
-    void replaceSubtreeHelper(const Node* u, Node* v);
-
-    size_t getHeightHelper(const Node* node);
-
-
-
-    /* Range query helpers */
-
-    void rangeQueryHelper(const K& start, const K& end,
-                          std::vector<Node*> &out);
-
-    Node* findSplitNodeHelper(const K& start, const K& end);
-
-    void reportSubtreeHelper(Node* node, std::vector<Node*>& out);
-
-
-
-    /* AVL Helpers */
-
-    void updateHeightHelper(Node* node);
-
-    void rebalanceHelper(Node* node);
-
-    Node* leftRotate(Node* a);
-    Node* rightRotate(Node* a);
-
-
-
-    /* Multidimensional range tree helper */
-
-    void rangeSearchInNextDimensionHelper(Node* node, const K& start, const K& end, std::vector<Node*>& out);
-
-    void createAssociatedTreeHelper(Node* node);
-
-    void insertIntoAssociatedTreeHelper(Node* node, const K& key, const T& value);
-    void insertIntoParentAssociatedTreesHelper(Node* node, const K& key, const T& value);
-
-    void eraseFromAssociatedTreeHelper(Node* node, const K& key);
-    void eraseFromParentAssociatedTreesHelper(Node* node, const K& key);
-
-
-
-    /* Comparator utilities */
-
-    inline bool isEqual(const K& a, const K& b) const {
-        return !(isLess(a,b) || isLess(b,a));
-    }
-    inline bool isLess(const K& a, const K& b) const {
-        if (lessDimensionComparator(a, b, dim))
-            return true;
-        if (lessDimensionComparator(b, a, dim))
-            return false;
-        return lessComparator(a,b);
-    }
-    inline bool isLessOrEqual(const K& a, const K& b) const {
-        return isLess(a,b) || isEqual(a,b);
-    }
-    inline bool isGreater(const K& a, const K& b) const {
-        return isLess(b,a);
-    }
-    inline bool isGreaterOrEqual(const K& a, const K& b) const {
-        return !isLess(a,b);
-    }
-
-    static bool defaultComparator(const K& key1, const K& key2) {
-        return key1 < key2;
-    }
+    void initialize();
 
 
 };
@@ -222,8 +150,6 @@ protected:
 
 }
 
-#include "rangetree/rangetreeiterator.h"
-#include "rangetree/rangetreenode.h"
 
 #include "rangetree.tpp"
 

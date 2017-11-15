@@ -1,13 +1,13 @@
 /**
     @author Stefano Nuvoli
 */
-#include "aabbtree.h"
+#include "bstleaf.h"
+
+#include "includes/bstleafhelpers.h"
 
 #include <stdexcept>
 #include <algorithm>
 #include <utility>
-
-#include "includes/bstleafhelpers.h"
 
 namespace cg3 {
 
@@ -17,17 +17,12 @@ namespace cg3 {
 /**
  * @brief Default constructor
  *
- * @param[in] customAABBValueExtractor Function to extract AABB coordinates from
- * a key
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <int D, class K, class T>
-AABBTree<D,K,T>::AABBTree(
-        const AABBValueExtractor customAABBValueExtractor,
-        const LessComparator customComparator) :
-    lessComparator(customComparator),
-    aabbValueExtractor(customAABBValueExtractor)
+template <class K, class T>
+BSTLeaf<K,T>::BSTLeaf(const LessComparator customComparator) :
+    lessComparator(customComparator)
 {
     this->initialize();
 }
@@ -36,18 +31,14 @@ AABBTree<D,K,T>::AABBTree(
  * @brief Constructor with a vector of entries (key/value pairs) to be inserted
  *
  * @param[in] vec Vector of pairs of keys/values
- * @param[in] customAABBValueExtractor Function to extract AABB coordinates from
- * a key
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <int D, class K, class T>
-AABBTree<D,K,T>::AABBTree(
+template <class K, class T>
+BSTLeaf<K,T>::BSTLeaf(
         const std::vector<std::pair<K,T>>& vec,
-        const AABBValueExtractor customAABBValueExtractor,
         const LessComparator customComparator) :
-    lessComparator(customComparator),
-    aabbValueExtractor(customAABBValueExtractor)
+    lessComparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -58,18 +49,14 @@ AABBTree<D,K,T>::AABBTree(
  * @brief Constructor with a vector of values to be inserted
  *
  * @param[in] vec Vector of values
- * @param[in] customAABBValueExtractor Function to extract AABB coordinates from
- * a key
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <int D, class K, class T>
-AABBTree<D,K,T>::AABBTree(
+template <class K, class T>
+BSTLeaf<K,T>::BSTLeaf(
         const std::vector<K>& vec,
-        const AABBValueExtractor customAABBValueExtractor,
         const LessComparator customComparator) :
-    lessComparator(customComparator),
-    aabbValueExtractor(customAABBValueExtractor)
+    lessComparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -79,8 +66,8 @@ AABBTree<D,K,T>::AABBTree(
 /**
  * @brief Destructor
  */
-template <int D, class K, class T>
-AABBTree<D,K,T>::~AABBTree() {
+template <class K, class T>
+BSTLeaf<K,T>::~BSTLeaf() {
     this->clear();
 }
 
@@ -99,8 +86,8 @@ AABBTree<D,K,T>::~AABBTree() {
  *
  * @param[in] vec Vector of values
  */
-template <int D, class K, class T>
-void AABBTree<D,K,T>::construction(const std::vector<K>& vec) {
+template <class K, class T>
+void BSTLeaf<K,T>::construction(const std::vector<K>& vec) {
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -118,8 +105,8 @@ void AABBTree<D,K,T>::construction(const std::vector<K>& vec) {
  *
  * @param[in] vec Vector of pairs of keys/values
  */
-template <int D, class K, class T>
-void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
+template <class K, class T>
+void BSTLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     this->clear();
 
     if (vec.size() == 0)
@@ -138,22 +125,11 @@ void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
         sortedNodes.push_back(node);
     }
 
-    //Calling the bottom up helper
+    //Calling the bottom up construction helper
     this->entries = constructionBottomUpHelperLeaf(
                 sortedNodes,
                 this->root,
                 lessComparator);
-
-    //Update the height of nodes and create their AABBs
-    for (Node*& node : sortedNodes) {
-        if (node != nullptr && node->isLeaf()) {
-            //Update height
-            updateHeightHelper(node);
-
-            //Update AABBs
-            updateAABBHelper<D>(node, aabbValueExtractor);
-        }
-    }
 }
 
 
@@ -166,8 +142,8 @@ void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(const K& key) {
+template <class K, class T>
+typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::insert(const K& key) {
     return insert(key, key);
 }
 
@@ -182,8 +158,8 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(const K& key) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(
+template <class K, class T>
+typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::insert(
         const K& key, const T& value)
 {
     //Create new node
@@ -194,12 +170,6 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(
 
     //If node has been inserted
     if (result != nullptr) {
-        //Update height and rebalance
-        updateHeightAndRebalanceAABBHelper<D>(newNode, this->root, aabbValueExtractor);
-
-        //Update AABBs
-        updateAABBHelper<D>(newNode, aabbValueExtractor);
-
         //Increment entry number
         this->entries++;
 
@@ -222,21 +192,15 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(
  * @param[in] key Key of the node
  * @return True if item has been found and then erased, false otherwise
  */
-template <int D, class K, class T>
-bool AABBTree<D,K,T>::erase(const K& key) {
+template <class K, class T>
+bool BSTLeaf<K,T>::erase(const K& key) {
     //Query the BST to find the node
     Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
 
     //If the node has been found
     if (node != nullptr) {
         //Erase node
-        Node* replacingNode = eraseNodeHelperLeaf(node, this->root);
-
-        //Update height and rebalance
-        updateHeightAndRebalanceAABBHelper<D>(replacingNode, this->root, aabbValueExtractor);
-
-        //Update AABBs
-        updateAABBHelper<D>(replacingNode, aabbValueExtractor);
+        eraseNodeHelperLeaf(node, this->root);
 
         //Decrease the number of entries
         this->entries--;
@@ -252,8 +216,8 @@ bool AABBTree<D,K,T>::erase(const K& key) {
  *
  * @param[in] it A generic iterator pointing to the node to be erased
  */
-template <int D, class K, class T>
-void AABBTree<D,K,T>::erase(generic_iterator it) {
+template <class K, class T>
+void BSTLeaf<K,T>::erase(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -262,16 +226,9 @@ void AABBTree<D,K,T>::erase(generic_iterator it) {
     //Save node to be deleted
     Node* node = it.node;
 
-
     if (node != nullptr) {
         //Erase node
-        Node* replacingNode = eraseNodeHelperLeaf(node, this->root);
-
-        //Update height and rebalance
-        updateHeightAndRebalanceAABBHelper(replacingNode, this->root, aabbValueExtractor);
-
-        //Update AABBs
-        updateAABBHelper(replacingNode, aabbValueExtractor);
+        eraseNodeHelperLeaf(node, this->root);
 
         //Decrease the number of entries
         this->entries--;
@@ -287,8 +244,8 @@ void AABBTree<D,K,T>::erase(generic_iterator it) {
  * @return The iterator pointing to the BST node if the element
  * is contained in the BST, end iterator otherwise
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::find(const K& key) {
+template <class K, class T>
+typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::find(const K& key) {
     //Query the BST to find the node
     Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
 
@@ -303,8 +260,8 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::find(const K& key) {
  * @brief Clear the tree, delete all its elements
  *
  */
-template <int D, class K, class T>
-void AABBTree<D,K,T>::clear() {
+template <class K, class T>
+void BSTLeaf<K,T>::clear() {
     //Clear entire tree
     clearHelper(this->root);
 
@@ -320,8 +277,8 @@ void AABBTree<D,K,T>::clear() {
  *
  * @return Number of entries in the BST
  */
-template <int D, class K, class T>
-TreeSize AABBTree<D,K,T>::size() {
+template <class K, class T>
+TreeSize BSTLeaf<K,T>::size() {
     return this->entries;
 }
 
@@ -330,8 +287,8 @@ TreeSize AABBTree<D,K,T>::size() {
  *
  * @return True if the BST is empty, false otherwise
  */
-template <int D, class K, class T>
-bool AABBTree<D,K,T>::empty() {
+template <class K, class T>
+bool BSTLeaf<K,T>::empty() {
     return (this->size() == 0);
 }
 
@@ -342,10 +299,10 @@ bool AABBTree<D,K,T>::empty() {
  *
  * @return Max height of the tree
  */
-template <int D, class K, class T>
-TreeSize AABBTree<D,K,T>::getHeight()
+template <class K, class T>
+TreeSize BSTLeaf<K,T>::getHeight()
 {
-    return getHeightHelper(this->root);
+    return getHeightRecursiveHelper(this->root);
 }
 
 
@@ -359,8 +316,8 @@ TreeSize AABBTree<D,K,T>::getHeight()
  * @param[out] out Vector of iterators pointing to the
  * elements enclosed in the input range
  */
-template <int D, class K, class T>
-void AABBTree<D,K,T>::rangeQuery(
+template <class K, class T>
+void BSTLeaf<K,T>::rangeQuery(
         const K& start, const K& end,
         std::vector<iterator> &out)
 {
@@ -377,55 +334,6 @@ void AABBTree<D,K,T>::rangeQuery(
 
 
 
-/**
- * @brief Find elements for which the input bounding box overlaps with the one of the values
- *
- * @param[in] key Input key
- * @param[out] out Vector of iterators pointing to elements that overlap
- */
-template <int D, class K, class T>
-void AABBTree<D,K,T>::aabbOverlapQuery(
-        const K& key,
-        std::vector<iterator>& out,
-        KeyOverlapChecker keyOverlapChecker)
-{
-    //Get the AABB
-    AABB<D> aabb;
-    setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
-
-    //Query the AABB tree
-    std::vector<Node*> nodeOutput;
-    aabbOverlapQueryHelper(this->root, key, aabb, nodeOutput, keyOverlapChecker);
-
-    //Pushing out the results
-    for (Node* node : nodeOutput) {
-        out.push_back(iterator(this, node));
-    }
-}
-
-
-/**
- * @brief Check if the given bounding box overlaps with the one of the values
- *
- * @param[in] key Input key
- * @return True if there is an overlapping bounding box in the stored values
- */
-template <int D, class K, class T>
-bool AABBTree<D,K,T>::aabbOverlapCheck(
-        const K& key,
-        KeyOverlapChecker keyOverlapChecker)
-{
-    //Get the AABB
-    AABB<D> aabb;
-    setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
-
-    //Query the AABB tree
-    return aabbOverlapCheckHelper(this->root, key, aabb, keyOverlapChecker);
-}
-
-
-
-
 
 /* ----- ITERATOR MIN/MAX NEXT/PREV ----- */
 
@@ -434,8 +342,8 @@ bool AABBTree<D,K,T>::aabbOverlapCheck(
  *
  * @return The iterator pointing to the minimum node
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::getMin() {
+template <class K, class T>
+typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::getMin() {
     return iterator(this, getMinimumHelperLeaf(this->root));
 }
 
@@ -444,8 +352,8 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::getMin() {
  *
  * @return The iterator pointing to the maximum node
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::getMax() {
+template <class K, class T>
+typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::getMax() {
     return iterator(this, getMaximumHelperLeaf(this->root));
 }
 
@@ -458,8 +366,8 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::getMax() {
  * @return The iterator pointing to the successor node (end
  * iterator if it has no successor)
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::generic_iterator AABBTree<D,K,T>::getNext(generic_iterator it) {
+template <class K, class T>
+typename BSTLeaf<K,T>::generic_iterator BSTLeaf<K,T>::getNext(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -474,8 +382,8 @@ typename AABBTree<D,K,T>::generic_iterator AABBTree<D,K,T>::getNext(generic_iter
  * @return The iterator pointing to the predecessor node (end
  * iterator if it has no predecessor)
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::generic_iterator AABBTree<D,K,T>::getPrev(generic_iterator it) {
+template <class K, class T>
+typename BSTLeaf<K,T>::generic_iterator BSTLeaf<K,T>::getPrev(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -490,16 +398,16 @@ typename AABBTree<D,K,T>::generic_iterator AABBTree<D,K,T>::getPrev(generic_iter
 /**
  * @brief Begin iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::begin() {
+template <class K, class T>
+typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::begin() {
     return iterator(this, getMinimumHelperLeaf(this->root));
 }
 
 /**
  * @brief End iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::end() {
+template <class K, class T>
+typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::end() {
     return iterator(this, nullptr);
 }
 
@@ -507,16 +415,16 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::end() {
 /**
  * @brief Begin const iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::const_iterator AABBTree<D,K,T>::cbegin() {
+template <class K, class T>
+typename BSTLeaf<K,T>::const_iterator BSTLeaf<K,T>::cbegin() {
     return const_iterator(this, getMinimumHelperLeaf(this->root));
 }
 
 /**
  * @brief End const iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::const_iterator AABBTree<D,K,T>::cend() {
+template <class K, class T>
+typename BSTLeaf<K,T>::const_iterator BSTLeaf<K,T>::cend() {
     return const_iterator(this, nullptr);
 }
 
@@ -524,16 +432,16 @@ typename AABBTree<D,K,T>::const_iterator AABBTree<D,K,T>::cend() {
 /**
  * @brief Begin reverse iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::reverse_iterator AABBTree<D,K,T>::rbegin() {
+template <class K, class T>
+typename BSTLeaf<K,T>::reverse_iterator BSTLeaf<K,T>::rbegin() {
     return reverse_iterator(this, getMaximumHelperLeaf(this->root));
 }
 
 /**
  * @brief End reverse iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::reverse_iterator AABBTree<D,K,T>::rend() {
+template <class K, class T>
+typename BSTLeaf<K,T>::reverse_iterator BSTLeaf<K,T>::rend() {
     return reverse_iterator(this, nullptr);
 }
 
@@ -541,16 +449,16 @@ typename AABBTree<D,K,T>::reverse_iterator AABBTree<D,K,T>::rend() {
 /**
  * @brief Begin const reverse iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::const_reverse_iterator AABBTree<D,K,T>::crbegin() {
+template <class K, class T>
+typename BSTLeaf<K,T>::const_reverse_iterator BSTLeaf<K,T>::crbegin() {
     return const_reverse_iterator(this, getMaximumHelperLeaf(this->root));
 }
 
 /**
  * @brief End const reverse iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::const_reverse_iterator AABBTree<D,K,T>::crend() {
+template <class K, class T>
+typename BSTLeaf<K,T>::const_reverse_iterator BSTLeaf<K,T>::crend() {
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -559,8 +467,8 @@ typename AABBTree<D,K,T>::const_reverse_iterator AABBTree<D,K,T>::crend() {
 /**
  * @brief Insert output iterator
  */
-template <int D, class K, class T>
-typename AABBTree<D,K,T>::insert_iterator AABBTree<D,K,T>::inserter() {
+template <class K, class T>
+typename BSTLeaf<K,T>::insert_iterator BSTLeaf<K,T>::inserter() {
     return insert_iterator(this);
 }
 
@@ -571,8 +479,8 @@ typename AABBTree<D,K,T>::insert_iterator AABBTree<D,K,T>::inserter() {
 /**
  * @brief Initialization of the BST
  */
-template <int D, class K, class T>
-void AABBTree<D,K,T>::initialize()
+template <class K, class T>
+void BSTLeaf<K,T>::initialize()
 {
     this->root = nullptr;
     this->entries = 0;

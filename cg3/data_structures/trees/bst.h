@@ -5,7 +5,7 @@
 #define CG3BST_H
 
 /** Default BST implementations */
-#include "bst/avlleaf.h"
+#include "avlleaf.h"
 
 namespace cg3 {
 
