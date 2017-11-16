@@ -56,39 +56,41 @@ HEADERS += \
     $$PWD/core/cg3/data_structures/color.ipp \
     $$PWD/core/cg3/data_structures/arrays/array2d.h \
     $$PWD/core/cg3/data_structures/arrays/array3d.h \
-    $$PWD/core/cg3/data_structures/arrays/array4d.h \
-    $$PWD/core/cg3/geometry/geometryutils.h
+    $$PWD/core/cg3/data_structures/arrays/array4d.h
 
 SOURCES += \
     $$PWD/core/cg3/data_structures/arrays/array2d.tpp \
     $$PWD/core/cg3/data_structures/arrays/array3d.tpp \
-    $$PWD/core/cg3/data_structures/arrays/array4d.tpp \
-    $$PWD/core/cg3/geometry/geometryutils.ipp
+    $$PWD/core/cg3/data_structures/arrays/array4d.tpp
 
 ##geometry
 HEADERS += \
     $$PWD/core/cg3/geometry/bounding_box.h \
-    $$PWD/core/cg3/geometry/bounding_box.ipp \
     $$PWD/core/cg3/geometry/line.h \
     $$PWD/core/cg3/geometry/plane.h \
     $$PWD/core/cg3/geometry/point.h \
     $$PWD/core/cg3/geometry/segment.h \
     $$PWD/core/cg3/geometry/transformations.h \
-    $$PWD/core/cg3/geometry/intersections.h \
+    $$PWD/core/cg3/geometry/utils3d.h \
     $$PWD/core/cg3/geometry/2d/bounding_box2d.h \
-    $$PWD/core/cg3/geometry/2d/bounding_box2d.ipp \
     $$PWD/core/cg3/geometry/2d/point2d.h \
-    $$PWD/core/cg3/geometry/2d/polygon2d.h
+    $$PWD/core/cg3/geometry/2d/polygon2d.h \
+    $$PWD/core/cg3/geometry/2d/utils2d.h \
+    $$PWD/core/cg3/geometry/2d/intersections2d.h
 
 SOURCES += \
+    $$PWD/core/cg3/geometry/bounding_box.ipp \
     $$PWD/core/cg3/geometry/line.cpp \
     $$PWD/core/cg3/geometry/plane.cpp \
     $$PWD/core/cg3/geometry/point.tpp \
     $$PWD/core/cg3/geometry/segment.tpp \
     $$PWD/core/cg3/geometry/transformations.cpp \
-    $$PWD/core/cg3/geometry/intersections.cpp \
+    $$PWD/core/cg3/geometry/utils3d.ipp \
+    $$PWD/core/cg3/geometry/2d/bounding_box2d.ipp \
     $$PWD/core/cg3/geometry/2d/point2d.tpp \
-    $$PWD/core/cg3/geometry/2d/polygon2d.cpp
+    $$PWD/core/cg3/geometry/2d/polygon2d.cpp \
+    $$PWD/core/cg3/geometry/2d/utils2d.ipp \
+    $$PWD/core/cg3/geometry/2d/intersections2d.cpp \
 
 
 #io

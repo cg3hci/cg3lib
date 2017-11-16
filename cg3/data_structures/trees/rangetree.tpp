@@ -351,28 +351,31 @@ size_t RangeTree<K,T>::getHeight()
 
 
 
+
 /**
- * @brief Find entries in the BST that are enclosed in a given range.
+ * @brief Find entries in the range tree that are enclosed in a given range.
  * Start and end are included bounds of the range.
  *
  * @param[in] start Starting value of the range
  * @param[in] end End value of the range
- * @param[out] out Vector of iterators pointing to the elements in the deepest
- * associated range tree enclosed in the input range
+ * @param[out] out Output iterator for the container containing the iterators
+ * pointing to the nodes in the deepest range tree which have keys enclosed
+ * in the input range
  */
-template <class K, class T>
+template <class K, class T>template <class OutputIterator>
 void RangeTree<K,T>::rangeQuery(
         const K& start, const K& end,
-        std::vector<iterator> &out)
+        OutputIterator out)
 {
     //Output
     std::vector<Node*> nodeOutput;
 
     //Execute range query
-    rangeQueryRangeTreeHelper<Node,K,iterator>(start, end, this->root, nodeOutput, lessComparator, dim);
+    this->rangeQueryHelper(start, end, nodeOutput);
 
     for (Node* node : nodeOutput) {
-        out.push_back(iterator(this, node));
+        *out = iterator(this, node);
+        out++;
     }
 }
 
@@ -549,6 +552,104 @@ void RangeTree<K,T>::initialize()
 }
 
 
+
+
+/* --------- RANGE QUERY HELPERS --------- */
+
+
+
+/**
+ * @brief Find entries in the range tree that are enclosed in a given range
+ *
+ * @param[in] start Starting value of the range
+ * @param[in] end End value of the range
+ * @param[out] out Container containing the nodes which have keys enclosed
+ * in the input range
+ */
+template <class K, class T>
+inline void RangeTree<K,T>::rangeQueryHelper(
+        const K& start, const K& end,
+        std::vector<Node*>& out)
+{
+    //Find split node
+    Node* splitNode = findSplitNodeHelperLeaf(start, end, this->root, lessComparator);
+
+    if (splitNode == nullptr)
+        return;
+
+    //If the split node is a leaf
+    if (splitNode->isLeaf()) {
+        //Report the node if it is contained in the range
+        if (isGreaterOrEqual(splitNode->key, start, lessComparator) &&
+                isLessOrEqual(splitNode->key, end, lessComparator))
+        {
+            this->rangeSearchInNextDimensionHelper(splitNode, start, end, out);
+        }
+    }
+    //If the split node is not a leaf
+    else {
+        //Follow path from splitNode to start and report right subtrees
+        Node* vl = splitNode->left;
+        while (!vl->isLeaf()) {
+            if (isLess(start, vl->key, lessComparator)) {
+                this->rangeSearchInNextDimensionHelper(vl->right, start, end, out);
+                vl = vl->left;
+            }
+            else {
+                vl = vl->right;
+            }
+        }
+        //Report the node if it is contained in the range
+        if (isGreaterOrEqual(vl->key, start, lessComparator) &&
+                isLessOrEqual(vl->key, end, lessComparator))
+        {
+            this->rangeSearchInNextDimensionHelper(vl, start, end, out);
+        }
+
+        //Follow path from splitNode to end and report left subtrees
+        Node* vr = splitNode->right;
+        while (!vr->isLeaf()) {
+            if (isGreaterOrEqual(end, vr->key, lessComparator)) {
+                this->rangeSearchInNextDimensionHelper(vr->left, start, end, out);
+                vr = vr->right;
+            }
+            else {
+                vr = vr->left;
+            }
+        }
+        //Report the node if it is contained in the range
+        if (isGreaterOrEqual(vr->key, start, lessComparator) && isLessOrEqual(vr->key, end, lessComparator)) {
+            this->rangeSearchInNextDimensionHelper(vr, start, end, out);
+        }
+    }
+
+}
+
+
+/**
+ * @brief Range search in next dimension or report the subtree
+ *
+ * @param[in] node Root of the subtree
+ * @param[in] start Starting value of the range
+ * @param[in] end End value of the range
+ * @param[out] out Container containing the nodes which have keys enclosed
+ * in the input range
+ */
+template <class K, class T>
+inline void RangeTree<K,T>::rangeSearchInNextDimensionHelper(
+        Node* node,
+        const K& start,
+        const K& end,
+        std::vector<Node*>& out)
+{
+
+    if (dim > 1) {
+        node->assRangeTree->rangeQueryHelper(start, end, out);
+    }
+    else {
+        reportSubTreeHelperLeaf(node, out);
+    }
+}
 
 
 

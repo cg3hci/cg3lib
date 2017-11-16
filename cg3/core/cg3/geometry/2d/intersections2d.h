@@ -1,9 +1,9 @@
-#ifndef CG3_INTERSECTIONS_H
-#define CG3_INTERSECTIONS_H
+#ifndef CG3_INTERSECTIONS2D_H
+#define CG3_INTERSECTIONS2D_H
 
 #include "cg3/utilities/utils.h"
 
-#include "segment.h"
+#include "cg3/geometry/segment.h"
 
 namespace cg3 {
 
@@ -22,4 +22,4 @@ void checkSegmentIntersection(
 
 }
 
-#endif // CG3_INTERSECTIONS_H
+#endif // CG3_INTERSECTIONS2D_H

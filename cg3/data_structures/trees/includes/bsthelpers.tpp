@@ -17,7 +17,7 @@ namespace cg3 {
  * @param[in] rootNode Root of the subtree
  */
 template <class Node>
-void clearHelper(Node*& rootNode) {
+inline void clearHelper(Node*& rootNode) {
     //If it is already empty
     if (rootNode == nullptr)
         return;
@@ -42,7 +42,7 @@ void clearHelper(Node*& rootNode) {
  * @return Max height of the subtree
  */
 template <class Node>
-unsigned long long int getHeightRecursiveHelper(const Node* node)
+inline unsigned long long int getHeightRecursiveHelper(const Node* node)
 {
     if (node == nullptr)
         return 0;
@@ -63,7 +63,7 @@ unsigned long long int getHeightRecursiveHelper(const Node* node)
  * @param[in] node Root node of the BST
  */
 template <class Node>
-void replaceSubtreeHelper(const Node* u, Node* v, Node*& rootNode) {
+inline void replaceSubtreeHelper(const Node* u, Node* v, Node*& rootNode) {
     //If u is the root (no parent)
     if (u->parent == nullptr) {
         rootNode = v;

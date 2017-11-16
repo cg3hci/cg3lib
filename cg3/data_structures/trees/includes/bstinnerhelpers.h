@@ -16,20 +16,20 @@ namespace cg3 {
 /* Basic BST operation helpers */
 
 template <class Node, class K>
-Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator);
+inline Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator);
 
 template <class Node, class K>
-Node* findNodeHelperInner(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
+inline Node* findNodeHelperInner(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
 
 template <class Node>
-Node* eraseNodeHelperInner(Node*& node, Node*& rootNode);
+inline Node* eraseNodeHelperInner(Node*& node, Node*& rootNode);
 
 
 
 /* Construction helpers */
 
 template <class Node, class K>
-TreeSize constructionMedianHelperInner(
+inline TreeSize constructionMedianHelperInner(
         std::vector<Node*>& sortedNodes,
         const TreeSize start, const TreeSize end,
         Node*& rootNode,
@@ -40,18 +40,18 @@ TreeSize constructionMedianHelperInner(
 /* Range query helpers */
 
 template <class Node, class K>
-Node* findSplitNodeHelperInner(
+inline Node* findSplitNodeHelperInner(
         const K& start, const K& end,
         Node* rootNode,
         LessComparatorType<K> lessComparator);
 
 template <class Node>
-void reportSubTreeHelperInner(
+inline void reportSubTreeHelperInner(
         Node* node,
         std::vector<Node*>& out);
 
 template <class Node, class K>
-void rangeQueryHelperInner(
+inline void rangeQueryHelperInner(
         const K& start, const K& end,
         std::vector<Node*> &out,
         Node* rootNode,
@@ -62,16 +62,16 @@ void rangeQueryHelperInner(
 /* Successors/Predecessors Min/Max */
 
 template <class Node>
-Node* getSuccessorHelperInner(Node* node);
+inline Node* getSuccessorHelperInner(Node* node);
 
 template <class Node>
-Node* getPredecessorHelperInner(Node* node);
+inline Node* getPredecessorHelperInner(Node* node);
 
 template <class Node>
-Node* getMinimumHelperInner(Node* node);
+inline Node* getMinimumHelperInner(Node* node);
 
 template <class Node>
-Node* getMaximumHelperInner(Node* node);
+inline Node* getMaximumHelperInner(Node* node);
 
 
 

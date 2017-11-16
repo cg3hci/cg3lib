@@ -16,27 +16,27 @@ namespace cg3 {
 /* Basic BST operation helpers */
 
 template <class Node, class K>
-Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator);
+inline Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator);
 
 template <class Node, class K>
-Node* findNodeHelperLeaf(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
+inline Node* findNodeHelperLeaf(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
 
 template <class Node>
-Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode);
+inline Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode);
 
 
 
 /* Construction helpers */
 
 template <class Node, class K>
-TreeSize constructionMedianHelperLeaf(
+inline TreeSize constructionMedianHelperLeaf(
         std::vector<Node*>& sortedNodes,
         const TreeSize start, const TreeSize end,
         Node*& rootNode,
         LessComparatorType<K> lessComparator);
 
 template <class Node, class K>
-TreeSize constructionBottomUpHelperLeaf(
+inline TreeSize constructionBottomUpHelperLeaf(
         std::vector<Node*>& sortedVec,
         Node*& rootNode,
         LessComparatorType<K> lessComparator);
@@ -45,19 +45,19 @@ TreeSize constructionBottomUpHelperLeaf(
 /* Range query helpers */
 
 template <class Node, class K>
-Node* findSplitNodeHelperLeaf(
+inline Node* findSplitNodeHelperLeaf(
         const K& start, const K& end,
         Node* rootNode,
         LessComparatorType<K> lessComparator);
 
 template <class Node>
-void reportSubTreeHelperLeaf(
+inline void reportSubTreeHelperLeaf(
         Node* node,
         std::vector<Node*>& out);
 
 
 template <class Node, class K>
-void rangeQueryHelperLeaf(
+inline void rangeQueryHelperLeaf(
         const K& start, const K& end,
         std::vector<Node*> &out,
         Node* rootNode,
@@ -68,16 +68,16 @@ void rangeQueryHelperLeaf(
 /* Successors/Predecessors Min/Max */
 
 template <class Node>
-Node* getSuccessorHelperLeaf(Node* node);
+inline Node* getSuccessorHelperLeaf(Node* node);
 
 template <class Node>
-Node* getPredecessorHelperLeaf(Node* node);
+inline Node* getPredecessorHelperLeaf(Node* node);
 
 template <class Node>
-Node* getMinimumHelperLeaf(Node* node);
+inline Node* getMinimumHelperLeaf(Node* node);
 
 template <class Node>
-Node* getMaximumHelperLeaf(Node* node);
+inline Node* getMaximumHelperLeaf(Node* node);
 
 
 

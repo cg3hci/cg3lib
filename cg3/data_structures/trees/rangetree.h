@@ -93,9 +93,12 @@ public:
     size_t getHeight();
 
 
+
+    template <class OutputIterator>
     void rangeQuery(
             const K& start, const K& end,
-            std::vector<iterator> &out);
+            OutputIterator out);
+
 
 
     /* Iterator Min/Max Next/Prev */
@@ -144,6 +147,19 @@ protected:
 
     void initialize();
 
+
+
+    /* Range query helpers */
+
+    inline void rangeQueryHelper(
+            const K& start, const K& end,
+            std::vector<Node*>& out);
+
+    inline void rangeSearchInNextDimensionHelper(
+            Node* node,
+            const K& start,
+            const K& end,
+            std::vector<Node*>& out);
 
 };
 

@@ -28,7 +28,7 @@ using AABBValueExtractorType = double (*)(const K& key, const AABBValueType& val
 /* AABB helpers */
 
 template <int D, class K, class Node>
-void aabbOverlapQueryHelper(
+inline void aabbOverlapQueryHelper(
         Node* node,
         const K& key,
         const AABB<D>& aabb,
@@ -36,39 +36,54 @@ void aabbOverlapQueryHelper(
         KeyOverlapCheckerType<K> keyOverlapChecker);
 
 template <int D, class K, class Node>
-bool aabbOverlapCheckHelper(
+inline bool aabbOverlapCheckHelper(
         Node* node,
         const K& key,
         const AABB<D>& aabb,
         KeyOverlapCheckerType<K> keyOverlapChecker);
 
 template <int D, class K, class Node>
-void updateAABBHelper(Node* node, AABBValueExtractorType<K> aabbValueExtractor);
+inline void updateAABBHelper(Node* node, AABBValueExtractorType<K> aabbValueExtractor);
 
 
 /* AVL helpers for AABB */
 
 template <int D, class K, class Node>
-void rebalanceAABBHelper(Node* node, Node*& rootNode, AABBValueExtractorType<K> aabbValueExtractor);
+inline void rebalanceAABBHelper(
+        Node* node,
+        Node*& rootNode,
+        AABBValueExtractorType<K> aabbValueExtractor);
 
 template <int D, class K, class Node>
-void updateHeightAndRebalanceAABBHelper(Node* node, Node*& rootNode, AABBValueExtractorType<K> aabbValueExtractor);
+inline void updateHeightAndRebalanceAABBHelper(
+        Node* node,
+        Node*& rootNode,
+        AABBValueExtractorType<K> aabbValueExtractor);
 
 template <int D, class K, class Node>
-Node* leftRotateAABBHelper(Node* a, AABBValueExtractorType<K> aabbValueExtractor);
+inline Node* leftRotateAABBHelper(
+        Node* a,
+        AABBValueExtractorType<K> aabbValueExtractor);
 
 template <int D, class K, class Node>
-Node* rightRotateAABBHelper(Node* a, AABBValueExtractorType<K> aabbValueExtractor);
+inline Node* rightRotateAABBHelper(
+        Node* a,
+        AABBValueExtractorType<K> aabbValueExtractor);
 
 
 
 /* AABB utilities */
 
 template <int D>
-inline bool aabbOverlapsHelper(const AABB<D>& a, const AABB<D>& b);
+inline bool aabbOverlapsHelper(
+        const AABB<D>& a,
+        const AABB<D>& b);
 
 template <int D, class K>
-inline void setAABBFromKeyHelper(const K& k, AABB<D>& aabb, AABBValueExtractorType<K> aabbValueExtractor);
+inline void setAABBFromKeyHelper(
+        const K& k,
+        AABB<D>& aabb,
+        AABBValueExtractorType<K> aabbValueExtractor);
 
 }
 

@@ -11,121 +11,6 @@ namespace cg3 {
 
 
 
-/* ----- MULTIDIMENSIONAL RANGE TREE HELPERS ----- */
-
-template <class Node, class K, class Iterator>
-void rangeSearchInNextDimensionHelper(
-        Node* node,
-        const K& start,
-        const K& end,
-        std::vector<Node*>& out,
-        const unsigned int dim);
-
-
-/**
- * @brief Find entries in the range tree that are enclosed in a given range
- *
- * @param[in] start Starting value of the range
- * @param[in] end End value of the range
- * @param[in] rootNode Root node of the BST
- * @param[out] out Vector of node with keys that are enclosed in the input range
- * @param[in] lessComparator Less comparator for keys
- * @param[in] dim Dimension of the range tree
- */
-template <class Node, class K, class Iterator>
-void rangeQueryRangeTreeHelper(
-        const K& start, const K& end,
-        Node*& rootNode,
-        std::vector<Node*> &out,
-        LessComparatorType<K> lessComparator,
-        const unsigned int dim)
-{
-    //Find split node
-    Node* splitNode = findSplitNodeHelperLeaf(start, end, rootNode, lessComparator);
-
-    if (splitNode == nullptr)
-        return;
-
-    //If the split node is a leaf
-    if (splitNode->isLeaf()) {
-        //Report the node if it is contained in the range
-        if (isGreaterOrEqual(splitNode->key, start, lessComparator) &&
-                isLessOrEqual(splitNode->key, end, lessComparator))
-        {
-            rangeSearchInNextDimensionHelper<Node,K,Iterator>(splitNode, start, end, out, dim);
-        }
-    }
-    //If the split node is not a leaf
-    else {
-        //Follow path from splitNode to start and report right subtrees
-        Node* vl = splitNode->left;
-        while (!vl->isLeaf()) {
-            if (isLess(start, vl->key, lessComparator)) {
-                rangeSearchInNextDimensionHelper<Node,K,Iterator>(vl->right, start, end, out, dim);
-                vl = vl->left;
-            }
-            else {
-                vl = vl->right;
-            }
-        }
-        //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vl->key, start, lessComparator) &&
-                isLessOrEqual(vl->key, end, lessComparator))
-        {
-            rangeSearchInNextDimensionHelper<Node,K,Iterator>(vl, start, end, out, dim);
-        }
-
-        //Follow path from splitNode to end and report left subtrees
-        Node* vr = splitNode->right;
-        while (!vr->isLeaf()) {
-            if (isGreaterOrEqual(end, vr->key, lessComparator)) {
-                rangeSearchInNextDimensionHelper<Node,K,Iterator>(vr->left, start, end, out, dim);
-                vr = vr->right;
-            }
-            else {
-                vr = vr->left;
-            }
-        }
-        //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vr->key, start, lessComparator) && isLessOrEqual(vr->key, end, lessComparator)) {
-            rangeSearchInNextDimensionHelper<Node,K,Iterator>(vr, start, end, out, dim);
-        }
-    }
-}
-
-
-/**
- * @brief Range search in next dimension or report the subtree
- *
- * @param[in] node Root of the subtree
- * @param[in] start Starting value of the range
- * @param[in] end End value of the range
- * @param[out] out Vector of output nodes
- * @param[in] dim Dimension of the range tree
- */
-template <class Node, class K, class Iterator>
-void rangeSearchInNextDimensionHelper(
-        Node* node,
-        const K& start,
-        const K& end,
-        std::vector<Node*>& out,
-        const unsigned int dim)
-{
-
-    if (dim > 1) {
-        std::vector<Iterator> itOut;
-
-        node->assRangeTree->rangeQuery(start, end, itOut);
-
-        for (Iterator it : itOut) {
-            out.push_back(it.node);
-        }
-    }
-    else {
-        reportSubTreeHelperLeaf(node, out);
-    }
-}
-
 
 
 
@@ -140,7 +25,7 @@ void rangeSearchInNextDimensionHelper(
  * dimension of the range tree
  */
 template <class Node, class K, class T>
-void createAssociatedTreeHelper(
+inline void createAssociatedTreeHelper(
         Node *node,
         const unsigned int dim,
         std::vector<LessComparatorType<K>> customComparators)
@@ -158,9 +43,11 @@ void createAssociatedTreeHelper(
  *
  * @param[in] node Node
  * @param[in] dim Dimension of the range tree
+ * @param[in] customComparators Vector of comparators for each
+ * dimension of the range tree
  */
 template <class Node, class K, class T>
-void createParentAssociatedTreeHelper(
+inline void createParentAssociatedTreeHelper(
         Node *node,
         const unsigned int dim,
         std::vector<LessComparatorType<K>> customComparators)
@@ -187,7 +74,7 @@ void createParentAssociatedTreeHelper(
  * @param[in] dim Dimension of the range tree
  */
 template <class Node, class K, class T>
-void insertIntoAssociatedTreeHelper(
+inline void insertIntoAssociatedTreeHelper(
         Node* node,
         const K& key,
         const T& value,
@@ -211,7 +98,7 @@ void insertIntoAssociatedTreeHelper(
  * @param[in] dim Dimension of the range tree
  */
 template <class Node, class K, class T>
-void insertIntoParentAssociatedTreesHelper(
+inline void insertIntoParentAssociatedTreesHelper(
         Node* node,
         const K& key,
         const T& value,
@@ -238,7 +125,7 @@ void insertIntoParentAssociatedTreesHelper(
  * @param[in] dim Dimension of the range tree
  */
 template <class Node, class K>
-void eraseFromAssociatedTreeHelper(
+inline void eraseFromAssociatedTreeHelper(
         Node* node,
         const K& key,
         const unsigned int dim)
@@ -260,7 +147,7 @@ void eraseFromAssociatedTreeHelper(
  * @param[in] dim Dimension of the range tree
  */
 template <class Node, class K>
-void eraseFromParentAssociatedTreesHelper(
+inline void eraseFromParentAssociatedTreesHelper(
         Node* node,
         const K& key,
         const unsigned int dim)
@@ -287,9 +174,10 @@ void eraseFromParentAssociatedTreesHelper(
  *
  * @param[in] node Starting node
  * @param[in] node Root node of the BST
+ * @param[in] dim Dimension of the range tree
  */
 template <class Node>
-void rebalanceRangeTreeHelper(
+inline void rebalanceRangeTreeHelper(
         Node* node,
         Node*& rootNode,
         const unsigned int dim)
@@ -366,9 +254,10 @@ void rebalanceRangeTreeHelper(
  *
  * @param[in] node Starting node
  * @param[in] node Root node of the BST
+ * @param[in] dim Dimension of the range tree
  */
 template <class Node>
-void updateHeightAndRebalanceRangeTreeHelper(
+inline void updateHeightAndRebalanceRangeTreeHelper(
         Node* node,
         Node*& rootNode,
         const unsigned int dim)
@@ -383,10 +272,11 @@ void updateHeightAndRebalanceRangeTreeHelper(
  * @brief Left rotation
  *
  * @param[in] a Node to be rotated
+ * @param[in] dim Dimension of the range tree
  * @return New node in the position of the original node after the rotation
  */
 template <class Node>
-Node* leftRotateRangeTreeHelper(Node* a, const unsigned int dim) {
+inline Node* leftRotateRangeTreeHelper(Node* a, const unsigned int dim) {
     //Rotate left
     Node* b = leftRotateHelper(a);
 
@@ -421,7 +311,7 @@ Node* leftRotateRangeTreeHelper(Node* a, const unsigned int dim) {
  * @return New node in the position of the original node after the rotation
  */
 template <class Node>
-Node* rightRotateRangeTreeHelper(Node* a, const unsigned int dim) {
+inline Node* rightRotateRangeTreeHelper(Node* a, const unsigned int dim) {
     //Rotate right
     Node* b = rightRotateHelper(a);
 

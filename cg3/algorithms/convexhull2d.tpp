@@ -4,8 +4,7 @@
 #include <set>
 
 #include "cg3/geometry/2d/point2d.h"
-
-#include "cg3/geometry/geometryutils.h"
+#include "cg3/geometry/2d/utils2d.h"
 
 namespace cg3 {
 

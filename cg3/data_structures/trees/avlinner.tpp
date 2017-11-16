@@ -252,6 +252,9 @@ void AVLInner<K,T>::erase(generic_iterator it) {
 
         //Decrease the number of entries
         this->entries--;
+
+        //Set end iterator
+        it.node = nullptr;
     }
 }
 
@@ -327,19 +330,21 @@ TreeSize AVLInner<K,T>::getHeight()
 
 
 
+
+
 /**
  * @brief Find entries in the BST that are enclosed in a given range.
  * Start and end are included bounds of the range.
  *
  * @param[in] start Starting value of the range
  * @param[in] end End value of the range
- * @param[out] out Vector of iterators pointing to the
- * elements enclosed in the input range
+ * @param[out] out Output iterator for the container containing the iterators
+ * pointing to the nodes which have keys enclosed in the input range
  */
-template <class K, class T>
+template <class K, class T> template <class OutputIterator>
 void AVLInner<K,T>::rangeQuery(
         const K& start, const K& end,
-        std::vector<iterator> &out)
+        OutputIterator out)
 {
     //Output
     std::vector<Node*> nodeOutput;
@@ -348,10 +353,10 @@ void AVLInner<K,T>::rangeQuery(
     rangeQueryHelperInner(start, end, nodeOutput, this->root, lessComparator);
 
     for (Node* node : nodeOutput) {
-        out.push_back(iterator(this, node));
+        *out = iterator(this, node);
+        out++;
     }
 }
-
 
 
 

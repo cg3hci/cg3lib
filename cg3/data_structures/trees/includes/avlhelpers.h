@@ -14,25 +14,25 @@ namespace cg3 {
 /* AVL helpers */
 
 template <class Node>
-TreeSize getHeightHelper(const Node* node);
+inline TreeSize getHeightHelper(const Node* node);
 
 template <class Node>
-void updateHeightHelper(Node* node);
+inline void updateHeightHelper(Node* node);
 
 template <class Node>
-void rebalanceHelper(Node* node, Node*& rootNode);
+inline void rebalanceHelper(Node* node, Node*& rootNode);
 
 template <class Node>
-void updateHeightAndRebalanceHelper(Node* node, Node*& rootNode);
+inline void updateHeightAndRebalanceHelper(Node* node, Node*& rootNode);
 
 
 /* AVL Rotations helper */
 
 template <class Node>
-Node* leftRotateHelper(Node* a);
+inline Node* leftRotateHelper(Node* a);
 
 template <class Node>
-Node* rightRotateHelper(Node* a);
+inline Node* rightRotateHelper(Node* a);
 
 }
 

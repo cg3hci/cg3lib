@@ -275,6 +275,9 @@ void AABBTree<D,K,T>::erase(generic_iterator it) {
 
         //Decrease the number of entries
         this->entries--;
+
+        //Set end iterator
+        it.node = nullptr;
     }
 }
 
@@ -356,13 +359,13 @@ TreeSize AABBTree<D,K,T>::getHeight()
  *
  * @param[in] start Starting value of the range
  * @param[in] end End value of the range
- * @param[out] out Vector of iterators pointing to the
- * elements enclosed in the input range
+ * @param[out] out Output iterator for the container containing the iterators
+ * pointing to the nodes which have keys enclosed in the input range
  */
-template <int D, class K, class T>
+template <int D, class K, class T> template <class OutputIterator>
 void AABBTree<D,K,T>::rangeQuery(
         const K& start, const K& end,
-        std::vector<iterator> &out)
+        OutputIterator out)
 {
     //Output
     std::vector<Node*> nodeOutput;
@@ -371,10 +374,10 @@ void AABBTree<D,K,T>::rangeQuery(
     rangeQueryHelperLeaf(start, end, nodeOutput, this->root, lessComparator);
 
     for (Node* node : nodeOutput) {
-        out.push_back(iterator(this, node));
+        *out = iterator(this, node);
+        out++;
     }
 }
-
 
 
 /**
@@ -383,10 +386,10 @@ void AABBTree<D,K,T>::rangeQuery(
  * @param[in] key Input key
  * @param[out] out Vector of iterators pointing to elements that overlap
  */
-template <int D, class K, class T>
+template <int D, class K, class T> template <class OutputIterator>
 void AABBTree<D,K,T>::aabbOverlapQuery(
         const K& key,
-        std::vector<iterator>& out,
+        OutputIterator out,
         KeyOverlapChecker keyOverlapChecker)
 {
     //Get the AABB
@@ -399,7 +402,8 @@ void AABBTree<D,K,T>::aabbOverlapQuery(
 
     //Pushing out the results
     for (Node* node : nodeOutput) {
-        out.push_back(iterator(this, node));
+        *out = iterator(this, node);
+        out++;
     }
 }
 

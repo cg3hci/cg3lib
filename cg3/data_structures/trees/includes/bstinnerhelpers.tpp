@@ -18,7 +18,7 @@ namespace cg3 {
  * @return Pointer to the node if the node has been inserted, nullptr otherwise
  */
 template <class Node, class K>
-Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator) {
+inline Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator) {
     //Find the position in the BST in which
     //the new node must be inserted
     Node* lastVisitedNode = nullptr;
@@ -79,7 +79,7 @@ Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<
  *
  */
 template <class Node, class K>
-Node* findNodeHelperInner(
+inline Node* findNodeHelperInner(
         const K& key,
         Node*& rootNode,
         LessComparatorType<K> lessComparator
@@ -108,7 +108,7 @@ Node* findNodeHelperInner(
  * @return Node that replaces the erased one (useful for rebalancing)
  */
 template <class Node>
-Node* eraseNodeHelperInner(Node*& node, Node*& rootNode)
+inline Node* eraseNodeHelperInner(Node*& node, Node*& rootNode)
 {
     //Node that will replace the node to be erased
     Node* y;
@@ -191,7 +191,7 @@ Node* eraseNodeHelperInner(Node*& node, Node*& rootNode)
  * @return Number of entries inserted in the BST
  */
 template <class Node, class K>
-TreeSize constructionMedianHelperInner(
+inline TreeSize constructionMedianHelperInner(
         std::vector<Node*>& sortedNodes,
         const TreeSize start, const TreeSize end,
         Node*& rootNode,
@@ -248,7 +248,7 @@ TreeSize constructionMedianHelperInner(
  * @param[in] lessComparator Less comparator for keys
  */
 template <class Node, class K>
-void rangeQueryHelperInner(
+inline void rangeQueryHelperInner(
         const K& start, const K& end,
         std::vector<Node*> &out,
         Node* rootNode,
@@ -322,7 +322,7 @@ void rangeQueryHelperInner(
  * @return Split node of the BST. Returns nullptr if the tree is empty
  */
 template <class Node, class K>
-Node* findSplitNodeHelperInner(
+inline Node* findSplitNodeHelperInner(
         const K& start, const K& end,
         Node* rootNode,
         LessComparatorType<K> lessComparator)
@@ -356,7 +356,7 @@ Node* findSplitNodeHelperInner(
  * @param[out] out Vector of output nodes
  */
 template <class Node>
-void reportSubTreeHelperInner(
+inline void reportSubTreeHelperInner(
         Node* node,
         std::vector<Node*>& out)
 {
@@ -383,7 +383,7 @@ void reportSubTreeHelperInner(
  * @return Successor of the node, nullptr if there is no successor
  */
 template <class Node>
-Node* getSuccessorHelperInner(Node* node) {
+inline Node* getSuccessorHelperInner(Node* node) {
     Node* x = node;
 
     //If it has a right child, get the minimum node of subtree
@@ -409,7 +409,7 @@ Node* getSuccessorHelperInner(Node* node) {
  * @return Predecessor of the node, nullptr if there is no predecessor
  */
 template <class Node>
-Node* getPredecessorHelperInner(Node* node) {
+inline Node* getPredecessorHelperInner(Node* node) {
     Node* x = node;
 
     // If it has a left child, get the maximum node of subtree
@@ -436,7 +436,7 @@ Node* getPredecessorHelperInner(Node* node) {
  * @return Minimum key node pointer
  */
 template <class Node>
-Node* getMinimumHelperInner(Node* rootNode) {
+inline Node* getMinimumHelperInner(Node* rootNode) {
     Node* x = rootNode;
 
     while (x != nullptr && x->left != nullptr)
@@ -453,7 +453,7 @@ Node* getMinimumHelperInner(Node* rootNode) {
  * @return Maximum key node pointer
  */
 template <class Node>
-Node* getMaximumHelperInner(Node* rootNode) {
+inline Node* getMaximumHelperInner(Node* rootNode) {
     Node* x = rootNode;
 
     while (x != nullptr && x->right != nullptr)

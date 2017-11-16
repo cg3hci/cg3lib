@@ -90,13 +90,15 @@ public:
     TreeSize getHeight();
 
 
-    void rangeQuery(const K& start, const K& end,
-                    std::vector<iterator> &out);
+    template <class OutputIterator>
+    void rangeQuery(
+            const K& start, const K& end,
+            OutputIterator out);
 
-
+    template <class OutputIterator>
     void aabbOverlapQuery(
             const K& key,
-            std::vector<iterator>& out,
+            OutputIterator out,
             KeyOverlapChecker keyOverlapChecker = nullptr);
 
     bool aabbOverlapCheck(

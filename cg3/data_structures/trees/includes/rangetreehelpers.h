@@ -11,40 +11,29 @@
 namespace cg3 {
 
 
-    /* Multidimensional range tree helper */
-
-    template <class Node, class K>
-    void rangeQueryRangeTreeHelper(
-            const K& start, const K& end,
-            Node*& rootNode,
-            std::vector<Node*> &out,
-            LessComparatorType<K> lessComparator,
-            const unsigned int dim);
-
-
 
     /* Helpers for associate range trees */
 
     template <class Node, class K, class T>
-    void createAssociatedTreeHelper(
+    inline void createAssociatedTreeHelper(
             Node* node, const unsigned int dim,
             std::vector<LessComparatorType<K>> customComparators);
 
     template <class Node, class K, class T>
-    void createParentAssociatedTreeHelper(
+    inline void createParentAssociatedTreeHelper(
             Node *node, const unsigned int dim,
             std::vector<LessComparatorType<K>> customComparators);
 
 
     template <class Node, class K, class T>
-    void insertIntoAssociatedTreeHelper(
+    inline void insertIntoAssociatedTreeHelper(
             Node* node,
             const K& key,
             const T& value,
             const unsigned int dim);
 
     template <class Node, class K, class T>
-    void insertIntoParentAssociatedTreesHelper(
+    inline void insertIntoParentAssociatedTreesHelper(
             Node* node,
             const K& key,
             const T& value,
@@ -52,13 +41,13 @@ namespace cg3 {
 
 
     template <class Node, class K>
-    void eraseFromAssociatedTreeHelper(
+    inline void eraseFromAssociatedTreeHelper(
             Node* node,
             const K& key,
             const unsigned int dim);
 
     template <class Node, class K>
-    void eraseFromParentAssociatedTreesHelper(
+    inline void eraseFromParentAssociatedTreesHelper(
             Node* node,
             const K& key,
             const unsigned int dim);
@@ -68,22 +57,22 @@ namespace cg3 {
     /* AVL helpers for range tree */
 
     template <class Node>
-    void rebalanceRangeTreeHelper(
+    inline void rebalanceRangeTreeHelper(
             Node* node,
             Node*& rootNode,
             const unsigned int dim);
 
     template <class Node>
-    void updateHeightAndRebalanceRangeTreeHelper(
+    inline void updateHeightAndRebalanceRangeTreeHelper(
             Node* node,
             Node*& rootNode,
             const unsigned int dim);
 
     template <class Node>
-    Node* leftRotateRangeTreeHelper(Node* a, const unsigned int dim);
+    inline Node* leftRotateRangeTreeHelper(Node* a, const unsigned int dim);
 
     template <class Node>
-    Node* rightRotateRangeTreeHelper(Node* a, const unsigned int dim);
+    inline Node* rightRotateRangeTreeHelper(Node* a, const unsigned int dim);
 }
 
 #include "rangetreehelpers.tpp"

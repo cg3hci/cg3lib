@@ -1,4 +1,4 @@
-#include "intersections.h"
+#include "intersections2d.h"
 
 namespace cg3 {
 

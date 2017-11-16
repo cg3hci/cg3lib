@@ -24,7 +24,7 @@ namespace cg3 {
  * @param[in] keyOverlapChecker Key overlap filter function
  */
 template <int D, class K, class Node>
-void aabbOverlapQueryHelper(
+inline void aabbOverlapQueryHelper(
         Node* node,
         const K& key,
         const AABB<D>& aabb,
@@ -66,7 +66,7 @@ void aabbOverlapQueryHelper(
  * @return True if there is an overlapping bounding box in the stored values
  */
 template <int D, class K, class Node>
-bool aabbOverlapCheckHelper(
+inline bool aabbOverlapCheckHelper(
         Node* node,
         const K& key,
         const AABB<D>& aabb,
@@ -107,7 +107,10 @@ bool aabbOverlapCheckHelper(
  * @param[in] aabbValueExtractor AABB extractor for key
  */
 template <int D, class K, class Node>
-void updateAABBHelper(Node* node, AABBValueExtractorType<K> aabbValueExtractor) {
+inline void updateAABBHelper(
+        Node* node,
+        AABBValueExtractorType<K> aabbValueExtractor)
+{
     if (node != nullptr) {
         bool done;
         do {
@@ -161,7 +164,11 @@ void updateAABBHelper(Node* node, AABBValueExtractorType<K> aabbValueExtractor) 
  * @param[in] aabbValueExtractor AABB extractor for key
  */
 template <int D, class K, class Node>
-void rebalanceAABBHelper(Node* node, Node*& rootNode, AABBValueExtractorType<K> aabbValueExtractor) {
+inline void rebalanceAABBHelper(
+        Node* node,
+        Node*& rootNode,
+        AABBValueExtractorType<K> aabbValueExtractor)
+{
     //Null handler
     if (node == nullptr)
         return;
@@ -239,7 +246,11 @@ void rebalanceAABBHelper(Node* node, Node*& rootNode, AABBValueExtractorType<K> 
  * @param[in] aabbValueExtractor AABB extractor for key
  */
 template <int D, class K, class Node>
-void updateHeightAndRebalanceAABBHelper(Node* node, Node*& rootNode, AABBValueExtractorType<K> aabbValueExtractor) {
+inline void updateHeightAndRebalanceAABBHelper(
+        Node* node,
+        Node*& rootNode,
+        AABBValueExtractorType<K> aabbValueExtractor)
+{
     updateHeightHelper(node);
     rebalanceAABBHelper<D>(node, rootNode, aabbValueExtractor);
 }
@@ -254,7 +265,10 @@ void updateHeightAndRebalanceAABBHelper(Node* node, Node*& rootNode, AABBValueEx
  * @param[in] aabbValueExtractor AABB extractor for key
  */
 template <int D, class K, class Node>
-Node* leftRotateAABBHelper(Node* a, AABBValueExtractorType<K> aabbValueExtractor) {
+inline Node* leftRotateAABBHelper(
+        Node* a,
+        AABBValueExtractorType<K> aabbValueExtractor)
+{
     //Rotate left
     Node* b = leftRotateHelper(a);
 
@@ -272,7 +286,10 @@ Node* leftRotateAABBHelper(Node* a, AABBValueExtractorType<K> aabbValueExtractor
  * @param[in] aabbValueExtractor AABB extractor for key
  */
 template <int D, class K, class Node>
-Node* rightRotateAABBHelper(Node* a, AABBValueExtractorType<K> aabbValueExtractor) {
+inline Node* rightRotateAABBHelper(
+        Node* a,
+        AABBValueExtractorType<K> aabbValueExtractor)
+{
     //Rotate right
     Node* b = rightRotateHelper(a);
 
@@ -294,7 +311,10 @@ Node* rightRotateAABBHelper(Node* a, AABBValueExtractorType<K> aabbValueExtracto
  * @returns True if the bounding boxes overlap, false otherwise
  */
 template <int D>
-inline bool aabbOverlapsHelper(const AABB<D>& a, const AABB<D>& b) {
+inline bool aabbOverlapsHelper(
+        const AABB<D>& a,
+        const AABB<D>& b)
+{
     for (int i = 1; i <= D; i++) {
         if (!(a.getMin(i) <= b.getMax(i) && a.getMax(i) >= b.getMin(i)))
             return false;
@@ -310,7 +330,11 @@ inline bool aabbOverlapsHelper(const AABB<D>& a, const AABB<D>& b) {
  * @param[in] aabbValueExtractor AABB extractor for key
  */
 template <int D, class K>
-inline void setAABBFromKeyHelper(const K& k, AABB<D>& aabb, AABBValueExtractorType<K> aabbValueExtractor) {
+inline void setAABBFromKeyHelper(
+        const K& k,
+        AABB<D>& aabb,
+        AABBValueExtractorType<K> aabbValueExtractor)
+{
     for (int i = 1; i <= D; i++) {
         aabb.setMin(i, aabbValueExtractor(k, MIN, i));
         aabb.setMax(i, aabbValueExtractor(k, MAX, i));

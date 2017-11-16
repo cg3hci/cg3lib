@@ -81,8 +81,12 @@ public:
     TreeSize getHeight();
 
 
-    void rangeQuery(const K& start, const K& end,
-                    std::vector<iterator> &out);
+
+    template <class OutputIterator>
+    void rangeQuery(
+            const K& start, const K& end,
+            OutputIterator out);
+
 
 
     /* Iterator Min/Max Next/Prev */

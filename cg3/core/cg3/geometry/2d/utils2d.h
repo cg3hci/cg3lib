@@ -1,14 +1,10 @@
-#ifndef CG3_GEOMETRYUTILS_H
-#define CG3_GEOMETRYUTILS_H
+#ifndef CG3_UTILS2D_H
+#define CG3_UTILS2D_H
 
-#include "cg3/geometry/point.h"
 #include "cg3/geometry/2d/point2d.h"
 #include "cg3/geometry/segment.h"
 
 namespace cg3 {
-    template <class Vector>
-    inline double getAngle(const Vector& v1, const Vector& v2);
-    inline double getInternalAngle(const Vec3& v1, const Vec3& v2, const Vec3& direction);
 
     template<typename T>
     inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
@@ -45,6 +41,6 @@ namespace cg3 {
             const std::vector<std::vector<Point2Dd>>& triangles);
 }
 
-#include "geometryutils.ipp"
+#include "utils2d.ipp"
 
-#endif // CG3_GEOMETRYUTILS_H
+#endif // CG3_UTILS2D_H
