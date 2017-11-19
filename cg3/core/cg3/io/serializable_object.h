@@ -16,6 +16,11 @@ namespace cg3 {
  * If an class implements this interface, it becames "Serializable".
  * In that case, rules for serialization and deserialization of that class are given on
  * SerializableObject::serialize() and SerializableObject::deserialize() methods.
+ *
+ * Iff your class is a simple class without manually managed resources, and all of its
+ * attributes are SerializableObjects (or it exists a specialized function in the Serializer
+ * namespace) you can easily use the helpers Serializer::serializeObjectAttributes() and
+ * Serializer::deserializeObjectsAttributes();
  */
 class SerializableObject {
     public:
@@ -41,6 +46,21 @@ class SerializableObject {
          * myfile.close();
          * \endcode
          *
+         * The serialize function should serialize all the data of your class.
+         * Iff your class is a simple class without manually managed resources, and all of its
+         * attributes are SerializableObjects (or it exists a specialized function in the Serializer
+         * namespace) you can easily use the helpers Serializer::serializeObjectAttributes():
+         *
+         * \code{.cpp}
+         * void serialize(std::ofstream& binaryFile){
+         *     //"MyClass" should be a string containing the name of your class.
+         *     Serializer::serializeObjectAttributes("MyClass", binaryFile, attr1, attr2, attr3);
+         * }
+         * \endcode
+         *
+         * The helper function Serializer::serializeObjectAttributes() accepts a variabile number of
+         * arguments.
+         *
          * @param[in] binaryFile : ofstream where we want to serialize the object
          */
         virtual void serialize(std::ofstream& binaryFile) const = 0;
@@ -55,19 +75,37 @@ class SerializableObject {
          * std::ifstream myfile;
          * myfile.open ("filename", std::ios::in | std::ios::binary);
          * if (myfile.is_open()) {
-         *      if (myobj.deserialize(myfile))
+         *      try{
+         *          myobj.deserialize(myfile);
          *          std::cout << "Object deserialized\n";
-         *      else
-         *          std::cout << "Object not serialized\n";
+         *      }
+         *      catch(...){
+         *          std::cout << "Object not deserialized\n";
+         *      }
          * }
          * myfile.close();
          * \endcode
          *
          * The deserialize function should:
-         * - save the initial point of the input ifstream;
+         * - save the initial position of the input ifstream (see Serializer::getPosition());
          * - inside a try block read all the data of the class;
-         * - if an exception is catched, restore the initial position of the stream (see Serializer::restore())
+         * - if an exception is catched, the initial position of the input ifstream should be restore  (see Serializer::restorePosition())
          * and throw an std::ios_base::failure exception.
+         *
+         * Iff your class is a simple class without manually managed resources, and all of its
+         * attributes are SerializableObjects (or it exists a specialized function in the Serializer
+         * namespace) you can easily use the helpers Serializer::serializeObjectAttributes():
+         *
+         * \code{.cpp}
+         * void deserialize(std::ifstream& binaryFile){
+         *     //"MyClass" should be a string containing the name of your class.
+         *     Serializer::deserializeObjectAttributes("MyClass", binaryFile, attr1, attr2, attr3);
+         * }
+         * \endcode
+         *
+         * The helper function Serializer::deserializeObjectAttributes() accepts a variabile number of
+         * arguments. The argument passed should be exactly the same of the argument passed to the function
+         * Serializer::serializeObjectAttributes() in the serialize function.
          *
          * @param[in] binaryFile : ifstream where we want to deserialize the object
          */

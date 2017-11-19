@@ -5,10 +5,21 @@
 
 namespace cg3 {
 
+/**
+ * @brief Serializer::getPosition
+ * @param[in] binaryFile
+ * @return the position of the stream
+ */
 inline std::streampos Serializer::getPosition(std::ifstream& binaryFile) {
     return binaryFile.tellg();
 }
 
+/**
+ * @brief Serializer::restorePosition
+ * restores the current position of the stream
+ * @param[out] binaryFile: the file with the new position
+ * @param[in] position: the desired position on the file
+ */
 inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::streampos& position) {
     binaryFile.clear();
     binaryFile.seekg(position);
@@ -23,8 +34,8 @@ inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::st
  * - All primitive types;
  * - All classes that have correctly implemented the abstract class SerializableObject
  *
- * This method will be called if there is not a specialized "serialize" method for the type of object
- * that you are passing as first parameter (see specialized methods below).
+ * This method will be called if there is not a specialized "serialize" function for the type of object
+ * that you are passing as first parameter (see specialized methods).
  *
  * @param[in] obj: object which we want serialize
  * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
@@ -79,12 +90,39 @@ inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile){
     }
 }
 
+/**
+ * @brief Serializer::serializeObjectAttributes
+ *
+ * Allows an easy serialization of a series of arguments in a binary file.
+ * The arguments will be serialized in the order they are passed, after the first input string,
+ * which is used as id.
+ *
+ * @param[in] s: a string which discriminates the set of arguments which are going to be serialized.
+ * @param[in] binaryFile: the file in which the arguments are going to be serialized
+ * @param[in] args: a variable number of arguments of different types
+ */
 template<typename... Args>
 inline void Serializer::serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args) {
     Serializer::serialize(s, binaryFile);
     Serializer::internal::serializeAttribute(binaryFile, args...);
 }
 
+/**
+ * @brief Serializer::deserializeObjectAttributes
+ *
+ * Allows an easy deserialization of a series of arguments from a binary file.
+ * The arguments will be deserialized in the order they are passed, after the first input string,
+ * which is deserialized and checked as id.
+ * If the data deserialized doesn't match with the arguments passed, an exception is thrown
+ * and the initial position of the binary file restored as it was when the function was called.
+ * The position of the binary file will change only if all arguments will deserialized correctly.
+ *
+ * @param[in] s: a string which should match with the first deserialized string on the file.
+ * @param[in] binaryFile: the file from which the arguments are going to be deserialized
+ * @param[out] args: a variable number of arguments of different types
+ * @throws std::ios_base::failure exception if the arguments don't match with the data
+ * deserialized from the binary file.
+ */
 template<typename... Args>
 inline void Serializer::deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args) {
     std::string tmp;
