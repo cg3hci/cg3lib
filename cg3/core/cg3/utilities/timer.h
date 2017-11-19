@@ -31,6 +31,6 @@ class Timer {
 
 }
 
-#include "timer.ipp"
+#include "timer.tpp"
 
 #endif //CG3_TIMER_H

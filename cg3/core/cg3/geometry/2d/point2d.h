@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 
+#include "../../deprecated/serialize_old.h"
 #include "../../io/serialize.h"
 
 namespace cg3 {
@@ -74,15 +75,20 @@ template <class T> class Point2D : SerializableObject {
         Point2D<T> operator /= (const T& scalar );
         Point2D<T> operator /= (const Point2D<T>& otherPoint);
 
+        // SerializableObject interface
+        void serializeOld(std::ofstream& binaryFile) const;
+        bool deserializeOld(std::ifstream& binaryFile);
+
+        // SerializableObject interface
+        void serialize(std::ofstream& binaryFile) const;
+        void deserialize(std::ifstream& binaryFile);
+
     private:
         T xCoord, yCoord;
         void rot(T matrix[][2]);
 
-        // SerializableObject interface
-    public:
-        void serialize(std::ofstream& binaryFile) const;
-        bool deserialize(std::ifstream& binaryFile);
-};
+
+    };
 
 /****************
 * Other Methods *

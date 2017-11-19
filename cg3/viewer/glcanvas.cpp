@@ -125,26 +125,26 @@ bool GLcanvas::isVisible(const DrawableObject* obj) {
 void GLcanvas::serializePointOfView(std::ofstream &file) {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
-    Serializer::serialize(v.x, file);
-    Serializer::serialize(v.y, file);
-    Serializer::serialize(v.z, file);
-    Serializer::serialize(q[0], file);
-    Serializer::serialize(q[1], file);
-    Serializer::serialize(q[2], file);
-    Serializer::serialize(q[3], file);
+    SerializerOld::serialize(v.x, file);
+    SerializerOld::serialize(v.y, file);
+    SerializerOld::serialize(v.z, file);
+    SerializerOld::serialize(q[0], file);
+    SerializerOld::serialize(q[1], file);
+    SerializerOld::serialize(q[2], file);
+    SerializerOld::serialize(q[3], file);
 }
 
 bool GLcanvas::deserializePointOfView(std::ifstream &file) {
     qglviewer::Vec v;
     qglviewer::Quaternion q;
     if (
-    Serializer::deserialize(v.x, file) &&
-    Serializer::deserialize(v.y, file) &&
-    Serializer::deserialize(v.z, file) &&
-    Serializer::deserialize(q[0], file) &&
-    Serializer::deserialize(q[1], file) &&
-    Serializer::deserialize(q[2], file) &&
-    Serializer::deserialize(q[3], file) )  {
+    SerializerOld::deserialize(v.x, file) &&
+    SerializerOld::deserialize(v.y, file) &&
+    SerializerOld::deserialize(v.z, file) &&
+    SerializerOld::deserialize(q[0], file) &&
+    SerializerOld::deserialize(q[1], file) &&
+    SerializerOld::deserialize(q[2], file) &&
+    SerializerOld::deserialize(q[3], file) )  {
         camera()->setPosition(v);
         camera()->setOrientation(q);
         return true;

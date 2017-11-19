@@ -50,6 +50,9 @@ class DrawableDcel : public Dcel, public DrawableMesh {
         void setFacesWireframeWidth(int w);
         void setFacesWireframeColor(float r, float g, float b);
 
+        // SerializableObject interface
+        void deserialize(std::ifstream& binaryFile);
+
     protected:
 
         void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
@@ -70,6 +73,8 @@ class DrawableDcel : public Dcel, public DrawableMesh {
 
         int facesWireframeWidth = 1;
         float facesWireframeColor[3];
+
+
 };
 
 }

@@ -33,7 +33,7 @@ namespace cg3 {
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  * @author Marco Livesu (marco.livesu@gmail.com)
  */
-class BoundingBox : public SerializableObject{
+class BoundingBox : public SerializableObject, SerializableObjectOld{
     public:
 
         /****************
@@ -92,10 +92,6 @@ class BoundingBox : public SerializableObject{
 
         void saveOnObj(const std::string &filename, const Color& c = Color(128, 128, 128)) const;
 
-        // SerializableObject interface
-        void serialize(std::ofstream& binaryFile) const;
-
-
         void setMin(const Pointd& min);
         Pointd& min();
         void setMax(const Pointd& max);
@@ -120,7 +116,13 @@ class BoundingBox : public SerializableObject{
         double& operator()(unsigned int i);
 
         // SerializableObject interface
-        bool deserialize(std::ifstream& binaryFile);
+        void serializeOld(std::ofstream& binaryFile) const;
+        bool deserializeOld(std::ifstream& binaryFile);
+
+
+        // SerializableObject interface
+        void serialize(std::ofstream& binaryFile) const;
+        void deserialize(std::ifstream& binaryFile);
 
     protected:
 
@@ -138,6 +140,6 @@ typedef BoundingBox Box;
 
 }
 
-#include "bounding_box.ipp"
+#include "bounding_box.tpp"
 
 #endif // CG3_BOUNDING_BOX_H

@@ -17,7 +17,7 @@ const Pointd&Line::getStartingPoint() const{
     return p0;
 }
 
-bool Line::pointBelonging(const Pointd& p) const{
+bool Line::pointLiesOnLine(const Pointd& p) const{
     if (p.x() != 0 && p.y() != 0 && p.z() != 0){
         Vec3 t = (dir - p0) / p;
         return (t.x() == t.y() && t.x() == t.z());
@@ -25,6 +25,14 @@ bool Line::pointBelonging(const Pointd& p) const{
     else {
         return false; /** \todo */
     }
+}
+
+void Line::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3Line", binaryFile, p0, dir);
+}
+
+void Line::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3Line", binaryFile, p0, dir);
 }
 
 }

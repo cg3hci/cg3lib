@@ -4,11 +4,12 @@
 #include <vector>
 #include <assert.h>
 #include <iomanip>
+#include "../../deprecated/serialize_old.h"
 #include "../../io/serialize.h"
 
 namespace cg3 {
 
-template <class T> class Array2D : public SerializableObject{
+template <class T> class Array2D : public SerializableObjectOld, SerializableObject{
 
     public:
         Array2D();
@@ -35,15 +36,19 @@ template <class T> class Array2D : public SerializableObject{
         void clear();
 
         // SerializableObject interface
+        void serializeOld(std::ofstream& binaryFile) const;
+        bool deserializeOld(std::ifstream& binaryFile);
+
+        // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
-        bool deserialize(std::ifstream& binaryFile);
+        void deserialize(std::ifstream& binaryFile);
 
     private:
         unsigned long int getIndex(unsigned long int i, unsigned long int j) const;
 
         unsigned long int sizeX, sizeY;
-        std::vector<T> v;
-};
+        std::vector<T> v;        
+    };
 
 template <class T>
 std::ostream& operator<< (std::ostream& inputStream, const Array2D<T>& a);

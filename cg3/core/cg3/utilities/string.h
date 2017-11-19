@@ -14,6 +14,6 @@ void separateFilenameFromPath(const std::string& fullpath, std::string& path, st
 
 }
 
-#include "string.ipp"
+#include "string.tpp"
 
 #endif // CG3_STRING_H

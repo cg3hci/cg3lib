@@ -109,26 +109,26 @@ inline void Array4D<T>::clear() {
 }
 
 template <class T>
-inline void Array4D<T>::serialize(std::ofstream& binaryFile) const {
-    Serializer::serialize(sizeX, binaryFile);
-    Serializer::serialize(sizeY, binaryFile);
-    Serializer::serialize(sizeZ, binaryFile);
-    Serializer::serialize(sizeW, binaryFile);
+inline void Array4D<T>::serializeOld(std::ofstream& binaryFile) const {
+    SerializerOld::serialize(sizeX, binaryFile);
+    SerializerOld::serialize(sizeY, binaryFile);
+    SerializerOld::serialize(sizeZ, binaryFile);
+    SerializerOld::serialize(sizeW, binaryFile);
     for (unsigned int i = 0; i < v.size(); ++i)
-        Serializer::serialize(v[i], binaryFile);
+        SerializerOld::serialize(v[i], binaryFile);
 }
 
 template <class T>
-inline bool Array4D<T>::deserialize(std::ifstream& binaryFile) {
+inline bool Array4D<T>::deserializeOld(std::ifstream& binaryFile) {
     Array4D<T> tmp;
     int begin = binaryFile.tellg();
-    if (Serializer::deserialize(tmp.sizeX, binaryFile) &&
-            Serializer::deserialize(tmp.sizeY, binaryFile) &&
-            Serializer::deserialize(tmp.sizeZ, binaryFile) &&
-            Serializer::deserialize(tmp.sizeW, binaryFile)) {
+    if (SerializerOld::deserialize(tmp.sizeX, binaryFile) &&
+            SerializerOld::deserialize(tmp.sizeY, binaryFile) &&
+            SerializerOld::deserialize(tmp.sizeZ, binaryFile) &&
+            SerializerOld::deserialize(tmp.sizeW, binaryFile)) {
         tmp.v.resize(tmp.sizeX*tmp.sizeY*tmp.sizeZ*tmp.sizeW);
         for (unsigned int i = 0; i < tmp.v.size(); ++i){
-            if (! Serializer::deserialize(tmp.v[i], binaryFile)){
+            if (! SerializerOld::deserialize(tmp.v[i], binaryFile)){
                 binaryFile.clear();
                 binaryFile.seekg(begin);
                 return false;
@@ -142,6 +142,16 @@ inline bool Array4D<T>::deserialize(std::ifstream& binaryFile) {
         binaryFile.seekg(begin);
         return false;
     }
+}
+
+template<class T>
+inline void Array4D<T>::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3Array4D", binaryFile, sizeX, sizeY, sizeZ, sizeW, v);
+}
+
+template<class T>
+inline void Array4D<T>::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3Array4D", binaryFile, sizeX, sizeY, sizeZ, sizeW, v);
 }
 
 template <class T>

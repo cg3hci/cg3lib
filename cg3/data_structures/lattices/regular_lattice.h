@@ -24,7 +24,7 @@ public:
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
-    bool deserialize(std::ifstream& binaryFile);
+    void deserialize(std::ifstream& binaryFile);
 
     class VertexIterator;
 

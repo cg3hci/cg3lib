@@ -11,9 +11,11 @@ exists($$(CINOLIB_HOME)){
     QMAKE_CXXFLAGS += -isystem $$(CINOLIB_HOME) #-> link to cinolib
 
     HEADERS += \
-        $$PWD/cinolib/mesh_conversions.h
+        $$PWD/cinolib/cinolib_mesh_conversions.h
 
     SOURCES += \
-        $$PWD/cinolib/mesh_conversions.cpp
+        $$PWD/cinolib/cinolib_mesh_conversions.cpp
 
 }
+
+

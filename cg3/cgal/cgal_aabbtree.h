@@ -27,6 +27,10 @@ namespace cgal {
     /**
      * @brief The AABBTree class
      * AABBTree is a Data Structure which allows to make fast intersection and distance queries.
+     * This is a simply interface of CGAL's AABBTree, which is easier to use.
+     * On this interface, an AABBTree can be constructed only on triangle meshes, and it
+     * provides to make distance or spatial queries with rays and bounding boxes.
+     * @link https://doc.cgal.org/latest/AABB_tree/index.html
      */
     class AABBTree
     {

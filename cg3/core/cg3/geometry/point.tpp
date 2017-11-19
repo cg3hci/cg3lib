@@ -159,18 +159,6 @@ inline Point<T> Point<T>::max(const Point<T>& otherPoint) const {
                     std::max(z(), otherPoint.z()));
 }
 
-/**
- * \~Italian
- * @brief Metodo per serializzare in un ofstream un Point
- * @param[in] myfile: l'ofstream (file) nel quale verrà serializzato il punto
- */
-template <class T>
-inline void Point<T>::serialize(std::ofstream &myfile) const{
-    Serializer::serialize(xCoord, myfile);
-    Serializer::serialize(yCoord, myfile);
-    Serializer::serialize(zCoord, myfile);
-}
-
 template <class T>
 inline const T& Point<T>::operator[](unsigned int i) const {
     assert(i < 3);
@@ -466,16 +454,28 @@ inline void Point<T>::rotate(double matrix[3][3], const Point<T>& centroid) {
 
 /**
  * \~Italian
+ * @brief Metodo per serializzare in un ofstream un Point
+ * @param[in] myfile: l'ofstream (file) nel quale verrà serializzato il punto
+ */
+template <class T>
+inline void Point<T>::serializeOld(std::ofstream &myfile) const{
+    SerializerOld::serialize(xCoord, myfile);
+    SerializerOld::serialize(yCoord, myfile);
+    SerializerOld::serialize(zCoord, myfile);
+}
+
+/**
+ * \~Italian
  * @brief Metodo per deserializzare da un ifstream un Point
  * @param[in] myfile: l'ifstream (file) dal quale verrà deserializzato il punto
  */
 template <class T>
-inline bool Point<T>::deserialize(std::ifstream& myfile) {
+inline bool Point<T>::deserializeOld(std::ifstream& myfile) {
     Point<T> tmp;
     int begin = myfile.tellg();
-    if (Serializer::deserialize(tmp.xCoord, myfile) &&
-        Serializer::deserialize(tmp.yCoord, myfile) &&
-        Serializer::deserialize(tmp.zCoord, myfile)){
+    if (SerializerOld::deserialize(tmp.xCoord, myfile) &&
+        SerializerOld::deserialize(tmp.yCoord, myfile) &&
+        SerializerOld::deserialize(tmp.zCoord, myfile)){
         *this = std::move(tmp);
         return true;
     }
@@ -484,6 +484,16 @@ inline bool Point<T>::deserialize(std::ifstream& myfile) {
         myfile.seekg(begin);
         return false;
     }
+}
+
+template<class T>
+void Point<T>::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
+}
+
+template<class T>
+void Point<T>::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
 }
 
 template <class T>

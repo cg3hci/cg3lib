@@ -2,7 +2,6 @@
 #define CG3_BOUNDINGBOX2D_H
 
 #include "point2d.h"
-#include "../../io/serializable_object.h"
 
 namespace cg3 {
 
@@ -37,16 +36,20 @@ class BoundingBox2D : public SerializableObject{
         bool isInside(const Point2Dd& p) const;
 
         // SerializableObject interface
+        void serializeOld(std::ofstream& binaryFile) const;
+        bool deserializeOld(std::ifstream& binaryFile);
+
+
+        // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
-        bool deserialize(std::ifstream& binaryFile);
+        void deserialize(std::ifstream& binaryFile);
 
     private:
         Point2Dd minCoord, maxCoord;
-
 };
 
 }
 
-#include "bounding_box2d.ipp"
+#include "bounding_box2d.tpp"
 
 #endif // CG3_BOUNDINGBOX2D_H

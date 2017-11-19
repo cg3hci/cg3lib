@@ -1,10 +1,10 @@
-#include "serialize.h"
+#include "serialize_old.h"
 
 #include <exception>
 
 namespace cg3 {
 
-inline void Serializer::restore(std::ifstream& binaryFile, const std::streampos& position) {
+inline void SerializerOld::restore(std::ifstream& binaryFile, const std::streampos& position) {
     binaryFile.clear();
     binaryFile.seekg(position);
 }
@@ -28,10 +28,10 @@ inline void Serializer::restore(std::ifstream& binaryFile, const std::streampos&
  * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
  */
 template <typename T>
-inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
-    if (std::is_base_of<SerializableObject, T>::value){
-        SerializableObject* o =(SerializableObject*) &obj;
-        o->serialize(binaryFile);
+inline void SerializerOld::serialize(const T& obj, std::ofstream& binaryFile){
+    if (std::is_base_of<SerializableObjectOld, T>::value){
+        SerializableObjectOld* o =(SerializableObjectOld*) &obj;
+        o->serializeOld(binaryFile);
     }
     else{        
         binaryFile.write(reinterpret_cast<const char*>(&obj), sizeof(T));
@@ -57,10 +57,10 @@ inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
  * @param[in] binaryFile: std::ifstream opened in binary mode on the file we want to deserialize
  */
 template <typename T>
-inline bool Serializer::deserialize(T& obj, std::ifstream& binaryFile){
-    if (std::is_base_of<SerializableObject, T>::value){
-        SerializableObject* o =(SerializableObject*) &obj;
-        return o->deserialize(binaryFile);
+inline bool SerializerOld::deserialize(T& obj, std::ifstream& binaryFile){
+    if (std::is_base_of<SerializableObjectOld, T>::value){
+        SerializableObjectOld* o =(SerializableObjectOld*) &obj;
+        return o->deserializeOld(binaryFile);
     }
     else{
         std::streampos begin = binaryFile.tellg();
@@ -80,12 +80,12 @@ inline bool Serializer::deserialize(T& obj, std::ifstream& binaryFile){
  * @param[in] obj: QColor
  * @param binaryFile
  */
-inline void Serializer::serialize(const QColor& obj, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const QColor& obj, std::ofstream& binaryFile){
     int r = obj.red(), g = obj.green(), b = obj.blue(), a = obj.alpha();
-    Serializer::serialize(r, binaryFile);
-    Serializer::serialize(g, binaryFile);
-    Serializer::serialize(b, binaryFile);
-    Serializer::serialize(a, binaryFile);
+    SerializerOld::serialize(r, binaryFile);
+    SerializerOld::serialize(g, binaryFile);
+    SerializerOld::serialize(b, binaryFile);
+    SerializerOld::serialize(a, binaryFile);
 }
 
 /**
@@ -94,13 +94,13 @@ inline void Serializer::serialize(const QColor& obj, std::ofstream& binaryFile){
  * @param[out] obj: QColor
  * @param binaryFile
  */
-inline bool Serializer::deserialize(QColor& obj, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(QColor& obj, std::ifstream& binaryFile){
     int r, g, b, a;
     std::streampos begin = binaryFile.tellg();
-    if (Serializer::deserialize(r, binaryFile) &&
-        Serializer::deserialize(g, binaryFile) &&
-        Serializer::deserialize(b, binaryFile) &&
-        Serializer::deserialize(a, binaryFile)) {
+    if (SerializerOld::deserialize(r, binaryFile) &&
+        SerializerOld::deserialize(g, binaryFile) &&
+        SerializerOld::deserialize(b, binaryFile) &&
+        SerializerOld::deserialize(a, binaryFile)) {
             obj.setRgb(r,g,b,a);
             return true;
     }
@@ -111,17 +111,17 @@ inline bool Serializer::deserialize(QColor& obj, std::ifstream& binaryFile){
 }
 #endif //QT_CORE_LIB
 
-inline void Serializer::serialize(const std::string& str, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const std::string& str, std::ofstream& binaryFile){
     unsigned long int size=str.size();
-    Serializer::serialize(size, binaryFile);
+    SerializerOld::serialize(size, binaryFile);
     binaryFile.write(&str[0],size);
 }
 
-inline bool Serializer::deserialize(std::string& str, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(std::string& str, std::ifstream& binaryFile){
     unsigned long int size;
     std::string tmp;
     std::streampos begin = binaryFile.tellg();
-    if (Serializer::deserialize(size, binaryFile)){
+    if (SerializerOld::deserialize(size, binaryFile)){
         try {
             tmp.resize(size);
             if (binaryFile.read(&tmp[0], size)){
@@ -151,11 +151,11 @@ inline bool Serializer::deserialize(std::string& str, std::ifstream& binaryFile)
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void Serializer::serialize(const std::set<T, A...> &s, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const std::set<T, A...> &s, std::ofstream& binaryFile){
     unsigned long int size = s.size();
-    Serializer::serialize(size, binaryFile);
+    SerializerOld::serialize(size, binaryFile);
     for (typename std::set<T, A...>::const_iterator it = s.begin(); it != s.end(); ++it)
-        Serializer::serialize((*it), binaryFile);
+        SerializerOld::serialize((*it), binaryFile);
 }
 
 /**
@@ -166,15 +166,15 @@ inline void Serializer::serialize(const std::set<T, A...> &s, std::ofstream& bin
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline bool Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(std::set<T, A...> &s, std::ifstream& binaryFile){
     std::set<T, A...> tmp;
     unsigned long int size;
     std::streampos begin = binaryFile.tellg();
     try {
-        if (Serializer::deserialize(size, binaryFile)){
+        if (SerializerOld::deserialize(size, binaryFile)){
             for (unsigned int it = 0; it < size; ++it){
                 T obj;
-                if(Serializer::deserialize(obj, binaryFile))
+                if(SerializerOld::deserialize(obj, binaryFile))
                     tmp.insert(obj);
                 else{
                     restore(binaryFile, begin);
@@ -184,7 +184,7 @@ inline bool Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryF
             s = std::move(tmp);
             return true;
         }
-        else{
+        else {
             restore(binaryFile, begin);
             return false;
         }
@@ -202,14 +202,14 @@ inline bool Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryF
  * @param binaryFile
  */
 template <typename ...A>
-inline void Serializer::serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile){
     bool tmp;
     unsigned long int size = v.size();
-    Serializer::serialize(size, binaryFile);
+    SerializerOld::serialize(size, binaryFile);
     for (typename std::vector<bool, A...>::const_iterator it = v.begin(); it != v.end(); ++it){
         if (*it) tmp = 1;
         else tmp = 0;
-        Serializer::serialize(tmp, binaryFile);
+        SerializerOld::serialize(tmp, binaryFile);
     }
 }
 
@@ -220,11 +220,11 @@ inline void Serializer::serialize(const std::vector<bool, A...> &v, std::ofstrea
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void Serializer::serialize(const std::vector<T, A...> &v, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const std::vector<T, A...> &v, std::ofstream& binaryFile){
     unsigned long int size = v.size();
-    Serializer::serialize(size, binaryFile);
+    SerializerOld::serialize(size, binaryFile);
     for (typename std::vector<T, A...>::const_iterator it = v.begin(); it != v.end(); ++it)
-        Serializer::serialize((*it), binaryFile);
+        SerializerOld::serialize((*it), binaryFile);
 }
 
 /**
@@ -235,16 +235,16 @@ inline void Serializer::serialize(const std::vector<T, A...> &v, std::ofstream& 
  * @param binaryFile
  */
 template <typename ...A>
-inline bool Serializer::deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile){
     unsigned long int size;
     std::vector<bool, A...> tmpv;
     std::streampos begin = binaryFile.tellg();
     try {
-        if (Serializer::deserialize(size, binaryFile)){
+        if (SerializerOld::deserialize(size, binaryFile)){
             tmpv.resize(size);
             bool tmp;
             for (unsigned int it = 0; it < size; ++it){
-                if (Serializer::deserialize(tmp, binaryFile))
+                if (SerializerOld::deserialize(tmp, binaryFile))
                     tmpv[it] = tmp;
                 else{
                     restore(binaryFile, begin);
@@ -273,15 +273,15 @@ inline bool Serializer::deserialize(std::vector<bool, A...> &v, std::ifstream& b
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline bool Serializer::deserialize(std::vector<T, A...> &v, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(std::vector<T, A...> &v, std::ifstream& binaryFile){
     unsigned long int size;
     std::vector<T, A...> tmpv;
     std::streampos begin = binaryFile.tellg();
     try {
-        if (Serializer::deserialize(size, binaryFile)){
+        if (SerializerOld::deserialize(size, binaryFile)){
             tmpv.resize(size);
             for (unsigned int it = 0; it < size; ++it){
-                if (! Serializer::deserialize(tmpv[it], binaryFile)){
+                if (! SerializerOld::deserialize(tmpv[it], binaryFile)){
                     binaryFile.clear();
                     binaryFile.seekg(begin);
                     return false;
@@ -309,11 +309,11 @@ inline bool Serializer::deserialize(std::vector<T, A...> &v, std::ifstream& bina
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void Serializer::serialize(const std::list<T, A...> &l, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const std::list<T, A...> &l, std::ofstream& binaryFile){
     unsigned long int size = l.size();
-    Serializer::serialize(size, binaryFile);
+    SerializerOld::serialize(size, binaryFile);
     for (typename std::list<T, A...>::const_iterator it = l.begin(); it != l.end(); ++it)
-        Serializer::serialize((*it), binaryFile);
+        SerializerOld::serialize((*it), binaryFile);
 }
 
 /**
@@ -324,16 +324,16 @@ inline void Serializer::serialize(const std::list<T, A...> &l, std::ofstream& bi
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline bool Serializer::deserialize(std::list<T, A...> &l, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(std::list<T, A...> &l, std::ifstream& binaryFile){
     unsigned long int size;
     std::list<T, A...> tmp;
 
     std::streampos begin = binaryFile.tellg();
     try {
-        if (Serializer::deserialize(size, binaryFile)){
+        if (SerializerOld::deserialize(size, binaryFile)){
             for (unsigned int it = 0; it < size; ++it){
                 T obj;
-                if (Serializer::deserialize(obj, binaryFile))
+                if (SerializerOld::deserialize(obj, binaryFile))
                     tmp.push_back(obj);
                 else{
                     binaryFile.clear();
@@ -363,12 +363,12 @@ inline bool Serializer::deserialize(std::list<T, A...> &l, std::ifstream& binary
  * @param binaryFile
  */
 template <typename T1, typename T2, typename ...A>
-inline void Serializer::serialize(const std::map<T1, T2, A...> &m, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const std::map<T1, T2, A...> &m, std::ofstream& binaryFile){
     unsigned long int size = m.size();
-    Serializer::serialize(size, binaryFile);
+    SerializerOld::serialize(size, binaryFile);
     for (typename std::map<T1, T2, A...>::const_iterator it = m.begin(); it != m.end(); ++it){
-        Serializer::serialize((it->first), binaryFile);
-        Serializer::serialize((it->second), binaryFile);
+        SerializerOld::serialize((it->first), binaryFile);
+        SerializerOld::serialize((it->second), binaryFile);
     }
 }
 
@@ -380,20 +380,20 @@ inline void Serializer::serialize(const std::map<T1, T2, A...> &m, std::ofstream
  * @param binaryFile
  */
 template <typename T1, typename T2, typename ...A>
-inline bool Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile){
     unsigned long int size;
     std::map<T1, T2, A...> tmp;
 
     std::streampos begin = binaryFile.tellg();
     try {
-        if (Serializer::deserialize(size, binaryFile)) {
+        if (SerializerOld::deserialize(size, binaryFile)) {
 
             for (unsigned int it = 0; it < size; ++it){
                 T1 o1;
                 T2 o2;
 
-                if (Serializer::deserialize(o1, binaryFile) &&
-                    Serializer::deserialize(o2, binaryFile))
+                if (SerializerOld::deserialize(o1, binaryFile) &&
+                    SerializerOld::deserialize(o2, binaryFile))
                         tmp[std::move(o1)] = std::move(o2);
                 else{
                     binaryFile.clear();
@@ -424,13 +424,13 @@ inline bool Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
  * @param binaryFile
  */
 template <typename T, int ...A>
-inline void Serializer::serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile){
     unsigned long int row = m.rows(), col = m.cols();
-    Serializer::serialize(row, binaryFile);
-    Serializer::serialize(col, binaryFile);
+    SerializerOld::serialize(row, binaryFile);
+    SerializerOld::serialize(col, binaryFile);
     for (unsigned int i = 0; i < row; i++){
         for (unsigned int j = 0; j < col; ++j){
-            Serializer::serialize(m(i,j), binaryFile);
+            SerializerOld::serialize(m(i,j), binaryFile);
         }
     }
 }
@@ -443,17 +443,17 @@ inline void Serializer::serialize(const Eigen::Matrix<T, A...> &m, std::ofstream
  * @param binaryFile
  */
 template <typename T, int ...A>
-inline bool Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile){
     unsigned long int row, col;
     Eigen::Matrix<T, A...> tmp;
     std::streampos begin = binaryFile.tellg();
     try {
-        if (Serializer::deserialize(row, binaryFile) && Serializer::deserialize(col, binaryFile)) {
+        if (SerializerOld::deserialize(row, binaryFile) && SerializerOld::deserialize(col, binaryFile)) {
             tmp.resize(row, col);
 
             for (unsigned int i = 0; i < row; i++){
                 for (unsigned int j = 0; j < col; ++j){
-                    if (! Serializer::deserialize(tmp(i,j), binaryFile)){
+                    if (! SerializerOld::deserialize(tmp(i,j), binaryFile)){
                         binaryFile.clear();
                         binaryFile.seekg(begin);
                         return false;
@@ -483,11 +483,11 @@ inline bool Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& bi
  * @param binaryFile
  */
 template <typename T, unsigned long int ...A>
-inline void Serializer::serialize(const std::array<T, A...> &a, std::ofstream& binaryFile){
+inline void SerializerOld::serialize(const std::array<T, A...> &a, std::ofstream& binaryFile){
     unsigned long int size = a.size();
-    Serializer::serialize(size, binaryFile);
+    SerializerOld::serialize(size, binaryFile);
     for (typename std::array<T, A...>::const_iterator it = a.begin(); it != a.end(); ++it)
-        Serializer::serialize((*it), binaryFile);
+        SerializerOld::serialize((*it), binaryFile);
 }
 
 /**
@@ -498,14 +498,14 @@ inline void Serializer::serialize(const std::array<T, A...> &a, std::ofstream& b
  * @param binaryFile
  */
 template <typename T, unsigned long int ...A>
-inline bool Serializer::deserialize(std::array<T, A...> &a, std::ifstream& binaryFile){
+inline bool SerializerOld::deserialize(std::array<T, A...> &a, std::ifstream& binaryFile){
     unsigned long int size;
     std::streampos begin = binaryFile.tellg();
     try {
-        if (Serializer::deserialize(size, binaryFile) && size == a.size()){
+        if (SerializerOld::deserialize(size, binaryFile) && size == a.size()){
             std::vector<T> tmp(size);
             for (unsigned int it = 0; it < size; ++it){
-                if (! Serializer::deserialize(tmp[it], binaryFile)){
+                if (! SerializerOld::deserialize(tmp[it], binaryFile)){
                     binaryFile.clear();
                     binaryFile.seekg(begin);
                     return false;

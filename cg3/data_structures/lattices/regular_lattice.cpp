@@ -64,32 +64,16 @@ void RegularLattice<VT>::setVertexProperty(const Pointd &p, const VT &property) 
 
 template<class VT>
 void RegularLattice<VT>::serialize(std::ofstream &binaryFile) const {
-    bb.serialize(binaryFile);
-    cg3::Serializer::serialize(unit, binaryFile);
-    cg3::Serializer::serialize(mresX, binaryFile);
-    cg3::Serializer::serialize(mresY, binaryFile);
-    cg3::Serializer::serialize(mresZ, binaryFile);
-    cg3::Serializer::serialize(vertexProperties, binaryFile);
+    /**
+      * @todo
+      */
 }
 
 template<class VT>
-bool RegularLattice<VT>::deserialize(std::ifstream &binaryFile) {
-    RegularLattice<VT> tmp;
-    std::streampos begin = binaryFile.tellg();
-    if (tmp.bb.deserialize(binaryFile) &&
-            cg3::Serializer::deserialize(tmp.unit, binaryFile) &&
-            cg3::Serializer::deserialize(tmp.mresX, binaryFile) &&
-            cg3::Serializer::deserialize(tmp.mresY, binaryFile) &&
-            cg3::Serializer::deserialize(tmp.mresZ, binaryFile) &&
-            cg3::Serializer::deserialize(tmp.vertexProperties, binaryFile)){
-        *this = std::move(tmp);
-        return true;
-    }
-    else {
-        Serializer::restore(binaryFile, begin);
-        return false;
-    }
-
+void RegularLattice<VT>::deserialize(std::ifstream &binaryFile) {
+    /**
+      * @todo
+      */
 }
 
 template<class VT>

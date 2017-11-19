@@ -516,9 +516,9 @@ inline void Point2D<T>::rot(T matrix[][2]){
  * @param binaryFile
  */
 template <class T>
-void Point2D<T>::serialize(std::ofstream& binaryFile) const {
-    Serializer::serialize(xCoord, binaryFile);
-    Serializer::serialize(yCoord, binaryFile);
+void Point2D<T>::serializeOld(std::ofstream& binaryFile) const {
+    SerializerOld::serialize(xCoord, binaryFile);
+    SerializerOld::serialize(yCoord, binaryFile);
 }
 
 /**
@@ -528,11 +528,11 @@ void Point2D<T>::serialize(std::ofstream& binaryFile) const {
  * @return true if the point was correctly deserialized
  */
 template <class T>
-bool Point2D<T>::deserialize(std::ifstream& binaryFile) {
+bool Point2D<T>::deserializeOld(std::ifstream& binaryFile) {
     Point2D<T> tmp;
     int begin = binaryFile.tellg();
-    if (Serializer::deserialize(tmp.xCoord, binaryFile) &&
-        Serializer::deserialize(tmp.yCoord, binaryFile)){
+    if (SerializerOld::deserialize(tmp.xCoord, binaryFile) &&
+        SerializerOld::deserialize(tmp.yCoord, binaryFile)){
         *this = std::move(tmp);
         return true;
     }
@@ -541,6 +541,16 @@ bool Point2D<T>::deserialize(std::ifstream& binaryFile) {
         binaryFile.seekg(begin);
         return false;
     }
+}
+
+template<class T>
+void Point2D<T>::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
+}
+
+template<class T>
+void Point2D<T>::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
 }
 
 /**

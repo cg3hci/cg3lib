@@ -39,8 +39,10 @@ namespace cg3 {
     inline bool isDeulaunayTriangulation(
             const std::vector<Point2Dd>& points,
             const std::vector<std::vector<Point2Dd>>& triangles);
+
+    inline bool isPolygonCounterClockwise(const std::vector<Point2Dd>& polygon);
 }
 
-#include "utils2d.ipp"
+#include "utils2d.tpp"
 
 #endif // CG3_UTILS2D_H

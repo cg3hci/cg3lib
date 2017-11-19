@@ -5,10 +5,11 @@
 #include <assert.h>
 #include <iomanip>
 #include "../../io/serialize.h"
+#include "../../deprecated/serialize_old.h"
 
 namespace cg3 {
 
-template <class T> class Array3D : public SerializableObject{
+template <class T> class Array3D : public SerializableObjectOld, SerializableObject{
 
     public:
         Array3D();
@@ -35,15 +36,19 @@ template <class T> class Array3D : public SerializableObject{
         void clear();
 
         // SerializableObject interface
+        void serializeOld(std::ofstream& binaryFile) const;
+        bool deserializeOld(std::ifstream& binaryFile);
+
+        // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
-        bool deserialize(std::ifstream& binaryFile);
+        void deserialize(std::ifstream& binaryFile);
 
     private:
         unsigned long int getIndex(unsigned long int i, unsigned long int j, unsigned long int k) const;
 
         unsigned long int sizeX, sizeY, sizeZ;
         std::vector<T> v;
-};
+    };
 
 }
 

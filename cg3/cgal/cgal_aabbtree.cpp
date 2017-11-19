@@ -3,9 +3,18 @@
 
 namespace cg3 {
 
+/**
+ * @brief cgal::AABBTree::AABBTree
+ * Creates an empty AABBTree. This object cannot be used.
+ */
 cgal::AABBTree::AABBTree() {
 }
 
+/**
+ * @brief cgal::AABBTree::AABBTree
+ * Copy constructor.
+ * @param[in] other: another AABBTree
+ */
 cgal::AABBTree::AABBTree(const cgal::AABBTree& other) : forDistanceQueries(other.forDistanceQueries), treeType(other.treeType), triangles(other.triangles), bb(other.bb) {
     #ifdef  CG3_DCEL_DEFINED
     mapDcelVerticesToCgalPoints = other.mapDcelVerticesToCgalPoints;
@@ -23,6 +32,12 @@ cgal::AABBTree::AABBTree(const cgal::AABBTree& other) : forDistanceQueries(other
 }
 
 #ifdef TRIMESH_DEFINED
+/**
+ * @brief CGALInterface::AABBTree::AABBTree
+ * It creates an AABBTree with the triangles of the input mesh.
+ * @param[in] t: the trimesh on which is constructed the tree.
+ * @param[in] forDistanceQueries: use this parameter to set the tree for distance queries.
+ */
 CGALInterface::AABBTree::AABBTree(const Trimesh<double>& t, bool forDistanceQueries) {
     treeType = TRIMESH;
     for (int i = 0; i < t.numVertices(); i++){
@@ -49,6 +64,12 @@ CGALInterface::AABBTree::AABBTree(const Trimesh<double>& t, bool forDistanceQuer
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
+/**
+ * @brief CGALInterface::AABBTree::AABBTree
+ * It creates an AABBTree with the triangles of the input mesh.
+ * @param[in] m: the eigenmesh on which is constructed the tree.
+ * @param[in] forDistanceQueries: use this parameter to set the tree for distance queries.
+ */
 cgal::AABBTree::AABBTree(const SimpleEigenMesh& m, bool forDistanceQueries) {
     treeType = EIGENMESH;
     for (unsigned int i = 0; i < m.getNumberVertices(); i++){
@@ -78,6 +99,12 @@ cgal::AABBTree::AABBTree(const SimpleEigenMesh& m, bool forDistanceQueries) {
 #endif
 
 #ifdef  CG3_DCEL_DEFINED
+/**
+ * @brief CGALInterface::AABBTree::AABBTree
+ * It creates an AABBTree with the triangles of the input mesh.
+ * @param[in] d: the Dcel on which is constructed the tree.
+ * @param[in] forDistanceQueries: use this parameter to set the tree for distance queries.
+ */
 cgal::AABBTree::AABBTree(const Dcel& d, bool forDistanceQueries) : forDistanceQueries(forDistanceQueries){
     treeType = DCEL;
     for (Dcel::ConstVertexIterator vit = d.vertexBegin(); vit != d.vertexEnd(); ++vit){
@@ -105,6 +132,12 @@ cgal::AABBTree::AABBTree(const Dcel& d, bool forDistanceQueries) : forDistanceQu
 }
 #endif
 
+/**
+ * @brief cgal::AABBTree::operator =
+ * assignment operator.
+ * @param[in] other: the tree which is assigned
+ * @return the assigned tree
+ */
 cgal::AABBTree&cgal::AABBTree::operator=(const cgal::AABBTree& other) {
     forDistanceQueries = other.forDistanceQueries;
     treeType = other.treeType;
@@ -128,6 +161,13 @@ cgal::AABBTree&cgal::AABBTree::operator=(const cgal::AABBTree& other) {
     return *this;
 }
 
+/**
+ * @brief cgal::AABBTree::getNumberIntersectedPrimitives
+ * returns the number of triangles which are intersected by the segment given by the two points p1 and p2.
+ * @param[in] p1: starting point of the segment query
+ * @param[in] p2: ending point of the segment query
+ * @return the number of triangles intersected by the segment
+ */
 int cgal::AABBTree::getNumberIntersectedPrimitives(const Pointd& p1, const Pointd& p2) const {
     CGALPoint pa(p1.x(), p1.y(), p1.z());
     CGALPoint pb(p2.x(), p2.y(), p2.z());

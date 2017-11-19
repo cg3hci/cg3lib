@@ -351,24 +351,24 @@ EigenMesh& EigenMesh::operator=(const Dcel& dcel) {
 }
 #endif
 
-void EigenMesh::serialize(std::ofstream& binaryFile) const {
-    Serializer::serialize(V, binaryFile);
-    Serializer::serialize(F, binaryFile);
-    Serializer::serialize(NV, binaryFile);
-    Serializer::serialize(NF, binaryFile);
-    Serializer::serialize(CV, binaryFile);
-    Serializer::serialize(CF, binaryFile);
+void EigenMesh::serializeOld(std::ofstream& binaryFile) const {
+    SerializerOld::serialize(V, binaryFile);
+    SerializerOld::serialize(F, binaryFile);
+    SerializerOld::serialize(NV, binaryFile);
+    SerializerOld::serialize(NF, binaryFile);
+    SerializerOld::serialize(CV, binaryFile);
+    SerializerOld::serialize(CF, binaryFile);
 }
 
-bool EigenMesh::deserialize(std::ifstream& binaryFile) {
+bool EigenMesh::deserializeOld(std::ifstream& binaryFile) {
     EigenMesh tmp;
     int begin = binaryFile.tellg();
-    if (Serializer::deserialize(tmp.V, binaryFile) &&
-            Serializer::deserialize(tmp.F, binaryFile) &&
-            Serializer::deserialize(tmp.NV, binaryFile) &&
-            Serializer::deserialize(tmp.NF, binaryFile) &&
-            Serializer::deserialize(tmp.CV, binaryFile) &&
-            Serializer::deserialize(tmp.CF, binaryFile)){
+    if (SerializerOld::deserialize(tmp.V, binaryFile) &&
+            SerializerOld::deserialize(tmp.F, binaryFile) &&
+            SerializerOld::deserialize(tmp.NV, binaryFile) &&
+            SerializerOld::deserialize(tmp.NF, binaryFile) &&
+            SerializerOld::deserialize(tmp.CV, binaryFile) &&
+            SerializerOld::deserialize(tmp.CF, binaryFile)){
         tmp.updateBoundingBox();
         *this = std::move(tmp);
         return true;

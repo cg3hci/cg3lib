@@ -4,7 +4,14 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 #ifdef  CG3_CGAL_DEFINED
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnon-template-friend"
 #include <igl/copyleft/cgal/CSGTree.h>
+#pragma GCC diagnostic pop
+#else
+#include <igl/copyleft/cgal/CSGTree.h>
+#endif
 #endif //CGAL_DEFINED
 
 namespace cg3 {

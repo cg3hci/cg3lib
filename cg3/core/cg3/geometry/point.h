@@ -10,12 +10,13 @@
 #include <string>
 #include <iostream>
 
+#include "../deprecated/serialize_old.h"
 #include "../io/serialize.h"
 
 #ifdef CG3_CINOLIB_DEFINED
 #ifdef __GNUC__
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable" //Doesn't work on gcc < 6.0
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #include <cinolib/geometry/vec3.h>
 #pragma GCC diagnostic pop
 #endif //__GNUC__
@@ -36,7 +37,7 @@ namespace cg3 {
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-template <class T> class Point : SerializableObject {
+template <class T> class Point : SerializableObjectOld, SerializableObject {
 
     public:
 
@@ -65,9 +66,7 @@ template <class T> class Point : SerializableObject {
         double getLength()                                  const;
         double getLengthSquared()                           const;
         Point<T> min(const Point<T>& otherPoint)            const;
-        Point<T> max(const Point<T>& otherPoint)            const;
-        // SerializableObject interface
-        void serialize(std::ofstream &myfile)               const;
+        Point<T> max(const Point<T>& otherPoint)            const;        
 
         // Operators
         const T& operator[](unsigned int i)                 const;
@@ -100,7 +99,12 @@ template <class T> class Point : SerializableObject {
         void rotate(double matrix[3][3], const Point<T>& centroid = Point<T>());
 
         // SerializableObject interface
-        bool deserialize(std::ifstream &myfile);
+        void serializeOld(std::ofstream &myfile)               const;
+        bool deserializeOld(std::ifstream &myfile);
+
+        // SerializableObject interface
+        void serialize(std::ofstream& binaryFile) const;
+        void deserialize(std::ifstream& binaryFile);
 
         // Operators
         T& operator[](unsigned int i);
@@ -127,8 +131,7 @@ template <class T> class Point : SerializableObject {
         T xCoord; /**< \~English @brief The \c x component of the point/vector */
         T yCoord; /**< \~English @brief The \c y component of the point/vector */
         T zCoord; /**< \~English @brief The \c z component of the point/vector */
-
-};
+    };
 
 /****************
 * Other Methods *

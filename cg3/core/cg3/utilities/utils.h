@@ -47,7 +47,7 @@ namespace cg3 {
 
 }
 
-#include "utils.ipp"
+#include "utils.tpp"
 
 #endif // CG3_UTILS_H
 

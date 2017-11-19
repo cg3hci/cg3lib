@@ -3,7 +3,7 @@
 
 #include <Eigen/Core>
 
-#include <cg3/io/serialize.h>
+#include <cg3/deprecated/serialize_old.h>
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/bounding_box.h>
 #include <cg3/data_structures/color.h>
@@ -39,7 +39,7 @@ class Trimesh;
 
 class EigenMeshAlgorithms;
 
-class SimpleEigenMesh : public SerializableObject {
+class SimpleEigenMesh : public SerializableObjectOld, SerializableObject {
         friend class EigenMeshAlgorithms;
 
 #ifdef CG3_LIBIGL_DEFINED
@@ -108,8 +108,12 @@ class SimpleEigenMesh : public SerializableObject {
         static SimpleEigenMesh merge(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
 
         // SerializableObject interface
-        virtual void serialize(std::ofstream& binaryFile) const;
-        virtual bool deserialize(std::ifstream& binaryFile);
+        virtual void serializeOld(std::ofstream& binaryFile) const;
+        virtual bool deserializeOld(std::ifstream& binaryFile);
+
+        // SerializableObject interface
+        void serialize(std::ofstream& binaryFile) const;
+        void deserialize(std::ifstream& binaryFile);
 
 
     protected:
@@ -294,22 +298,30 @@ inline void SimpleEigenMesh::setFacesMatrix(const Eigen::Matrix<U, A...>& F) {
     this->F = F;
 }
 
-inline void SimpleEigenMesh::serialize(std::ofstream& binaryFile) const {
-    Serializer::serialize(V, binaryFile);
-    Serializer::serialize(F, binaryFile);
+inline void SimpleEigenMesh::serializeOld(std::ofstream& binaryFile) const {
+    SerializerOld::serialize(V, binaryFile);
+    SerializerOld::serialize(F, binaryFile);
 }
 
-inline bool SimpleEigenMesh::deserialize(std::ifstream& binaryFile) {
+inline bool SimpleEigenMesh::deserializeOld(std::ifstream& binaryFile) {
     int begin = binaryFile.tellg();
     SimpleEigenMesh tmp;
-    if (Serializer::deserialize(tmp.V, binaryFile) &&
-            Serializer::deserialize(tmp.F, binaryFile)){
+    if (SerializerOld::deserialize(tmp.V, binaryFile) &&
+            SerializerOld::deserialize(tmp.F, binaryFile)){
         *this = std::move(tmp);
         return true;
     }
     binaryFile.clear();
     binaryFile.seekg(begin);
     return false;
+}
+
+inline void SimpleEigenMesh::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3SimpleEigenMesh", binaryFile, V, F);
+}
+
+inline void SimpleEigenMesh::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3SimpleEigenMesh", binaryFile, V, F);
 }
 
 }

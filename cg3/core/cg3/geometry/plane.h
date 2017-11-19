@@ -6,7 +6,7 @@
 
 namespace cg3 {
 
-class Plane {
+class Plane : SerializableObject {
     public:
         Plane(const Vec3& normal, double d);
         Plane(double a, double b, double c, double d);
@@ -25,10 +25,13 @@ class Plane {
         bool getIntersection(Pointd&intersection, const Line &l) const;
         #endif
 
+        // SerializableObject interface
+        void serialize(std::ofstream& binaryFile) const;
+        void deserialize(std::ifstream& binaryFile);
+
     protected:
         Vec3 normal;
         double d;
-
 };
 
 }

@@ -87,8 +87,11 @@ class EigenMesh : public SimpleEigenMesh {
         EigenMesh& operator= (const Dcel& dcel);
         #endif
 
+        void serializeOld(std::ofstream& binaryFile) const;
+        bool deserializeOld(std::ifstream& binaryFile);
+
         void serialize(std::ofstream& binaryFile) const;
-        bool deserialize(std::ifstream& binaryFile);
+        void deserialize(std::ifstream& binaryFile);
 
     protected:
 
@@ -231,6 +234,14 @@ inline void EigenMesh::getBoundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVecto
 inline void EigenMesh::updateFacesAndVerticesNormals() {
     updateFaceNormals();
     updateVerticesNormals();
+}
+
+inline void EigenMesh::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
+}
+
+inline void EigenMesh::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
 }
 
 }

@@ -389,20 +389,6 @@ inline void BoundingBox::saveOnObj(const std::string& filename, const Color &c) 
 
 /**
  * \~English
- * @brief Serializes in a std::ofstream opened in binary mode the bounding box
- * @param an std::ofstream opened in binary mode
- *
- * \~Italian
- * @brief Serializza in un std::ofstream aperto in modalità binaria il bounding box
- * @param Un std::ofstream aperto in modalità binaria
- */
-inline void BoundingBox::serialize(std::ofstream& binaryFile) const {
-    minCoord.serialize(binaryFile);
-    maxCoord.serialize(binaryFile);
-}
-
-/**
- * \~English
  * @brief Modifies the minimum point of the bounding box
  * @param[in] min: point setted as minimum point
  *
@@ -614,6 +600,20 @@ inline double& BoundingBox::operator()(unsigned int i) {
 
 /**
  * \~English
+ * @brief Serializes in a std::ofstream opened in binary mode the bounding box
+ * @param an std::ofstream opened in binary mode
+ *
+ * \~Italian
+ * @brief Serializza in un std::ofstream aperto in modalità binaria il bounding box
+ * @param Un std::ofstream aperto in modalità binaria
+ */
+inline void BoundingBox::serializeOld(std::ofstream& binaryFile) const {
+    minCoord.serializeOld(binaryFile);
+    maxCoord.serializeOld(binaryFile);
+}
+
+/**
+ * \~English
  * @brief Deserializes (reads) a bounding box from a std::ifstream opened in binary mode
  * @param[in] binaryFile: std::ifstream opened in binary mode, having the cursor on a position where is stored a bounding box
  *
@@ -621,10 +621,10 @@ inline double& BoundingBox::operator()(unsigned int i) {
  * @brief Deserializza (legge) un bounding box da un std::ifstream aperto in modalità binaria
  * @param[in] binaryFile: std::ifstream aperto in modalità binaria, avente il cursore in una posizione dove è salvato un bounding box
  */
-inline bool BoundingBox::deserialize(std::ifstream& binaryFile) {
+inline bool BoundingBox::deserializeOld(std::ifstream& binaryFile) {
     Pointd tmp;
     int begin = binaryFile.tellg();
-    if (tmp.deserialize(binaryFile) && maxCoord.deserialize(binaryFile)){
+    if (tmp.deserializeOld(binaryFile) && maxCoord.deserializeOld(binaryFile)){
         minCoord = std::move(tmp);
         return true;
     }
@@ -633,6 +633,14 @@ inline bool BoundingBox::deserialize(std::ifstream& binaryFile) {
         binaryFile.seekg(begin);
         return false;
     }
+}
+
+inline void BoundingBox::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
+}
+
+inline void BoundingBox::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
 }
 
 }

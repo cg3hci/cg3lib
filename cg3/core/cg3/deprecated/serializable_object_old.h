@@ -1,7 +1,6 @@
-#ifndef CG3_SERIALIZABLE_OBJECT_H
-#define CG3_SERIALIZABLE_OBJECT_H
+#ifndef CG3_SERIALIZABLE_OBJECT_OLD_H
+#define CG3_SERIALIZABLE_OBJECT_OLD_H
 
-#include "../cg3lib.h"
 #include <fstream>
 
 namespace cg3 {
@@ -17,10 +16,10 @@ namespace cg3 {
  * In that case, rules for serialization and deserialization of that class are given on
  * SerializableObject::serialize() and SerializableObject::deserialize() methods.
  */
-class SerializableObject {
+class SerializableObjectOld {
     public:
-        SerializableObject() {}
-        virtual ~SerializableObject() {}
+        SerializableObjectOld() {}
+        virtual ~SerializableObjectOld() {}
 
         /**
          * \~English
@@ -43,7 +42,8 @@ class SerializableObject {
          *
          * @param[in] binaryFile : ofstream where we want to serialize the object
          */
-        virtual void serialize(std::ofstream& binaryFile) const = 0;
+
+        virtual void serializeOld(std::ofstream& binaryFile) const = 0;
 
         /**
          * \~English
@@ -63,17 +63,11 @@ class SerializableObject {
          * myfile.close();
          * \endcode
          *
-         * The deserialize function should:
-         * - save the initial point of the input ifstream;
-         * - inside a try block read all the data of the class;
-         * - if an exception is catched, restore the initial position of the stream (see Serializer::restore())
-         * and throw an std::ios_base::failure exception.
-         *
          * @param[in] binaryFile : ifstream where we want to deserialize the object
          */
-        virtual void deserialize(std::ifstream& binaryFile) = 0;
+        virtual bool deserializeOld(std::ifstream& binaryFile) = 0;
 };
 
 }
 
-#endif // CG3_SERIALIZABLE_OBJECT_H
+#endif // CG3_SERIALIZABLE_OBJECT_OLD_H

@@ -11,6 +11,6 @@ namespace cg3 {
 
 }
 
-#include "utils3d.ipp"
+#include "utils3d.tpp"
 
 #endif // CG3_UTILS3D_H

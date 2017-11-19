@@ -4,11 +4,6 @@
 #include "../geometry/point.h"
 #include "../data_structures/color.h"
 
-/**
-  * @link: https://stackoverflow.com/questions/11124895/suppress-compiler-warning-function-declared-never-referenced
-  */
-#define CG3_SUPPRESS_WARNING(a) (void)a
-
 namespace cg3 {
 
 static const double CG3_EPSILON = 1e-6;

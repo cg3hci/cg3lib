@@ -137,22 +137,22 @@ inline void Array2D<T>::clear() {
 }
 
 template <class T>
-inline void Array2D<T>::serialize(std::ofstream& binaryFile) const {
-    Serializer::serialize(sizeX, binaryFile);
-    Serializer::serialize(sizeY, binaryFile);
+inline void Array2D<T>::serializeOld(std::ofstream& binaryFile) const {
+    SerializerOld::serialize(sizeX, binaryFile);
+    SerializerOld::serialize(sizeY, binaryFile);
     for (unsigned int i = 0; i < v.size(); ++i)
-        Serializer::serialize(v[i], binaryFile);
+        SerializerOld::serialize(v[i], binaryFile);
 }
 
 template <class T>
-inline bool Array2D<T>::deserialize(std::ifstream& binaryFile) {
+inline bool Array2D<T>::deserializeOld(std::ifstream& binaryFile) {
     Array2D<T> tmp;
     int begin = binaryFile.tellg();
-    if (Serializer::deserialize(tmp.sizeX, binaryFile) &&
-            Serializer::deserialize(tmp.sizeY, binaryFile)) {
+    if (SerializerOld::deserialize(tmp.sizeX, binaryFile) &&
+            SerializerOld::deserialize(tmp.sizeY, binaryFile)) {
         tmp.v.resize(tmp.sizeX*tmp.sizeY);
         for (unsigned int i = 0; i < tmp.v.size(); ++i){
-            if (! Serializer::deserialize(tmp.v[i], binaryFile)){
+            if (! SerializerOld::deserialize(tmp.v[i], binaryFile)){
                 binaryFile.seekg(begin);
                 return false;
             }
@@ -165,6 +165,16 @@ inline bool Array2D<T>::deserialize(std::ifstream& binaryFile) {
         binaryFile.seekg(begin);
         return false;
     }
+}
+
+template<class T>
+inline void Array2D<T>::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3Array2D", binaryFile, sizeX, sizeY, v);
+}
+
+template<class T>
+inline void Array2D<T>::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3Array2D", binaryFile, sizeX, sizeY, v);
 }
 
 template <class T>

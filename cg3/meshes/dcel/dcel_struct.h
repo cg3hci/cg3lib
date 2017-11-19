@@ -64,7 +64,7 @@ namespace cg3 {
  * sono ottenibili mediante operazioni di get.
  */
 
-class Dcel : public SerializableObject {
+class Dcel : public SerializableObjectOld, SerializableObject {
 
     public:
 
@@ -159,7 +159,7 @@ class Dcel : public SerializableObject {
         void saveOnObjFile(std::string fileNameObj)             const;
         void saveOnPlyFile(std::string fileNamePly)             const;
         void saveOnDcelFile(std::string fileNameDcel)           const;
-        void serialize(std::ofstream& binaryFile)               const;
+        void saveOnOldDcelFile(std::string fileNameDcel)           const;
 
         Vertex* addVertex(const Pointd& p = Pointd(), const Vec3& n = Vec3(), const Color &c = Color(128, 128, 128));
         HalfEdge* addHalfEdge();
@@ -188,9 +188,16 @@ class Dcel : public SerializableObject {
         bool loadFromObjFile(const std::string& filename);
         bool loadFromPlyFile(const std::string& filename);
         bool loadFromDcelFile(const std::string& filename);
-        bool deserialize(std::ifstream& binaryFile);
+        bool loadFromOldDcelFile(const std::string& filename);
         Dcel& operator= (const Dcel& dcel);
         Dcel& operator= (Dcel&& dcel);
+
+        void serializeOld(std::ofstream& binaryFile) const;
+        bool deserializeOld(std::ifstream& binaryFile);
+
+        // SerializableObject interface
+        void serialize(std::ofstream& binaryFile) const;
+        void deserialize(std::ifstream& binaryFile);
 
     protected:
 
@@ -237,7 +244,6 @@ class Dcel : public SerializableObject {
         #ifdef CG3_CINOLIB_DEFINED
         void copyFrom(const cinolib::Trimesh &trimesh);
         #endif //CG3_CINOLIB_DEFINED
-
 };
 
 }

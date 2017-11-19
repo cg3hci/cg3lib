@@ -1,7 +1,12 @@
-#ifndef CG3_SERIALIZE_H
-#define CG3_SERIALIZE_H
+/*
+ * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ * @copyright Alessandro Muntoni 2016.
+ */
 
-#include "serializable_object.h"
+#ifndef CG3_SERIALIZE_OLD_H
+#define CG3_SERIALIZE_OLD_H
+
+#include "serializable_object_old.h"
 
 #include <string>
 #include <set>
@@ -25,11 +30,7 @@ namespace cg3 {
  * \~English
  * @namespace Serializer
  *
- * @brief
- * The Serializer namespace contains some functions for serialization/deserialization of standard
- * classes (vectors, sets, maps, etc).
- *
- * Please, if you can, add serialize/deserialize methods for all types you need that don't work
+ * @brief Please, if you can, add serialize/deserialize methods for all types you need that don't work
  * with the standard "serialize"/"deserialize" methods!
  *
  * \~Italian
@@ -50,78 +51,57 @@ namespace cg3 {
  *         T è un tipo primitivo o un SerializableObject (NON puntatore a SerializableObject)
  *         size_t è la dimensione dell'array
  */
-namespace Serializer {
+namespace SerializerOld {
 
-    std::streampos getPosition(std::ifstream& binaryFile);
-
-    void restorePosition(std::ifstream& binaryFile, const std::streampos& position);
+    void restore(std::ifstream& binaryFile, const std::streampos& position);
 
     template <typename T> void serialize(const T& obj, std::ofstream& binaryFile);
 
-    template <typename T> void deserialize(T& obj, std::ifstream& binaryFile);
-
-    template <typename... Args> void serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args);
-
-    template <typename... Args> void deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args);
+    template <typename T> bool deserialize(T& obj, std::ifstream& binaryFile);
 
     #ifdef QT_CORE_LIB
     void serialize(const QColor& obj, std::ofstream& binaryFile);
 
-    void deserialize(QColor& obj, std::ifstream& binaryFile);
+    bool deserialize(QColor& obj, std::ifstream& binaryFile);
     #endif
-
-    void serialize(const char * str, std::ofstream& binaryFile);
 
     void serialize(const std::string& str, std::ofstream& binaryFile);
 
-    void deserialize(std::string& str, std::ifstream& binaryFile);
-
-    template <typename T1, typename T2> void serialize(const std::pair<T1, T2>& p, std::ofstream& binaryFile);
-
-    template <typename T1, typename T2> void deserialize(std::pair<T1, T2>& p, std::ifstream& binaryFile);
+    bool deserialize(std::string& str, std::ifstream& binaryFile);
 
     template <typename T, typename ...A> void serialize(const std::set<T, A...> &s, std::ofstream& binaryFile);
 
-    template <typename T, typename ...A> void deserialize(std::set<T, A...> &s, std::ifstream& binaryFile);
+    template <typename T, typename ...A> bool deserialize(std::set<T, A...> &s, std::ifstream& binaryFile);
 
     template <typename ...A> void serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile);
 
     template <typename T, typename ...A> void serialize(const std::vector<T, A...> &v, std::ofstream& binaryFile);
 
-    template <typename ...A> void deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile);
+    template <typename ...A> bool deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile);
 
-    template <typename T, typename ...A> void deserialize(std::vector<T, A...> &v, std::ifstream& binaryFile);
+    template <typename T, typename ...A> bool deserialize(std::vector<T, A...> &v, std::ifstream& binaryFile);
 
     template <typename T, typename ...A> void serialize(const std::list<T, A...> &l, std::ofstream& binaryFile);
 
-    template <typename T, typename ...A> void deserialize(std::list<T, A...> &l, std::ifstream& binaryFile);
+    template <typename T, typename ...A> bool deserialize(std::list<T, A...> &l, std::ifstream& binaryFile);
 
     template <typename T1, typename T2, typename ...A> void serialize(const std::map<T1, T2, A...> &m, std::ofstream& binaryFile);
 
-    template <typename T1, typename T2, typename ...A> void deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile);
+    template <typename T1, typename T2, typename ...A> bool deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile);
 
     #ifdef CG3_WITH_EIGEN
     template <typename T, int ...A> void serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile);
 
-    template <typename T, int ...A> void deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile);
+    template <typename T, int ...A> bool deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile);
     #endif //CG3_WITH_EIGEN
 
     template <typename T, unsigned long int ...A> void serialize(const std::array<T, A...> &a, std::ofstream& binaryFile);
 
-    template <typename T, unsigned long int ...A> void deserialize(std::array<T, A...> &a, std::ifstream& binaryFile);
-
-    namespace internal {
-        void serializeAttribute(std::ofstream& binaryFile);
-        template<typename T, typename... Args> void serializeAttribute(std::ofstream& binaryFile, const T& t, const Args&... args);
-
-        void deserializeAttribute(std::ifstream& binaryFile);
-        template<typename T, typename... Args> void deserializeAttribute(std::ifstream& binaryFile, T& t, Args&... args);
-    }
-
+    template <typename T, unsigned long int ...A> bool deserialize(std::array<T, A...> &a, std::ifstream& binaryFile);
 }
 
 }
 
-#include "serialize.tpp"
+#include "serialize_old.ipp"
 
-#endif // CG3_SERIALIZE_H
+#endif // CG3_SERIALIZE_OLD_H

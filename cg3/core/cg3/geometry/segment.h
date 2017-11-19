@@ -11,7 +11,7 @@ namespace cg3 {
  * by two end-points
  */
 template <class T>
-class Segment : SerializableObject {
+class Segment : SerializableObjectOld, SerializableObject {
 
 public:
 
@@ -40,8 +40,12 @@ public:
     bool operator >= (const Segment& otherSegment) const;
 
     /* SerializableObject interface */
-    void serialize(std::ofstream &myfile) const;
-    bool deserialize(std::ifstream &myfile);
+    void serializeOld(std::ofstream &myfile) const;
+    bool deserializeOld(std::ifstream &myfile);
+
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
     /* Utilities */
     std::string toString() const;
@@ -51,7 +55,6 @@ private:
     /* Fields */
     T p1;
     T p2;
-
 };
 
 /* ----- Common typedefs (1D, 2D, 3D double) ----- */

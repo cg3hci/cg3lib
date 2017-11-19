@@ -241,4 +241,9 @@ void DrawableDcel::setFacesWireframeColor(float r, float g, float b) {
     wireframeColor[2] = b;
 }
 
+void DrawableDcel::deserialize(std::ifstream& binaryFile) {
+    Dcel::deserialize(binaryFile);
+    update();
+}
+
 }

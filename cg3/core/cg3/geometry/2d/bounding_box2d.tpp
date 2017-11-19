@@ -67,15 +67,15 @@ inline bool BoundingBox2D::isInside(const Point2Dd& p) const {
             p.x() <= maxCoord.x() && p.y() <= maxCoord.y());
 }
 
-inline void BoundingBox2D::serialize(std::ofstream& binaryFile) const {
-    minCoord.serialize(binaryFile);
-    maxCoord.serialize(binaryFile);
+inline void BoundingBox2D::serializeOld(std::ofstream& binaryFile) const {
+    minCoord.serializeOld(binaryFile);
+    maxCoord.serializeOld(binaryFile);
 }
 
-inline bool BoundingBox2D::deserialize(std::ifstream& binaryFile) {
+inline bool BoundingBox2D::deserializeOld(std::ifstream& binaryFile) {
     Point2Dd tmp;
     int begin = binaryFile.tellg();
-    if (tmp.deserialize(binaryFile) && maxCoord.deserialize(binaryFile)){
+    if (tmp.deserializeOld(binaryFile) && maxCoord.deserializeOld(binaryFile)){
         minCoord = std::move(tmp);
         return true;
     }
@@ -84,6 +84,14 @@ inline bool BoundingBox2D::deserialize(std::ifstream& binaryFile) {
         binaryFile.seekg(begin);
         return false;
     }
+}
+
+inline void BoundingBox2D::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3BoundingBox2D", binaryFile, minCoord, maxCoord);
+}
+
+inline void BoundingBox2D::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3BoundingBox2D", binaryFile, minCoord, maxCoord);
 }
 
 }

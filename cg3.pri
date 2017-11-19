@@ -7,6 +7,8 @@ CONFIG(release, debug|release){
     #CONFIG += FINAL_RELEASE
 }
 
+CONFIG += c++11
+
 #comment modules that you don't desire
 include (cg3/core.pri)
 include (cg3/meshes/dcel.pri)
