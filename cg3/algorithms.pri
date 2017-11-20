@@ -8,8 +8,10 @@ MODULES += CG3_ALGORITHMS
 
 HEADERS += \
     $$PWD/algorithms/marching_cubes.h \
-    $$PWD/algorithms/convexhull2d.h
+    $$PWD/algorithms/convexhull2d.h \
+    $$PWD/algorithms/convexhull2d_iterative.h
 
 SOURCES += \
     $$PWD/algorithms/marching_cubes.cpp \
-    $$PWD/algorithms/convexhull2d.tpp
+    $$PWD/algorithms/convexhull2d.tpp \
+    $$PWD/algorithms/convexhull2d_iterative.tpp

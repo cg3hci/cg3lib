@@ -170,5 +170,4 @@ protected:
 #include "rangetree.tpp"
 
 
-
 #endif // CG3_RANGETREE_H

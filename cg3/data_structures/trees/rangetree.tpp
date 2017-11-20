@@ -221,7 +221,7 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
         //Create associated tree for the node
         createAssociatedTreeHelper<Node,K,T>(newNode, dim, customComparators);
         //Insert new node into associated range trees of the node and the parents
-        insertIntoParentAssociatedTreesHelper(newNode, newNode->key, *(newNode->value), dim);
+        Node* deepestNode = insertIntoParentAssociatedTreesHelper(newNode, newNode->key, *(newNode->value), dim);
 
 
         //Update height and rebalance
@@ -231,8 +231,8 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
         //Increment entry number
         this->entries++;
 
-        //Returns the iterator to the node
-        return iterator(this, newNode);
+        //Returns the iterator to the node in the deepest range tree
+        return iterator(this, deepestNode);
     }
 
     //Returns end iterator

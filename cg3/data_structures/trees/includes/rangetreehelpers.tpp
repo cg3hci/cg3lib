@@ -74,7 +74,7 @@ inline void createParentAssociatedTreeHelper(
  * @param[in] dim Dimension of the range tree
  */
 template <class Node, class K, class T>
-inline void insertIntoAssociatedTreeHelper(
+inline Node* insertIntoAssociatedTreeHelper(
         Node* node,
         const K& key,
         const T& value,
@@ -82,8 +82,11 @@ inline void insertIntoAssociatedTreeHelper(
 {
     if (dim > 1) {
         //Insert into associated range tree
-        node->assRangeTree->insert(key, value);
+        auto it = node->assRangeTree->insert(key, value);
+        return it.node;
     }
+
+    return nullptr;
 }
 
 
@@ -98,21 +101,23 @@ inline void insertIntoAssociatedTreeHelper(
  * @param[in] dim Dimension of the range tree
  */
 template <class Node, class K, class T>
-inline void insertIntoParentAssociatedTreesHelper(
+inline Node* insertIntoParentAssociatedTreesHelper(
         Node* node,
         const K& key,
         const T& value,
         const unsigned int dim)
 {
+    Node* res;
     if (dim > 1) {
         while (node != nullptr) {
             //Insert into associated range tree
-            insertIntoAssociatedTreeHelper(node, key, value, dim);
+            res = insertIntoAssociatedTreeHelper(node, key, value, dim);
 
             //Next parent
             node = node->parent;
         }
     }
+    return res;
 }
 
 

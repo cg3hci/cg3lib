@@ -252,9 +252,6 @@ void AVLInner<K,T>::erase(generic_iterator it) {
 
         //Decrease the number of entries
         this->entries--;
-
-        //Set end iterator
-        it.node = nullptr;
     }
 }
 

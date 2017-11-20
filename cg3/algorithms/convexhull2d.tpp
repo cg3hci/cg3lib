@@ -1,3 +1,6 @@
+/**
+    @author Stefano Nuvoli
+*/
 #include "convexhull2d.h"
 
 #include <vector>
@@ -144,13 +147,11 @@ inline void grahamScanOnContainer(const InputIterator first, const InputIterator
 
     //Writing on the output iterator the results
     typename std::vector<InputIterator>::iterator sIter = stack.begin();
-    for (++sIter;  sIter != stack.end(); ++sIter)
-    {
+    for (++sIter;  sIter != stack.end(); ++sIter) {
         *outIt =  **sIter;
         ++outIt;
     }
 }
-
 
 
 

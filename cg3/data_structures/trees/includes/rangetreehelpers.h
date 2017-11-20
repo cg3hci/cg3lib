@@ -26,14 +26,14 @@ namespace cg3 {
 
 
     template <class Node, class K, class T>
-    inline void insertIntoAssociatedTreeHelper(
+    inline Node* insertIntoAssociatedTreeHelper(
             Node* node,
             const K& key,
             const T& value,
             const unsigned int dim);
 
     template <class Node, class K, class T>
-    inline void insertIntoParentAssociatedTreesHelper(
+    inline Node* insertIntoParentAssociatedTreesHelper(
             Node* node,
             const K& key,
             const T& value,
