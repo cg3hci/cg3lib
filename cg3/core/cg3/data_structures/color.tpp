@@ -211,13 +211,21 @@ inline bool Color::operator <(const Color& otherColor) const {
 }
 
 inline void Color::serialize(std::ofstream& binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
+}
+
+inline void Color::deserialize(std::ifstream& binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
+}
+
+inline void Color::serializeOld(std::ofstream& binaryFile) const {
     SerializerOld::serialize(r, binaryFile);
     SerializerOld::serialize(g, binaryFile);
     SerializerOld::serialize(b, binaryFile);
     SerializerOld::serialize(a, binaryFile);
 }
 
-inline bool Color::deserialize(std::ifstream& binaryFile) {
+inline bool Color::deserializeOld(std::ifstream& binaryFile) {
     int red, green, blue, alpha;
     if (SerializerOld::deserialize(red, binaryFile) &&
         SerializerOld::deserialize(green, binaryFile) &&
@@ -229,14 +237,6 @@ inline bool Color::deserialize(std::ifstream& binaryFile) {
     }
     else
         return false;
-}
-
-inline void Color::serializeOld(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
-}
-
-inline void Color::deserializeOld(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
 }
 
 }
