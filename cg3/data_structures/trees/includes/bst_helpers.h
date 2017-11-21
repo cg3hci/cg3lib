@@ -4,7 +4,7 @@
 #ifndef CG3_BSTHELPERS_H
 #define CG3_BSTHELPERS_H
 
-#include "treecommon.h"
+#include "tree_common.h"
 
 #include <vector>
 
@@ -27,6 +27,6 @@ namespace cg3 {
 
 }
 
-#include "bsthelpers.tpp"
+#include "bst_helpers.tpp"
 
 #endif // CG3_BSTHELPERS_H

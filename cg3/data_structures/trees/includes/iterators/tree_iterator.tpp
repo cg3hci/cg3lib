@@ -1,7 +1,7 @@
 /**
     @author Stefano Nuvoli
 */
-#include "treeiterator.h"
+#include "tree_iterator.h"
 
 
 namespace cg3 {

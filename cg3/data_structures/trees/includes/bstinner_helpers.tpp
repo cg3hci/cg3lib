@@ -1,7 +1,7 @@
 /**
     @author Stefano Nuvoli
 */
-#include "bstinnerhelpers.h"
+#include "bstinner_helpers.h"
 
 namespace cg3 {
 

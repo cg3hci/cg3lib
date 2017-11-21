@@ -30,19 +30,19 @@ SOURCES += \
 
 # Tree common includes
 HEADERS +=  \
-    $$PWD/data_structures/trees/includes/treecommon.h \
-    $$PWD/data_structures/trees/includes/iterators/treegenericiterator.h \
-    $$PWD/data_structures/trees/includes/iterators/treeinsertiterator.h \
-    $$PWD/data_structures/trees/includes/iterators/treeiterator.h \
-    $$PWD/data_structures/trees/includes/iterators/treereverseiterator.h \
-    $$PWD/data_structures/trees/includes/bsthelpers.h
+    $$PWD/data_structures/trees/includes/tree_common.h \
+    $$PWD/data_structures/trees/includes/iterators/tree_genericiterator.h \
+    $$PWD/data_structures/trees/includes/iterators/tree_insertiterator.h \
+    $$PWD/data_structures/trees/includes/iterators/tree_iterator.h \
+    $$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.h \
+    $$PWD/data_structures/trees/includes/bst_helpers.h
 
 SOURCES += \
-    $$PWD/data_structures/trees/includes/iterators/treegenericiterator.tpp \
-    $$PWD/data_structures/trees/includes/iterators/treeinsertiterator.tpp \
-    $$PWD/data_structures/trees/includes/iterators/treeiterator.tpp \
-    $$PWD/data_structures/trees/includes/iterators/treereverseiterator.tpp \
-    $$PWD/data_structures/trees/includes/bsthelpers.tpp
+    $$PWD/data_structures/trees/includes/iterators/tree_genericiterator.tpp \
+    $$PWD/data_structures/trees/includes/iterators/tree_insertiterator.tpp \
+    $$PWD/data_structures/trees/includes/iterators/tree_iterator.tpp \
+    $$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.tpp \
+    $$PWD/data_structures/trees/includes/bst_helpers.tpp
 
 
 
@@ -51,55 +51,57 @@ HEADERS +=  \
     $$PWD/data_structures/trees/bst.h \
     $$PWD/data_structures/trees/bstinner.h \
     $$PWD/data_structures/trees/bstleaf.h \
-    $$PWD/data_structures/trees/avlleaf.h \
-    $$PWD/data_structures/trees/includes/nodes/bstnode.h \
-    $$PWD/data_structures/trees/includes/bstinnerhelpers.h \
-    $$PWD/data_structures/trees/includes/bstleafhelpers.h
+    $$PWD/data_structures/trees/includes/nodes/bst_node.h \
+    $$PWD/data_structures/trees/includes/bstinner_helpers.h \
+    $$PWD/data_structures/trees/includes/bstleaf_helpers.h
 
 SOURCES += \
     $$PWD/data_structures/trees/bstinner.tpp \
     $$PWD/data_structures/trees/bstleaf.tpp \
-    $$PWD/data_structures/trees/avlleaf.tpp \
-    $$PWD/data_structures/trees/includes/nodes/bstnode.tpp \
-    $$PWD/data_structures/trees/includes/bstinnerhelpers.tpp \
-    $$PWD/data_structures/trees/includes/bstleafhelpers.tpp
+    $$PWD/data_structures/trees/includes/nodes/bst_node.tpp \
+    $$PWD/data_structures/trees/includes/bstinner_helpers.tpp \
+    $$PWD/data_structures/trees/includes/bstleaf_helpers.tpp
 
 
 
 # AVL trees
 HEADERS += \
     $$PWD/data_structures/trees/avlinner.h \
-    $$PWD/data_structures/trees/includes/nodes/avlnode.h \
-    $$PWD/data_structures/trees/includes/avlhelpers.h
+    $$PWD/data_structures/trees/avlleaf.h \
+    $$PWD/data_structures/trees/includes/nodes/avl_node.h \
+    $$PWD/data_structures/trees/includes/avl_helpers.h
 
 SOURCES += \
     $$PWD/data_structures/trees/avlinner.tpp \
-    $$PWD/data_structures/trees/includes/nodes/avlnode.tpp \
-    $$PWD/data_structures/trees/includes/avlhelpers.tpp
+    $$PWD/data_structures/trees/avlleaf.tpp \
+    $$PWD/data_structures/trees/includes/nodes/avl_node.tpp \
+    $$PWD/data_structures/trees/includes/avl_helpers.tpp
 
 
 
 # Range tree
 HEADERS += \
     $$PWD/data_structures/trees/rangetree.h \
-    $$PWD/data_structures/trees/includes/nodes/rangetreenode.h \
-    $$PWD/data_structures/trees/includes/rangetreehelpers.h
+    $$PWD/data_structures/trees/includes/nodes/rangetree_node.h \
+    $$PWD/data_structures/trees/includes/rangetree_helpers.h \
+    $$PWD/data_structures/trees/includes/rangetree_types.h
 
 SOURCES += \
     $$PWD/data_structures/trees/rangetree.tpp \
-    $$PWD/data_structures/trees/includes/nodes/rangetreenode.tpp \
-    $$PWD/data_structures/trees/includes/rangetreehelpers.tpp
+    $$PWD/data_structures/trees/includes/rangetree_types.cpp \
+    $$PWD/data_structures/trees/includes/nodes/rangetree_node.tpp \
+    $$PWD/data_structures/trees/includes/rangetree_helpers.tpp
 
 
 # AABB tree
 HEADERS += \
     $$PWD/data_structures/trees/aabbtree.h \
-    $$PWD/data_structures/trees/includes/aabbhelpers.h \
-    $$PWD/data_structures/trees/includes/nodes/aabbnode.h \
+    $$PWD/data_structures/trees/includes/aabb_helpers.h \
+    $$PWD/data_structures/trees/includes/nodes/aabb_node.h \
     $$PWD/data_structures/trees/includes/nodes/aabb.h
 
 SOURCES += \
     $$PWD/data_structures/trees/aabbtree.tpp \
-    $$PWD/data_structures/trees/includes/aabbhelpers.tpp \
-    $$PWD/data_structures/trees/includes/nodes/aabbnode.tpp \
+    $$PWD/data_structures/trees/includes/aabb_helpers.tpp \
+    $$PWD/data_structures/trees/includes/nodes/aabb_node.tpp \
     $$PWD/data_structures/trees/includes/nodes/aabb.tpp

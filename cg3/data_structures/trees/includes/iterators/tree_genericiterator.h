@@ -29,6 +29,6 @@ public:
 
 }
 
-#include "treegenericiterator.tpp"
+#include "tree_genericiterator.tpp"
 
 #endif // CG3_TREEGENERICITERATOR_H

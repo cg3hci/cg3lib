@@ -4,7 +4,7 @@
 #ifndef CG3_AVLHELPERS_H
 #define CG3_AVLHELPERS_H
 
-#include "treecommon.h"
+#include "tree_common.h"
 
 #include <vector>
 
@@ -36,6 +36,6 @@ inline Node* rightRotateHelper(Node* a);
 
 }
 
-#include "avlhelpers.tpp"
+#include "avl_helpers.tpp"
 
 #endif // CG3_AVLHELPERS_H

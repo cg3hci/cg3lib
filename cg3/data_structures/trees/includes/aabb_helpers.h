@@ -4,7 +4,7 @@
 #ifndef CG3_AABBHELPERS_H
 #define CG3_AABBHELPERS_H
 
-#include "treecommon.h"
+#include "tree_common.h"
 
 #include "nodes/aabb.h"
 
@@ -87,6 +87,6 @@ inline void setAABBFromKeyHelper(
 
 }
 
-#include "aabbhelpers.tpp"
+#include "aabb_helpers.tpp"
 
 #endif // CG3_AABBHELPERS_H

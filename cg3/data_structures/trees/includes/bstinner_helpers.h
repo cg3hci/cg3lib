@@ -4,9 +4,9 @@
 #ifndef CG3_BSTINNERHELPERS_H
 #define CG3_BSTINNERHELPERS_H
 
-#include "treecommon.h"
+#include "tree_common.h"
 
-#include "bsthelpers.h"
+#include "bst_helpers.h"
 
 #include <vector>
 
@@ -77,6 +77,6 @@ inline Node* getMaximumHelperInner(Node* node);
 
 }
 
-#include "bstinnerhelpers.tpp"
+#include "bstinner_helpers.tpp"
 
 #endif // CG3_BSTINNERHELPERS_H

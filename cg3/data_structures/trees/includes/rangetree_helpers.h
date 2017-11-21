@@ -4,7 +4,7 @@
 #ifndef CG3_RANGETREEHELPERS_H
 #define CG3_RANGETREEHELPERS_H
 
-#include "treecommon.h"
+#include "tree_common.h"
 
 #include <vector>
 
@@ -75,6 +75,6 @@ namespace cg3 {
     inline Node* rightRotateRangeTreeHelper(Node* a, const unsigned int dim);
 }
 
-#include "rangetreehelpers.tpp"
+#include "rangetree_helpers.tpp"
 
 #endif // CG3_RANGETREEHELPERS_H

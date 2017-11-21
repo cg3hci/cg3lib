@@ -5,8 +5,8 @@
 
 #include "assert.h"
 
-#include "includes/bstleafhelpers.h"
-#include "includes/avlhelpers.h"
+#include "includes/bstleaf_helpers.h"
+#include "includes/avl_helpers.h"
 
 namespace cg3 {
 

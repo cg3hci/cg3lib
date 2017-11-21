@@ -3,7 +3,7 @@
 */
 #include "bstinner.h"
 
-#include "includes/bstinnerhelpers.h"
+#include "includes/bstinner_helpers.h"
 
 #include <stdexcept>
 #include <algorithm>

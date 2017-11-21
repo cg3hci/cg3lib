@@ -1,9 +1,9 @@
 /**
     @author Stefano Nuvoli
 */
-#include "rangetreehelpers.h"
+#include "rangetree_helpers.h"
 
-#include "bstleafhelpers.h"
+#include "bstleaf_helpers.h"
 
 #include "assert.h"
 

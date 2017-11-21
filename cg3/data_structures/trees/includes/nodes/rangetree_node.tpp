@@ -1,7 +1,7 @@
 /**
     @author Stefano Nuvoli
 */
-#include "rangetreenode.h"
+#include "rangetree_node.h"
 
 namespace cg3 {
 

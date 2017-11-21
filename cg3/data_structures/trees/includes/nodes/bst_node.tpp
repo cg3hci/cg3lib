@@ -1,11 +1,12 @@
 /**
     @author Stefano Nuvoli
 */
-#include "aabbnode.h"
+#include "bst_node.h"
 
 namespace cg3 {
 
 /* --------- CONSTRUCTORS/DESTRUCTOR --------- */
+
 
 /**
  * @brief Constructor with key and value
@@ -13,8 +14,8 @@ namespace cg3 {
  * param[in] key Key of the node
  * param[in] value Value of the node
  */
-template <int D, class K, class T>
-AABBNode<D,K,T>::AABBNode(
+template<class K, class T>
+BSTNode<K,T>::BSTNode(
         const K& key,
         const T& value)
 {
@@ -26,8 +27,8 @@ AABBNode<D,K,T>::AABBNode(
  *
  * param[in] key Key of the node
  */
-template <int D, class K, class T>
-AABBNode<D,K,T>::AABBNode(const K& key)
+template<class K, class T>
+BSTNode<K,T>::BSTNode(const K& key)
 {
     init(key, nullptr);
 }
@@ -35,8 +36,8 @@ AABBNode<D,K,T>::AABBNode(const K& key)
 /**
  * @brief Destructor
  */
-template <int D, class K, class T>
-AABBNode<D,K,T>::~AABBNode()
+template<class K, class T>
+BSTNode<K,T>::~BSTNode()
 {
     if (this->value != nullptr) {
         delete this->value;
@@ -45,15 +46,17 @@ AABBNode<D,K,T>::~AABBNode()
 }
 
 
+
 /* --------- PUBLIC METHODS --------- */
+
 
 /**
  * @brief Check if the node is a leaf
  *
  * @return True if the node is a leaf
  */
-template <int D, class K, class T>
-inline bool AABBNode<D,K,T>::isLeaf() const {
+template<class K, class T>
+inline bool BSTNode<K,T>::isLeaf() const {
     return (left == nullptr) && (right == nullptr);
 }
 
@@ -67,8 +70,8 @@ inline bool AABBNode<D,K,T>::isLeaf() const {
  * param[in] key Key of the node
  * param[in] value Value of the node
  */
-template <int D, class K, class T>
-inline void AABBNode<D,K,T>::init(const K& key, T* value) {
+template<class K, class T>
+inline void BSTNode<K,T>::init(const K& key, T* value) {
     this->key = key;
     this->value = value;
 
@@ -76,10 +79,7 @@ inline void AABBNode<D,K,T>::init(const K& key, T* value) {
     this->right = nullptr;
 
     this->parent = nullptr;
-
-    this->height = 0;
 }
-
 
 
 }

@@ -1,10 +1,8 @@
 /**
     @author Stefano Nuvoli
 */
-#ifndef CG3_AVLNODE_H
-#define CG3_AVLNODE_H
-
-#include "../treecommon.h"
+#ifndef CG3_BSTNODE_H
+#define CG3_BSTNODE_H
 
 namespace cg3 {
 
@@ -13,16 +11,16 @@ namespace cg3 {
  *
  */
 template <class K, class T>
-class AVLNode {
+class BSTNode {
 
 public:
 
     /* Constructors/Destructor */
 
-    AVLNode(const K& key, const T& value);
-    AVLNode(const K& key);
+    BSTNode(const K& key, const T& value);
+    BSTNode(const K& key);
 
-    ~AVLNode();
+    ~BSTNode();
 
 
     /* Fields */
@@ -30,26 +28,26 @@ public:
     K key;
     T* value;
 
-    AVLNode* parent;
-    AVLNode* left;
-    AVLNode* right;
-
-    TreeSize height;
-
+    BSTNode* parent;
+    BSTNode* left;
+    BSTNode* right;
 
     /* Public methods */
 
     inline bool isLeaf() const;
+
 
 private:
 
     /* Private methods */
 
     inline void init(const K& key, T* value);
+
+
 };
 
 }
 
-#include "avlnode.tpp"
+#include "bst_node.tpp"
 
-#endif // CG3_AVLNODE_H
+#endif // CG3_BSTNODE_H

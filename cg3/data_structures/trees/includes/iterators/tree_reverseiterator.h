@@ -4,7 +4,7 @@
 #ifndef CG3_TREEREVERSEITERATOR_H
 #define CG3_TREEREVERSEITERATOR_H
 
-#include "treegenericiterator.h"
+#include "tree_genericiterator.h"
 #include <iterator>
 
 namespace cg3 {
@@ -54,6 +54,6 @@ protected:
 }
 
 
-#include "treereverseiterator.tpp"
+#include "tree_reverseiterator.tpp"
 
 #endif // CG3_TREEREVERSEITERATOR_H

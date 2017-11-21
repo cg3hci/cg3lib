@@ -12,7 +12,7 @@
 namespace cg3 {
 
 /**
- * Iterative convex hull data structure
+ * @brief Iterative convex hull data structure
  */
 template <class T>
 class IterativeConvexHull2D {

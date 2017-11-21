@@ -7,15 +7,15 @@
 #include <vector>
 #include <algorithm>
 
-#include "includes/treecommon.h"
+#include "includes/tree_common.h"
 
-#include "includes/iterators/treeiterator.h"
-#include "includes/iterators/treereverseiterator.h"
-#include "includes/iterators/treeinsertiterator.h"
+#include "includes/iterators/tree_iterator.h"
+#include "includes/iterators/tree_reverseiterator.h"
+#include "includes/iterators/tree_insertiterator.h"
 
-#include "includes/nodes/rangetreenode.h"
+#include "includes/nodes/rangetree_node.h"
 
-#include "includes/rangetreehelpers.h"
+#include "includes/rangetree_helpers.h"
 
 
 namespace cg3 {
@@ -168,6 +168,8 @@ protected:
 
 
 #include "rangetree.tpp"
+
+#include "includes/rangetree_types.h"
 
 
 #endif // CG3_RANGETREE_H

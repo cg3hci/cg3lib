@@ -3,7 +3,7 @@
 */
 #include "bstleaf.h"
 
-#include "includes/bstleafhelpers.h"
+#include "includes/bstleaf_helpers.h"
 
 #include <stdexcept>
 #include <algorithm>

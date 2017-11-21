@@ -1,9 +1,9 @@
 /**
     @author Stefano Nuvoli
 */
-#include "aabbhelpers.h"
+#include "aabb_helpers.h"
 
-#include "avlhelpers.h"
+#include "avl_helpers.h"
 
 #include "assert.h"
 

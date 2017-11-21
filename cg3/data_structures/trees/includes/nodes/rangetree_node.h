@@ -53,6 +53,6 @@ public:
 
 #include "../../rangetree.h"
 
-#include "rangetreenode.tpp"
+#include "rangetree_node.tpp"
 
 #endif // CG3_RANGETREENODE_H

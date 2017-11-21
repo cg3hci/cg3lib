@@ -7,8 +7,8 @@
 #include <algorithm>
 #include <utility>
 
-#include "includes/bstinnerhelpers.h"
-#include "includes/avlhelpers.h"
+#include "includes/bstinner_helpers.h"
+#include "includes/avl_helpers.h"
 
 namespace cg3 {
 

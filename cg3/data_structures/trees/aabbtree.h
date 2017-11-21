@@ -7,15 +7,15 @@
 #include <vector>
 #include <utility>
 
-#include "includes/treecommon.h"
+#include "includes/tree_common.h"
 
-#include "includes/iterators/treeiterator.h"
-#include "includes/iterators/treereverseiterator.h"
-#include "includes/iterators/treeinsertiterator.h"
+#include "includes/iterators/tree_iterator.h"
+#include "includes/iterators/tree_reverseiterator.h"
+#include "includes/iterators/tree_insertiterator.h"
 
-#include "includes/nodes/aabbnode.h"
+#include "includes/nodes/aabb_node.h"
 
-#include "includes/aabbhelpers.h"
+#include "includes/aabb_helpers.h"
 
 namespace cg3 {
 

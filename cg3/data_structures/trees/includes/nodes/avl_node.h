@@ -1,12 +1,10 @@
 /**
     @author Stefano Nuvoli
 */
-#ifndef CG3_AABBNODE_H
-#define CG3_AABBNODE_H
+#ifndef CG3_AVLNODE_H
+#define CG3_AVLNODE_H
 
-#include "../treecommon.h"
-
-#include "aabb.h"
+#include "../tree_common.h"
 
 namespace cg3 {
 
@@ -14,17 +12,17 @@ namespace cg3 {
  * @brief The node of the binary search tree
  *
  */
-template <int D, class K, class T>
-class AABBNode {
+template <class K, class T>
+class AVLNode {
 
 public:
 
     /* Constructors/Destructor */
 
-    AABBNode(const K& key, const T& value);
-    AABBNode(const K& key);
+    AVLNode(const K& key, const T& value);
+    AVLNode(const K& key);
 
-    ~AABBNode();
+    ~AVLNode();
 
 
     /* Fields */
@@ -32,11 +30,9 @@ public:
     K key;
     T* value;
 
-    AABB<D> aabb;
-
-    AABBNode* parent;
-    AABBNode* left;
-    AABBNode* right;
+    AVLNode* parent;
+    AVLNode* left;
+    AVLNode* right;
 
     TreeSize height;
 
@@ -52,9 +48,8 @@ private:
     inline void init(const K& key, T* value);
 };
 
-
 }
 
-#include "aabbnode.tpp"
+#include "avl_node.tpp"
 
-#endif // CG3_AABBNODE_H
+#endif // CG3_AVLNODE_H

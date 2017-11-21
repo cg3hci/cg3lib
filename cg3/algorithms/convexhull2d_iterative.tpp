@@ -22,7 +22,7 @@ void processConvexHull(
 /* CONSTRUCTORS/DESTRUCTORS */
 
 /**
- * Constructor for empty datastructure
+ * @brief Constructor for empty datastructure
  */
 template <class T>
 IterativeConvexHull2D<T>::IterativeConvexHull2D() {
@@ -154,7 +154,7 @@ void IterativeConvexHull2D<T>::clear() {
 /* ----- ALGORITHM INTERFACE IMPLEMENTATION ----- */
 
 /**
- * Add point to the convex hull
+ * @brief Add point to the convex hull
  */
 template <class T>
 void addPointToConvexHull(
@@ -169,7 +169,7 @@ void addPointToConvexHull(
 /* ----- USEFUL FUNCTION IMPLEMENTATION ----- */
 
 /**
- * Algorithm step for processing iterative convex hull
+ * @brief Algorithm step for processing iterative convex hull
  *
  * @param[in] point Added point
  * @param[out] upper Current upper convex hull

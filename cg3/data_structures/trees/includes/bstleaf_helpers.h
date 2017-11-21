@@ -4,9 +4,9 @@
 #ifndef CG3_BSTLEAFHELPERS_H
 #define CG3_BSTLEAFHELPERS_H
 
-#include "bsthelpers.h"
+#include "bst_helpers.h"
 
-#include "treecommon.h"
+#include "tree_common.h"
 
 #include <vector>
 
@@ -83,6 +83,6 @@ inline Node* getMaximumHelperLeaf(Node* node);
 
 }
 
-#include "bstleafhelpers.tpp"
+#include "bstleaf_helpers.tpp"
 
 #endif // CG3_BSTLEAFHELPERS_H
