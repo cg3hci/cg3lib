@@ -447,7 +447,6 @@ inline void Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
             tmp[std::move(o1)] = std::move(o2);
         }
         m = std::move(tmp);
-        return true;
     }
     catch (...){
         restorePosition(binaryFile, begin);
