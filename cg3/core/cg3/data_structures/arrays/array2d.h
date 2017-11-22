@@ -21,6 +21,8 @@ template <class T> class Array2D : public SerializableObjectOld, SerializableObj
 
         unsigned long int getSizeX() const;
         unsigned long int getSizeY() const;
+        unsigned long int rows() const;
+        unsigned long int cols() const;
 
         T& getMin();
         const T& getMin() const;

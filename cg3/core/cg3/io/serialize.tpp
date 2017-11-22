@@ -2,6 +2,10 @@
 
 #include <exception>
 #include <type_traits>
+#include <memory>
+#ifndef _MSC_VER
+#   include <cxxabi.h>
+#endif
 
 namespace cg3 {
 
@@ -77,15 +81,19 @@ inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile){
         try {
             o->deserialize(binaryFile);
         }
-        catch (...){
+        catch (std::ios_base::failure& e){
             restorePosition(binaryFile, begin);
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure(e.what() + std::string("\nFrom ") + internal::typeName<decltype(obj)>(false, false, false));
+        }
+        catch(...){
+            restorePosition(binaryFile, begin);
+            throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
         }
     }
     else{ // primitive type or type which doesn't exist a "deserialize" implementation
         if (! binaryFile.read(reinterpret_cast<char*>(&obj), sizeof(T))){
             restorePosition(binaryFile, begin);
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
         }
     }
 }
@@ -131,13 +139,17 @@ inline void Serializer::deserializeObjectAttributes(const std::string& s, std::i
 
         Serializer::deserialize(tmp, binaryFile);
         if (tmp != s)
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + tmp + " != " + s);
         Serializer::internal::deserializeAttribute(binaryFile, args...);
 
     }
+    catch(std::ios_base::failure& e){
+        Serializer::restorePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom ") + s);
+    }
     catch(...){
         Serializer::restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading " + s);
+        throw std::ios_base::failure("Deserialization failed of " + s);
     }
 }
 
@@ -182,14 +194,23 @@ inline void Serializer::deserialize(std::string& str, std::ifstream& binaryFile)
     unsigned long int size;
     std::string tmp;
     std::streampos begin = binaryFile.tellg();
-    Serializer::deserialize(size, binaryFile);
-    tmp.resize(size);
-    if (binaryFile.read(&tmp[0], size)){
-        str = std::move(tmp);
+    try {
+        Serializer::deserialize(size, binaryFile);
+        tmp.resize(size);
+        if (binaryFile.read(&tmp[0], size)){
+            str = std::move(tmp);
+        }
+        else{
+            throw std::exception();
+        }
     }
-    else{
+    catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::string");
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::string"));
+    }
+    catch(...){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of std::string");
     }
 
 }
@@ -209,9 +230,13 @@ inline void Serializer::deserialize(std::pair<T1, T2>& p, std::ifstream& binaryF
         Serializer::deserialize(tmp.second, binaryFile);
         p = std::move(tmp);
     }
+    catch(std::ios_base::failure& e){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::pair"));
+    }
     catch(...){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::pair");
+        throw std::ios_base::failure("Deserialization failed of std::pair");
     }
 
 }
@@ -246,7 +271,7 @@ inline void Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryF
     try {
         Serializer::deserialize(str, binaryFile);
         if (str != "stdset")
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + str + " != stdset");
         Serializer::deserialize(size, binaryFile);
         for (unsigned int it = 0; it < size; ++it){
             T obj;
@@ -255,9 +280,13 @@ inline void Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryF
         }
         s = std::move(tmp);
     }
-    catch (...){
+    catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::set");
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::set"));
+    }
+    catch(...){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of std::set");
     }
 }
 
@@ -310,7 +339,7 @@ inline void Serializer::deserialize(std::vector<bool, A...> &v, std::ifstream& b
     try {
         Serializer::deserialize(s, binaryFile);
         if (s != "stdvectorBool")
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + s + " != stdvectorBool");
         Serializer::deserialize(size, binaryFile);
         tmpv.resize(size);
         bool tmp;
@@ -320,9 +349,13 @@ inline void Serializer::deserialize(std::vector<bool, A...> &v, std::ifstream& b
         }
         v = std::move(tmpv);
     }
+    catch(std::ios_base::failure& e){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::vector<bool>"));
+    }
     catch(...){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::vector<bool>");
+        throw std::ios_base::failure("Deserialization failed of std::set");
     }
 }
 
@@ -341,7 +374,7 @@ inline void Serializer::deserialize(std::vector<T, A...> &v, std::ifstream& bina
     try {
         Serializer::deserialize(s, binaryFile);
         if (s != "stdvector")
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + s + " != stdvector");
         Serializer::deserialize(size, binaryFile);
         tmpv.resize(size);
         for (unsigned int it = 0; it < size; ++it){
@@ -350,9 +383,13 @@ inline void Serializer::deserialize(std::vector<T, A...> &v, std::ifstream& bina
         v = std::move(tmpv);
 
     }
+    catch(std::ios_base::failure& e){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::vector"));
+    }
     catch(...){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::vector");
+        throw std::ios_base::failure("Deserialization failed of std::vector");
     }
 }
 
@@ -387,7 +424,7 @@ inline void Serializer::deserialize(std::list<T, A...> &l, std::ifstream& binary
     try {
         Serializer::deserialize(s, binaryFile);
         if (s != "stdlist")
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + s + " != stdlist");
         Serializer::deserialize(size, binaryFile);
         for (unsigned int it = 0; it < size; ++it){
             T obj;
@@ -396,9 +433,13 @@ inline void Serializer::deserialize(std::list<T, A...> &l, std::ifstream& binary
         }
         l = std::move(tmp);
     }
-    catch (...){
+    catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::list");
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::list"));
+    }
+    catch(...){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of std::list");
     }
 }
 
@@ -435,7 +476,7 @@ inline void Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
     try {
         Serializer::deserialize(s, binaryFile);
         if (s != "stdmap")
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + s + " != stdmap");
         Serializer::deserialize(size, binaryFile);
 
         for (unsigned int it = 0; it < size; ++it){
@@ -448,9 +489,13 @@ inline void Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
         }
         m = std::move(tmp);
     }
-    catch (...){
+    catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::list");
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::map"));
+    }
+    catch(...){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of std::map");
     }
 }
 
@@ -489,7 +534,7 @@ inline void Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& bi
     try {
         Serializer::deserialize(s, binaryFile);
         if (s != "EigenMatrix")
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + s + " != EigenMatrix");
         Serializer::deserialize(row, binaryFile);
         Serializer::deserialize(col, binaryFile);
         tmp.resize(row, col);
@@ -501,9 +546,13 @@ inline void Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& bi
         }
         m = std::move(tmp);
     }
-    catch (...){
+    catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading Eigen::Matrix");
+        throw std::ios_base::failure(e.what() + std::string("\nFrom Eigen::Matrix"));
+    }
+    catch(...){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of Eigen::Matrix");
     }
 }
 #endif //CG3_WITH_EIGEN
@@ -538,20 +587,48 @@ inline void Serializer::deserialize(std::array<T, A...> &a, std::ifstream& binar
     try {
         Serializer::deserialize(s, binaryFile);
         if (s != "stdarray")
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + s + " != stdarray");
         Serializer::deserialize(size, binaryFile);
         if (size != a.size())
-            throw std::ios_base::failure("");
+            throw std::ios_base::failure(std::string("Mismatching std::array size: ") + std::to_string(size) + " != " + std::to_string(a.size()));
         std::vector<T> tmp(size);
         for (unsigned int it = 0; it < size; ++it){
             Serializer::deserialize(tmp[it], binaryFile);
         }
         std::copy_n(tmp.begin(), size, a.begin());
     }
-    catch (...){
+    catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading std::array");
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::array"));
     }
+    catch(...){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of std::array");
+    }
+}
+
+template<typename T>
+inline std::string Serializer::internal::typeName(bool specifyIfConst, bool specifyIfVolatile, bool specifyIfReference) {
+    typedef typename std::remove_reference<T>::type TR;
+    std::unique_ptr<char, void(*)(void*)> own(
+    #ifndef _MSC_VER
+                    abi::__cxa_demangle(typeid(TR).name(), nullptr, nullptr, nullptr),
+    #else
+                    nullptr,
+    #endif
+                    std::free);
+    std::string r = own != nullptr ? own.get() : typeid(TR).name();
+    if (std::is_const<TR>::value && specifyIfConst)
+        r += " const";
+    if (std::is_volatile<TR>::value && specifyIfVolatile)
+        r += " volatile";
+    if (specifyIfReference){
+        if (std::is_lvalue_reference<T>::value)
+            r += "&";
+        else if (std::is_rvalue_reference<T>::value)
+            r += "&&";
+    }
+    return r;
 }
 
 inline void Serializer::internal::serializeAttribute(std::ofstream& binaryFile){

@@ -119,4 +119,41 @@ inline std::map<T, Color> smartColoring(const std::vector<T> &elements, AdjCompa
     return colorMap;
 }
 
+/**
+ * @brief typeName
+ * Returns the type of T as a std::string
+ *
+ * @example
+ * \code{.cpp}
+ * int i;
+ * std::cout << "Type of i is " << typeName<decltype(i)>() << "\n";
+ * \endcode
+ *
+ * @link https://stackoverflow.com/questions/81870/is-it-possible-to-print-a-variables-type-in-standard-c
+ * @return the type of T as a std::string
+ */
+template<typename T>
+inline std::string typeName(bool specifyIfConst, bool specifyIfVolatile, bool specifyIfReference) {
+    typedef typename std::remove_reference<T>::type TR;
+    std::unique_ptr<char, void(*)(void*)> own(
+    #ifndef _MSC_VER
+                    abi::__cxa_demangle(typeid(TR).name(), nullptr, nullptr, nullptr),
+    #else
+                    nullptr,
+    #endif
+                    std::free);
+    std::string r = own != nullptr ? own.get() : typeid(TR).name();
+    if (std::is_const<TR>::value && specifyIfConst)
+        r += " const";
+    if (std::is_volatile<TR>::value && specifyIfVolatile)
+        r += " volatile";
+    if (specifyIfReference){
+        if (std::is_lvalue_reference<T>::value)
+            r += "&";
+        else if (std::is_rvalue_reference<T>::value)
+            r += "&&";
+    }
+    return r;
+}
+
 }

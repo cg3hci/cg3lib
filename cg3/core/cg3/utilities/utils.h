@@ -21,6 +21,13 @@
 
 #include <vector>
 #include <memory>
+#include <type_traits>
+#include <typeinfo>
+#ifndef _MSC_VER
+#   include <cxxabi.h>
+#endif
+#include <string>
+#include <cstdlib>
 #include "../geometry/point.h"
 #include "../geometry/2d/point2d.h"
 #include "../data_structures/color.h"
@@ -44,6 +51,9 @@ namespace cg3 {
 
     template <typename T, typename AdjComparator>
     std::map<T, Color> smartColoring(const std::vector<T> &elements, AdjComparator comp, const std::vector<Color> &colors = PASTEL_COLORS);
+
+    template <typename T>
+    std::string typeName(bool specifyIfConst = true, bool specifyIfVolatile = true, bool specifyIfReference = true);
 
 }
 

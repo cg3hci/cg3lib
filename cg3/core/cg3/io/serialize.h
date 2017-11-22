@@ -111,6 +111,9 @@ namespace Serializer {
     template <typename T, unsigned long int ...A> void deserialize(std::array<T, A...> &a, std::ifstream& binaryFile);
 
     namespace internal {
+        template <typename T>
+        std::string typeName(bool specifyIfConst = true, bool specifyIfVolatile = true, bool specifyIfReference = true);
+
         void serializeAttribute(std::ofstream& binaryFile);
         template<typename T, typename... Args> void serializeAttribute(std::ofstream& binaryFile, const T& t, const Args&... args);
 

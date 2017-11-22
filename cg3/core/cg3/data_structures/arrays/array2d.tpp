@@ -55,24 +55,73 @@ inline T& Array2D<T>::operator ()(unsigned long int i, unsigned long int j) {
     return v[getIndex(i,j)];
 }
 
+/**
+ * @brief Array2D<T>::operator ()
+ * Access to the i,j element of the array
+ *
+ * @param i: row of the desired element
+ * @param j: column of the desired element
+ * @return a copy of the element in position i,j
+ */
 template <class T>
 inline T Array2D<T>::operator ()(unsigned long int i, unsigned long int j) const {
     return v[getIndex(i,j)];
 }
 
+/**
+ * @brief Array2D<T>::operator ()
+ * Access to the i-th row of the array
+ *
+ * @param i: index of the desired row
+ * @return a pointer to the first element of the i-th row
+ */
 template <class T>
 inline const T* Array2D<T>::operator ()(unsigned long int i) const{
     assert (i < sizeX);
     return &(v[sizeY*i]);
 }
 
+/**
+ * @brief Array2D<T>::getSizeX
+ * Returns the number of rows of the array
+ *
+ * @return number of rows
+ */
 template <class T>
 inline unsigned long int Array2D<T>::getSizeX() const {
     return sizeX;
 }
 
+/**
+ * @brief Array2D<T>::getSizeY
+ * Returns the number of columns of the array
+ *
+ * @return number of columns
+ */
 template <class T>
 inline unsigned long int Array2D<T>::getSizeY() const{
+    return sizeY;
+}
+
+/**
+ * @brief Array2D<T>::rows
+ * Returns the number of rows of the array
+ *
+ * @return number of rows
+ */
+template<class T>
+inline unsigned long Array2D<T>::rows() const {
+    return sizeX;
+}
+
+/**
+ * @brief Array2D<T>::cols
+ * Returns the number of columns of the array
+ *
+ * @return number of columns
+ */
+template<class T>
+inline unsigned long Array2D<T>::cols() const {
     return sizeY;
 }
 
@@ -96,11 +145,24 @@ const T&Array2D<T>::getMax() const {
     return *(std::max_element(v.begin(), v.end()));
 }
 
+/**
+ * @brief Array2D<T>::setConstant
+ * Sets all the values of the array to c
+ * @param[in] c
+ */
 template <class T>
 inline void Array2D<T>::setConstant(const T& c) {
     std::fill(v.begin(), v.end(), c);
 }
 
+/**
+ * @brief Array2D<T>::resize
+ * Resizes this array.
+ * It does not conserve the values of the array before the resize operation.
+ * @see conservativeResize(x, y)
+ * @param[in] x: new size of the rows of the array
+ * @param[in] y: new size of the columns of the array
+ */
 template <class T>
 inline void Array2D<T>::resize(unsigned long int x, unsigned long int y) {
     v.resize(x*y);
@@ -109,6 +171,14 @@ inline void Array2D<T>::resize(unsigned long int x, unsigned long int y) {
 }
 
 template <class T>
+/**
+ * @brief Array2D<T>::resize
+ * Resizes this array and sets all its elements to passed value.
+ *
+ * @param[in] x: new size of the rows of the array
+ * @param[in] y: new size of the columns of the array
+ * @param value
+ */
 inline void Array2D<T>::resize(unsigned long int x, unsigned long int y, const T& value) {
     v.resize(x*y, value);
     sizeX = x;
