@@ -16,12 +16,11 @@ bool operator <(const QColor &c1, const QColor &c2);
 
 #else
 
-#include "../deprecated/serialize_old.h"
 #include "../io/serialize.h"
 
 namespace cg3 {
 
-class Color : SerializableObject, SerializableObjectOld {
+class Color : SerializableObject {
     public:
         Color();
         Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
@@ -58,9 +57,6 @@ class Color : SerializableObject, SerializableObjectOld {
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
         void deserialize(std::ifstream& binaryFile);
-
-        void serializeOld(std::ofstream& binaryFile) const;
-        bool deserializeOld(std::ifstream& binaryFile);
 
     protected:
         int r, g, b;
