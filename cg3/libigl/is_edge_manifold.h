@@ -13,6 +13,6 @@ inline bool isEdgeManifold(const SimpleEigenMesh& input);
 
 }
 
-#include "is_edge_manifold.ipp"
+#include "is_edge_manifold.tpp"
 
 #endif // CG3_LIBIGL_IS_EDGE_MANIFOLD_H

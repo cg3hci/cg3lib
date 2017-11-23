@@ -16,6 +16,6 @@ void removeDuplicateVertices(EigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic
 
 }
 
-#include "remove_duplicate_vertices.ipp"
+#include "remove_duplicate_vertices.tpp"
 
 #endif // REMOVE_LIBIGL_DUPLICATE_VERTICES_H

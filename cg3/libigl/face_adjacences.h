@@ -13,6 +13,6 @@ Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m);
 
 }
 
-#include "face_adjacences.ipp"
+#include "face_adjacences.tpp"
 
 #endif // CG3_LIBIGL_FACE_ADJACENCES_H

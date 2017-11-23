@@ -13,6 +13,6 @@ std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);
 
 }
 
-#include "connected_components.ipp"
+#include "connected_components.tpp"
 
 #endif // CG3_LIBIGL_CONNECTED_COMPONENTS_H

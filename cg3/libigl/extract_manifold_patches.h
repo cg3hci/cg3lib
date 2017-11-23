@@ -14,6 +14,6 @@ int extractManifoldPatches(const SimpleEigenMesh& m);
 
 }
 
-#include "extract_manifold_patches.ipp"
+#include "extract_manifold_patches.tpp"
 
 #endif // CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_H

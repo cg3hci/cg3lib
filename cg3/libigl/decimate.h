@@ -23,6 +23,6 @@ void decimateMesh(EigenMesh& m, int numberDesiredFaces);
 
 }
 
-#include "decimate.ipp"
+#include "decimate.tpp"
 
 #endif // CG3_LIBIGL_DECIMATE_H

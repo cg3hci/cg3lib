@@ -14,6 +14,6 @@ void removeUnreferencedVertices(SimpleEigenMesh &input);
 
 }
 
-#include "remove_unreferenced_vertices.ipp"
+#include "remove_unreferenced_vertices.tpp"
 
 #endif // CG3_REMOVE_UNREFERENCED_VERTICES_H

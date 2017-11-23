@@ -13,6 +13,6 @@ namespace libigl {
 
 }
 
-#include "is_vertex_manifold.ipp"
+#include "is_vertex_manifold.tpp"
 
 #endif // CG3_LIBIGL_IS_VERTEX_MANIFOLD_H

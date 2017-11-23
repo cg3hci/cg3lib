@@ -31,29 +31,29 @@ exists($$(LIBIGL_HOME)){
     }
 
     HEADERS += \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.h \
+        $$PWD/libigl/libigl.h \
+        $$PWD/libigl/booleans.h \
+        $$PWD/libigl/connected_components.h \
+        $$PWD/libigl/decimate.h \
+        $$PWD/libigl/extract_manifold_patches.h \
+        $$PWD/libigl/face_adjacences.h \
         $$PWD/libigl/is_edge_manifold.h \
         $$PWD/libigl/is_vertex_manifold.h \
-        $$PWD/libigl/face_adjacences.h \
-        $$PWD/libigl/extract_manifold_patches.h \
-        $$PWD/libigl/booleans.h\
-        $$PWD/libigl/decimate.h \
+        $$PWD/libigl/remove_duplicate_vertices.h \
         $$PWD/libigl/remove_unreferenced_vertices.h \
-        $$PWD/libigl/connected_components.h \
-        $$PWD/libigl/remove_duplicate_vertices.h\
-        $$PWD/libigl/libigl.h
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.h
 
     SOURCES += \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp \
-        $$PWD/libigl/booleans.ipp \
-        $$PWD/libigl/connected_components.ipp \
-        $$PWD/libigl/decimate.ipp \
-        $$PWD/libigl/extract_manifold_patches.ipp \
-        $$PWD/libigl/face_adjacences.ipp \
-        $$PWD/libigl/is_edge_manifold.ipp \
-        $$PWD/libigl/is_vertex_manifold.ipp \
-        $$PWD/libigl/remove_duplicate_vertices.ipp \
-        $$PWD/libigl/remove_unreferenced_vertices.ipp
+        $$PWD/libigl/booleans.tpp\
+        $$PWD/libigl/connected_components.tpp \
+        $$PWD/libigl/decimate.tpp \
+        $$PWD/libigl/extract_manifold_patches.tpp \
+        $$PWD/libigl/face_adjacences.tpp \
+        $$PWD/libigl/is_edge_manifold.tpp \
+        $$PWD/libigl/is_vertex_manifold.tpp \
+        $$PWD/libigl/remove_duplicate_vertices.tpp \
+        $$PWD/libigl/remove_unreferenced_vertices.tpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp
 }
 
 
