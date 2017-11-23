@@ -107,7 +107,7 @@ inline Node* insertIntoParentAssociatedTreesHelper(
         const T& value,
         const unsigned int dim)
 {
-    Node* res;
+    Node* res = nullptr;
     if (dim > 1) {
         while (node != nullptr) {
             //Insert into associated range tree
