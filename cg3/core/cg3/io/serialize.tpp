@@ -179,19 +179,19 @@ inline void Serializer::deserialize(QColor& obj, std::ifstream& binaryFile){
 #endif //QT_CORE_LIB
 
 inline void Serializer::serialize(const char * str, std::ofstream& binaryFile){
-    unsigned long int size=std::strlen(str);
+    unsigned long long int size = std::strlen(str);
     Serializer::serialize(size, binaryFile);
     binaryFile.write(str, size);
 }
 
 inline void Serializer::serialize(const std::string& str, std::ofstream& binaryFile){
-    unsigned long int size=str.size();
+    unsigned long long int size = str.size();
     Serializer::serialize(size, binaryFile);
     binaryFile.write(&str[0],size);
 }
 
 inline void Serializer::deserialize(std::string& str, std::ifstream& binaryFile){
-    unsigned long int size;
+    unsigned long long int size;
     std::string tmp;
     std::streampos begin = binaryFile.tellg();
     try {
@@ -249,7 +249,7 @@ inline void Serializer::deserialize(std::pair<T1, T2>& p, std::ifstream& binaryF
  */
 template <typename T, typename ...A>
 inline void Serializer::serialize(const std::set<T, A...> &s, std::ofstream& binaryFile){
-    unsigned long int size = s.size();
+    unsigned long long int size = s.size();
     Serializer::serialize("stdset", binaryFile);
     Serializer::serialize(size, binaryFile);
     for (typename std::set<T, A...>::const_iterator it = s.begin(); it != s.end(); ++it)
@@ -266,7 +266,7 @@ template <typename T, typename ...A>
 inline void Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryFile){
     std::string str;
     std::set<T, A...> tmp;
-    unsigned long int size;
+    unsigned long long int size;
     std::streampos begin = binaryFile.tellg();
     try {
         Serializer::deserialize(str, binaryFile);
@@ -299,7 +299,7 @@ inline void Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryF
 template <typename ...A>
 inline void Serializer::serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile){
     bool tmp;
-    unsigned long int size = v.size();
+    unsigned long long int size = v.size();
     Serializer::serialize("stdvectorBool", binaryFile);
     Serializer::serialize(size, binaryFile);
     for (typename std::vector<bool, A...>::const_iterator it = v.begin(); it != v.end(); ++it){
@@ -317,7 +317,7 @@ inline void Serializer::serialize(const std::vector<bool, A...> &v, std::ofstrea
  */
 template <typename T, typename ...A>
 inline void Serializer::serialize(const std::vector<T, A...> &v, std::ofstream& binaryFile){
-    unsigned long int size = v.size();
+    unsigned long long int size = v.size();
     Serializer::serialize(std::string("stdvector"), binaryFile);
     Serializer::serialize(size, binaryFile);
     for (typename std::vector<T, A...>::const_iterator it = v.begin(); it != v.end(); ++it)
@@ -332,7 +332,7 @@ inline void Serializer::serialize(const std::vector<T, A...> &v, std::ofstream& 
  */
 template <typename ...A>
 inline void Serializer::deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile){
-    unsigned long int size;
+    unsigned long long int size;
     std::string s;
     std::vector<bool, A...> tmpv;
     std::streampos begin = binaryFile.tellg();
@@ -367,7 +367,7 @@ inline void Serializer::deserialize(std::vector<bool, A...> &v, std::ifstream& b
  */
 template <typename T, typename ...A>
 inline void Serializer::deserialize(std::vector<T, A...> &v, std::ifstream& binaryFile){
-    unsigned long int size;
+    unsigned long long int size;
     std::string s;
     std::vector<T, A...> tmpv;
     std::streampos begin = binaryFile.tellg();
@@ -401,7 +401,7 @@ inline void Serializer::deserialize(std::vector<T, A...> &v, std::ifstream& bina
  */
 template <typename T, typename ...A>
 inline void Serializer::serialize(const std::list<T, A...> &l, std::ofstream& binaryFile){
-    unsigned long int size = l.size();
+    unsigned long long int size = l.size();
     Serializer::serialize("stdlist", binaryFile);
     Serializer::serialize(size, binaryFile);
     for (typename std::list<T, A...>::const_iterator it = l.begin(); it != l.end(); ++it)
@@ -416,7 +416,7 @@ inline void Serializer::serialize(const std::list<T, A...> &l, std::ofstream& bi
  */
 template <typename T, typename ...A>
 inline void Serializer::deserialize(std::list<T, A...> &l, std::ifstream& binaryFile){
-    unsigned long int size;
+    unsigned long long int size;
     std::string s;
     std::list<T, A...> tmp;
 
@@ -451,7 +451,7 @@ inline void Serializer::deserialize(std::list<T, A...> &l, std::ifstream& binary
  */
 template <typename T1, typename T2, typename ...A>
 inline void Serializer::serialize(const std::map<T1, T2, A...> &m, std::ofstream& binaryFile){
-    unsigned long int size = m.size();
+    unsigned long long int size = m.size();
     Serializer::serialize("stdmap", binaryFile);
     Serializer::serialize(size, binaryFile);
     for (typename std::map<T1, T2, A...>::const_iterator it = m.begin(); it != m.end(); ++it){
@@ -468,7 +468,7 @@ inline void Serializer::serialize(const std::map<T1, T2, A...> &m, std::ofstream
  */
 template <typename T1, typename T2, typename ...A>
 inline void Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile){
-    unsigned long int size;
+    unsigned long long int size;
     std::string s;
     std::map<T1, T2, A...> tmp;
 
@@ -508,7 +508,7 @@ inline void Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
  */
 template <typename T, int ...A>
 inline void Serializer::serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile){
-    unsigned long int row = m.rows(), col = m.cols();
+    unsigned long long int row = m.rows(), col = m.cols();
     Serializer::serialize("EigenMatrix", binaryFile);
     Serializer::serialize(row, binaryFile);
     Serializer::serialize(col, binaryFile);
@@ -527,7 +527,7 @@ inline void Serializer::serialize(const Eigen::Matrix<T, A...> &m, std::ofstream
  */
 template <typename T, int ...A>
 inline void Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile){
-    unsigned long int row, col;
+    unsigned long long int row, col;
     std::string s;
     Eigen::Matrix<T, A...> tmp;
     std::streampos begin = binaryFile.tellg();
@@ -560,12 +560,12 @@ inline void Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& bi
 /**
  * \~English
  * @brief Serializer::serialize
- * @param[in] m: Eigen::Matrix
+ * @param[in] m: std::array
  * @param binaryFile
  */
-template <typename T, unsigned long int ...A>
+template <typename T, size_t ...A>
 inline void Serializer::serialize(const std::array<T, A...> &a, std::ofstream& binaryFile){
-    unsigned long int size = a.size();
+    unsigned long long int size = a.size();
     Serializer::serialize("stdarray", binaryFile);
     Serializer::serialize(size, binaryFile);
     for (typename std::array<T, A...>::const_iterator it = a.begin(); it != a.end(); ++it)
@@ -576,12 +576,12 @@ inline void Serializer::serialize(const std::array<T, A...> &a, std::ofstream& b
  * \~English
  * @brief Serializer::deserialize
  * @warning please make sure that the input set is an empty set.
- * @param[out] m: Eigen::Matrix
+ * @param[out] m: std::array
  * @param binaryFile
  */
-template <typename T, unsigned long int ...A>
+template <typename T, size_t ...A>
 inline void Serializer::deserialize(std::array<T, A...> &a, std::ifstream& binaryFile){
-    unsigned long int size;
+    unsigned long long int size;
     std::string s;
     std::streampos begin = binaryFile.tellg();
     try {

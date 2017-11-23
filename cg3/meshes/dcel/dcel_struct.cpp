@@ -1274,7 +1274,7 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
         Serializer::deserialize(s, binaryFile);
 
         if (s != "cg3Dcel")
-            std::ios_base::failure("");
+            throw std::ios_base::failure("Mismatching String: " + s + " != cg3Dcel");
         //BB
 
         tmp.boundingBox.deserialize(binaryFile);
@@ -1378,9 +1378,13 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
 
         *this = std::move(tmp);
     }
+    catch(std::ios_base::failure& e){
+        Serializer::restorePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom cg3::Dcel"));
+    }
     catch(...){
         Serializer::restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading Dcel");
+        throw std::ios_base::failure("Failure reading cg3::Dcel");
     }
 }
 
