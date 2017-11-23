@@ -123,15 +123,6 @@ SOURCES += \
     $$PWD/core/cg3/utilities/vector.tpp \
     $$PWD/core/cg3/utilities/utils.tpp
 
-#deprecated
-HEADERS += \
-    $$PWD/core/cg3/deprecated/serializable_object_old.h \
-    $$PWD/core/cg3/deprecated/serialize_old.h
-
-SOURCES += \
-    $$PWD/core/cg3/deprecated/serialize_old.ipp
-
-
 INCLUDEPATH += $$PWD/core/
 
 

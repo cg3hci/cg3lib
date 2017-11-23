@@ -106,20 +106,6 @@ inline std::ostream& operator<<(std::ostream& inputStream, const Segment<T>& seg
     return inputStream;
 }
 
-
-/* SerializableObject interface */
-
-template <class T>
-inline void Segment<T>::serializeOld(std::ofstream &myfile) const{
-    SerializerOld::serialize(p1, myfile);
-    SerializerOld::serialize(p2, myfile);
-}
-
-template <class T>
-inline bool Segment<T>::deserializeOld(std::ifstream& myfile) {
-    return (SerializerOld::deserialize(p1, myfile) && SerializerOld::deserialize(p2, myfile));
-}
-
 template<class T>
 inline void Segment<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Segment", binaryFile, p1, p2);

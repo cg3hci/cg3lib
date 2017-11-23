@@ -11,7 +11,7 @@ namespace cg3 {
  * It is composed of two points, min and max, which represent the minimum and
  * maximum coordinates of the box.
  */
-class BoundingBox2D : public SerializableObjectOld, SerializableObject{
+class BoundingBox2D : SerializableObject{
     public:
         BoundingBox2D();
         BoundingBox2D(const Point2Dd& minCoord, const Point2Dd& maxCoord);
@@ -34,11 +34,6 @@ class BoundingBox2D : public SerializableObjectOld, SerializableObject{
         double lengthY() const;
 
         bool isInside(const Point2Dd& p) const;
-
-        // SerializableObject interface
-        void serializeOld(std::ofstream& binaryFile) const;
-        bool deserializeOld(std::ifstream& binaryFile);
-
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;

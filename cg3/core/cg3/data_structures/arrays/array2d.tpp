@@ -206,37 +206,6 @@ inline void Array2D<T>::clear() {
     sizeX = sizeY = 0;
 }
 
-template <class T>
-inline void Array2D<T>::serializeOld(std::ofstream& binaryFile) const {
-    SerializerOld::serialize(sizeX, binaryFile);
-    SerializerOld::serialize(sizeY, binaryFile);
-    for (unsigned int i = 0; i < v.size(); ++i)
-        SerializerOld::serialize(v[i], binaryFile);
-}
-
-template <class T>
-inline bool Array2D<T>::deserializeOld(std::ifstream& binaryFile) {
-    Array2D<T> tmp;
-    int begin = binaryFile.tellg();
-    if (SerializerOld::deserialize(tmp.sizeX, binaryFile) &&
-            SerializerOld::deserialize(tmp.sizeY, binaryFile)) {
-        tmp.v.resize(tmp.sizeX*tmp.sizeY);
-        for (unsigned int i = 0; i < tmp.v.size(); ++i){
-            if (! SerializerOld::deserialize(tmp.v[i], binaryFile)){
-                binaryFile.seekg(begin);
-                return false;
-            }
-        }
-        *this = std::move(tmp);
-        return true;
-    }
-    else{
-        binaryFile.clear();
-        binaryFile.seekg(begin);
-        return false;
-    }
-}
-
 template<class T>
 inline void Array2D<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Array2D", binaryFile, sizeX, sizeY, v);

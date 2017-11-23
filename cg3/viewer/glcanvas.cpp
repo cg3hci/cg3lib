@@ -125,31 +125,19 @@ bool GLcanvas::isVisible(const DrawableObject* obj) {
 void GLcanvas::serializePointOfView(std::ofstream &file) {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
-    SerializerOld::serialize(v.x, file);
-    SerializerOld::serialize(v.y, file);
-    SerializerOld::serialize(v.z, file);
-    SerializerOld::serialize(q[0], file);
-    SerializerOld::serialize(q[1], file);
-    SerializerOld::serialize(q[2], file);
-    SerializerOld::serialize(q[3], file);
+    Serializer::serializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
 }
 
 bool GLcanvas::deserializePointOfView(std::ifstream &file) {
     qglviewer::Vec v;
     qglviewer::Quaternion q;
-    if (
-    SerializerOld::deserialize(v.x, file) &&
-    SerializerOld::deserialize(v.y, file) &&
-    SerializerOld::deserialize(v.z, file) &&
-    SerializerOld::deserialize(q[0], file) &&
-    SerializerOld::deserialize(q[1], file) &&
-    SerializerOld::deserialize(q[2], file) &&
-    SerializerOld::deserialize(q[3], file) )  {
-        camera()->setPosition(v);
-        camera()->setOrientation(q);
+    try {
+        Serializer::deserializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
         return true;
     }
-    return false;
+    catch(...){
+        return false;
+    }
 }
 
 void GLcanvas::savePointOfView(const std::string &filename) {

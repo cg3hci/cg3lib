@@ -87,9 +87,6 @@ class EigenMesh : public SimpleEigenMesh {
         EigenMesh& operator= (const Dcel& dcel);
         #endif
 
-        void serializeOld(std::ofstream& binaryFile) const;
-        bool deserializeOld(std::ifstream& binaryFile);
-
         void serialize(std::ofstream& binaryFile) const;
         void deserialize(std::ifstream& binaryFile);
 

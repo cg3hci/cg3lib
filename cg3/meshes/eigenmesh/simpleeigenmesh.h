@@ -3,7 +3,6 @@
 
 #include <Eigen/Core>
 
-#include <cg3/deprecated/serialize_old.h>
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/bounding_box.h>
 #include <cg3/data_structures/color.h>
@@ -39,7 +38,7 @@ class Trimesh;
 
 class EigenMeshAlgorithms;
 
-class SimpleEigenMesh : public SerializableObjectOld, SerializableObject {
+class SimpleEigenMesh : public SerializableObject {
         friend class EigenMeshAlgorithms;
 
 #ifdef CG3_LIBIGL_DEFINED
@@ -106,10 +105,6 @@ class SimpleEigenMesh : public SerializableObjectOld, SerializableObject {
         virtual void scale(const Vec3 &scaleFactor);
         static void merge(SimpleEigenMesh &result, const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
         static SimpleEigenMesh merge(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
-
-        // SerializableObject interface
-        virtual void serializeOld(std::ofstream& binaryFile) const;
-        virtual bool deserializeOld(std::ifstream& binaryFile);
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
@@ -296,24 +291,6 @@ inline void SimpleEigenMesh::setVerticesMatrix(const Eigen::Matrix<T, A...>& V) 
 template <typename U, int ...A>
 inline void SimpleEigenMesh::setFacesMatrix(const Eigen::Matrix<U, A...>& F) {
     this->F = F;
-}
-
-inline void SimpleEigenMesh::serializeOld(std::ofstream& binaryFile) const {
-    SerializerOld::serialize(V, binaryFile);
-    SerializerOld::serialize(F, binaryFile);
-}
-
-inline bool SimpleEigenMesh::deserializeOld(std::ifstream& binaryFile) {
-    int begin = binaryFile.tellg();
-    SimpleEigenMesh tmp;
-    if (SerializerOld::deserialize(tmp.V, binaryFile) &&
-            SerializerOld::deserialize(tmp.F, binaryFile)){
-        *this = std::move(tmp);
-        return true;
-    }
-    binaryFile.clear();
-    binaryFile.seekg(begin);
-    return false;
 }
 
 inline void SimpleEigenMesh::serialize(std::ofstream& binaryFile) const {

@@ -108,42 +108,6 @@ inline void Array4D<T>::clear() {
     sizeX = sizeY = sizeZ = sizeW = 0;
 }
 
-template <class T>
-inline void Array4D<T>::serializeOld(std::ofstream& binaryFile) const {
-    SerializerOld::serialize(sizeX, binaryFile);
-    SerializerOld::serialize(sizeY, binaryFile);
-    SerializerOld::serialize(sizeZ, binaryFile);
-    SerializerOld::serialize(sizeW, binaryFile);
-    for (unsigned int i = 0; i < v.size(); ++i)
-        SerializerOld::serialize(v[i], binaryFile);
-}
-
-template <class T>
-inline bool Array4D<T>::deserializeOld(std::ifstream& binaryFile) {
-    Array4D<T> tmp;
-    int begin = binaryFile.tellg();
-    if (SerializerOld::deserialize(tmp.sizeX, binaryFile) &&
-            SerializerOld::deserialize(tmp.sizeY, binaryFile) &&
-            SerializerOld::deserialize(tmp.sizeZ, binaryFile) &&
-            SerializerOld::deserialize(tmp.sizeW, binaryFile)) {
-        tmp.v.resize(tmp.sizeX*tmp.sizeY*tmp.sizeZ*tmp.sizeW);
-        for (unsigned int i = 0; i < tmp.v.size(); ++i){
-            if (! SerializerOld::deserialize(tmp.v[i], binaryFile)){
-                binaryFile.clear();
-                binaryFile.seekg(begin);
-                return false;
-            }
-        }
-        *this = std::move(tmp);
-        return true;
-    }
-    else{
-        binaryFile.clear();
-        binaryFile.seekg(begin);
-        return false;
-    }
-}
-
 template<class T>
 inline void Array4D<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Array4D", binaryFile, sizeX, sizeY, sizeZ, sizeW, v);

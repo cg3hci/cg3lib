@@ -96,40 +96,6 @@ inline void Array3D<T>::clear() {
     sizeX = sizeY = sizeZ = 0;
 }
 
-template <class T>
-inline void Array3D<T>::serializeOld(std::ofstream& binaryFile) const {
-    SerializerOld::serialize(sizeX, binaryFile);
-    SerializerOld::serialize(sizeY, binaryFile);
-    SerializerOld::serialize(sizeZ, binaryFile);
-    for (unsigned int i = 0; i < v.size(); ++i)
-        SerializerOld::serialize(v[i], binaryFile);
-}
-
-template <class T>
-inline bool Array3D<T>::deserializeOld(std::ifstream& binaryFile) {
-    Array3D<T> tmp;
-    int begin = binaryFile.tellg();
-    if (SerializerOld::deserialize(tmp.sizeX, binaryFile) &&
-            SerializerOld::deserialize(tmp.sizeY, binaryFile) &&
-            SerializerOld::deserialize(tmp.sizeZ, binaryFile)) {
-        tmp.v.resize(tmp.sizeX*tmp.sizeY*tmp.sizeZ);
-        for (unsigned int i = 0; i < tmp.v.size(); ++i){
-            if (! SerializerOld::deserialize(tmp.v[i], binaryFile)){
-                binaryFile.clear();
-                binaryFile.seekg(begin);
-                return false;
-            }
-        }
-        *this = std::move(tmp);
-        return true;
-    }
-    else{
-        binaryFile.clear();
-        binaryFile.seekg(begin);
-        return false;
-    }
-}
-
 template<class T>
 inline void Array3D<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Array3D", binaryFile, sizeX, sizeY, sizeZ, v);

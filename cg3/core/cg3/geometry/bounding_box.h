@@ -33,7 +33,7 @@ namespace cg3 {
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  * @author Marco Livesu (marco.livesu@gmail.com)
  */
-class BoundingBox : public SerializableObject, SerializableObjectOld{
+class BoundingBox : public SerializableObject {
     public:
 
         /****************
@@ -114,11 +114,6 @@ class BoundingBox : public SerializableObject, SerializableObjectOld{
 
         //Operators
         double& operator()(unsigned int i);
-
-        // SerializableObject interface
-        void serializeOld(std::ofstream& binaryFile) const;
-        bool deserializeOld(std::ifstream& binaryFile);
-
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;

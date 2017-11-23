@@ -509,40 +509,6 @@ inline void Point2D<T>::rot(T matrix[][2]){
     yCoord = p.y();
 }
 
-/**
- * @brief Point2D<T>::serialize
- * serializes the point in a file
- *
- * @param binaryFile
- */
-template <class T>
-void Point2D<T>::serializeOld(std::ofstream& binaryFile) const {
-    SerializerOld::serialize(xCoord, binaryFile);
-    SerializerOld::serialize(yCoord, binaryFile);
-}
-
-/**
- * @brief Point2D<T>::deserialize
- * deserializes the point from a file
- * @param binaryFile
- * @return true if the point was correctly deserialized
- */
-template <class T>
-bool Point2D<T>::deserializeOld(std::ifstream& binaryFile) {
-    Point2D<T> tmp;
-    int begin = binaryFile.tellg();
-    if (SerializerOld::deserialize(tmp.xCoord, binaryFile) &&
-        SerializerOld::deserialize(tmp.yCoord, binaryFile)){
-        *this = std::move(tmp);
-        return true;
-    }
-    else{
-        binaryFile.clear();
-        binaryFile.seekg(begin);
-        return false;
-    }
-}
-
 template<class T>
 void Point2D<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);

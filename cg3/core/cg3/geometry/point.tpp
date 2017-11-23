@@ -452,40 +452,6 @@ inline void Point<T>::rotate(double matrix[3][3], const Point<T>& centroid) {
     *this += centroid;
 }
 
-/**
- * \~Italian
- * @brief Metodo per serializzare in un ofstream un Point
- * @param[in] myfile: l'ofstream (file) nel quale verrà serializzato il punto
- */
-template <class T>
-inline void Point<T>::serializeOld(std::ofstream &myfile) const{
-    SerializerOld::serialize(xCoord, myfile);
-    SerializerOld::serialize(yCoord, myfile);
-    SerializerOld::serialize(zCoord, myfile);
-}
-
-/**
- * \~Italian
- * @brief Metodo per deserializzare da un ifstream un Point
- * @param[in] myfile: l'ifstream (file) dal quale verrà deserializzato il punto
- */
-template <class T>
-inline bool Point<T>::deserializeOld(std::ifstream& myfile) {
-    Point<T> tmp;
-    int begin = myfile.tellg();
-    if (SerializerOld::deserialize(tmp.xCoord, myfile) &&
-        SerializerOld::deserialize(tmp.yCoord, myfile) &&
-        SerializerOld::deserialize(tmp.zCoord, myfile)){
-        *this = std::move(tmp);
-        return true;
-    }
-    else{
-        myfile.clear();
-        myfile.seekg(begin);
-        return false;
-    }
-}
-
 template<class T>
 void Point<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);

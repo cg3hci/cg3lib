@@ -10,7 +10,6 @@
 #include <string>
 #include <iostream>
 
-#include "../deprecated/serialize_old.h"
 #include "../io/serialize.h"
 
 #ifdef CG3_CINOLIB_DEFINED
@@ -37,7 +36,7 @@ namespace cg3 {
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-template <class T> class Point : SerializableObjectOld, SerializableObject {
+template <class T> class Point : SerializableObject {
 
     public:
 
@@ -97,10 +96,6 @@ template <class T> class Point : SerializableObjectOld, SerializableObject {
         void rotate(const Eigen::Matrix3d &matrix, const Point<T>& centroid = Point<T>());
         #endif //CG3_WITH_EIGEN
         void rotate(double matrix[3][3], const Point<T>& centroid = Point<T>());
-
-        // SerializableObject interface
-        void serializeOld(std::ofstream &myfile)               const;
-        bool deserializeOld(std::ifstream &myfile);
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;

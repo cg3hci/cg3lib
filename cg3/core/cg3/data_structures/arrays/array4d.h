@@ -4,12 +4,11 @@
 #include <vector>
 #include <assert.h>
 #include <iomanip>
-#include "../../deprecated/serialize_old.h"
 #include "../../io/serialize.h"
 
 namespace cg3 {
 
-template <class T> class Array4D : public SerializableObjectOld, SerializableObject{
+template <class T> class Array4D : SerializableObject{
 
     public:
         Array4D();
@@ -35,10 +34,6 @@ template <class T> class Array4D : public SerializableObjectOld, SerializableObj
         void resize (unsigned long int x, unsigned long int y, unsigned long int z, unsigned long int w, const T& value);
 
         void clear();
-
-        // SerializableObject interface
-        void serializeOld(std::ofstream& binaryFile) const;
-        bool deserializeOld(std::ifstream& binaryFile);
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;

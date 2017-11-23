@@ -5,11 +5,10 @@
 #include <assert.h>
 #include <iomanip>
 #include "../../io/serialize.h"
-#include "../../deprecated/serialize_old.h"
 
 namespace cg3 {
 
-template <class T> class Array3D : public SerializableObjectOld, SerializableObject{
+template <class T> class Array3D : SerializableObject{
 
     public:
         Array3D();
@@ -34,10 +33,6 @@ template <class T> class Array3D : public SerializableObjectOld, SerializableObj
         void resize (unsigned long int x, unsigned long int y, unsigned long int z, const T& value);
 
         void clear();
-
-        // SerializableObject interface
-        void serializeOld(std::ofstream& binaryFile) const;
-        bool deserializeOld(std::ifstream& binaryFile);
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;

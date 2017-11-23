@@ -351,33 +351,6 @@ EigenMesh& EigenMesh::operator=(const Dcel& dcel) {
 }
 #endif
 
-void EigenMesh::serializeOld(std::ofstream& binaryFile) const {
-    SerializerOld::serialize(V, binaryFile);
-    SerializerOld::serialize(F, binaryFile);
-    SerializerOld::serialize(NV, binaryFile);
-    SerializerOld::serialize(NF, binaryFile);
-    SerializerOld::serialize(CV, binaryFile);
-    SerializerOld::serialize(CF, binaryFile);
-}
-
-bool EigenMesh::deserializeOld(std::ifstream& binaryFile) {
-    EigenMesh tmp;
-    int begin = binaryFile.tellg();
-    if (SerializerOld::deserialize(tmp.V, binaryFile) &&
-            SerializerOld::deserialize(tmp.F, binaryFile) &&
-            SerializerOld::deserialize(tmp.NV, binaryFile) &&
-            SerializerOld::deserialize(tmp.NF, binaryFile) &&
-            SerializerOld::deserialize(tmp.CV, binaryFile) &&
-            SerializerOld::deserialize(tmp.CF, binaryFile)){
-        tmp.updateBoundingBox();
-        *this = std::move(tmp);
-        return true;
-    }
-    binaryFile.clear();
-    binaryFile.seekg(begin);
-    return false;
-}
-
 void EigenMesh::updateFaceColorsSize() {
     CF.conservativeResizeLike(Eigen::MatrixXf::Constant(F.rows(), 3, 0.5));
 }
