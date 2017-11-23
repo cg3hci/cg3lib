@@ -1384,7 +1384,7 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
     }
     catch(...){
         Serializer::restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Failure reading cg3::Dcel");
+        throw std::ios_base::failure("Deserialization failed of cg3::Dcel");
     }
 }
 
