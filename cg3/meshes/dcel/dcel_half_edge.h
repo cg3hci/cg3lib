@@ -140,7 +140,7 @@ class Dcel::HalfEdge
 
 }
 
-#include "dcel_half_edge_inline.cpp"
+#include "dcel_half_edge_inline.tpp"
 
 
 #endif // DCEL_HALF_EDGE_H

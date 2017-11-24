@@ -26,9 +26,6 @@ DrawableDcel::DrawableDcel(const Dcel &d) : Dcel(d) {
     init();
 }
 
-DrawableDcel::~DrawableDcel() {
-}
-
 /**
  * \~Italian
  * @brief Setta impostazioni di visualizzazione di default.

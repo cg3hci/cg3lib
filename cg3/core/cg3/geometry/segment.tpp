@@ -15,17 +15,6 @@ inline Segment<T>::Segment(const T& p1, const T& p2) {
     set(p1, p2);
 }
 
-template <class T>
-inline Segment<T>::Segment(const Segment& otherSegment) {
-    set(otherSegment.getP1(), otherSegment.getP2());
-}
-
-template <class T>
-inline Segment<T>::~Segment()
-{
-
-}
-
 
 /* ----- Getters/setters ----- */
 

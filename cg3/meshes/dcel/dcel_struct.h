@@ -98,6 +98,8 @@ class Dcel : public SerializableObject {
         ****************/
 
         Dcel();
+        Dcel(const char* filename);
+        Dcel(const std::string& filename);
         Dcel(const Dcel& dcel);
         Dcel(Dcel&& dcel);
         #ifdef  CG3_EIGENMESH_DEFINED
@@ -236,7 +238,6 @@ class Dcel : public SerializableObject {
 
         void afterLoadFile(const std::list<double>& coords, const std::list<unsigned int>& faces, int mode, const std::list<double>& vnorm, const std::list<Color>& vcolor, const std::list<Color>& fcolor, const std::list<unsigned int>& fsizes);
 
-        void copyFrom(const Dcel &d);
         #ifdef  CG3_EIGENMESH_DEFINED
         void copyFrom(const SimpleEigenMesh &eigenMesh);
         void copyFrom(const EigenMesh &eigenMesh);
@@ -248,6 +249,6 @@ class Dcel : public SerializableObject {
 
 }
 
-#include "dcel_inline.cpp"
+#include "dcel_inline.tpp"
 
 #endif // CG3_DCEL_STRUCT_H

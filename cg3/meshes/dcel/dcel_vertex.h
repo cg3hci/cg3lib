@@ -212,6 +212,6 @@ class Dcel::Vertex
 
 }
 
-#include "dcel_vertex_inline.cpp"
+#include "dcel_vertex_inline.tpp"
 
 #endif // CG3_DCEL_VERTEX_H

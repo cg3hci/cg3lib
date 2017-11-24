@@ -249,6 +249,6 @@ std::ostream& operator<< (std::ostream& inputStream, const Dcel::Face* f);
 
 }
 
-#include "dcel_face_inline.cpp"
+#include "dcel_face_inline.tpp"
 
 #endif // CG3_DCEL_FACE_H

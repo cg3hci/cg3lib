@@ -9,7 +9,6 @@ namespace cg3 {
 class DrawableDebugObjects : public DrawableObject{
     public:
         DrawableDebugObjects();
-        virtual ~DrawableDebugObjects();
 
         // DrawableObject interface
         void draw() const;

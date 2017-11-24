@@ -745,6 +745,6 @@ class Dcel::Vertex::IncidentFaceRangeBasedIterator {
 
 }
 
-#include "dcel_vertex_iterators_inline.cpp"
+#include "dcel_vertex_iterators_inline.tpp"
 
 #endif // CG3_DCEL_VERTEX_ITERATORS_H

@@ -224,7 +224,7 @@ inline bool loadSave::saveMeshOnPly(const std::string& filename, size_t nVertice
         fp << "property float nx\nproperty float ny\nproperty float nz\n";
     }
     if (modality & COLOR_VERTICES){
-        if (colorMod & RGB)
+        if (colorMod == RGB)
             fp << "property uchar red\nproperty uchar green\nproperty uchar blue\n";
         else
             fp << "property uchar red\nproperty uchar green\nproperty uchar blue\nproperty uchar alpha\n";
@@ -232,7 +232,7 @@ inline bool loadSave::saveMeshOnPly(const std::string& filename, size_t nVertice
     fp << "element face " << nFaces << "\n";
     fp << "property list uchar int vertex_indices\n";
     if (modality & COLOR_FACES){
-        if (colorMod & RGB)
+        if (colorMod == RGB)
             fp << "property uchar red\nproperty uchar green\nproperty uchar blue\n";
         else
             fp << "property uchar red\nproperty uchar green\nproperty uchar blue\nproperty uchar alpha\n";
@@ -248,7 +248,7 @@ inline bool loadSave::saveMeshOnPly(const std::string& filename, size_t nVertice
         if (modality & COLOR_VERTICES){
             Color c = getColor(colorMod == RGB ? i : (i/3)*4, verticesColors, colorMod);
             fp << " " << c.red() << " " << c.green() << " " << c.blue();
-            if (colorMod & RGBA)
+            if (colorMod == RGBA)
                 fp << " " << c.alpha();
         }
         fp << std::endl;
@@ -260,7 +260,7 @@ inline bool loadSave::saveMeshOnPly(const std::string& filename, size_t nVertice
             if (modality & COLOR_FACES){
                 Color c = getColor(colorMod == RGB ? i : (i/3)*4, faceColors, colorMod);;
                 fp << " " << c.red() << " " << c.green() << " " << c.blue();
-                if (colorMod & RGBA)
+                if (colorMod == RGBA)
                     fp << " " << c.alpha();
             }
             fp << std::endl;
@@ -273,7 +273,7 @@ inline bool loadSave::saveMeshOnPly(const std::string& filename, size_t nVertice
             if (modality & COLOR_FACES){
                 Color c = getColor(colorMod == RGB ? (i/4)*3 : i, verticesColors, colorMod);;
                 fp << " " << c.red() << " " << c.green() << " " << c.blue();
-                if (colorMod & RGBA)
+                if (colorMod == RGBA)
                     fp << " " << c.alpha();
             }
             fp << std::endl;
@@ -291,7 +291,7 @@ inline bool loadSave::saveMeshOnPly(const std::string& filename, size_t nVertice
             if (modality & COLOR_FACES){
                 Color c = getColor(colorMod == RGB ? i*3 : i*4, faceColors, colorMod);
                 fp << c.red() << " " << c.green() << " " << c.blue();
-                if (colorMod & RGBA)
+                if (colorMod == RGBA)
                     fp << " " << c.alpha();
             }
             fp << std::endl;

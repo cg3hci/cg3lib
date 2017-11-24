@@ -6,6 +6,14 @@
 
 namespace cg3 {
 
+inline Dcel::Dcel(const char *filename) {
+    loadFromFile(std::string(filename));
+}
+
+inline Dcel::Dcel(const std::string& filename) {
+    loadFromFile(filename);
+}
+
 /**
  * \~Italian
  * @brief Funzione che restituisce il puntatore al vertice avente l'id passato in input

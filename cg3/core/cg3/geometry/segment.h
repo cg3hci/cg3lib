@@ -18,8 +18,6 @@ public:
     /* Constructors/destructor */
     Segment();
     Segment(const T& p1, const T& p2);
-    Segment(const Segment& otherSegment);
-    ~Segment();
 
     /* Getters/setters */
     const T& getP1() const;

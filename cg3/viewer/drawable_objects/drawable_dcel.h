@@ -32,7 +32,6 @@ class DrawableDcel : public Dcel, public DrawableMesh {
 
         DrawableDcel();
         DrawableDcel(const Dcel &d);
-        virtual ~DrawableDcel();
 
         void init();
         void clear();

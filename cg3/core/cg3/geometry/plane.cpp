@@ -20,9 +20,6 @@ Plane::Plane(const Pointd& p1, const Pointd& p2, const Pointd& p3){
     d = normal.x() * p1.x() + normal.y() * p1.y() + normal.z() * p1.z();
 }
 
-Plane::~Plane(){
-}
-
 /**
  * @brief Line::pointBelonging Metodo che si occupa di controllare se un punto appartiene alla retta
  * @param p il punto del quale contollare l'appartenenza

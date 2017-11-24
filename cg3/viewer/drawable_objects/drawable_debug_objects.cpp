@@ -7,9 +7,6 @@ DrawableDebugObjects::DrawableDebugObjects() : visible(true) {
 
 }
 
-DrawableDebugObjects::~DrawableDebugObjects(){
-}
-
 void DrawableDebugObjects::draw() const {
     if (visible){
         for (unsigned int i = 0; i < debugSpheres.size(); i++){

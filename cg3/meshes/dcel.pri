@@ -23,16 +23,11 @@ SOURCES += \
     $$PWD/dcel/dcel_half_edge.cpp \
     $$PWD/dcel/dcel_vertex.cpp \
     $$PWD/dcel/dcel_struct.cpp \
-    $$PWD/dcel/dcel_iterators_inline.cpp \
-    $$PWD/dcel/dcel_vertex_iterators_inline.cpp \
-    $$PWD/dcel/dcel_inline.cpp \
-    $$PWD/dcel/dcel_face_iterators_inline.cpp \
-    $$PWD/dcel/dcel_vertex_inline.cpp \
-    $$PWD/dcel/dcel_face_inline.cpp \
-    $$PWD/dcel/dcel_half_edge_inline.cpp \
-    $$PWD/dcel/algorithms/dcel_algorithms.cpp
-
-#Note: QtCreator always shows this module included, however files included in it are compiled only if Viewer module is included
-#CG3_VIEWER{
-#    include ($$PWD/dcel/gui/dcelmanager.pri)
-#}
+    $$PWD/dcel/algorithms/dcel_algorithms.cpp \
+    $$PWD/dcel/dcel_inline.tpp \
+    $$PWD/dcel/dcel_half_edge_inline.tpp \
+    $$PWD/dcel/dcel_face_iterators_inline.tpp \
+    $$PWD/dcel/dcel_iterators_inline.tpp \
+    $$PWD/dcel/dcel_vertex_inline.tpp \
+    $$PWD/dcel/dcel_vertex_iterators_inline.tpp \
+    $$PWD/dcel/dcel_face_inline.tpp

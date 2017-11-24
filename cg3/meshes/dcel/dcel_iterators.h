@@ -356,7 +356,7 @@ class Dcel::FaceRangeBasedIterator {
 
 }
 
-#include "dcel_iterators_inline.cpp"
+#include "dcel_iterators_inline.tpp"
 
 #endif // CG3_DCEL_ITERATORS_H
 

@@ -11,7 +11,6 @@ class DrawableEigenMesh : public EigenMesh, public DrawableMesh {
         DrawableEigenMesh();
         DrawableEigenMesh(const SimpleEigenMesh &m);
         DrawableEigenMesh(const EigenMesh &m);
-        virtual ~DrawableEigenMesh();
 
         // DrawableObject interface
         void draw() const;

@@ -17,9 +17,6 @@ DrawableEigenMesh::DrawableEigenMesh(const SimpleEigenMesh& m) : EigenMesh(m) {
 DrawableEigenMesh::DrawableEigenMesh(const EigenMesh& m) : EigenMesh(m){
 }
 
-DrawableEigenMesh::~DrawableEigenMesh(){
-}
-
 void DrawableEigenMesh::draw() const {
     DrawableMesh::draw(V.rows(), F.rows(), V.data(), F.data(), NV.data(), CV.data(), NF.data(), CF.data(), bb.min(), bb.max());
 }
