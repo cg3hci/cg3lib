@@ -63,12 +63,12 @@ Dcel::Dcel(Dcel&& dcel) {
     nHalfEdges = std::move(dcel.nHalfEdges);
     nFaces = std::move(dcel.nFaces);
     boundingBox = std::move(dcel.boundingBox);
+    #ifdef NDEBUG
     vertexCoordinates = std::move(dcel.vertexCoordinates);
     vertexNormals = std::move(dcel.vertexNormals);
     vertexColors = std::move(dcel.vertexColors);
     faceNormals = std::move(dcel.faceNormals);
     faceColors = std::move(dcel.faceColors);
-    #ifdef NDEBUG
     for (Dcel::Vertex* v : vertexIterator()){
         v->parent = this;
     }
@@ -260,18 +260,31 @@ Dcel::Vertex *Dcel::addVertex(const Pointd& p, const Vec3& n, const Color& c) {
     if (unusedVids.size() == 0) {
         last->setId(nVertices);
         vertices.push_back(last);
+        #ifdef NDEBUG
         vertexCoordinates.push_back(p);
         vertexNormals.push_back(n);
         vertexColors.push_back(c);
+        #else
+        last->setCoordinate(p);
+        last->setNormal(n);
+        last->setColor(c);
+        #endif
     }
     else {
         int vid = *(unusedVids.begin());
         last->setId(vid);
         vertices[vid] = last;
+        unusedVids.erase(vid);
+        #ifdef NDEBUG
         vertexCoordinates[vid] = p;
         vertexNormals[vid] = n;
         vertexColors[vid] = c;
-        unusedVids.erase(vid);
+        #else
+        last->setCoordinate(p);
+        last->setNormal(n);
+        last->setColor(c);
+        #endif
+
     }
     nVertices++;
     return last;
@@ -330,16 +343,26 @@ Dcel::Face* Dcel::addFace(const Vec3& n, const Color& c) {
     if (unusedFids.size() == 0){
         last->setId(nFaces);
         faces.push_back(last);
+        #ifdef NDEBUG
         faceNormals.push_back(n);
         faceColors.push_back(c);
+        #else
+        last->setNormal(n);
+        last->setColor(c);
+        #endif
     }
     else {
         int fid = *(unusedFids.begin());
         last->setId(fid);
         faces[fid] = last;
+        unusedFids.erase(fid);
+        #ifdef NDEBUG
         faceNormals[fid] = n;
         faceColors[fid] = c;
-        unusedFids.erase(fid);
+        #else
+        last->setNormal(n);
+        last->setColor(c);
+        #endif
     }
     nFaces++;
     return last;
@@ -659,18 +682,21 @@ void Dcel::clear()	{
         if (faces[i] != nullptr)
             delete faces[i];
     vertices.clear();
-    vertexCoordinates.clear();
-    vertexNormals.clear();
-    vertexColors.clear();
     halfEdges.clear();
     faces.clear();
-    faceNormals.clear();
     unusedVids.clear();
     unusedHeids.clear();
     unusedFids.clear();
     nVertices = 0;
     nFaces = 0;
     nHalfEdges = 0;
+    #ifdef NDEBUG
+    vertexCoordinates.clear();
+    vertexNormals.clear();
+    vertexColors.clear();
+    faceNormals.clear();
+    faceColors.clear();
+    #endif
 }
 
 #ifdef  CG3_CGAL_DEFINED
@@ -955,6 +981,39 @@ bool Dcel::loadFromDcelFile(const std::string& filename) {
     return true;
 }
 
+void Dcel::swap(Dcel& d) {
+    std::swap(vertices, d.vertices);
+    std::swap(halfEdges, d.halfEdges);
+    std::swap(faces, d.faces);
+    std::swap(unusedVids, d.unusedVids);
+    std::swap(unusedHeids, d.unusedHeids);
+    std::swap(unusedFids, d.unusedFids);
+    std::swap(nVertices, d.nVertices);
+    std::swap(nHalfEdges, d.nHalfEdges);
+    std::swap(nFaces, d.nFaces);
+    std::swap(boundingBox, d.boundingBox);
+
+    #ifdef NDEBUG
+    std::swap(vertexCoordinates, d.vertexCoordinates);
+    std::swap(vertexNormals, d.vertexNormals);
+    std::swap(vertexColors, d.vertexColors);
+    std::swap(faceNormals, d.faceNormals);
+    std::swap(faceColors, d.faceColors);
+    for (Dcel::Vertex* v: vertexIterator())
+        v->parent = this;
+    for (Dcel::HalfEdge* he: halfEdgeIterator())
+        he->parent = this;
+    for (Dcel::Face* f: faceIterator())
+        f->parent = this;
+    for (Dcel::Vertex* v: d.vertexIterator())
+        v->parent = &d;
+    for (Dcel::HalfEdge* he: d.halfEdgeIterator())
+        he->parent = &d;
+    for (Dcel::Face* f: d.faceIterator())
+        f->parent = &d;
+    #endif
+}
+
 void Dcel::serialize(std::ofstream& binaryFile) const {
     Serializer::serialize("cg3Dcel", binaryFile);
     //BB
@@ -1042,9 +1101,11 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
 
         //Vertices
         tmp.vertices.resize(tmp.nVertices+tmp.unusedVids.size(), nullptr);
+        #ifdef NDEBUG
         tmp.vertexCoordinates.resize(tmp.nVertices+tmp.unusedVids.size(), Pointd());
         tmp.vertexNormals.resize(tmp.nVertices+tmp.unusedVids.size(), Vec3());
         tmp.vertexColors.resize(tmp.nVertices+tmp.unusedVids.size(), Color());
+        #endif
         std::map<int, int> vert;
 
         for (unsigned int i = 0; i < tmp.nVertices; i++){
@@ -1087,8 +1148,10 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
 
         //Faces
         tmp.faces.resize(tmp.nFaces+tmp.unusedFids.size(), nullptr);
+        #ifdef NDEBUG
         tmp.faceNormals.resize(tmp.nFaces+tmp.unusedFids.size(), Vec3());
         tmp.faceColors.resize(tmp.nFaces+tmp.unusedFids.size(), Color());
+        #endif
         for (unsigned int i = 0; i < tmp.nFaces; i++){
             int id, ohe, /*cr, cg, cb,*/ flag, nihe;
             double /*nx, ny, nz,*/ area;
@@ -1176,12 +1239,12 @@ Dcel& Dcel::operator=(Dcel&& dcel) {
     nHalfEdges = std::move(dcel.nHalfEdges);
     nFaces = std::move(dcel.nFaces);
     boundingBox = std::move(dcel.boundingBox);
+    #ifdef NDEBUG
     vertexCoordinates = std::move(dcel.vertexCoordinates);
     vertexNormals = std::move(dcel.vertexNormals);
     vertexColors = std::move(dcel.vertexColors);
     faceNormals = std::move(dcel.faceNormals);
     faceColors = std::move(dcel.faceColors);
-    #ifdef NDEBUG
     for (Dcel::Vertex* v : vertexIterator()){
         v->parent = this;
     }
@@ -1515,9 +1578,11 @@ void Dcel::copyFrom(const Dcel &d) {
     std::map<const Dcel::HalfEdge*, Dcel::HalfEdge*> mapHalfEdges;
     std::map<const Dcel::Face*, Dcel::Face*> mapFaces;
     this->vertices.resize(d.vertices.size(), nullptr);
+    #ifdef NDEBUG
     this->vertexCoordinates.resize(d.vertexCoordinates.size(), Pointd());
     this->vertexNormals.resize(d.vertexNormals.size(), Vec3());
     this->vertexColors.resize(d.vertexColors.size(), Color());
+    #endif
     for (Dcel::ConstVertexIterator vit = d.vertexBegin(); vit != d.vertexEnd(); ++vit) {
         const Dcel::Vertex* ov = *vit;
         Dcel::Vertex* v = this->addVertex(ov->getId());
@@ -1543,8 +1608,10 @@ void Dcel::copyFrom(const Dcel &d) {
     }
 
     this->faces.resize(d.faces.size(), nullptr);
+    #ifdef NDEBUG
     this->faceNormals.resize(d.faceNormals.size(), Vec3());
     this->faceColors.resize(d.faceColors.size(), Color());
+    #endif
     for (Dcel::ConstFaceIterator fit = d.faceBegin(); fit != d.faceEnd(); ++fit){
         const Dcel::Face* of = *fit;
         Dcel::Face* f = this->addFace(of->getId());

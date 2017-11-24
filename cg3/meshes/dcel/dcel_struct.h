@@ -187,6 +187,9 @@ class Dcel : public SerializableObject {
         bool loadFromObjFile(const std::string& filename);
         bool loadFromPlyFile(const std::string& filename);
         bool loadFromDcelFile(const std::string& filename);
+
+        void swap(Dcel& d);
+
         Dcel& operator= (const Dcel& dcel);
         Dcel& operator= (Dcel&& dcel);
 
@@ -212,11 +215,13 @@ class Dcel : public SerializableObject {
         BoundingBox             boundingBox;    /**< \~Italian @brief Bounding box della mesh. */
 
         //Data
+        #ifdef NDEBUG
         std::vector<Pointd> vertexCoordinates;
         std::vector<Vec3> vertexNormals;
         std::vector<Color> vertexColors;
         std::vector<Vec3> faceNormals;
         std::vector<Color> faceColors;
+        #endif
 
         /******************
         * Private Methods *
