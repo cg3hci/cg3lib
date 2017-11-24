@@ -1,4 +1,4 @@
-#include "cgal_intersections.h"
+#include "cgal_intersections2d.h"
 
 #include "cg3/utilities/utils.h"
 

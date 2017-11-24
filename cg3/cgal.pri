@@ -51,28 +51,30 @@ contains(DEFINES, CG3_WITH_EIGEN){
 
 HEADERS += \
     $$PWD/cgal/cgal.h \
-    $$PWD/cgal/cgal_intersections.h \
-    $$PWD/cgal/cgal_minimumbbox.h \
     $$PWD/cgal/cgal_aabbtree.h \
-    $$PWD/cgal/cgal_booleans2d.h \
     $$PWD/cgal/cgal_holefilling.h \
     $$PWD/cgal/cgal_polyhedron.h \
     $$PWD/cgal/cgal_sdf.h \
     $$PWD/cgal/cgal_signeddistances.h \
     $$PWD/cgal/cgal_slicer.h \
     $$PWD/cgal/cgal_triangulation.h \
-    $$PWD/cgal/cgal_convexhull.h
+    $$PWD/cgal/2d/cgal_booleans2d.h \
+    $$PWD/cgal/2d/cgal_convexhull2d.h \
+    $$PWD/cgal/2d/cgal_intersections2d.h \
+    $$PWD/cgal/2d/cgal_minimumbbox2d.h \
+    $$PWD/cgal/2d/cgal_triangulation2d.h
 
 SOURCES += \
-    $$PWD/cgal/cgal_intersections.cpp \
-    $$PWD/cgal/cgal_minimumbbox.cpp \
     $$PWD/cgal/cgal_aabbtree.cpp \
-    $$PWD/cgal/cgal_booleans2d.cpp \
     $$PWD/cgal/cgal_holefilling.cpp \
     $$PWD/cgal/cgal_polyhedron.cpp \
     $$PWD/cgal/cgal_sdf.cpp \
     $$PWD/cgal/cgal_signeddistances.cpp \
     $$PWD/cgal/cgal_slicer.cpp \
     $$PWD/cgal/cgal_triangulation.cpp \
-    $$PWD/cgal/cgal_convexhull.tpp
+    $$PWD/cgal/2d/cgal_booleans2d.cpp \
+    $$PWD/cgal/2d/cgal_convexhull2d.tpp \
+    $$PWD/cgal/2d/cgal_intersections2d.cpp \
+    $$PWD/cgal/2d/cgal_minimumbbox2d.cpp \
+    $$PWD/cgal/2d/cgal_triangulation2d.cpp
 

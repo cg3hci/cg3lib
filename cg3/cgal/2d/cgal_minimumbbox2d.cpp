@@ -1,4 +1,4 @@
-#include "cgal_minimumbbox.h"
+#include "cgal_minimumbbox2d.h"
 
 #include <CGAL/Polygon_2.h>
 #include <CGAL/min_quadrilateral_2.h>

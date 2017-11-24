@@ -27,9 +27,15 @@ namespace cg3 {
  * - id pari a 0;
  * - flag pari a 0.
  */
+#ifdef NDEBUG
 Dcel::Face::Face(Dcel& parent) : parent(&parent), outerHalfEdge(nullptr), area(0), id(0), flag(0){
     innerHalfEdges.clear();
 }
+#else
+Dcel::Face::Face() : outerHalfEdge(nullptr), area(0), id(0), flag(0){
+    innerHalfEdges.clear();
+}
+#endif
 
 /**
  * \~Italian
@@ -166,7 +172,11 @@ void Dcel::Face::getTriangulation(std::vector<std::array<const Dcel::Vertex*, 3>
         }
     }
 
+    #ifdef NDEBUG
     std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulation::triangulate(parent->faceNormals[id], borderCoordinates, innerBorderCoordinates);
+    #else
+    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulation::triangulate(normal, borderCoordinates, innerBorderCoordinates);
+    #endif
 
     triangles.clear();
     for (unsigned int i = 0; i < trianglesP.size(); ++i) {
@@ -195,7 +205,11 @@ void Dcel::Face::getTriangulation(std::vector<std::array<const Dcel::Vertex*, 3>
 std::string Dcel::Face::toString() const {
     std::stringstream ss;
 
+    #ifdef NDEBUG
     ss << "ID: " << id << "; Normal: " << parent->faceNormals[id] << "; Outer Component: ";
+    #else
+    ss << "ID: " << id << "; Normal: " << normal << "; Outer Component: ";
+    #endif
     if (outerHalfEdge != nullptr) ss << outerHalfEdge->getId();
     else ss << "nullptr";
     ss << "; N Inner Components: " << innerHalfEdges.size() << "; Inner Components: "
@@ -308,7 +322,11 @@ Vec3 Dcel::Face::updateNormal() {
         if (sum > 0)
             normal = -normal;
     }
+    #ifdef NDEBUG
     parent->faceNormals[id] = normal;
+    #else
+    this->normal = normal;
+    #endif
     return normal;
 }
 

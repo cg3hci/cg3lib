@@ -209,19 +209,26 @@ class Dcel::Face {
         * Constructors *
         ****************/
 
+        #ifdef NDEBUG
         Face(Dcel &parent);
+        #else
+        Face();
+        #endif
         ~Face();
 
         /*************
         * Attributes *
         **************/
 
+        #ifdef NDEBUG
         Dcel *parent;
+        #else
+        Vec3                            normal;         /**< \~Italian @brief Vettore normale alla faccia */
+        Color                           color;          /**< \~Italian @brief Colore associato alla faccia */
+        #endif
         Dcel::HalfEdge*                 outerHalfEdge;  /**< \~Italian @brief Uno degli half edge sul bordo della faccia */
         std::vector<Dcel::HalfEdge*>    innerHalfEdges; /**< \~Italian @brief Lista degli half edge sul bordo di eventuali buchi della faccia, uno per ogni buco */
-        //Vec3                            normal;         /**< \~Italian @brief Vettore normale alla faccia */
         double                          area;           /**< \~Italian @brief Superficie della faccia */
-        //Color                           color;          /**< \~Italian @brief Colore associato alla faccia */
         unsigned int                    id;             /**< \~Italian @brief Id univoco, all'interno della Dcel, associato alla faccia */
         int                             flag;           /**< \~Italian @brief Flag personalizzabile, associato alla faccia */
 

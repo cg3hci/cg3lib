@@ -1,5 +1,5 @@
-#ifndef CG3_CGAL_INTERSECTIONS_H
-#define CG3_CGAL_INTERSECTIONS_H
+#ifndef CG3_CGAL_INTERSECTIONS2D_H
+#define CG3_CGAL_INTERSECTIONS2D_H
 
 #include "cg3/geometry/segment.h"
 

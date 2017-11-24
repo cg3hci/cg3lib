@@ -48,8 +48,11 @@ inline int Dcel::Face::getFlag() const {
  * @return La normale della faccia
  */
 inline Vec3 Dcel::Face::getNormal() const {
+    #ifdef NDEBUG
     return parent->faceNormals[id];
-    //return normal;
+    #else
+    return normal;
+    #endif
 }
 
 /**
@@ -68,8 +71,11 @@ inline double Dcel::Face::getArea() const {
  * @return Il colore della faccia
  */
 inline Color Dcel::Face::getColor() const {
+    #ifdef NDEBUG
     return parent->faceColors[id];
-    //return color;
+    #else
+    return color;
+    #endif
 }
 
 /**
@@ -154,8 +160,11 @@ inline void Dcel::Face::resetFlag() {
  * @param[in] newNormal: il vettore normale che verrà settato
  */
 inline void Dcel::Face::setNormal(const Vec3& newNormal) {
+    #ifdef NDEBUG
     parent->faceNormals[id] = newNormal;
-    //normal = newNormal;
+    #else
+    normal = newNormal;
+    #endif
 }
 
 /**
@@ -173,8 +182,11 @@ inline void Dcel::Face::setArea(double newArea) {
  * @param[in] newColor: il nuovo colore che verrà assegnato alla faccia
  */
 inline void Dcel::Face::setColor(const Color& newColor) {
+    #ifdef NDEBUG
     parent->faceColors[id] = newColor;
-    //color = newColor;
+    #else
+    color = newColor;
+    #endif
 }
 
 /**

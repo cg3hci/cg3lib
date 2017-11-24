@@ -1,4 +1,4 @@
-#include "cgal_convexhull.h"
+#include "cgal_convexhull2d.h"
 
 #include <CGAL/ch_graham_andrew.h>
 

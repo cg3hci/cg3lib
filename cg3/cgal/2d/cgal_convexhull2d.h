@@ -1,5 +1,5 @@
-#ifndef CG3_CGAL_CONVEXHULL_H
-#define CG3_CGAL_CONVEXHULL_H
+#ifndef CG3_CGAL_CONVEXHULL2D_H
+#define CG3_CGAL_CONVEXHULL2D_H
 
 
 #include <vector>
@@ -22,6 +22,6 @@ void getConvexHull2D(
 }
 
 
-#include "cgal_convexhull.tpp"
+#include "cgal_convexhull2d.tpp"
 
-#endif // CG3_CGAL_CONVEXHULL_H
+#endif // CG3_CGAL_CONVEXHULL2D_H

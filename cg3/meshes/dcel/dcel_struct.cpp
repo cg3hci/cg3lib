@@ -68,6 +68,7 @@ Dcel::Dcel(Dcel&& dcel) {
     vertexColors = std::move(dcel.vertexColors);
     faceNormals = std::move(dcel.faceNormals);
     faceColors = std::move(dcel.faceColors);
+    #ifdef NDEBUG
     for (Dcel::Vertex* v : vertexIterator()){
         v->parent = this;
     }
@@ -77,6 +78,8 @@ Dcel::Dcel(Dcel&& dcel) {
     for (Dcel::Face* f : faceIterator()){
         f->parent = this;
     }
+    #endif
+
 }
 
 #ifdef  CG3_EIGENMESH_DEFINED
@@ -249,7 +252,11 @@ void Dcel::saveOnDcelFile(std::string fileNameDcel) const {
  *      \e O(1)
  */
 Dcel::Vertex *Dcel::addVertex(const Pointd& p, const Vec3& n, const Color& c) {
+    #ifdef NDEBUG
     Vertex* last= new Vertex(*this);
+    #else
+    Vertex* last= new Vertex();
+    #endif
     if (unusedVids.size() == 0) {
         last->setId(nVertices);
         vertices.push_back(last);
@@ -282,7 +289,11 @@ Dcel::Vertex *Dcel::addVertex(const Pointd& p, const Vec3& n, const Color& c) {
  *      \e O(1)
  */
 Dcel::HalfEdge* Dcel::addHalfEdge() {
+    #ifdef NDEBUG
     HalfEdge* last = new HalfEdge(*this);
+    #else
+    HalfEdge* last = new HalfEdge();
+    #endif
     if (unusedHeids.size() == 0){
         last->setId(nHalfEdges);
         halfEdges.push_back(last);
@@ -311,7 +322,11 @@ Dcel::HalfEdge* Dcel::addHalfEdge() {
  *      \e O(1)
  */
 Dcel::Face* Dcel::addFace(const Vec3& n, const Color& c) {
+    #ifdef NDEBUG
     Face* last = new Face(*this);
+    #else
+    Face* last = new Face();
+    #endif
     if (unusedFids.size() == 0){
         last->setId(nFaces);
         faces.push_back(last);
@@ -1166,6 +1181,7 @@ Dcel& Dcel::operator=(Dcel&& dcel) {
     vertexColors = std::move(dcel.vertexColors);
     faceNormals = std::move(dcel.faceNormals);
     faceColors = std::move(dcel.faceColors);
+    #ifdef NDEBUG
     for (Dcel::Vertex* v : vertexIterator()){
         v->parent = this;
     }
@@ -1175,6 +1191,8 @@ Dcel& Dcel::operator=(Dcel&& dcel) {
     for (Dcel::Face* f : faceIterator()){
         f->parent = this;
     }
+    #endif
+
     return *this;
 }
 
@@ -1192,7 +1210,11 @@ Dcel& Dcel::operator=(Dcel&& dcel) {
  * @return Il puntatore al vertice appena inserito nella Dcel
  */
 Dcel::Vertex*Dcel::addVertex(int id) {
+    #ifdef NDEBUG
     Vertex* last= new Vertex(*this);
+    #else
+    Vertex* last= new Vertex();
+    #endif
     last->setId(id);
     vertices[id] = last;
     return last;
@@ -1208,7 +1230,11 @@ Dcel::Vertex*Dcel::addVertex(int id) {
  * @return Il puntatore all'half edge appena inserito nella Dcel
  */
 Dcel::HalfEdge*Dcel::addHalfEdge(int id) {
+    #ifdef NDEBUG
     HalfEdge* last = new HalfEdge(*this);
+    #else
+    HalfEdge* last = new HalfEdge();
+    #endif
     last->setId(id);
     halfEdges[id] = last;
     return last;
@@ -1224,7 +1250,11 @@ Dcel::HalfEdge*Dcel::addHalfEdge(int id) {
  * @return Il puntatore alla faccia appena inserita nella Dcel
  */
 Dcel::Face*Dcel::addFace(int id) {
+    #ifdef NDEBUG
     Face* last = new Face(*this);
+    #else
+    Face* last = new Face();
+    #endif
     last->setId(id);
     faces[id] = last;
     return last;

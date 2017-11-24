@@ -24,8 +24,13 @@ namespace cg3 {
  * - id pari a 0;
  * - flag pari a 0.
  */
+#ifdef NDEBUG
 Dcel::Vertex::Vertex(Dcel& parent) : parent(&parent), incidentHalfEdge(nullptr), cardinality(0), id(0), flag(0){
 }
+#else
+Dcel::Vertex::Vertex() : incidentHalfEdge(nullptr), cardinality(0), id(0), flag(0){
+}
+#endif
 
 /**
  * \~Italian
@@ -116,7 +121,11 @@ const Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Dcel::Vertex* verte
 std::string Dcel::Vertex::toString() const {
     std::stringstream ss;
 
+    #ifdef NDEBUG
     ss << "ID: " << id << "; Position: " << /*coordinate.toString()*/ parent->vertexCoordinates[id].toString() << "; Normal: " << parent->vertexNormals[id].toString()
+    #else
+    ss << "ID: " << id << "; Position: " << coordinate.toString() << "; Normal: " << normal.toString()
+    #endif
        << "; Half-Edge: " ;
     if (incidentHalfEdge == nullptr) ss << "nullptr";
     else ss << incidentHalfEdge->getId();
@@ -135,16 +144,32 @@ std::string Dcel::Vertex::toString() const {
  *      \e O(Cardinality)
  */
 Vec3 Dcel::Vertex::updateNormal() {
+    #ifdef NDEBUG
     parent->vertexNormals[id].set(0,0,0);
+    #else
+    normal.set(0,0,0);
+    #endif
     unsigned int n = 0;
     ConstIncidentFaceIterator f;
     for (f = incidentFaceBegin(); f != incidentFaceEnd(); ++f) {
+        #ifdef NDEBUG
         parent->vertexNormals[id] += (*f)->getNormal();
+        #else
+        normal += (*f)->getNormal();
+        #endif
         n++;
     }
+    #ifdef NDEBUG
     parent->vertexNormals[id] /= n;
+    #else
+    normal /= n;
+    #endif
     cardinality = n;
+    #ifdef NDEBUG
     return parent->vertexNormals[id];
+    #else
+    return normal;
+    #endif
 }
 
 /**

@@ -32,8 +32,11 @@ inline int Dcel::Vertex::getFlag() const {
  * @return La normale al vertice
  */
 inline Vec3 Dcel::Vertex::getNormal() const	{
+    #ifdef NDEBUG
     return parent->vertexNormals[id];
-    //return normal;
+    #else
+    return normal;
+    #endif
 }
 
 /**
@@ -42,8 +45,11 @@ inline Vec3 Dcel::Vertex::getNormal() const	{
  * @return Pointd rappresentante la posizione nello spazio del vertice
  */
 inline Pointd Dcel::Vertex::getCoordinate() const {
-    //return coordinate;
+    #ifdef NDEBUG
     return parent->vertexCoordinates[id];
+    #else
+    return coordinate;
+    #endif
 }
 
 /**
@@ -52,8 +58,11 @@ inline Pointd Dcel::Vertex::getCoordinate() const {
  * @return Color rappresentante la posizione nello spazio del vertice
  */
 inline Color Dcel::Vertex::getColor() const {
-    //return coordinate;
+    #ifdef NDEBUG
     return parent->vertexColors[id];
+    #else
+    return color;
+    #endif
 }
 
 /**
@@ -82,8 +91,11 @@ inline const Dcel::HalfEdge* Dcel::Vertex::getIncidentHalfEdge() const {
  * @return La distanza tra il vertice this e otherVertex
  */
 inline double Dcel::Vertex::dist(const Vertex* otherVertex) const {
-    //return this->coordinate.dist(otherVertex->coordinate);
+    #ifdef NDEBUG
     return parent->vertexCoordinates[id].dist(parent->vertexCoordinates[otherVertex->id]);
+    #else
+    return this->coordinate.dist(otherVertex->coordinate);
+    #endif
 }
 
 /**
@@ -94,8 +106,11 @@ inline double Dcel::Vertex::dist(const Vertex* otherVertex) const {
  * @todo Da riscrivere
  */
 inline bool Dcel::Vertex::operator == (const Vertex& otherVertex) const {
-    //if (otherVertex.coordinate == this->coordinate ) return true;
+    #ifdef NDEBUG
     if (parent->vertexCoordinates[id] == parent->vertexCoordinates[otherVertex.id]) return true;
+    #else
+    if (otherVertex.coordinate == this->coordinate ) return true;
+    #endif
     return false;
 }
 
@@ -106,8 +121,11 @@ inline bool Dcel::Vertex::operator == (const Vertex& otherVertex) const {
  * @return True se i vertici sono diversi, false altrimenti
  */
 inline bool Dcel::Vertex::operator != (const Vertex& otherVertex) const {
-    //if (otherVertex.coordinate == this->coordinate ) return false;
+    #ifdef NDEBUG
     if (parent->vertexCoordinates[id] == parent->vertexCoordinates[otherVertex.id]) return false;
+    #else
+    if (otherVertex.coordinate == this->coordinate ) return false;
+    #endif
     return true;
 }
 
@@ -151,8 +169,11 @@ inline void Dcel::Vertex::resetFlag() {
  * @param[in] newNormal: il vettore normale che verrà settato
  */
 inline void Dcel::Vertex::setNormal(const Vec3& newNormal) {
+    #ifdef NDEBUG
     parent->vertexNormals[id] = newNormal;
-    //normal = newNormal;
+    #else
+    normal = newNormal;
+    #endif
 }
 
 /**
@@ -161,8 +182,11 @@ inline void Dcel::Vertex::setNormal(const Vec3& newNormal) {
  * @param[in] newCoordinate: il punto che verrà settato
  */
 inline void Dcel::Vertex::setCoordinate(const Pointd& newCoordinate) {
+    #ifdef NDEBUG
     parent->vertexCoordinates[id] = newCoordinate;
-    //coordinate = newCoordinate;
+    #else
+    coordinate = newCoordinate;
+    #endif
 }
 
 /**
@@ -175,7 +199,11 @@ inline void Dcel::Vertex::setCardinality( int newCardinality ) {
 }
 
 inline void Dcel::Vertex::setColor(const Color& c) {
+    #ifdef NDEBUG
     parent->vertexColors[id] = c;
+    #else
+    color = c;
+    #endif
 }
 
 /**

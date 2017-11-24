@@ -27,8 +27,13 @@ namespace cg3 {
  * - id pari a 0;
  * - flag pari a 0.
  */
+#ifdef NDEBUG
 Dcel::HalfEdge::HalfEdge(Dcel& parent) : parent(&parent), fromVertex(nullptr), toVertex(nullptr), twin(nullptr), prev(nullptr), next(nullptr), face(nullptr), id(0), flag(0) {
 }
+#else
+Dcel::HalfEdge::HalfEdge() : fromVertex(nullptr), toVertex(nullptr), twin(nullptr), prev(nullptr), next(nullptr), face(nullptr), id(0), flag(0) {
+}
+#endif
 
 /**
  * \~Italian

@@ -106,7 +106,11 @@ class Dcel::HalfEdge
         * Constructors *
         ****************/
 
+        #ifdef NDEBUG
         HalfEdge(Dcel &parent);
+        #else
+        HalfEdge();
+        #endif
         //HalfEdge(Dcel::Vertex* from, Dcel::Vertex* to);
         //HalfEdge(Dcel::Vertex* from, Dcel::Vertex* to, Dcel::HalfEdge* twin, Dcel::HalfEdge* prev, Dcel::HalfEdge* next, Dcel::Face* face);
         ~HalfEdge();
@@ -115,7 +119,9 @@ class Dcel::HalfEdge
         * Attributes *
         **************/
 
+        #ifdef NDEBUG
         Dcel* parent;
+        #endif
         Dcel::Vertex* 	fromVertex; /**< \~Italian @brief Vertice di origine dell'half edge */
         Dcel::Vertex* 	toVertex;   /**< \~Italian @brief Vertice di destinazione dell'half edge */
         Dcel::HalfEdge* twin;       /**< \~Italian @brief Half edge gemello dell'half edge */

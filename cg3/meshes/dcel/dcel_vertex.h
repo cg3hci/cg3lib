@@ -177,7 +177,11 @@ class Dcel::Vertex
         * Constructors *
         ****************/
 
+        #ifdef NDEBUG
         Vertex(Dcel& parent);
+        #else
+        Vertex();
+        #endif
         //Vertex(Dcel& parent, const Pointd& p);
         //Vertex(Dcel& parent, const Pointd& p, Dcel::HalfEdge* halfEdge);
         //Vertex(Dcel& parent, const Pointd& p, Dcel::HalfEdge* halfEdge, int cardinality);
@@ -187,10 +191,14 @@ class Dcel::Vertex
         * Attributes *
         **************/
 
+        #ifdef NDEBUG
         Dcel* parent;
-        //Pointd          coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
+        #else
+        Pointd          coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
+        Vec3            normal;             /**< \~Italian @brief Vettore normale al vertice */
+        Color           color;              /**< \~Italian @brief Colore associato al vertice */
+        #endif
         Dcel::HalfEdge* incidentHalfEdge;   /**< \~Italian @brief Uno degli half edge uscenti incidenti sul vertice */
-        //Vec3            normal;             /**< \~Italian @brief Vettore normale al vertice */
         unsigned int    cardinality;        /**< \~Italian @brief Numero di edge (metà degli half edge) incidenti sul vertice */
         unsigned int    id;                 /**< \~Italian @brief Id univoco, all'interno della Dcel, associato al vertice */
         int             flag;               /**< \~Italian @brief Flag personalizzabile, associato al vertice */
