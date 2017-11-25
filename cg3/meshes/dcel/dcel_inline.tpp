@@ -1,5 +1,7 @@
-//#ifndef DCEL_INLINES_H
-//#define DCEL_INLINES_H
+/*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+ * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ */
 
 #include "dcel_struct.h"
 #include "dcel_iterators.h"

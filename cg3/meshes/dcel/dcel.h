@@ -1,7 +1,6 @@
 /*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @author    Andreas Scalas (andreasscalas@tiscali.it)
- * @copyright Alessandro Muntoni 2016.
  */
 
 #ifndef CG3_DCEL_H

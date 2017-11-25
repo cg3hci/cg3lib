@@ -1,6 +1,6 @@
 /*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @copyright Alessandro Muntoni 2016.
  */
 
 #include "dcel_face_iterators.h"

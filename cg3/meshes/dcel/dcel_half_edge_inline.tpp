@@ -1,3 +1,8 @@
+/*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+ * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ */
+
 #include "dcel_half_edge.h"
 
 namespace cg3 {

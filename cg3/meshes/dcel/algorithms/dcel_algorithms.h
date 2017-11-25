@@ -1,3 +1,8 @@
+/*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+ * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ */
+
 #ifndef DCEL_ALGORITHMS_H
 #define DCEL_ALGORITHMS_H
 

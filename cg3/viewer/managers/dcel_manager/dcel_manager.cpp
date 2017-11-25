@@ -6,6 +6,9 @@
 #include "dcel_manager.h"
 #include "ui_dcel_manager.h"
 
+#include <cg3/algorithms/convexhull.h>
+#include <cg3/utilities/timer.h>
+
 #include <QFileDialog>
 #include <QColorDialog>
 #include <iostream>
@@ -182,6 +185,9 @@ void DcelManager::on_loadDcelButton_clicked() {
             else {
                 std::cerr << "Triangle Mesh\n";
             }
+            cg3::Timer t("Ch");
+            *drawableDcel = cg3::convexHull(*drawableDcel);
+            t.stopAndPrint();
             //drawableDcel->setFacesWireframe(true);
             drawableDcel->setSmoothShading();
             drawableDcel->update();

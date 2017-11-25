@@ -1,3 +1,8 @@
+/*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+ * @author    Stefano Nuvoli (stefano.nuvoli@gmail.com)
+ */
+
 #ifndef CG3_CGAL_CONVEXHULL2D_H
 #define CG3_CGAL_CONVEXHULL2D_H
 

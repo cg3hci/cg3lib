@@ -68,8 +68,8 @@ class BipartiteGraph<T1, T2>::UNodeIterator{
 
     protected:
         const BipartiteGraph* g;
-        typename std::vector<UndirectedNode<T1> >::const_iterator pos;
-        UNodeIterator(typename std::vector<UndirectedNode<T1> >::const_iterator it, const BipartiteGraph &g);
+        typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator pos;
+        UNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph &g);
 
 
 };
@@ -91,8 +91,8 @@ class BipartiteGraph<T1, T2>::VNodeIterator{
 
     protected:
         const BipartiteGraph* g;
-        typename std::vector<UndirectedNode<T2> >::const_iterator pos;
-        VNodeIterator(typename std::vector<UndirectedNode<T2> >::const_iterator it, const BipartiteGraph &g);
+        typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator pos;
+        VNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph &g);
 
 
 };
@@ -301,7 +301,7 @@ typename BipartiteGraph<T1, T2>::UNodeIterator BipartiteGraph<T1, T2>::UNodeIter
 }
 
 template <class T1, class T2>
-BipartiteGraph<T1, T2>::UNodeIterator::UNodeIterator(typename std::vector<UndirectedNode<T1> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
+BipartiteGraph<T1, T2>::UNodeIterator::UNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
 }
 
 //VNodeIterator
@@ -360,7 +360,7 @@ typename BipartiteGraph<T1, T2>::VNodeIterator BipartiteGraph<T1, T2>::VNodeIter
 }
 
 template <class T1, class T2>
-BipartiteGraph<T1, T2>::VNodeIterator::VNodeIterator(typename std::vector<UndirectedNode<T2> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
+BipartiteGraph<T1, T2>::VNodeIterator::VNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
 }
 
 //ConstAdjacentUNodeRangeBasedIterator

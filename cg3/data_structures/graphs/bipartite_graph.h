@@ -251,7 +251,7 @@ template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::modifyUNode(const T1& old, const T1& newInfo) {
     int uid = getIdU(old);
     if (uid >= 0){
-        nodesU[uid] = UndirectedNode<T1>(newInfo);
+        nodesU[uid] = cg3::graphs::UndirectedNode<T1>(newInfo);
         mapU.erase(old);
         mapU[newInfo] = uid;
         return true;
@@ -264,7 +264,7 @@ template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::modifyVNode(const T2& old, const T2& newInfo) {
     int vid = getIdV(old);
     if (vid >= 0){
-        nodesV[vid] = UndirectedNode<T2>(newInfo);
+        nodesV[vid] = cg3::graphs::UndirectedNode<T2>(newInfo);
         mapV.erase(old);
         mapV[newInfo] = vid;
         return true;

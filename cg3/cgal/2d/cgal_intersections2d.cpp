@@ -1,3 +1,8 @@
+/*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+ * @author    Stefano Nuvoli (stefano.nuvoli@gmail.com)
+ */
+
 #include "cgal_intersections2d.h"
 
 #include "cg3/utilities/utils.h"

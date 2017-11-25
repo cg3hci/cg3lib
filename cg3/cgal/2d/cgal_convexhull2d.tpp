@@ -1,3 +1,8 @@
+/*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+ * @author    Stefano Nuvoli (stefano.nuvoli@gmail.com)
+ */
+
 #include "cgal_convexhull2d.h"
 
 #include <CGAL/ch_graham_andrew.h>
