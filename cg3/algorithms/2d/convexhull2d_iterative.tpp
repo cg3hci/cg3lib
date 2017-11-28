@@ -6,7 +6,9 @@
 namespace cg3 {
 
 
-/* ----- USEFUL FUNCTION DECLARATION ----- */
+/* ----- INTERNAL FUNCTION DECLARATION ----- */
+
+namespace internal {
 
 template <class T>
 void processConvexHull(
@@ -14,6 +16,7 @@ void processConvexHull(
         std::set<Point2D<T>>& upper,
         std::set<Point2D<T>>& lower);
 
+}
 
 
 /* ----- ITERATIVE CONVEX HULL 2D IMPLEMENTATION ----- */
@@ -89,7 +92,7 @@ void IterativeConvexHull2D<T>::addPoints(const InputContainer& container)
  */
 template <class T>
 void IterativeConvexHull2D<T>::addPoint(const Point2D<T>& point) {
-    cg3::processConvexHull<T>(point, this->upper, this->lower);
+    internal::processConvexHull<T>(point, this->upper, this->lower);
 }
 
 /**
@@ -166,7 +169,9 @@ void addPointToConvexHull(
 
 
 
-/* ----- USEFUL FUNCTION IMPLEMENTATION ----- */
+/* ----- INTERNAL FUNCTION IMPLEMENTATION ----- */
+
+namespace internal {
 
 /**
  * @brief Algorithm step for processing iterative convex hull
@@ -327,6 +332,8 @@ void processConvexHull(
             }
         }
     }
+
+}
 
 }
 

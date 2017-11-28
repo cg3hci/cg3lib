@@ -13,7 +13,7 @@ HEADERS += \
     $$PWD/algorithms/2d/convexhull2d_iterative.h
 
 SOURCES += \
-    $$PWD/algorithms/convexhull.cpp \
+    $$PWD/algorithms/convexhull.tpp \
     $$PWD/algorithms/marching_cubes.cpp \
     $$PWD/algorithms/2d/convexhull2d.tpp \
     $$PWD/algorithms/2d/convexhull2d_iterative.tpp

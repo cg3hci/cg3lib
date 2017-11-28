@@ -11,12 +11,14 @@
 
 namespace cg3 {
 
-/* ----- FUNCTION DECLARATION ----- */
+/* ----- INTERNAL FUNCTION DECLARATION ----- */
 
+namespace internal {
 
-template <class T = double, class InputIterator, class OutputIterator>
-inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt);
+    template <class T = double, class InputIterator, class OutputIterator>
+    inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt);
 
+}
 
 
 /* ----- IMPLEMENTATION OF GRAHAM SCAN ----- */
@@ -46,8 +48,8 @@ void getConvexHull2D(const InputIterator first, const InputIterator end, OutputI
     }
 
     //Graham scan on upper and lower convex hull
-    grahamScanOnContainer<T>(sortedPoints.begin(), sortedPoints.end(), outIt);
-    grahamScanOnContainer<T>(sortedPoints.rbegin(), sortedPoints.rend(), outIt);
+    internal::grahamScanOnContainer<T>(sortedPoints.begin(), sortedPoints.end(), outIt);
+    internal::grahamScanOnContainer<T>(sortedPoints.rbegin(), sortedPoints.rend(), outIt);
 }
 
 
@@ -63,8 +65,9 @@ void getConvexHull2D(const InputContainer& points, OutputContainer& convexHull) 
 
 
 
-/* ----- FUNCTIONS FOR GRAHAM SCAN ----- */
+/* ----- INTERNAL FUNCTIONS IMPLEMENTATION ----- */
 
+namespace internal {
 
 /**
  * @brief Graham scan on a collection of points (upper or lower)
@@ -153,7 +156,7 @@ inline void grahamScanOnContainer(const InputIterator first, const InputIterator
     }
 }
 
-
+}
 
 
 
