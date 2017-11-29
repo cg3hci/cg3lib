@@ -19,9 +19,15 @@ namespace cg3 {
 namespace cgal {
 
 template <class T = double, class InputContainer, class OutputContainer>
-void getConvexHull2D(
+void getCGALConvexHull2D(
         const InputContainer& points,
-        OutputContainer& convexHull);
+        OutputContainer& outputContainer);
+
+template <class T = double, class InputIterator, class OutputIterator>
+void getCGALConvexHull2D(
+        InputIterator first,
+        InputIterator end,
+        OutputIterator outIt);
 
 }
 }

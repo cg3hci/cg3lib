@@ -12,11 +12,30 @@
 namespace cg3 {
 namespace cgal {
 
-
+/**
+ * @brief Get the 2D convex hull using Graham scan algorithm
+ * @param[in] container Container of the points of the shape
+ * @param[out] convexHull Output container for the convex hull
+ */
 template <class T = double, class InputContainer, class OutputContainer>
-void getConvexHull2D(
+void getCGALConvexHull2D(
         const InputContainer& points,
         OutputContainer& convexHull)
+{
+    getCGALConvexHull2D<T>(points.begin(), points.end(), std::back_inserter(convexHull));
+}
+
+/**
+ * @brief Get the 2D convex hull using Graham scan algorithm on iterators of containers
+ * @param[in] first First iterator of the input container
+ * @param[in] end End iterator of the input container
+ * @param[out] outIt Output iterator for the container containing the convex hull
+ */
+template <class T = double, class InputIterator, class OutputIterator>
+void getCGALConvexHull2D(
+        InputIterator first,
+        InputIterator end,
+        OutputIterator outIt)
 {
 
     typedef CGAL::Simple_cartesian<T>                               CK;
@@ -24,8 +43,8 @@ void getConvexHull2D(
 
     std::vector<CK_Point_2> cgalPoints;
 
-    for (const Point2D<T> p : points) {
-        CK_Point_2 point(p.x(), p.y());
+    for (InputIterator it = first; it != end; it++) {
+        CK_Point_2 point(it->x(), it->y());
         cgalPoints.push_back(point);
     }
 
@@ -34,7 +53,8 @@ void getConvexHull2D(
     CGAL::ch_graham_andrew(cgalPoints.begin(), cgalPoints.end(), std::back_inserter(cgalCHPoints));
 
     for (const CK_Point_2 p : cgalCHPoints) {
-        convexHull.push_back(Point2D<T>(p.x(), p.y()));
+        *outIt = Point2D<T>(p.x(), p.y());
+        outIt++;
     }
 }
 

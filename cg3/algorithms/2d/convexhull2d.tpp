@@ -4,7 +4,6 @@
 #include "convexhull2d.h"
 
 #include <vector>
-#include <set>
 
 #include "cg3/geometry/2d/point2d.h"
 #include "cg3/geometry/2d/utils2d.h"
@@ -15,13 +14,23 @@ namespace cg3 {
 
 namespace internal {
 
-    template <class T = double, class InputIterator, class OutputIterator>
-    inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt);
+template <class T = double, class InputIterator, class OutputIterator>
+inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt);
 
 }
 
 
 /* ----- IMPLEMENTATION OF GRAHAM SCAN ----- */
+
+/**
+ * @brief Get the 2D convex hull using Graham scan algorithm
+ * @param[in] container Container of the points of the shape
+ * @param[out] convexHull Output container for the convex hull
+ */
+template <class T = double, class InputContainer, class OutputContainer>
+void getConvexHull2D(const InputContainer& container, OutputContainer& convexHull) {
+    getConvexHull2D<T>(container.begin(), container.end(), std::back_inserter(convexHull));
+}
 
 /**
  * @brief Get the 2D convex hull using Graham scan algorithm on iterators of containers
@@ -30,7 +39,7 @@ namespace internal {
  * @param[out] outIt Output iterator for the container containing the convex hull
  */
 template <class T = double, class InputIterator, class OutputIterator>
-void getConvexHull2D(const InputIterator first, const InputIterator end, OutputIterator outIt) {
+void getConvexHull2D(InputIterator first, InputIterator end, OutputIterator outIt) {
     //If the container is empty
     if (first == end)
         return;
@@ -52,16 +61,6 @@ void getConvexHull2D(const InputIterator first, const InputIterator end, OutputI
     internal::grahamScanOnContainer<T>(sortedPoints.rbegin(), sortedPoints.rend(), outIt);
 }
 
-
-/**
- * @brief Get the 2D convex hull using Graham scan algorithm
- * @param[in] points Container of the points of the shape
- * @param[out] convexHull Output container for the convex hull
- */
-template <class T = double, class InputContainer, class OutputContainer>
-void getConvexHull2D(const InputContainer& points, OutputContainer& convexHull) {
-    getConvexHull2D<T>(points.begin(), points.end(), std::back_inserter(convexHull));
-}
 
 
 

@@ -53,9 +53,20 @@ private:
 
 /* ----- Common typedefs (1D, 2D, 3D double) ----- */
 
-typedef Segment<double> Segment1Dd;
-typedef Segment<Point2Dd> Segment2Dd;
-typedef Segment<Pointd> Segment3Dd;
+template <class T>
+using Segment1D = Segment<T>;
+template <class T>
+using Segment2D = Segment<Point2D<T>>;
+template <class T>
+using Segment3D = Segment<Point<T>>;
+
+typedef Segment1D<double> Segment1Dd;
+typedef Segment2D<double> Segment2Dd;
+typedef Segment3D<double> Segment3Dd;
+
+typedef Segment1D<double> Segment1Di;
+typedef Segment2D<double> Segment2Di;
+typedef Segment3D<double> Segment3Di;
 
 }
 
