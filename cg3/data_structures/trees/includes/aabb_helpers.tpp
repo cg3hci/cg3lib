@@ -7,6 +7,8 @@
 
 #include "assert.h"
 
+#include "cg3/utilities/const.h"
+
 namespace cg3 {
 
 
@@ -315,10 +317,14 @@ inline bool aabbOverlapsHelper(
         const AABB<D>& a,
         const AABB<D>& b)
 {
+    double eps = cg3::CG3_EPSILON;
+
     for (int i = 1; i <= D; i++) {
-        if (!(a.getMin(i) <= b.getMax(i) && a.getMax(i) >= b.getMin(i)))
+        if (a.getMin(i) > b.getMax(i) + eps || b.getMin(i) > a.getMax(i) + eps) {
             return false;
+        }
     }
+
     return true;
 }
 

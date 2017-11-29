@@ -7,8 +7,11 @@
 
 namespace cg3 {
 
+namespace internal {
 
 static Point2Dd point2DDummy;
+
+}
 
 bool checkSegmentIntersection(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
@@ -18,7 +21,7 @@ void checkSegmentIntersection(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
         char& code,
         const double eps = cg3::CG3_EPSILON,
-        Point2Dd& intersectionPoint = point2DDummy);
+        Point2Dd& intersectionPoint = internal::point2DDummy);
 
 }
 
