@@ -122,9 +122,9 @@ std::string Dcel::Vertex::toString() const {
     std::stringstream ss;
 
     #ifdef NDEBUG
-    ss << "ID: " << id << "; Position: " << /*coordinate.toString()*/ to_string(parent->vertexCoordinates[id]) << "; Normal: " << parent->vertexNormals[id].toString()
+    ss << "ID: " << id << "; Position: " << to_string(parent->vertexCoordinates[id]) << "; Normal: " << to_string(parent->vertexNormals[id])
     #else
-    ss << "ID: " << id << "; Position: " << to_string(coordinate) << "; Normal: " << normal.toString()
+    ss << "ID: " << id << "; Position: " << to_string(coordinate) << "; Normal: " << to_string(normal)
     #endif
        << "; Half-Edge: " ;
     if (incidentHalfEdge == nullptr) ss << "nullptr";

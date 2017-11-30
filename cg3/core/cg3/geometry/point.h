@@ -112,12 +112,6 @@ template <class T> class Point : SerializableObject {
         Point<T> operator /= (const T& scalar );
         Point<T> operator /= (const Point<T>& otherPoint);
 
-        /*****************
-        * Public Methods *
-        ******************/
-
-        std::string toString() const;
-
     protected:
 
         /**************

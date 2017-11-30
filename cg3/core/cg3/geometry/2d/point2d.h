@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "../../io/serialize.h"
+#include "../../utilities/hash.h"
 
 namespace cg3 {
 
@@ -100,6 +101,15 @@ typedef Point2D<double> Point2Dd;
 typedef Point2D<float> Point2Df;
 typedef Point2D<int> Point2Di;
 typedef Point2D<double> Vec2;
+
+}
+
+namespace std {
+
+template <typename T>
+struct hash<cg3::Point2D<T>> {
+    size_t operator()(const cg3::Point2D<T>& k) const;
+};
 
 }
 
