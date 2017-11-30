@@ -39,10 +39,10 @@ void getConvexHull2D(const InputContainer& container, OutputContainer& convexHul
  * @param[out] outIt Output iterator for the container containing the convex hull
  */
 template <class T = double, class InputIterator, class OutputIterator>
-void getConvexHull2D(InputIterator first, InputIterator end, OutputIterator outIt) {
+OutputIterator getConvexHull2D(InputIterator first, InputIterator end, OutputIterator outIt) {
     //If the container is empty
     if (first == end)
-        return;
+        return outIt;
 
     //Sort the points
     std::vector<Point2D<T>> sortedPoints(first, end);
@@ -53,12 +53,14 @@ void getConvexHull2D(InputIterator first, InputIterator end, OutputIterator outI
         *outIt = *(sortedPoints.begin());
         outIt++;
 
-        return;
+        return outIt;
     }
 
     //Graham scan on upper and lower convex hull
     internal::grahamScanOnContainer<T>(sortedPoints.begin(), sortedPoints.end(), outIt);
     internal::grahamScanOnContainer<T>(sortedPoints.rbegin(), sortedPoints.rend(), outIt);
+
+    return outIt;
 }
 
 

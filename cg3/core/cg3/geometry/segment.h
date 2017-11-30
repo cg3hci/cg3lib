@@ -4,6 +4,8 @@
 #include "point.h"
 #include "2d/point2d.h"
 
+#include <ostream>
+
 namespace cg3 {
 
 /**
@@ -19,11 +21,11 @@ public:
     Segment();
     Segment(const T& p1, const T& p2);
 
-    /* Getters/setters */
+    /* Getters */
     const T& getP1() const;
     const T& getP2() const;
 
-    /* Getters/setters */
+    /* Setters */
     void setP1(const T& p1);
     void setP2(const T& p2);
 
@@ -50,6 +52,9 @@ private:
     T p1;
     T p2;
 };
+
+template<class T>
+std::ostream& operator<<(std::ostream& o, const Segment<T>& b);
 
 /* ----- Common typedefs (1D, 2D, 3D double) ----- */
 

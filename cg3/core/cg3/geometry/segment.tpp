@@ -89,12 +89,6 @@ inline bool Segment<T>::operator >= (const Segment& otherSegment) const {
     return *this == otherSegment || *this > otherSegment;
 }
 
-template <class T>
-inline std::ostream& operator<<(std::ostream& inputStream, const Segment<T>& seg) {
-    inputStream << seg.toString();
-    return inputStream;
-}
-
 template<class T>
 inline void Segment<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
@@ -109,11 +103,9 @@ inline void Segment<T>::deserialize(std::ifstream& binaryFile) {
 /* Utilities interface */
 
 template <class T>
-std::string Segment<T>::toString() const {
-    std::stringstream ss;
-    ss << "{ " << p1 << ";" << p2 << " }";
-    std::string s1 = ss.str();
-    return s1;
+std::ostream& operator<<(std::ostream& o, const Segment<T>& seg) {
+    o << "{" << seg.getP1() << ", " << seg.getP2() << "}";
+    return o;
 }
 
 }

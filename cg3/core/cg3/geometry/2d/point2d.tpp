@@ -519,6 +519,14 @@ void Point2D<T>::deserialize(std::ifstream& binaryFile) {
     Serializer::deserializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
 }
 
+
+template <class T>
+std::ostream& operator<<(std::ostream& o, const Point2D<T>& p) {
+    o << "[" << p.x() << ", " << p.y() << "]";
+    return o;
+}
+
+
 /**
  * @brief operator *
  * multiplies a scalar with a point
