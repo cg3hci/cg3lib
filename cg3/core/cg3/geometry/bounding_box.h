@@ -139,11 +139,7 @@ namespace std {
 
 template <>
 struct hash<cg3::BoundingBox> {
-    size_t operator()(const cg3::BoundingBox& k) const{
-        std::size_t h;
-        cg3::hashCombine(h, k.min(), k.max());
-        return h;
-    }
+    size_t operator()(const cg3::BoundingBox& k) const;
 };
 
 }

@@ -8,16 +8,16 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <array>
+#include <typeinfo>
+#include <type_traits> // To use 'std::integral_constant'.
 #ifdef QT_CORE_LIB
 #include <QColor>
 #endif //QT_CORE_LIB
-#include <typeinfo>
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
 #endif //CG3_WITH_EIGEN
-#include <array>
 
-#include <type_traits> // To use 'std::integral_constant'.
 
 namespace cg3 {
 

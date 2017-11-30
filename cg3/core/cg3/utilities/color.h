@@ -4,6 +4,7 @@
 #ifdef QT_GUI_LIB
 
 #include <QColor>
+#include "hash.h"
 
 namespace cg3 {
 
@@ -68,6 +69,15 @@ class Color : SerializableObject {
 }
 
 #endif
+
+namespace std {
+
+template <>
+struct hash<cg3::Color> {
+    size_t operator()(const cg3::Color& k) const;
+};
+
+}
 
 #include "color.tpp"
 

@@ -2,8 +2,12 @@
 
 namespace cg3 {
 
+inline void hashCombine(std::size_t& seed) {
+    CG3_SUPPRESS_WARNING(seed);
+}
+
 /**
- * @brief hash_combine
+ * @brief hashCombine
  * @link https://stackoverflow.com/questions/2590677/how-do-i-combine-hash-values-in-c0x
  * @example
  * \code{.cpp}
@@ -12,16 +16,93 @@ namespace cg3 {
  * \endcode
  * @param seed
  */
-
-inline void hashCombine(std::size_t& seed) {
-    CG3_SUPPRESS_WARNING(seed);
-}
-
 template <typename T, typename... Rest>
 inline void hashCombine(std::size_t& seed, const T& v, Rest... rest) {
     std::hash<T> hasher;
     seed ^= hasher(v) + 0x9e3779b9 + (seed<<6) + (seed>>2);
     hashCombine(seed, rest...);
+}
+
+}
+
+namespace std {
+
+/**
+ * @brief hash<std::pair<T1, T2> >::operator ()
+ * combines tha hashes of the T1 and T2 elements.
+ * It works only if the hash is specialized for T1 ans T2 types.
+ * @param k
+ * @return the hash of a std::pair
+ */
+template<typename T1, typename T2>
+size_t hash<std::pair<T1, T2> >::operator()(const std::pair<T1, T2> &k) const {
+    std::size_t seed = 0;
+    cg3::hashCombine(seed, k.first, k.second);
+    return seed;
+}
+
+/**
+ * @brief hash<std::vector<T, A> >::operator ()
+ * combines tha hashes of the elements of a vector.
+ * It works only if the hash is specialized for the T type.
+ * @param k
+ * @return the hash of a vector
+ */
+template<typename T, typename ...A>
+size_t hash<std::vector<T, A...> >::operator()(const std::vector<T, A...> &k) const {
+    std::size_t seed = 0;
+    for (const T& e : k){
+        cg3::hashCombine(seed, e);
+    }
+    return seed;
+}
+
+/**
+ * @brief hash<std::set<T, A> >::operator ()
+ * combines tha hashes of the elements of a set.
+ * It works only if the hash is specialized for the T type.
+ * @param k
+ * @return the hash of a set
+ */
+template<typename T, typename ...A>
+size_t hash<std::set<T, A...> >::operator()(const std::set<T, A...> &k) const {
+    std::size_t seed = 0;
+    for (const T& e : k){
+        cg3::hashCombine(seed, e);
+    }
+    return seed;
+}
+
+/**
+ * @brief hash<std::list<T, A> >::operator ()
+ * combines tha hashes of the elements of a list.
+ * It works only if the hash is specialized for the T type.
+ * @param k
+ * @return the hash of a list
+ */
+template<typename T, typename ...A>
+size_t hash<std::list<T, A...> >::operator()(const std::list<T, A...> &k) const {
+    std::size_t seed = 0;
+    for (const T& e : k){
+        cg3::hashCombine(seed, e);
+    }
+    return seed;
+}
+
+/**
+ * @brief hash<std::array<T, A> >::operator ()
+ * combines tha hashes of the elements of an array.
+ * It works only if the hash is specialized for the T type.
+ * @param k
+ * @return the hash of an array
+ */
+template<typename T, unsigned long int ...A>
+size_t hash<std::array<T, A...> >::operator()(const std::array<T, A...> &k) const {
+    std::size_t seed = 0;
+    for (const T& e : k){
+        cg3::hashCombine(seed, e);
+    }
+    return seed;
 }
 
 }

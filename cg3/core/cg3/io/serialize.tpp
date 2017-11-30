@@ -1,7 +1,6 @@
 #include "serialize.h"
 
 #include <exception>
-#include <type_traits>
 #include <memory>
 #ifndef _MSC_VER
 #   include <cxxabi.h>

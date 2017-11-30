@@ -387,3 +387,9 @@ inline void Color::deserialize(std::ifstream& binaryFile) {
 
 }
 #endif
+
+inline std::size_t std::hash<cg3::Color>::operator()(const cg3::Color &k) const {
+    std::size_t seed = 0;
+    cg3::hashCombine(seed, k.red(), k.green(), k.blue(), k.alpha());
+    return seed;
+}

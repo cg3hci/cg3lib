@@ -607,3 +607,9 @@ inline void BoundingBox::deserialize(std::ifstream& binaryFile) {
 }
 
 }
+
+inline std::size_t std::hash<cg3::BoundingBox>::operator()(const cg3::BoundingBox &k) const{
+    std::size_t h = 0;
+    cg3::hashCombine(h, k.min(), k.max());
+    return h;
+}
