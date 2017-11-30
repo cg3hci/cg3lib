@@ -47,21 +47,7 @@ win32 {
 HEADERS += \
     $$PWD/core/cg3/cg3lib.h
 
-#data_structures
-HEADERS += \
-    $$PWD/core/cg3/data_structures/arrays.h \
-    $$PWD/core/cg3/data_structures/color.h \
-    $$PWD/core/cg3/data_structures/arrays/array2d.h \
-    $$PWD/core/cg3/data_structures/arrays/array3d.h \
-    $$PWD/core/cg3/data_structures/arrays/array4d.h
-
-SOURCES += \
-    $$PWD/core/cg3/data_structures/color.tpp \
-    $$PWD/core/cg3/data_structures/arrays/array2d.tpp \
-    $$PWD/core/cg3/data_structures/arrays/array3d.tpp \
-    $$PWD/core/cg3/data_structures/arrays/array4d.tpp
-
-##geometry
+#geometry
 HEADERS += \
     $$PWD/core/cg3/geometry/bounding_box.h \
     $$PWD/core/cg3/geometry/line.h \
@@ -100,9 +86,11 @@ SOURCES += \
 
 #utilities
 HEADERS += \
+    $$PWD/core/cg3/utilities/color.h \
     $$PWD/core/cg3/utilities/comparators.h \
     $$PWD/core/cg3/utilities/const.h \
     $$PWD/core/cg3/utilities/eigen.h \
+    $$PWD/core/cg3/utilities/hash.h \
     $$PWD/core/cg3/utilities/map.h \
     $$PWD/core/cg3/utilities/pair.h \
     $$PWD/core/cg3/utilities/set.h \
@@ -113,7 +101,9 @@ HEADERS += \
     $$PWD/core/cg3/utilities/utils.h
 
 SOURCES += \
+    $$PWD/core/cg3/utilities/color.tpp \
     $$PWD/core/cg3/utilities/eigen.tpp \
+    $$PWD/core/cg3/utilities/hash.tpp \
     $$PWD/core/cg3/utilities/map.tpp \
     $$PWD/core/cg3/utilities/pair.tpp \
     $$PWD/core/cg3/utilities/set.tpp \

@@ -8,7 +8,7 @@
 
 #include <float.h>
 #include "point.h"
-#include "../data_structures/color.h"
+#include "../utilities/color.h"
 
 namespace cg3 {
 
@@ -132,6 +132,19 @@ class BoundingBox : public SerializableObject {
 };
 
 typedef BoundingBox Box;
+
+}
+
+namespace std {
+
+template <>
+struct hash<cg3::BoundingBox> {
+    size_t operator()(const cg3::BoundingBox& k) const{
+        std::size_t h;
+        cg3::hashCombine(h, k.min(), k.max());
+        return h;
+    }
+};
 
 }
 

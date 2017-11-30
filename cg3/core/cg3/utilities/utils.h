@@ -30,7 +30,7 @@
 #include <cstdlib>
 #include "../geometry/point.h"
 #include "../geometry/2d/point2d.h"
-#include "../data_structures/color.h"
+#include "../utilities/color.h"
 #include "const.h"
 
 namespace cg3 {

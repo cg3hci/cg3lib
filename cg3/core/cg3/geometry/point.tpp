@@ -586,20 +586,6 @@ inline Point<T> Point<T>::operator /= (const Point<T>& otherPoint) {
     return *this;
 }
 
-/*****************
-* Public Methods *
-******************/
-
-/**
- * \~Italian
- * @brief Funzione toString di un punto/vettore
- * @return Una stringa rappresentativa del punto/vettore this
- */
-template <class T>
-std::string Point<T>::toString() const {
-    return "[" + std::to_string(xCoord) + ", " + std::to_string(yCoord) + ", " + std::to_string(zCoord) + "]";
-}
-
 /****************
 * Other Methods *
 *****************/
@@ -644,9 +630,21 @@ inline Point<T> mul(const Eigen::Matrix3d &m, const Point<T>& point) {
  * @return Lo stream di input a cui è stato accodato lo stream del punto/vettore
  */
 template <class T>
-std::ostream& operator<<(std::ostream& inputStream, const Point<T>& p) {
+inline std::ostream& operator<<(std::ostream& inputStream, const Point<T>& p) {
     inputStream << "[" << p.x() << ", " << p.y() << ", " << p.z() << "]";
     return inputStream;
 }
 
+template<class T>
+inline std::string to_string(const Point<T> &p) {
+    return std::string("[" + std::to_string(p.x()) + ", " + std::to_string(p.y()) + ", " + std::to_string(p.z()) + "]");
+}
+
+}
+
+template<typename T>
+inline std::size_t std::hash<cg3::Point<T> >::operator()(const cg3::Point<T>& k) const {
+    std::size_t h=0;
+    cg3::hashCombine(h, k.x(), k.y(), k.z());
+    return h;
 }

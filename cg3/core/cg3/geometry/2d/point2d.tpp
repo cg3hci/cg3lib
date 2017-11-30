@@ -53,7 +53,7 @@ inline const T& Point2D<T>::y() const {
  */
 template <class T>
 inline double Point2D<T>::dist(const Point2D<T> &otherPoint) const{
-    return sqrt ( std::pow((xCoord - otherPoint.xCoord), 2) +
+    return std::sqrt ( std::pow((xCoord - otherPoint.xCoord), 2) +
                   std::pow((yCoord - otherPoint.yCoord), 2) );
 }
 

@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <boost/tokenizer.hpp>
-#include "../data_structures/color.h"
+#include "../utilities/color.h"
 #include <clocale>
 
 #ifdef CG3_WITH_EIGEN

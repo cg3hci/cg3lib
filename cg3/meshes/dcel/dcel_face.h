@@ -7,7 +7,7 @@
 #define CG3_DCEL_FACE_H
 
 #include "dcel_struct.h"
-#include <cg3/data_structures/color.h>
+#include <cg3/utilities/color.h>
 
 namespace cg3 {
 

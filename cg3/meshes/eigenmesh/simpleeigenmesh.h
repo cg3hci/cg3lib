@@ -5,7 +5,7 @@
 
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/bounding_box.h>
-#include <cg3/data_structures/color.h>
+#include <cg3/utilities/color.h>
 #include <cg3/utilities/const.h>
 #include <cg3/utilities/eigen.h>
 

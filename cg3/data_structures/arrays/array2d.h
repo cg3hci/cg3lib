@@ -4,7 +4,7 @@
 #include <vector>
 #include <assert.h>
 #include <iomanip>
-#include "../../io/serialize.h"
+#include <cg3/io/serialize.h>
 
 namespace cg3 {
 

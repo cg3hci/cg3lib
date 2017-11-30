@@ -2,7 +2,7 @@
 #define CG3_DRAWABLE_BOUNDINGBOX2D_H
 
 #include <cg3/geometry/2d/bounding_box2d.h>
-#include <cg3/data_structures/color.h>
+#include <cg3/utilities/color.h>
 #include "../interfaces/drawable_object.h"
 
 namespace cg3 {

@@ -2,7 +2,7 @@
 #define CG3_CONST_H
 
 #include "../geometry/point.h"
-#include "../data_structures/color.h"
+#include "../utilities/color.h"
 
 namespace cg3 {
 

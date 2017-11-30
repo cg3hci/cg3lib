@@ -6,6 +6,18 @@ MODULES += CG3_DATA_SRUCTURES
     error(DataStructures module requires cg3_core!)
 }
 
+# ----- Arrays -----
+
+HEADERS += \
+    $$PWD/data_structures/arrays/arrays.h \
+    $$PWD/data_structures/arrays/array2d.h \
+    $$PWD/data_structures/arrays/array3d.h \
+    $$PWD/data_structures/arrays/array4d.h
+
+SOURCES += \
+    $$PWD/data_structures/arrays/array2d.tpp \
+    $$PWD/data_structures/arrays/array3d.tpp \
+    $$PWD/data_structures/arrays/array4d.tpp
 
 # ----- Graphs -----
 
@@ -13,8 +25,6 @@ HEADERS += \
     $$PWD/data_structures/graphs/bipartite_graph.h \
     $$PWD/data_structures/graphs/bipartite_graph_iterators.h \
     $$PWD/data_structures/graphs/undirected_node.h
-
-
 
 # ----- Lattices -----
 

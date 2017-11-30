@@ -7,7 +7,7 @@
 #define CG3_DCEL_STRUCT_H
 
 #include <cg3/geometry/bounding_box.h>
-#include <cg3/data_structures/color.h>
+#include <cg3/utilities/color.h>
 
 #ifdef  CG3_EIGENMESH_DEFINED
 namespace cg3 {

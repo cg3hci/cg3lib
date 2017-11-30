@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "../io/serialize.h"
+#include "../utilities/hash.h"
 
 #ifdef CG3_CINOLIB_DEFINED
 #ifdef __GNUC__
@@ -146,6 +147,9 @@ Point<T> mul(const Eigen::Matrix3d &m, const Point<T>& point);
 template <class T>
 std::ostream& operator<< (std::ostream& inputStream, const Point<T>& p);
 
+template <class T>
+std::string to_string(const Point<T>& p);
+
 /**************
 * Other Types *
 ***************/
@@ -156,6 +160,15 @@ typedef Point<int>    Pointi; /**< \~English @brief Point composed of integer co
 typedef Point<double>   Vec3; /**< \~English @brief Point composed of double components, sinctactic sugar for discriminate points from vectors */
 template<typename T>
 using Point3D = Point<T>; /**< \~English @brief alias of Point */
+
+}
+
+namespace std {
+
+template <typename T>
+struct hash<cg3::Point<T>> {
+    size_t operator()(const cg3::Point<T>& k) const;
+};
 
 }
 
