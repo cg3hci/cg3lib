@@ -33,7 +33,7 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*>& horizonEdge
 
 /* ----- IMPLEMENTATION OF CONVEX HULL 3D ----- */
 
-Dcel convexHull(const Dcel& inputDcel) {
+inline Dcel convexHull(const Dcel& inputDcel) {
     std::vector<Pointd> points;
     points.reserve(inputDcel.getNumberVertices());
     for (const Dcel::Vertex* v : inputDcel.vertexIterator()){

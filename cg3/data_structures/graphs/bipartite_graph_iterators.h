@@ -105,7 +105,7 @@ class BipartiteGraph<T1, T2>::AdjacentUNodeRangeBasedIterator {
         BipartiteGraph<T1, T2>::AdjacentUNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
-        const T1& uNode;
+        T1 uNode;
         AdjacentUNodeRangeBasedIterator(const BipartiteGraph* g, const T1& uNode);
 };
 
@@ -117,7 +117,7 @@ class BipartiteGraph<T1, T2>::AdjacentVNodeRangeBasedIterator {
         BipartiteGraph<T1, T2>::AdjacentVNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
-        const T2& vNode;
+        T2 vNode;
         AdjacentVNodeRangeBasedIterator(const BipartiteGraph* g, const T2& vNode);
 };
 

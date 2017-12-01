@@ -124,18 +124,12 @@ bool BipartiteGraph<T1, T2>::addVNode(const T2& info) {
 
 template <class T1, class T2>
 bool BipartiteGraph<T1, T2>::existsUNode(const T1& uNode) const {
-    if (getIdU(uNode) >= 0)
-        return true;
-    else
-        return false;
+    return mapU.find(uNode) != mapU.end();
 }
 
 template <class T1, class T2>
 bool BipartiteGraph<T1, T2>::existsVNode(const T2& vNode) const {
-    if (getIdV(vNode) >= 0)
-        return true;
-    else
-        return false;
+    return mapV.find(vNode) != mapV.end();
 }
 
 template <class T1, class T2>
@@ -151,19 +145,13 @@ unsigned int BipartiteGraph<T1, T2>::sizeV() const {
 template<class T1, class T2>
 int BipartiteGraph<T1, T2>::sizeAdjacencesUNode(const T1& uNode) const {
     int uid = getIdU(uNode);
-    if (uid >= 0)
-        return nodesU[uid].sizeAdjacentNodes();
-    else
-        return -1;
+    return nodesU[uid].sizeAdjacentNodes();
 }
 
 template<class T1, class T2>
 int BipartiteGraph<T1, T2>::sizeAdjacencesVNode(const T2& vNode) const {
     int vid = getIdV(vNode);
-    if (vid >= 0)
-        return nodesV[vid].sizeAdjacentNodes();
-    else
-        return -1;
+    return nodesV[vid].sizeAdjacentNodes();
 }
 
 template <class T1, class T2>
@@ -191,106 +179,109 @@ bool BipartiteGraph<T1, T2>::deleteVNode(const T2& vNode) {
 
 template <class T1, class T2>
 bool BipartiteGraph<T1, T2>::addArc(const T1& uNode, const T2& vNode) {
-    int uid = getIdU(uNode);
-    int vid = getIdV(vNode);
-    if(uid >= 0 && vid >= 0){
+    try {
+        int uid = getIdU(uNode);
+        int vid = getIdV(vNode);
         assert((unsigned int)uid < nodesU.size());
         assert((unsigned int)vid < nodesV.size());
         nodesU[uid].addAdjacent(vid);
         nodesV[vid].addAdjacent(uid);
         return true;
     }
-    else
+    catch(...){
         return false;
+    }
 }
 
 template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::deleteArc(const T1& uNode, const T2& vNode) {
-    int uid = getIdU(uNode);
-    int vid = getIdV(vNode);
-    if(uid >= 0 && vid >= 0){
+    try {
+        int uid = getIdU(uNode);
+        int vid = getIdV(vNode);
         assert((unsigned int)uid < nodesU.size());
         assert((unsigned int)vid < nodesV.size());
         nodesU[uid].deleteAdjacent(vid);
         nodesV[vid].deleteAdjacent(uid);
         return true;
     }
-    else
+    catch(...){
         return false;
+    }
 }
 
 template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::clearAdjacencesUNode(const T1& uNode) {
-    int uid = getIdU(uNode);
-    if (uid >= 0){
+    try {
+        int uid = getIdU(uNode);
         for (unsigned int adj : nodesU[uid]){
             nodesV[adj].deleteAdjacent(uid);
         }
         nodesU[uid].clearAdjacentNodes();
         return true;
     }
-    else
+    catch(...){
         return false;
+    }
 }
 
 template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::clearAdjacencesVNode(const T2& vNode) {
-    int vid = getIdV(vNode);
-    if (vid >= 0){
+    try {
+        int vid = getIdV(vNode);
         for (unsigned int adj : nodesV[vid]){
             nodesU[adj].deleteAdjacent(vid);
         }
         nodesV[vid].clearAdjacentNodes();
         return true;
     }
-    else
+    catch(...){
         return false;
+    }
 }
 
 template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::modifyUNode(const T1& old, const T1& newInfo) {
-    int uid = getIdU(old);
-    if (uid >= 0){
+    try {
+        int uid = getIdU(old);
         nodesU[uid] = cg3::graphs::UndirectedNode<T1>(newInfo);
         mapU.erase(old);
         mapU[newInfo] = uid;
         return true;
     }
-    else
+    catch(...){
         return false;
+    }
 }
 
 template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::modifyVNode(const T2& old, const T2& newInfo) {
-    int vid = getIdV(old);
-    if (vid >= 0){
+    try {
+        int vid = getIdV(old);
         nodesV[vid] = cg3::graphs::UndirectedNode<T2>(newInfo);
         mapV.erase(old);
         mapV[newInfo] = vid;
         return true;
     }
-    else
+    catch(...){
         return false;
+    }
 }
 
 template<class T1, class T2>
 typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::adjacentUNodeBegin(const T1& uNode) const{
     int uid = getIdU(uNode);
-    assert(uid >= 0);
     return AdjacentUNodeIterator(nodesU[uid].begin(), *this);
 }
 
 template<class T1, class T2>
 typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::adjacentUNodeEnd(const T1& uNode) const {
     int uid = getIdU(uNode);
-    assert(uid >= 0);
     return AdjacentUNodeIterator(nodesU[uid].end(), *this);
 }
 
 template<class T1, class T2>
 typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::adjacentVNodeBegin(const T2& vNode) const {
     int vid = getIdV(vNode);
-    assert(vid >= 0);
     return AdjacentVNodeIterator(nodesV[vid].begin(), *this);
 
 }
@@ -298,7 +289,6 @@ typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::a
 template<class T1, class T2>
 typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::adjacentVNodeEnd(const T2& vNode) const {
     int vid = getIdV(vNode);
-    assert(vid >= 0);
     return AdjacentVNodeIterator(nodesV[vid].end(), *this);
 }
 
@@ -344,20 +334,12 @@ typename BipartiteGraph<T1, T2>::VNodeRangeBasedIterator BipartiteGraph<T1, T2>:
 
 template <class T1, class T2>
 int BipartiteGraph<T1, T2>::getIdU(const T1& uNode) const{
-    auto uit = mapU.find(uNode);
-    if (uit != mapU.end())
-        return uit->second;
-    else
-        return -1;
+    return mapU.at(uNode);
 }
 
 template <class T1, class T2>
 int BipartiteGraph<T1, T2>::getIdV(const T2& vNode) const{
-    auto vit = mapV.find(vNode);
-    if (vit != mapV.end())
-        return vit->second;
-    else
-        return -1;
+    return mapV.at(vNode);
 }
 
 }

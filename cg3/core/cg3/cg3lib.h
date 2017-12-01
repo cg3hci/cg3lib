@@ -10,4 +10,10 @@
   */
 #define CG3_SUPPRESS_WARNING(a) (void)a
 
+/**
+  * @link: https://stackoverflow.com/questions/20631922/expand-macro-inside-string-literal
+  */
+#define CG3_STRINGIFY2(X) #X
+#define CG3_STRINGIFY(X) CG3_STRINGIFY2(X)
+
 #endif // CG3_CG3LIB_H
