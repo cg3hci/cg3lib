@@ -350,6 +350,10 @@ inline Dcel::FaceRangeBasedIterator Dcel::faceIterator() {
     return FaceRangeBasedIterator(this);
 }
 
+inline void swap(Dcel& d1, Dcel& d2) {
+    d1.swap(d2);
+}
+
 }
 
 //#endif // DCEL_INLINES_H

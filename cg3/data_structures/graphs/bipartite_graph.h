@@ -10,7 +10,7 @@
 namespace cg3 {
 
 template <class T1, class T2>
-class BipartiteGraph {
+class BipartiteGraph : SerializableObject{
     public:
         BipartiteGraph();
         bool addLeftNode(const T1& info);
@@ -29,6 +29,10 @@ class BipartiteGraph {
         bool clearAdjacencesRightNode(const T2 &rNode);
         bool modifyLeftNode(const T1 &old, const T1& newInfo);
         bool modifyRightNode(const T2 &old, const T2& newInfo);
+
+        // SerializableObject interface
+        void serialize(std::ofstream &binaryFile) const;
+        void deserialize(std::ifstream &binaryFile);
 
         class AdjacentLeftNodeIterator;
         class AdjacentRightNodeIterator;

@@ -1789,6 +1789,7 @@ void Dcel::copyFrom(const cinolib::Trimesh& trimesh) {
         fid->updateArea();
     }
 }
+
 #endif //CG3_CINOLIB_DEFINED
 
 }

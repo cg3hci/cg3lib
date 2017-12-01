@@ -43,6 +43,7 @@ namespace cgal {
 
             AABBTree();
             AABBTree(const AABBTree& other);
+            AABBTree(AABBTree&& other);
             #ifdef  CG3_DCEL_DEFINED
             AABBTree(const Dcel &d, bool forDistanceQueries = false);
             #endif
@@ -96,7 +97,7 @@ namespace cgal {
                 }
             };
 
-            bool isDegeneratedTriangle(const CGALTriangle &t);
+            static bool isDegeneratedTriangle(const CGALTriangle &t);
 
             Tree tree;
             bool forDistanceQueries;

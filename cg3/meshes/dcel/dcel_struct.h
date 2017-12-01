@@ -247,6 +247,8 @@ class Dcel : public SerializableObject {
         #endif //CG3_CINOLIB_DEFINED
 };
 
+void swap(Dcel& d1, Dcel& d2);
+
 }
 
 #include "dcel_inline.tpp"

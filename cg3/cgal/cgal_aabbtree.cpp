@@ -36,6 +36,22 @@ cgal::AABBTree::AABBTree(const cgal::AABBTree& other) : forDistanceQueries(other
         tree.accelerate_distance_queries();
 }
 
+cgal::AABBTree::AABBTree(cgal::AABBTree &&other) : forDistanceQueries(other.forDistanceQueries), treeType(other.treeType), triangles(other.triangles), bb(other.bb){
+    #ifdef  CG3_DCEL_DEFINED
+    mapDcelVerticesToCgalPoints = std::move(other.mapDcelVerticesToCgalPoints);
+    mapCgalPointsToDcelVertices = std::move(other.mapCgalPointsToDcelVertices);
+    mapCgalTrianglesToDcelFaces = std::move(other.mapCgalTrianglesToDcelFaces);
+    #endif
+    #if defined(TRIMESH_DEFINED) || defined( CG3_EIGENMESH_DEFINED)
+    mapIdVerticesToCgalPoints = std::move(other.mapIdVerticesToCgalPoints);
+    mapCgalTrianglesToIdTriangles = std::move(other.mapCgalTrianglesToIdTriangles);
+    #endif
+    tree.insert(triangles.begin(), triangles.end());
+
+    if (forDistanceQueries)
+        tree.accelerate_distance_queries();
+}
+
 #ifdef TRIMESH_DEFINED
 /**
  * @brief CGALInterface::AABBTree::AABBTree

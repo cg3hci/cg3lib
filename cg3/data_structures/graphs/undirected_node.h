@@ -2,13 +2,14 @@
 #define CG3_UNDIRECTED_NODE_H
 
 #include <set>
+#include <cg3/io/serialize.h>
 
 namespace cg3 {
 
 namespace graphs {
 
 template <class T>
-class UndirectedNode {
+class UndirectedNode : SerializableObject {
     public:
         UndirectedNode();
         UndirectedNode(const T& info);
@@ -23,9 +24,15 @@ class UndirectedNode {
         std::set<unsigned int>::iterator end() const;
         unsigned int sizeAdjacentNodes() const;
 
+        // SerializableObject interface
+        void serialize(std::ofstream &binaryFile) const;
+        void deserialize(std::ifstream &binaryFile);
+
     protected:
         T info;
         std::set<unsigned int> adjacentNodes;
+
+
 };
 
 template <class T>
@@ -84,6 +91,16 @@ std::set<unsigned int>::iterator UndirectedNode<T>::end() const {
 template<class T>
 unsigned int UndirectedNode<T>::sizeAdjacentNodes() const {
     return adjacentNodes.size();
+}
+
+template<class T>
+void UndirectedNode<T>::serialize(std::ofstream &binaryFile) const {
+    Serializer::serializeObjectAttributes("cg3UndirectedNode", binaryFile, info, adjacentNodes);
+}
+
+template<class T>
+void UndirectedNode<T>::deserialize(std::ifstream &binaryFile) {
+    Serializer::deserializeObjectAttributes("cg3UndirectedNode", binaryFile, info, adjacentNodes);
 }
 
 }
