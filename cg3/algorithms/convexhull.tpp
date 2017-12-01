@@ -78,12 +78,12 @@ Dcel convexHull(InputIterator first, InputIterator end) {
         internal::insertTet(convexHull, points[1], points[0], points[2], points[3]);
 
     for (Dcel::Face* f : convexHull.faceIterator()){
-        cg.addVNode(f);
+        cg.addRightNode(f);
     }
 
 
     for (unsigned int i = 4; i < points.size(); i++){
-        cg.addUNode(points[i]);
+        cg.addLeftNode(points[i]);
         for (Dcel::Face* f : convexHull.faceIterator()){
             if (internal::isFaceVisible(f, points[i]))
                 cg.addArc(points[i], f);
@@ -91,19 +91,19 @@ Dcel convexHull(InputIterator first, InputIterator end) {
     }
 
     unsigned int iterations = 0;
-    while (cg.sizeU() > 0){
-        for (const Pointd& p : cg.uNodeIterator()){ //For every point that is not inserted in the convex hull yet
+    while (cg.sizeLeftNodes() > 0){
+        for (const Pointd& p : cg.leftNodeIterator()){ //For every point that is not inserted in the convex hull yet
             /**
              * Se il punto è interno al convex hull, nel conflict graph il nodo associato al punto non
              * ha archi uscenti: si ignora il punto.
              */
-            if (cg.sizeAdjacencesUNode(p) > 0){
+            if (cg.sizeAdjacencesLeftNode(p) > 0){
 
                 /**
                  * Calcolo l'array (ordinato per face_id!) delle facce sul convex hull viste da next_point
                  */
                 std::set<Dcel::Face*> visibleFaces;
-                for (Dcel::Face* f : cg.adjacentUNodeIterator(p)){
+                for (Dcel::Face* f : cg.adjacentLeftNodeIterator(p)){
                     visibleFaces.insert(f);
                 }
 
@@ -130,7 +130,7 @@ Dcel convexHull(InputIterator first, InputIterator end) {
                  * convex hull: vengono ricalcolati gli indici dei nodi esattamente come vengono ricalcolati quando
                  * viene rimosso un elemento dalla DCEL.
                  */
-                cg.deleteUNode(p);
+                cg.deleteLeftNode(p);
 
                 /**
                  * Elimino dal convex hull tutte le facce di visible_faces e tutti gli half edge ed i vece ad esse
@@ -147,7 +147,7 @@ Dcel convexHull(InputIterator first, InputIterator end) {
                 internal::insertNewFaces(convexHull, horizonEdges, p, cg, P);
             }
             else
-                cg.deleteUNode(p);
+                cg.deleteLeftNode(p);
         }
 
         iterations++;
@@ -394,9 +394,9 @@ inline void calculateP(std::vector< std::set<Pointd> > &P, const BipartiteGraph<
         f0 = he0->getFace();
         f1 = he1->getFace();
         // viene inserito in P[i] l'array ordinato contente i punti visibili da f0 e f1
-        for (const Pointd& p : cg.adjacentVNodeIterator(f0))
+        for (const Pointd& p : cg.adjacentRightNodeIterator(f0))
             P[i].insert(p);
-        for (const Pointd& p : cg.adjacentVNodeIterator(f1))
+        for (const Pointd& p : cg.adjacentRightNodeIterator(f1))
             P[i].insert(p);
     }
 }
@@ -437,7 +437,7 @@ inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertic
 
         /** eliminazione della faccia f */
         ch.deleteFace(f);
-        cg.deleteVNode(f);
+        cg.deleteRightNode(f);
         /** Salvo i vertici da eliminare nell'array garbage_vertex */
 
         if (horizonVertices.find(v1) == horizonVertices.end())
@@ -521,7 +521,7 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
     v2->setIncidentHalfEdge(e2);
     v3->setIncidentHalfEdge(e3);
 
-    cg.addVNode(f); // aggiungo f al conflict_graph
+    cg.addRightNode(f); // aggiungo f al conflict_graph
 
     /** CHECK VISIBILITà f */
     for (const Pointd& point: P[0]){
@@ -579,7 +579,7 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
         v1->setIncidentHalfEdge(e1);
         v2->setIncidentHalfEdge(e2);
 
-        cg.addVNode(f);
+        cg.addRightNode(f);
 
         /** CHECK VISIBILITà f */
         for (const Pointd& point: P[i]){

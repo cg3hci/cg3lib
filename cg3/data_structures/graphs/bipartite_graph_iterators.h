@@ -6,427 +6,145 @@
 namespace cg3 {
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::AdjacentUNodeIterator{
+class BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator{
         friend class BipartiteGraph;
     public:
-        AdjacentUNodeIterator();
+        AdjacentLeftNodeIterator();
 
         const T2& operator *() const;
-        bool operator == (const AdjacentUNodeIterator& otherIterator) const;
-        bool operator != (const AdjacentUNodeIterator& otherIterator) const;
+        bool operator == (const AdjacentLeftNodeIterator& otherIterator) const;
+        bool operator != (const AdjacentLeftNodeIterator& otherIterator) const;
 
-        AdjacentUNodeIterator operator ++ ();
-        AdjacentUNodeIterator operator ++ (int);
-        AdjacentUNodeIterator operator -- ();
-        AdjacentUNodeIterator operator -- (int);
+        AdjacentLeftNodeIterator operator ++ ();
+        AdjacentLeftNodeIterator operator ++ (int);
+        AdjacentLeftNodeIterator operator -- ();
+        AdjacentLeftNodeIterator operator -- (int);
 
     protected:
         const BipartiteGraph* g;
         std::set<unsigned int>::iterator pos;
-        AdjacentUNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph &g);
+        AdjacentLeftNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph &g);
 
 
 };
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::AdjacentVNodeIterator{
+class BipartiteGraph<T1, T2>::AdjacentRightNodeIterator{
         friend class BipartiteGraph;
     public:
-        AdjacentVNodeIterator();
+        AdjacentRightNodeIterator();
 
         const T1& operator *() const;
-        bool operator == (const AdjacentVNodeIterator& otherIterator) const;
-        bool operator != (const AdjacentVNodeIterator& otherIterator) const;
+        bool operator == (const AdjacentRightNodeIterator& otherIterator) const;
+        bool operator != (const AdjacentRightNodeIterator& otherIterator) const;
 
-        AdjacentVNodeIterator operator ++ ();
-        AdjacentVNodeIterator operator ++ (int);
-        AdjacentVNodeIterator operator -- ();
-        AdjacentVNodeIterator operator -- (int);
+        AdjacentRightNodeIterator operator ++ ();
+        AdjacentRightNodeIterator operator ++ (int);
+        AdjacentRightNodeIterator operator -- ();
+        AdjacentRightNodeIterator operator -- (int);
 
     protected:
         const BipartiteGraph* g;
         std::set<unsigned int>::iterator pos;
-        AdjacentVNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph &g);
+        AdjacentRightNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph &g);
 
 
 };
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::UNodeIterator{
+class BipartiteGraph<T1, T2>::LeftNodeIterator{
         friend class BipartiteGraph;
     public:
-        UNodeIterator();
+        LeftNodeIterator();
 
         const T1& operator *() const;
-        bool operator == (const UNodeIterator& otherIterator) const;
-        bool operator != (const UNodeIterator& otherIterator) const;
+        bool operator == (const LeftNodeIterator& otherIterator) const;
+        bool operator != (const LeftNodeIterator& otherIterator) const;
 
-        UNodeIterator operator ++ ();
-        UNodeIterator operator ++ (int);
-        UNodeIterator operator -- ();
-        UNodeIterator operator -- (int);
+        LeftNodeIterator operator ++ ();
+        LeftNodeIterator operator ++ (int);
+        LeftNodeIterator operator -- ();
+        LeftNodeIterator operator -- (int);
 
     protected:
         const BipartiteGraph* g;
         typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator pos;
-        UNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph &g);
+        LeftNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph &g);
 
 
 };
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::VNodeIterator{
+class BipartiteGraph<T1, T2>::RightNodeIterator{
         friend class BipartiteGraph;
     public:
-        VNodeIterator();
+        RightNodeIterator();
 
         const T2& operator *() const;
-        bool operator == (const VNodeIterator& otherIterator) const;
-        bool operator != (const VNodeIterator& otherIterator) const;
+        bool operator == (const RightNodeIterator& otherIterator) const;
+        bool operator != (const RightNodeIterator& otherIterator) const;
 
-        VNodeIterator operator ++ ();
-        VNodeIterator operator ++ (int);
-        VNodeIterator operator -- ();
-        VNodeIterator operator -- (int);
+        RightNodeIterator operator ++ ();
+        RightNodeIterator operator ++ (int);
+        RightNodeIterator operator -- ();
+        RightNodeIterator operator -- (int);
 
     protected:
         const BipartiteGraph* g;
         typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator pos;
-        VNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph &g);
+        RightNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph &g);
 
 
 };
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::AdjacentUNodeRangeBasedIterator {
+class BipartiteGraph<T1, T2>::AdjacentLeftNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::AdjacentUNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::AdjacentUNodeIterator end() const;
+        BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator begin() const;
+        BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
         T1 uNode;
-        AdjacentUNodeRangeBasedIterator(const BipartiteGraph* g, const T1& uNode);
+        AdjacentLeftNodeRangeBasedIterator(const BipartiteGraph* g, const T1& uNode);
 };
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::AdjacentVNodeRangeBasedIterator {
+class BipartiteGraph<T1, T2>::AdjacentRightNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::AdjacentVNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::AdjacentVNodeIterator end() const;
+        BipartiteGraph<T1, T2>::AdjacentRightNodeIterator begin() const;
+        BipartiteGraph<T1, T2>::AdjacentRightNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
         T2 vNode;
-        AdjacentVNodeRangeBasedIterator(const BipartiteGraph* g, const T2& vNode);
+        AdjacentRightNodeRangeBasedIterator(const BipartiteGraph* g, const T2& vNode);
 };
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::UNodeRangeBasedIterator {
+class BipartiteGraph<T1, T2>::LeftNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::UNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::UNodeIterator end() const;
+        BipartiteGraph<T1, T2>::LeftNodeIterator begin() const;
+        BipartiteGraph<T1, T2>::LeftNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
-        UNodeRangeBasedIterator(const BipartiteGraph* g);
+        LeftNodeRangeBasedIterator(const BipartiteGraph* g);
 };
 
 template <class T1, class T2>
-class BipartiteGraph<T1, T2>::VNodeRangeBasedIterator {
+class BipartiteGraph<T1, T2>::RightNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::VNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::VNodeIterator end() const;
+        BipartiteGraph<T1, T2>::RightNodeIterator begin() const;
+        BipartiteGraph<T1, T2>::RightNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
-        VNodeRangeBasedIterator(const BipartiteGraph* g);
+        RightNodeRangeBasedIterator(const BipartiteGraph* g);
 };
 
-//ConstAdjacentUNodeIterator
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::AdjacentUNodeIterator::AdjacentUNodeIterator() : g(nullptr) {
 }
 
-template <class T1, class T2>
-const T2& BipartiteGraph<T1, T2>::AdjacentUNodeIterator::operator *() const {
-    return g->nodesV[*pos].getInfo();
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::AdjacentUNodeIterator::operator ==(const BipartiteGraph<T1, T2>::AdjacentUNodeIterator& otherIterator) const {
-    return (g == otherIterator.g && pos == otherIterator.pos);
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::AdjacentUNodeIterator::operator !=(const BipartiteGraph<T1, T2>::AdjacentUNodeIterator& otherIterator) const {
-    return (g != otherIterator.g || pos != otherIterator.pos);
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::AdjacentUNodeIterator::operator ++() {
-    ++pos;
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::AdjacentUNodeIterator::operator ++(int) {
-    AdjacentUNodeIterator oldIt = *this;
-    ++pos;
-    return oldIt;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::AdjacentUNodeIterator::operator --() {
-    --pos;
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::AdjacentUNodeIterator::operator --(int) {
-    AdjacentUNodeIterator oldIt;
-    --pos;
-    return oldIt;
-}
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::AdjacentUNodeIterator::AdjacentUNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph& g): g(&g), pos(it){
-}
-
-//ConstAdjacentUNodeIterator
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::AdjacentVNodeIterator::AdjacentVNodeIterator() : g(nullptr) {
-}
-
-template <class T1, class T2>
-const T1& BipartiteGraph<T1, T2>::AdjacentVNodeIterator::operator *() const {
-    return g->nodesU[*pos].getInfo();
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::AdjacentVNodeIterator::operator ==(const BipartiteGraph<T1, T2>::AdjacentVNodeIterator& otherIterator) const {
-    return (g == otherIterator.g && pos == otherIterator.pos);
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::AdjacentVNodeIterator::operator !=(const BipartiteGraph<T1, T2>::AdjacentVNodeIterator& otherIterator) const {
-    return (g != otherIterator.g || pos != otherIterator.pos);
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::AdjacentVNodeIterator::operator ++() {
-    ++pos;
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::AdjacentVNodeIterator::operator ++(int) {
-    AdjacentVNodeIterator oldIt = *this;
-    ++pos;
-    return oldIt;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::AdjacentVNodeIterator::operator --() {
-    --pos;
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::AdjacentVNodeIterator::operator --(int) {
-    AdjacentVNodeIterator oldIt;
-    --pos;
-    return oldIt;
-}
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::AdjacentVNodeIterator::AdjacentVNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph& g): g(&g), pos(it){
-}
-
-//UNodeIterator
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::UNodeIterator::UNodeIterator() : g(nullptr) {
-}
-
-template <class T1, class T2>
-const T1& BipartiteGraph<T1, T2>::UNodeIterator::operator *() const {
-    return (*pos).getInfo();
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::UNodeIterator::operator ==(const BipartiteGraph<T1, T2>::UNodeIterator& otherIterator) const {
-    return (g == otherIterator.g && pos == otherIterator.pos);
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::UNodeIterator::operator !=(const BipartiteGraph<T1, T2>::UNodeIterator& otherIterator) const {
-    return (g != otherIterator.g || pos != otherIterator.pos);
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::UNodeIterator BipartiteGraph<T1, T2>::UNodeIterator::operator ++() {
-    do {
-        ++pos;
-    } while (pos != g->nodesU.end() && (g->unusedUNodes.find(pos - g->nodesU.begin())) != g->unusedUNodes.end());
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::UNodeIterator BipartiteGraph<T1, T2>::UNodeIterator::operator ++(int) {
-    UNodeIterator oldIt = *this;
-    do {
-        ++pos;
-    } while (pos != g->nodesU.end() && (g->unusedUNodes.find(pos - g->nodesU.begin())) != g->unusedUNodes.end());
-    return oldIt;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::UNodeIterator BipartiteGraph<T1, T2>::UNodeIterator::operator --() {
-    do {
-        --pos;
-    } while (pos != g->nodesU.begin() && (g->unusedUNodes.find(pos - g->nodesU.begin())) != g->unusedUNodes.end());
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::UNodeIterator BipartiteGraph<T1, T2>::UNodeIterator::operator --(int) {
-    UNodeIterator oldIt;
-    do {
-        --pos;
-    } while (pos != g->nodesU.begin() && (g->unusedUNodes.find(pos - g->nodesU.begin())) != g->unusedUNodes.end());
-    return oldIt;
-}
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::UNodeIterator::UNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
-}
-
-//VNodeIterator
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::VNodeIterator::VNodeIterator() : g(nullptr) {
-}
-
-template <class T1, class T2>
-const T2& BipartiteGraph<T1, T2>::VNodeIterator::operator *() const {
-    return (*pos).getInfo();
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::VNodeIterator::operator ==(const BipartiteGraph<T1, T2>::VNodeIterator& otherIterator) const {
-    return (g == otherIterator.g && pos == otherIterator.pos);
-}
-
-template <class T1, class T2>
-bool BipartiteGraph<T1, T2>::VNodeIterator::operator !=(const BipartiteGraph<T1, T2>::VNodeIterator& otherIterator) const {
-    return (g != otherIterator.g || pos != otherIterator.pos);
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::VNodeIterator BipartiteGraph<T1, T2>::VNodeIterator::operator ++() {
-    do {
-        ++pos;
-    } while (pos != g->nodesV.end() && (g->unusedVNodes.find(pos - g->nodesV.begin())) != g->unusedVNodes.end());
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::VNodeIterator BipartiteGraph<T1, T2>::VNodeIterator::operator ++(int) {
-    UNodeIterator oldIt = *this;
-    do {
-        ++pos;
-    } while (pos != g->nodesV.end() && (g->unusedVNodes.find(pos - g->nodesV.begin())) != g->unusedVNodes.end());
-    return oldIt;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::VNodeIterator BipartiteGraph<T1, T2>::VNodeIterator::operator --() {
-    do {
-        --pos;
-    } while (pos != g->nodesV.begin() && (g->unusedVNodes.find(pos - g->nodesV.begin())) != g->unusedVNodes.end());
-    return *this;
-}
-
-template <class T1, class T2>
-typename BipartiteGraph<T1, T2>::VNodeIterator BipartiteGraph<T1, T2>::VNodeIterator::operator --(int) {
-    UNodeIterator oldIt;
-    do {
-        --pos;
-    } while (pos != g->nodesV.begin() && (g->unusedVNodes.find(pos - g->nodesV.begin())) != g->unusedVNodes.end());
-    return oldIt;
-}
-
-template <class T1, class T2>
-BipartiteGraph<T1, T2>::VNodeIterator::VNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
-}
-
-//ConstAdjacentUNodeRangeBasedIterator
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::AdjacentUNodeRangeBasedIterator::begin() const {
-    return g->adjacentUNodeBegin(uNode);
-}
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentUNodeIterator BipartiteGraph<T1, T2>::AdjacentUNodeRangeBasedIterator::end() const {
-    return g->adjacentUNodeEnd(uNode);
-}
-
-template<class T1, class T2>
-BipartiteGraph<T1, T2>::AdjacentUNodeRangeBasedIterator::AdjacentUNodeRangeBasedIterator(const BipartiteGraph* g, const T1& uNode) : g(g), uNode(uNode) {
-}
-
-//ConstAdjacentVNodeRangeBasedIterator
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::AdjacentVNodeRangeBasedIterator::begin() const {
-    return g->adjacentVNodeBegin(vNode);
-}
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::AdjacentVNodeIterator BipartiteGraph<T1, T2>::AdjacentVNodeRangeBasedIterator::end() const {
-    return g->adjacentVNodeEnd(vNode);
-}
-
-template<class T1, class T2>
-BipartiteGraph<T1, T2>::AdjacentVNodeRangeBasedIterator::AdjacentVNodeRangeBasedIterator(const BipartiteGraph* g, const T2& vNode) : g(g), vNode(vNode) {
-}
-
-//UNodeRangeBasedIterator
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::UNodeIterator BipartiteGraph<T1, T2>::UNodeRangeBasedIterator::begin() const {
-    return g->uNodeBegin();
-}
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::UNodeIterator BipartiteGraph<T1, T2>::UNodeRangeBasedIterator::end() const {
-    return g->uNodeEnd();
-}
-
-template<class T1, class T2>
-BipartiteGraph<T1, T2>::UNodeRangeBasedIterator::UNodeRangeBasedIterator(const BipartiteGraph* g) : g(g) {
-}
-
-//VNodeRangeBasedIterator
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::VNodeIterator BipartiteGraph<T1, T2>::VNodeRangeBasedIterator::begin() const {
-    return g->vNodeBegin();
-}
-
-template<class T1, class T2>
-typename BipartiteGraph<T1, T2>::VNodeIterator BipartiteGraph<T1, T2>::VNodeRangeBasedIterator::end() const {
-    return g->vNodeEnd();
-}
-
-template<class T1, class T2>
-BipartiteGraph<T1, T2>::VNodeRangeBasedIterator::VNodeRangeBasedIterator(const BipartiteGraph* g) : g(g) {
-}
-
-}
+#include "bipartite_graph_iterators.tpp"
 
 #endif // CG3_BIPARTITE_GRAPH_ITERATORS_H

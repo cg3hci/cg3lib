@@ -26,6 +26,10 @@ HEADERS += \
     $$PWD/data_structures/graphs/bipartite_graph_iterators.h \
     $$PWD/data_structures/graphs/undirected_node.h
 
+SOURCES += \
+    $$PWD/data_structures/graphs/bipartite_graph.tpp \
+    $$PWD/data_structures/graphs/bipartite_graph_iterators.tpp
+
 # ----- Lattices -----
 
 HEADERS += \
