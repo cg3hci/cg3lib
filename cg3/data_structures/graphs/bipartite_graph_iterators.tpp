@@ -14,12 +14,12 @@ inline const T2& BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::operator *() 
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::operator ==(const BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::operator ==(const AdjacentLeftNodeIterator& otherIterator) const {
     return (g == otherIterator.g && pos == otherIterator.pos);
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::operator !=(const BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::operator !=(const AdjacentLeftNodeIterator& otherIterator) const {
     return (g != otherIterator.g || pos != otherIterator.pos);
 }
 
@@ -65,12 +65,12 @@ inline const T1& BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::operator *()
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::operator ==(const BipartiteGraph<T1, T2>::AdjacentRightNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::operator ==(const AdjacentRightNodeIterator& otherIterator) const {
     return (g == otherIterator.g && pos == otherIterator.pos);
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::operator !=(const BipartiteGraph<T1, T2>::AdjacentRightNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::operator !=(const AdjacentRightNodeIterator& otherIterator) const {
     return (g != otherIterator.g || pos != otherIterator.pos);
 }
 
@@ -116,12 +116,12 @@ inline const T1& BipartiteGraph<T1, T2>::LeftNodeIterator::operator *() const {
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::LeftNodeIterator::operator ==(const BipartiteGraph<T1, T2>::LeftNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::LeftNodeIterator::operator ==(const LeftNodeIterator& otherIterator) const {
     return (g == otherIterator.g && pos == otherIterator.pos);
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::LeftNodeIterator::operator !=(const BipartiteGraph<T1, T2>::LeftNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::LeftNodeIterator::operator !=(const LeftNodeIterator& otherIterator) const {
     return (g != otherIterator.g || pos != otherIterator.pos);
 }
 
@@ -175,12 +175,12 @@ inline const T2& BipartiteGraph<T1, T2>::RightNodeIterator::operator *() const {
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::RightNodeIterator::operator ==(const BipartiteGraph<T1, T2>::RightNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::RightNodeIterator::operator ==(const RightNodeIterator& otherIterator) const {
     return (g == otherIterator.g && pos == otherIterator.pos);
 }
 
 template <class T1, class T2>
-inline bool BipartiteGraph<T1, T2>::RightNodeIterator::operator !=(const BipartiteGraph<T1, T2>::RightNodeIterator& otherIterator) const {
+inline bool BipartiteGraph<T1, T2>::RightNodeIterator::operator !=(const RightNodeIterator& otherIterator) const {
     return (g != otherIterator.g || pos != otherIterator.pos);
 }
 

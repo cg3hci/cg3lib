@@ -20,7 +20,7 @@ template <class T1, class T2>
 bool BipartiteGraph<T1, T2>::addLeftNode(const T1& info) {
     if (mapL.find(info) == mapL.end()){
         if (unusedLNodes.size() == 0){
-            mapL[info] = nodesL.size();
+            mapL[info] = (unsigned int)nodesL.size();
             nodesL.push_back(graphs::UndirectedNode<T1>(info));
         }
         else {
@@ -45,7 +45,7 @@ template <class T1, class T2>
 bool BipartiteGraph<T1, T2>::addRightNode(const T2& info) {
     if (mapR.find(info) == mapR.end()){
         if (unusedRNodes.size() == 0){
-            mapR[info] = nodesR.size();
+            mapR[info] = (unsigned int)nodesR.size();
             nodesR.push_back(graphs::UndirectedNode<T2>(info));
         }
         else {

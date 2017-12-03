@@ -101,8 +101,8 @@ template <class T1, class T2>
 class BipartiteGraph<T1, T2>::AdjacentLeftNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator end() const;
+        AdjacentLeftNodeIterator begin() const;
+        AdjacentLeftNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
         T1 uNode;
@@ -113,8 +113,8 @@ template <class T1, class T2>
 class BipartiteGraph<T1, T2>::AdjacentRightNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::AdjacentRightNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::AdjacentRightNodeIterator end() const;
+        AdjacentRightNodeIterator begin() const;
+        AdjacentRightNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
         T2 vNode;
@@ -125,8 +125,8 @@ template <class T1, class T2>
 class BipartiteGraph<T1, T2>::LeftNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::LeftNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::LeftNodeIterator end() const;
+        LeftNodeIterator begin() const;
+        LeftNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
         LeftNodeRangeBasedIterator(const BipartiteGraph* g);
@@ -136,8 +136,8 @@ template <class T1, class T2>
 class BipartiteGraph<T1, T2>::RightNodeRangeBasedIterator {
         friend class BipartiteGraph;
     public:
-        BipartiteGraph<T1, T2>::RightNodeIterator begin() const;
-        BipartiteGraph<T1, T2>::RightNodeIterator end() const;
+        RightNodeIterator begin() const;
+        RightNodeIterator end() const;
     protected:
         const BipartiteGraph* g;
         RightNodeRangeBasedIterator(const BipartiteGraph* g);
