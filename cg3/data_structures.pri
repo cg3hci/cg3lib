@@ -12,12 +12,14 @@ HEADERS += \
     $$PWD/data_structures/arrays/arrays.h \
     $$PWD/data_structures/arrays/array2d.h \
     $$PWD/data_structures/arrays/array3d.h \
-    $$PWD/data_structures/arrays/array4d.h
+    $$PWD/data_structures/arrays/array4d.h \
+    $$PWD/data_structures/arrays/array.h
 
 SOURCES += \
     $$PWD/data_structures/arrays/array2d.tpp \
     $$PWD/data_structures/arrays/array3d.tpp \
-    $$PWD/data_structures/arrays/array4d.tpp
+    $$PWD/data_structures/arrays/array4d.tpp \
+    $$PWD/data_structures/arrays/array.tpp
 
 # ----- Graphs -----
 
