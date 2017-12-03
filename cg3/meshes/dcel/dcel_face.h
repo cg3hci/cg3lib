@@ -126,7 +126,7 @@ class Dcel::Face {
         double getArea()                                const;
         Color getColor()                                const;
         const Dcel::HalfEdge* getOuterHalfEdge()        const;
-        int getNumberInnerHalfEdges()                   const;
+        unsigned int getNumberInnerHalfEdges()          const;
         bool hasHoles()                                 const;
         bool checkOuterHalfEdge()                       const;
 

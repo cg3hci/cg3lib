@@ -97,8 +97,8 @@ inline const Dcel::HalfEdge* Dcel::Face::getOuterHalfEdge() const {
  * @brief Restituisce il numero di inner half edges contenuti nella faccia, ossia il numero di buchi
  * @return Il numero di HalfEdge interni della faccia
  */
-inline int Dcel::Face::getNumberInnerHalfEdges() const {
-    return innerHalfEdges.size();
+inline unsigned int Dcel::Face::getNumberInnerHalfEdges() const {
+    return (unsigned int)innerHalfEdges.size();
 }
 
 /**

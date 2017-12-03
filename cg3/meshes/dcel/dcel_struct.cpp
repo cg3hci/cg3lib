@@ -1421,7 +1421,7 @@ std::vector<const Dcel::Vertex*> Dcel::makeSingleBorder(const Face* f) const {
         p1.first = visI;
         p1.second = visIndex;
         std::pair<int, int> p2;
-        p2.first = visited.size();
+        p2.first = (int)visited.size();
         p2.second = notvisIndex;
         visited.push_back(notVisited[visJ]);
         notVisited.erase(notVisited.begin() + visJ);
@@ -1470,7 +1470,7 @@ void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& vert
         mapVertices[v->getId()] = iv++;
     }
     for (const Dcel::Face* f : faceIterator()){
-        int size = 0;
+        unsigned int size = 0;
         if (f->getNumberInnerHalfEdges() == 0) {
             for (const Dcel::Vertex* v : f->incidentVertexIterator()){
                 assert(mapVertices.find(v->getId()) != mapVertices.end());
@@ -1485,7 +1485,7 @@ void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& vert
                 assert(mapVertices.find(v[i]->getId()) != mapVertices.end());
                 faces.push_back(mapVertices[v[i]->getId()]);
             }
-            size = v.size();
+            size = (unsigned int)v.size();
         }
         faceSizes.push_back(size);
         faceColors.push_back(f->getColor().redF());

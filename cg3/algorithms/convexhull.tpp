@@ -57,7 +57,7 @@ Dcel convexHull(InputIterator first, InputIterator end) {
     std::random_shuffle(points.begin(), points.end());
 
     double determinant = 0;
-    int nPoints = points.size();
+    unsigned int nPoints = (unsigned int)points.size();
     int a, b, c, d;
     do {
         a = rand()%nPoints;

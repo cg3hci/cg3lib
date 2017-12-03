@@ -410,7 +410,7 @@ bool loadSave::loadMeshFromObj(const std::string& filename, std::list<T>& coords
                     dummy.push_back(*(token));
                     token++;
                 }
-                int nVert = dummy.size();
+                unsigned int nVert = (unsigned int)dummy.size();
                 faceSizes.push_back(nVert);
 
                 if (first == true){
@@ -881,7 +881,7 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
                     meshType = POLYGON_MESH;
             }
             //save properties to lists
-            faceSizes.push_back(indices.size());
+            faceSizes.push_back((unsigned int)indices.size());
             for (unsigned int i = 0; i < indices.size(); i++)
                 faces.push_back(indices[i]);
             if (modality & COLOR_FACES)

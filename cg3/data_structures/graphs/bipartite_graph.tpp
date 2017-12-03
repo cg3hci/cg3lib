@@ -88,7 +88,7 @@ bool BipartiteGraph<T1, T2>::existsRightNode(const T2& rNode) const {
  */
 template <class T1, class T2>
 unsigned int BipartiteGraph<T1, T2>::sizeLeftNodes() const {
-    return nodesL.size() - unusedLNodes.size();
+    return (unsigned int)(nodesL.size() - unusedLNodes.size());
 }
 
 /**
@@ -97,7 +97,7 @@ unsigned int BipartiteGraph<T1, T2>::sizeLeftNodes() const {
  */
 template <class T1, class T2>
 unsigned int BipartiteGraph<T1, T2>::sizeRightNodes() const {
-    return nodesR.size() - unusedRNodes.size();
+    return (unsigned int)(nodesR.size() - unusedRNodes.size());
 }
 
 /**

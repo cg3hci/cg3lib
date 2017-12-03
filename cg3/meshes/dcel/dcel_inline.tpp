@@ -111,7 +111,7 @@ inline Dcel::ConstVertexIterator Dcel::vertexBegin() const {
  * @return Un iteratore che punta all'ultimo vertice della Dcel
  */
 inline Dcel::ConstVertexIterator Dcel::vertexEnd() const {
-    return ConstVertexIterator(vertices.size(), vertices);
+    return ConstVertexIterator((unsigned int)vertices.size(), vertices);
 }
 
 /**
@@ -131,7 +131,7 @@ inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeBegin() const {
  * @return Un iteratore che punta all'ultimo half edge della Dcel
  */
 inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeEnd() const {
-    return ConstHalfEdgeIterator(halfEdges.size(), halfEdges);
+    return ConstHalfEdgeIterator((unsigned int)halfEdges.size(), halfEdges);
 }
 
 /**
@@ -150,7 +150,7 @@ inline Dcel::ConstFaceIterator Dcel::faceBegin() const {
  * @return Un iteratore che punta all'ultima faccia della Dcel
  */
 inline Dcel::ConstFaceIterator Dcel::faceEnd() const {
-    return ConstFaceIterator(faces.size(), faces);
+    return ConstFaceIterator((unsigned int)faces.size(), faces);
 }
 
 /**
@@ -283,7 +283,7 @@ inline Dcel::VertexIterator Dcel::vertexBegin() {
  * @return Un iteratore che punta all'ultimo vertice della Dcel
  */
 inline Dcel::VertexIterator Dcel::vertexEnd() {
-    return VertexIterator(vertices.size(), vertices);
+    return VertexIterator((unsigned int)vertices.size(), vertices);
 }
 
 /**
@@ -303,7 +303,7 @@ inline Dcel::HalfEdgeIterator Dcel::halfEdgeBegin() {
  * @return Un iteratore che punta all'ultimo half edge della Dcel
  */
 inline Dcel::HalfEdgeIterator Dcel::halfEdgeEnd() {
-    return HalfEdgeIterator(halfEdges.size(), halfEdges);
+    return HalfEdgeIterator((unsigned int)halfEdges.size(), halfEdges);
 }
 
 /**
@@ -323,7 +323,7 @@ inline Dcel::FaceIterator Dcel::faceBegin() {
  * @return Un iteratore che punta all'ultima faccia della Dcel
  */
 inline Dcel::FaceIterator Dcel::faceEnd() {
-    return FaceIterator(faces.size(), faces);
+    return FaceIterator((unsigned int)faces.size(), faces);
 }
 
 inline const Dcel::ConstVertexRangeBasedIterator Dcel::vertexIterator() const {

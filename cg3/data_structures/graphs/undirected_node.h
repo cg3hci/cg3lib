@@ -90,7 +90,7 @@ std::set<unsigned int>::iterator UndirectedNode<T>::end() const {
 
 template<class T>
 unsigned int UndirectedNode<T>::sizeAdjacentNodes() const {
-    return adjacentNodes.size();
+    return (unsigned int)adjacentNodes.size();
 }
 
 template<class T>
