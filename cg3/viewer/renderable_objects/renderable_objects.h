@@ -13,6 +13,7 @@
 #include <GL/glu.h>
 #endif
 
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <QColor>
 #include <cg3/geometry/point.h>
@@ -44,6 +45,6 @@ static inline void drawBox(const Pointd &p0, const Pointd &p1, const Pointd &p2,
 
 }
 
-#include "objects.cpp"
+#include "renderable_objects.tpp"
 
 #endif // CG3_RENDERABLE_OBJECTS_H

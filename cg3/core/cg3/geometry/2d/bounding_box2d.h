@@ -3,6 +3,11 @@
 
 #include "point2d.h"
 
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 namespace cg3 {
 
 /**

@@ -63,7 +63,7 @@ inline void rebalanceHelper(Node* node, Node*& rootNode) {
 
     //Not balanced node
     Node* n = node;
-    int balanceFactor = getHeightHelper(n->right) - getHeightHelper(n->left);
+    int balanceFactor = (int)(getHeightHelper(n->right) - getHeightHelper(n->left));
 
     //Climb on parents to find the not balanced node
     while (n != nullptr && balanceFactor >= -1 && balanceFactor <= 1) {
@@ -71,7 +71,7 @@ inline void rebalanceHelper(Node* node, Node*& rootNode) {
 
         if (n != nullptr) {
             //Compute balance factor
-            balanceFactor = getHeightHelper(n->right) - getHeightHelper(n->left);
+            balanceFactor = (int)(getHeightHelper(n->right) - getHeightHelper(n->left));
 
             assert(balanceFactor <= 2 && balanceFactor >= -2);
         }

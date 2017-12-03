@@ -22,6 +22,11 @@
 #endif //__GNUC__
 #endif //CG3_CINOLIB_DEFINED
 
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 namespace cg3 {
 
 /**

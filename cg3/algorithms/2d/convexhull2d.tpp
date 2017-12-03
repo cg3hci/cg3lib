@@ -27,7 +27,7 @@ inline void grahamScanOnContainer(const InputIterator first, const InputIterator
  * @param[in] container Container of the points of the shape
  * @param[out] convexHull Output container for the convex hull
  */
-template <class T = double, class InputContainer, class OutputContainer>
+template <class T, class InputContainer, class OutputContainer>
 void getConvexHull2D(const InputContainer& container, OutputContainer& convexHull) {
     getConvexHull2D<T>(container.begin(), container.end(), std::back_inserter(convexHull));
 }
@@ -38,7 +38,7 @@ void getConvexHull2D(const InputContainer& container, OutputContainer& convexHul
  * @param[in] end End iterator of the input container
  * @param[out] outIt Output iterator for the container containing the convex hull
  */
-template <class T = double, class InputIterator, class OutputIterator>
+template <class T, class InputIterator, class OutputIterator>
 OutputIterator getConvexHull2D(InputIterator first, InputIterator end, OutputIterator outIt) {
     //If the container is empty
     if (first == end)
@@ -77,7 +77,7 @@ namespace internal {
  * @param[out] container Container that contains the points
  */
 
-template <class T = double, class InputIterator, class OutputIterator>
+template <class T, class InputIterator, class OutputIterator>
 inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt) {
     //Iterators
     InputIterator it1;

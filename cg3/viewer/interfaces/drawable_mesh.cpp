@@ -5,9 +5,9 @@ namespace cg3 {
 void DrawableMesh::init() {
     drawMode          = DRAW_MESH | DRAW_SMOOTH | DRAW_FACECOLOR;
     wireframeWidth    = 1;
-    wireframeColor[0] = 0.1;
-    wireframeColor[1] = 0.1;
-    wireframeColor[2] = 0.1;
+    wireframeColor[0] = (float)0.1;
+    wireframeColor[1] = (float)0.1;
+    wireframeColor[2] = (float)0.1;
 }
 
 bool DrawableMesh::isVisible() const {
