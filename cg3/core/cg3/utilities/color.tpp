@@ -337,7 +337,7 @@ inline void Color::setRgbF(float red, float green, float blue, float alpha) {
  * @param[in] alpha
  */
 inline void Color::setHsvF(float hf, float sf, float vf, float alpha) {
-    setHsv(hf*255, sf*255, vf*255, alpha*255);
+    setHsv((int)hf*255, (int)sf*255, (int)vf*255, (int)alpha*255);
 }
 
 /**

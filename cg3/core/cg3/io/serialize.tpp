@@ -562,7 +562,7 @@ inline void Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& bi
  * @param[in] m: std::array
  * @param binaryFile
  */
-template <typename T, size_t ...A>
+template <typename T, unsigned long int ...A>
 inline void Serializer::serialize(const std::array<T, A...> &a, std::ofstream& binaryFile){
     unsigned long long int size = a.size();
     Serializer::serialize("stdarray", binaryFile);
@@ -578,7 +578,7 @@ inline void Serializer::serialize(const std::array<T, A...> &a, std::ofstream& b
  * @param[out] m: std::array
  * @param binaryFile
  */
-template <typename T, size_t ...A>
+template <typename T, unsigned long int ...A>
 inline void Serializer::deserialize(std::array<T, A...> &a, std::ifstream& binaryFile){
     unsigned long long int size;
     std::string s;

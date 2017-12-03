@@ -31,6 +31,7 @@ template <class T> class Array3D : SerializableObject{
 
         void resize (unsigned long int x, unsigned long int y, unsigned long int z);
         void resize (unsigned long int x, unsigned long int y, unsigned long int z, const T& value);
+        void conservativeResize(unsigned long int x, unsigned long int y, unsigned long int z);
 
         void clear();
 

@@ -91,6 +91,24 @@ inline void Array3D<T>::resize(unsigned long int x, unsigned long int y, unsigne
 }
 
 template<class T>
+inline void Array3D::conservativeResize(unsigned long x, unsigned long y, unsigned long z) {
+    std::vector<T> newVector(x*y);
+    for (unsigned int i = 0; i < sizeX || i < x; i++){
+        for (unsigned int j = 0; j < sizeY || j < y; j++){
+            for (unsigned int k = 0; k < sizeZ || k < z; k++){
+                int newIndex = k+z*(j + y*i);
+                int oldIndex = getIndex(i,j, k);
+                newVector[newIndex] = v[oldIndex];
+            }
+        }
+    }
+    sizeX = x;
+    sizeY = y;
+    sizeZ = z;
+    v = newVector;
+}
+
+template<class T>
 inline void Array3D<T>::clear() {
     v.clear();
     sizeX = sizeY = sizeZ = 0;

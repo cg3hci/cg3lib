@@ -25,14 +25,8 @@ macx{
     }
 }
 
-CG3_OPENMP {
-    unix:!macx{
-        QMAKE_CXXFLAGS += -fopenmp
-        QMAKE_LFLAGS += -fopenmp
-    }
-}
-
 win32 {
+    CONFIG += qt
     exists(C:/dev/eigen3){
         DEFINES += CG3_WITH_EIGEN
         MODULES += CG3_WITH_EIGEN
@@ -40,6 +34,13 @@ win32 {
     }
     else{
         MODULES += CG3_WITHOUT_EIGEN
+    }
+}
+
+CG3_OPENMP {
+    unix:!macx{
+        QMAKE_CXXFLAGS += -fopenmp
+        QMAKE_LFLAGS += -fopenmp
     }
 }
 

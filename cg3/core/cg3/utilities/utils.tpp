@@ -68,7 +68,7 @@ inline bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilo
 
 
 inline double truncate(double d, unsigned int numberOfDecimalDigitsToKeep) {
-    int tmp = (10*numberOfDecimalDigitsToKeep)*d;
+    int tmp = (int)((10*numberOfDecimalDigitsToKeep)*d);
     if (numberOfDecimalDigitsToKeep > 0)
         return (double) tmp / (10*numberOfDecimalDigitsToKeep);
     else return d;

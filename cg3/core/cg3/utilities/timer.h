@@ -1,11 +1,12 @@
 #ifndef CG3_TIMER_H
 #define CG3_TIMER_H
 
-#include <QString>
-
 #include <time.h>
 #include <iostream>
+#include <string>
+#ifndef _WIN32
 #include <sys/time.h>
+#endif
 
 namespace cg3 {
 
@@ -25,7 +26,11 @@ class Timer {
 
     private:
         std::string caption;
+        #ifdef _WIN32
+
+        #else
         timeval begin, end;
+        #endif
         bool isStopped;
 };
 
