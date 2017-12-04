@@ -49,7 +49,7 @@ class Array : SerializableObject {
         void serialize(std::ofstream& binaryFile) const;
         void deserialize(std::ifstream& binaryFile);
 
-    private:
+    protected:
         unsigned long int getIndex(const unsigned long int indices[]) const;
         std::array<unsigned long int, N> reverseIndex(unsigned int index);
         static unsigned long int getIndex(const unsigned long int indices[], const unsigned long int sizes[]);
