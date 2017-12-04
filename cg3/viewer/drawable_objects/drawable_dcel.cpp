@@ -56,7 +56,7 @@ void DrawableDcel::clear() {
 }
 
 void DrawableDcel::draw() const {
-    DrawableMesh::draw(vertexCoordinates.size()/3, triangles.size()/3, vertexCoordinates.data(), triangles.data(), vertexNormals.data(), vertexColors.data(), triangleNormals.data(), triangleColors.data(), boundingBox.min(), boundingBox.max());
+    DrawableMesh::draw((unsigned int)vertexCoordinates.size()/3, (unsigned int)triangles.size()/3, vertexCoordinates.data(), triangles.data(), vertexNormals.data(), vertexColors.data(), triangleNormals.data(), triangleColors.data(), boundingBox.min(), boundingBox.max());
 }
 
 /**

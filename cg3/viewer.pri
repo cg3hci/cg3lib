@@ -44,7 +44,7 @@ HEADERS += \
     $$PWD/viewer/utilities/consolestream.h \
     $$PWD/viewer/renderable_objects/renderable_objects.h \
     $$PWD/viewer/drawable_objects/drawable_bounding_box2d.h \
-    $$PWD/viewer/drawable_objects/drawable_debug_object \
+    $$PWD/viewer/drawable_objects/drawable_debug_objects.h \
     $$PWD/viewer/managers/window_manager/window_manager.h
 
 SOURCES += \

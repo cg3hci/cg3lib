@@ -28,6 +28,7 @@ macx{
 win32 {
     CONFIG += qt
     INCLUDEPATH += -I C:/dev/boost
+    DEFINES += _USE_MATH_DEFINES
     exists(C:/dev/eigen3){
         DEFINES += CG3_WITH_EIGEN
         MODULES += CG3_WITH_EIGEN

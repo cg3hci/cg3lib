@@ -42,8 +42,6 @@ class Array : SerializableObject {
 
         template<typename... Sizes>
         void conservativeResize (Sizes... s);
-        //void resize (unsigned long int x, unsigned long int y, const T& value);
-        //void conservativeResize(unsigned long int x, unsigned long int y);
 
         void clear();
 
@@ -53,6 +51,7 @@ class Array : SerializableObject {
 
     private:
         unsigned long int getIndex(const unsigned long int indices[]) const;
+        std::array<unsigned long int, N> reverseIndex(unsigned int index);
         static unsigned long int getIndex(const unsigned long int indices[], const unsigned long int sizes[]);
 
         std::array<unsigned long int, N> sizes;

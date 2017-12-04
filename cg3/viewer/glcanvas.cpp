@@ -88,12 +88,12 @@ void GLcanvas::draw() {
     }
 }
 
-int GLcanvas::pushObj(const DrawableObject* obj, bool visible) {
+unsigned int GLcanvas::pushObj(const DrawableObject* obj, bool visible) {
     drawlist.push_back(obj);
     objVisibility.push_back(visible);
     updateGL();
 
-    return drawlist.size();
+    return (unsigned int)drawlist.size();
 }
 
 void GLcanvas::deleteObj(const DrawableObject* obj) {

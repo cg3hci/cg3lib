@@ -51,7 +51,7 @@ class GLcanvas : public QGLViewer {
         int getNumberVisibleObjects();
         void postSelection(const QPoint& point);
 
-        int  pushObj(const cg3::DrawableObject * obj, bool visible = true);
+        unsigned int pushObj(const cg3::DrawableObject * obj, bool visible = true);
         void deleteObj(const cg3::DrawableObject* obj);
         void setVisibility(const cg3::DrawableObject * obj, bool visible = true);
         bool isVisible(const cg3::DrawableObject* obj);

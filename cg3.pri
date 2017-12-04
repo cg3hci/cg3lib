@@ -9,17 +9,46 @@ CONFIG(release, debug|release){
 
 CONFIG += c++11
 
-#comment modules that you don't desire
-include (cg3/core.pri)
-include (cg3/meshes/dcel.pri)
-include (cg3/meshes/eigenmesh.pri)
-include (cg3/data_structures.pri)
-include (cg3/algorithms.pri)
-include (cg3/cgal.pri)
-include (cg3/cinolib.pri)
-include (cg3/libigl.pri)
+CG3_ALL {
+    CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_DCEL CG3_EIGENMESH CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VIEWER
+}
+
+CG3_CORE {
+    include (cg3/core.pri)
+}
+
+CG3_DATA_STRUCTURES {
+    include (cg3/data_structures.pri)
+}
+
+CG3_DCEL {
+    include (cg3/meshes/dcel.pri)
+}
+
+CG3_EIGENMESH {
+    include (cg3/meshes/eigenmesh.pri)
+}
+
+CG3_ALGORITHMS {
+    include (cg3/algorithms.pri)
+}
+
+CG3_CGAL {
+    include (cg3/cgal.pri)
+}
+
+CG3_CINOLIB {
+    include (cg3/cinolib.pri)
+}
+
+CG3_LIBIGL {
+    include (cg3/libigl.pri)
+}
+
 qt {
-    include (cg3/viewer.pri)
+    CG3_VIEWER {
+        include (cg3/viewer.pri)
+    }
 }
 
 FINAL_RELEASE {

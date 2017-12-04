@@ -113,7 +113,22 @@ void cg3::Array<T, N>::conservativeResize(Sizes... s) {
         newTotalSize*=newSizes[i];
     std::vector<T> newVector(newTotalSize);
 
+    for (unsigned long int i = 0; i < v.size() || i < newTotalSize; i++){
+        std::array<unsigned long int, N> indices = reverseIndex(i);
+        bool outOfBound = false;
+        for (unsigned long int j = 0; j < N; j++)
+            if (indices[j] >= newSizes[j])
+                outOfBound = true;
+        if (!outOfBound){
+            newVector[getIndex(indices.data(), newSizes)] = v[i];
+        }
+    }
 
+    for (unsigned long int i = 0; i < sizes.size(); i++){
+        sizes[i] = newSizes[i];
+    }
+
+    v = std::move(newVector);
 }
 
 template<class T, size_t N>
@@ -143,6 +158,16 @@ unsigned long int cg3::Array<T, N>::getIndex(const unsigned long indices[]) cons
         ind+=indices[i];
     }
     return ind;
+}
+
+template<class T, size_t N>
+std::array<unsigned long int, N> cg3::Array<T, N>::reverseIndex(unsigned int index) {
+    std::array<unsigned long int, N> indices;
+    for (long int i = N-1; i >= 0; i--){
+        indices[i] = index%sizes[i];
+        index/= sizes[i];
+    }
+    return indices;
 }
 
 template<class T, size_t N>

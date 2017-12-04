@@ -13,8 +13,6 @@
 #include <GL/glu.h>
 #endif
 
-#define _USE_MATH_DEFINES
-#include <cmath>
 #include <QColor>
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/2d/point2d.h>

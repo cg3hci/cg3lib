@@ -2,6 +2,11 @@
 
 #include "../renderable_objects/renderable_objects.h"
 
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 namespace cg3 {
 
 DrawableBoundingBox2D::DrawableBoundingBox2D(double thirdCoord) : BoundingBox2D(), pointSize(2), colorPoint(), edgeWidth(1), colorEdge(), thirdCoord(thirdCoord)

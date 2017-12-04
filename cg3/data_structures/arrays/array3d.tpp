@@ -91,7 +91,7 @@ inline void Array3D<T>::resize(unsigned long int x, unsigned long int y, unsigne
 }
 
 template<class T>
-inline void Array3D::conservativeResize(unsigned long x, unsigned long y, unsigned long z) {
+inline void Array3D<T>::conservativeResize(unsigned long x, unsigned long y, unsigned long z) {
     std::vector<T> newVector(x*y);
     for (unsigned int i = 0; i < sizeX || i < x; i++){
         for (unsigned int j = 0; j < sizeY || j < y; j++){

@@ -9,6 +9,11 @@
 #include "../../io/serialize.h"
 #include "../../utilities/hash.h"
 
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 namespace cg3 {
 
 /**
