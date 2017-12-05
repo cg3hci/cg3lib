@@ -91,6 +91,7 @@ void checkSegmentIntersection(
     if ((cg3::epsilonEqual(a, c, eps) && cg3::epsilonEqual(b, d, eps)) ||
         (cg3::epsilonEqual(a, d, eps) && cg3::epsilonEqual(b, c, eps)))
     {
+        intersectionPoint = a;
         code = 's';
         return;
     }

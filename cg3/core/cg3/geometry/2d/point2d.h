@@ -92,7 +92,7 @@ private:
 };
 
 template <class T>
-std::ostream& operator<<(std::ostream& inputStream, const Point2D<T>& p);
+std::ostream& operator<<(std::ostream& o, const Point2D<T>& p);
 
 /****************
 * Other Methods *
