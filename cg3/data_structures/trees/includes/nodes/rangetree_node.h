@@ -8,8 +8,12 @@
 
 namespace cg3 {
 
+
 template <class K, class T>
 class RangeTree;
+
+
+namespace internal {
 
 /**
  * @brief The node of the binary search tree
@@ -48,6 +52,8 @@ public:
     inline bool isLeaf() const;
 
 };
+
+}
 
 }
 

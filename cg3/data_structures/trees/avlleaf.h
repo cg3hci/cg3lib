@@ -31,7 +31,7 @@ public:
 
     /* Typedefs */
 
-    typedef AVLNode<K,T> Node;
+    typedef internal::AVLNode<K,T> Node;
 
     typedef LessComparatorType<K> LessComparator;
 
@@ -49,11 +49,11 @@ public:
 
     /* Constructors/destructor */
 
-    AVLLeaf(const LessComparator customComparator = &cg3::defaultComparator<K>);
+    AVLLeaf(const LessComparator customComparator = &internal::defaultComparator<K>);
     AVLLeaf(const std::vector<std::pair<K,T>>& vec,
-            const LessComparator customComparator = &cg3::defaultComparator<K>);
+            const LessComparator customComparator = &internal::defaultComparator<K>);
     AVLLeaf(const std::vector<K>& vec,
-            const LessComparator customComparator = &cg3::defaultComparator<K>);
+            const LessComparator customComparator = &internal::defaultComparator<K>);
 
     ~AVLLeaf();
 
@@ -71,6 +71,9 @@ public:
     void erase(generic_iterator it);
 
     iterator find(const K& key);
+
+    iterator findLower(const K& key);
+    iterator findUpper(const K& key);
 
 
     TreeSize size();

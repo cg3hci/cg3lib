@@ -6,6 +6,8 @@
 
 namespace cg3 {
 
+namespace internal {
+
 /**
  * @brief The node of the binary search tree
  *
@@ -45,6 +47,8 @@ private:
 
 
 };
+
+}
 
 }
 

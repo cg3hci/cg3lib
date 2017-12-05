@@ -1,10 +1,11 @@
 /**
     @author Stefano Nuvoli
 */
-#include "bstinner_helpers.h"
+#include "bst_helpers.h"
 
 namespace cg3 {
 
+namespace internal {
 
 
 /* ----- BASIC BST OPERATIONS ----- */
@@ -82,6 +83,8 @@ inline void replaceSubtreeHelper(const Node* u, Node* v, Node*& rootNode) {
     if (v != nullptr) {
         v->parent = u->parent;
     }
+}
+
 }
 
 }

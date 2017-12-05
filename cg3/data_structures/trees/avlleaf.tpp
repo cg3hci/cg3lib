@@ -116,7 +116,7 @@ void AVLLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(lessComparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -127,7 +127,7 @@ void AVLLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the bottom up helper
-    this->entries = constructionBottomUpHelperLeaf(
+    this->entries = internal::constructionBottomUpHelperLeaf(
                 sortedNodes,
                 this->root,
                 lessComparator);
@@ -135,7 +135,7 @@ void AVLLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     //Update the height of nodes
     for (Node*& node : sortedNodes) {
         if (node != nullptr && node->isLeaf()) {
-            updateHeightHelper(node);
+            internal::updateHeightHelper(node);
         }
     }
 }
@@ -174,12 +174,12 @@ typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::insert(
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = insertNodeHelperLeaf(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperLeaf(newNode, this->root, lessComparator);
 
     //If node has been inserted
     if (result != nullptr) {
         //Update height and rebalance
-        updateHeightAndRebalanceHelper(newNode, this->root);
+        internal::updateHeightAndRebalanceHelper(newNode, this->root);
 
         //Increment entry number
         this->entries++;
@@ -206,15 +206,15 @@ typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::insert(
 template <class K, class T>
 bool AVLLeaf<K,T>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
 
     //If the node has been found
     if (node != nullptr) {
         //Erase node
-        Node* replacingNode = eraseNodeHelperLeaf(node, this->root);
+        Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
         //Update height and rebalance
-        updateHeightAndRebalanceHelper(replacingNode, this->root);
+        internal::updateHeightAndRebalanceHelper(replacingNode, this->root);
 
         //Decrease the number of entries
         this->entries--;
@@ -243,10 +243,10 @@ void AVLLeaf<K,T>::erase(generic_iterator it) {
 
     if (node != nullptr) {
         //Erase node
-        Node* replacingNode = eraseNodeHelperLeaf(node, this->root);
+        Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
         //Update height and rebalance
-        updateHeightAndRebalanceHelper(replacingNode, this->root);
+        internal::updateHeightAndRebalanceHelper(replacingNode, this->root);
 
         //Decrease the number of entries
         this->entries--;
@@ -265,10 +265,45 @@ void AVLLeaf<K,T>::erase(generic_iterator it) {
 template <class K, class T>
 typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::find(const K& key) {
     //Query the BST to find the node
-    Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
 
     return iterator(this, node);
 }
+
+
+
+
+/**
+ * @brief Find the entry in the BST which is right lower than (or equal to)
+ * a given key
+ *
+ * @param[in] key Input key
+ * @return The iterator pointing to the BST node if the element (lower/equal)
+ * exists in the BST, end iterator otherwise
+ */
+template <class K, class T>
+typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::findLower(const K& key) {
+    //Query the BST to find the node
+    Node* node = internal::findLowerHelperLeaf(key, this->root, lessComparator);
+
+    return iterator(this, node);
+}
+
+/**
+ * @brief Find the entry in the BST which is right upper than a given key
+ *
+ * @param[in] key Key of the node to be found
+ * @return The iterator pointing to the BST node if the element (upper)
+ * exists in the BST, end iterator otherwise
+ */
+template <class K, class T>
+typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::findUpper(const K& key) {
+    //Query the BST to find the node
+    Node* node = internal::findUpperHelperLeaf(key, this->root, lessComparator);
+
+    return iterator(this, node);
+}
+
 
 
 
@@ -281,7 +316,7 @@ typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::find(const K& key) {
 template <class K, class T>
 void AVLLeaf<K,T>::clear() {
     //Clear entire tree
-    clearHelper(this->root);
+    internal::clearHelper(this->root);
 
     //Decreasing entries
     this->entries = 0;
@@ -320,7 +355,7 @@ bool AVLLeaf<K,T>::empty() {
 template <class K, class T>
 TreeSize AVLLeaf<K,T>::getHeight()
 {
-    return getHeightHelper(this->root);
+    return internal::getHeightHelper(this->root);
 }
 
 
@@ -343,7 +378,7 @@ void AVLLeaf<K,T>::rangeQuery(
     std::vector<Node*> nodeOutput;
 
     //Execute range query
-    rangeQueryHelperLeaf(start, end, nodeOutput, this->root, lessComparator);
+    internal::rangeQueryHelperLeaf(start, end, nodeOutput, this->root, lessComparator);
 
     for (Node* node : nodeOutput) {
         *out = iterator(this, node);
@@ -362,7 +397,7 @@ void AVLLeaf<K,T>::rangeQuery(
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::getMin() {
-    return iterator(this, getMinimumHelperLeaf(this->root));
+    return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -372,7 +407,7 @@ typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::getMin() {
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::getMax() {
-    return iterator(this, getMaximumHelperLeaf(this->root));
+    return iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 
@@ -390,7 +425,7 @@ typename AVLLeaf<K,T>::generic_iterator AVLLeaf<K,T>::getNext(generic_iterator i
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getSuccessorHelperLeaf(it.node));
+    return generic_iterator(this, internal::getSuccessorHelperLeaf(it.node));
 }
 
 /**
@@ -406,7 +441,7 @@ typename AVLLeaf<K,T>::generic_iterator AVLLeaf<K,T>::getPrev(generic_iterator i
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getPredecessorHelperLeaf(it.node));
+    return generic_iterator(this, internal::getPredecessorHelperLeaf(it.node));
 }
 
 
@@ -418,7 +453,7 @@ typename AVLLeaf<K,T>::generic_iterator AVLLeaf<K,T>::getPrev(generic_iterator i
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::begin() {
-    return iterator(this, getMinimumHelperLeaf(this->root));
+    return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -435,7 +470,7 @@ typename AVLLeaf<K,T>::iterator AVLLeaf<K,T>::end() {
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::const_iterator AVLLeaf<K,T>::cbegin() {
-    return const_iterator(this, getMinimumHelperLeaf(this->root));
+    return const_iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -452,7 +487,7 @@ typename AVLLeaf<K,T>::const_iterator AVLLeaf<K,T>::cend() {
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::reverse_iterator AVLLeaf<K,T>::rbegin() {
-    return reverse_iterator(this, getMaximumHelperLeaf(this->root));
+    return reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**
@@ -469,7 +504,7 @@ typename AVLLeaf<K,T>::reverse_iterator AVLLeaf<K,T>::rend() {
  */
 template <class K, class T>
 typename AVLLeaf<K,T>::const_reverse_iterator AVLLeaf<K,T>::crbegin() {
-    return const_reverse_iterator(this, getMaximumHelperLeaf(this->root));
+    return const_reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**

@@ -5,6 +5,8 @@
 
 namespace cg3 {
 
+namespace internal {
+
 /* --------- CONSTRUCTORS/DESTRUCTOR --------- */
 
 /**
@@ -81,5 +83,6 @@ inline void AVLNode<K,T>::init(const K& key, T* value) {
 }
 
 
+}
 
 }

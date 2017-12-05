@@ -10,6 +10,7 @@
 
 namespace cg3 {
 
+namespace internal {
 
 /* AVL helpers */
 
@@ -33,6 +34,8 @@ inline Node* leftRotateHelper(Node* a);
 
 template <class Node>
 inline Node* rightRotateHelper(Node* a);
+
+}
 
 }
 

@@ -4,14 +4,13 @@
 #include "rangetree_helpers.h"
 
 #include "bstleaf_helpers.h"
+#include "avl_helpers.h"
 
 #include "assert.h"
 
 namespace cg3 {
 
-
-
-
+namespace internal {
 
 
 /* ----- HELPERS FOR ASSOCIATED RANGE TREE ----- */
@@ -267,8 +266,8 @@ inline void updateHeightAndRebalanceRangeTreeHelper(
         Node*& rootNode,
         const unsigned int dim)
 {
-    updateHeightHelper(node);
-    rebalanceRangeTreeHelper(node, rootNode, dim);
+    internal::updateHeightHelper(node);
+    internal::rebalanceRangeTreeHelper(node, rootNode, dim);
 }
 
 
@@ -283,7 +282,7 @@ inline void updateHeightAndRebalanceRangeTreeHelper(
 template <class Node>
 inline Node* leftRotateRangeTreeHelper(Node* a, const unsigned int dim) {
     //Rotate left
-    Node* b = leftRotateHelper(a);
+    Node* b = internal::leftRotateHelper(a);
 
 
     //Update associated trees
@@ -344,5 +343,6 @@ inline Node* rightRotateRangeTreeHelper(Node* a, const unsigned int dim) {
     return b;
 }
 
+}
 
 }

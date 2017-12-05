@@ -19,27 +19,26 @@ public:
 
     /* Constructors/destructor */
     Segment();
-    Segment(const T& p1, const T& p2);
+    Segment(const T& getP1, const T& getP2);
 
     /* Getters */
-    const T& getP1() const;
-    const T& getP2() const;
+    inline const T& getP1() const;
+    inline const T& getP2() const;
 
     /* Setters */
-    void setP1(const T& p1);
-    void setP2(const T& p2);
-
-    void set(const T& p1, const T& p2);
+    inline void setP1(const T& getP1);
+    inline void setP2(const T& getP2);
+    inline void set(const T& getP1, const T& getP2);
 
     /* Operator overrides */
-    bool operator == (const Segment& otherSegment) const;
-    bool operator != (const Segment& otherSegment) const;
-    bool operator < (const Segment& otherSegment) const;
-    bool operator > (const Segment& otherSegment) const;
-    bool operator <= (const Segment& otherSegment) const;
-    bool operator >= (const Segment& otherSegment) const;
+    inline bool operator == (const Segment& otherSegment) const;
+    inline bool operator != (const Segment& otherSegment) const;
+    inline bool operator < (const Segment& otherSegment) const;
+    inline bool operator > (const Segment& otherSegment) const;
+    inline bool operator <= (const Segment& otherSegment) const;
+    inline bool operator >= (const Segment& otherSegment) const;
 
-    // SerializableObject interface
+    /* Serialization */
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 

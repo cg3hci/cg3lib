@@ -1,10 +1,12 @@
 /**
     @author Stefano Nuvoli
 */
-#ifndef CG3_AABB_H
-#define CG3_AABB_H
+#ifndef CG3_AABB_NODE_AABB_H
+#define CG3_AABB_NODE_AABB_H
 
 namespace cg3 {
+
+namespace internal {
 
 /**
  * @brief D-dimensional axis-aligned bounding box
@@ -45,6 +47,8 @@ private:
 
 }
 
-#include "aabb.tpp"
+}
 
-#endif // CG3_AABB_H
+#include "aabb_node_aabb.tpp"
+
+#endif // CG3_AABB_NODE_AABB_H

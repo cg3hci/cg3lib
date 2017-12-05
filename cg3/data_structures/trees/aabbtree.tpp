@@ -128,7 +128,7 @@ void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(lessComparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -139,7 +139,7 @@ void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the bottom up helper
-    this->entries = constructionBottomUpHelperLeaf(
+    this->entries = internal::constructionBottomUpHelperLeaf(
                 sortedNodes,
                 this->root,
                 lessComparator);
@@ -148,10 +148,10 @@ void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     for (Node*& node : sortedNodes) {
         if (node != nullptr && node->isLeaf()) {
             //Update height
-            updateHeightHelper(node);
+            internal::updateHeightHelper(node);
 
             //Update AABBs
-            updateAABBHelper<D>(node, aabbValueExtractor);
+            internal::updateAABBHelper<D>(node, aabbValueExtractor);
         }
     }
 }
@@ -190,15 +190,15 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = insertNodeHelperLeaf(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperLeaf(newNode, this->root, lessComparator);
 
     //If node has been inserted
     if (result != nullptr) {
         //Update height and rebalance
-        updateHeightAndRebalanceAABBHelper<D>(newNode, this->root, aabbValueExtractor);
+        internal::updateHeightAndRebalanceAABBHelper<D>(newNode, this->root, aabbValueExtractor);
 
         //Update AABBs
-        updateAABBHelper<D>(newNode, aabbValueExtractor);
+        internal::updateAABBHelper<D>(newNode, aabbValueExtractor);
 
         //Increment entry number
         this->entries++;
@@ -225,18 +225,18 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(
 template <int D, class K, class T>
 bool AABBTree<D,K,T>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
 
     //If the node has been found
     if (node != nullptr) {
         //Erase node
-        Node* replacingNode = eraseNodeHelperLeaf(node, this->root);
+        Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
         //Update height and rebalance
-        updateHeightAndRebalanceAABBHelper<D>(replacingNode, this->root, aabbValueExtractor);
+        internal::updateHeightAndRebalanceAABBHelper<D>(replacingNode, this->root, aabbValueExtractor);
 
         //Update AABBs
-        updateAABBHelper<D>(replacingNode, aabbValueExtractor);
+        internal::updateAABBHelper<D>(replacingNode, aabbValueExtractor);
 
         //Decrease the number of entries
         this->entries--;
@@ -265,13 +265,13 @@ void AABBTree<D,K,T>::erase(generic_iterator it) {
 
     if (node != nullptr) {
         //Erase node
-        Node* replacingNode = eraseNodeHelperLeaf(node, this->root);
+        Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
         //Update height and rebalance
-        updateHeightAndRebalanceAABBHelper(replacingNode, this->root, aabbValueExtractor);
+        internal::updateHeightAndRebalanceAABBHelper(replacingNode, this->root, aabbValueExtractor);
 
         //Update AABBs
-        updateAABBHelper(replacingNode, aabbValueExtractor);
+        internal::updateAABBHelper(replacingNode, aabbValueExtractor);
 
         //Decrease the number of entries
         this->entries--;
@@ -290,7 +290,7 @@ void AABBTree<D,K,T>::erase(generic_iterator it) {
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::find(const K& key) {
     //Query the BST to find the node
-    Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
 
     return iterator(this, node);
 }
@@ -306,7 +306,7 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::find(const K& key) {
 template <int D, class K, class T>
 void AABBTree<D,K,T>::clear() {
     //Clear entire tree
-    clearHelper(this->root);
+    internal::clearHelper(this->root);
 
     //Decreasing entries
     this->entries = 0;
@@ -345,7 +345,7 @@ bool AABBTree<D,K,T>::empty() {
 template <int D, class K, class T>
 TreeSize AABBTree<D,K,T>::getHeight()
 {
-    return getHeightHelper(this->root);
+    return internal::getHeightHelper(this->root);
 }
 
 
@@ -368,7 +368,7 @@ void AABBTree<D,K,T>::rangeQuery(
     std::vector<Node*> nodeOutput;
 
     //Execute range query
-    rangeQueryHelperLeaf(start, end, nodeOutput, this->root, lessComparator);
+    internal::rangeQueryHelperLeaf(start, end, nodeOutput, this->root, lessComparator);
 
     for (Node* node : nodeOutput) {
         *out = iterator(this, node);
@@ -390,12 +390,12 @@ void AABBTree<D,K,T>::aabbOverlapQuery(
         KeyOverlapChecker keyOverlapChecker)
 {
     //Get the AABB
-    AABB<D> aabb;
-    setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
+    internal::AABB<D> aabb;
+    internal::setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
 
     //Query the AABB tree
     std::vector<Node*> nodeOutput;
-    aabbOverlapQueryHelper(this->root, key, aabb, nodeOutput, keyOverlapChecker);
+    internal::aabbOverlapQueryHelper(this->root, key, aabb, nodeOutput, keyOverlapChecker);
 
     //Pushing out the results
     for (Node* node : nodeOutput) {
@@ -417,11 +417,11 @@ bool AABBTree<D,K,T>::aabbOverlapCheck(
         KeyOverlapChecker keyOverlapChecker)
 {
     //Get the AABB
-    AABB<D> aabb;
-    setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
+    internal::AABB<D> aabb;
+    internal::setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
 
     //Query the AABB tree
-    return aabbOverlapCheckHelper(this->root, key, aabb, keyOverlapChecker);
+    return internal::aabbOverlapCheckHelper(this->root, key, aabb, keyOverlapChecker);
 }
 
 
@@ -437,7 +437,7 @@ bool AABBTree<D,K,T>::aabbOverlapCheck(
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::getMin() {
-    return iterator(this, getMinimumHelperLeaf(this->root));
+    return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -447,7 +447,7 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::getMin() {
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::getMax() {
-    return iterator(this, getMaximumHelperLeaf(this->root));
+    return iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 
@@ -465,7 +465,7 @@ typename AABBTree<D,K,T>::generic_iterator AABBTree<D,K,T>::getNext(generic_iter
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getSuccessorHelperLeaf(it.node));
+    return generic_iterator(this, internal::getSuccessorHelperLeaf(it.node));
 }
 
 /**
@@ -481,7 +481,7 @@ typename AABBTree<D,K,T>::generic_iterator AABBTree<D,K,T>::getPrev(generic_iter
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getPredecessorHelperLeaf(it.node));
+    return generic_iterator(this, internal::getPredecessorHelperLeaf(it.node));
 }
 
 
@@ -493,7 +493,7 @@ typename AABBTree<D,K,T>::generic_iterator AABBTree<D,K,T>::getPrev(generic_iter
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::begin() {
-    return iterator(this, getMinimumHelperLeaf(this->root));
+    return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -510,7 +510,7 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::end() {
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::const_iterator AABBTree<D,K,T>::cbegin() {
-    return const_iterator(this, getMinimumHelperLeaf(this->root));
+    return const_iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -527,7 +527,7 @@ typename AABBTree<D,K,T>::const_iterator AABBTree<D,K,T>::cend() {
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::reverse_iterator AABBTree<D,K,T>::rbegin() {
-    return reverse_iterator(this, getMaximumHelperLeaf(this->root));
+    return reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**
@@ -544,7 +544,7 @@ typename AABBTree<D,K,T>::reverse_iterator AABBTree<D,K,T>::rend() {
  */
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::const_reverse_iterator AABBTree<D,K,T>::crbegin() {
-    return const_reverse_iterator(this, getMaximumHelperLeaf(this->root));
+    return const_reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**

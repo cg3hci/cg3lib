@@ -126,7 +126,7 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(lessComparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -137,7 +137,7 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the bottom up helper
-    this->entries = constructionBottomUpHelperLeaf(
+    this->entries = internal::constructionBottomUpHelperLeaf(
                 sortedNodes,
                 this->root,
                 lessComparator);
@@ -146,13 +146,13 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     for (Node*& node : sortedNodes) {
         if (node != nullptr && node->isLeaf()) {
             //Update height
-            updateHeightHelper(node);
+            internal::updateHeightHelper(node);
 
             //Create associate trees climbing on parents
-            createParentAssociatedTreeHelper<Node,K,T>(node, dim, customComparators);
+            internal::createParentAssociatedTreeHelper<Node,K,T>(node, dim, customComparators);
 
             //Insert new node into associated range trees of the node and the parents
-            insertIntoParentAssociatedTreesHelper(node, node->key, *(node->value), dim);
+            internal::insertIntoParentAssociatedTreesHelper(node, node->key, *(node->value), dim);
         }
     }
 
@@ -194,7 +194,7 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = insertNodeHelperLeaf(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperLeaf(newNode, this->root, lessComparator);
 
     //If node has been inserted
     if (result != nullptr) {
@@ -213,19 +213,19 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
             }
 
             //Create associated tree for the parent
-            createAssociatedTreeHelper<Node,K,T>(newParent, dim, customComparators);
+            internal::createAssociatedTreeHelper<Node,K,T>(newParent, dim, customComparators);
             //Insert into associated range tree of the parent the node
-            insertIntoAssociatedTreeHelper(newParent, otherNode->key, *(otherNode->value), dim);
+            internal::insertIntoAssociatedTreeHelper(newParent, otherNode->key, *(otherNode->value), dim);
         }
 
         //Create associated tree for the node
-        createAssociatedTreeHelper<Node,K,T>(newNode, dim, customComparators);
+        internal::createAssociatedTreeHelper<Node,K,T>(newNode, dim, customComparators);
         //Insert new node into associated range trees of the node and the parents
-        Node* deepestNode = insertIntoParentAssociatedTreesHelper(newNode, newNode->key, *(newNode->value), dim);
+        Node* deepestNode = internal::insertIntoParentAssociatedTreesHelper(newNode, newNode->key, *(newNode->value), dim);
 
 
         //Update height and rebalance
-        updateHeightAndRebalanceRangeTreeHelper(newNode, this->root, dim);
+        internal::updateHeightAndRebalanceRangeTreeHelper(newNode, this->root, dim);
 
 
         //Increment entry number
@@ -251,20 +251,20 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
 template <class K, class T>
 bool RangeTree<K,T>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
 
     //If the node has been found
     if (node != nullptr) {
 
         //Update associated trees
-        eraseFromParentAssociatedTreesHelper(node->parent, node->key, dim);
+        internal::eraseFromParentAssociatedTreesHelper(node->parent, node->key, dim);
 
         //Erase node
-        Node* replacingNode = eraseNodeHelperLeaf(node, this->root);
+        Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
 
         //Update height and rebalance
-        updateHeightAndRebalanceRangeTreeHelper(replacingNode, this->root, dim);
+        internal::updateHeightAndRebalanceRangeTreeHelper(replacingNode, this->root, dim);
 
         //Decrease the number of entries
         this->entries--;
@@ -290,7 +290,7 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::find(const K& key) {
         return this->root->assRangeTree->find(key);
 
     //Query the BST to find the node
-    Node* node = findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
 
     return iterator(this, node);
 }
@@ -306,7 +306,7 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::find(const K& key) {
 template <class K, class T>
 void RangeTree<K,T>::clear() {
     //Clear entire tree
-    clearHelper(this->root);
+    internal::clearHelper(this->root);
 
     //Decreasing entries
     this->entries = 0;
@@ -346,7 +346,7 @@ bool RangeTree<K,T>::empty()
 template <class K, class T>
 size_t RangeTree<K,T>::getHeight()
 {
-    return getHeightHelper(this->root);
+    return internal::getHeightHelper(this->root);
 }
 
 
@@ -393,7 +393,7 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::getMin() {
     if (dim > 1) {
         return this->root->assRangeTree->getMin();
     }
-    return iterator(this, getMinimumHelperLeaf(this->root));
+    return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -406,7 +406,7 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::getMax() {
     if (dim > 1) {
         return this->root->assRangeTree->getMax();
     }
-    return iterator(this, getMaximumHelperLeaf(this->root));
+    return iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 
@@ -424,7 +424,7 @@ typename RangeTree<K,T>::generic_iterator RangeTree<K,T>::getNext(generic_iterat
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getSuccessorHelperLeaf(it.node));
+    return generic_iterator(this, internal::getSuccessorHelperLeaf(it.node));
 }
 
 /**
@@ -440,7 +440,7 @@ typename RangeTree<K,T>::generic_iterator RangeTree<K,T>::getPrev(generic_iterat
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getPredecessorHelperLeaf(it.node));
+    return generic_iterator(this, internal::getPredecessorHelperLeaf(it.node));
 }
 
 
@@ -455,7 +455,7 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::begin() {
     if (dim > 1) {
         return this->root->assRangeTree->begin();
     }
-    return iterator(this, getMinimumHelperLeaf(this->root));
+    return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -475,7 +475,7 @@ typename RangeTree<K,T>::const_iterator RangeTree<K,T>::cbegin() {
     if (dim > 1) {
         return this->root->assRangeTree->cbegin();
     }
-    return const_iterator(this, getMinimumHelperLeaf(this->root));
+    return const_iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
@@ -495,7 +495,7 @@ typename RangeTree<K,T>::reverse_iterator RangeTree<K,T>::rbegin() {
     if (dim > 1) {
         return this->root->assRangeTree->rbegin();
     }
-    return reverse_iterator(this, getMaximumHelperLeaf(this->root));
+    return reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**
@@ -515,7 +515,7 @@ typename RangeTree<K,T>::const_reverse_iterator RangeTree<K,T>::crbegin() {
     if (dim > 1) {
         return this->root->assRangeTree->crbegin();
     }
-    return const_reverse_iterator(this, getMaximumHelperLeaf(this->root));
+    return const_reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**
@@ -572,7 +572,7 @@ inline void RangeTree<K,T>::rangeQueryHelper(
         std::vector<Node*>& out)
 {
     //Find split node
-    Node* splitNode = findSplitNodeHelperLeaf(start, end, this->root, lessComparator);
+    Node* splitNode = internal::findSplitNodeHelperLeaf(start, end, this->root, lessComparator);
 
     if (splitNode == nullptr)
         return;
@@ -580,8 +580,8 @@ inline void RangeTree<K,T>::rangeQueryHelper(
     //If the split node is a leaf
     if (splitNode->isLeaf()) {
         //Report the node if it is contained in the range
-        if (isGreaterOrEqual(splitNode->key, start, lessComparator) &&
-                isLessOrEqual(splitNode->key, end, lessComparator))
+        if (internal::isGreaterOrEqual(splitNode->key, start, lessComparator) &&
+                internal::isLessOrEqual(splitNode->key, end, lessComparator))
         {
             this->rangeSearchInNextDimensionHelper(splitNode, start, end, out);
         }
@@ -591,7 +591,7 @@ inline void RangeTree<K,T>::rangeQueryHelper(
         //Follow path from splitNode to start and report right subtrees
         Node* vl = splitNode->left;
         while (!vl->isLeaf()) {
-            if (isLess(start, vl->key, lessComparator)) {
+            if (internal::isLess(start, vl->key, lessComparator)) {
                 this->rangeSearchInNextDimensionHelper(vl->right, start, end, out);
                 vl = vl->left;
             }
@@ -600,8 +600,8 @@ inline void RangeTree<K,T>::rangeQueryHelper(
             }
         }
         //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vl->key, start, lessComparator) &&
-                isLessOrEqual(vl->key, end, lessComparator))
+        if (internal::isGreaterOrEqual(vl->key, start, lessComparator) &&
+                internal::isLessOrEqual(vl->key, end, lessComparator))
         {
             this->rangeSearchInNextDimensionHelper(vl, start, end, out);
         }
@@ -609,7 +609,7 @@ inline void RangeTree<K,T>::rangeQueryHelper(
         //Follow path from splitNode to end and report left subtrees
         Node* vr = splitNode->right;
         while (!vr->isLeaf()) {
-            if (isGreaterOrEqual(end, vr->key, lessComparator)) {
+            if (internal::isGreaterOrEqual(end, vr->key, lessComparator)) {
                 this->rangeSearchInNextDimensionHelper(vr->left, start, end, out);
                 vr = vr->right;
             }
@@ -618,7 +618,8 @@ inline void RangeTree<K,T>::rangeQueryHelper(
             }
         }
         //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vr->key, start, lessComparator) && isLessOrEqual(vr->key, end, lessComparator)) {
+        if (internal::isGreaterOrEqual(vr->key, start, lessComparator) &&
+                internal::isLessOrEqual(vr->key, end, lessComparator)) {
             this->rangeSearchInNextDimensionHelper(vr, start, end, out);
         }
     }
@@ -647,7 +648,7 @@ inline void RangeTree<K,T>::rangeSearchInNextDimensionHelper(
         node->assRangeTree->rangeQueryHelper(start, end, out);
     }
     else {
-        reportSubTreeHelperLeaf(node, out);
+        internal::reportSubTreeHelperLeaf(node, out);
     }
 }
 

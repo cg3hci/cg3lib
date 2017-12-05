@@ -32,7 +32,7 @@ public:
 
     /* Typedefs */
 
-    typedef BSTNode<K,T> Node;
+    typedef internal::BSTNode<K,T> Node;
 
     typedef LessComparatorType<K> LessComparator;
 
@@ -50,11 +50,11 @@ public:
 
     /* Constructors/destructor */
 
-    BSTInner(const LessComparator customComparator = &cg3::defaultComparator<K>);
+    BSTInner(const LessComparator customComparator = &internal::defaultComparator<K>);
     BSTInner(const std::vector<std::pair<K,T>>& vec,
-             const LessComparator customComparator = &cg3::defaultComparator<K>);
+             const LessComparator customComparator = &internal::defaultComparator<K>);
     BSTInner(const std::vector<K>& vec,
-             const LessComparator customComparator = &cg3::defaultComparator<K>);
+             const LessComparator customComparator = &internal::defaultComparator<K>);
 
     ~BSTInner();
 
@@ -72,6 +72,9 @@ public:
     void erase(generic_iterator it);
 
     iterator find(const K& key);
+
+    iterator findLower(const K& key);
+    iterator findUpper(const K& key);
 
 
     TreeSize size();

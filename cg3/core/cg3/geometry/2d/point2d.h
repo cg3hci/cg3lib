@@ -34,9 +34,6 @@ public:
     Point2D(const Eigen::VectorXd &v);
 #endif
 
-    /***
-         * Const Member Functions
-         **/
     const T& x() const;
     const T& y() const;
     double dist(const Point2D<T> &otherPoint) const;

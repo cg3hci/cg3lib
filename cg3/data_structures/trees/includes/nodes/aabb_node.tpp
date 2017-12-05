@@ -5,6 +5,8 @@
 
 namespace cg3 {
 
+namespace internal {
+
 /* --------- CONSTRUCTORS/DESTRUCTOR --------- */
 
 /**
@@ -78,6 +80,8 @@ inline void AABBNode<D,K,T>::init(const K& key, T* value) {
     this->parent = nullptr;
 
     this->height = 0;
+}
+
 }
 
 

@@ -2,6 +2,8 @@
 
 namespace cg3 {
 
+namespace internal {
+
 
 /* ----- COMPARATORS FOR 2D POINTS ----- */
 
@@ -125,6 +127,6 @@ std::vector<LessComparatorType<Pointd>> getComparatorsForPoint3D() {
     return customComparators;
 }
 
-
+}
 
 }

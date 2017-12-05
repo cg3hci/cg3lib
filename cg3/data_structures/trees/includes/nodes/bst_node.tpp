@@ -5,6 +5,9 @@
 
 namespace cg3 {
 
+namespace internal {
+
+
 /* --------- CONSTRUCTORS/DESTRUCTOR --------- */
 
 
@@ -81,5 +84,6 @@ inline void BSTNode<K,T>::init(const K& key, T* value) {
     this->parent = nullptr;
 }
 
+}
 
 }

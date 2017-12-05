@@ -16,7 +16,7 @@ inline Segment<T>::Segment(const T& p1, const T& p2) {
 }
 
 
-/* ----- Getters/setters ----- */
+/* ----- Getters ----- */
 
 template <class T>
 inline const T& Segment<T>::getP1() const {
@@ -27,6 +27,10 @@ template <class T>
 inline const T& Segment<T>::getP2() const {
     return p2;
 }
+
+
+
+/* ----- Setters ----- */
 
 template <class T>
 inline void Segment<T>::setP1(const T& p1) {
@@ -89,6 +93,11 @@ inline bool Segment<T>::operator >= (const Segment& otherSegment) const {
     return *this == otherSegment || *this > otherSegment;
 }
 
+
+
+
+/* ----- Serialization ----- */
+
 template<class T>
 inline void Segment<T>::serialize(std::ofstream& binaryFile) const {
     Serializer::serializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
@@ -100,7 +109,7 @@ inline void Segment<T>::deserialize(std::ifstream& binaryFile) {
 }
 
 
-/* Utilities interface */
+/* ------ Utilities ------ */
 
 template <class T>
 std::ostream& operator<<(std::ostream& o, const Segment<T>& seg) {

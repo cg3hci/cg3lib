@@ -13,11 +13,12 @@ namespace cg3 {
     using LessComparatorType = bool(*)(const K& key1, const K& key2);
 
 
+namespace internal {
 
     /* Default comparator for keys */
 
     template <class K>
-    bool defaultComparator(const K& key1, const K& key2) {
+    inline bool defaultComparator(const K& key1, const K& key2) {
         return key1 < key2;
     }
 
@@ -83,7 +84,7 @@ namespace cg3 {
                 const std::pair<K,T>& a,
                 const std::pair<K,T>& b) const
         {
-            return cg3::isLess(a.first, b.first, keyComparator);
+            return isLess(a.first, b.first, keyComparator);
         }
 
     private:
@@ -91,6 +92,9 @@ namespace cg3 {
         const LessComparatorType<K> keyComparator;
 
     };
+
+}
+
 }
 
 

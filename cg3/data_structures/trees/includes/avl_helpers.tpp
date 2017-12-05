@@ -7,6 +7,7 @@
 
 namespace cg3 {
 
+namespace internal {
 
 /* ----- AVL HELPERS ----- */
 
@@ -203,6 +204,8 @@ inline Node* rightRotateHelper(Node* a) {
     updateHeightHelper(a);
 
     return b;
+}
+
 }
 
 }

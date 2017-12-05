@@ -5,6 +5,7 @@
 
 namespace cg3 {
 
+namespace internal {
 
 
 /* --------- CONSTRUCTORS/DESTRUCTOR --------- */
@@ -79,5 +80,6 @@ inline bool RangeTreeNode<K,T>::isLeaf() const {
     return (left == nullptr) && (right == nullptr);
 }
 
+}
 
 }

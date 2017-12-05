@@ -114,10 +114,10 @@ HEADERS += \
     $$PWD/data_structures/trees/aabbtree.h \
     $$PWD/data_structures/trees/includes/aabb_helpers.h \
     $$PWD/data_structures/trees/includes/nodes/aabb_node.h \
-    $$PWD/data_structures/trees/includes/nodes/aabb.h
+    $$PWD/data_structures/trees/includes/nodes/aabb_node_aabb.h
 
 SOURCES += \
     $$PWD/data_structures/trees/aabbtree.tpp \
     $$PWD/data_structures/trees/includes/aabb_helpers.tpp \
     $$PWD/data_structures/trees/includes/nodes/aabb_node.tpp \
-    $$PWD/data_structures/trees/includes/nodes/aabb.tpp
+    $$PWD/data_structures/trees/includes/nodes/aabb_node_aabb.tpp

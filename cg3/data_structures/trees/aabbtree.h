@@ -34,7 +34,7 @@ public:
 
     /* Typedefs */
 
-    typedef AABBNode<D,K,T> Node;
+    typedef internal::AABBNode<D,K,T> Node;
 
     typedef LessComparatorType<K> LessComparator;
 
@@ -56,13 +56,13 @@ public:
     /* Constructors/destructor */
 
     AABBTree(const AABBValueExtractor customAABBExtractor,
-             const LessComparator customComparator = &cg3::defaultComparator<K>);
+             const LessComparator customComparator = &internal::defaultComparator<K>);
     AABBTree(const std::vector<std::pair<K,T>>& vec,
              const AABBValueExtractor customAABBExtractor,
-             const LessComparator customComparator = &cg3::defaultComparator<K>);
+             const LessComparator customComparator = &internal::defaultComparator<K>);
     AABBTree(const std::vector<K>& vec,
              const AABBValueExtractor customAABBExtractor,
-             const LessComparator customComparator = &cg3::defaultComparator<K>);
+             const LessComparator customComparator = &internal::defaultComparator<K>);
 
     ~AABBTree();
 

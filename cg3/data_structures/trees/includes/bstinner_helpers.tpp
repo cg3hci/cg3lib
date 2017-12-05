@@ -5,6 +5,7 @@
 
 namespace cg3 {
 
+namespace internal {
 
 
 /* ----- BASIC BST OPERATIONS ----- */
@@ -63,40 +64,6 @@ inline Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparat
     newNode = nullptr;
 
     return nullptr;
-}
-
-
-
-/**
- * @brief Find an entry on the BST given a key
- *
- * @param[in] key Key of the node to be found
- * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
- *
- * @return If the node with a given value is found, then its pointer
- * is returned. Otherwise a null pointer is returned.
- *
- */
-template <class Node, class K>
-inline Node* findNodeHelperInner(
-        const K& key,
-        Node*& rootNode,
-        LessComparatorType<K> lessComparator
-) {
-    Node* node = rootNode;
-
-    //Follow a path until the node is found
-    while (node != nullptr && !isEqual(node->key, key, lessComparator)) {
-        if (isLess(key, node->key, lessComparator)) {
-            node = node->left;
-        }
-        else {
-            node = node->right;
-        }
-    }
-
-    return node;
 }
 
 
@@ -172,6 +139,150 @@ inline Node* eraseNodeHelperInner(Node*& node, Node*& rootNode)
     return replacingNode;
 
 }
+
+
+
+/**
+ * @brief Find an entry on the BST given a key
+ *
+ * @param[in] key Key of the node to be found
+ * @param[in] rootNode Root node of the BST
+ * @param[in] lessComparator Less comparator for keys
+ *
+ * @return If the node with a given value is found, then its pointer
+ * is returned. Otherwise a null pointer is returned.
+ *
+ */
+template <class Node, class K>
+inline Node* findNodeHelperInner(
+        const K& key,
+        Node*& rootNode,
+        LessComparatorType<K> lessComparator
+) {
+    Node* node = rootNode;
+
+    //Follow a path until the node is found
+    while (node != nullptr && !isEqual(node->key, key, lessComparator)) {
+        if (isLess(key, node->key, lessComparator)) {
+            node = node->left;
+        }
+        else {
+            node = node->right;
+        }
+    }
+
+    return node;
+}
+
+/**
+ * @brief Find the entry of the BST which is equal/lower than a given key
+ *
+ * @param[in] key Input key
+ * @param[in] rootNode Root node of the BST
+ * @param[in] lessComparator Less comparator for keys
+ *
+ * @return If the node with a key equal/lower than the input key is found, then
+ * its pointer is returned. Otherwise, if there is not any entry equal/lower than
+ * the input key, a null pointer is returned.
+ *
+ */
+template <class Node, class K>
+inline Node* findLowerHelperInner(
+        const K& key,
+        Node*& rootNode,
+        LessComparatorType<K> lessComparator
+) {
+    Node* node = rootNode;
+
+    if (node == nullptr)
+        return nullptr;
+
+    Node* lastVisitedNode = nullptr;
+
+    //Follow a path until a leaf has been reached
+    while (node != nullptr) {
+        //Update last visited node
+        lastVisitedNode = node;
+
+        if (isLess(key, node->key, lessComparator)) {
+            node = node->left;
+        }
+        else {
+            node = node->right;
+        }
+
+        //Return node if we found a node with the same key
+        if (node != nullptr && isEqual(node->key, key, lessComparator)) {
+            return node;
+        }
+    }
+
+    //If the input key is lower
+    if (isLess(key, lastVisitedNode->key, lessComparator)) {
+        return getPredecessorHelperInner(lastVisitedNode);
+    }
+    //If the input key is greater or equal
+    else {
+        return lastVisitedNode;
+    }
+}
+
+/**
+ * @brief Find the entry of the BST which is upper than a given key
+ *
+ * @param[in] key Input key
+ * @param[in] rootNode Root node of the BST
+ * @param[in] lessComparator Less comparator for keys
+ *
+ * @return If the node with a key upper than the input key is found, then
+ * its pointer is returned. Otherwise, if there is not any entry upper
+ * than the input key, a null pointer is returned.
+ *
+ */
+template <class Node, class K>
+inline Node* findUpperHelperInner(
+        const K& key,
+        Node*& rootNode,
+        LessComparatorType<K> lessComparator
+) {
+    Node* node = rootNode;
+
+    if (node == nullptr)
+        return nullptr;
+
+    Node* lastVisitedNode = nullptr;
+
+    //Follow a path until a leaf has been reached
+    while (node != nullptr) {
+        //Update last visited node
+        lastVisitedNode = node;
+
+        if (isLess(key, node->key, lessComparator)) {
+            node = node->left;
+        }
+        else {
+            node = node->right;
+        }
+
+        //Return the successor of the node if we found a
+        //node with the same key
+        if (node != nullptr && isEqual(node->key, key, lessComparator)) {
+            return getSuccessorHelperInner(node);
+        }
+    }
+
+    //If the input key is lower
+    if (isLess(key, lastVisitedNode->key, lessComparator)) {
+        return lastVisitedNode;
+    }
+    //If the input key is greater or equal
+    else {
+        return getSuccessorHelperInner(lastVisitedNode);
+    }
+}
+
+
+
 
 
 
@@ -463,6 +574,6 @@ inline Node* getMaximumHelperInner(Node* rootNode) {
 }
 
 
-
+}
 
 }

@@ -12,18 +12,25 @@
 
 namespace cg3 {
 
+namespace internal {
+
 
 /* Basic BST operation helpers */
 
 template <class Node, class K>
 inline Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator);
 
-template <class Node, class K>
-inline Node* findNodeHelperLeaf(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
-
 template <class Node>
 inline Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode);
 
+template <class Node, class K>
+inline Node* findHelperLeaf(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
+
+template <class Node, class K>
+inline Node* findLowerHelperLeaf(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
+
+template <class Node, class K>
+inline Node* findUpperHelperLeaf(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
 
 
 /* Construction helpers */
@@ -79,7 +86,7 @@ inline Node* getMinimumHelperLeaf(Node* node);
 template <class Node>
 inline Node* getMaximumHelperLeaf(Node* node);
 
-
+}
 
 }
 

@@ -115,7 +115,7 @@ void BSTInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(lessComparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -126,7 +126,7 @@ void BSTInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the recursive helper
-    this->entries = constructionMedianHelperInner(
+    this->entries = internal::constructionMedianHelperInner(
                 sortedNodes,
                 0,
                 sortedNodes.size(),
@@ -168,7 +168,7 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::insert(
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = insertNodeHelperInner(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperInner(newNode, this->root, lessComparator);
 
     //If node has been inserted
     if (result != nullptr) {
@@ -197,12 +197,12 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::insert(
 template <class K, class T>
 bool BSTInner<K,T>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = findNodeHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperInner(key, this->root, lessComparator);
 
     //If the node has been found
     if (node != nullptr) {
         //Erase node
-        eraseNodeHelperInner(node, this->root);
+        internal::eraseNodeHelperInner(node, this->root);
 
         //Decrease the number of entries
         this->entries--;
@@ -231,7 +231,7 @@ void BSTInner<K,T>::erase(generic_iterator it) {
 
     if (node != nullptr) {
         //Erase node
-        eraseNodeHelperInner(node, this->root);
+        internal::eraseNodeHelperInner(node, this->root);
 
         //Decrease the number of entries
         this->entries--;
@@ -250,7 +250,41 @@ void BSTInner<K,T>::erase(generic_iterator it) {
 template <class K, class T>
 typename BSTInner<K,T>::iterator BSTInner<K,T>::find(const K& key) {
     //Query the BST to find the node
-    Node* node = findNodeHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperInner(key, this->root, lessComparator);
+
+    return iterator(this, node);
+}
+
+
+
+
+/**
+ * @brief Find the entry in the BST which is right lower than (or equal to)
+ * a given key
+ *
+ * @param[in] key Input key
+ * @return The iterator pointing to the BST node if the element (lower/equal)
+ * exists in the BST, end iterator otherwise
+ */
+template <class K, class T>
+typename BSTInner<K,T>::iterator BSTInner<K,T>::findLower(const K& key) {
+    //Query the BST to find the node
+    Node* node = internal::findLowerHelperInner(key, this->root, lessComparator);
+
+    return iterator(this, node);
+}
+
+/**
+ * @brief Find the entry in the BST which is right upper than a given key
+ *
+ * @param[in] key Key of the node to be found
+ * @return The iterator pointing to the BST node if the element (upper)
+ * exists in the BST, end iterator otherwise
+ */
+template <class K, class T>
+typename BSTInner<K,T>::iterator BSTInner<K,T>::findUpper(const K& key) {
+    //Query the BST to find the node
+    Node* node = internal::findUpperHelperInner(key, this->root, lessComparator);
 
     return iterator(this, node);
 }
@@ -266,7 +300,7 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::find(const K& key) {
 template <class K, class T>
 void BSTInner<K,T>::clear() {
     //Clear entire tree
-    clearHelper(this->root);
+    internal::clearHelper(this->root);
 
     //Decreasing entries
     this->entries = 0;
@@ -305,7 +339,7 @@ bool BSTInner<K,T>::empty() {
 template <class K, class T>
 TreeSize BSTInner<K,T>::getHeight()
 {
-    return getHeightRecursiveHelper(this->root);
+    return internal::getHeightRecursiveHelper(this->root);
 }
 
 
@@ -328,7 +362,7 @@ void BSTInner<K,T>::rangeQuery(
     std::vector<Node*> nodeOutput;
 
     //Execute range query
-    rangeQueryHelperInner(start, end, nodeOutput, this->root, lessComparator);
+    internal::rangeQueryHelperInner(start, end, nodeOutput, this->root, lessComparator);
 
     for (Node* node : nodeOutput) {
         *out = iterator(this, node);
@@ -347,7 +381,7 @@ void BSTInner<K,T>::rangeQuery(
  */
 template <class K, class T>
 typename BSTInner<K,T>::iterator BSTInner<K,T>::getMin() {
-    return iterator(this, getMinimumHelperInner(this->root));
+    return iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
 /**
@@ -357,7 +391,7 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::getMin() {
  */
 template <class K, class T>
 typename BSTInner<K,T>::iterator BSTInner<K,T>::getMax() {
-    return iterator(this, getMaximumHelperInner(this->root));
+    return iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
 
@@ -375,7 +409,7 @@ typename BSTInner<K,T>::generic_iterator BSTInner<K,T>::getNext(generic_iterator
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getSuccessorHelperInner(it.node));
+    return generic_iterator(this, internal::getSuccessorHelperInner(it.node));
 }
 
 /**
@@ -391,7 +425,7 @@ typename BSTInner<K,T>::generic_iterator BSTInner<K,T>::getPrev(generic_iterator
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
     }
-    return generic_iterator(this, getPredecessorHelperInner(it.node));
+    return generic_iterator(this, internal::getPredecessorHelperInner(it.node));
 }
 
 
@@ -403,7 +437,7 @@ typename BSTInner<K,T>::generic_iterator BSTInner<K,T>::getPrev(generic_iterator
  */
 template <class K, class T>
 typename BSTInner<K,T>::iterator BSTInner<K,T>::begin() {
-    return iterator(this, getMinimumHelperInner(this->root));
+    return iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
 /**
@@ -420,7 +454,7 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::end() {
  */
 template <class K, class T>
 typename BSTInner<K,T>::const_iterator BSTInner<K,T>::cbegin() {
-    return const_iterator(this, getMinimumHelperInner(this->root));
+    return const_iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
 /**
@@ -437,7 +471,7 @@ typename BSTInner<K,T>::const_iterator BSTInner<K,T>::cend() {
  */
 template <class K, class T>
 typename BSTInner<K,T>::reverse_iterator BSTInner<K,T>::rbegin() {
-    return reverse_iterator(this, getMaximumHelperInner(this->root));
+    return reverse_iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
 /**
@@ -454,7 +488,7 @@ typename BSTInner<K,T>::reverse_iterator BSTInner<K,T>::rend() {
  */
 template <class K, class T>
 typename BSTInner<K,T>::const_reverse_iterator BSTInner<K,T>::crbegin() {
-    return const_reverse_iterator(this, getMaximumHelperInner(this->root));
+    return const_reverse_iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
 /**

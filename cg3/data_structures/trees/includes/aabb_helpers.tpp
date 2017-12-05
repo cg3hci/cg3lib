@@ -11,7 +11,7 @@
 
 namespace cg3 {
 
-
+namespace internal {
 
 /* ----- AABB HELPERS ----- */
 
@@ -320,7 +320,9 @@ inline bool aabbOverlapsHelper(
     double eps = cg3::CG3_EPSILON;
 
     for (int i = 1; i <= D; i++) {
-        if (a.getMin(i) > b.getMax(i) + eps || b.getMin(i) > a.getMax(i) + eps) {
+        if (a.getMin(i) - eps > b.getMax(i) + eps ||
+                b.getMin(i) - eps > a.getMax(i) + eps)
+        {
             return false;
         }
     }
@@ -347,5 +349,6 @@ inline void setAABBFromKeyHelper(
     }
 }
 
+}
 
 }

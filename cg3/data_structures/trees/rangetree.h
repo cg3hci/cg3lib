@@ -41,7 +41,7 @@ public:
 
     /* Typedefs */
 
-    typedef RangeTreeNode<K,T> Node;
+    typedef internal::RangeTreeNode<K,T> Node;
 
     typedef LessComparatorType<K> LessComparator;
 

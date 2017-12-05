@@ -6,9 +6,11 @@
 
 #include "../tree_common.h"
 
-#include "aabb.h"
+#include "aabb_node_aabb.h"
 
 namespace cg3 {
+
+namespace internal {
 
 /**
  * @brief The node of the binary search tree
@@ -52,6 +54,7 @@ private:
     inline void init(const K& key, T* value);
 };
 
+}
 
 }
 

@@ -10,6 +10,8 @@
 
 namespace cg3 {
 
+namespace internal {
+
 
 
     /* Helpers for associate range trees */
@@ -73,6 +75,9 @@ namespace cg3 {
 
     template <class Node>
     inline Node* rightRotateRangeTreeHelper(Node* a, const unsigned int dim);
+
+}
+
 }
 
 #include "rangetree_helpers.tpp"

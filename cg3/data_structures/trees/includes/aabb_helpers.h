@@ -6,12 +6,11 @@
 
 #include "tree_common.h"
 
-#include "nodes/aabb.h"
+#include "nodes/aabb_node_aabb.h"
 
 #include <vector>
 
 namespace cg3 {
-
 
 /* Types */
 
@@ -24,6 +23,7 @@ template <class K>
 using AABBValueExtractorType = double (*)(const K& key, const AABBValueType& valueType, const int& dim);
 
 
+namespace internal {
 
 /* AABB helpers */
 
@@ -84,6 +84,8 @@ inline void setAABBFromKeyHelper(
         const K& k,
         AABB<D>& aabb,
         AABBValueExtractorType<K> aabbValueExtractor);
+
+}
 
 }
 

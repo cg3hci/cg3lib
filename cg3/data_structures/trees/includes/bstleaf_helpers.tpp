@@ -7,7 +7,7 @@
 
 namespace cg3 {
 
-
+namespace internal {
 
 /* ----- BASIC BST OPERATIONS ----- */
 
@@ -87,48 +87,6 @@ inline Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparato
 
 
 /**
- * @brief Find an entry on the BST given a key
- *
- * @param[in] key Key of the node to be found
- * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
- *
- * @return If the node with a given value is found, then its pointer
- * is returned. Otherwise a null pointer is returned.
- *
- */
-template <class Node, class K>
-inline Node* findNodeHelperLeaf(
-        const K& key,
-        Node*& rootNode,
-        LessComparatorType<K> lessComparator)
-{
-    if (rootNode == nullptr)
-        return nullptr;
-
-    Node* node = rootNode;
-
-    //Travel in the BST until a leaf is found
-    while (!node->isLeaf()) {
-        if (isLess(key, node->key, lessComparator)) {
-            node = node->left;
-        }
-        else {
-            node = node->right;
-        }
-        assert(node != nullptr);
-    }
-
-    //If node has the input key, then the node is found
-    if (isEqual(node->key, key, lessComparator)) {
-        return node;
-    }
-
-    return nullptr;
-}
-
-
-/**
  * @brief Erase node from BST
  *
  * @param[in] node Node to be erased
@@ -176,6 +134,136 @@ inline Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode)
 }
 
 
+
+/**
+ * @brief Find an entry on the BST given a key
+ *
+ * @param[in] key Key of the node to be found
+ * @param[in] rootNode Root node of the BST
+ * @param[in] lessComparator Less comparator for keys
+ *
+ * @return If the node with a given value is found, then its pointer
+ * is returned. Otherwise a null pointer is returned.
+ *
+ */
+template <class Node, class K>
+inline Node* findNodeHelperLeaf(
+        const K& key,
+        Node*& rootNode,
+        LessComparatorType<K> lessComparator)
+{
+    if (rootNode == nullptr)
+        return nullptr;
+
+    Node* node = rootNode;
+
+    //Travel in the BST until a leaf is found
+    while (!node->isLeaf()) {
+        if (isLess(key, node->key, lessComparator)) {
+            node = node->left;
+        }
+        else {
+            node = node->right;
+        }
+        assert(node != nullptr);
+    }
+
+    //If node has the input key, then the node is found
+    if (isEqual(node->key, key, lessComparator)) {
+        return node;
+    }
+
+    return nullptr;
+}
+
+
+/**
+ * @brief Find the entry of the BST which is equal/lower than a given key
+ *
+ * @param[in] key Input key
+ * @param[in] rootNode Root node of the BST
+ * @param[in] lessComparator Less comparator for keys
+ *
+ * @return If the node with a key equal/lower than the input key is found, then
+ * its pointer is returned. Otherwise, if there is not any entry equal/lower than
+ * the input key, a null pointer is returned.
+ *
+ */
+template <class Node, class K>
+inline Node* findLowerHelperLeaf(
+        const K& key,
+        Node*& rootNode,
+        LessComparatorType<K> lessComparator
+) {
+    if (rootNode == nullptr)
+        return nullptr;
+
+    Node* node = rootNode;
+
+    //Travel in the BST until a leaf is found
+    while (!node->isLeaf()) {
+        if (isLess(key, node->key, lessComparator)) {
+            node = node->left;
+        }
+        else {
+            node = node->right;
+        }
+        assert(node != nullptr);
+    }
+
+    //If the input key is lower
+    if (isLess(key, node->key, lessComparator)) {
+        return getPredecessorHelperLeaf(node);
+    }
+    //If the input key is greater or equal
+    else {
+        return node;
+    }
+}
+
+/**
+ * @brief Find the entry of the BST which is upper than a given key
+ *
+ * @param[in] key Input key
+ * @param[in] rootNode Root node of the BST
+ * @param[in] lessComparator Less comparator for keys
+ *
+ * @return If the node with a key upper than the input key is found, then
+ * its pointer is returned. Otherwise, if there is not any entry upper
+ * than the input key, a null pointer is returned.
+ *
+ */
+template <class Node, class K>
+inline Node* findUpperHelperLeaf(
+        const K& key,
+        Node*& rootNode,
+        LessComparatorType<K> lessComparator
+) {
+    if (rootNode == nullptr)
+        return nullptr;
+
+    Node* node = rootNode;
+
+    //Travel in the BST until a leaf is found
+    while (!node->isLeaf()) {
+        if (isLess(key, node->key, lessComparator)) {
+            node = node->left;
+        }
+        else {
+            node = node->right;
+        }
+        assert(node != nullptr);
+    }
+
+    //If the input key is lower
+    if (isGreaterOrEqual(key, node->key, lessComparator)) {
+        return getSuccessorHelperLeaf(node);
+    }
+    //If the input key is greater or equal
+    else {
+        return node;
+    }
+}
 
 
 /* ----- CONSTRUCTION HELPERS ----- */
@@ -558,6 +646,6 @@ inline Node* getMaximumHelperLeaf(Node* rootNode) {
 }
 
 
-
+}
 
 }

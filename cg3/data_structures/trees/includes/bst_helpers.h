@@ -10,6 +10,8 @@
 
 namespace cg3 {
 
+namespace internal {
+
     /* Basic BST operation helpers */
 
     template <class Node>
@@ -24,6 +26,8 @@ namespace cg3 {
 
     template <class Node>
     inline void replaceSubtreeHelperInner(const Node* u, Node* v, Node*& rootNode);
+
+}
 
 }
 

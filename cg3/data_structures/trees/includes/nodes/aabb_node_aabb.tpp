@@ -1,10 +1,12 @@
 /**
     @author Stefano Nuvoli
 */
-#include "aabb.h"
+#include "aabb_node_aabb.h"
 #include "assert.h"
 
 namespace cg3 {
+
+namespace internal {
 
 
 /* --------- CONSTRUCTORS/DESTRUCTOR --------- */
@@ -81,5 +83,6 @@ double AABB<D>::getMax(const int& dim) const {
 }
 
 
+}
 
 }
