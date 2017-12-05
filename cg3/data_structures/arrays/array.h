@@ -13,6 +13,35 @@
 
 namespace cg3 {
 
+/**
+ * @brief The Array class
+ * This is a dynamically allocated N-dimensional array, stored in RowWise mode.
+ * All its elements are stored contiguously. For array 1D please use std::vector or std::array.
+ *
+ * For D-dimensional array you can declare your array in this way:
+ * \code{.cpp}
+ * cg3::Array<Type, D> array;
+ * \endcode
+ *
+ * Where Type is a generic primitive or user-defined type and D is an unsigned integer that
+ * represents the dimensions of the aray.
+ *
+ * You can also specify the sizes of the array on initialization:
+ * \code{.cpp}
+ * cg3::Array<int, 3> array(n,m,l);
+ * \endcode
+ *
+ * In this example, array is a 3-dimensional array with sizes n*m*l.
+ * The sizes of the array can be accessed using "size" member function.
+ * You can access to its elements by using () operator:
+ * \code{.cpp}
+ * for (unsigned int i = 0; i < array.size(0); i++)
+ *      for (unsigned int j = 0; j < array.size(1); j++)
+ *          for (unsigned int k = 0; k < array.size(2); k++)
+ *              array(i,j,k) = someFunction();
+ * \endcode
+ *
+ */
 template <class T, size_t N>
 class Array : SerializableObject {
         static_assert(N > 0, "Array dimension must be > 0.");
@@ -21,7 +50,7 @@ class Array : SerializableObject {
         Array();
         template<typename... Sizes>
         Array(Sizes... sizes);
-        unsigned long int dimensions() const;
+        constexpr unsigned long int dimensions() const;
         template<typename... I>
         T& operator () (I... indices);
         template<typename... I>

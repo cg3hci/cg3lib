@@ -8,6 +8,10 @@
 
 namespace cg3 {
 
+/**
+ * @brief The Array3D class
+ * Specialization of cg3::Array class with 3 dimensions.
+ */
 template <typename T>
 class Array3D : public Array<T, 3> {
 public:

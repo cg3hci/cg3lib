@@ -8,6 +8,10 @@
 
 namespace cg3 {
 
+/**
+ * @brief The Array2D class
+ * Specialization of cg3::Array class with 2 dimensions.
+ */
 template <typename T>
 class Array2D : public Array<T, 2> {
 public:

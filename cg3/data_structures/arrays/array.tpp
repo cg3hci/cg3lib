@@ -6,7 +6,7 @@ inline cg3::Array<T, N>::Array() : v(0){
 }
 
 template<class T, size_t N>
-unsigned long int cg3::Array<T, N>::dimensions() const {
+constexpr unsigned long int cg3::Array<T, N>::dimensions() const {
     return N;
 }
 
