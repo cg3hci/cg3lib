@@ -2,6 +2,14 @@
 
 namespace cg3 {
 
+template <class T>
+Array2D<T>::Array2D() : Array<T, 2>() {
+}
+
+template <class T>
+inline Array2D<T>::Array2D(unsigned long int sizeX, unsigned long int sizeY) : Array<T, 2>(sizeX, sizeY){
+}
+
 /**
  * @brief Array2D<T>::Array2D
  * Initializes a 2D array with sizeX rows and sizeY columns.
@@ -60,21 +68,6 @@ inline unsigned long Array2D<T>::rows() const {
 template<class T>
 inline unsigned long Array2D<T>::cols() const {
     return Array<T, 2>::sizes[1];
-}
-
-/**
- * @brief Array2D<T>::resize
- * Resizes this array and sets all its elements to passed value.
- *
- * @param[in] x: new size of the rows of the array
- * @param[in] y: new size of the columns of the array
- * @param value
- */
-template <class T>
-inline void Array2D<T>::resize(unsigned long int x, unsigned long int y, const T& value) {
-    Array<T, 2>::v.resize(x*y, value);
-    Array<T, 2>::sizes[0] = x;
-    Array<T, 2>::sizes[1] = y;
 }
 
 

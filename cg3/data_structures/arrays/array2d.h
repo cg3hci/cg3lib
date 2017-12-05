@@ -11,14 +11,14 @@ namespace cg3 {
 template <typename T>
 class Array2D : public Array<T, 2> {
 public:
+    Array2D();
+    Array2D(unsigned long int sizeX, unsigned long int sizeY);
     Array2D(unsigned long int sizeX, unsigned long int sizeY, const T& value);
 
     unsigned long int getSizeX() const;
     unsigned long int getSizeY() const;
     unsigned long int rows() const;
     unsigned long int cols() const;
-
-    void resize (unsigned long int x, unsigned long int y, const T& value);
 };
 
 template <class T>
