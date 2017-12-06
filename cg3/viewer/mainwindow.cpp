@@ -71,7 +71,7 @@ Point2Di MainWindow::getCanvasSize() const {
  */
 void MainWindow::updateGlCanvas() {
     //ui->glCanvas->fitScene();
-    ui->glCanvas->updateGL();
+    ui->glCanvas->update();
 }
 
 /**
@@ -85,7 +85,7 @@ void MainWindow::updateGlCanvas() {
 void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bool b) {
     ui->glCanvas->pushObj(obj);
     if (b) ui->glCanvas->fitScene();
-    ui->glCanvas->updateGL();
+    ui->glCanvas->update();
 
     QCheckBox * cb = new QCheckBox();
     cb->setText(checkBoxName.c_str());
@@ -125,7 +125,7 @@ void MainWindow::deleteObj(const DrawableObject* obj, bool b) {
 
         ui->glCanvas->deleteObj(obj);
         if (b) ui->glCanvas->fitScene();
-        ui->glCanvas->updateGL();
+        ui->glCanvas->update();
     }
 }
 
@@ -167,7 +167,7 @@ int MainWindow::getNumberVisibleObjects() {
  * Aggiorna in automatico la scena visualizzata.
  */
 void MainWindow::saveSnapshot() {
-    ui->glCanvas->updateGL();
+    ui->glCanvas->update();
     ui->glCanvas->saveSnapshot();
 }
 
@@ -179,7 +179,7 @@ void MainWindow::saveSnapshot() {
  */
 void MainWindow::drawAxis(bool b) {
     ui->glCanvas->setAxisIsDrawn(b);
-    ui->glCanvas->updateGL();
+    ui->glCanvas->update();
 }
 
 void MainWindow::savePointOfView(std::string filename) {
@@ -188,7 +188,7 @@ void MainWindow::savePointOfView(std::string filename) {
 
 void MainWindow::loadPointOfView(std::string filename) {
     ui->glCanvas->loadPointOfView(filename);
-    ui->glCanvas->updateGL();
+    ui->glCanvas->update();
 }
 
 /**
@@ -279,48 +279,48 @@ void MainWindow::disableDebugObjects() {
         delete debugObjects;
         debugObjects = nullptr;
     }
-    ui->glCanvas->updateGL();
+    ui->glCanvas->update();
 }
 
 void MainWindow::addDebugSphere(const Pointd& center, double radius, const QColor& color, int precision) {
     if (debugObjects!= nullptr){
         debugObjects->addDebugSphere(center, radius, color, precision);
-        ui->glCanvas->updateGL();
+        ui->glCanvas->update();
     }
 }
 
 void MainWindow::clearDebugSpheres() {
     if (debugObjects!= nullptr){
         debugObjects->clearDebugSpheres();
-        ui->glCanvas->updateGL();
+        ui->glCanvas->update();
     }
 }
 
 void MainWindow::addDebugCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
     if (debugObjects!=nullptr){
         debugObjects->addDebugCylinder(a,b,radius, color);
-        ui->glCanvas->updateGL();
+        ui->glCanvas->update();
     }
 }
 
 void MainWindow::clearDebugCylinders() {
     if (debugObjects!=nullptr){
         debugObjects->clearDebugCylinders();
-        ui->glCanvas->updateGL();
+        ui->glCanvas->update();
     }
 }
 
 void MainWindow::addDebugLine(const Pointd &a, const Pointd &b, int width, const QColor color) {
     if (debugObjects != nullptr){
         debugObjects->addDebugLine(a,b,width, color);
-        ui->glCanvas->updateGL();
+        ui->glCanvas->update();
     }
 }
 
 void MainWindow::clearDebugLines() {
     if (debugObjects!=nullptr){
         debugObjects->clearDebugLines();
-        ui->glCanvas->updateGL();
+        ui->glCanvas->update();
     }
 }
 
@@ -335,7 +335,7 @@ void MainWindow::checkBoxClicked(int i) {
     //else obj->setVisible(false);
     if (cb->isChecked()) ui->glCanvas->setVisibility(obj, true);
     else ui->glCanvas->setVisibility(obj, false);
-    ui->glCanvas->updateGL();
+    ui->glCanvas->update();
 }
 
 void MainWindow::slotObjectPicked(unsigned int i) {

@@ -84,7 +84,7 @@ void PickableDcel::drawFace(const Face* f) const{
 
     std::vector<int> face_triangles = obtainFaceTriangles(f);
 
-    glDrawElements(GL_TRIANGLES, face_triangles.size(), GL_UNSIGNED_INT, face_triangles.data());
+    glDrawElements(GL_TRIANGLES, (GLsizei)face_triangles.size(), GL_UNSIGNED_INT, face_triangles.data());
 
 }
 

@@ -62,7 +62,7 @@ void GLcanvas::postSelection(const QPoint& point) {
           const PickableObject* po = dynamic_cast<const PickableObject*>(drawlist[i]);
           if (po) { // se è un PickableObject, allora faccio la emit sull'object!
               emit objectPicked(idObject);
-              updateGL();
+              update();
           }
       }
 }
@@ -91,7 +91,7 @@ void GLcanvas::draw() {
 unsigned int GLcanvas::pushObj(const DrawableObject* obj, bool visible) {
     drawlist.push_back(obj);
     objVisibility.push_back(visible);
-    updateGL();
+    update();
 
     return (unsigned int)drawlist.size();
 }
@@ -218,7 +218,7 @@ void GLcanvas::fitScene(const Pointd& center, double radius) {
 
 void GLcanvas::setClearColor(const QColor &color) {
     clearColor = color;
-    updateGL();
+    update();
 }
 
 BoundingBox GLcanvas::getFullBoundingBox() {
