@@ -1,7 +1,5 @@
-
-
 !contains(DEFINES, CG3_CORE_DEFINED){
-    error(Viewer module requires cg3_core!)
+    error(Viewer module requires Core module!)
 }
 
 QT += core gui opengl xml widgets
@@ -10,7 +8,9 @@ unix:!macx{
     DEFINES += CG3_VIEWER_DEFINED
     CONFIG += CG3_VIEWER
     MODULES += CG3_VIEWER
+
     QMAKE_CXXFLAGS += -std=c++11
+
     LIBS += /usr/lib/x86_64-linux-gnu/libGLU.so
     LIBS += -lQGLViewer
 }
@@ -20,8 +20,10 @@ macx{
         DEFINES += CG3_VIEWER_DEFINED
         CONFIG += CG3_VIEWER
         MODULES += CG3_VIEWER
+
         INCLUDEPATH += -I /libs/include/boost
         INCLUDEPATH += /libs/frameworks/QGLViewer/QGLViewer.framework/Headers
+
         LIBS += -F/libs/frameworks/QGLViewer -framework QGLViewer
     }
 }
@@ -46,6 +48,7 @@ win32 {
 }
 
 contains(DEFINES, CG3_VIEWER_DEFINED){
+
     HEADERS += \
         $$PWD/viewer/glcanvas.h \
         $$PWD/viewer/mainwindow.h \
@@ -103,9 +106,9 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         FORMS += \
             $$PWD/viewer/managers/eigenmesh_manager/eigenmesh_manager.ui
 
-        CG3_CGAL {
-            CG3_LIBIGL {
-                HEADERS +=  \
+        contains(DEFINES, CG3_CGAL_DEFINED){
+            contains(DEFINES, CG3_LIBIGL_DEFINED){
+                HEADERS += \
                     $$PWD/viewer/managers/booleans_manager/booleans_manager.h
 
                 SOURCES += \

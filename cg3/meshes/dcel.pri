@@ -1,10 +1,10 @@
+!contains(DEFINES, CG3_CORE_DEFINED){
+    error(Dcel module requires the Core module!)
+}
+
 DEFINES += CG3_DCEL_DEFINED
 CONFIG += CG3_DCEL
 MODULES += CG3_DCEL
-
-!contains(DEFINES, CG3_CORE_DEFINED){
-    error(Dcel module requires cg3_core!)
-}
 
 HEADERS += \
     $$PWD/dcel/dcel.h \

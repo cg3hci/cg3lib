@@ -1,12 +1,3 @@
-CONFIG(debug, debug|release){
-    DEFINES += DEBUG
-}
-CONFIG(release, debug|release){
-    DEFINES -= DEBUG
-    #just uncomment next lines if you want to ignore asserts and got a more optimized binary
-    #CONFIG += FINAL_RELEASE
-}
-
 CONFIG += c++11
 
 CG3_ALL {
@@ -51,16 +42,9 @@ qt {
     }
 }
 
-FINAL_RELEASE {
-    unix:!macx{
-        QMAKE_CXXFLAGS_RELEASE -= -g -O2
-        QMAKE_CXXFLAGS += -O3 -DNDEBUG
-    }
-}
 
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md
-
 
 INCLUDEPATH += $$PWD

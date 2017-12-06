@@ -1,4 +1,8 @@
 exists($$(LIBIGL_HOME)){
+    !contains(DEFINES, CG3_EIGENMESH_DEFINED){
+        error(Igl module requires Eigenmesh module!)
+    }
+
     DEFINES += CG3_LIBIGL_DEFINED
     CONFIG += CG3_LIBIGL
     MODULES += CG3_LIBIGL
@@ -6,10 +10,6 @@ exists($$(LIBIGL_HOME)){
     exists($$(LIBIGL_STATIC_HOME)){
         #comment next line if libigl is not used in static mode
         #CONFIG += LIBIGL_STATIC
-    }
-
-    !contains(DEFINES, CG3_EIGENMESH_DEFINED){
-        error(Igl module requires eigenmesh module!)
     }
 
     unix:!macx{
@@ -55,9 +55,3 @@ exists($$(LIBIGL_HOME)){
         $$PWD/libigl/remove_unreferenced_vertices.tpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp
 }
-
-
-
-
-
-

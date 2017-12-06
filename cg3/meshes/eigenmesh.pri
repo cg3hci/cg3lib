@@ -1,10 +1,10 @@
+!contains(DEFINES, CG3_WITH_EIGEN){
+    error(EigenMesh module requires Core module with Eigen!)
+}
+
 DEFINES += CG3_EIGENMESH_DEFINED
 CONFIG += CG3_EIGENMESH
 MODULES += CG3_EIGENMESH
-
-!contains(DEFINES, CG3_WITH_EIGEN){
-    error(EigenMesh module requires cg3_core with eigen!)
-}
 
 unix:!macx{
     LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread

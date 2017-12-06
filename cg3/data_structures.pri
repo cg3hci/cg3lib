@@ -1,10 +1,11 @@
+!contains(DEFINES, CG3_CORE_DEFINED){
+    error(DataStructures module requires Core module)
+}
+
 DEFINES += CG3_DATA_STRUCTURES_DEFINED
 CONFIG += CG3_DATA_STRUCTURES
 MODULES += CG3_DATA_SRUCTURES
 
-!contains(DEFINES, CG3_CORE_DEFINED){
-    error(DataStructures module requires cg3_core!)
-}
 
 # ----- Arrays -----
 

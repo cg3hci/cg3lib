@@ -1,10 +1,10 @@
+!contains(DEFINES, CG3_CORE_DEFINED){
+    error(Algorithms module requires Core module!)
+}
+
 DEFINES += CG3_ALGORITHMS_DEFINED
 CONFIG += CG3_ALGORITHMS
 MODULES += CG3_ALGORITHMS
-
-!contains(DEFINES, CG3_CORE_DEFINED){
-    error(Algorithms module requires cg3_core!)
-}
 
 HEADERS += \
     $$PWD/algorithms/convexhull.h \

@@ -1,7 +1,12 @@
+!contains(DEFINES, CG3_CORE_DEFINED){
+    error(Cgal module requires Core module!)
+}
+
 unix:!macx{
     DEFINES += CG3_CGAL_DEFINED
     CONFIG += CG3_CGAL
     MODULES += CG3_CGAL
+
     LIBS += -lmpfr -lgmp -lCGAL -frounding-math
     LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
 }
@@ -11,6 +16,7 @@ macx{
         DEFINES += CG3_CGAL_DEFINED
         CONFIG += CG3_CGAL
         MODULES += CG3_CGAL
+
         INCLUDEPATH += -I /libs/include/CGAL/
 
         LIBS += -frounding-math
@@ -27,6 +33,7 @@ win32{
             DEFINES += CG3_CGAL_DEFINED
             CONFIG += CG3_CGAL
             MODULES += CG3_CGAL
+
             INCLUDEPATH += -I "C:/dev/CGAL/include"
             INCLUDEPATH += -I "C:/dev/CGAL/auxiliary/gmp/include"
 
@@ -47,10 +54,6 @@ win32{
 }
 
 contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the architecture:
-
-    !contains(DEFINES, CG3_CORE_DEFINED){
-        error(Cgal module requires cg3_core!)
-    }
 
     PROFILER{
         message(Profiling Configuration)
