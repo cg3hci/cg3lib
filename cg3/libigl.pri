@@ -8,8 +8,8 @@ exists($$(LIBIGL_HOME)){
         #CONFIG += LIBIGL_STATIC
     }
 
-    !contains(DEFINES, CG3_CORE_DEFINED){
-        error(Igl module requires cg3_core!)
+    !contains(DEFINES, CG3_EIGENMESH_DEFINED){
+        error(Igl module requires eigenmesh module!)
     }
 
     unix:!macx{

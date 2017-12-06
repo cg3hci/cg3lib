@@ -15,6 +15,7 @@ unix:!macx{
 }
 
 macx{
+    INCLUDEPATH += -I /libs/include/boost/
     exists(/libs/include/eigen3){
         DEFINES += CG3_WITH_EIGEN
         MODULES += CG3_WITH_EIGEN
