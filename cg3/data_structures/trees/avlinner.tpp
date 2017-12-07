@@ -530,8 +530,7 @@ typename AVLInner<K,T>::insert_iterator AVLInner<K,T>::inserter() {
 
 
 /**
- * @brief AVLInner<K,T>::getIterator
- * Get range based iterator of the BST
+ * @brief Get range based iterator of the BST
  *
  * @return Range based iterator
  */
@@ -541,8 +540,7 @@ typename AVLInner<K,T>::RangeBasedIterator AVLInner<K,T>::getIterator() {
 }
 
 /**
- * @brief AVLInner<K,T>::getConstIterator
- * Get range based const iterator of the BST
+ * @brief Get range based const iterator of the BST
  *
  * @return Range based const iterator
  */
@@ -552,8 +550,7 @@ typename AVLInner<K,T>::RangeBasedConstIterator AVLInner<K,T>::getConstIterator(
 }
 
 /**
- * @brief AVLInner<K,T>::getReverseIterator
- * Get range based reverse iterator of the BST
+ * @brief Get range based reverse iterator of the BST
  *
  * @return Range based reverse iterator
  */
@@ -563,8 +560,7 @@ typename AVLInner<K,T>::RangeBasedReverseIterator AVLInner<K,T>::getReverseItera
 }
 
 /**
- * @brief AVLInner<K,T>::getConstReverseIterator
- * Get range based const reverse iterator of the BST
+ * @brief Get range based const reverse iterator of the BST
  *
  * @return Range based const reverse iterator
  */

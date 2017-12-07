@@ -14,9 +14,9 @@ class TreeGenericIterator {
 
 public:
 
-    /* Constructors/destructor */
+    /* Constructors */
 
-    TreeGenericIterator(B* bst, N* node);
+    inline TreeGenericIterator(B* bst, N* node);
 
 
     /* Fields */

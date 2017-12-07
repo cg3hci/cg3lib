@@ -8,7 +8,7 @@ namespace cg3 {
 
 
 
-/* --------- ITERATOR --------- */
+/* --------- ITERATOR OPERATOR OVERLOAD --------- */
 
 
 template <class B, class N, class T>
@@ -108,7 +108,7 @@ T& TreeIterator<B,N,T>::operator *() const
 
 
 
-/* Protected methods for navigation */
+/* ----- PROTECTED METHODS ----- */
 
 template <class B, class N, class T>
 void TreeIterator<B,N,T>::next() {

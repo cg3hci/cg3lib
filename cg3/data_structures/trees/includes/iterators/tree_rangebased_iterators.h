@@ -18,7 +18,7 @@ class TreeRangeBasedIterator
 
 public:
 
-    TreeRangeBasedIterator(B* bst);
+    inline TreeRangeBasedIterator(B* bst);
 
     inline typename B::iterator begin();
     inline typename B::iterator end();
@@ -38,7 +38,7 @@ class TreeRangeBasedConstIterator
 
 public:
 
-    TreeRangeBasedConstIterator(B* bst);
+    inline TreeRangeBasedConstIterator(B* bst);
 
     inline typename B::const_iterator begin();
     inline typename B::const_iterator end();
@@ -58,7 +58,7 @@ class TreeRangeBasedReverseIterator
 
 public:
 
-    TreeRangeBasedReverseIterator(B* bst);
+    inline TreeRangeBasedReverseIterator(B* bst);
 
     inline typename B::reverse_iterator begin();
     inline typename B::reverse_iterator end();
@@ -78,7 +78,7 @@ class TreeRangeBasedConstReverseIterator
 
 public:
 
-    TreeRangeBasedConstReverseIterator(B* bst);
+    inline TreeRangeBasedConstReverseIterator(B* bst);
 
     inline typename B::const_reverse_iterator begin();
     inline typename B::const_reverse_iterator end();

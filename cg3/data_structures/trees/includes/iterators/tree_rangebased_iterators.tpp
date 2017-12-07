@@ -14,12 +14,12 @@ TreeRangeBasedIterator<B>::TreeRangeBasedIterator(B* bst) {
 }
 
 template <class B>
-inline typename B::iterator TreeRangeBasedIterator<B>::begin() {
+typename B::iterator TreeRangeBasedIterator<B>::begin() {
     return this->bst->begin();
 }
 
 template <class B>
-inline typename B::iterator TreeRangeBasedIterator<B>::end() {
+typename B::iterator TreeRangeBasedIterator<B>::end() {
     return this->bst->end();
 }
 
@@ -32,12 +32,12 @@ TreeRangeBasedConstIterator<B>::TreeRangeBasedConstIterator(B* bst) {
 }
 
 template <class B>
-inline typename B::const_iterator TreeRangeBasedConstIterator<B>::begin() {
+typename B::const_iterator TreeRangeBasedConstIterator<B>::begin() {
     return this->bst->cbegin();
 }
 
 template <class B>
-inline typename B::const_iterator TreeRangeBasedConstIterator<B>::end() {
+typename B::const_iterator TreeRangeBasedConstIterator<B>::end() {
     return this->bst->cend();
 }
 
@@ -51,12 +51,12 @@ TreeRangeBasedReverseIterator<B>::TreeRangeBasedReverseIterator(B* bst) {
 }
 
 template <class B>
-inline typename B::reverse_iterator TreeRangeBasedReverseIterator<B>::begin() {
+typename B::reverse_iterator TreeRangeBasedReverseIterator<B>::begin() {
     return this->bst->rbegin();
 }
 
 template <class B>
-inline typename B::reverse_iterator TreeRangeBasedReverseIterator<B>::end() {
+typename B::reverse_iterator TreeRangeBasedReverseIterator<B>::end() {
     return this->bst->rend();
 }
 
@@ -69,12 +69,12 @@ TreeRangeBasedConstReverseIterator<B>::TreeRangeBasedConstReverseIterator(B* bst
 }
 
 template <class B>
-inline typename B::const_reverse_iterator TreeRangeBasedConstReverseIterator<B>::begin() {
+typename B::const_reverse_iterator TreeRangeBasedConstReverseIterator<B>::begin() {
     return this->bst->crbegin();
 }
 
 template <class B>
-inline typename B::const_reverse_iterator TreeRangeBasedConstReverseIterator<B>::end() {
+typename B::const_reverse_iterator TreeRangeBasedConstReverseIterator<B>::end() {
     return this->bst->crend();
 }
 

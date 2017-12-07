@@ -510,8 +510,7 @@ typename BSTLeaf<K,T>::insert_iterator BSTLeaf<K,T>::inserter() {
 
 
 /**
- * @brief BSTLeaf<K,T>::getIterator
- * Get range based iterator of the BST
+ * @brief Get range based iterator of the BST
  *
  * @return Range based iterator
  */
@@ -521,8 +520,7 @@ typename BSTLeaf<K,T>::RangeBasedIterator BSTLeaf<K,T>::getIterator() {
 }
 
 /**
- * @brief BSTLeaf<K,T>::getConstIterator
- * Get range based const iterator of the BST
+ * @brief Get range based const iterator of the BST
  *
  * @return Range based const iterator
  */
@@ -532,8 +530,7 @@ typename BSTLeaf<K,T>::RangeBasedConstIterator BSTLeaf<K,T>::getConstIterator() 
 }
 
 /**
- * @brief BSTLeaf<K,T>::getReverseIterator
- * Get range based reverse iterator of the BST
+ * @brief Get range based reverse iterator of the BST
  *
  * @return Range based reverse iterator
  */
@@ -543,8 +540,7 @@ typename BSTLeaf<K,T>::RangeBasedReverseIterator BSTLeaf<K,T>::getReverseIterato
 }
 
 /**
- * @brief BSTLeaf<K,T>::getConstReverseIterator
- * Get range based const reverse iterator of the BST
+ * @brief Get range based const reverse iterator of the BST
  *
  * @return Range based const reverse iterator
  */

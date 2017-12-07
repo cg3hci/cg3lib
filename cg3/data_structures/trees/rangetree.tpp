@@ -539,8 +539,7 @@ typename RangeTree<K,T>::insert_iterator RangeTree<K,T>::inserter() {
 
 
 /**
- * @brief RangeTree<K,T>::getIterator
- * Get range based iterator of the BST
+ * @brief Get range based iterator of the BST
  *
  * @return Range based iterator
  */
@@ -550,8 +549,7 @@ typename RangeTree<K,T>::RangeBasedIterator RangeTree<K,T>::getIterator() {
 }
 
 /**
- * @brief RangeTree<K,T>::getConstIterator
- * Get range based const iterator of the BST
+ * @brief Get range based const iterator of the BST
  *
  * @return Range based const iterator
  */
@@ -561,8 +559,7 @@ typename RangeTree<K,T>::RangeBasedConstIterator RangeTree<K,T>::getConstIterato
 }
 
 /**
- * @brief RangeTree<K,T>::getReverseIterator
- * Get range based reverse iterator of the BST
+ * @brief Get range based reverse iterator of the BST
  *
  * @return Range based reverse iterator
  */
@@ -572,8 +569,7 @@ typename RangeTree<K,T>::RangeBasedReverseIterator RangeTree<K,T>::getReverseIte
 }
 
 /**
- * @brief RangeTree<K,T>::getConstReverseIterator
- * Get range based const reverse iterator of the BST
+ * @brief Get range based const reverse iterator of the BST
  *
  * @return Range based const reverse iterator
  */

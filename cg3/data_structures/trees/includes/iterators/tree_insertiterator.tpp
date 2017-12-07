@@ -10,7 +10,7 @@ namespace cg3 {
 /* --------- CONSTRUCTORS/DESTRUCTOR --------- */
 
 /**
- * Default constructor
+ * @brief Default constructor
  */
 template <class B, class K>
 TreeInsertIterator<B,K>::TreeInsertIterator(B* bst)
@@ -20,7 +20,7 @@ TreeInsertIterator<B,K>::TreeInsertIterator(B* bst)
 
 
 
-/* --------- ITERATOR --------- */
+/* --------- ITERATOR OPERATOR OVERLOAD --------- */
 
 template <class B, class K>
 TreeInsertIterator<B,K>& TreeInsertIterator<B,K>::operator=(const K key)

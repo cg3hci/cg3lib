@@ -6,7 +6,7 @@
 namespace cg3 {
 
 
-/* --------- REVERSE ITERATOR --------- */
+/* --------- REVERSE ITERATOR OPERATOR OVERLOAD --------- */
 
 
 template <class B, class N, class T>
@@ -106,7 +106,7 @@ T& TreeReverseIterator<B,N,T>::operator *() const
 
 
 
-/* Protected methods for navigation */
+/* ----- PROTECTED METHODS ----- */
 
 template <class B, class N, class T>
 void TreeReverseIterator<B,N,T>::next() {

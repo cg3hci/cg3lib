@@ -512,8 +512,7 @@ typename BSTInner<K,T>::insert_iterator BSTInner<K,T>::inserter() {
 
 
 /**
- * @brief BSTInner<K,T>::getIterator
- * Get range based iterator of the BST
+ * @brief Get range based iterator of the BST
  *
  * @return Range based iterator
  */
@@ -523,8 +522,7 @@ typename BSTInner<K,T>::RangeBasedIterator BSTInner<K,T>::getIterator() {
 }
 
 /**
- * @brief BSTInner<K,T>::getConstIterator
- * Get range based const iterator of the BST
+ * @brief Get range based const iterator of the BST
  *
  * @return Range based const iterator
  */
@@ -534,8 +532,7 @@ typename BSTInner<K,T>::RangeBasedConstIterator BSTInner<K,T>::getConstIterator(
 }
 
 /**
- * @brief BSTInner<K,T>::getReverseIterator
- * Get range based reverse iterator of the BST
+ * @brief Get range based reverse iterator of the BST
  *
  * @return Range based reverse iterator
  */
@@ -545,8 +542,7 @@ typename BSTInner<K,T>::RangeBasedReverseIterator BSTInner<K,T>::getReverseItera
 }
 
 /**
- * @brief BSTInner<K,T>::getConstReverseIterator
- * Get range based const reverse iterator of the BST
+ * @brief Get range based const reverse iterator of the BST
  *
  * @return Range based const reverse iterator
  */
@@ -554,7 +550,6 @@ template <class K, class T>
 typename BSTInner<K,T>::RangeBasedConstReverseIterator BSTInner<K,T>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
 }
-
 
 
 /* --------- PRIVATE METHODS --------- */

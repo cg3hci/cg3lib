@@ -17,18 +17,18 @@ class TreeInsertIterator :
         public std::iterator<std::output_iterator_tag,void,void,void,void>  {
 public:
 
-    /* Constructors/destructor */
+    /* Constructors */
 
-    TreeInsertIterator(B* bst);
+    inline TreeInsertIterator(B* bst);
 
 
     /* Iterator operators */
 
-    TreeInsertIterator& operator *();
-    TreeInsertIterator& operator ++();
-    TreeInsertIterator& operator ++(int);
+    inline TreeInsertIterator& operator *();
+    inline TreeInsertIterator& operator ++();
+    inline TreeInsertIterator& operator ++(int);
 
-    TreeInsertIterator& operator=(const K key);
+    inline TreeInsertIterator& operator=(const K key);
 
 private:
 

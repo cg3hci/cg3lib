@@ -20,32 +20,34 @@ class TreeReverseIterator :
 
 public:
 
-    TreeReverseIterator(B* bst, N* node) : TreeGenericIterator<B,N>(bst,node) {}
+    /* Constructors */
+
+    inline TreeReverseIterator(B* bst, N* node) : TreeGenericIterator<B,N>(bst,node) {}
 
 
     /* Iterator operators */
 
-    bool operator == (const TreeReverseIterator& otherIterator) const;
-    bool operator != (const TreeReverseIterator& otherIterator) const;
+    inline bool operator == (const TreeReverseIterator& otherIterator) const;
+    inline bool operator != (const TreeReverseIterator& otherIterator) const;
 
-    TreeReverseIterator operator ++ ();
-    TreeReverseIterator operator ++ (int);
-    TreeReverseIterator operator + (int);
-    TreeReverseIterator operator += (int);
+    inline TreeReverseIterator operator ++ ();
+    inline TreeReverseIterator operator ++ (int);
+    inline TreeReverseIterator operator + (int);
+    inline TreeReverseIterator operator += (int);
 
-    TreeReverseIterator operator -- ();
-    TreeReverseIterator operator -- (int);
-    TreeReverseIterator operator - (int);
-    TreeReverseIterator operator -= (int);
+    inline TreeReverseIterator operator -- ();
+    inline TreeReverseIterator operator -- (int);
+    inline TreeReverseIterator operator - (int);
+    inline TreeReverseIterator operator -= (int);
 
-    T& operator *() const;
+    inline T& operator *() const;
 
 protected:
 
     /* Protected methods */
 
-    void next();
-    void prev();
+    inline void next();
+    inline void prev();
 
 };
 
