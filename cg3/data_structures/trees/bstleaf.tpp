@@ -509,6 +509,51 @@ typename BSTLeaf<K,T>::insert_iterator BSTLeaf<K,T>::inserter() {
 
 
 
+/**
+ * @brief BSTLeaf<K,T>::getIterator
+ * Get range based iterator of the BST
+ *
+ * @return Range based iterator
+ */
+template <class K, class T>
+typename BSTLeaf<K,T>::RangeBasedIterator BSTLeaf<K,T>::getIterator() {
+    return RangeBasedIterator(this);
+}
+
+/**
+ * @brief BSTLeaf<K,T>::getConstIterator
+ * Get range based const iterator of the BST
+ *
+ * @return Range based const iterator
+ */
+template <class K, class T>
+typename BSTLeaf<K,T>::RangeBasedConstIterator BSTLeaf<K,T>::getConstIterator() {
+    return RangeBasedConstIterator(this);
+}
+
+/**
+ * @brief BSTLeaf<K,T>::getReverseIterator
+ * Get range based reverse iterator of the BST
+ *
+ * @return Range based reverse iterator
+ */
+template <class K, class T>
+typename BSTLeaf<K,T>::RangeBasedReverseIterator BSTLeaf<K,T>::getReverseIterator() {
+    return RangeBasedReverseIterator(this);
+}
+
+/**
+ * @brief BSTLeaf<K,T>::getConstReverseIterator
+ * Get range based const reverse iterator of the BST
+ *
+ * @return Range based const reverse iterator
+ */
+template <class K, class T>
+typename BSTLeaf<K,T>::RangeBasedConstReverseIterator BSTLeaf<K,T>::getConstReverseIterator() {
+    return RangeBasedConstReverseIterator(this);
+}
+
+
 /* --------- PRIVATE METHODS --------- */
 
 /**

@@ -10,7 +10,7 @@
 namespace cg3 {
 
 /**
- * @brief The iterator class for BST
+ * @brief The insert iterator class for BST
  */
 template <class B, class K>
 class TreeInsertIterator :

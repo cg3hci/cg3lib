@@ -10,7 +10,7 @@
 namespace cg3 {
 
 /**
- * @brief The reverse iteratro class for BST
+ * @brief The reverse iterator class for BST
  */
 template <class B, class N, class T>
 class TreeReverseIterator :

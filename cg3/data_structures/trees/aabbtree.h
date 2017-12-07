@@ -12,6 +12,7 @@
 #include "includes/iterators/tree_iterator.h"
 #include "includes/iterators/tree_reverseiterator.h"
 #include "includes/iterators/tree_insertiterator.h"
+#include "includes/iterators/tree_rangebased_iterators.h"
 
 #include "includes/nodes/aabb_node.h"
 
@@ -50,6 +51,11 @@ public:
     typedef TreeReverseIterator<AABBTree<D,K,T>, Node, const T> const_reverse_iterator;
 
     typedef TreeInsertIterator<AABBTree<D,K,T>, K> insert_iterator;
+
+    typedef TreeRangeBasedIterator<AABBTree<D,K,T>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<AABBTree<D,K,T>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<AABBTree<D,K,T>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<AABBTree<D,K,T>> RangeBasedConstReverseIterator;
 
 
 
@@ -131,6 +137,11 @@ public:
     const_reverse_iterator crend();
 
     insert_iterator inserter();
+
+    RangeBasedIterator getIterator();
+    RangeBasedConstIterator getConstIterator();
+    RangeBasedReverseIterator getReverseIterator();
+    RangeBasedConstReverseIterator getConstReverseIterator();
 
 
 protected:

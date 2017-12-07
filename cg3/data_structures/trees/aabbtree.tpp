@@ -567,6 +567,52 @@ typename AABBTree<D,K,T>::insert_iterator AABBTree<D,K,T>::inserter() {
 
 
 
+/**
+ * @brief AABBTree<D,K,T>::getIterator
+ * Get range based iterator of the BST
+ *
+ * @return Range based iterator
+ */
+template <int D, class K, class T>
+typename AABBTree<D,K,T>::RangeBasedIterator AABBTree<D,K,T>::getIterator() {
+    return RangeBasedIterator(this);
+}
+
+/**
+ * @brief AABBTree<D,K,T>::getConstIterator
+ * Get range based const iterator of the BST
+ *
+ * @return Range based const iterator
+ */
+template <int D, class K, class T>
+typename AABBTree<D,K,T>::RangeBasedConstIterator AABBTree<D,K,T>::getConstIterator() {
+    return RangeBasedConstIterator(this);
+}
+
+/**
+ * @brief AABBTree<D,K,T>::getReverseIterator
+ * Get range based reverse iterator of the BST
+ *
+ * @return Range based reverse iterator
+ */
+template <int D, class K, class T>
+typename AABBTree<D,K,T>::RangeBasedReverseIterator AABBTree<D,K,T>::getReverseIterator() {
+    return RangeBasedReverseIterator(this);
+}
+
+/**
+ * @brief AABBTree<D,K,T>::getConstReverseIterator
+ * Get range based const reverse iterator of the BST
+ *
+ * @return Range based const reverse iterator
+ */
+template <int D, class K, class T>
+typename AABBTree<D,K,T>::RangeBasedConstReverseIterator AABBTree<D,K,T>::getConstReverseIterator() {
+    return RangeBasedConstReverseIterator(this);
+}
+
+
+
 /* --------- PRIVATE METHODS --------- */
 
 /**

@@ -12,6 +12,7 @@
 #include "includes/iterators/tree_iterator.h"
 #include "includes/iterators/tree_reverseiterator.h"
 #include "includes/iterators/tree_insertiterator.h"
+#include "includes/iterators/tree_rangebased_iterators.h"
 
 #include "includes/nodes/avl_node.h"
 
@@ -44,6 +45,11 @@ public:
     typedef TreeReverseIterator<AVLLeaf<K,T>, Node, const T> const_reverse_iterator;
 
     typedef TreeInsertIterator<AVLLeaf<K,T>, K> insert_iterator;
+
+    typedef TreeRangeBasedIterator<AVLLeaf<K,T>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<AVLLeaf<K,T>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<AVLLeaf<K,T>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<AVLLeaf<K,T>> RangeBasedConstReverseIterator;
 
 
 
@@ -116,6 +122,11 @@ public:
     const_reverse_iterator crend();
 
     insert_iterator inserter();
+
+    RangeBasedIterator getIterator();
+    RangeBasedConstIterator getConstIterator();
+    RangeBasedReverseIterator getReverseIterator();
+    RangeBasedConstReverseIterator getConstReverseIterator();
 
 
 protected:

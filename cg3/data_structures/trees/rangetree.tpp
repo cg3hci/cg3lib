@@ -538,6 +538,50 @@ typename RangeTree<K,T>::insert_iterator RangeTree<K,T>::inserter() {
 
 
 
+/**
+ * @brief RangeTree<K,T>::getIterator
+ * Get range based iterator of the BST
+ *
+ * @return Range based iterator
+ */
+template <class K, class T>
+typename RangeTree<K,T>::RangeBasedIterator RangeTree<K,T>::getIterator() {
+    return RangeBasedIterator(this);
+}
+
+/**
+ * @brief RangeTree<K,T>::getConstIterator
+ * Get range based const iterator of the BST
+ *
+ * @return Range based const iterator
+ */
+template <class K, class T>
+typename RangeTree<K,T>::RangeBasedConstIterator RangeTree<K,T>::getConstIterator() {
+    return RangeBasedConstIterator(this);
+}
+
+/**
+ * @brief RangeTree<K,T>::getReverseIterator
+ * Get range based reverse iterator of the BST
+ *
+ * @return Range based reverse iterator
+ */
+template <class K, class T>
+typename RangeTree<K,T>::RangeBasedReverseIterator RangeTree<K,T>::getReverseIterator() {
+    return RangeBasedReverseIterator(this);
+}
+
+/**
+ * @brief RangeTree<K,T>::getConstReverseIterator
+ * Get range based const reverse iterator of the BST
+ *
+ * @return Range based const reverse iterator
+ */
+template <class K, class T>
+typename RangeTree<K,T>::RangeBasedConstReverseIterator RangeTree<K,T>::getConstReverseIterator() {
+    return RangeBasedConstReverseIterator(this);
+}
+
 
 /* --------- PRIVATE METHODS --------- */
 

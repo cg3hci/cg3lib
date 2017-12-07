@@ -527,6 +527,51 @@ typename AVLLeaf<K,T>::insert_iterator AVLLeaf<K,T>::inserter() {
 
 
 
+/**
+ * @brief AVLLeaf<K,T>::getIterator
+ * Get range based iterator of the BST
+ *
+ * @return Range based iterator
+ */
+template <class K, class T>
+typename AVLLeaf<K,T>::RangeBasedIterator AVLLeaf<K,T>::getIterator() {
+    return RangeBasedIterator(this);
+}
+
+/**
+ * @brief AVLLeaf<K,T>::getConstIterator
+ * Get range based const iterator of the BST
+ *
+ * @return Range based const iterator
+ */
+template <class K, class T>
+typename AVLLeaf<K,T>::RangeBasedConstIterator AVLLeaf<K,T>::getConstIterator() {
+    return RangeBasedConstIterator(this);
+}
+
+/**
+ * @brief AVLLeaf<K,T>::getReverseIterator
+ * Get range based reverse iterator of the BST
+ *
+ * @return Range based reverse iterator
+ */
+template <class K, class T>
+typename AVLLeaf<K,T>::RangeBasedReverseIterator AVLLeaf<K,T>::getReverseIterator() {
+    return RangeBasedReverseIterator(this);
+}
+
+/**
+ * @brief AVLLeaf<K,T>::getConstReverseIterator
+ * Get range based const reverse iterator of the BST
+ *
+ * @return Range based const reverse iterator
+ */
+template <class K, class T>
+typename AVLLeaf<K,T>::RangeBasedConstReverseIterator AVLLeaf<K,T>::getConstReverseIterator() {
+    return RangeBasedConstReverseIterator(this);
+}
+
+
 /* --------- PRIVATE METHODS --------- */
 
 /**

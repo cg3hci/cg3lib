@@ -52,6 +52,7 @@ HEADERS +=  \
     $$PWD/data_structures/trees/includes/iterators/tree_insertiterator.h \
     $$PWD/data_structures/trees/includes/iterators/tree_iterator.h \
     $$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.h \
+    $$PWD/data_structures/trees/includes/iterators/tree_rangebased_iterators.h \
     $$PWD/data_structures/trees/includes/bst_helpers.h
 
 SOURCES += \
@@ -59,6 +60,7 @@ SOURCES += \
     $$PWD/data_structures/trees/includes/iterators/tree_insertiterator.tpp \
     $$PWD/data_structures/trees/includes/iterators/tree_iterator.tpp \
     $$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.tpp \
+    $$PWD/data_structures/trees/includes/iterators/tree_rangebased_iterators.tpp \
     $$PWD/data_structures/trees/includes/bst_helpers.tpp
 
 
