@@ -6,8 +6,6 @@
 
 #include "../tree_common.h"
 
-#include "aabb_node_aabb.h"
-
 namespace cg3 {
 
 namespace internal {
@@ -20,6 +18,14 @@ template <int D, class K, class T>
 class AABBNode {
 
 public:
+
+    /**
+     * @brief D-dimensional axis-aligned bounding box
+     */
+    struct AABB {
+        double min[D];
+        double max[D];
+    };
 
     /* Constructors/Destructor */
 
@@ -34,7 +40,7 @@ public:
     K key;
     T* value;
 
-    AABB<D> aabb;
+    AABB aabb;
 
     AABBNode* parent;
     AABBNode* left;
@@ -46,6 +52,7 @@ public:
     /* Public methods */
 
     inline bool isLeaf() const;
+
 
 private:
 

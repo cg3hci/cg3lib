@@ -34,6 +34,7 @@ public:
     BSTNode* left;
     BSTNode* right;
 
+
     /* Public methods */
 
     inline bool isLeaf() const;
@@ -44,7 +45,6 @@ private:
     /* Private methods */
 
     inline void init(const K& key, T* value);
-
 
 };
 

@@ -76,7 +76,7 @@ void RangeTreeNode<K,T>::init(const K& key, T* value) {
  * @return True if the node is a leaf
  */
 template <class K, class T>
-inline bool RangeTreeNode<K,T>::isLeaf() const {
+bool RangeTreeNode<K,T>::isLeaf() const {
     return (left == nullptr) && (right == nullptr);
 }
 

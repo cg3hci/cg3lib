@@ -16,8 +16,6 @@
 
 #include "includes/nodes/rangetree_node.h"
 
-#include "includes/rangetree_helpers.h"
-
 
 namespace cg3 {
 
@@ -141,7 +139,6 @@ public:
 protected:
 
 
-
     /* Protected fields */
 
     Node* root;
@@ -153,6 +150,8 @@ protected:
 
     const std::vector<LessComparator> customComparators;
 
+
+private:
 
     /* Private methods */
 
@@ -171,6 +170,51 @@ protected:
             const K& start,
             const K& end,
             std::vector<Node*>& out);
+
+
+
+
+    /* Helpers for associate range trees */
+
+    inline void createAssociatedTreeHelper(
+            Node* node);
+
+    inline void createParentAssociatedTreeHelper(
+            Node *node);
+
+
+
+    inline Node* insertIntoAssociatedTreeHelper(
+            Node* node,
+            const K& key,
+            const T& value);
+
+    inline Node* insertIntoParentAssociatedTreesHelper(
+            Node* node,
+            const K& key,
+            const T& value);
+
+
+
+    inline void eraseFromAssociatedTreeHelper(
+            Node* node,
+            const K& key);
+
+    inline void eraseFromParentAssociatedTreesHelper(
+            Node* node,
+            const K& key);
+
+
+
+    /* AVL helpers for range tree */
+
+    inline void rebalanceRangeTreeHelper(Node* node);
+
+    inline void updateHeightAndRebalanceRangeTreeHelper(Node* node);
+
+    inline Node* leftRotateRangeTreeHelper(Node* a);
+
+    inline Node* rightRotateRangeTreeHelper(Node* a);
 
 };
 

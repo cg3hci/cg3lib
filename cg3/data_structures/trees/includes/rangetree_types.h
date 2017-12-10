@@ -13,13 +13,13 @@ namespace cg3 {
 namespace internal {
 
 /* Comparators for 2D points */
-bool point2DDimensionComparatorX(const Point2Dd& o1, const Point2Dd& o2);
-bool point2DDimensionComparatorY(const Point2Dd& o1, const Point2Dd& o2);
+inline bool point2DDimensionComparatorX(const Point2Dd& o1, const Point2Dd& o2);
+inline bool point2DDimensionComparatorY(const Point2Dd& o1, const Point2Dd& o2);
 
 /* Comparators for 3D points */
-bool point2DDimensionComparatorX(const Pointd& o1, const Pointd& o2);
-bool point2DDimensionComparatorY(const Pointd& o1, const Pointd& o2);
-bool point2DDimensionComparatorZ(const Pointd& o1, const Pointd& o2);
+inline bool point2DDimensionComparatorX(const Pointd& o1, const Pointd& o2);
+inline bool point2DDimensionComparatorY(const Pointd& o1, const Pointd& o2);
+inline bool point2DDimensionComparatorZ(const Pointd& o1, const Pointd& o2);
 
 /* Get vector of comparators for 2D and 3D points */
 std::vector<LessComparatorType<Point2Dd>> getComparatorsForPoint2D();

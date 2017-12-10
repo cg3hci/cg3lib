@@ -12,7 +12,25 @@ namespace cg3 {
 template <class B, class N>
 class TreeGenericIterator {
 
-public:
+    template <class T1, class T2, class T3>
+    friend class TreeIterator;
+    template <class T1, class T2, class T3>
+    friend class TreeReverseIterator;
+
+    template <class T1, class T2>
+    friend class BSTInner;
+    template <class T1, class T2>
+    friend class BSTLeaf;
+    template <class T1, class T2>
+    friend class AVLInner;
+    template <class T1, class T2>
+    friend class AVLLeaf;
+    template <class T1, class T2>
+    friend class RangeTree;
+    template <int T1, class T2, class T3>
+    friend class AABBTree;
+
+protected:
 
     /* Constructors */
 

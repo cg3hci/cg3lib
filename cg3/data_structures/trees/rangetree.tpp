@@ -149,10 +149,10 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
             internal::updateHeightHelper(node);
 
             //Create associate trees climbing on parents
-            internal::createParentAssociatedTreeHelper<Node,K,T>(node, dim, customComparators);
+            this->createParentAssociatedTreeHelper(node);
 
             //Insert new node into associated range trees of the node and the parents
-            internal::insertIntoParentAssociatedTreesHelper(node, node->key, *(node->value), dim);
+            this->insertIntoParentAssociatedTreesHelper(node, node->key, *(node->value));
         }
     }
 
@@ -213,19 +213,19 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
             }
 
             //Create associated tree for the parent
-            internal::createAssociatedTreeHelper<Node,K,T>(newParent, dim, customComparators);
+            this->createAssociatedTreeHelper(newParent);
             //Insert into associated range tree of the parent the node
-            internal::insertIntoAssociatedTreeHelper(newParent, otherNode->key, *(otherNode->value), dim);
+            this->insertIntoAssociatedTreeHelper(newParent, otherNode->key, *(otherNode->value));
         }
 
         //Create associated tree for the node
-        internal::createAssociatedTreeHelper<Node,K,T>(newNode, dim, customComparators);
+        this->createAssociatedTreeHelper(newNode);
         //Insert new node into associated range trees of the node and the parents
-        Node* deepestNode = internal::insertIntoParentAssociatedTreesHelper(newNode, newNode->key, *(newNode->value), dim);
+        Node* deepestNode = this->insertIntoParentAssociatedTreesHelper(newNode, newNode->key, *(newNode->value));
 
 
         //Update height and rebalance
-        internal::updateHeightAndRebalanceRangeTreeHelper(newNode, this->root, dim);
+        this->updateHeightAndRebalanceRangeTreeHelper(newNode);
 
 
         //Increment entry number
@@ -257,14 +257,14 @@ bool RangeTree<K,T>::erase(const K& key) {
     if (node != nullptr) {
 
         //Update associated trees
-        internal::eraseFromParentAssociatedTreesHelper(node->parent, node->key, dim);
+        this->eraseFromParentAssociatedTreesHelper(node->parent, node->key);
 
         //Erase node
         Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
 
         //Update height and rebalance
-        internal::updateHeightAndRebalanceRangeTreeHelper(replacingNode, this->root, dim);
+        this->updateHeightAndRebalanceRangeTreeHelper(replacingNode);
 
         //Decrease the number of entries
         this->entries--;
@@ -607,7 +607,7 @@ void RangeTree<K,T>::initialize()
  * in the input range
  */
 template <class K, class T>
-inline void RangeTree<K,T>::rangeQueryHelper(
+void RangeTree<K,T>::rangeQueryHelper(
         const K& start, const K& end,
         std::vector<Node*>& out)
 {
@@ -677,14 +677,14 @@ inline void RangeTree<K,T>::rangeQueryHelper(
  * in the input range
  */
 template <class K, class T>
-inline void RangeTree<K,T>::rangeSearchInNextDimensionHelper(
+void RangeTree<K,T>::rangeSearchInNextDimensionHelper(
         Node* node,
         const K& start,
         const K& end,
         std::vector<Node*>& out)
 {
 
-    if (dim > 1) {
+    if (this->dim > 1) {
         node->assRangeTree->rangeQueryHelper(start, end, out);
     }
     else {
@@ -693,6 +693,312 @@ inline void RangeTree<K,T>::rangeSearchInNextDimensionHelper(
 }
 
 
+
+/* ----- HELPERS FOR ASSOCIATED RANGE TREE ----- */
+
+/**
+ * @brief Create associated tree helper for a node
+ *
+ * @param[in] node Node
+ */
+template <class K, class T>
+void RangeTree<K,T>::createAssociatedTreeHelper(
+        Node *node)
+{
+    if (dim > 1) {
+        node->assRangeTree = new RangeTree<K,T>(this->dim-1, this->customComparators);
+    }
+}
+
+
+
+/**
+ * @brief Create associated tree helper for a node
+ * climbing on parents (the input node is included)
+ *
+ * @param[in] node Node
+ */
+template <class K, class T>
+void RangeTree<K,T>::createParentAssociatedTreeHelper(
+        Node *node)
+{
+    if (this->dim > 1) {
+        while (node != nullptr && node->assRangeTree == nullptr) {
+            //Insert into associated range tree
+            createAssociatedTreeHelper(node);
+
+            //Next parent
+            node = node->parent;
+        }
+    }
+}
+
+
+/**
+ * @brief Insert into associated range tree key/value of the node
+ *
+ * @param[in] node Node for which the new node will be inserted into
+ * its associated range tree
+ * @param[in] key Key of new node
+ * @param[in] value Value of new node
+ */
+template <class K, class T>
+typename RangeTree<K,T>::Node* RangeTree<K,T>::insertIntoAssociatedTreeHelper(
+        Node* node,
+        const K& key,
+        const T& value)
+{
+    if (this->dim > 1) {
+        //Insert into associated range tree
+        auto it = node->assRangeTree->insert(key, value);
+        return it.node;
+    }
+
+    return nullptr;
+}
+
+
+
+/**
+ * @brief Insert into associated range trees the current key and value
+ * climbing on parents (the input node is included)
+ *
+ * @param[in] node Node from which the climbing starts
+ * @param[in] key Key of new node
+ * @param[in] value Value of new node
+ * @param[in] dim Dimension of the range tree
+ */
+template <class K, class T>
+typename RangeTree<K,T>::Node* RangeTree<K,T>::insertIntoParentAssociatedTreesHelper(
+        Node* node,
+        const K& key,
+        const T& value)
+{
+    Node* res = nullptr;
+    if (this->dim > 1) {
+        while (node != nullptr) {
+            //Insert into associated range tree
+            res = insertIntoAssociatedTreeHelper(node, key, value);
+
+            //Next parent
+            node = node->parent;
+        }
+    }
+    return res;
+}
+
+
+/**
+ * @brief Erase from associated range tree key/value of the node
+ *
+ * @param[in] node Node for which the node will be erase from its
+ * associated range tree
+ * @param[in] key Key of the node to be deleted
+ */
+template <class K, class T>
+void RangeTree<K,T>::eraseFromAssociatedTreeHelper(
+        Node* node,
+        const K& key)
+{
+    if (this->dim > 1) {
+        //Erase from associated range tree
+        node->assRangeTree->erase(key);
+    }
+}
+
+
+
+/**
+ * @brief Erase from associated range trees the current key climbing
+ * on parents (the input node is included)
+ *
+ * @param[in] node Node from which the climbing starts
+ * @param[in] key Key of new node
+ */
+template <class K, class T>
+void RangeTree<K,T>::eraseFromParentAssociatedTreesHelper(
+        Node* node,
+        const K& key)
+{
+    if (this->dim > 1) {
+        while (node != nullptr) {
+            //Erase from associated range tree
+            eraseFromAssociatedTreeHelper(node, key);
+
+            //Next parent
+            node = node->parent;
+        }
+    }
+}
+
+
+
+
+/* ----- AVL HELPERS FOR RANGE TREE ----- */
+
+/**
+ * @brief Rebalance with left/right rotations to make the
+ * RangeTree satisfy the AVL constraints
+ *
+ * @param[in] node Starting node
+ */
+template <class K, class T>
+void RangeTree<K,T>::rebalanceRangeTreeHelper(
+        Node* node)
+{
+    //Null handler
+    if (node == nullptr)
+        return;
+
+    //Not balanced node
+    Node* n = node;
+    int balanceFactor = (int)(getHeightHelper(n->right) - getHeightHelper(n->left));
+
+    //Climb on parents to find the not balanced node
+    while (n != nullptr && balanceFactor >= -1 && balanceFactor <= 1) {
+        n = n->parent;
+
+        if (n != nullptr) {
+            //Compute balance factor
+            balanceFactor = (int)(getHeightHelper(n->right) - getHeightHelper(n->left));
+
+            assert(balanceFactor <= 2 && balanceFactor >= -2);
+        }
+    }
+
+
+    if (n != nullptr) {
+        assert(balanceFactor == 2 || balanceFactor == -2);
+        if (balanceFactor < -1) {
+            Node* leftleft = n->left->left;
+            Node* leftright = n->left->right;
+
+            //Left left case
+            if (getHeightHelper(leftleft) >= getHeightHelper(leftright)) {
+                n = rightRotateRangeTreeHelper(n);
+            }
+            //Left right case
+            else {
+                n->left = leftRotateRangeTreeHelper(n->left);
+                n = rightRotateRangeTreeHelper(n);
+            }
+        }
+        else if (balanceFactor > 1) {
+            Node* rightright = n->right->right;
+            Node* rightleft = n->right->left;
+
+            //Right right case
+            if (getHeightHelper(rightright) >= getHeightHelper(rightleft)) {
+                n = leftRotateRangeTreeHelper(n);
+            }
+            //Left right case
+            else {
+                n->right = rightRotateRangeTreeHelper(n->right);
+                n = leftRotateRangeTreeHelper(n);
+            }
+        }
+
+
+        //Set root
+        if (n->parent == nullptr) {
+            this->root = n;
+        }
+
+        //Update heights on parents and rebalance them if needed
+        updateHeightAndRebalanceRangeTreeHelper(n->parent);
+
+    }
+}
+
+
+
+/**
+ * @brief Update heights climbing on the parents and then
+ * rebalance them if needed
+ *
+ * @param[in] node Starting node
+ * @param[in] node Root node of the BST
+ */
+template <class K, class T>
+void RangeTree<K,T>::updateHeightAndRebalanceRangeTreeHelper(
+        Node* node)
+{
+    internal::updateHeightHelper(node);
+    this->rebalanceRangeTreeHelper(node);
+}
+
+
+
+/**
+ * @brief Left rotation
+ *
+ * @param[in] a Node to be rotated
+ * @param[in] dim Dimension of the range tree
+ * @return New node in the position of the original node after the rotation
+ */
+template <class K, class T>
+typename RangeTree<K,T>::Node* RangeTree<K,T>::leftRotateRangeTreeHelper(Node* a) {
+    //Rotate left
+    Node* b = internal::leftRotateHelper(a);
+
+
+    //Update associated trees
+    if (this->dim > 1) {
+        //Referencing subtrees
+        Node* c = b->right;
+        Node* aLeft = a->left;
+
+        if (aLeft != nullptr) {
+            //Insert aLeft into b associated tree
+            for (auto aLeftIt = aLeft->assRangeTree->begin(); aLeftIt != aLeft->assRangeTree->end(); aLeftIt++) {
+                Node* aLeftNode = aLeftIt.node;
+                insertIntoAssociatedTreeHelper(b, aLeftNode->key, *(aLeftNode->value));
+            }
+        }
+        //Erase c from a associated tree
+        for (auto cIt = c->assRangeTree->begin(); cIt != c->assRangeTree->end(); cIt++) {
+            Node* cNode = cIt.node;
+            eraseFromAssociatedTreeHelper(a, cNode->key);
+        }
+    }
+
+    return b;
+}
+
+/**
+ * @brief Right rotation
+ *
+ * @param[in] a Node to be rotated
+ * @return New node in the position of the original node after the rotation
+ */
+template <class K, class T>
+typename RangeTree<K,T>::Node* RangeTree<K,T>::rightRotateRangeTreeHelper(Node* a) {
+    //Rotate right
+    Node* b = rightRotateHelper(a);
+
+
+    //Update associated trees
+    if (this->dim > 1) {
+        //Referencing subtrees
+        Node* c = b->left;
+        Node* aRight = a->right;
+
+        if (aRight != nullptr) {
+            //Insert aRight into b associated tree
+            for (auto aRightIt = aRight->assRangeTree->begin(); aRightIt != aRight->assRangeTree->end(); aRightIt++) {
+                Node* aRightNode = aRightIt.node;
+                insertIntoAssociatedTreeHelper(b, aRightNode->key, *(aRightNode->value));
+            }
+        }
+        //Erase c from a associated tree
+        for (auto cIt = c->assRangeTree->begin(); cIt != c->assRangeTree->end(); cIt++) {
+            Node* cNode = cIt.node;
+            eraseFromAssociatedTreeHelper(a, cNode->key);
+        }
+    }
+
+    return b;
+}
 
 
 

@@ -25,6 +25,18 @@ SOURCES += \
 # ----- Graphs -----
 
 HEADERS += \
+    $$PWD/data_structures/graphs/graph.h \
+    $$PWD/data_structures/graphs/includes/nodes/graph_node.h \
+    $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.h
+
+SOURCES += \
+    $$PWD/data_structures/graphs/graph.tpp \
+    $$PWD/data_structures/graphs/includes/nodes/graph_node.tpp \
+    $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.tpp
+
+# ----- Bipartite graph -----
+
+HEADERS += \
     $$PWD/data_structures/graphs/bipartite_graph.h \
     $$PWD/data_structures/graphs/bipartite_graph_iterators.h \
     $$PWD/data_structures/graphs/undirected_node.h
@@ -53,7 +65,10 @@ HEADERS +=  \
     $$PWD/data_structures/trees/includes/iterators/tree_iterator.h \
     $$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.h \
     $$PWD/data_structures/trees/includes/iterators/tree_rangebased_iterators.h \
-    $$PWD/data_structures/trees/includes/bst_helpers.h
+    $$PWD/data_structures/trees/includes/bst_helpers.h \
+    $$PWD/data_structures/trees/includes/bstinner_helpers.h \
+    $$PWD/data_structures/trees/includes/bstleaf_helpers.h \
+    $$PWD/data_structures/trees/includes/avl_helpers.h
 
 SOURCES += \
     $$PWD/data_structures/trees/includes/iterators/tree_genericiterator.tpp \
@@ -61,7 +76,10 @@ SOURCES += \
     $$PWD/data_structures/trees/includes/iterators/tree_iterator.tpp \
     $$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.tpp \
     $$PWD/data_structures/trees/includes/iterators/tree_rangebased_iterators.tpp \
-    $$PWD/data_structures/trees/includes/bst_helpers.tpp
+    $$PWD/data_structures/trees/includes/bst_helpers.tpp \
+    $$PWD/data_structures/trees/includes/bstinner_helpers.tpp \
+    $$PWD/data_structures/trees/includes/bstleaf_helpers.tpp \
+    $$PWD/data_structures/trees/includes/avl_helpers.tpp
 
 
 
@@ -70,16 +88,12 @@ HEADERS +=  \
     $$PWD/data_structures/trees/bst.h \
     $$PWD/data_structures/trees/bstinner.h \
     $$PWD/data_structures/trees/bstleaf.h \
-    $$PWD/data_structures/trees/includes/nodes/bst_node.h \
-    $$PWD/data_structures/trees/includes/bstinner_helpers.h \
-    $$PWD/data_structures/trees/includes/bstleaf_helpers.h
+    $$PWD/data_structures/trees/includes/nodes/bst_node.h
 
 SOURCES += \
     $$PWD/data_structures/trees/bstinner.tpp \
     $$PWD/data_structures/trees/bstleaf.tpp \
-    $$PWD/data_structures/trees/includes/nodes/bst_node.tpp \
-    $$PWD/data_structures/trees/includes/bstinner_helpers.tpp \
-    $$PWD/data_structures/trees/includes/bstleaf_helpers.tpp
+    $$PWD/data_structures/trees/includes/nodes/bst_node.tpp
 
 
 
@@ -87,40 +101,31 @@ SOURCES += \
 HEADERS += \
     $$PWD/data_structures/trees/avlinner.h \
     $$PWD/data_structures/trees/avlleaf.h \
-    $$PWD/data_structures/trees/includes/nodes/avl_node.h \
-    $$PWD/data_structures/trees/includes/avl_helpers.h
+    $$PWD/data_structures/trees/includes/nodes/avl_node.h
 
 SOURCES += \
     $$PWD/data_structures/trees/avlinner.tpp \
     $$PWD/data_structures/trees/avlleaf.tpp \
-    $$PWD/data_structures/trees/includes/nodes/avl_node.tpp \
-    $$PWD/data_structures/trees/includes/avl_helpers.tpp
-
+    $$PWD/data_structures/trees/includes/nodes/avl_node.tpp
 
 
 # Range tree
 HEADERS += \
     $$PWD/data_structures/trees/rangetree.h \
     $$PWD/data_structures/trees/includes/nodes/rangetree_node.h \
-    $$PWD/data_structures/trees/includes/rangetree_helpers.h \
     $$PWD/data_structures/trees/includes/rangetree_types.h
 
 SOURCES += \
     $$PWD/data_structures/trees/rangetree.tpp \
-    $$PWD/data_structures/trees/includes/rangetree_types.cpp \
     $$PWD/data_structures/trees/includes/nodes/rangetree_node.tpp \
-    $$PWD/data_structures/trees/includes/rangetree_helpers.tpp
+    $$PWD/data_structures/trees/includes/rangetree_types.cpp
 
 
 # AABB tree
 HEADERS += \
     $$PWD/data_structures/trees/aabbtree.h \
-    $$PWD/data_structures/trees/includes/aabb_helpers.h \
-    $$PWD/data_structures/trees/includes/nodes/aabb_node.h \
-    $$PWD/data_structures/trees/includes/nodes/aabb_node_aabb.h
+    $$PWD/data_structures/trees/includes/nodes/aabb_node.h
 
 SOURCES += \
     $$PWD/data_structures/trees/aabbtree.tpp \
-    $$PWD/data_structures/trees/includes/aabb_helpers.tpp \
-    $$PWD/data_structures/trees/includes/nodes/aabb_node.tpp \
-    $$PWD/data_structures/trees/includes/nodes/aabb_node_aabb.tpp
+    $$PWD/data_structures/trees/includes/nodes/aabb_node.tpp

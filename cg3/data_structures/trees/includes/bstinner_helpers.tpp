@@ -19,7 +19,7 @@ namespace internal {
  * @return Pointer to the node if the node has been inserted, nullptr otherwise
  */
 template <class Node, class K>
-inline Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator) {
+Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator) {
     //Find the position in the BST in which
     //the new node must be inserted
     Node* lastVisitedNode = nullptr;
@@ -75,7 +75,7 @@ inline Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparat
  * @return Node that replaces the erased one (useful for rebalancing)
  */
 template <class Node>
-inline Node* eraseNodeHelperInner(Node*& node, Node*& rootNode)
+Node* eraseNodeHelperInner(Node*& node, Node*& rootNode)
 {
     //Node that will replace the node to be erased
     Node* y;
@@ -154,7 +154,7 @@ inline Node* eraseNodeHelperInner(Node*& node, Node*& rootNode)
  *
  */
 template <class Node, class K>
-inline Node* findNodeHelperInner(
+Node* findNodeHelperInner(
         const K& key,
         Node*& rootNode,
         LessComparatorType<K> lessComparator
@@ -187,7 +187,7 @@ inline Node* findNodeHelperInner(
  *
  */
 template <class Node, class K>
-inline Node* findLowerHelperInner(
+Node* findLowerHelperInner(
         const K& key,
         Node*& rootNode,
         LessComparatorType<K> lessComparator
@@ -240,7 +240,7 @@ inline Node* findLowerHelperInner(
  *
  */
 template <class Node, class K>
-inline Node* findUpperHelperInner(
+Node* findUpperHelperInner(
         const K& key,
         Node*& rootNode,
         LessComparatorType<K> lessComparator
@@ -302,7 +302,7 @@ inline Node* findUpperHelperInner(
  * @return Number of entries inserted in the BST
  */
 template <class Node, class K>
-inline TreeSize constructionMedianHelperInner(
+TreeSize constructionMedianHelperInner(
         std::vector<Node*>& sortedNodes,
         const TreeSize start, const TreeSize end,
         Node*& rootNode,
@@ -359,7 +359,7 @@ inline TreeSize constructionMedianHelperInner(
  * @param[in] lessComparator Less comparator for keys
  */
 template <class Node, class K>
-inline void rangeQueryHelperInner(
+void rangeQueryHelperInner(
         const K& start, const K& end,
         std::vector<Node*> &out,
         Node* rootNode,
@@ -433,7 +433,7 @@ inline void rangeQueryHelperInner(
  * @return Split node of the BST. Returns nullptr if the tree is empty
  */
 template <class Node, class K>
-inline Node* findSplitNodeHelperInner(
+Node* findSplitNodeHelperInner(
         const K& start, const K& end,
         Node* rootNode,
         LessComparatorType<K> lessComparator)
@@ -467,7 +467,7 @@ inline Node* findSplitNodeHelperInner(
  * @param[out] out Vector of output nodes
  */
 template <class Node>
-inline void reportSubTreeHelperInner(
+void reportSubTreeHelperInner(
         Node* node,
         std::vector<Node*>& out)
 {
@@ -494,7 +494,7 @@ inline void reportSubTreeHelperInner(
  * @return Successor of the node, nullptr if there is no successor
  */
 template <class Node>
-inline Node* getSuccessorHelperInner(Node* node) {
+Node* getSuccessorHelperInner(Node* node) {
     Node* x = node;
 
     //If it has a right child, get the minimum node of subtree
@@ -520,7 +520,7 @@ inline Node* getSuccessorHelperInner(Node* node) {
  * @return Predecessor of the node, nullptr if there is no predecessor
  */
 template <class Node>
-inline Node* getPredecessorHelperInner(Node* node) {
+Node* getPredecessorHelperInner(Node* node) {
     Node* x = node;
 
     // If it has a left child, get the maximum node of subtree
@@ -547,7 +547,7 @@ inline Node* getPredecessorHelperInner(Node* node) {
  * @return Minimum key node pointer
  */
 template <class Node>
-inline Node* getMinimumHelperInner(Node* rootNode) {
+Node* getMinimumHelperInner(Node* rootNode) {
     Node* x = rootNode;
 
     while (x != nullptr && x->left != nullptr)
@@ -564,7 +564,7 @@ inline Node* getMinimumHelperInner(Node* rootNode) {
  * @return Maximum key node pointer
  */
 template <class Node>
-inline Node* getMaximumHelperInner(Node* rootNode) {
+Node* getMaximumHelperInner(Node* rootNode) {
     Node* x = rootNode;
 
     while (x != nullptr && x->right != nullptr)

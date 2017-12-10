@@ -8,6 +8,9 @@
 #include <utility>
 
 #include "includes/bstleaf_helpers.h"
+#include "includes/avl_helpers.h"
+
+#include "cg3/utilities/const.h"
 
 namespace cg3 {
 
@@ -151,7 +154,7 @@ void AABBTree<D,K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
             internal::updateHeightHelper(node);
 
             //Update AABBs
-            internal::updateAABBHelper<D>(node, aabbValueExtractor);
+            this->updateAABBHelper(node, aabbValueExtractor);
         }
     }
 }
@@ -195,10 +198,10 @@ typename AABBTree<D,K,T>::iterator AABBTree<D,K,T>::insert(
     //If node has been inserted
     if (result != nullptr) {
         //Update height and rebalance
-        internal::updateHeightAndRebalanceAABBHelper<D>(newNode, this->root, aabbValueExtractor);
+        this->updateHeightAndRebalanceAABBHelper(newNode, aabbValueExtractor);
 
         //Update AABBs
-        internal::updateAABBHelper<D>(newNode, aabbValueExtractor);
+        this->updateAABBHelper(newNode, aabbValueExtractor);
 
         //Increment entry number
         this->entries++;
@@ -233,10 +236,10 @@ bool AABBTree<D,K,T>::erase(const K& key) {
         Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
         //Update height and rebalance
-        internal::updateHeightAndRebalanceAABBHelper<D>(replacingNode, this->root, aabbValueExtractor);
+        this->updateHeightAndRebalanceAABBHelper(replacingNode, aabbValueExtractor);
 
         //Update AABBs
-        internal::updateAABBHelper<D>(replacingNode, aabbValueExtractor);
+        this->updateAABBHelper(replacingNode, aabbValueExtractor);
 
         //Decrease the number of entries
         this->entries--;
@@ -268,10 +271,10 @@ void AABBTree<D,K,T>::erase(generic_iterator it) {
         Node* replacingNode = internal::eraseNodeHelperLeaf(node, this->root);
 
         //Update height and rebalance
-        internal::updateHeightAndRebalanceAABBHelper(replacingNode, this->root, aabbValueExtractor);
+        this->updateHeightAndRebalanceAABBHelper(replacingNode, aabbValueExtractor);
 
         //Update AABBs
-        internal::updateAABBHelper(replacingNode, aabbValueExtractor);
+        this->updateAABBHelper(replacingNode, aabbValueExtractor);
 
         //Decrease the number of entries
         this->entries--;
@@ -390,12 +393,12 @@ void AABBTree<D,K,T>::aabbOverlapQuery(
         KeyOverlapChecker keyOverlapChecker)
 {
     //Get the AABB
-    internal::AABB<D> aabb;
-    internal::setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
+    typename Node::AABB aabb;
+    this->setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
 
     //Query the AABB tree
     std::vector<Node*> nodeOutput;
-    internal::aabbOverlapQueryHelper(this->root, key, aabb, nodeOutput, keyOverlapChecker);
+    this->aabbOverlapQueryHelper(this->root, key, aabb, nodeOutput, keyOverlapChecker);
 
     //Pushing out the results
     for (Node* node : nodeOutput) {
@@ -417,11 +420,11 @@ bool AABBTree<D,K,T>::aabbOverlapCheck(
         KeyOverlapChecker keyOverlapChecker)
 {
     //Get the AABB
-    internal::AABB<D> aabb;
-    internal::setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
+    typename Node::AABB aabb;
+    this->setAABBFromKeyHelper(key, aabb, aabbValueExtractor);
 
     //Query the AABB tree
-    return internal::aabbOverlapCheckHelper(this->root, key, aabb, keyOverlapChecker);
+    return this->aabbOverlapCheckHelper(this->root, key, aabb, keyOverlapChecker);
 }
 
 
@@ -618,6 +621,344 @@ void AABBTree<D,K,T>::initialize()
 {
     this->root = nullptr;
     this->entries = 0;
+}
+
+
+
+
+/* ----- AABB HELPERS ----- */
+
+/**
+ * @brief Find elements for which the input bounding box overlaps with the one of the values.
+ * Output can be filtered by another optional key overlap filter function.
+ *
+ * @param[in] node Starting node
+ * @param[in] key Input key
+ * @param[in] aabb Axis-aligned bounding box of the key
+ * @param[out] out Vector of iterators pointing to elements that overlap
+ * @param[in] keyOverlapChecker Key overlap filter function
+ */
+template <int D, class K, class T>
+void AABBTree<D,K,T>::aabbOverlapQueryHelper(
+        Node* node,
+        const K& key,
+        const typename Node::AABB& aabb,
+        std::vector<Node*> &out,
+        KeyOverlapChecker keyOverlapChecker)
+{
+    if (node == nullptr)
+        return;
+
+    //If node is a leaf, then return the node if its bounding box is overlapping
+    if (node->isLeaf()) {
+        if (aabbOverlapsHelper(aabb, node->aabb)) {
+            if (keyOverlapChecker == nullptr || keyOverlapChecker(key, node->key)) {
+                out.push_back(node);
+            }
+        }
+    }
+    //If node is not a leaf, search on left and right subtrees if the AABB overlaps
+    else {
+        if (node->right != nullptr && aabbOverlapsHelper(aabb, node->right->aabb)) {
+            aabbOverlapQueryHelper(node->right, key, aabb, out, keyOverlapChecker);
+        }
+
+        if (node->left != nullptr && aabbOverlapsHelper(aabb, node->left->aabb)) {
+            aabbOverlapQueryHelper(node->left, key, aabb, out, keyOverlapChecker);
+        }
+    }
+}
+
+/**
+ * @brief Check if the given bounding box overlaps with at least one of the values
+ * in the AABB tree. If the optional key overlap filter function is specified, then
+ * true is returned iff the bounding box overlaps and the filter function returns true.
+ *
+ * @param[in] node Starting node
+ * @param[in] key Input key
+ * @param[in] aabb Axis-aligned bounding box of the key
+ * @param[in] keyOverlapChecker Key overlap filter function
+ * @return True if there is an overlapping bounding box in the stored values
+ */
+template <int D, class K, class T>
+bool AABBTree<D,K,T>::aabbOverlapCheckHelper(
+        Node* node,
+        const K& key,
+        const typename Node::AABB& aabb,
+        KeyOverlapChecker keyOverlapChecker)
+{
+    if (node == nullptr)
+        return false;
+
+    //If node is a leaf, then return the node if its bounding box is overlapping
+    if (node->isLeaf()) {
+        if (aabbOverlapsHelper(aabb, node->aabb)) {
+            if (keyOverlapChecker == nullptr || keyOverlapChecker(key, node->key)) {
+                return true;
+            }
+        }
+    }
+    //If node is not a leaf, search on left and right subtrees if the AABB overlaps
+    else {
+        if (node->right != nullptr && aabbOverlapsHelper(aabb, node->right->aabb)) {
+            if (aabbOverlapCheckHelper(node->right, key, aabb, keyOverlapChecker))
+                return true;
+        }
+
+        if (node->left != nullptr && aabbOverlapsHelper(aabb, node->left->aabb)) {
+            if (aabbOverlapCheckHelper(node->left, key, aabb, keyOverlapChecker))
+                return true;
+        }
+    }
+    return false;
+}
+
+
+
+/**
+ * @brief Update AABBs climbing on the parents
+ *
+ * @param[in] node Starting node
+ * @param[in] aabbValueExtractor AABB extractor for key
+ */
+template <int D, class K, class T>
+void AABBTree<D,K,T>::updateAABBHelper(
+        Node* node,
+        AABBValueExtractor aabbValueExtractor)
+{
+    if (node != nullptr) {
+        bool done;
+        do {
+            done = false;
+
+            //Set AABB for the key
+            if (node->isLeaf()) {
+                this->setAABBFromKeyHelper(node->key, node->aabb, aabbValueExtractor);
+            }
+            //Set maximum AABB of the subtree
+            else {
+                typename Node::AABB& leftChildAABB = node->left->aabb;
+                typename Node::AABB& rightChildAABB = node->right->aabb;
+
+                done = true;
+
+                for (int i = 0; i < D; i++) {
+                    double minValue = std::min(leftChildAABB.min[i], rightChildAABB.min[i]);
+                    double maxValue = std::max(leftChildAABB.max[i], rightChildAABB.max[i]);
+
+                    if (node->aabb.min[i] != minValue || node->aabb.max[i] != maxValue) {
+                        done = false;
+                    }
+
+                    node->aabb.min[i] = minValue;
+                    node->aabb.max[i] = maxValue;
+                }
+            }
+
+            //Done flag
+            if (node->parent == nullptr) {
+                done = true;
+            }
+
+            //Next parent
+            node = node->parent;
+        } while (!done);
+    }
+}
+
+
+
+/* ----- AVL HELPERS FOR AABB ----- */
+
+/**
+ * @brief Rebalance with left/right rotations to make the
+ * AABBTree satisfy the AVL constraints
+ *
+ * @param[in] node Starting node
+ * @param[in] aabbValueExtractor AABB extractor for key
+ */
+template <int D, class K, class T>
+void AABBTree<D,K,T>::rebalanceAABBHelper(
+        Node* node,
+        AABBValueExtractor aabbValueExtractor)
+{
+    //Null handler
+    if (node == nullptr)
+        return;
+
+    //Not balanced node
+    Node* n = node;
+    int balanceFactor = internal::getHeightHelper(n->right) - internal::getHeightHelper(n->left);
+
+    //Climb on parents to find the not balanced node
+    while (n != nullptr && balanceFactor >= -1 && balanceFactor <= 1) {
+        n = n->parent;
+
+        if (n != nullptr) {
+            //Compute balance factor
+            balanceFactor = internal::getHeightHelper(n->right) - internal::getHeightHelper(n->left);
+
+            assert(balanceFactor <= 2 && balanceFactor >= -2);
+        }
+    }
+
+
+    if (n != nullptr) {
+        assert(balanceFactor == 2 || balanceFactor == -2);
+        if (balanceFactor < -1) {
+            Node* leftleft = n->left->left;
+            Node* leftright = n->left->right;
+
+            //Left left case
+            if (internal::getHeightHelper(leftleft) >= internal::getHeightHelper(leftright)) {
+                n = this->rightRotateAABBHelper(n, aabbValueExtractor);
+            }
+            //Left right case
+            else {
+                n->left = this->leftRotateAABBHelper(n->left, aabbValueExtractor);
+                n = this->rightRotateAABBHelper(n, aabbValueExtractor);
+            }
+        }
+        else if (balanceFactor > 1) {
+            Node* rightright = n->right->right;
+            Node* rightleft = n->right->left;
+
+            //Right right case
+            if (internal::getHeightHelper(rightright) >= internal::getHeightHelper(rightleft)) {
+                n = this->leftRotateAABBHelper(n, aabbValueExtractor);
+            }
+            //Left right case
+            else {
+                n->right = rightRotateAABBHelper(n->right, aabbValueExtractor);
+                n = this->leftRotateAABBHelper(n, aabbValueExtractor);
+            }
+        }
+
+
+        //Set root
+        if (n->parent == nullptr) {
+            this->root = n;
+        }
+
+        //Update heights on parents and rebalance them if needed
+        this->updateHeightAndRebalanceAABBHelper(n->parent, aabbValueExtractor);
+
+        //Update AABBs
+        this->updateAABBHelper(n, aabbValueExtractor);
+    }
+}
+
+
+
+/**
+ * @brief Update heights climbing on the parents and then
+ * rebalance them if needed
+ *
+ * @param[in] node Starting node
+ * @param[in] node Root node of the BST
+ * @param[in] aabbValueExtractor AABB extractor for key
+ */
+template <int D, class K, class T>
+void AABBTree<D,K,T>::updateHeightAndRebalanceAABBHelper(
+        Node* node,
+        AABBValueExtractor aabbValueExtractor)
+{
+    internal::updateHeightHelper(node);
+    this->rebalanceAABBHelper(node, aabbValueExtractor);
+}
+
+
+
+/**
+ * @brief Left rotation
+ *
+ * @param[in] a Node to be rotated
+ * @param[in] aabbValueExtractor AABB extractor for key
+ * @return New node in the position of the original node after the rotation
+ */
+template <int D, class K, class T>
+typename AABBTree<D,K,T>::Node* AABBTree<D,K,T>::leftRotateAABBHelper(
+        Node* a,
+        AABBValueExtractor aabbValueExtractor)
+{
+    //Rotate left
+    Node* b = internal::leftRotateHelper(a);
+
+    //Update AABBs
+    this->updateAABBHelper(a, aabbValueExtractor);
+
+    return b;
+}
+
+/**
+ * @brief Right rotation
+ *
+ * @param[in] a Node to be rotated
+ * @param[in] aabbValueExtractor AABB extractor for key
+ * @return New node in the position of the original node after the rotation
+ */
+template <int D, class K, class T>
+typename AABBTree<D,K,T>::Node* AABBTree<D,K,T>::rightRotateAABBHelper(
+        Node* a,
+        AABBValueExtractor aabbValueExtractor)
+{
+    //Rotate right
+    Node* b = internal::rightRotateHelper(a);
+
+    //Update AABBs
+    this->updateAABBHelper(a, aabbValueExtractor);
+
+    return b;
+}
+
+
+
+
+
+/* ----- AABB UTILITIES ----- */
+
+/**
+ * Check if two bounding boxes overlap
+ *
+ * @param[in] a First bounding box
+ * @param[in] a Second bounding box
+ * @returns True if the bounding boxes overlap, false otherwise
+ */
+template <int D, class K, class T>
+bool AABBTree<D,K,T>::aabbOverlapsHelper(
+        const typename Node::AABB& a,
+        const typename Node::AABB& b)
+{
+    double eps = cg3::CG3_EPSILON;
+
+    for (int i = 0; i < D; i++) {
+        if (a.min[i] - eps > b.max[i] + eps ||
+            b.min[i] - eps > a.max[i] + eps)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Set a bounding box for a key
+ *
+ * @param[in] k Input key
+ * @param[out] a Bounding box to be updated
+ * @param[in] aabbValueExtractor AABB extractor for key
+ */
+template <int D, class K, class T>
+void AABBTree<D,K,T>::setAABBFromKeyHelper(
+        const K& k,
+        typename Node::AABB& aabb,
+        AABBValueExtractor aabbValueExtractor)
+{
+    for (int i = 0; i < D; i++) {
+        aabb.min[i] = aabbValueExtractor(k, MIN, i+1);
+        aabb.max[i] = aabbValueExtractor(k, MAX, i+1);
+    }
 }
 
 

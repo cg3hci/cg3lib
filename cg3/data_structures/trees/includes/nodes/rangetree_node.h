@@ -46,10 +46,16 @@ public:
     size_t height;
 
 
-    /* Private methods */
+    /* Public methods */
+
+    inline bool isLeaf() const;
+
+
+private:
+
+     /* Private methods */
 
     void init(const K& key, T* value);
-    inline bool isLeaf() const;
 
 };
 

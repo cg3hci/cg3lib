@@ -59,7 +59,7 @@ private:
 /* Algorithm interface */
 
 template <class T = double>
-void addPointToConvexHull(
+inline void addPointToConvexHull(
         const Point2D<T>& point,
         IterativeConvexHull2D<Point2D<T>>& iterativeConvexHull2D);
 

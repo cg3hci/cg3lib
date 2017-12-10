@@ -16,9 +16,12 @@
 
 #include "includes/nodes/aabb_node.h"
 
-#include "includes/aabb_helpers.h"
-
 namespace cg3 {
+
+/* Types */
+
+enum AABBValueType { MIN, MAX };
+
 
 /**
  * @brief An autobalancing (AVL) AABB tree
@@ -33,14 +36,18 @@ class AABBTree
 
 public:
 
+    /* Types */
+
+    using KeyOverlapChecker = bool (*)(const K& key1, const K& key2);
+
+    using AABBValueExtractor = double (*)(const K& key, const AABBValueType& valueType, const int& dim);
+
+
     /* Typedefs */
 
     typedef internal::AABBNode<D,K,T> Node;
 
     typedef LessComparatorType<K> LessComparator;
-
-    typedef AABBValueExtractorType<K> AABBValueExtractor;
-    typedef KeyOverlapCheckerType<K> KeyOverlapChecker;
 
     typedef TreeGenericIterator<AABBTree<D,K,T>, Node> generic_iterator;
 
@@ -162,6 +169,59 @@ private:
     /* Private methods */
 
     void initialize();
+
+
+
+    /* AABB helpers */
+
+    inline void aabbOverlapQueryHelper(
+            Node* node,
+            const K& key,
+            const typename Node::AABB& aabb,
+            std::vector<Node*> &out,
+            KeyOverlapChecker keyOverlapChecker);
+
+    inline bool aabbOverlapCheckHelper(
+            Node* node,
+            const K& key,
+            const typename Node::AABB& aabb,
+            KeyOverlapChecker keyOverlapChecker);
+
+    inline void updateAABBHelper(
+            Node* node,
+            AABBValueExtractor aabbValueExtractor);
+
+
+    /* AVL helpers for AABB */
+
+    inline void rebalanceAABBHelper(
+            Node* node,
+            AABBValueExtractor aabbValueExtractor);
+
+    inline void updateHeightAndRebalanceAABBHelper(
+            Node* node,
+            AABBValueExtractor aabbValueExtractor);
+
+    inline Node* leftRotateAABBHelper(
+            Node* a,
+            AABBValueExtractor aabbValueExtractor);
+
+    inline Node* rightRotateAABBHelper(
+            Node* a,
+            AABBValueExtractor aabbValueExtractor);
+
+
+
+    /* AABB utilities */
+
+    inline bool aabbOverlapsHelper(
+            const typename Node::AABB& a,
+            const typename Node::AABB& b);
+
+    inline void setAABBFromKeyHelper(
+            const K& k,
+            typename Node::AABB& aabb,
+            AABBValueExtractor aabbValueExtractor);
 
 };
 

@@ -78,7 +78,7 @@ namespace internal {
  */
 
 template <class T, class InputIterator, class OutputIterator>
-inline void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt) {
+void grahamScanOnContainer(const InputIterator first, const InputIterator end, OutputIterator& outIt) {
     //Iterators
     InputIterator it1;
     InputIterator it2;

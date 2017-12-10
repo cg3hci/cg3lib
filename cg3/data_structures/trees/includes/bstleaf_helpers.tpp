@@ -20,7 +20,7 @@ namespace internal {
  * @return Pointer to the node if the node has been inserted, nullptr otherwise
  */
 template <class Node, class K>
-inline Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator) {
+Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator) {
     //If the tree is empty
     if (rootNode == nullptr) {
         //Insert the node as the root
@@ -94,7 +94,7 @@ inline Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparato
  * @return Node that replaces the erased one (useful for rebalancing)
  */
 template <class Node>
-inline Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode)
+Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode)
 {
     Node* replacingChild = nullptr;
 
@@ -147,7 +147,7 @@ inline Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode)
  *
  */
 template <class Node, class K>
-inline Node* findNodeHelperLeaf(
+Node* findNodeHelperLeaf(
         const K& key,
         Node*& rootNode,
         LessComparatorType<K> lessComparator)
@@ -190,7 +190,7 @@ inline Node* findNodeHelperLeaf(
  *
  */
 template <class Node, class K>
-inline Node* findLowerHelperLeaf(
+Node* findLowerHelperLeaf(
         const K& key,
         Node*& rootNode,
         LessComparatorType<K> lessComparator
@@ -234,7 +234,7 @@ inline Node* findLowerHelperLeaf(
  *
  */
 template <class Node, class K>
-inline Node* findUpperHelperLeaf(
+Node* findUpperHelperLeaf(
         const K& key,
         Node*& rootNode,
         LessComparatorType<K> lessComparator
@@ -281,7 +281,7 @@ inline Node* findUpperHelperLeaf(
  * @return Number of entries inserted in the BST
  */
 template <class Node, class K>
-inline TreeSize constructionMedianHelperLeaf(
+TreeSize constructionMedianHelperLeaf(
         std::vector<Node*>& sortedNodes,
         const TreeSize start, const TreeSize end,
         Node*& rootNode,
@@ -330,7 +330,7 @@ inline TreeSize constructionMedianHelperLeaf(
  * @returns Number of entries inserted in the BST
  */
 template <class Node, class K>
-inline TreeSize constructionBottomUpHelperLeaf(
+TreeSize constructionBottomUpHelperLeaf(
         std::vector<Node*>& sortedNodes,
         Node*& rootNode,
         LessComparatorType<K> lessComparator)
@@ -431,7 +431,7 @@ inline TreeSize constructionBottomUpHelperLeaf(
  * @param[in] lessComparator Less comparator for keys
  */
 template <class Node, class K>
-inline void rangeQueryHelperLeaf(
+void rangeQueryHelperLeaf(
         const K& start, const K& end,
         std::vector<Node*> &out,
         Node* rootNode,
@@ -500,7 +500,7 @@ inline void rangeQueryHelperLeaf(
  * @return Split node of the BST. Returns nullptr if the tree is empty
  */
 template <class Node, class K>
-inline Node* findSplitNodeHelperLeaf(
+Node* findSplitNodeHelperLeaf(
         const K& start, const K& end,
         Node* rootNode,
         LessComparatorType<K> lessComparator)
@@ -538,7 +538,7 @@ inline Node* findSplitNodeHelperLeaf(
  * @param[out] out Vector of output nodes
  */
 template <class Node>
-inline void reportSubTreeHelperLeaf(
+void reportSubTreeHelperLeaf(
         Node* node,
         std::vector<Node*>& out)
 {
@@ -565,7 +565,7 @@ inline void reportSubTreeHelperLeaf(
  * @return Successor of the node, nullptr if there is no successor
  */
 template <class Node>
-inline Node* getSuccessorHelperLeaf(Node* node) {
+Node* getSuccessorHelperLeaf(Node* node) {
     Node* x = node;
 
     //Climb on parents
@@ -591,7 +591,7 @@ inline Node* getSuccessorHelperLeaf(Node* node) {
  * @return Predecessor of the node, nullptr if there is no predecessor
  */
 template <class Node>
-inline Node* getPredecessorHelperLeaf(Node* node) {
+Node* getPredecessorHelperLeaf(Node* node) {
     Node* x = node;
 
     //Climb on parents
@@ -619,7 +619,7 @@ inline Node* getPredecessorHelperLeaf(Node* node) {
  * @return Minimum key node pointer
  */
 template <class Node>
-inline Node* getMinimumHelperLeaf(Node* rootNode) {
+Node* getMinimumHelperLeaf(Node* rootNode) {
     Node* x = rootNode;
 
     while (x != nullptr && !x->isLeaf())
@@ -636,7 +636,7 @@ inline Node* getMinimumHelperLeaf(Node* rootNode) {
  * @return Maximum key node pointer
  */
 template <class Node>
-inline Node* getMaximumHelperLeaf(Node* rootNode) {
+Node* getMaximumHelperLeaf(Node* rootNode) {
     Node* x = rootNode;
 
     while (x != nullptr && !x->isLeaf())
