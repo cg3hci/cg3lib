@@ -22,7 +22,8 @@ public:
 
     /* Constructors */
 
-    inline TreeReverseIterator(B* bst, N* node) : TreeGenericIterator<B,N>(bst,node) {}
+    inline TreeReverseIterator(B* bst, N* node) :
+        TreeGenericIterator<B,N>(bst,node) {}
 
 
     /* Iterator operators */

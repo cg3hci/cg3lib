@@ -3,8 +3,6 @@
 */
 #include "graph.h"
 
-#include <cfloat>
-
 namespace cg3 {
 
 /* ----- CONSTRUCTORS/DESTRUCTORS ----- */
@@ -105,14 +103,14 @@ typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) {
 }
 
 /**
- * @brief Add arc in the graph
+ * @brief Add edge in the graph
  * @param[in] o1 Object of the node 1
  * @param[in] o2 Object of the node 2
- * @return True if the arc has been inserted, false if it was not possible
- * to insert the arc because the values have not been found.
+ * @return True if the edge has been inserted, false if it was not possible
+ * to insert the edge because the values have not been found.
  */
 template <class T>
-bool Graph<T>::addArc(const T& o1, const T& o2, const double weight) {
+bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight) {
     //If node does not exists, return false
     Node* node1 = findNodeHelper(o1);
     if (node1 == nullptr)
@@ -122,23 +120,23 @@ bool Graph<T>::addArc(const T& o1, const T& o2, const double weight) {
     if (node2 == nullptr)
         return false;
 
-    addArcHelper(node1, node2, weight);
+    addEdgeHelper(node1, node2, weight);
     if (type == GraphType::UNDIRECTED)
-        addArcHelper(node2, node1, weight);
+        addEdgeHelper(node2, node1, weight);
 
     return true;
 }
 
 
 /**
- * @brief Delete arc from the graph
+ * @brief Delete edge from the graph
  * @param[in] o1 Object of the node 1
  * @param[in] o2 Object of the node 2
- * @return True if the arc has been deleted, false if it was not possible
- * to insert the arc because the values have not been found.
+ * @return True if the edge has been deleted, false if it was not possible
+ * to insert the edge because the values have not been found.
  */
 template <class T>
-bool Graph<T>::deleteArc(const T& o1, const T& o2) {
+bool Graph<T>::deleteEdge(const T& o1, const T& o2) {
     //If node does not exists, return false
     Node* node1 = findNodeHelper(o1);
     if (node1 == nullptr)
@@ -148,9 +146,9 @@ bool Graph<T>::deleteArc(const T& o1, const T& o2) {
     if (node2 == nullptr)
         return false;
 
-    deleteArcHelper(node1, node2);
+    deleteEdgeHelper(node1, node2);
     if (type == GraphType::UNDIRECTED)
-        deleteArcHelper(node2, node1);
+        deleteEdgeHelper(node2, node1);
 
     return true;
 }
@@ -178,13 +176,13 @@ bool Graph<T>::isAdjacent(const T& o1, const T& o2) const {
 
 
 /**
- * @brief Get the weight of an arc between to elements.
- * It returns DBL_MAX if node are not adjacent
+ * @brief Get the weight of an edge between to elements.
+ * It returns MAX_WEIGHT if node are not adjacent
  * or the nodes are not in the graph
  *
  * @param[in] o1 Object of the node 1
  * @param[in] o2 Object of the node 2
- * @return Weight of the arc, DBL_MAX if nodes are not adjacent
+ * @return Weight of the edge, MAX_WEIGHT if nodes are not adjacent
  * or the nodes are not in the graph
  */
 template <class T>
@@ -192,18 +190,18 @@ double Graph<T>::getWeight(const T& o1, const T& o2) {
     //If node does not exists, return false
     Node* node1 = findNodeHelper(o1);
     if (node1 == nullptr)
-        return DBL_MAX;
+        return MAX_WEIGHT;
 
     Node* node2 = findNodeHelper(o2);
     if (node2 == nullptr)
-        return DBL_MAX;
+        return MAX_WEIGHT;
 
     return getWeightHelper(node1, node2);
 }
 
 
 /**
- * @brief Set the weight of the arc between two nodes if it
+ * @brief Set the weight of the edge between two nodes if it
  * exists.
  * @param[in] o1 Object of the node 1
  * @param[in] o2 Object of the node 2
@@ -243,7 +241,7 @@ bool Graph<T>::deleteNode(NodeIterator n) {
 }
 
 /**
- * @brief Add arc in the graph given the node iterators
+ * @brief Add edge in the graph given the node iterators
  * Note that you should use this function when you are sure
  * that the iteratos are pointing to an element which is in the
  * graph
@@ -251,14 +249,14 @@ bool Graph<T>::deleteNode(NodeIterator n) {
  * @param[in] n2 Iterator to node 2
  */
 template <class T>
-void Graph<T>::addArc(NodeIterator n1, NodeIterator n2, const double weight) {
-    addArcHelper(n1.node, n2.node, weight);
+void Graph<T>::addEdge(NodeIterator n1, NodeIterator n2, const double weight) {
+    addEdgeHelper(n1.node, n2.node, weight);
     if (type == GraphType::UNDIRECTED)
-        addArcHelper(n2.node, n1.node, weight);
+        addEdgeHelper(n2.node, n1.node, weight);
 }
 
 /**
- * @brief Delete arc from the graph given the node iterators
+ * @brief Delete edge from the graph given the node iterators
  * Note that you should use this function when you are sure
  * that the iteratos are pointing to an element which is in the
  * graph
@@ -266,10 +264,10 @@ void Graph<T>::addArc(NodeIterator n1, NodeIterator n2, const double weight) {
  * @param[in] n2 Iterator to node 2
  */
 template <class T>
-void Graph<T>::deleteArc(NodeIterator n1, const NodeIterator n2) {
-    deleteArcHelper(n1.node, n2.node);
+void Graph<T>::deleteEdge(NodeIterator n1, const NodeIterator n2) {
+    deleteEdgeHelper(n1.node, n2.node);
     if (type == GraphType::UNDIRECTED)
-        deleteArcHelper(n2.node, n1.node);
+        deleteEdgeHelper(n2.node, n1.node);
 }
 
 
@@ -289,13 +287,13 @@ bool Graph<T>::isAdjacent(const NodeIterator n1, const NodeIterator n2) const {
 
 /**
  * @brief Check if two nodes are adjacent given the iterators.
- * It returns DBL_MAX if node are not adjacent
+ * It returns MAX_WEIGHT if node are not adjacent
  * Note that you should use this function when you are sure
  * that the iterators are pointing to an element which is in the
  * graph
  * @param[in] n1 Iterator to node 1
  * @param[in] n2 Iterator to node 2
- * @return Weight of the arc, DBL_MAX if nodes are not adjacent
+ * @return Weight of the edge, MAX_WEIGHT if nodes are not adjacent
  */
 template <class T>
 double Graph<T>::getWeight(const NodeIterator o1, const NodeIterator o2) {
@@ -304,13 +302,13 @@ double Graph<T>::getWeight(const NodeIterator o1, const NodeIterator o2) {
 
 
 /**
- * @brief Set the weight of an arc between two nodes
+ * @brief Set the weight of an edge between two nodes
  * Note that you should use this function when you are sure
  * that the iterators are pointing to an element which is in the
  * graph
  * @param[in] n1 Iterator to node 1
  * @param[in] n2 Iterator to node 2
- * @param[in] weight Weight of the arc
+ * @param[in] weight Weight of the edge
  */
 template <class T>
 void Graph<T>::setWeight(NodeIterator o1, NodeIterator o2, const double weight) {
@@ -321,8 +319,15 @@ void Graph<T>::setWeight(NodeIterator o1, NodeIterator o2, const double weight) 
 
 /* ----- ITERATORS ----- */
 
+
+
+
+
+/* Node iterators */
+
 /**
  * @brief Begin node iterator
+ * @return Iterator
  */
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
@@ -340,6 +345,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
 
 /**
  * @brief End node iterator
+ * @return Iterator
  */
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::nodeIteratorEnd() {
@@ -348,7 +354,6 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorEnd() {
 
 /**
  * @brief Get range based node iterator of the graph
- *
  * @return Range based node iterator
  */
 template <class T>
@@ -357,63 +362,158 @@ typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator() {
 }
 
 
-/* ----- FUNCTIONS FOR ITERATORS ----- */
+
+
+/* Edge iterators */
 
 /**
- * @brief Get next node
- *
- * @param[in] pos Current position of the input node
- * @param[out] newPos Position of the next node
- * @return Next node
+ * @brief Begin edge iterator
+ * @return Iterator
  */
-template<class T>
-typename Graph<T>::Node* Graph<T>::getNextNode(
-        const unsigned int pos,
-        unsigned int& newPos)
-{
-    typename std::vector<Node*>::iterator it = nodes.begin();
-    std::advance(it, pos);
+template <class T>
+typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorBegin() {
+    NodeIterator nodeIt = this->nodeIteratorBegin();
 
-    newPos = pos;
+    if (nodeIt == this->nodeIteratorEnd())
+        return this->edgeIteratorEnd();
 
-    do {
+    AdjacentNodeIterator adjIt = this->adjacentNodeIteratorBegin(nodeIt);
+
+    while (adjIt == this->adjacentNodeIteratorEnd(nodeIt)) {
+        nodeIt++;
+
+        if (nodeIt == this->nodeIteratorEnd()) {
+            return this->edgeIteratorEnd();
+        }
+
+        adjIt = this->adjacentNodeIteratorBegin(nodeIt);
+    }
+
+    return EdgeIterator(this, nodeIt, adjIt);
+}
+
+/**
+ * @brief End edge iterator
+ * @return Iterator
+ */
+template <class T>
+typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorEnd() {
+    return EdgeIterator(this, this->nodeIteratorEnd(), this->adjacentNodeIteratorEnd(nullptr));
+}
+
+/**
+ * @brief Get range based edge iterator of the graph
+ * @return Range based edge iterator
+ */
+template <class T>
+typename Graph<T>::RangeBasedEdgeIterator Graph<T>::edgeIterator() {
+    return RangeBasedEdgeIterator(this);
+}
+
+
+
+
+/* Adjacent node iterators */
+
+/**
+ * @brief Begin adjacent node iterator
+ * @param[in] nodeIterator Iterator of the node
+ * @return Iterator
+ */
+template <class T>
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(NodeIterator nodeIterator) {
+    Node* node = nodeIterator.node;
+    return this->adjacentNodeIteratorBegin(node);
+}
+
+/**
+ * @brief Begin adjacent node iterator
+ * @param[in] o Object of the node
+ * @return Iterator
+ */
+template <class T>
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(const T& o) {
+    return this->adjacentNodeIteratorBegin(this->findNode(o));
+}
+
+/**
+ * @brief End adjacent node iterator
+ * @param[in] nodeIterator Iterator of the node
+ * @return Iterator
+ */
+template <class T>
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(NodeIterator nodeIterator) {
+    Node* node = nodeIterator.node;
+    return this->adjacentNodeIteratorEnd(node);
+}
+
+/**
+ * @brief End adjacent node iterator
+ * @param[in] o Object of the node
+ * @return Iterator
+ */
+template <class T>
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(const T& o) {
+    return this->adjacentNodeIteratorEnd(this->findNode(o));
+}
+
+/**
+ * @brief Get range based adjacent node iterator of the graph given a node
+ * @param[in] nodeIterator Iterator of the node
+ * @return Range based node iterator
+ */
+template <class T>
+typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator(NodeIterator nodeIterator) {
+    return RangeBasedAdjacentNodeIterator(this, nodeIterator.node);
+}
+
+/**
+ * @brief Get range based adjacent node iterator of the graph given a node
+ * @param[in] o Object of the node
+ * @return Range based node iterator
+ */
+template <class T>
+typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator(const T& o) {
+    return this->adjacentNodeIterator(this->findNode(o));
+}
+
+
+
+
+
+/* ----- PRIVATE FUNCTIONS FOR ITERATORS ----- */
+
+
+/**
+ * @brief Begin adjacent node iterator
+ * @param[in] node Iterator of the node
+ * @return Iterator
+ */
+template <class T>
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(Node* node) {
+    std::unordered_map<unsigned int, double>& map = node->adjacentNodes;
+    typename std::unordered_map<unsigned int, double>::iterator it = map.begin();
+
+    while (it != map.end() && nodes.at(it->first) == nullptr) {
         it++;
-        newPos++;
-    } while (it != nodes.end() && *it == nullptr);
+    }
 
-    if (it == nodes.end())
-        return nullptr;
+    if (it == map.end())
+        return this->adjacentNodeIteratorEnd(node);
 
-    return *it;
+    return AdjacentNodeIterator(this, node, nodes.at(it->first));
 }
 
 /**
- * @brief Get previous node
- *
- * @param[in] pos Current position of the input node
- * @param[out] newPos Position of the previous node
- * @return Previous node
+ * @brief End adjacent node iterator
+ * @param[in] node Iterator of the node
+ * @return Iterator
  */
-template<class T>
-typename Graph<T>::Node* Graph<T>::getPrevNode(
-        const unsigned int pos,
-        unsigned int& newPos)
-{
-    typename std::vector<Node*>::iterator it = nodes.begin();
-    std::advance(it, pos);
-
-    newPos = pos;
-
-    do {
-        if (it == nodes.begin())
-            return nullptr;
-
-        it--;
-        newPos--;
-    } while (*it == nullptr);
-
-    return *it;
+template <class T>
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(Node* node) {
+    return AdjacentNodeIterator(this, node, nullptr);
 }
+
 
 
 
@@ -439,15 +539,13 @@ typename Graph<T>::Node* Graph<T>::findNodeHelper(const T& o) const {
 }
 
 /**
- * @brief Add arc in the graph given the nodes
+ * @brief Add edge in the graph given the nodes
  * @param[in] node1 Node 1
  * @param[in] node2 Node 2
  */
 template <class T>
-void Graph<T>::addArcHelper(Node* n1, const Node* n2, const double weight) {
-
+void Graph<T>::addEdgeHelper(Node* n1, const Node* n2, const double weight) {
     if (n2 != nullptr) {
-
         std::unordered_map<unsigned int, double>::iterator it = n1->adjacentNodes.find(n2->id);
 
         if (it == n1->adjacentNodes.end()) {
@@ -460,12 +558,12 @@ void Graph<T>::addArcHelper(Node* n1, const Node* n2, const double weight) {
 }
 
 /**
- * @brief Delete arc from the graph given the nodes
+ * @brief Delete edge from the graph given the nodes
  * @param[in] node1 Node 1
  * @param[in] node2 Node 2
  */
 template <class T>
-void Graph<T>::deleteArcHelper(Node* n1, const Node* n2) {
+void Graph<T>::deleteEdgeHelper(Node* n1, const Node* n2) {
     if (n2 != nullptr) {
         n1->adjacentNodes.erase(n2->id);
     }
@@ -492,27 +590,27 @@ bool Graph<T>::isAdjacentHelper(const Node* n1, const Node* n2) const {
 }
 
 /**
- * @brief Get the weight of an arc between two nodes
- * It returns DBL_MAX if node are not adjacent
+ * @brief Get the weight of an edge between two nodes
+ * It returns MAX_WEIGHT if node are not adjacent
  *
  * @param[in] node1 Node 1
  * @param[in] node2 Node 2
- * @return Weight of the arc, DBL_MAX if nodes are not adjacent
+ * @return Weight of the edge, MAX_WEIGHT if nodes are not adjacent
  */
 template <class T>
 double Graph<T>::getWeightHelper(const Node* n1, const Node* n2) const {
     std::unordered_map<unsigned int, double>::const_iterator it = n1->adjacentNodes.find(n2->id);
     if (it == n1->adjacentNodes.end())
-        return DBL_MAX;
+        return MAX_WEIGHT;
     else
         return it->second;
 }
 
 /**
- * @brief Set the weight of an arc between two nodes
+ * @brief Set the weight of an edge between two nodes
  * @param[in] node1 Node 1
  * @param[in] node2 Node 2
- * @param[in] weight Weight of the arc
+ * @param[in] weight Weight of the edge
  */
 template <class T>
 void Graph<T>::setWeightHelper(Node* n1, const Node* n2, const double weight) {

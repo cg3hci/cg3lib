@@ -93,8 +93,6 @@ private:
 }
 
 
-
-
 #include "tree_rangebased_iterators.tpp"
 
 #endif // CG3_TREERANGEBASEDITERATORS_H

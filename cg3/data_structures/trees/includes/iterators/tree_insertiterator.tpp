@@ -7,19 +7,6 @@
 namespace cg3 {
 
 
-/* --------- CONSTRUCTORS/DESTRUCTOR --------- */
-
-/**
- * @brief Default constructor
- */
-template <class B, class K>
-TreeInsertIterator<B,K>::TreeInsertIterator(B* bst)
-{
-    this->bst = bst;
-}
-
-
-
 /* --------- ITERATOR OPERATOR OVERLOAD --------- */
 
 template <class B, class K>
@@ -42,5 +29,7 @@ template <class B, class K>
 TreeInsertIterator<B,K>& TreeInsertIterator<B,K>::operator++(int) {
     return *this;
 }
+
+
 
 }

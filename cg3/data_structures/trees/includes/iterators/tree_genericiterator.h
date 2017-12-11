@@ -34,19 +34,18 @@ protected:
 
     /* Constructors */
 
-    inline TreeGenericIterator(B* bst, N* node);
+    inline TreeGenericIterator(B* bst, N* node) :
+        bst(bst), node(node) {}
 
 
     /* Fields */
 
-    N* node;
     B* bst;
+    N* node;
 
 };
 
 
 }
-
-#include "tree_genericiterator.tpp"
 
 #endif // CG3_TREEGENERICITERATOR_H

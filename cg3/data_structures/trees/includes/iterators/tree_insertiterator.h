@@ -19,7 +19,7 @@ public:
 
     /* Constructors */
 
-    inline TreeInsertIterator(B* bst);
+    inline TreeInsertIterator(B* bst) : bst(bst) {}
 
 
     /* Iterator operators */

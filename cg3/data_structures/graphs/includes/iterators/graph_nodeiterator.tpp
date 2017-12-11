@@ -14,7 +14,8 @@ template <class T>
 bool Graph<T>::NodeIterator::operator ==(
         const NodeIterator& otherIterator) const
 {
-    return (this->node == otherIterator.node);
+    return (this->node == otherIterator.node &&
+            this->graph == this->graph);
 }
 
 template <class T>
@@ -40,20 +41,6 @@ typename Graph<T>::NodeIterator Graph<T>::NodeIterator::operator ++(int)
     return oldIt;
 }
 
-template <class T>
-typename Graph<T>::NodeIterator Graph<T>::NodeIterator::operator --()
-{
-    this->prev();
-    return *this;
-}
-
-template <class T>
-typename Graph<T>::NodeIterator Graph<T>::NodeIterator::operator --(int)
-{
-    NodeIterator oldIt = *this;
-    this->prev();
-    return oldIt;
-}
 
 
 template <class T>
@@ -68,28 +55,23 @@ const T& Graph<T>::NodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::NodeIterator::next() {
-    unsigned int newPos;
-    node = graph->getNextNode(pos, newPos);
-    pos = newPos;
+    typename std::vector<Node*>::iterator it = graph->nodes.begin();
+    std::advance(it, pos);
+
+    do {
+        it++;
+        pos++;
+    } while (it != graph->nodes.end() && *it == nullptr);
+
+    if (it == graph->nodes.end())
+        this->node = nullptr;
+    else
+        this->node = *it;
 }
-
-template <class T>
-void Graph<T>::NodeIterator::prev() {
-    unsigned int newPos;
-    node = graph->getPrevNode(pos, newPos);
-    pos = newPos;
-}
-
-
 
 
 
 /* --------- RANGE BASED ITERATOR --------- */
-
-template <class T>
-Graph<T>::RangeBasedNodeIterator::RangeBasedNodeIterator(Graph<T>* graph) {
-    this->graph = graph;
-}
 
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::RangeBasedNodeIterator::begin() {

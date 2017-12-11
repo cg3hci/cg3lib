@@ -9,11 +9,11 @@
 namespace cg3 {
 
 /**
- * @brief The iterator of a graph
+ * @brief The node iterator of a graph
  */
 template <class T>
 class Graph<T>::NodeIterator :
-        public std::iterator<std::bidirectional_iterator_tag, T>
+        public std::iterator<std::forward_iterator_tag, T>
 {
 
     friend class Graph<T>;
@@ -34,8 +34,6 @@ public:
 
     inline NodeIterator operator ++ ();
     inline NodeIterator operator ++ (int);
-    inline NodeIterator operator -- ();
-    inline NodeIterator operator -- (int);
 
     inline const T& operator *() const;
 
@@ -44,7 +42,6 @@ private:
     /* Protected methods */
 
     inline void next();
-    inline void prev();
 
 
     /* Fields */
@@ -64,7 +61,8 @@ class Graph<T>::RangeBasedNodeIterator {
 
 public:
 
-    inline RangeBasedNodeIterator(Graph<T>* graph);
+    inline RangeBasedNodeIterator(Graph<T>* graph) :
+        graph(graph) {}
 
     inline NodeIterator begin();
     inline NodeIterator end();
