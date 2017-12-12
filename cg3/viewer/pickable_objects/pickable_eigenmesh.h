@@ -10,11 +10,11 @@ namespace cg3 {
  * \~Italian
  * @class PickableEigenmesh
  */
-class PickableEigenmesh : public DrawableEigenMesh, public PickableObject
+class PickableEigenMesh : public DrawableEigenMesh, public PickableObject
 {
 public:
-    PickableEigenmesh();
-    PickableEigenmesh(const EigenMesh &e);
+    PickableEigenMesh();
+    PickableEigenMesh(const EigenMesh &e);
     void drawWithNames() const;
     void setSelectedFaces(std::vector<int> selected_faces);
     void setSelectionColor(Color color);

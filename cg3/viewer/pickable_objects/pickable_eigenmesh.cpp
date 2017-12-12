@@ -2,13 +2,13 @@
 
 namespace cg3 {
 
-PickableEigenmesh::PickableEigenmesh()
+PickableEigenMesh::PickableEigenMesh()
 {
     selection_color = Color(244,196,48);
     selection_width = 3;
 }
 
-PickableEigenmesh::PickableEigenmesh(const EigenMesh &e) :DrawableEigenMesh(e)
+PickableEigenMesh::PickableEigenMesh(const EigenMesh &e) :DrawableEigenMesh(e)
 {
     selection_color = Color(244,196,48);
     selection_width = 3;
@@ -19,7 +19,7 @@ PickableEigenmesh::PickableEigenmesh(const EigenMesh &e) :DrawableEigenMesh(e)
  * @brief PickableEigenmesh::drawWithNames Metodo che si occupa di disegnare le facce assegnando a esse un identificativo
  * riconoscibile nella postSelection (classe glCanvas) in modo da poterne effettuare il picking.
  */
-void PickableEigenmesh::drawWithNames() const
+void PickableEigenMesh::drawWithNames() const
 {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_DOUBLE, 0, V.data());
@@ -62,7 +62,7 @@ void PickableEigenmesh::drawWithNames() const
  * @brief PickableEigenmesh::drawFace Metodo che si occupa di effettuare il rendering di una faccia
  * @param f La faccia da renderizzare
  */
-void PickableEigenmesh::drawFace(int f) const{
+void PickableEigenMesh::drawFace(int f) const{
 
     std::vector<unsigned int> face_vertex;
     face_vertex.push_back(F(f,0));
@@ -73,11 +73,11 @@ void PickableEigenmesh::drawFace(int f) const{
 
 }
 
-void PickableEigenmesh::setSelectedFaces(std::vector<int> selected_faces){
+void PickableEigenMesh::setSelectedFaces(std::vector<int> selected_faces){
     this->selected_faces = selected_faces;
 }
 
-void PickableEigenmesh::setSelectionColor(Color color){
+void PickableEigenMesh::setSelectionColor(Color color){
     selection_color = color;
 }
 
