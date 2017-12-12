@@ -29,7 +29,8 @@ HEADERS += \
     $$PWD/data_structures/graphs/includes/nodes/graph_node.h \
     $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.h \
     $$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.h \
-    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentnodeiterator.h
+    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentnodeiterator.h \
+    $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.h
 
 SOURCES += \
     $$PWD/data_structures/graphs/graph.tpp \

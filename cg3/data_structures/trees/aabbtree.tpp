@@ -929,7 +929,7 @@ bool AABBTree<D,K,T>::aabbOverlapsHelper(
         const typename Node::AABB& a,
         const typename Node::AABB& b)
 {
-    double eps = cg3::CG3_EPSILON;
+    double eps = cg3::CG3_EPSILON*100;
 
     for (int i = 0; i < D; i++) {
         if (a.min[i] - eps > b.max[i] + eps ||

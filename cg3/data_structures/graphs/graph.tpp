@@ -5,6 +5,11 @@
 
 namespace cg3 {
 
+/* ----- CONST ----- */
+
+template <class T>
+constexpr double Graph<T>::MAX_WEIGHT;
+
 /* ----- CONSTRUCTORS/DESTRUCTORS ----- */
 
 /**
@@ -21,15 +26,7 @@ Graph<T>::Graph(GraphType type) : type(type)
  */
 template <class T>
 Graph<T>::~Graph() {
-    //Delete nodes
-    for (Node* n : nodes) {
-        if (n != nullptr) {
-            delete n;
-        }
-    }
-    //Clear nodes and map
-    nodes.clear();
-    map.clear();
+    this->clear();
 }
 
 
@@ -236,8 +233,8 @@ void Graph<T>::setWeight(const T& o1, const T& o2, const double weight) {
  * @param[in] n Iterator to the node
  */
 template <class T>
-bool Graph<T>::deleteNode(NodeIterator n) {
-    return deleteNode(*n);
+bool Graph<T>::deleteNode(GenericNodeIterator n) {
+    return deleteNode(n.node->value);
 }
 
 /**
@@ -249,7 +246,7 @@ bool Graph<T>::deleteNode(NodeIterator n) {
  * @param[in] n2 Iterator to node 2
  */
 template <class T>
-void Graph<T>::addEdge(NodeIterator n1, NodeIterator n2, const double weight) {
+void Graph<T>::addEdge(GenericNodeIterator n1, GenericNodeIterator n2, const double weight) {
     addEdgeHelper(n1.node, n2.node, weight);
     if (type == GraphType::UNDIRECTED)
         addEdgeHelper(n2.node, n1.node, weight);
@@ -264,7 +261,7 @@ void Graph<T>::addEdge(NodeIterator n1, NodeIterator n2, const double weight) {
  * @param[in] n2 Iterator to node 2
  */
 template <class T>
-void Graph<T>::deleteEdge(NodeIterator n1, const NodeIterator n2) {
+void Graph<T>::deleteEdge(GenericNodeIterator n1, const GenericNodeIterator n2) {
     deleteEdgeHelper(n1.node, n2.node);
     if (type == GraphType::UNDIRECTED)
         deleteEdgeHelper(n2.node, n1.node);
@@ -281,7 +278,7 @@ void Graph<T>::deleteEdge(NodeIterator n1, const NodeIterator n2) {
  * @return True if the nodes are adjacent, false otherwise
  */
 template <class T>
-bool Graph<T>::isAdjacent(const NodeIterator n1, const NodeIterator n2) const {
+bool Graph<T>::isAdjacent(const GenericNodeIterator n1, const GenericNodeIterator n2) const {
     return isAdjacentHelper(n1.node, n2.node);
 }
 
@@ -296,7 +293,7 @@ bool Graph<T>::isAdjacent(const NodeIterator n1, const NodeIterator n2) const {
  * @return Weight of the edge, MAX_WEIGHT if nodes are not adjacent
  */
 template <class T>
-double Graph<T>::getWeight(const NodeIterator o1, const NodeIterator o2) {
+double Graph<T>::getWeight(const GenericNodeIterator o1, const GenericNodeIterator o2) {
     return getWeightHelper(o1.node, o2.node);
 }
 
@@ -311,7 +308,7 @@ double Graph<T>::getWeight(const NodeIterator o1, const NodeIterator o2) {
  * @param[in] weight Weight of the edge
  */
 template <class T>
-void Graph<T>::setWeight(NodeIterator o1, NodeIterator o2, const double weight) {
+void Graph<T>::setWeight(GenericNodeIterator o1, GenericNodeIterator o2, const double weight) {
     setWeightHelper(o1.node, o2.node, weight);
 }
 
@@ -478,8 +475,22 @@ typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator
 }
 
 
-
-
+/**
+ * @brief Clear the graph.
+ * It deletes all the nodes and clear the element map
+ */
+template <class T>
+void Graph<T>::clear() {
+    //Delete nodes
+    for (Node* n : nodes) {
+        if (n != nullptr) {
+            delete n;
+        }
+    }
+    //Clear nodes and map
+    nodes.clear();
+    map.clear();
+}
 
 /* ----- PRIVATE FUNCTIONS FOR ITERATORS ----- */
 

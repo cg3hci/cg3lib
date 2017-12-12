@@ -1,10 +1,7 @@
 #ifndef CG3_GRAPH_ADJACENTNODEITERATOR_H
 #define CG3_GRAPH_ADJACENTNODEITERATOR_H
 
-#include <iterator>
-#include <vector>
-
-#include "../../graph.h"
+#include "graph_genericnodeiterator.h"
 
 namespace cg3 {
 
@@ -13,6 +10,7 @@ namespace cg3 {
  */
 template <class T>
 class Graph<T>::AdjacentNodeIterator :
+        public Graph<T>::GenericNodeIterator,
         public std::iterator<std::forward_iterator_tag, T>
 {
 
@@ -23,9 +21,10 @@ private:
     /* Constructors */
 
     inline AdjacentNodeIterator(Graph<T>* graph,
-                                Graph<T>::Node* node,
-                                Graph<T>::Node* adjacentNode) :
-        graph(graph), node(node), adjacentNode(adjacentNode) {}
+                                Graph<T>::Node* targetNode,
+                                Graph<T>::Node* node) :
+        Graph<T>::GenericNodeIterator(graph, node),
+        targetNode(targetNode) {}
 
 public:
 
@@ -48,10 +47,7 @@ private:
 
     /* Fields */
 
-    Graph<T>* graph;
-    Graph<T>::Node* node;
-
-    Graph<T>::Node* adjacentNode;
+    Graph<T>::Node* targetNode;
 
 };
 

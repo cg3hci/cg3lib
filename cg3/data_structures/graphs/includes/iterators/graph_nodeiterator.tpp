@@ -46,7 +46,7 @@ typename Graph<T>::NodeIterator Graph<T>::NodeIterator::operator ++(int)
 template <class T>
 const T& Graph<T>::NodeIterator::operator *() const
 {
-    return node->value;
+    return this->node->value;
 }
 
 
@@ -55,15 +55,15 @@ const T& Graph<T>::NodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::NodeIterator::next() {
-    typename std::vector<Node*>::iterator it = graph->nodes.begin();
+    typename std::vector<Node*>::iterator it = this->graph->nodes.begin();
     std::advance(it, pos);
 
     do {
         it++;
         pos++;
-    } while (it != graph->nodes.end() && *it == nullptr);
+    } while (it != this->graph->nodes.end() && *it == nullptr);
 
-    if (it == graph->nodes.end())
+    if (it == this->graph->nodes.end())
         this->node = nullptr;
     else
         this->node = *it;

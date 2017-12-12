@@ -48,6 +48,8 @@ public:
 
     /* Iterator classes */
 
+    class GenericNodeIterator;
+
     class NodeIterator;
     friend class NodeIterator;
     class RangeBasedNodeIterator;
@@ -83,14 +85,20 @@ public:
 
     /* Public methods with iterators */
 
-    bool deleteNode(NodeIterator n);
+    bool deleteNode(GenericNodeIterator n);
 
-    void addEdge(NodeIterator n1, NodeIterator n2, const double weight = 0);
-    void deleteEdge(NodeIterator n1, NodeIterator n2);
-    bool isAdjacent(const NodeIterator n1, const NodeIterator n2) const;
+    void addEdge(GenericNodeIterator n1, GenericNodeIterator n2, const double weight = 0);
+    void deleteEdge(GenericNodeIterator n1, const GenericNodeIterator n2);
+    bool isAdjacent(const GenericNodeIterator n1, const GenericNodeIterator n2) const;
 
-    double getWeight(const NodeIterator o1, const NodeIterator o2);
-    void setWeight(NodeIterator o1, NodeIterator o2, const double weight);
+    double getWeight(const GenericNodeIterator o1, const GenericNodeIterator o2);
+    void setWeight(GenericNodeIterator o1, GenericNodeIterator o2, const double weight);
+
+
+    /* Clear methods */
+
+    void clear();
+
 
 
     /* Iterators */
@@ -142,6 +150,7 @@ private:
 
 #include "includes/nodes/graph_node.h"
 
+#include "includes/iterators/graph_genericnodeiterator.h"
 #include "includes/iterators/graph_nodeiterator.h"
 #include "includes/iterators/graph_edgeiterator.h"
 #include "includes/iterators/graph_adjacentnodeiterator.h"

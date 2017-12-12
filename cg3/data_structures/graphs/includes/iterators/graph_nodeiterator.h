@@ -1,10 +1,7 @@
 #ifndef CG3_GRAPH_NODEITERATOR_H
 #define CG3_GRAPH_NODEITERATOR_H
 
-#include <iterator>
-#include <vector>
-
-#include "../../graph.h"
+#include "graph_genericnodeiterator.h"
 
 namespace cg3 {
 
@@ -13,6 +10,7 @@ namespace cg3 {
  */
 template <class T>
 class Graph<T>::NodeIterator :
+        public Graph<T>::GenericNodeIterator,
         public std::iterator<std::forward_iterator_tag, T>
 {
 
@@ -23,7 +21,8 @@ private:
     /* Constructors */
 
     inline NodeIterator(Graph<T>* graph, Graph<T>::Node* node, unsigned int pos) :
-        graph(graph), node(node), pos(pos) {}
+        Graph<T>::GenericNodeIterator(graph, node),
+        pos(pos) {}
 
 public:
 
@@ -46,8 +45,6 @@ private:
 
     /* Fields */
 
-    Graph<T>* graph;
-    Graph<T>::Node* node;
     unsigned int pos;
 
 };

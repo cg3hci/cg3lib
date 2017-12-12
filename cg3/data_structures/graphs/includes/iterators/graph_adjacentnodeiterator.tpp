@@ -14,8 +14,8 @@ template <class T>
 bool Graph<T>::AdjacentNodeIterator::operator ==(
         const AdjacentNodeIterator& otherIterator) const
 {
-    return (this->adjacentNode == otherIterator.adjacentNode &&
-            this->node == otherIterator.node &&
+    return (this->node == otherIterator.node &&
+            this->targetNode == otherIterator.targetNode &&
             this->graph == this->graph);
 }
 
@@ -46,7 +46,7 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::AdjacentNodeIterator::operator
 template <class T>
 const T& Graph<T>::AdjacentNodeIterator::operator *() const
 {
-    return adjacentNode->value;
+    return this->node->value;
 }
 
 
@@ -55,17 +55,17 @@ const T& Graph<T>::AdjacentNodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::AdjacentNodeIterator::next() {
-    std::unordered_map<unsigned int, double>& map = node->adjacentNodes;
-    std::unordered_map<unsigned int, double>::iterator it = map.find(adjacentNode->id);
+    std::unordered_map<unsigned int, double>& map = this->targetNode->adjacentNodes;
+    std::unordered_map<unsigned int, double>::iterator it = map.find(this->node->id);
 
     do {
         it++;
-    } while (it != map.end() && graph->nodes.at(it->first) == nullptr);
+    } while (it != map.end() && this->graph->nodes.at(it->first) == nullptr);
 
     if (it == map.end())
-        this->adjacentNode = nullptr;
+        this->node = nullptr;
     else
-        this->adjacentNode = graph->nodes.at(it->first);
+        this->node = this->graph->nodes.at(it->first);
 }
 
 
