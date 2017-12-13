@@ -1290,13 +1290,7 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
  * @param[in] dcel: dcel da cui verrà creata la Dcel this
  * @return La Dcel appena assegnata
  */
-Dcel& Dcel::operator = (const Dcel& dcel) {
-    Dcel tmp(dcel);
-    swap(tmp);
-    return *this;
-}
-
-Dcel& Dcel::operator=(Dcel&& dcel) {
+Dcel& Dcel::operator = (Dcel dcel) {
     swap(dcel);
     return *this;
 }

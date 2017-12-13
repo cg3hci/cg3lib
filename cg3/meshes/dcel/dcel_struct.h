@@ -192,8 +192,7 @@ class Dcel : public SerializableObject {
 
         void swap(Dcel& d);
 
-        Dcel& operator= (const Dcel& dcel);
-        Dcel& operator= (Dcel&& dcel);
+        Dcel& operator= (Dcel dcel);
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
