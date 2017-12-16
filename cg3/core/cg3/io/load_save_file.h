@@ -88,10 +88,10 @@ template <typename T, typename V, typename C = double>
 bool loadTriangleMeshFromObj(const std::string &filename, std::vector<T>& coords, std::vector<V>&triangles, int &modality = dummies::dummyInt, std::vector<C> &verticesNormals = dummies::dummyVectorDouble, std::vector<Color> &verticesColors = dummies::dummyVectorColor, std::vector<Color> &triangleColors = dummies::dummyVectorColor);
 
 #ifdef CG3_WITH_EIGEN
-template <typename T, typename V, int ...A>
-bool loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles);
-template <typename T, typename V, typename C = double, typename W = float, typename X = float, int ...A>
-bool loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors);
+template <typename T, typename V>
+bool loadTriangleMeshFromObj(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles);
+template <typename T, typename V, typename C = double, typename W = float, typename X = float>
+bool loadTriangleMeshFromObj(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles, int &modality, Eigen::PlainObjectBase<C> &verticesNormals, Eigen::PlainObjectBase<W> &verticesColors, Eigen::PlainObjectBase<X> &triangleColors);
 #endif
 
 ///Ply
@@ -99,10 +99,10 @@ template <typename T, typename V, typename C = double, typename W = unsigned int
 bool loadMeshFromPly(const std::string &filename, std::list<T>& coords, std::list<V>& faces, MeshType &meshType, int &modality = dummies::dummyInt, std::list<C> &verticesNormals = dummies::dummyListDouble, std::list<Color> &verticesColors = dummies::dummyListColor, std::list<Color> &faceColors = dummies::dummyListColor, std::list<W> &faceSizes = dummies::dummyListUnsignedInt);
 
 #ifdef CG3_WITH_EIGEN
-template <typename T, typename V, int ...A>
-bool loadTriangleMeshFromPly(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles);
-template <typename T, typename V, typename C = double, typename W = float, typename X = float, int ...A>
-bool loadTriangleMeshFromPly(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors);
+template <typename T, typename V>
+bool loadTriangleMeshFromPly(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles);
+template <typename T, typename V, typename C = double, typename W = float, typename X = float>
+bool loadTriangleMeshFromPly(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles, int &modality, Eigen::PlainObjectBase<C> &verticesNormals, Eigen::PlainObjectBase<W> &verticesColors, Eigen::PlainObjectBase<X> &triangleColors);
 #endif
 
 }

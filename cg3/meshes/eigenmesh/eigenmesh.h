@@ -3,6 +3,11 @@
 
 #include "simpleeigenmesh.h"
 
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 namespace cg3 {
 
 #ifdef CG3_LIBIGL_DEFINED
@@ -205,17 +210,17 @@ inline void EigenMesh::removeFace(unsigned int f) {
 }
 
 inline Vec3 EigenMesh::getFaceNormal(unsigned int f) const {
-    assert (f < F.rows());
+    assert (f < (unsigned int)F.rows());
     return Vec3(NF(f,0), NF(f,1), NF(f,2));
 }
 
 inline Vec3 EigenMesh::getVertexNormal(unsigned int v) const {
-    assert (v < V.rows());
+    assert (v < (unsigned int)V.rows());
     return Vec3(NV(v,0), NV(v,1), NV(v,2));
 }
 
 inline Color EigenMesh::getFaceColor(unsigned int f) const {
-    assert (f < F.rows());
+    assert (f < (unsigned int)F.rows());
     Color c;
     c.setRedF((float)CF(f,0));
     c.setGreenF((float)CF(f,1));

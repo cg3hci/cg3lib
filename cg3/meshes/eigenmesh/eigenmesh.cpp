@@ -122,7 +122,7 @@ void EigenMesh::setFaceColor(double red, double green, double blue, int f) {
     if (f < 0){
         if (CF.rows() != F.rows())
             CF.resize(F.rows(), 3);
-        for (unsigned int i = 0; i < CF.rows(); i++)
+        for (unsigned int i = 0; i < (unsigned int)CF.rows(); i++)
             CF.row(i) << red, green, blue;
     }
     else{
@@ -143,7 +143,7 @@ void EigenMesh::setVertexColor(double red, double green, double blue, int v) {
     if (v < 0){
         if (CV.rows() != V.rows())
             CV.resize(V.rows(), 3);
-        for (unsigned int i = 0; i < CV.rows(); i++)
+        for (unsigned int i = 0; i < (unsigned int)CV.rows(); i++)
             CV.row(i) << red, green, blue;
     }
     else{
@@ -153,7 +153,7 @@ void EigenMesh::setVertexColor(double red, double green, double blue, int v) {
 }
 
 void EigenMesh::setVertexNormal(const Vec3 &n, unsigned int v) {
-    assert(v < V.rows());
+    assert(v < (unsigned int)V.rows());
     NV.row(v) << n.x(), n.y(), n.z();
 }
 
@@ -174,10 +174,10 @@ void EigenMesh::translate(const Eigen::Vector3d &p) {
 void EigenMesh::rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d &centroid) {
     SimpleEigenMesh::rotate(m, centroid);
     updateBoundingBox();
-    for (unsigned int i = 0; i < NF.rows(); i++){
+    for (unsigned int i = 0; i < (unsigned int)NF.rows(); i++){
         NF.row(i) =  m * NF.row(i).transpose();
     }
-    for (unsigned int i = 0; i < NV.rows(); i++){
+    for (unsigned int i = 0; i < (unsigned int)NV.rows(); i++){
         NV.row(i) =  m * NV.row(i).transpose();
     }
 }
@@ -236,7 +236,7 @@ void EigenMesh::updateVerticesNormals() {
 }
 
 void EigenMesh::removeDegenerateTriangles(double epsilon) {
-    for (unsigned int i = 0; i < F.rows(); i++){
+    for (unsigned int i = 0; i < (unsigned int)F.rows(); i++){
         if (isDegenerateTriangle(i, epsilon)){
             this->removeFace(i);
             i--;

@@ -505,8 +505,8 @@ inline void Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
  * @param[in] m: Eigen::Matrix
  * @param binaryFile
  */
-template <typename T, int ...A>
-inline void Serializer::serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile){
+template <typename T>
+inline void Serializer::serialize(const Eigen::PlainObjectBase<T> &m, std::ofstream& binaryFile){
     unsigned long long int row = m.rows(), col = m.cols();
     Serializer::serialize("EigenMatrix", binaryFile);
     Serializer::serialize(row, binaryFile);
@@ -524,11 +524,11 @@ inline void Serializer::serialize(const Eigen::Matrix<T, A...> &m, std::ofstream
  * @param[out] m: Eigen::Matrix
  * @param binaryFile
  */
-template <typename T, int ...A>
-inline void Serializer::deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile){
+template <typename T>
+inline void Serializer::deserialize(Eigen::PlainObjectBase<T> &m, std::ifstream& binaryFile){
     unsigned long long int row, col;
     std::string s;
-    Eigen::Matrix<T, A...> tmp;
+    Eigen::PlainObjectBase<T> tmp;
     std::streampos begin = binaryFile.tellg();
     try {
         Serializer::deserialize(s, binaryFile);

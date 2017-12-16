@@ -117,11 +117,11 @@ namespace Serializer {
     void deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile);
 
     #ifdef CG3_WITH_EIGEN
-    template <typename T, int ...A>
-    void serialize(const Eigen::Matrix<T, A...> &m, std::ofstream& binaryFile);
+    template <typename T>
+    void serialize(const Eigen::PlainObjectBase<T> &m, std::ofstream& binaryFile);
 
-    template <typename T, int ...A>
-    void deserialize(Eigen::Matrix<T, A...> &m, std::ifstream& binaryFile);
+    template <typename T>
+    void deserialize(Eigen::PlainObjectBase<T> &m, std::ifstream& binaryFile);
     #endif //CG3_WITH_EIGEN
 
     template <typename T, unsigned long int ...A>

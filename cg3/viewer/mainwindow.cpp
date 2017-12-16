@@ -200,13 +200,13 @@ void MainWindow::loadPointOfView(std::string filename) {
  */
 int MainWindow::addManager(QFrame * f, std::string name, QToolBox * parent) {
     if (parent == nullptr) parent = ui->toolBox;
-    ui->toolBox->insertItem(managers.size(), f, QString(name.c_str()));
+    ui->toolBox->insertItem((int)managers.size(), f, QString(name.c_str()));
     ui->toolBox->adjustSize();
 
     f->show();
     managers.push_back(f);
     //adjustSize();
-    return managers.size()-1;
+    return (int)managers.size()-1;
 }
 
 /**

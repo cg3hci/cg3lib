@@ -122,7 +122,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
 
         std::map<Pointi, int> indices;
         int index = 0;
-        box.resizeVertices(vertices.size());
+        box.resizeVertices((unsigned int)vertices.size());
         for (std::pair<Pointi, Pointd> pair : vertices) {
             indices[pair.first] = index;
             box.setVertex(index, pair.second.x(), pair.second.y(), pair.second.z());
@@ -247,7 +247,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
  */
 SimpleEigenMesh EigenMeshAlgorithms::makeSphere(const Pointd &center, float radius, unsigned nLatitude) {
     SimpleEigenMesh sphere;
-    float DEGS_TO_RAD = M_PI/180.0f;
+    const double DEGS_TO_RAD = M_PI/180.0f;
     int i, j;
     float x, y, z, out;
     const unsigned int nPitch = nLatitude/2 + 1;

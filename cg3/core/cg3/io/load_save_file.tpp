@@ -502,10 +502,10 @@ bool loadSave::loadTriangleMeshFromObj(const std::string& filename, std::vector<
 }
 
 #ifdef CG3_WITH_EIGEN
-template <typename T, typename V, int ...A>
-bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles) {
-    std::list<T> dummyc;
-    std::list<V> dummyt;
+template <typename T, typename V>
+bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles) {
+    std::list<double> dummyc;
+    std::list<long int> dummyt;
     MeshType meshType;
     std::list<unsigned int> faceSizes;
     bool r = loadMeshFromObj(filename, dummyc, dummyt, meshType, dummies::dummyInt, dummies::dummyListDouble, dummies::dummyListColor, dummies::dummyListColor, faceSizes);
@@ -516,7 +516,7 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matri
         coords.resize(dummyc.size()/3, 3);
         triangles.resize(faceSizes.size(), 3);
         int v = 0;
-        for (typename std::list<T>::iterator it = dummyc.begin(); it != dummyc.end();){
+        for (typename std::list<double>::iterator it = dummyc.begin(); it != dummyc.end();){
             coords(v,0) = *it++;
             coords(v,1) = *it++;
             coords(v,2) = *it++;
@@ -524,7 +524,7 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matri
         }
         int t = 0;
         std::list<unsigned int>::iterator fsit = faceSizes.begin();
-        for (typename std::list<V>::iterator it = dummyt.begin(); it != dummyt.end(); ){
+        for (typename std::list<long int>::iterator it = dummyt.begin(); it != dummyt.end(); ){
             for (unsigned int id = 0; id < *fsit; id++){
                 if (id < 3)
                     triangles(t,id) = *it++;
@@ -537,13 +537,13 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matri
     return r;
 }
 
-template <typename T, typename V, typename C, typename W, typename X, int ...A>
-bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors){
-    std::list<T> dummyc;
-    std::list<V> dummyt;
+template <typename T, typename V, typename C, typename W, typename X>
+bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles, int &modality, Eigen::PlainObjectBase<C> &verticesNormals, Eigen::PlainObjectBase<W> &verticesColors, Eigen::PlainObjectBase<X> &triangleColors){
+    std::list<double> dummyc;
+    std::list<int> dummyt;
     modality = 0;
     MeshType meshType;
-    std::list<C> dummyvn;
+    std::list<double> dummyvn;
     std::list<Color> dummycv;
     std::list<Color> dummyct;
     std::list<unsigned int> faceSizes;
@@ -555,7 +555,7 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matri
         coords.resize(dummyc.size()/3, 3);
         triangles.resize(faceSizes.size(), 3);
         int v = 0;
-        for (typename std::list<T>::iterator it = dummyc.begin(); it != dummyc.end(); ){
+        for (typename std::list<double>::iterator it = dummyc.begin(); it != dummyc.end(); ){
             coords(v,0) = *it++;
             coords(v,1) = *it++;
             coords(v,2) = *it++;
@@ -563,7 +563,7 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matri
         }
         int t = 0;
         std::list<unsigned int>::iterator fsit = faceSizes.begin();
-        for (typename std::list<V>::iterator it = dummyt.begin(); it != dummyt.end(); ){
+        for (typename std::list<int>::iterator it = dummyt.begin(); it != dummyt.end(); ){
             for (unsigned int id = 0; id < *fsit; id++){
                 if (id < 3)
                     triangles(t,id) = *it++;
@@ -576,7 +576,7 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matri
                 && dummyc.size() == dummyvn.size()) {
             verticesNormals.resize(dummyc.size()/3, 3);
             int vn = 0;
-            for (typename std::list<C>::iterator it = dummyvn.begin(); it != dummyvn.end(); ){
+            for (typename std::list<double>::iterator it = dummyvn.begin(); it != dummyvn.end(); ){
                 verticesNormals(vn, 0) = *it++;
                 verticesNormals(vn, 1) = *it++;
                 verticesNormals(vn, 2) = *it++;
@@ -629,7 +629,6 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Matri
     }
     return r;
 }
-
 #endif
 
 template <typename T, typename V, typename C, typename W>
@@ -897,10 +896,10 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
 }
 
 #ifdef CG3_WITH_EIGEN
-template <typename T, typename V, int ...A>
-bool loadSave::loadTriangleMeshFromPly(const std::string& filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>& triangles) {
-    std::list<T> dummyc;
-    std::list<V> dummyt;
+template <typename T, typename V>
+bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles) {
+    std::list<double> dummyc;
+    std::list<int> dummyt;
     MeshType meshType;
     std::list<unsigned int> faceSizes;
     bool r = loadMeshFromPly(filename, dummyc, dummyt, meshType, dummies::dummyInt, dummies::dummyListDouble, dummies::dummyListColor, dummies::dummyListColor, faceSizes);
@@ -911,7 +910,7 @@ bool loadSave::loadTriangleMeshFromPly(const std::string& filename, Eigen::Matri
         coords.resize(dummyc.size()/3, 3);
         triangles.resize(faceSizes.size(), 3);
         int v = 0;
-        for (typename std::list<T>::iterator it = dummyc.begin(); it != dummyc.end();){
+        for (typename std::list<double>::iterator it = dummyc.begin(); it != dummyc.end();){
             coords(v,0) = *it++;
             coords(v,1) = *it++;
             coords(v,2) = *it++;
@@ -919,7 +918,7 @@ bool loadSave::loadTriangleMeshFromPly(const std::string& filename, Eigen::Matri
         }
         int t = 0;
         std::list<unsigned int>::iterator fsit = faceSizes.begin();
-        for (typename std::list<V>::iterator it = dummyt.begin(); it != dummyt.end(); ){
+        for (typename std::list<int>::iterator it = dummyt.begin(); it != dummyt.end(); ){
             for (unsigned int id = 0; id < *fsit; id++){
                 if (id < 3)
                     triangles(t,id) = *it++;
@@ -932,13 +931,13 @@ bool loadSave::loadTriangleMeshFromPly(const std::string& filename, Eigen::Matri
     return r;
 }
 
-template <typename T, typename V, typename C, typename W, typename X, int ...A>
-bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::Matrix<T, A...>& coords, Eigen::Matrix<V, A...>&triangles, int &modality, Eigen::Matrix<C, A...> &verticesNormals, Eigen::Matrix<W, A...> &verticesColors, Eigen::Matrix<X, A...> &triangleColors){
-    std::list<T> dummyc;
-    std::list<V> dummyt;
+template <typename T, typename V, typename C, typename W, typename X>
+bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles, int &modality, Eigen::PlainObjectBase<C> &verticesNormals, Eigen::PlainObjectBase<W> &verticesColors, Eigen::PlainObjectBase<X> &triangleColors){
+    std::list<double> dummyc;
+    std::list<int> dummyt;
     modality = 0;
     MeshType meshType;
-    std::list<C> dummyvn;
+    std::list<double> dummyvn;
     std::list<Color> dummycv;
     std::list<Color> dummyct;
     std::list<unsigned int> faceSizes;
@@ -950,7 +949,7 @@ bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::Matri
         coords.resize(dummyc.size()/3, 3);
         triangles.resize(faceSizes.size(), 3);
         int v = 0;
-        for (typename std::list<T>::iterator it = dummyc.begin(); it != dummyc.end(); ){
+        for (typename std::list<double>::iterator it = dummyc.begin(); it != dummyc.end(); ){
             coords(v,0) = *it++;
             coords(v,1) = *it++;
             coords(v,2) = *it++;
@@ -958,7 +957,7 @@ bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::Matri
         }
         int t = 0;
         std::list<unsigned int>::iterator fsit = faceSizes.begin();
-        for (typename std::list<V>::iterator it = dummyt.begin(); it != dummyt.end(); ){
+        for (typename std::list<int>::iterator it = dummyt.begin(); it != dummyt.end(); ){
             for (unsigned int id = 0; id < *fsit; id++){
                 if (id < 3)
                     triangles(t,id) = *it++;
@@ -971,7 +970,7 @@ bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::Matri
                 && dummyc.size() == dummyvn.size()) {
             verticesNormals.resize(dummyc.size()/3, 3);
             int vn = 0;
-            for (typename std::list<C>::iterator it = dummyvn.begin(); it != dummyvn.end(); ){
+            for (typename std::list<double>::iterator it = dummyvn.begin(); it != dummyvn.end(); ){
                 verticesNormals(vn, 0) = *it++;
                 verticesNormals(vn, 1) = *it++;
                 verticesNormals(vn, 2) = *it++;

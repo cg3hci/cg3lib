@@ -82,6 +82,18 @@ bool SimpleEigenMesh::readFromPly(const std::string& filename) {
     return loadSave::loadTriangleMeshFromPly(filename, V, F);
 }
 
+bool SimpleEigenMesh::readFromFile(const std::string& filename) {
+    std::string ext = filename.substr(filename.find_last_of(".") + 1);
+    if(ext == "obj" || ext == "OBJ") { //obj file
+        return readFromObj(filename);
+    }
+    else if(ext == "ply" || ext == "PLY") { //ply file
+        return readFromPly(filename);
+    }
+    else
+        return false;
+}
+
 bool SimpleEigenMesh::saveOnPly(const std::string& filename) const {
     return loadSave::saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data());
 }

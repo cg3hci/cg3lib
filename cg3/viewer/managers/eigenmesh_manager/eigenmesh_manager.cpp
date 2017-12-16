@@ -59,7 +59,7 @@ void EigenMeshManager::on_loadMeshButton_clicked() {
             mesh = new DrawableEigenMesh();
             bool loaded = false;
             if (selectedFilter == "all"){
-                //read from file, check extension
+                loaded = mesh->readFromFile(filename);
             }
             else if(selectedFilter == "ply"){
                 loaded = mesh->readFromPly(filename);

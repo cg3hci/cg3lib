@@ -47,7 +47,7 @@ class SimpleEigenMesh : public SerializableObject {
 
     public:
         SimpleEigenMesh();
-        template <typename T, typename U, int ...A> SimpleEigenMesh(const Eigen::Matrix<T, A...> &V, const Eigen::Matrix<U, A...> &F);
+        template <typename T, typename U> SimpleEigenMesh(const Eigen::PlainObjectBase<T> &V, const Eigen::PlainObjectBase<U> &F);
         #ifdef  CG3_DCEL_DEFINED
         SimpleEigenMesh(const Dcel& dcel);
         #endif
@@ -93,6 +93,7 @@ class SimpleEigenMesh : public SerializableObject {
 
         virtual bool readFromObj(const std::string &filename);
         virtual bool readFromPly(const std::string &filename);
+        virtual bool readFromFile(const std::string &filename);
 
         virtual bool saveOnPly(const std::string &filename) const;
         virtual bool saveOnObj(const std::string &filename) const;
@@ -123,8 +124,8 @@ class SimpleEigenMesh : public SerializableObject {
 inline SimpleEigenMesh::SimpleEigenMesh() {
 }
 
-template <typename T, typename U, int ...A>
-SimpleEigenMesh::SimpleEigenMesh(const Eigen::Matrix<T, A...> &V, const Eigen::Matrix<U, A...> &F) : V(V), F(F) {
+template <typename T, typename U>
+SimpleEigenMesh::SimpleEigenMesh(const Eigen::PlainObjectBase<T> &V, const Eigen::PlainObjectBase<U> &F) : V(V), F(F) {
 }
 
 #ifdef TRIMESH_DEFINED
@@ -168,12 +169,12 @@ inline unsigned int SimpleEigenMesh::getNumberFaces() const {
 }
 
 inline Pointd SimpleEigenMesh::getVertex(unsigned int i) const {
-    assert(i < V.rows());
+    assert(i < (unsigned int)V.rows());
     return Pointd(V(i,0), V(i,1), V(i,2));
 }
 
 inline Pointi SimpleEigenMesh::getFace(unsigned int i) const {
-    assert (i < F.rows());
+    assert (i < (unsigned int)F.rows());
     return Pointi(F(i,0), F(i,1), F(i,2));
 }
 
@@ -220,18 +221,18 @@ inline void SimpleEigenMesh::resizeVertices(unsigned int nv) {
 }
 
 inline void SimpleEigenMesh::setVertex(unsigned int i, const Eigen::VectorXd& p) {
-    assert (i < V.rows());
+    assert (i < (unsigned int)V.rows());
     assert (p.size() == 3);
     V.row(i) =  p;
 }
 
 inline void SimpleEigenMesh::setVertex(unsigned int i, const Pointd& p) {
-    assert (i < V.rows());
+    assert (i < (unsigned int)V.rows());
     V(i,0) = p[0]; V(i,1) = p[1]; V(i,2) = p[2];
 }
 
 inline void SimpleEigenMesh::setVertex(unsigned int i, double x, double y, double z) {
-    assert (i < V.rows());
+    assert (i < (unsigned int)V.rows());
     V(i, 0) = x; V(i, 1) = y; V(i, 2) = z;
 }
 
@@ -256,13 +257,13 @@ inline void SimpleEigenMesh::resizeFaces(unsigned int nf) {
 }
 
 inline void SimpleEigenMesh::setFace(unsigned int i, const Eigen::VectorXi& f) {
-    assert (i < F.rows());
+    assert (i < (unsigned int)F.rows());
     assert (f.size() == 3);
     F.row(i) =  f;
 }
 
 inline void SimpleEigenMesh::setFace(unsigned int i, int t1, int t2, int t3) {
-    assert (i < F.rows());
+    assert (i < (unsigned int)F.rows());
     F(i, 0) = t1; F(i, 1) = t2; F(i, 2) = t3;
 }
 
@@ -278,7 +279,7 @@ inline void SimpleEigenMesh::addFace(int t1, int t2, int t3) {
 }
 
 inline void SimpleEigenMesh::removeFace(unsigned int f) {
-    assert(f < F.rows());
+    assert(f < (unsigned int)F.rows());
     cg3::removeRowFromEigenMatrix(F, f);
 }
 

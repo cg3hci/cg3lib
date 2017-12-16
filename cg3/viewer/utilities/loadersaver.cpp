@@ -36,7 +36,7 @@ std::string LoaderSaver::loadDialog(const std::string& windowName, std::string& 
         std::string s = selectedFilter.toStdString();
 
         for (const std::string& tmp : supportedExtensions){
-            size_t i = s.find("*(" + tmp + ")");
+            size_t i = s.find("(*." + tmp + ")");
             if (i != std::string::npos)
                 selectedExtension = tmp;
         }
