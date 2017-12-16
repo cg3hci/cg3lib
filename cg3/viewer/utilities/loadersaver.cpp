@@ -40,6 +40,8 @@ std::string LoaderSaver::loadDialog(const std::string& windowName, std::string& 
             if (i != std::string::npos)
                 selectedExtension = tmp;
         }
+        if (selectedExtension == "")
+            selectedExtension = "all";
 
         std::string path, name;
         separateFilenameFromPath(filename.toStdString(), path, name);
