@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     ui->console->hide();
 
+    povLS.addSupportedExtension("cg3pov");
+
     //doesn't work
     ConsoleStream(std::cerr, this->ui->console);
     ConsoleStream::registerConsoleMessageHandler();
@@ -447,4 +449,18 @@ void MainWindow::on_actionLoad_Point_of_View_triggered() {
 void MainWindow::on_actionShow_Hide_Dock_Widget_triggered() {
     QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_H, Qt::NoModifier);
     QCoreApplication::postEvent (ui->glCanvas, event);
+}
+
+void MainWindow::on_actionLoad_Point_Of_View_from_triggered() {
+    std::string s = povLS.loadDialog("Open Point Of View");
+    if (s != ""){
+        loadPointOfView(s);
+    }
+}
+
+void MainWindow::on_actionSave_Point_Of_View_as_triggered() {
+    std::string s = povLS.saveDialog("Save Point Of View");
+    if (s != ""){
+        savePointOfView(s);
+    }
 }

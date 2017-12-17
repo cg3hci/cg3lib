@@ -28,6 +28,7 @@
 
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
+#include "utilities/loadersaver.h"
 #include <cg3/geometry/bounding_box.h>
 #include "drawable_objects/drawable_debug_objects.h"
 #include <cg3/geometry/2d/point2d.h>
@@ -137,12 +138,17 @@ class MainWindow : public QMainWindow {
 
         void on_actionShow_Hide_Dock_Widget_triggered();
 
+        void on_actionLoad_Point_Of_View_from_triggered();
+
+        void on_actionSave_Point_Of_View_as_triggered();
+
 private:
 
         // GUI
         //
         Ui::MainWindow  * ui;
         std::vector<QFrame *> managers;
+        cg3::viewer::LoaderSaver povLS;
 
         //Config
         //

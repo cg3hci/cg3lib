@@ -16,6 +16,17 @@ namespace cg3 {
 
 namespace viewer {
 
+/**
+ * @brief The LoaderSaver class
+ *
+ * An utility class that manages load/save dialogs.
+ *
+ * It stores a set of supported extensions and the actual path that points
+ * to the path where will be opened by default the dialogs.
+ *
+ * The actual path automatically changes whenever a file is opened/saved from a different
+ * directory. This allows to open a dialog which starts from the last used path.
+ */
 class LoaderSaver
 {
 public:
@@ -29,7 +40,7 @@ public:
     void setActualPath(const std::string& path);
     const std::string& getActualPath() const;
 
-    std::string loadDialog(const std::string &windowName = "Load File", std::string &selectedExtension = * std::unique_ptr<std::string>(new std::string("")), bool allFormats = true);
+    std::string loadDialog(const std::string &windowName = "Load File");
     std::string saveDialog(const std::string& windowName = "Save File", std::string &selectedExtension = * std::unique_ptr<std::string>(new std::string("")) );
     std::string directoryDialog(const std::string& windowName = "Choose Directory");
 

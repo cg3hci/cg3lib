@@ -80,7 +80,9 @@
      <string>File</string>
     </property>
     <addaction name="actionLoad_Point_of_View"/>
+    <addaction name="actionLoad_Point_Of_View_from"/>
     <addaction name="actionSave_Point_Of_View"/>
+    <addaction name="actionSave_Point_Of_View_as"/>
     <addaction name="actionSave_Snapshot"/>
    </widget>
    <addaction name="menuFile_2"/>
@@ -266,6 +268,16 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionLoad_Point_Of_View_from">
+   <property name="text">
+    <string>Load Point Of View from...</string>
+   </property>
+  </action>
+  <action name="actionSave_Point_Of_View_as">
+   <property name="text">
+    <string>Save Point Of View as...</string>
    </property>
   </action>
  </widget>

@@ -60,20 +60,11 @@ EigenMeshManager::~EigenMeshManager() {
 }
 
 void EigenMeshManager::on_loadMeshButton_clicked() {
-    std::string selectedFilter;
-    std::string filename = objls.loadDialog("Open Eigen Mesh", selectedFilter);
+    std::string filename = objls.loadDialog("Open Eigen Mesh");
         if (filename != "") {
             mesh = new DrawableEigenMesh();
-            bool loaded = false;
-            if (selectedFilter == "all"){
-                loaded = mesh->readFromFile(filename);
-            }
-            else if(selectedFilter == "ply"){
-                loaded = mesh->readFromPly(filename);
-            }
-            else if (selectedFilter == "obj") {
-                loaded = mesh->readFromObj(filename);
-            }
+            bool loaded = mesh->readFromFile(filename);
+
             if (loaded) {
                 mesh->setEnableTriangleColor();
                 mainWindow.pushObj(mesh, filename.substr(filename.find_last_of("/") + 1));

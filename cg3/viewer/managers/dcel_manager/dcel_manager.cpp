@@ -153,8 +153,7 @@ void DcelManager::setButtonsDcelNotLoaded() {
  * @brief Metodo chiamato quando viene premuto il pulsante LoadDcel
  */
 void DcelManager::on_loadDcelButton_clicked() {
-    std::string selectedFilter;
-    std::string filename = dcells.loadDialog("Open Dcel", selectedFilter);
+    std::string filename = dcells.loadDialog("Open Dcel");
 
     if (filename != "") {
         if (drawableDcel != nullptr) {
@@ -163,18 +162,8 @@ void DcelManager::on_loadDcelButton_clicked() {
         }
         bool success = true;
         drawableDcel = new DrawableDcel();
-        if (selectedFilter == "obj"){
-            success = drawableDcel->loadFromObjFile(filename);
-        }
-        else if (selectedFilter == "ply") {
-            success = drawableDcel->loadFromPlyFile(filename);
-        }
-        else  if(selectedFilter == "dcel") {
-            success = drawableDcel->loadFromDcelFile(filename);
-        }
-        else {
-            success = drawableDcel->loadFromFile(filename);
-        }
+        success = drawableDcel->loadFromFile(filename);
+
         if (success) {
             std::cout << "load: " << filename << std::endl;
             if (! drawableDcel->isTriangleMesh()){
