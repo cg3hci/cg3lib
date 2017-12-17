@@ -55,9 +55,37 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Rendering</string>
+    </property>
+    <addaction name="actionChange_Background_Color"/>
+    <addaction name="actionFit_Scene"/>
+    <addaction name="actionShow_Axis"/>
+    <addaction name="actionUpdate_Canvas"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionFull_Screen"/>
+    <addaction name="actionShow_Hide_Dock_Widget"/>
+   </widget>
+   <widget class="QMenu" name="menuFile_2">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionLoad_Point_of_View"/>
+    <addaction name="actionSave_Point_Of_View"/>
+    <addaction name="actionSave_Snapshot"/>
+   </widget>
+   <addaction name="menuFile_2"/>
+   <addaction name="menuFile"/>
+   <addaction name="menuWindow"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
    <property name="sizePolicy">
@@ -118,7 +146,7 @@
           <x>0</x>
           <y>0</y>
           <width>158</width>
-          <height>539</height>
+          <height>547</height>
          </rect>
         </property>
        </widget>
@@ -155,8 +183,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>414</width>
-          <height>508</height>
+          <width>419</width>
+          <height>521</height>
          </rect>
         </property>
         <attribute name="label">
@@ -168,24 +196,76 @@
     </layout>
    </widget>
   </widget>
-  <action name="actionTrimesh">
+  <action name="actionSave_Snapshot">
    <property name="text">
-    <string>Trimesh</string>
+    <string>Save Snapshot</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionSkel">
+  <action name="actionShow_Axis">
    <property name="text">
-    <string>Skel</string>
+    <string>Show Axis</string>
+   </property>
+   <property name="shortcut">
+    <string>A</string>
    </property>
   </action>
-  <action name="actionWindow">
+  <action name="actionFull_Screen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Window</string>
+    <string>Full Screen</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
    </property>
   </action>
-  <action name="actionDCEL">
+  <action name="actionUpdate_Canvas">
    <property name="text">
-    <string>DCEL</string>
+    <string>Update Canvas</string>
+   </property>
+   <property name="shortcut">
+    <string>U</string>
+   </property>
+  </action>
+  <action name="actionFit_Scene">
+   <property name="text">
+    <string>Fit Scene</string>
+   </property>
+   <property name="shortcut">
+    <string>F</string>
+   </property>
+  </action>
+  <action name="actionChange_Background_Color">
+   <property name="text">
+    <string>Change Background Color</string>
+   </property>
+  </action>
+  <action name="actionSave_Point_Of_View">
+   <property name="text">
+    <string>Save Point Of View</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionLoad_Point_of_View">
+   <property name="text">
+    <string>Load Point Of View</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionShow_Hide_Dock_Widget">
+   <property name="text">
+    <string>Show/Hide Dock Widget</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>

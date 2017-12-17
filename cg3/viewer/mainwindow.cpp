@@ -1,15 +1,19 @@
-/*
- * @author    Marco Livesu (marco.livesu@gmail.com)
- * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @copyright Alessandro Muntoni 2016.
- */
+/**
+  * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+  * This Source Code Form is subject to the terms of the GNU GPL 3.0
+  *
+  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+  * @author Marco Livesu (marco.livesu@gmail.com)
+  */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QScrollArea>
 #include <QCheckBox>
+#include <QColorDialog>
 #include <cg3/geometry/plane.h>
 #include "utilities/consolestream.h"
+#include <experimental/filesystem>
 
 using namespace cg3;
 
@@ -44,6 +48,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     ui->glCanvas->setSnapshotQuality(100);
     ui->glCanvas->setSnapshotFormat("PNG");
+
+    if (! std::experimental::filesystem::exists(configFolderDirectory.c_str()))
+        std::experimental::filesystem::create_directory(configFolderDirectory.c_str());
 }
 
 MainWindow::~MainWindow() {
@@ -70,7 +77,6 @@ Point2Di MainWindow::getCanvasSize() const {
  * @brief Centra la scena tenendo conto di tutti gli oggetti visibili all'interno di essa
  */
 void MainWindow::updateGlCanvas() {
-    //ui->glCanvas->fitScene();
     ui->glCanvas->update();
 }
 
@@ -180,6 +186,14 @@ void MainWindow::saveSnapshot() {
 void MainWindow::drawAxis(bool b) {
     ui->glCanvas->setAxisIsDrawn(b);
     ui->glCanvas->update();
+}
+
+void MainWindow::savePointOfView() {
+    savePointOfView(configFolderDirectory + "pov.cg3pov");
+}
+
+void MainWindow::loadPointOfView() {
+    loadPointOfView(configFolderDirectory + "pov.cg3pov");
 }
 
 void MainWindow::savePointOfView(std::string filename) {
@@ -352,6 +366,8 @@ void MainWindow::slotPoint2DClicked(Point2Dd p) {
 
 void MainWindow::setFullScreen(bool b) {
     ui->glCanvas->setFullScreen(b);
+    if (!b)
+        showMaximized();
 }
 
 void MainWindow::setBackgroundColor(const QColor & color) {
@@ -359,6 +375,10 @@ void MainWindow::setBackgroundColor(const QColor & color) {
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event){
+    if (event->key() == Qt::Key_F)
+        fitScene();
+    if (event->key() == Qt::Key_U)
+        updateGlCanvas();
     if(event->matches(QKeySequence::Undo))
         emit(undoEvent());
     if (event->matches(QKeySequence::Redo))
@@ -385,4 +405,46 @@ void MainWindow::keyPressEvent(QKeyEvent * event){
     if (QKeySequence(event->key() | event->modifiers()) == QKeySequence(Qt::CTRL + Qt::Key_L)){ //ctrl+l
         loadPointOfView();
     }
+}
+
+void MainWindow::on_actionSave_Snapshot_triggered() {
+    QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_S, Qt::NoModifier);
+    QCoreApplication::postEvent (ui->glCanvas, event);
+}
+
+void MainWindow::on_actionShow_Axis_triggered() {
+    QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_A, Qt::NoModifier);
+    QCoreApplication::postEvent (ui->glCanvas, event);
+}
+
+void MainWindow::on_actionFull_Screen_toggled(bool arg1) {
+    setFullScreen(arg1);
+}
+
+void MainWindow::on_actionUpdate_Canvas_triggered() {
+    updateGlCanvas();
+}
+
+void MainWindow::on_actionFit_Scene_triggered() {
+    fitScene();
+}
+
+void MainWindow::on_actionChange_Background_Color_triggered() {
+    QColor color = QColorDialog::getColor(Qt::white, this);
+
+    setBackgroundColor(color);
+    updateGlCanvas();
+}
+
+void MainWindow::on_actionSave_Point_Of_View_triggered() {
+    savePointOfView();
+}
+
+void MainWindow::on_actionLoad_Point_of_View_triggered() {
+    loadPointOfView();
+}
+
+void MainWindow::on_actionShow_Hide_Dock_Widget_triggered() {
+    QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_H, Qt::NoModifier);
+    QCoreApplication::postEvent (ui->glCanvas, event);
 }

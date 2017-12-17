@@ -1,23 +1,12 @@
-/*
- * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @copyright Alessandro Muntoni 2016.
- */
+/**
+  * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+  * This Source Code Form is subject to the terms of the GNU GPL 3.0
+  *
+  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+  */
 
 #ifndef CG3_UTILS_H
 #define CG3_UTILS_H
-
-/**
- * \~English
- * @brief This header contains some generic functions that may be useful.
- *
- * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @copyright Alessandro Muntoni 2016.
- *
- * \~Italian
- * @brief Questo header contiene alcune funzioni generiche che possono essere utili.
- *
- * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- */
 
 #include <vector>
 #include <memory>

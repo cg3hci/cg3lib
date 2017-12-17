@@ -1,8 +1,10 @@
-/*
- * @author    Marco Livesu (marco.livesu@gmail.com)
- * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @copyright Alessandro Muntoni 2016.
- */
+/**
+  * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+  * This Source Code Form is subject to the terms of the GNU GPL 3.0
+  *
+  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+  * @author Marco Livesu (marco.livesu@gmail.com)
+  */
 
 #ifndef CG3_MAINWINDOW_H
 #define CG3_MAINWINDOW_H
@@ -60,8 +62,10 @@ class MainWindow : public QMainWindow {
         void saveSnapshot();
         void drawAxis(bool);
 
-        void savePointOfView(std::string filename = "pov.pov");
-        void loadPointOfView(std::string filename = "pov.pov");
+        void savePointOfView();
+        void loadPointOfView();
+        void savePointOfView(std::string filename);
+        void loadPointOfView(std::string filename);
 
         void setFullScreen(bool);
         void setBackgroundColor(const QColor &);
@@ -115,12 +119,40 @@ class MainWindow : public QMainWindow {
         void slotObjectPicked(unsigned int i);
         void slotPoint2DClicked(cg3::Point2Dd p);
 
-    private:
+        void on_actionSave_Snapshot_triggered();
+
+        void on_actionShow_Axis_triggered();
+
+        void on_actionFull_Screen_toggled(bool arg1);
+
+        void on_actionUpdate_Canvas_triggered();
+
+        void on_actionFit_Scene_triggered();
+
+        void on_actionChange_Background_Color_triggered();
+
+        void on_actionSave_Point_Of_View_triggered();
+
+        void on_actionLoad_Point_of_View_triggered();
+
+        void on_actionShow_Hide_Dock_Widget_triggered();
+
+private:
 
         // GUI
         //
         Ui::MainWindow  * ui;
         std::vector<QFrame *> managers;
+
+        //Config
+        //
+        #ifdef WIN32
+        const std::string configFolderDirectory = std::string(std::getenv("USERPROFILE")) + "\\AppData\\Roaming\\cg3lib\\";
+        #elif __APPLE__
+        const std::string configFolderDirectory = std::string("/Users/") + std::getenv("USER") + "/Library/Preferences/cg3lib/"
+        #elif __linux__
+        const std::string configFolderDirectory = "~/.config/cg3lib/";
+        #endif
 
         // Mesh Stack
         //

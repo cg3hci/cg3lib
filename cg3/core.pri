@@ -1,43 +1,21 @@
+#
+# This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+# This Source Code Form is subject to the terms of the GNU GPL 3.0
+#
+# @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+# @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
+#
+
 DEFINES += CG3_CORE_DEFINED
 CONFIG += CG3_CORE
 
 CONFIG += CG3_OPENMP
 
-unix:!macx{
-    exists(/usr/include/eigen3){
-        DEFINES += CG3_WITH_EIGEN
-        MODULES += CG3_WITH_EIGEN
-        INCLUDEPATH += -I /usr/include/eigen3
-    }
-    else{
-        MODULES += CG3_WITHOUT_EIGEN
-    }
-}
-
-macx{
-    INCLUDEPATH += -I /libs/include/boost/
-    exists(/libs/include/eigen3){
-        DEFINES += CG3_WITH_EIGEN
-        MODULES += CG3_WITH_EIGEN
-        INCLUDEPATH += -I /libs/include/eigen3/
-    }
-    else{
-        MODULES += CG3_WITHOUT_EIGEN
-    }
-}
+include(core/find_boost.pri)
+include(core/find_eigen.pri)
 
 win32 {
-    CONFIG += qt
-    INCLUDEPATH += -I C:/dev/boost
     DEFINES += _USE_MATH_DEFINES
-    exists(C:/dev/eigen3){
-        DEFINES += CG3_WITH_EIGEN
-        MODULES += CG3_WITH_EIGEN
-        INCLUDEPATH += -I C:/dev/eigen3
-    }
-    else{
-        MODULES += CG3_WITHOUT_EIGEN
-    }
 }
 
 CG3_OPENMP {

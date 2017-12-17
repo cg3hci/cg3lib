@@ -1,8 +1,10 @@
-/*
- * @author    Marco Livesu (marco.livesu@gmail.com)
- * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @copyright Alessandro Muntoni 2016.
- */
+/**
+  * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+  * This Source Code Form is subject to the terms of the GNU GPL 3.0
+  *
+  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+  * @author Marco Livesu (marco.livesu@gmail.com)
+  */
 
 #ifndef CG3_GL_CANVAS_H
 #define CG3_GL_CANVAS_H

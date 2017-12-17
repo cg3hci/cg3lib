@@ -1,3 +1,11 @@
+#
+# This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+# This Source Code Form is subject to the terms of the GNU GPL 3.0
+#
+# @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+# @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
+#
+
 !contains(DEFINES, CG3_CORE_DEFINED){
     error(Viewer module requires Core module!)
 }
@@ -59,8 +67,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/consolestream.h \
         $$PWD/viewer/renderable_objects/renderable_objects.h \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2d.h \
-        $$PWD/viewer/drawable_objects/drawable_debug_objects.h \
-        $$PWD/viewer/managers/window_manager/window_manager.h
+        $$PWD/viewer/drawable_objects/drawable_debug_objects.h
 
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
@@ -70,12 +77,10 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/consolestream.cpp \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2d.cpp \
         $$PWD/viewer/drawable_objects/drawable_debug_objects.cpp \
-        $$PWD/viewer/managers/window_manager/window_manager.cpp \
         $$PWD/viewer/renderable_objects/renderable_objects.tpp
 
     FORMS += \
-        $$PWD/viewer/mainwindow.ui \
-        $$PWD/viewer/managers/window_manager/window_manager.ui
+        $$PWD/viewer/mainwindow.ui
 
     CG3_DCEL {
         HEADERS += \

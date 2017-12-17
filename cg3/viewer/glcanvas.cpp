@@ -1,8 +1,10 @@
-/*
- * @author    Marco Livesu (marco.livesu@gmail.com)
- * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @copyright Alessandro Muntoni 2016.
- */
+/**
+  * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+  * This Source Code Form is subject to the terms of the GNU GPL 3.0
+  *
+  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+  * @author Marco Livesu (marco.livesu@gmail.com)
+  */
 
 #include <iostream>
 
@@ -133,6 +135,8 @@ bool GLcanvas::deserializePointOfView(std::ifstream &file) {
     qglviewer::Quaternion q;
     try {
         Serializer::deserializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
+        this->camera()->setPosition(v);
+        this->camera()->setOrientation(q);
         return true;
     }
     catch(...){
