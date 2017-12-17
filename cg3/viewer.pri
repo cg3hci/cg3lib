@@ -74,7 +74,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/mainwindow.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
-        $$PWD/viewer/utilities/consolestream.cpp \
+        $$PWD/viewer/utilities/consolestream.tpp \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2d.cpp \
         $$PWD/viewer/drawable_objects/drawable_debug_objects.cpp \
         $$PWD/viewer/renderable_objects/renderable_objects.tpp

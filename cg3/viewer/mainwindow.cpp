@@ -23,6 +23,7 @@ using namespace cg3;
  */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow),
+                                          consoleStream(nullptr),
                                           nMeshes(0),
                                           first(true),
                                           debugObjects(nullptr){
@@ -43,9 +44,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     povLS.addSupportedExtension("cg3pov");
 
-    //doesn't work
-    ConsoleStream(std::cerr, this->ui->console);
-    ConsoleStream::registerConsoleMessageHandler();
     showMaximized();
 
     ui->glCanvas->setSnapshotQuality(100);
@@ -60,6 +58,8 @@ MainWindow::~MainWindow() {
         deleteObj(debugObjects);
         delete debugObjects;
     }
+    if (consoleStream != nullptr)
+        delete consoleStream;
     delete ui;
 }
 
@@ -340,6 +340,19 @@ void MainWindow::clearDebugLines() {
     }
 }
 
+void MainWindow::toggleConsoleStream() {
+    if (consoleStream == nullptr){
+        ui->console->show();
+        consoleStream =  new ConsoleStream(std::cout, std::cerr, this->ui->console);
+        ConsoleStream::registerConsoleMessageHandler();
+    }
+    else {
+        ui->console->hide();
+        delete consoleStream;
+        consoleStream = nullptr;
+    }
+}
+
 /**
  * @brief Evento i-esima checkBox cliccata, modifica la visibilità dell'oggetto ad essa collegato
  * @param[in] i: indice della checkBox cliccata
@@ -386,19 +399,13 @@ void MainWindow::keyPressEvent(QKeyEvent * event){
     if (event->matches(QKeySequence::Redo))
         emit(redoEvent());
     if (event->matches(QKeySequence::Replace)){ //ctrl+h
-        std::cerr << "\n";
         if (ui->dockWidget->isHidden())
             ui->dockWidget->show();
         else
             ui->dockWidget->hide();
     }
-    /** @todo doesn't work */
-    if (event->matches(QKeySequence::SelectAll)){ //ctrl+a
-        std::cerr << "\n";
-        if (ui->console->isHidden())
-            ui->console->show();
-        else
-            ui->console->hide();
+    if (event->key() == Qt::Key_C){ //c
+        toggleConsoleStream();
     }
 
     if (event->matches(QKeySequence::Print)){ //ctrl+p
@@ -463,4 +470,8 @@ void MainWindow::on_actionSave_Point_Of_View_as_triggered() {
     if (s != ""){
         savePointOfView(s);
     }
+}
+
+void MainWindow::on_actionShow_Hide_Console_Stream_triggered() {
+    toggleConsoleStream();
 }

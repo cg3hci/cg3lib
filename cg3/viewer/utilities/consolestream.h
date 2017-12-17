@@ -11,40 +11,34 @@
 #include <streambuf>
 #include <QTextEdit>
 
-class ConsoleStream : public std::basic_streambuf<char>
-{
+/**
+ * @brief The ConsoleStream class
+ * @link https://stackoverflow.com/questions/9211298/redirect-stdcout-to-qtextedit
+ */
+class ConsoleStream : public std::basic_streambuf<char> {
 
 public:
-    ConsoleStream(std::ostream &stream, QTextEdit* text_edit);
-
+    ConsoleStream(std::ostream &stream, std::ostream &stream2, QTextEdit* text_edit);
     virtual ~ConsoleStream();
+
     static void registerConsoleMessageHandler();
 
-private:
-
-    static void consoleMessageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg);
 
 protected:
-
-
-    // Diese Funktion wird aufgerufen wenn std::endl im Stream erscheint
-    virtual int_type overflow(int_type v)
-        {
-            if (v == '\n')
-            {
-                log_window->append("");
-            }
-            return v;
-        }
-
+    virtual int_type overflow(int_type v);
     virtual std::streamsize xsputn(const char *p, std::streamsize n);
 
 private:
+    static void consoleMessageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg);
 
-    std::ostream &m_stream;
-    std::streambuf *m_old_buf;
-    QTextEdit* log_window;
+    std::ostream& stream;
+    std::ostream& stream2;
+    std::streambuf *oldBuffer;
+    std::streambuf *oldBuffer2;
+    QTextEdit* textEdit;
 
 };
+
+#include "consolestream.tpp"
 
 #endif // CG3_CONSOLESTREAM_H

@@ -31,6 +31,7 @@
 #include "utilities/loadersaver.h"
 #include <cg3/geometry/bounding_box.h>
 #include "drawable_objects/drawable_debug_objects.h"
+#include "utilities/consolestream.h"
 #include <cg3/geometry/2d/point2d.h>
 
 namespace Ui {
@@ -93,6 +94,8 @@ class MainWindow : public QMainWindow {
         void addDebugLine(const cg3::Pointd& a, const cg3::Pointd& b, int width, const QColor color);
         void clearDebugLines();
 
+        void toggleConsoleStream();
+
         void keyPressEvent(QKeyEvent * event);
 
     signals:
@@ -142,6 +145,8 @@ class MainWindow : public QMainWindow {
 
         void on_actionSave_Point_Of_View_as_triggered();
 
+        void on_actionShow_Hide_Console_Stream_triggered();
+
 private:
 
         // GUI
@@ -149,6 +154,7 @@ private:
         Ui::MainWindow  * ui;
         std::vector<QFrame *> managers;
         cg3::viewer::LoaderSaver povLS;
+        ConsoleStream* consoleStream;
 
         //Config
         //
