@@ -21,7 +21,7 @@ namespace internal {
     void executeDijkstra(
             Graph<T>& graph,
             const std::vector<typename Graph<T>::NodeIterator>& nodes,
-            const std::vector<std::list<unsigned int>>& nodeAdjacencies,
+            const std::vector<std::list<size_t>>& nodeAdjacencies,
             const int sourceId,
             std::vector<double>& dist,
             std::vector<int>& pred);
@@ -30,8 +30,8 @@ namespace internal {
     void fillIndexedData(
             Graph<T>& graph,
             std::vector<typename Graph<T>::NodeIterator>& nodes,
-            std::vector<std::list<unsigned int>>& nodeAdjacencies,
-            std::map<T, unsigned int>& idMap);
+            std::vector<std::list<size_t>>& nodeAdjacencies,
+            std::map<T, size_t>& idMap);
 }
 
 /**
@@ -62,14 +62,14 @@ DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source)
 
     //Vector of nodes and adjacencies
     std::vector<NIterator> nodes;
-    std::vector<std::list<unsigned int>> nodeAdjacencies;
-    std::map<T, unsigned int> idMap;
+    std::vector<std::list<size_t>> nodeAdjacencies;
+    std::map<T, size_t> idMap;
 
     //Fill indexed data needed by dijkstra algorithm
     internal::fillIndexedData(graph, nodes, nodeAdjacencies, idMap);
 
     //Id of the source
-    unsigned int sourceId = idMap.find(source)->second;
+    size_t sourceId = idMap.find(source)->second;
 
     //Vector of distances and predecessor of the shortest path from the source
     std::vector<double> dist;
@@ -79,14 +79,14 @@ DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source)
     internal::executeDijkstra(graph, nodes, nodeAdjacencies, sourceId, dist, pred);
 
     //Update result map
-    unsigned int id = 0;
+    size_t id = 0;
     for (NIterator nodeIt : nodes) {
         //If there is a path
         if (pred[id] != -1) {
             std::list<T> path;
 
             //Get the shortest path
-            unsigned int idPred = id;
+            size_t idPred = id;
             while (idPred != sourceId) {
                 NIterator& predIterator = nodes[idPred];
                 path.push_front(*predIterator);
@@ -139,16 +139,16 @@ GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination) {
 
     //Vector of nodes and adjacencies
     std::vector<NIterator> nodes;
-    std::vector<std::list<unsigned int>> nodeAdjacencies;
-    std::map<T, unsigned int> idMap;
+    std::vector<std::list<size_t>> nodeAdjacencies;
+    std::map<T, size_t> idMap;
 
     //Fill indexed data needed by dijkstra algorithm
     internal::fillIndexedData(graph, nodes, nodeAdjacencies, idMap);
 
     //Id of the source
-    unsigned int sourceId = idMap.find(source)->second;
+    size_t sourceId = idMap.find(source)->second;
     //Id of the destination
-    unsigned int destinationId = idMap.find(destination)->second;
+    size_t destinationId = idMap.find(destination)->second;
 
     //Vector of distances and predecessor of the shortest path from the source
     std::vector<double> dist;
@@ -162,7 +162,7 @@ GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination) {
     std::list<T> path;
     if (pred[destinationId] != -1) {
         //Create path
-        unsigned int idPred = destinationId;
+        size_t idPred = destinationId;
         while (idPred != sourceId) {
             NIterator& predIterator = nodes[idPred];
             path.push_front(*predIterator);
@@ -196,15 +196,15 @@ template <class T>
 void executeDijkstra(
         Graph<T>& graph,
         const std::vector<typename Graph<T>::NodeIterator>& nodes,
-        const std::vector<std::list<unsigned int>>& nodeAdjacencies,
+        const std::vector<std::list<size_t>>& nodeAdjacencies,
         const int sourceId,
         std::vector<double>& dist,
         std::vector<int>& pred)
 {
     typedef typename Graph<T>::NodeIterator NIterator;
-    typedef std::pair<double, unsigned int> QueueObject;
+    typedef std::pair<double, size_t> QueueObject;
 
-    unsigned int numberOfNodes = (unsigned int)nodes.size();
+    size_t numberOfNodes = nodes.size();
 
     dist.resize(numberOfNodes, Graph<int>::MAX_WEIGHT);
     pred.resize(numberOfNodes, -1);
@@ -220,14 +220,14 @@ void executeDijkstra(
     while (!queue.empty()) {
         //Get iterator on the queue and pop it from it
         const QueueObject& qObject = queue.top();
-        unsigned int uId = qObject.second;
+        size_t uId = qObject.second;
 
         queue.pop();
 
         //Getting node iterator
         const NIterator& uIterator = nodes[uId];
 
-        for (unsigned int vId : nodeAdjacencies[uId]) {
+        for (size_t vId : nodeAdjacencies[uId]) {
             //Getting adjacent node iterator
             const NIterator& vIterator = nodes[vId];
 
@@ -263,12 +263,12 @@ template <class T>
 void fillIndexedData(
         Graph<T>& graph,
         std::vector<typename Graph<T>::NodeIterator>& nodes,
-        std::vector<std::list<unsigned int>>& nodeAdjacencies,
-        std::map<T, unsigned int>& idMap)
+        std::vector<std::list<size_t>>& nodeAdjacencies,
+        std::map<T, size_t>& idMap)
 {
     typedef typename Graph<T>::NodeIterator NIterator;
 
-    unsigned int id;
+    size_t id;
 
     //Fill vector of iterators for the nodes
     id = 0;
@@ -283,12 +283,12 @@ void fillIndexedData(
 
     id = 0;
     for (NIterator nodeIt : nodes) {
-        std::list<unsigned int>& adjList = nodeAdjacencies[id];
+        std::list<size_t>& adjList = nodeAdjacencies[id];
 
         //For each adjacent node
         for (const T& adjNode : graph.adjacentNodeIterator(nodeIt)) {
-            typename std::map<T, unsigned int>::iterator findIdIt = idMap.find(adjNode);
-            unsigned int adjId = findIdIt->second;
+            typename std::map<T, size_t>::iterator findIdIt = idMap.find(adjNode);
+            size_t adjId = findIdIt->second;
 
             adjList.push_back(adjId);
         }

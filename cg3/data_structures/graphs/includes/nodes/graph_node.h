@@ -18,16 +18,16 @@ private:
 
     /* Constructors */
 
-    inline Node(const T& value, const unsigned int id);
+    inline Node(const T& value, const size_t id);
 
 
     /* Fields */
 
-    unsigned int id;
+    size_t id;
 
     T value;
 
-    std::unordered_map<unsigned int, double> adjacentNodes;
+    std::unordered_map<size_t, double> adjacentNodes;
 
 };
 

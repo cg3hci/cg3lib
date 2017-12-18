@@ -143,7 +143,7 @@ private:
     const GraphType type;
 
     std::vector<Node*> nodes;
-    std::map<T, unsigned int> map;
+    std::map<T, size_t> map;
 };
 
 }

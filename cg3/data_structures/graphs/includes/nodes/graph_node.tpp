@@ -11,7 +11,7 @@ namespace cg3 {
  * @param[in] id If of the node in the current graph
  */
 template <class T>
-Graph<T>::Node::Node(const T& value, const unsigned int id)
+Graph<T>::Node::Node(const T& value, const size_t id)
 {
     this->value = value;
     this->id = id;

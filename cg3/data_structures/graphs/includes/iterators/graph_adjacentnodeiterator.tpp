@@ -55,8 +55,8 @@ const T& Graph<T>::AdjacentNodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::AdjacentNodeIterator::next() {
-    std::unordered_map<unsigned int, double>& map = this->targetNode->adjacentNodes;
-    std::unordered_map<unsigned int, double>::iterator it = map.find(this->node->id);
+    std::unordered_map<size_t, double>& map = this->targetNode->adjacentNodes;
+    std::unordered_map<size_t, double>::iterator it = map.find(this->node->id);
 
     do {
         it++;

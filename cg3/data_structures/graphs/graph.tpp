@@ -42,12 +42,12 @@ Graph<T>::~Graph() {
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o) {
     //If node does exists, return nullptr
-    typename std::map<T, unsigned int>::iterator mapIt = map.find(o);
+    typename std::map<T, size_t>::iterator mapIt = map.find(o);
     if (mapIt != map.end())
         return this->nodeIteratorEnd();
 
     //Create new node
-    unsigned int newId = (unsigned int)nodes.size();
+    size_t newId = nodes.size();
     Node* newNode = new Node(o, newId);
 
     map[o] = newId;
@@ -64,7 +64,7 @@ typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o) {
 template <class T>
 bool Graph<T>::deleteNode(const T& o) {
     //If node does not exists, return nullptr
-    typename std::map<T, unsigned int>::iterator mapIt = map.find(o);
+    typename std::map<T, size_t>::iterator mapIt = map.find(o);
     if (mapIt == map.end())
         return false;
 
@@ -346,7 +346,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
  */
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::nodeIteratorEnd() {
-    return NodeIterator(this, nullptr, (unsigned int)nodes.size());
+    return NodeIterator(this, nullptr, nodes.size());
 }
 
 /**
@@ -502,8 +502,8 @@ void Graph<T>::clear() {
  */
 template <class T>
 typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(Node* node) {
-    std::unordered_map<unsigned int, double>& map = node->adjacentNodes;
-    typename std::unordered_map<unsigned int, double>::iterator it = map.begin();
+    std::unordered_map<size_t, double>& map = node->adjacentNodes;
+    typename std::unordered_map<size_t, double>::iterator it = map.begin();
 
     while (it != map.end() && nodes.at(it->first) == nullptr) {
         it++;
@@ -539,12 +539,12 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(Node* 
 template <class T>
 typename Graph<T>::Node* Graph<T>::findNodeHelper(const T& o) const {
     //If node does not exists, return nullptr
-    typename std::map<T, unsigned int>::const_iterator mapIt = map.find(o);
+    typename std::map<T, size_t>::const_iterator mapIt = map.find(o);
     if (mapIt == map.end())
         return nullptr;
 
     //Retrieve id
-    unsigned int id = mapIt->second;
+    size_t id = mapIt->second;
 
     return nodes.at(id);
 }
@@ -557,7 +557,7 @@ typename Graph<T>::Node* Graph<T>::findNodeHelper(const T& o) const {
 template <class T>
 void Graph<T>::addEdgeHelper(Node* n1, const Node* n2, const double weight) {
     if (n2 != nullptr) {
-        std::unordered_map<unsigned int, double>::iterator it = n1->adjacentNodes.find(n2->id);
+        std::unordered_map<size_t, double>::iterator it = n1->adjacentNodes.find(n2->id);
 
         if (it == n1->adjacentNodes.end()) {
             n1->adjacentNodes.insert(std::make_pair(n2->id, weight));
@@ -589,7 +589,7 @@ void Graph<T>::deleteEdgeHelper(Node* n1, const Node* n2) {
  */
 template <class T>
 bool Graph<T>::isAdjacentHelper(const Node* n1, const Node* n2) const {
-    std::unordered_map<unsigned int, double>::const_iterator it = n1->adjacentNodes.find(n2->id);
+    std::unordered_map<size_t, double>::const_iterator it = n1->adjacentNodes.find(n2->id);
 
     if (it == n1->adjacentNodes.end())
         return false;
@@ -610,7 +610,7 @@ bool Graph<T>::isAdjacentHelper(const Node* n1, const Node* n2) const {
  */
 template <class T>
 double Graph<T>::getWeightHelper(const Node* n1, const Node* n2) const {
-    std::unordered_map<unsigned int, double>::const_iterator it = n1->adjacentNodes.find(n2->id);
+    std::unordered_map<size_t, double>::const_iterator it = n1->adjacentNodes.find(n2->id);
     if (it == n1->adjacentNodes.end())
         return MAX_WEIGHT;
     else
@@ -625,7 +625,7 @@ double Graph<T>::getWeightHelper(const Node* n1, const Node* n2) const {
  */
 template <class T>
 void Graph<T>::setWeightHelper(Node* n1, const Node* n2, const double weight) {
-    std::unordered_map<unsigned int, double>::iterator it = n1->adjacentNodes.find(n2->id);
+    std::unordered_map<size_t, double>::iterator it = n1->adjacentNodes.find(n2->id);
     if (it == n1->adjacentNodes.end())
         return;
     it->second = weight;
