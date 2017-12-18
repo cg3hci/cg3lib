@@ -28,6 +28,9 @@ using DijkstraResult = std::map<T, GraphPath<T>>;
 template <class T>
 DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source);
 
+template <class T>
+GraphPath<T> dijkstra(Graph<T>& graph, const T& sourceId, const T& destinationId);
+
 }
 
 #include "graph_algorithms.tpp"

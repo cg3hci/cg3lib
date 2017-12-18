@@ -20,7 +20,7 @@ private:
 
     /* Constructors */
 
-    inline NodeIterator(Graph<T>* graph, Graph<T>::Node* node, unsigned int pos) :
+    inline NodeIterator(Graph<T>* graph, typename Graph<T>::Node* node, unsigned int pos) :
         Graph<T>::GenericNodeIterator(graph, node),
         pos(pos) {}
 

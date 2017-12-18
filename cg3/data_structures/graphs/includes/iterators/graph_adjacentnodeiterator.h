@@ -21,8 +21,8 @@ private:
     /* Constructors */
 
     inline AdjacentNodeIterator(Graph<T>* graph,
-                                Graph<T>::Node* targetNode,
-                                Graph<T>::Node* node) :
+                                typename Graph<T>::Node* targetNode,
+                                typename Graph<T>::Node* node) :
         Graph<T>::GenericNodeIterator(graph, node),
         targetNode(targetNode) {}
 
@@ -47,7 +47,7 @@ private:
 
     /* Fields */
 
-    Graph<T>::Node* targetNode;
+    typename Graph<T>::Node* targetNode;
 
 };
 
@@ -62,7 +62,7 @@ public:
 
     inline RangeBasedAdjacentNodeIterator(
             Graph<T>* graph,
-            Graph<T>::Node* node) :
+            typename Graph<T>::Node* node) :
         graph(graph), node(node) {}
 
     inline AdjacentNodeIterator begin();
@@ -71,7 +71,7 @@ public:
 private:
 
     Graph<T>* graph;
-    Graph<T>::Node* node;
+    typename Graph<T>::Node* node;
 
 };
 
