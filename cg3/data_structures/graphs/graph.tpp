@@ -47,7 +47,7 @@ typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o) {
         return this->nodeIteratorEnd();
 
     //Create new node
-    unsigned int newId = nodes.size();
+    unsigned int newId = (unsigned int)nodes.size();
     Node* newNode = new Node(o, newId);
 
     map[o] = newId;
@@ -346,7 +346,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
  */
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::nodeIteratorEnd() {
-    return NodeIterator(this, nullptr, nodes.size());
+    return NodeIterator(this, nullptr, (unsigned int)nodes.size());
 }
 
 /**

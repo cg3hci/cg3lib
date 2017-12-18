@@ -18,14 +18,14 @@ protected:
 
     /* Constructors */
 
-    inline GenericNodeIterator(Graph<T>* graph, Graph<T>::Node* node) :
+    inline GenericNodeIterator(Graph<T>* graph, typename Graph<T>::Node* node) :
         graph(graph), node(node) {}
 
 
     /* Fields */
 
     Graph<T>* graph;
-    Graph<T>::Node* node;
+    typename Graph<T>::Node* node;
 
 };
 

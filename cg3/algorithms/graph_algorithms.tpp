@@ -204,7 +204,7 @@ void executeDijkstra(
     typedef typename Graph<T>::NodeIterator NIterator;
     typedef std::pair<double, unsigned int> QueueObject;
 
-    unsigned int numberOfNodes = nodes.size();
+    unsigned int numberOfNodes = (unsigned int)nodes.size();
 
     dist.resize(numberOfNodes, Graph<int>::MAX_WEIGHT);
     pred.resize(numberOfNodes, -1);
