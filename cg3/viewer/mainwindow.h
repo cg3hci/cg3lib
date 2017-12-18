@@ -163,7 +163,7 @@ private:
         #elif __APPLE__
         const std::string configFolderDirectory = std::string("/Users/") + std::getenv("USER") + "/Library/Preferences/cg3lib/"
         #elif __linux__
-        const std::string configFolderDirectory = "~/.config/cg3lib/";
+        const std::string configFolderDirectory = std::string(std::getenv("HOME")) + "/.config/cg3lib/";
         #endif
 
         // Mesh Stack

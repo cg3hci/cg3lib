@@ -21,6 +21,7 @@ unix:!macx{
 
     LIBS += /usr/lib/x86_64-linux-gnu/libGLU.so
     LIBS += -lQGLViewer
+    LIBS += -lstdc++fs
 }
 
 macx{
@@ -33,6 +34,7 @@ macx{
         INCLUDEPATH += /libs/frameworks/QGLViewer/QGLViewer.framework/Headers
 
         LIBS += -F/libs/frameworks/QGLViewer -framework QGLViewer
+        LIBS += -libc++experimental.a
     }
 }
 
