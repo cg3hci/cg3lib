@@ -68,6 +68,7 @@ class MainWindow : public QMainWindow {
         void savePointOfView(std::string filename);
         void loadPointOfView(std::string filename);
         void setBackgroundColor(const QColor &);
+        void set2DMode(bool b);
 
         //DrawableObjects for the Canvas
         void pushObj(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
@@ -139,6 +140,10 @@ class MainWindow : public QMainWindow {
         void on_actionEnable_Debug_Objects_triggered();
         void on_actionDisable_Debug_Objects_triggered();
 
+        void on_action2D_Mode_triggered();
+
+        void on_action3D_Mode_triggered();
+
 private:
 
         // GUI
@@ -157,6 +162,7 @@ private:
         #elif __linux__
         const std::string configFolderDirectory = std::string(std::getenv("HOME")) + "/.config/cg3lib/";
         #endif
+        bool mode2D;
 
         // Mesh Stack
         //

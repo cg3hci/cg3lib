@@ -58,6 +58,7 @@ class GLcanvas : public QGLViewer {
         void setVisibility(const cg3::DrawableObject * obj, bool visible = true);
         bool isVisible(const cg3::DrawableObject* obj);
 
+        void resetPointOfView();
         void serializePointOfView(std::ofstream& file);
         bool deserializePointOfView(std::ifstream& file);
         void savePointOfView(const std::string& filename);

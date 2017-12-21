@@ -55,7 +55,7 @@ static inline void viewer2d::drawLine2D(const Point2Dd& a, const Point2Dd& b, co
     glEnd();
 }
 
-static inline void viewer2d::drawTriangle2D(const array<Point2Dd, 3>& arr, const QColor& c, int width = 3, bool fill = false) {
+static inline void viewer2d::drawTriangle2D(const std::array<Point2Dd, 3>& arr, const QColor& c, int width, bool fill) {
     drawTriangle2D(arr[0], arr[1], arr[2], c, width, fill);
 }
 
@@ -88,8 +88,8 @@ static inline void viewer2d::drawQuad2D(const std::array<Point2Dd, 4>& points, c
                 pivot = i;
         }
         assert(pivot >= 0);
-        drawTriangle2D(points[i], points[(i+1)%4], points[(i+2)%4], c, 0, true);
-        drawTriangle2D(points[(i+2)%4], points[(i+3)%4], points[i], c, 0, true);
+        drawTriangle2D(points[pivot], points[(pivot+1)%4], points[(pivot+2)%4], c, 0, true);
+        drawTriangle2D(points[(pivot+2)%4], points[(pivot+3)%4], points[pivot], c, 0, true);
     }
 }
 

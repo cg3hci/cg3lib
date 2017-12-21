@@ -67,6 +67,8 @@
     <addaction name="actionShow_Axis"/>
     <addaction name="actionUpdate_Canvas"/>
     <addaction name="separator"/>
+    <addaction name="action2D_Mode"/>
+    <addaction name="action3D_Mode"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -302,6 +304,9 @@
    <property name="text">
     <string>Enable Debug Objects</string>
    </property>
+   <property name="shortcut">
+    <string>D</string>
+   </property>
   </action>
   <action name="actionDisable_Debug_Objects">
    <property name="enabled">
@@ -309,6 +314,28 @@
    </property>
    <property name="text">
     <string>Disable Debug Objects</string>
+   </property>
+   <property name="shortcut">
+    <string>D</string>
+   </property>
+  </action>
+  <action name="action2D_Mode">
+   <property name="text">
+    <string>2D Mode</string>
+   </property>
+   <property name="shortcut">
+    <string>2</string>
+   </property>
+  </action>
+  <action name="action3D_Mode">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>3D Mode</string>
+   </property>
+   <property name="shortcut">
+    <string>3</string>
    </property>
   </action>
  </widget>

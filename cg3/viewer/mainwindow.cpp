@@ -24,6 +24,7 @@ using namespace cg3;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow),
                                           consoleStream(nullptr),
+                                          mode2D(false),
                                           nMeshes(0),
                                           first(true),
                                           debugObjectsEnabled(false){
@@ -146,6 +147,22 @@ void MainWindow::loadPointOfView(std::string filename) {
 
 void MainWindow::setBackgroundColor(const QColor & color) {
     ui->glCanvas->setClearColor(color);
+}
+
+void MainWindow::set2DMode(bool b) {
+    if (b != mode2D){
+        ui->action2D_Mode->setEnabled(mode2D);
+        ui->action3D_Mode->setEnabled(!mode2D);
+        mode2D = b;
+        if (b){
+            ui->glCanvas->resetPointOfView();
+            disableRotation();
+            updateGlCanvas();
+        }
+        else {
+            enableRotation();
+        }
+    }
 }
 
 
@@ -483,4 +500,12 @@ void MainWindow::on_actionEnable_Debug_Objects_triggered() {
 
 void MainWindow::on_actionDisable_Debug_Objects_triggered() {
     disableDebugObjects();
+}
+
+void MainWindow::on_action2D_Mode_triggered() {
+    set2DMode(true);
+}
+
+void MainWindow::on_action3D_Mode_triggered() {
+    set2DMode(false);
 }

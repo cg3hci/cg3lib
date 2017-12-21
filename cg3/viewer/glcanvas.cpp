@@ -124,6 +124,13 @@ bool GLcanvas::isVisible(const DrawableObject* obj) {
     return false;
 }
 
+void GLcanvas::resetPointOfView() {
+    qglviewer::Vec v(0,0,2.61313);
+    qglviewer::Quaternion q(0,0,0,1);
+    camera()->setPosition(v);
+    camera()->setOrientation(q);
+}
+
 void GLcanvas::serializePointOfView(std::ofstream &file) {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
