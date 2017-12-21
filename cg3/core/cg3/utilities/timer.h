@@ -11,7 +11,9 @@
 #include <time.h>
 #include <iostream>
 #include <string>
-#ifndef _WIN32
+#ifdef _WIN32
+#include <chrono>
+#else
 #include <sys/time.h>
 #endif
 
@@ -19,7 +21,7 @@ namespace cg3 {
 
 class Timer {
     public:
-        Timer (const std::string& caption, bool start_ = true);
+        Timer (const std::string& caption, bool _start = true);
 
         void start();
 
@@ -27,14 +29,15 @@ class Timer {
 
         void stop();
 
-        void print ();
+        void print();
 
         double delay();
 
     private:
         std::string caption;
         #ifdef _WIN32
-
+        std::chrono::high_resolution_clock clock;
+        std::chrono::high_resolution_clock::time_point begin, end;
         #else
         timeval begin, end;
         #endif
