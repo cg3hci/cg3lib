@@ -78,6 +78,32 @@ AABBTree<D,K,T>::AABBTree(
     this->construction(vec);
 }
 
+/**
+ * @brief Copy constructor
+ * @param bst BST
+ */
+template <int D, class K, class T>
+AABBTree<D,K,T>::AABBTree(const AABBTree<D,K,T>& bst) :
+    lessComparator(bst.lessComparator),
+    aabbValueExtractor(bst.aabbValueExtractor)
+{
+    this->root = internal::copySubtreeHelper<Node,T>(bst.root);
+    this->entries = bst.entries;
+}
+
+/**
+ * @brief Move constructor
+ * @param bst BST
+ */
+template <int D, class K, class T>
+AABBTree<D,K,T>::AABBTree(AABBTree<D,K,T>&& bst) :
+    lessComparator(bst.lessComparator),
+    aabbValueExtractor(bst.aabbValueExtractor)
+{
+    this->root = bst.root;
+    bst.root = nullptr;
+    this->entries = bst.entries;
+}
 
 /**
  * @brief Destructor
@@ -608,6 +634,45 @@ typename AABBTree<D,K,T>::RangeBasedReverseIterator AABBTree<D,K,T>::getReverseI
 template <int D, class K, class T>
 typename AABBTree<D,K,T>::RangeBasedConstReverseIterator AABBTree<D,K,T>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
+}
+
+
+/* ----- SWAP FUNCTION AND ASSIGNMENT ----- */
+
+/**
+ * @brief Assignment operator
+ * @param[out] bst Parameter BST
+ * @return This object
+ */
+template <int D, class K, class T>
+AABBTree<D,K,T>& AABBTree<D,K,T>::operator= (AABBTree<D,K,T> bst) {
+    swap(bst);
+    return *this;
+}
+
+
+/**
+ * @brief Swap BST with another one
+ * @param[out] bst BST to be swapped with this object
+ */
+template <int D, class K, class T>
+void AABBTree<D,K,T>::swap(AABBTree<D,K,T>& bst) {
+    using std::swap;
+    swap(this->root, bst.root);
+    swap(this->entries, bst.entries);
+    swap(this->lessComparator, bst.lessComparator);
+    swap(this->aabbValueExtractor, bst.aabbValueExtractor);
+}
+
+
+/**
+ * @brief Swap graph with another one
+ * @param b1 First BST
+ * @param b2 Second BST
+ */
+template <int D, class K, class T>
+void swap(AABBTree<D,K,T>& b1, AABBTree<D,K,T>& b2) {
+    b1.swap(b2);
 }
 
 

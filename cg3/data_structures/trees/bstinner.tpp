@@ -62,6 +62,30 @@ BSTInner<K,T>::BSTInner(
     this->construction(vec);
 }
 
+/**
+ * @brief Copy constructor
+ * @param bst BST
+ */
+template <class K, class T>
+BSTInner<K,T>::BSTInner(const BSTInner<K,T>& bst) :
+    lessComparator(bst.lessComparator)
+{
+    this->root = internal::copySubtreeHelper<Node,T>(bst.root);
+    this->entries = bst.entries;
+}
+
+/**
+ * @brief Move constructor
+ * @param bst BST
+ */
+template <class K, class T>
+BSTInner<K,T>::BSTInner(BSTInner<K,T>&& bst) :
+    lessComparator(bst.lessComparator)
+{
+    this->root = bst.root;
+    bst.root = nullptr;
+    this->entries = bst.entries;
+}
 
 /**
  * @brief Destructor
@@ -549,6 +573,44 @@ typename BSTInner<K,T>::RangeBasedReverseIterator BSTInner<K,T>::getReverseItera
 template <class K, class T>
 typename BSTInner<K,T>::RangeBasedConstReverseIterator BSTInner<K,T>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
+}
+
+
+/* ----- SWAP FUNCTION AND ASSIGNMENT ----- */
+
+/**
+ * @brief Assignment operator
+ * @param[out] bst Parameter BST
+ * @return This object
+ */
+template <class K, class T>
+BSTInner<K,T>& BSTInner<K,T>::operator= (BSTInner<K,T> bst) {
+    swap(bst);
+    return *this;
+}
+
+
+/**
+ * @brief Swap BST with another one
+ * @param[out] bst BST to be swapped with this object
+ */
+template <class K, class T>
+void BSTInner<K,T>::swap(BSTInner<K,T>& bst) {
+    using std::swap;
+    swap(this->root, bst.root);
+    swap(this->entries, bst.entries);
+    swap(this->lessComparator, bst.lessComparator);
+}
+
+
+/**
+ * @brief Swap graph with another one
+ * @param b1 First BST
+ * @param b2 Second BST
+ */
+template <class K, class T>
+void swap(BSTInner<K,T>& b1, BSTInner<K,T>& b2) {
+    b1.swap(b2);
 }
 
 

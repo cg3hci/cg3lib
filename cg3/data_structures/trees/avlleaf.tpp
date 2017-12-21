@@ -63,6 +63,30 @@ AVLLeaf<K,T>::AVLLeaf(
     this->construction(vec);
 }
 
+/**
+ * @brief Copy constructor
+ * @param bst BST
+ */
+template <class K, class T>
+AVLLeaf<K,T>::AVLLeaf(const AVLLeaf<K,T>& bst) :
+    lessComparator(bst.lessComparator)
+{
+    this->root = internal::copySubtreeHelper<Node,T>(bst.root);
+    this->entries = bst.entries;
+}
+
+/**
+ * @brief Move constructor
+ * @param bst BST
+ */
+template <class K, class T>
+AVLLeaf<K,T>::AVLLeaf(AVLLeaf<K,T>&& bst) :
+    lessComparator(bst.lessComparator)
+{
+    this->root = bst.root;
+    bst.root = nullptr;
+    this->entries = bst.entries;
+}
 
 /**
  * @brief Destructor
@@ -565,6 +589,46 @@ typename AVLLeaf<K,T>::RangeBasedReverseIterator AVLLeaf<K,T>::getReverseIterato
 template <class K, class T>
 typename AVLLeaf<K,T>::RangeBasedConstReverseIterator AVLLeaf<K,T>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
+}
+
+
+
+/* ----- SWAP FUNCTION AND ASSIGNMENT ----- */
+
+
+/**
+ * @brief Assignment operator
+ * @param[out] bst Parameter BST
+ * @return This object
+ */
+template <class K, class T>
+AVLLeaf<K,T>& AVLLeaf<K,T>::operator= (AVLLeaf<K,T> bst) {
+    swap(bst);
+    return *this;
+}
+
+
+/**
+ * @brief Swap BST with another one
+ * @param[out] bst BST to be swapped with this object
+ */
+template <class K, class T>
+void AVLLeaf<K,T>::swap(AVLLeaf<K,T>& bst) {
+    using std::swap;
+    swap(this->root, bst.root);
+    swap(this->entries, bst.entries);
+    swap(this->lessComparator, bst.lessComparator);
+}
+
+
+/**
+ * @brief Swap graph with another one
+ * @param b1 First BST
+ * @param b2 Second BST
+ */
+template <class K, class T>
+void swap(AVLLeaf<K,T>& b1, AVLLeaf<K,T>& b2) {
+    b1.swap(b2);
 }
 
 

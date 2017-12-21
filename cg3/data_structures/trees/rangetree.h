@@ -72,6 +72,9 @@ public:
               const std::vector<K>& vec,
               const std::vector<LessComparator>& customComparators);
 
+    RangeTree(const RangeTree<K,T>& bst);
+    RangeTree(RangeTree<K,T>&& bst);
+
     ~RangeTree();
 
 
@@ -136,6 +139,11 @@ public:
     RangeBasedConstReverseIterator getConstReverseIterator();
 
 
+    /* Swap function and assignment */
+
+    inline RangeTree<K,T>& operator= (RangeTree<K,T> bst);
+    inline void swap(RangeTree<K,T>& bst);
+
 protected:
 
 
@@ -145,10 +153,10 @@ protected:
 
     size_t entries;
 
-    const unsigned int dim;
-    const LessComparator lessComparator;
+    unsigned int dim;
 
-    const std::vector<LessComparator> customComparators;
+    LessComparator lessComparator;
+    std::vector<LessComparator> customComparators;
 
 
 private:
@@ -157,6 +165,9 @@ private:
 
     void initialize();
 
+    Node* copyRangeTreeSubtree(
+            Node* rootNode,
+            Node* parent = nullptr);
 
 
     /* Range query helpers */
@@ -218,6 +229,9 @@ private:
 
 };
 
+
+template <class K, class T>
+void swap(RangeTree<K,T>& b1, RangeTree<K,T>& b2);
 
 }
 

@@ -53,7 +53,6 @@ public:
     typedef TreeRangeBasedConstReverseIterator<BSTInner<K,T>> RangeBasedConstReverseIterator;
 
 
-
     /* Constructors/destructor */
 
     BSTInner(const LessComparator customComparator = &internal::defaultComparator<K>);
@@ -62,8 +61,10 @@ public:
     BSTInner(const std::vector<K>& vec,
              const LessComparator customComparator = &internal::defaultComparator<K>);
 
-    ~BSTInner();
+    BSTInner(const BSTInner<K,T>& bst);
+    BSTInner(BSTInner<K,T>&& bst);
 
+    ~BSTInner();
 
 
     /* Public methods */
@@ -131,6 +132,11 @@ public:
     RangeBasedConstReverseIterator getConstReverseIterator();
 
 
+    /* Swap function and assignment */
+
+    inline BSTInner<K,T>& operator= (BSTInner<K,T> bst);
+    inline void swap(BSTInner<K,T>& bst);
+
 protected:
 
     /* Protected fields */
@@ -139,7 +145,7 @@ protected:
 
     TreeSize entries;
 
-    const LessComparator lessComparator;
+    LessComparator lessComparator;
 
 
 private:
@@ -149,6 +155,9 @@ private:
     void initialize();
 
 };
+
+template <class K, class T>
+void swap(BSTInner<K,T>& b1, BSTInner<K,T>& b2);
 
 }
 

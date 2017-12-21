@@ -61,6 +61,9 @@ public:
     AVLInner(const std::vector<K>& vec,
              const LessComparator customComparator = &internal::defaultComparator<K>);
 
+    AVLInner(const AVLInner<K,T>& bst);
+    AVLInner(AVLInner<K,T>&& bst);
+
     ~AVLInner();
 
 
@@ -129,6 +132,11 @@ public:
     RangeBasedConstReverseIterator getConstReverseIterator();
 
 
+    /* Swap function and assignment */
+
+    inline AVLInner<K,T>& operator= (AVLInner<K,T> bst);
+    inline void swap(AVLInner<K,T>& bst);
+
 protected:
 
     /* Protected fields */
@@ -137,7 +145,7 @@ protected:
 
     TreeSize entries;
 
-    const LessComparator lessComparator;
+    LessComparator lessComparator;
 
 
 private:
@@ -147,6 +155,10 @@ private:
     void initialize();
 
 };
+
+template <class K, class T>
+void swap(AVLInner<K,T>& b1, AVLInner<K,T>& b2);
+
 
 }
 

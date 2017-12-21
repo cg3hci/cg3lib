@@ -15,8 +15,12 @@ namespace internal {
     /* Basic BST operation helpers */
 
     template <class Node>
-    inline void clearHelperInner(Node*& rootNode);
+    inline void clearHelper(Node*& rootNode);
 
+    template <class Node, class T>
+    inline Node* copySubtreeHelper(
+            Node* rootNode,
+            Node* parent = nullptr);
 
 
     /* Utilities */
@@ -25,7 +29,10 @@ namespace internal {
     inline TreeSize getHeightRecursiveHelper(const Node* node);
 
     template <class Node>
-    inline void replaceSubtreeHelperInner(const Node* u, Node* v, Node*& rootNode);
+    inline void replaceSubtreeHelperInner(
+            const Node* u,
+            Node* v,
+            Node*& rootNode);
 
 }
 

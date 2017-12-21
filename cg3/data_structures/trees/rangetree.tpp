@@ -76,6 +76,34 @@ RangeTree<K,T>::RangeTree(
     this->construction(vec);
 }
 
+/**
+ * @brief Copy constructor
+ * @param rangeTree Range tree
+ */
+template <class K, class T>
+RangeTree<K,T>::RangeTree(const RangeTree<K,T>& bst) :
+    dim(bst.dim),
+    lessComparator(bst.lessComparator),
+    customComparators(bst.customComparators)
+{
+    this->root = this->copyRangeTreeSubtree(this->root);
+    this->entries = bst.entries;
+}
+
+/**
+ * @brief Move constructor
+ * @param rangeTree Range tree
+ */
+template <class K, class T>
+RangeTree<K,T>::RangeTree(RangeTree<K,T>&& bst) :
+    dim(bst.dim),
+    lessComparator(bst.lessComparator),
+    customComparators(bst.customComparators)
+{
+    this->root = bst.root;
+    bst.root = nullptr;
+    this->entries = bst.entries;
+}
 
 /**
  * @brief Destructor
@@ -579,6 +607,46 @@ typename RangeTree<K,T>::RangeBasedConstReverseIterator RangeTree<K,T>::getConst
 }
 
 
+/* ----- SWAP FUNCTION AND ASSIGNMENT ----- */
+
+/**
+ * @brief Assignment operator
+ * @param[out] bst Parameter BST
+ * @return This object
+ */
+template <class K, class T>
+RangeTree<K,T>& RangeTree<K,T>::operator= (RangeTree<K,T> bst) {
+    swap(bst);
+    return *this;
+}
+
+
+/**
+ * @brief Swap BST with another one
+ * @param[out] bst BST to be swapped with this object
+ */
+template <class K, class T>
+void RangeTree<K,T>::swap(RangeTree<K,T>& bst) {
+    using std::swap;
+    swap(this->root, bst.root);
+    swap(this->entries, bst.entries);
+    swap(this->lessComparator, bst.lessComparator);
+    swap(this->customComparators, bst.customComparators);
+    swap(this->dim, bst.dim);
+}
+
+
+/**
+ * @brief Swap graph with another one
+ * @param b1 First BST
+ * @param b2 Second BST
+ */
+template <class K, class T>
+void swap(RangeTree<K,T>& b1, RangeTree<K,T>& b2) {
+    b1.swap(b2);
+}
+
+
 /* --------- PRIVATE METHODS --------- */
 
 /**
@@ -592,11 +660,30 @@ void RangeTree<K,T>::initialize()
 }
 
 
+template <class K, class T>
+typename RangeTree<K,T>::Node* RangeTree<K,T>::copyRangeTreeSubtree(
+        Node* rootNode,
+        Node* parent)
+{
+    if (rootNode == nullptr)
+        return nullptr;
+
+    Node* newNode = new Node(*rootNode);
+
+    newNode->left = this->copyRangeTreeSubtree(rootNode->left, newNode);
+    newNode->right = this->copyRangeTreeSubtree(rootNode->right, newNode);
+    newNode->parent = parent;
+    if (rootNode->value != nullptr)
+        newNode->value = new T(*(rootNode->value));
+
+    if (rootNode->assRangeTree != nullptr)
+        newNode->assRangeTree = new RangeTree<K,T>(*(rootNode->assRangeTree));
+
+    return newNode;
+}
 
 
 /* --------- RANGE QUERY HELPERS --------- */
-
-
 
 /**
  * @brief Find entries in the range tree that are enclosed in a given range

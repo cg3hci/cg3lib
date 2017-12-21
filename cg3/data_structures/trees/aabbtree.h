@@ -77,6 +77,9 @@ public:
              const AABBValueExtractor customAABBExtractor,
              const LessComparator customComparator = &internal::defaultComparator<K>);
 
+    AABBTree(const AABBTree<D,K,T>& bst);
+    AABBTree(AABBTree<D,K,T>&& bst);
+
     ~AABBTree();
 
 
@@ -151,6 +154,11 @@ public:
     RangeBasedConstReverseIterator getConstReverseIterator();
 
 
+    /* Swap function and assignment */
+
+    inline AABBTree<D,K,T>& operator= (AABBTree<D,K,T> bst);
+    inline void swap(AABBTree<D,K,T>& bst);
+
 protected:
 
     /* Protected fields */
@@ -159,9 +167,9 @@ protected:
 
     TreeSize entries;
 
-    const LessComparator lessComparator;
+    LessComparator lessComparator;
 
-    const AABBValueExtractor aabbValueExtractor;
+    AABBValueExtractor aabbValueExtractor;
 
 
 private:
@@ -224,6 +232,9 @@ private:
             AABBValueExtractor aabbValueExtractor);
 
 };
+
+template <int D, class K, class T>
+void swap(AABBTree<D,K,T>& b1, AABBTree<D,K,T>& b2);
 
 }
 

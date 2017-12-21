@@ -61,6 +61,9 @@ public:
     BSTLeaf(const std::vector<K>& vec,
             const LessComparator customComparator = &internal::defaultComparator<K>);
 
+    BSTLeaf(const BSTLeaf<K,T>& bst);
+    BSTLeaf(BSTLeaf<K,T>&& bst);
+
     ~BSTLeaf();
 
 
@@ -130,6 +133,11 @@ public:
     RangeBasedConstReverseIterator getConstReverseIterator();
 
 
+    /* Swap function and assignment */
+
+    inline BSTLeaf<K,T>& operator= (BSTLeaf<K,T> bst);
+    inline void swap(BSTLeaf<K,T>& bst);
+
 protected:
 
     /* Protected fields */
@@ -138,7 +146,7 @@ protected:
 
     TreeSize entries;
 
-    const LessComparator lessComparator;
+    LessComparator lessComparator;
 
 
 private:
@@ -148,6 +156,11 @@ private:
     void initialize();
 
 };
+
+
+template <class K, class T>
+void swap(BSTLeaf<K,T>& b1, BSTLeaf<K,T>& b2);
+
 
 }
 

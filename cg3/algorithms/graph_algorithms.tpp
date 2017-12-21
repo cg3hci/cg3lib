@@ -24,7 +24,7 @@ namespace internal {
             const std::vector<std::list<size_t>>& nodeAdjacencies,
             const size_t sourceId,
             std::vector<double>& dist,
-            std::vector<int>& pred);
+            std::vector<long long int>& pred);
 
     template <class T>
     void fillIndexedData(
@@ -70,10 +70,11 @@ DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source)
 
     //Id of the source
     size_t sourceId = idMap.find(source)->second;
+    NIterator& sourceIterator = nodes[sourceId];
 
     //Vector of distances and predecessor of the shortest path from the source
     std::vector<double> dist;
-    std::vector<int> pred;
+    std::vector<long long int> pred;
 
     //Execute Dijkstra
     internal::executeDijkstra(graph, nodes, nodeAdjacencies, sourceId, dist, pred);
@@ -89,11 +90,13 @@ DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source)
             size_t idPred = id;
             while (idPred != sourceId) {
                 NIterator& predIterator = nodes[idPred];
-                path.push_front((T)*predIterator);
+                path.push_front((T) *predIterator);
 
-                idPred = pred[idPred];
+                assert(pred[idPred] >= 0);
+
+                idPred = (size_t) pred[idPred];
             }
-            path.push_front((T)sourceId);
+            path.push_front((T) *sourceIterator);
 
             //Create resulting object
             GraphPath<T> graphPath;
@@ -146,13 +149,15 @@ GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination) {
     internal::fillIndexedData(graph, nodes, nodeAdjacencies, idMap);
 
     //Id of the source
-    size_t sourceId = idMap.find(source)->second;
+    size_t sourceId = idMap.find(source)->second;    
+    NIterator& sourceIterator = nodes[sourceId];
+
     //Id of the destination
     size_t destinationId = idMap.find(destination)->second;
 
     //Vector of distances and predecessor of the shortest path from the source
     std::vector<double> dist;
-    std::vector<int> pred;
+    std::vector<long long int> pred;
 
     //Execute Dijkstra
     internal::executeDijkstra(graph, nodes, nodeAdjacencies, sourceId, dist, pred);
@@ -165,11 +170,13 @@ GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination) {
         size_t idPred = destinationId;
         while (idPred != sourceId) {
             NIterator& predIterator = nodes[idPred];
-            path.push_front(*predIterator);
+            path.push_front((T) *predIterator);
 
-            idPred = pred[idPred];
+            assert(pred[idPred] >= 0);
+
+            idPred = (size_t) pred[idPred];
         }
-        path.push_front((T)sourceId);
+        path.push_front((T) *sourceIterator);
     }
 
     //Create resulting object
@@ -199,18 +206,18 @@ void executeDijkstra(
         const std::vector<std::list<size_t>>& nodeAdjacencies,
         const size_t sourceId,
         std::vector<double>& dist,
-        std::vector<int>& pred)
+        std::vector<long long int>& pred)
 {
     typedef typename Graph<T>::NodeIterator NIterator;
     typedef std::pair<double, size_t> QueueObject;
 
     size_t numberOfNodes = nodes.size();
 
-    dist.resize(numberOfNodes, Graph<int>::MAX_WEIGHT);
+    dist.resize(numberOfNodes, Graph<T>::MAX_WEIGHT);
     pred.resize(numberOfNodes, -1);
 
     dist[sourceId] = 0;
-    pred[sourceId] = (int)sourceId;
+    pred[sourceId] = (long long int) sourceId;
 
     //Priority queue
     std::priority_queue<QueueObject, std::vector<QueueObject>, std::greater<QueueObject>> queue;
@@ -234,7 +241,7 @@ void executeDijkstra(
             //Get weight
             double weight = graph.getWeight(uIterator, vIterator);
 
-            assert(dist[uId] < Graph<int>::MAX_WEIGHT);
+            assert(dist[uId] < Graph<T>::MAX_WEIGHT);
 
             //If there is short path to v through u.
             if (dist[vId] > dist[uId] + weight)
@@ -243,7 +250,7 @@ void executeDijkstra(
                 dist[vId] = dist[uId] + weight;
 
                 //Set predecessor
-                pred[vId] = (int)uId;
+                pred[vId] = (long long int) uId;
 
                 //Add to the queue
                 queue.push(std::make_pair(dist[vId], vId));

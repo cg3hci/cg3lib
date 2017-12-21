@@ -66,7 +66,11 @@ public:
     /* Constructors / destructor */
 
     Graph(GraphType type = GraphType::DIRECTED);
-    virtual ~Graph();
+
+    Graph(const Graph<T>& graph);
+    Graph(Graph<T>&& graph);
+
+    ~Graph();
 
 
     /* Public methods with values */
@@ -119,6 +123,11 @@ public:
     RangeBasedAdjacentNodeIterator adjacentNodeIterator(NodeIterator node);
 
 
+    /* Swap function and assignment */
+
+    inline Graph<T>& operator= (Graph<T> graph);
+    inline void swap(Graph<T>& graph);
+
 private:
 
     /* Private functions for iterators */
@@ -144,7 +153,11 @@ private:
 
     std::vector<Node*> nodes;
     std::map<T, size_t> map;
+
 };
+
+template <class T>
+void swap(Graph<T>& g1, Graph<T>& g2);
 
 }
 

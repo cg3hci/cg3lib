@@ -10,6 +10,7 @@ namespace cg3 {
 template <class T>
 constexpr double Graph<T>::MAX_WEIGHT;
 
+
 /* ----- CONSTRUCTORS/DESTRUCTORS ----- */
 
 /**
@@ -20,6 +21,33 @@ Graph<T>::Graph(GraphType type) : type(type)
 {
 
 }
+
+/**
+ * @brief Copy constructor
+ * @param graph Graph
+ */
+template <class T>
+Graph<T>::Graph(const Graph& graph) : type(graph.type) {
+    int id = 0;
+    for (Node* node : graph.nodes) {
+        if (node != nullptr) {
+            this->nodes.push_back(new Node(*node));
+            this->map.insert(std::make_pair(node->value, id));
+            id++;
+        }
+    }
+}
+
+/**
+ * @brief Move constructor
+ * @param graph Graph
+ */
+template <class T>
+Graph<T>::Graph(Graph<T>&& graph) : type(graph.type) {
+    this->nodes = std::move(graph.nodes);
+    this->map = std::move(graph.map);
+}
+
 
 /**
  * @brief Destructor
@@ -492,6 +520,47 @@ void Graph<T>::clear() {
     map.clear();
 }
 
+
+
+/* ----- SWAP FUNCTION AND ASSIGNMENT ----- */
+
+
+/**
+ * @brief Assignment operator
+ * @param[out] graph Parameter graph
+ * @return This object
+ */
+template <class T>
+Graph<T>& Graph<T>::operator= (Graph<T> graph) {
+    swap(graph);
+    return *this;
+}
+
+
+/**
+ * @brief Swap graph with another one
+ * @param[out] graph Graph to be swapped with this object
+ */
+template <class T>
+void Graph<T>::swap(Graph<T>& graph) {
+    using std::swap;
+    swap(this->nodes, graph.nodes);
+    swap(this->map, graph.map);
+}
+
+
+/**
+ * @brief Swap graph with another one
+ * @param g1 First graph
+ * @param g2 Second graph
+ */
+template <class T>
+void swap(Graph<T>& g1, Graph<T>& g2) {
+    g1.swap(g2);
+}
+
+
+
 /* ----- PRIVATE FUNCTIONS FOR ITERATORS ----- */
 
 
@@ -630,6 +699,8 @@ void Graph<T>::setWeightHelper(Node* n1, const Node* n2, const double weight) {
         return;
     it->second = weight;
 }
+
+
 
 
 }

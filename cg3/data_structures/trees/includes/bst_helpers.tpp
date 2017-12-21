@@ -32,6 +32,31 @@ void clearHelper(Node*& rootNode) {
     rootNode = nullptr;
 }
 
+/**
+ * @brief Create a copy of a given subtree, having as root
+ * the rootNode.
+ *
+ * @param[in] rootNode Root of the subtree
+ * @returns Copy of the subtree
+ */
+template <class Node, class T>
+Node* copySubtreeHelper(
+        Node* rootNode,
+        Node* parent)
+{
+    if (rootNode == nullptr)
+        return nullptr;
+
+    Node* newNode = new Node(*rootNode);
+
+    newNode->left = copySubtreeHelper<Node,T>(rootNode->left, newNode);
+    newNode->right = copySubtreeHelper<Node,T>(rootNode->right, newNode);
+    newNode->parent = parent;
+    if (rootNode->value != nullptr)
+        newNode->value = new T(*(rootNode->value));
+
+    return newNode;
+}
 
 
 /* ----- UTILITIES ----- */

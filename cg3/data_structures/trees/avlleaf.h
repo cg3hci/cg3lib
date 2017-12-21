@@ -61,6 +61,9 @@ public:
     AVLLeaf(const std::vector<K>& vec,
             const LessComparator customComparator = &internal::defaultComparator<K>);
 
+    AVLLeaf(const AVLLeaf<K,T>& bst);
+    AVLLeaf(AVLLeaf<K,T>&& bst);
+
     ~AVLLeaf();
 
 
@@ -129,6 +132,11 @@ public:
     RangeBasedConstReverseIterator getConstReverseIterator();
 
 
+    /* Swap function and assignment */
+
+    inline AVLLeaf<K,T>& operator= (AVLLeaf<K,T> bst);
+    inline void swap(AVLLeaf<K,T>& bst);
+
 protected:
 
     /* Protected fields */
@@ -137,7 +145,7 @@ protected:
 
     TreeSize entries;
 
-    const LessComparator lessComparator;
+    LessComparator lessComparator;
 
 
 private:
@@ -147,6 +155,9 @@ private:
     void initialize();
 
 };
+
+template <class K, class T>
+void swap(AVLLeaf<K,T>& b1, AVLLeaf<K,T>& b2);
 
 }
 

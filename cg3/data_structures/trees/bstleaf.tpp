@@ -62,6 +62,30 @@ BSTLeaf<K,T>::BSTLeaf(
     this->construction(vec);
 }
 
+/**
+ * @brief Copy constructor
+ * @param bst BST
+ */
+template <class K, class T>
+BSTLeaf<K,T>::BSTLeaf(const BSTLeaf<K,T>& bst) :
+    lessComparator(bst.lessComparator)
+{
+    this->root = internal::copySubtreeHelper<Node,T>(bst.root);
+    this->entries = bst.entries;
+}
+
+/**
+ * @brief Move constructor
+ * @param bst BST
+ */
+template <class K, class T>
+BSTLeaf<K,T>::BSTLeaf(BSTLeaf<K,T>&& bst) :
+    lessComparator(bst.lessComparator)
+{
+    this->root = bst.root;
+    bst.root = nullptr;
+    this->entries = bst.entries;
+}
 
 /**
  * @brief Destructor
@@ -548,6 +572,45 @@ template <class K, class T>
 typename BSTLeaf<K,T>::RangeBasedConstReverseIterator BSTLeaf<K,T>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
 }
+
+
+/* ----- SWAP FUNCTION AND ASSIGNMENT ----- */
+
+/**
+ * @brief Assignment operator
+ * @param[out] bst Parameter BST
+ * @return This object
+ */
+template <class K, class T>
+BSTLeaf<K,T>& BSTLeaf<K,T>::operator= (BSTLeaf<K,T> bst) {
+    swap(bst);
+    return *this;
+}
+
+
+/**
+ * @brief Swap BST with another one
+ * @param[out] bst BST to be swapped with this object
+ */
+template <class K, class T>
+void BSTLeaf<K,T>::swap(BSTLeaf<K,T>& bst) {
+    using std::swap;
+    swap(this->root, bst.root);
+    swap(this->entries, bst.entries);
+    swap(this->lessComparator, bst.lessComparator);
+}
+
+
+/**
+ * @brief Swap graph with another one
+ * @param b1 First BST
+ * @param b2 Second BST
+ */
+template <class K, class T>
+void swap(BSTLeaf<K,T>& b1, BSTLeaf<K,T>& b2) {
+    b1.swap(b2);
+}
+
 
 
 /* --------- PRIVATE METHODS --------- */
