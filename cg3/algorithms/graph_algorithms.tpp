@@ -90,13 +90,13 @@ DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source)
             size_t idPred = id;
             while (idPred != sourceId) {
                 NIterator& predIterator = nodes[idPred];
-                path.push_front((T) *predIterator);
+                path.push_front(*predIterator);
 
                 assert(pred[idPred] >= 0);
 
                 idPred = (size_t) pred[idPred];
             }
-            path.push_front((T) *sourceIterator);
+            path.push_front(*sourceIterator);
 
             //Create resulting object
             GraphPath<T> graphPath;
@@ -170,13 +170,13 @@ GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination) {
         size_t idPred = destinationId;
         while (idPred != sourceId) {
             NIterator& predIterator = nodes[idPred];
-            path.push_front((T) *predIterator);
+            path.push_front(*predIterator);
 
             assert(pred[idPred] >= 0);
 
             idPred = (size_t) pred[idPred];
         }
-        path.push_front((T) *sourceIterator);
+        path.push_front(*sourceIterator);
     }
 
     //Create resulting object
