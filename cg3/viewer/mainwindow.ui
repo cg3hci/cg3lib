@@ -86,8 +86,17 @@
     <addaction name="actionSave_Point_Of_View_as"/>
     <addaction name="actionSave_Snapshot"/>
    </widget>
+   <widget class="QMenu" name="menuDebug_Objects">
+    <property name="title">
+     <string>Debug Objects</string>
+    </property>
+    <addaction name="actionEnable_Debug_Objects"/>
+    <addaction name="actionDisable_Debug_Objects"/>
+    <addaction name="separator"/>
+   </widget>
    <addaction name="menuFile_2"/>
    <addaction name="menuFile"/>
+   <addaction name="menuDebug_Objects"/>
    <addaction name="menuWindow"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
@@ -287,6 +296,19 @@
    </property>
    <property name="shortcut">
     <string>C</string>
+   </property>
+  </action>
+  <action name="actionEnable_Debug_Objects">
+   <property name="text">
+    <string>Enable Debug Objects</string>
+   </property>
+  </action>
+  <action name="actionDisable_Debug_Objects">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Disable Debug Objects</string>
    </property>
   </action>
  </widget>

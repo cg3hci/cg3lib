@@ -39,9 +39,7 @@ namespace Ui {
 }
 
 /**
- * @brief La classe MainWindow è una classe che gestisce la canvas di QGLViewer e tutti i manager che vengono aggiunti ad essa.
- *
- * Gestisce in oltre una scrollArea avente le checkbox che gestiscono la visualizzazione di tutti gli oggetti presenti nella canvas.
+ * @brief MainWindow is a class that manages a QGLViewer canvas and all the managers which are added to it.
  */
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -51,32 +49,11 @@ class MainWindow : public QMainWindow {
         explicit MainWindow(QWidget *parent = 0);
         ~MainWindow();
 
+        //Canvas:
         void fitScene();
         void fitScene(const cg3::Pointd& center, double radius);
         cg3::Point2Di getCanvasSize() const;
         void updateGlCanvas();
-        void pushObj(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
-        void deleteObj(const cg3::DrawableObject * obj, bool b = true);
-        void setObjVisibility(const cg3::DrawableObject * obj, bool visible);
-        bool contains(const cg3::DrawableObject* obj);
-        cg3::BoundingBox getFullBoundingBox();
-        int getNumberVisibleObjects();
-        void saveSnapshot();
-        void drawAxis(bool);
-
-        void savePointOfView();
-        void loadPointOfView();
-        void savePointOfView(std::string filename);
-        void loadPointOfView(std::string filename);
-
-        void setFullScreen(bool);
-        void setBackgroundColor(const QColor &);
-
-        int addManager(QFrame *f, std::string name, QToolBox *parent = nullptr);
-        QFrame *getManager(unsigned int i);
-        void renameManager(unsigned int i, std::string s);
-        void setCurrentIndexToolBox(unsigned int i);
-
         void disableRotation();
         void enableRotation();
         void disableTranslation();
@@ -84,7 +61,23 @@ class MainWindow : public QMainWindow {
         void disableZoom();
         void enableZoom();
         void setSelectLeftButton();
+        void saveSnapshot();
+        void drawAxis(bool);
+        void savePointOfView();
+        void loadPointOfView();
+        void savePointOfView(std::string filename);
+        void loadPointOfView(std::string filename);
+        void setBackgroundColor(const QColor &);
 
+        //DrawableObjects for the Canvas
+        void pushObj(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
+        bool deleteObj(const cg3::DrawableObject * obj, bool b = true);
+        void setObjVisibility(const cg3::DrawableObject * obj, bool visible);
+        bool contains(const cg3::DrawableObject* obj);
+        cg3::BoundingBox getFullBoundingBox();
+        int getNumberVisibleObjects();
+
+        //Debug Objects
         void enableDebugObjects();
         void disableDebugObjects();
         void addDebugSphere(const cg3::Pointd& center, double radius, const QColor &color, int precision = 4);
@@ -94,9 +87,16 @@ class MainWindow : public QMainWindow {
         void addDebugLine(const cg3::Pointd& a, const cg3::Pointd& b, int width, const QColor color);
         void clearDebugLines();
 
-        void toggleConsoleStream();
+        //Window Options:
+        void setFullScreen(bool);
+        void toggleConsoleStream(); //work in progress...
+        void keyPressEvent(QKeyEvent * event); //event options for keys pressed
 
-        void keyPressEvent(QKeyEvent * event);
+        //Managers:
+        int addManager(QFrame *f, std::string name, QToolBox *parent = nullptr);
+        QFrame *getManager(unsigned int i);
+        void renameManager(unsigned int i, std::string s);
+        void setCurrentIndexToolBox(unsigned int i);
 
     signals:
         /**
@@ -123,29 +123,21 @@ class MainWindow : public QMainWindow {
         void slotObjectPicked(unsigned int i);
         void slotPoint2DClicked(cg3::Point2Dd p);
 
+        //Menu Actions
         void on_actionSave_Snapshot_triggered();
-
         void on_actionShow_Axis_triggered();
-
         void on_actionFull_Screen_toggled(bool arg1);
-
         void on_actionUpdate_Canvas_triggered();
-
         void on_actionFit_Scene_triggered();
-
         void on_actionChange_Background_Color_triggered();
-
         void on_actionSave_Point_Of_View_triggered();
-
         void on_actionLoad_Point_of_View_triggered();
-
         void on_actionShow_Hide_Dock_Widget_triggered();
-
         void on_actionLoad_Point_Of_View_from_triggered();
-
         void on_actionSave_Point_Of_View_as_triggered();
-
         void on_actionShow_Hide_Console_Stream_triggered();
+        void on_actionEnable_Debug_Objects_triggered();
+        void on_actionDisable_Debug_Objects_triggered();
 
 private:
 
@@ -173,7 +165,8 @@ private:
         boost::bimap<int, const cg3::DrawableObject*> mapObjects;
         int nMeshes;
         bool first;
-        cg3::DrawableDebugObjects* debugObjects;
+        cg3::DrawableDebugObjects debugObjects;
+        bool debugObjectsEnabled;
 };
 
 #endif // CG3_MAINWINDOW_H

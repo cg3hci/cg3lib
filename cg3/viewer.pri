@@ -68,6 +68,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/loadersaver.h \
         $$PWD/viewer/utilities/consolestream.h \
         $$PWD/viewer/renderable_objects/renderable_objects.h \
+        $$PWD/viewer/renderable_objects/2d/renderable_objects_2d.h \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2d.h \
         $$PWD/viewer/drawable_objects/drawable_debug_objects.h
 
@@ -79,7 +80,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/consolestream.tpp \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2d.cpp \
         $$PWD/viewer/drawable_objects/drawable_debug_objects.cpp \
-        $$PWD/viewer/renderable_objects/renderable_objects.tpp
+        $$PWD/viewer/renderable_objects/renderable_objects.tpp \
+        $$PWD/viewer/renderable_objects/2d/renderable_objects_2d.tpp
 
     FORMS += \
         $$PWD/viewer/mainwindow.ui

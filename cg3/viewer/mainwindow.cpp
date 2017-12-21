@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           consoleStream(nullptr),
                                           nMeshes(0),
                                           first(true),
-                                          debugObjects(nullptr){
+                                          debugObjectsEnabled(false){
     ui->setupUi(this);
     ui->toolBox->removeItem(0);
 
@@ -54,10 +54,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 }
 
 MainWindow::~MainWindow() {
-    if (debugObjects!=nullptr){
-        deleteObj(debugObjects);
-        delete debugObjects;
-    }
     if (consoleStream != nullptr)
         delete consoleStream;
     delete ui;
@@ -82,91 +78,32 @@ void MainWindow::updateGlCanvas() {
     ui->glCanvas->update();
 }
 
-/**
- * @brief Aggiunge un DrawableObject alla scena e la relativa checkBox nella scrollBar.
- *
- * Aggiorna in automatico la scena visualizzata.
- *
- * @param obj: nuovo oggetto da visualizzare nella canvas
- * @param checkBoxName: nome assegnato alla checkbox relativa al nuovo oggetto
- */
-void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bool b) {
-    ui->glCanvas->pushObj(obj);
-    if (b) ui->glCanvas->fitScene();
-    ui->glCanvas->update();
-
-    QCheckBox * cb = new QCheckBox();
-    cb->setText(checkBoxName.c_str());
-    cb->setEnabled(true);
-    cb->setChecked(true);
-
-    checkBoxes[nMeshes] = cb;
-    mapObjects.insert( boost::bimap<int, const DrawableObject*>::value_type(nMeshes, obj ) );
-    connect(cb, SIGNAL(stateChanged(int)), checkBoxMapper, SLOT(map()));
-    checkBoxMapper->setMapping(cb, nMeshes);
-    nMeshes++;
-
-    ((QVBoxLayout*)ui->scrollArea->layout())->addWidget(cb, 1, Qt::AlignTop);
+void MainWindow::disableRotation() {
+    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->NO_CLICK_ACTION);
 }
 
-/**
- * @brief Elimina il DrawableObject dalla scena (non esegue nessuna free!) e la relativa checkBox nella scrollBar.
- *
- * Aggiorna in automatico la scena visualizzata.
- *
- * @param obj: oggetto che verrà rimosso dalla canvas
- */
-void MainWindow::deleteObj(const DrawableObject* obj, bool b) {
-    boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
-    if (it != mapObjects.right.end()){
-        int i = it->second;
-
-        QCheckBox * cb = checkBoxes[i];
-        checkBoxMapper->removeMappings(cb);
-        cb->setVisible(false);
-        ui->scrollArea->layout()->removeWidget(cb);
-
-        checkBoxes.erase(i);
-        mapObjects.left.erase(i);
-
-        delete cb;
-
-        ui->glCanvas->deleteObj(obj);
-        if (b) ui->glCanvas->fitScene();
-        ui->glCanvas->update();
-    }
+void MainWindow::enableRotation() {
+    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->CAMERA, ui->glCanvas->ROTATE);
 }
 
-void MainWindow::setObjVisibility(const DrawableObject *obj, bool visible) {
-    boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
-    if (it != mapObjects.right.end()){
-        int i = it->second;
-
-        QCheckBox * cb = checkBoxes[i];
-        cb->setChecked(visible);
-    }
-
+void MainWindow::disableTranslation() {
+    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->NO_CLICK_ACTION);
 }
 
-bool MainWindow::contains(const DrawableObject* obj) {
-    boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter = mapObjects.right.find(obj);
-    return (right_iter != mapObjects.right.end());
+void MainWindow::enableTranslation() {
+    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->CAMERA, ui->glCanvas->TRANSLATE);
 }
 
-/**
- * @brief Restituisce il BoundingBox di tutti gli oggetti \i presenti presenti nella canvas
- * @return il bounding box contenente gli oggetti visibili
- */
-BoundingBox MainWindow::getFullBoundingBox() {
-    return ui->glCanvas->getFullBoundingBox();
+void MainWindow::disableZoom() {
+    ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->NO_MOUSE_ACTION);
 }
 
-/**
- * @brief Restituisce il numero di oggetti visibili presenti nella canvas.
- * @return intero rappresentante il numero di oggetti visibili
- */
-int MainWindow::getNumberVisibleObjects() {
-    return ui->glCanvas->getNumberVisibleObjects();
+void MainWindow::enableZoom() {
+    ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->ZOOM);
+}
+
+void MainWindow::setSelectLeftButton() {
+    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->SELECT);
 }
 
 /**
@@ -205,6 +142,210 @@ void MainWindow::savePointOfView(std::string filename) {
 void MainWindow::loadPointOfView(std::string filename) {
     ui->glCanvas->loadPointOfView(filename);
     ui->glCanvas->update();
+}
+
+void MainWindow::setBackgroundColor(const QColor & color) {
+    ui->glCanvas->setClearColor(color);
+}
+
+
+/**
+ * @brief Aggiunge un DrawableObject alla scena e la relativa checkBox nella scrollBar.
+ *
+ * Aggiorna in automatico la scena visualizzata.
+ *
+ * @param obj: nuovo oggetto da visualizzare nella canvas
+ * @param checkBoxName: nome assegnato alla checkbox relativa al nuovo oggetto
+ */
+void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bool b) {
+    ui->glCanvas->pushObj(obj);
+    if (b) ui->glCanvas->fitScene();
+    ui->glCanvas->update();
+
+    QCheckBox * cb = new QCheckBox();
+    cb->setText(checkBoxName.c_str());
+    cb->setEnabled(true);
+    cb->setChecked(true);
+
+    checkBoxes[nMeshes] = cb;
+    mapObjects.insert( boost::bimap<int, const DrawableObject*>::value_type(nMeshes, obj ) );
+    connect(cb, SIGNAL(stateChanged(int)), checkBoxMapper, SLOT(map()));
+    checkBoxMapper->setMapping(cb, nMeshes);
+    nMeshes++;
+
+    ((QVBoxLayout*)ui->scrollArea->layout())->addWidget(cb, 1, Qt::AlignTop);
+}
+
+/**
+ * @brief Elimina il DrawableObject dalla scena (non esegue nessuna free!) e la relativa checkBox nella scrollBar.
+ *
+ * Aggiorna in automatico la scena visualizzata.
+ *
+ * @param obj: oggetto che verrà rimosso dalla canvas
+ */
+bool MainWindow::deleteObj(const DrawableObject* obj, bool b) {
+    boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
+    if (it != mapObjects.right.end()){
+        int i = it->second;
+
+        QCheckBox * cb = checkBoxes[i];
+        checkBoxMapper->removeMappings(cb);
+        cb->setVisible(false);
+        ui->scrollArea->layout()->removeWidget(cb);
+
+        checkBoxes.erase(i);
+        mapObjects.left.erase(i);
+
+        delete cb;
+
+        ui->glCanvas->deleteObj(obj);
+        if (b) ui->glCanvas->fitScene();
+        ui->glCanvas->update();
+        return true;
+    }
+    else
+        return false;
+}
+
+void MainWindow::setObjVisibility(const DrawableObject *obj, bool visible) {
+    boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
+    if (it != mapObjects.right.end()){
+        int i = it->second;
+
+        QCheckBox * cb = checkBoxes[i];
+        cb->setChecked(visible);
+    }
+
+}
+
+bool MainWindow::contains(const DrawableObject* obj) {
+    boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter = mapObjects.right.find(obj);
+    return (right_iter != mapObjects.right.end());
+}
+
+/**
+ * @brief Restituisce il BoundingBox di tutti gli oggetti \i presenti presenti nella canvas
+ * @return il bounding box contenente gli oggetti visibili
+ */
+BoundingBox MainWindow::getFullBoundingBox() {
+    return ui->glCanvas->getFullBoundingBox();
+}
+
+/**
+ * @brief Restituisce il numero di oggetti visibili presenti nella canvas.
+ * @return intero rappresentante il numero di oggetti visibili
+ */
+int MainWindow::getNumberVisibleObjects() {
+    return ui->glCanvas->getNumberVisibleObjects();
+}
+
+
+void MainWindow::enableDebugObjects() {
+    if (debugObjectsEnabled == false){
+        pushObj(&debugObjects, "Debug Objects");
+        ui->actionEnable_Debug_Objects->setEnabled(false);
+        ui->actionDisable_Debug_Objects->setEnabled(true);
+        debugObjectsEnabled = true;
+    }
+}
+
+void MainWindow::disableDebugObjects() {
+    if (debugObjectsEnabled == true){
+        if (deleteObj(&debugObjects)) {
+            ui->actionEnable_Debug_Objects->setEnabled(true);
+            ui->actionDisable_Debug_Objects->setEnabled(false);
+            debugObjectsEnabled = false;
+        }
+    }
+    ui->glCanvas->update();
+}
+
+void MainWindow::addDebugSphere(const Pointd& center, double radius, const QColor& color, int precision) {
+    if (debugObjectsEnabled == true){
+        debugObjects.addDebugSphere(center, radius, color, precision);
+        ui->glCanvas->update();
+    }
+}
+
+void MainWindow::clearDebugSpheres() {
+    if (debugObjectsEnabled == true){
+        debugObjects.clearDebugSpheres();
+        ui->glCanvas->update();
+    }
+}
+
+void MainWindow::addDebugCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
+    if (debugObjectsEnabled == true){
+        debugObjects.addDebugCylinder(a,b,radius, color);
+        ui->glCanvas->update();
+    }
+}
+
+void MainWindow::clearDebugCylinders() {
+    if (debugObjectsEnabled == true){
+        debugObjects.clearDebugCylinders();
+        ui->glCanvas->update();
+    }
+}
+
+void MainWindow::addDebugLine(const Pointd &a, const Pointd &b, int width, const QColor color) {
+    if (debugObjectsEnabled == true){
+        debugObjects.addDebugLine(a,b,width, color);
+        ui->glCanvas->update();
+    }
+}
+
+void MainWindow::clearDebugLines() {
+    if (debugObjectsEnabled == true){
+        debugObjects.clearDebugLines();
+        ui->glCanvas->update();
+    }
+}
+
+void MainWindow::setFullScreen(bool b) {
+    ui->glCanvas->setFullScreen(b);
+    if (!b)
+        showMaximized();
+}
+
+void MainWindow::toggleConsoleStream() {
+    if (consoleStream == nullptr){
+        ui->console->show();
+        consoleStream =  new ConsoleStream(std::cout, std::cerr, this->ui->console);
+        ConsoleStream::registerConsoleMessageHandler();
+    }
+    else {
+        ui->console->hide();
+        delete consoleStream;
+        consoleStream = nullptr;
+    }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent * event){
+    if (event->key() == Qt::Key_F)
+        fitScene();
+    if (event->key() == Qt::Key_U)
+        updateGlCanvas();
+    if(event->matches(QKeySequence::Undo))
+        emit(undoEvent());
+    if (event->matches(QKeySequence::Redo))
+        emit(redoEvent());
+    if (event->matches(QKeySequence::Replace)){ //ctrl+h
+        if (ui->dockWidget->isHidden())
+            ui->dockWidget->show();
+        else
+            ui->dockWidget->hide();
+    }
+    if (event->key() == Qt::Key_C){ //c
+        toggleConsoleStream();
+    }
+
+    if (event->matches(QKeySequence::Print)){ //ctrl+p
+        savePointOfView();
+    }
+    if (QKeySequence(event->key() | event->modifiers()) == QKeySequence(Qt::CTRL + Qt::Key_L)){ //ctrl+l
+        loadPointOfView();
+    }
 }
 
 /**
@@ -254,105 +395,6 @@ void MainWindow::setCurrentIndexToolBox(unsigned int i){
         ui->toolBox->setCurrentIndex(i);
 }
 
-void MainWindow::disableRotation() {
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->NO_CLICK_ACTION);
-}
-
-void MainWindow::enableRotation() {
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->CAMERA, ui->glCanvas->ROTATE);
-}
-
-void MainWindow::disableTranslation() {
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->NO_CLICK_ACTION);
-}
-
-void MainWindow::enableTranslation() {
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->CAMERA, ui->glCanvas->TRANSLATE);
-}
-
-void MainWindow::disableZoom() {
-    ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->NO_MOUSE_ACTION);
-}
-
-void MainWindow::enableZoom() {
-    ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->ZOOM);
-}
-
-void MainWindow::setSelectLeftButton() {
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->SELECT);
-}
-
-void MainWindow::enableDebugObjects() {
-    if (debugObjects == nullptr){
-        debugObjects = new DrawableDebugObjects();
-        pushObj(debugObjects, "Debug Objects");
-    }
-}
-
-void MainWindow::disableDebugObjects() {
-    if (debugObjects != nullptr){
-        deleteObj(debugObjects);
-        delete debugObjects;
-        debugObjects = nullptr;
-    }
-    ui->glCanvas->update();
-}
-
-void MainWindow::addDebugSphere(const Pointd& center, double radius, const QColor& color, int precision) {
-    if (debugObjects!= nullptr){
-        debugObjects->addDebugSphere(center, radius, color, precision);
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::clearDebugSpheres() {
-    if (debugObjects!= nullptr){
-        debugObjects->clearDebugSpheres();
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::addDebugCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
-    if (debugObjects!=nullptr){
-        debugObjects->addDebugCylinder(a,b,radius, color);
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::clearDebugCylinders() {
-    if (debugObjects!=nullptr){
-        debugObjects->clearDebugCylinders();
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::addDebugLine(const Pointd &a, const Pointd &b, int width, const QColor color) {
-    if (debugObjects != nullptr){
-        debugObjects->addDebugLine(a,b,width, color);
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::clearDebugLines() {
-    if (debugObjects!=nullptr){
-        debugObjects->clearDebugLines();
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::toggleConsoleStream() {
-    if (consoleStream == nullptr){
-        ui->console->show();
-        consoleStream =  new ConsoleStream(std::cout, std::cerr, this->ui->console);
-        ConsoleStream::registerConsoleMessageHandler();
-    }
-    else {
-        ui->console->hide();
-        delete consoleStream;
-        consoleStream = nullptr;
-    }
-}
-
 /**
  * @brief Evento i-esima checkBox cliccata, modifica la visibilità dell'oggetto ad essa collegato
  * @param[in] i: indice della checkBox cliccata
@@ -373,47 +415,6 @@ void MainWindow::slotObjectPicked(unsigned int i) {
 
 void MainWindow::slotPoint2DClicked(Point2Dd p) {
     emit point2DClicked(p);
-}
-
-/**
- * WIDGETS SLOTS
- */
-
-void MainWindow::setFullScreen(bool b) {
-    ui->glCanvas->setFullScreen(b);
-    if (!b)
-        showMaximized();
-}
-
-void MainWindow::setBackgroundColor(const QColor & color) {
-    ui->glCanvas->setClearColor(color);
-}
-
-void MainWindow::keyPressEvent(QKeyEvent * event){
-    if (event->key() == Qt::Key_F)
-        fitScene();
-    if (event->key() == Qt::Key_U)
-        updateGlCanvas();
-    if(event->matches(QKeySequence::Undo))
-        emit(undoEvent());
-    if (event->matches(QKeySequence::Redo))
-        emit(redoEvent());
-    if (event->matches(QKeySequence::Replace)){ //ctrl+h
-        if (ui->dockWidget->isHidden())
-            ui->dockWidget->show();
-        else
-            ui->dockWidget->hide();
-    }
-    if (event->key() == Qt::Key_C){ //c
-        toggleConsoleStream();
-    }
-
-    if (event->matches(QKeySequence::Print)){ //ctrl+p
-        savePointOfView();
-    }
-    if (QKeySequence(event->key() | event->modifiers()) == QKeySequence(Qt::CTRL + Qt::Key_L)){ //ctrl+l
-        loadPointOfView();
-    }
 }
 
 void MainWindow::on_actionSave_Snapshot_triggered() {
@@ -474,4 +475,12 @@ void MainWindow::on_actionSave_Point_Of_View_as_triggered() {
 
 void MainWindow::on_actionShow_Hide_Console_Stream_triggered() {
     toggleConsoleStream();
+}
+
+void MainWindow::on_actionEnable_Debug_Objects_triggered() {
+    enableDebugObjects();
+}
+
+void MainWindow::on_actionDisable_Debug_Objects_triggered() {
+    disableDebugObjects();
 }

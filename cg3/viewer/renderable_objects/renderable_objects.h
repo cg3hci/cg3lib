@@ -22,23 +22,18 @@
 
 #include <QColor>
 #include <cg3/geometry/point.h>
-#include <cg3/geometry/2d/point2d.h>
 
 namespace cg3 {
 
-namespace viewer{
+namespace viewer {
 
 static inline void drawSphere(const Pointd& center, float radius, const QColor& color, int precision = 4);
-
-static inline void drawPoint2D(const Point2Dd& p, const QColor& c, int size);
 
 static inline void drawCylinder(const Pointd& a, const Pointd& b, float top_radius, float bottom_radius, const QColor& color);
 
 static inline void drawLine(const Pointd &a, const Pointd &b, const QColor& c, int width = 3);
 
 static inline void drawDashedLine(const Pointd &a, const Pointd &b, const QColor& c, int width = 3);
-
-static inline void drawLine2D(const Point2Dd&a, const Point2Dd& b, const QColor& c, int width = 3);
 
 static inline void drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width = 3);
 

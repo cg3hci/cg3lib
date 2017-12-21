@@ -22,7 +22,7 @@ namespace internal {
             Graph<T>& graph,
             const std::vector<typename Graph<T>::NodeIterator>& nodes,
             const std::vector<std::list<size_t>>& nodeAdjacencies,
-            const int sourceId,
+            const size_t sourceId,
             std::vector<double>& dist,
             std::vector<int>& pred);
 
@@ -89,11 +89,11 @@ DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source)
             size_t idPred = id;
             while (idPred != sourceId) {
                 NIterator& predIterator = nodes[idPred];
-                path.push_front(*predIterator);
+                path.push_front((T)*predIterator);
 
                 idPred = pred[idPred];
             }
-            path.push_front(sourceId);
+            path.push_front((T)sourceId);
 
             //Create resulting object
             GraphPath<T> graphPath;
@@ -169,7 +169,7 @@ GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination) {
 
             idPred = pred[idPred];
         }
-        path.push_front(sourceId);
+        path.push_front((T)sourceId);
     }
 
     //Create resulting object
@@ -197,7 +197,7 @@ void executeDijkstra(
         Graph<T>& graph,
         const std::vector<typename Graph<T>::NodeIterator>& nodes,
         const std::vector<std::list<size_t>>& nodeAdjacencies,
-        const int sourceId,
+        const size_t sourceId,
         std::vector<double>& dist,
         std::vector<int>& pred)
 {
@@ -210,7 +210,7 @@ void executeDijkstra(
     pred.resize(numberOfNodes, -1);
 
     dist[sourceId] = 0;
-    pred[sourceId] = sourceId;
+    pred[sourceId] = (int)sourceId;
 
     //Priority queue
     std::priority_queue<QueueObject, std::vector<QueueObject>, std::greater<QueueObject>> queue;
@@ -243,7 +243,7 @@ void executeDijkstra(
                 dist[vId] = dist[uId] + weight;
 
                 //Set predecessor
-                pred[vId] = uId;
+                pred[vId] = (int)uId;
 
                 //Add to the queue
                 queue.push(std::make_pair(dist[vId], vId));

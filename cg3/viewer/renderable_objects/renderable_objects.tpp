@@ -37,27 +37,6 @@ static inline void viewer::drawSphere(const Pointd  & center,
 }
 
 /**
- * @brief Viewer::drawPoint2D
- *
- * Draws a point on the plane (coord z = 0 if 3D).
- *
- * @param p: coordinates of the point
- * @param c: color of the point
- * @param size: size of the point (default: 8)
- */
-static inline void viewer::drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8) {
-    glEnable(GL_POINT_SMOOTH);
-    glPointSize(size);
-    glBegin(GL_POINTS);
-
-    glColor3f(c.redF(), c.greenF(), c.blueF());
-
-    glVertex2d(p.x(), p.y());
-
-    glEnd();
-}
-
-/**
  * @brief Viewer::drawCylinder
  *
  * Draws a cylinder with opengl.
@@ -136,31 +115,6 @@ static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, cons
     glEnd();
 
     glPopAttrib();
-}
-
-/**
- * @brief Viewer::drawLine2D
- *
- * Draws a line with opengl on the plane (z=0 if 3D).
- * It links the two points passed as parameters.
- *
- * @param a: first point of the line
- * @param b: second point of the line
- * @param c: color of the line
- * @param width: width of the line (default: 3)
- */
-static inline void viewer::drawLine2D(const Point2Dd& a, const Point2Dd& b, const QColor& c, int width) {
-
-    glLineWidth(width);
-
-    glBegin(GL_LINES);
-
-    glColor3f(c.redF(), c.greenF(), c.blueF());
-
-    glVertex2f(a.x(), a.y());
-    glVertex2f(b.x(), b.y());
-
-    glEnd();
 }
 
 /**
