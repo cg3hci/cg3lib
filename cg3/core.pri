@@ -60,11 +60,15 @@ SOURCES += \
 HEADERS += \
     $$PWD/core/cg3/io/load_save_file.h \
     $$PWD/core/cg3/io/serializable_object.h \
-    $$PWD/core/cg3/io/serialize.h
+    $$PWD/core/cg3/io/serialize.h \
+    $$PWD/core/cg3/io/serialize_eigen.h \
+    $$PWD/core/cg3/io/serialize_qt.h
 
 SOURCES += \
     $$PWD/core/cg3/io/load_save_file.tpp \
-    $$PWD/core/cg3/io/serialize.tpp
+    $$PWD/core/cg3/io/serialize.tpp \
+    $$PWD/core/cg3/io/serialize_eigen.tpp \
+    $$PWD/core/cg3/io/serialize_qt.tpp
 
 #utilities
 HEADERS += \
@@ -79,6 +83,7 @@ HEADERS += \
     $$PWD/core/cg3/utilities/string.h \
     $$PWD/core/cg3/utilities/system.h \
     $$PWD/core/cg3/utilities/timer.h \
+    $$PWD/core/cg3/utilities/traits.h \
     $$PWD/core/cg3/utilities/vector.h \
     $$PWD/core/cg3/utilities/utils.h
 

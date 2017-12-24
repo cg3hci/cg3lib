@@ -9,6 +9,7 @@
 #define CG3_SERIALIZE_H
 
 #include "serializable_object.h"
+#include "../utilities/traits.h"
 
 #include <string>
 #include <set>
@@ -18,13 +19,6 @@
 #include <array>
 #include <typeinfo>
 #include <type_traits> // To use 'std::integral_constant'.
-#ifdef QT_CORE_LIB
-#include <QColor>
-#endif //QT_CORE_LIB
-#ifdef CG3_WITH_EIGEN
-#include <Eigen/Core>
-#endif //CG3_WITH_EIGEN
-
 
 namespace cg3 {
 
@@ -63,23 +57,17 @@ namespace Serializer {
 
     void restorePosition(std::ifstream& binaryFile, const std::streampos& position);
 
-    template <typename T>
-    void serialize(const T& obj, std::ofstream& binaryFile);
-
-    template <typename T>
-    void deserialize(T& obj, std::ifstream& binaryFile);
-
     template <typename... Args>
     void serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args);
 
     template <typename... Args>
     void deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args);
 
-    #ifdef QT_CORE_LIB
-    void serialize(const QColor& obj, std::ofstream& binaryFile);
+    template <typename T>
+    void serialize(const T& obj, std::ofstream& binaryFile);
 
-    void deserialize(QColor& obj, std::ifstream& binaryFile);
-    #endif
+    template <typename T>
+    void deserialize(T& obj, std::ifstream& binaryFile);
 
     void serialize(const char * str, std::ofstream& binaryFile);
 
@@ -123,14 +111,6 @@ namespace Serializer {
     template <typename T1, typename T2, typename ...A>
     void deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile);
 
-    #ifdef CG3_WITH_EIGEN
-    template <typename T>
-    void serialize(const Eigen::PlainObjectBase<T> &m, std::ofstream& binaryFile);
-
-    template <typename T>
-    void deserialize(Eigen::PlainObjectBase<T> &m, std::ifstream& binaryFile);
-    #endif //CG3_WITH_EIGEN
-
     template <typename T, unsigned long int ...A>
     void serialize(const std::array<T, A...> &a, std::ofstream& binaryFile);
 
@@ -155,6 +135,9 @@ namespace Serializer {
 }
 
 }
+
+#include "serialize_eigen.h"
+#include "serialize_qt.h"
 
 #include "serialize.tpp"
 

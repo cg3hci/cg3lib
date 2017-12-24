@@ -36,75 +36,6 @@ inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::st
 }
 
 /**
- * \~English
- * @brief Serializer::serialize
- *
- * This function allows to serialize on a std::ofstream opened in binary mode:
- *
- * - All primitive types;
- * - All classes that have correctly implemented the abstract class SerializableObject
- *
- * This method will be called if there is not a specialized "serialize" function for the type of object
- * that you are passing as first parameter (see specialized methods).
- *
- * @param[in] obj: object which we want serialize
- * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
- */
-template <typename T>
-inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
-    if (std::is_base_of<SerializableObject, T>::value){
-        SerializableObject* o =(SerializableObject*) &obj;
-        o->serialize(binaryFile);
-    }
-    else{
-        binaryFile.write(reinterpret_cast<const char*>(&obj), sizeof(T));
-    }
-}
-
-/**
- * \~English
- * @brief Serializer::deserialize
- *
- * This function allows to deserialize on a std::ifstream opened in binary mode:
- *
- * - All primitive types
- * - All classes that have correctly implemented the abstract class SerializableObject
- *
- * All you have to do is to call all the deserialize methods in the same order of the methods
- * serialize.
- *
- * This method will be called if there is not a specialized "deserialize" method for the type of object
- * that you are passing as first parameter (see specialized methods below).
- *
- * @param[out] obj: the object that we want to load
- * @param[in] binaryFile: std::ifstream opened in binary mode on the file we want to deserialize
- */
-template <typename T>
-inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile){
-    std::streampos begin = binaryFile.tellg();
-    if (std::is_base_of<SerializableObject, T>::value){
-        SerializableObject* o =(SerializableObject*) &obj;
-        try {
-            o->deserialize(binaryFile);
-        }
-        catch (std::ios_base::failure& e){
-            restorePosition(binaryFile, begin);
-            throw std::ios_base::failure(e.what() + std::string("\nFrom ") + internal::typeName<decltype(obj)>(false, false, false));
-        }
-        catch(...){
-            restorePosition(binaryFile, begin);
-            throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
-        }
-    }
-    else{ // primitive type or type which doesn't exist a "deserialize" implementation
-        if (! binaryFile.read(reinterpret_cast<char*>(&obj), sizeof(T))){
-            restorePosition(binaryFile, begin);
-            throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
-        }
-    }
-}
-
-/**
  * @brief Serializer::serializeObjectAttributes
  *
  * Allows an easy serialization of a series of arguments in a binary file.
@@ -159,30 +90,76 @@ inline void Serializer::deserializeObjectAttributes(const std::string& s, std::i
     }
 }
 
-#ifdef QT_CORE_LIB
 /**
  * \~English
  * @brief Serializer::serialize
- * @param[in] obj: QColor
- * @param binaryFile
+ *
+ * This function allows to serialize on a std::ofstream opened in binary mode:
+ *
+ * - All primitive types;
+ * - All classes that have correctly implemented the abstract class SerializableObject
+ *
+ * This method will be called if there is not a specialized "serialize" function for the type of object
+ * that you are passing as first parameter (see specialized methods).
+ *
+ * @param[in] obj: object which we want serialize
+ * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
  */
-inline void Serializer::serialize(const QColor& obj, std::ofstream& binaryFile){
-    int r = obj.red(), g = obj.green(), b = obj.blue(), a = obj.alpha();
-    Serializer::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
+template <typename T>
+inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::serialize specialization for this type!");
+    if (std::is_base_of<SerializableObject, T>::value){
+        SerializableObject* o =(SerializableObject*) &obj;
+        o->serialize(binaryFile);
+    }
+    else{ //primitive type serialization
+        binaryFile.write(reinterpret_cast<const char*>(&obj), sizeof(T));
+    }
 }
 
 /**
  * \~English
  * @brief Serializer::deserialize
- * @param[out] obj: QColor
- * @param binaryFile
+ *
+ * This function allows to deserialize on a std::ifstream opened in binary mode:
+ *
+ * - All primitive types
+ * - All classes that have correctly implemented the abstract class SerializableObject
+ *
+ * All you have to do is to call all the deserialize methods in the same order of the methods
+ * serialize.
+ *
+ * This method will be called if there is not a specialized "deserialize" method for the type of object
+ * that you are passing as first parameter (see specialized methods below).
+ *
+ * @param[out] obj: the object that we want to load
+ * @param[in] binaryFile: std::ifstream opened in binary mode on the file we want to deserialize
  */
-inline void Serializer::deserialize(QColor& obj, std::ifstream& binaryFile){
-    int r, g, b, a;
-    Serializer::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
-    obj.setRgb(r,g,b,a);
+template <typename T>
+inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile){
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::deserialize specialization for this type!");
+    std::streampos begin = binaryFile.tellg();
+    if (std::is_base_of<SerializableObject, T>::value){
+        SerializableObject* o =(SerializableObject*) &obj;
+        try {
+            o->deserialize(binaryFile);
+        }
+        catch (std::ios_base::failure& e){
+            restorePosition(binaryFile, begin);
+            throw std::ios_base::failure(e.what() + std::string("\nFrom ") + internal::typeName<decltype(obj)>(false, false, false));
+        }
+        catch(...){
+            restorePosition(binaryFile, begin);
+            throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
+        }
+    }
+    else{ //primitive type deserialization
+        if (! binaryFile.read(reinterpret_cast<char*>(&obj), sizeof(T))){
+            restorePosition(binaryFile, begin);
+            throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
+        }
+    }
 }
-#endif //QT_CORE_LIB
 
 inline void Serializer::serialize(const char * str, std::ofstream& binaryFile){
     unsigned long long int size = std::strlen(str);
@@ -504,64 +481,6 @@ inline void Serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& bi
         throw std::ios_base::failure("Deserialization failed of std::map");
     }
 }
-
-#ifdef CG3_WITH_EIGEN
-/**
- * \~English
- * @brief Serializer::serialize
- * @param[in] m: Eigen::Matrix
- * @param binaryFile
- */
-template <typename T>
-inline void Serializer::serialize(const Eigen::PlainObjectBase<T> &m, std::ofstream& binaryFile){
-    unsigned long long int row = m.rows(), col = m.cols();
-    Serializer::serialize("EigenMatrix", binaryFile);
-    Serializer::serialize(row, binaryFile);
-    Serializer::serialize(col, binaryFile);
-    for (unsigned int i = 0; i < row; i++){
-        for (unsigned int j = 0; j < col; ++j){
-            Serializer::serialize(m(i,j), binaryFile);
-        }
-    }
-}
-
-/**
- * \~English
- * @brief Serializer::deserialize
- * @param[out] m: Eigen::Matrix
- * @param binaryFile
- */
-template <typename T>
-inline void Serializer::deserialize(Eigen::PlainObjectBase<T> &m, std::ifstream& binaryFile){
-    unsigned long long int row, col;
-    std::string s;
-    Eigen::PlainObjectBase<T> tmp;
-    std::streampos begin = binaryFile.tellg();
-    try {
-        Serializer::deserialize(s, binaryFile);
-        if (s != "EigenMatrix")
-            throw std::ios_base::failure("Mismatching String: " + s + " != EigenMatrix");
-        Serializer::deserialize(row, binaryFile);
-        Serializer::deserialize(col, binaryFile);
-        tmp.resize(row, col);
-
-        for (unsigned int i = 0; i < row; i++){
-            for (unsigned int j = 0; j < col; ++j){
-                Serializer::deserialize(tmp(i,j), binaryFile);
-            }
-        }
-        m = std::move(tmp);
-    }
-    catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
-        throw std::ios_base::failure(e.what() + std::string("\nFrom Eigen::Matrix"));
-    }
-    catch(...){
-        restorePosition(binaryFile, begin);
-        throw std::ios_base::failure("Deserialization failed of Eigen::Matrix");
-    }
-}
-#endif //CG3_WITH_EIGEN
 
 /**
  * \~English
