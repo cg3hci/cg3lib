@@ -20,7 +20,7 @@ template <typename T>
 inline void Serializer::internal::deserializeEigen(Eigen::PlainObjectBase<T> &m, std::ifstream& binaryFile){
     unsigned long long int row, col;
     std::string s;
-    Eigen::PlainObjectBase<T> tmp;
+    T tmp;
     std::streampos begin = binaryFile.tellg();
     try {
         Serializer::deserialize(s, binaryFile);
@@ -35,7 +35,11 @@ inline void Serializer::internal::deserializeEigen(Eigen::PlainObjectBase<T> &m,
                 Serializer::deserialize(tmp(i,j), binaryFile);
             }
         }
+        #ifndef _WIN32
         m = std::move(tmp);
+        #else
+        m = tmp;
+        #endif
     }
     catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);
