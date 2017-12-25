@@ -246,11 +246,11 @@ inline void EigenMesh::updateFacesAndVerticesNormals() {
 }
 
 inline void EigenMesh::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
+    serializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
 }
 
 inline void EigenMesh::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
+    deserializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
 }
 
 }

@@ -16,27 +16,7 @@
 namespace cg3 {
 
 /**
- * @brief Serializer::getPosition
- * @param[in] binaryFile
- * @return the position of the stream
- */
-inline std::streampos Serializer::getPosition(std::ifstream& binaryFile) {
-    return binaryFile.tellg();
-}
-
-/**
- * @brief Serializer::restorePosition
- * restores the current position of the stream
- * @param[out] binaryFile: the file with the new position
- * @param[in] position: the desired position on the file
- */
-inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::streampos& position) {
-    binaryFile.clear();
-    binaryFile.seekg(position);
-}
-
-/**
- * @brief Serializer::serializeObjectAttributes
+ * @brief serializeObjectAttributes
  *
  * Allows an easy serialization of a series of arguments in a binary file.
  * The arguments will be serialized in the order they are passed, after the first input string,
@@ -47,7 +27,7 @@ inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::st
  * @param[in] args: a variable number of arguments of different types
  */
 template<typename... Args>
-inline void Serializer::serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args) {
+inline void serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args) {
     Serializer::serialize(s, binaryFile);
     Serializer::internal::serializeAttribute(binaryFile, args...);
 }
@@ -69,7 +49,7 @@ inline void Serializer::serializeObjectAttributes(const std::string& s, std::ofs
  * deserialized from the binary file.
  */
 template<typename... Args>
-inline void Serializer::deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args) {
+inline void deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args) {
     std::string tmp;
     std::streampos begin = binaryFile.tellg();
     try {
@@ -88,6 +68,26 @@ inline void Serializer::deserializeObjectAttributes(const std::string& s, std::i
         Serializer::restorePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of " + s);
     }
+}
+
+/**
+ * @brief Serializer::getPosition
+ * @param[in] binaryFile
+ * @return the position of the stream
+ */
+inline std::streampos Serializer::getPosition(std::ifstream& binaryFile) {
+    return binaryFile.tellg();
+}
+
+/**
+ * @brief Serializer::restorePosition
+ * restores the current position of the stream
+ * @param[out] binaryFile: the file with the new position
+ * @param[in] position: the desired position on the file
+ */
+inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::streampos& position) {
+    binaryFile.clear();
+    binaryFile.seekg(position);
 }
 
 /**

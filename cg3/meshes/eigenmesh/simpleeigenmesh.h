@@ -302,11 +302,11 @@ inline void SimpleEigenMesh::setFacesMatrix(const Eigen::Matrix<U, A...>& F) {
 }
 
 inline void SimpleEigenMesh::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3SimpleEigenMesh", binaryFile, V, F);
+    serializeObjectAttributes("cg3SimpleEigenMesh", binaryFile, V, F);
 }
 
 inline void SimpleEigenMesh::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3SimpleEigenMesh", binaryFile, V, F);
+    deserializeObjectAttributes("cg3SimpleEigenMesh", binaryFile, V, F);
 }
 
 }

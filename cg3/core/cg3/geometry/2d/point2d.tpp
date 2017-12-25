@@ -518,12 +518,12 @@ inline void Point2D<T>::rot(T matrix[][2]){
 
 template<class T>
 void Point2D<T>::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
+    serializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
 }
 
 template<class T>
 void Point2D<T>::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
+    deserializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
 }
 
 

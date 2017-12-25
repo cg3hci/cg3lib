@@ -22,6 +22,12 @@
 
 namespace cg3 {
 
+    template <typename... Args>
+    void serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args);
+
+    template <typename... Args>
+    void deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args);
+
 /**
  * \~English
  * @namespace Serializer
@@ -32,36 +38,12 @@ namespace cg3 {
  *
  * Please, if you can, add serialize/deserialize methods for all types you need that don't work
  * with the standard "serialize"/"deserialize" methods!
- *
- * \~Italian
- * @namespace Serializer
- * @brief Supporta la serializzazione/deserializzazione di tutti i tipi primitivi più:
- * - QColor
- * - std::string
- * - std::set<T,...> dove :
- *         T è un tipo primitivo o un SerializableObject (NON puntatore a SerializableObject)
- * - std::vector<T,...> dove :
- *         T è un tipo primitivo o un SerializableObject (NON puntatore a SerializableObject)
- * - std::list<T,...> dove :
- *         T è un tipo primitivo o un SerializableObject (NON puntatore a SerializableObject)
- * - std::map<T1,T2,...> dove:
- *         T1 è un tipo primitivo o un SerializableObject (NON puntatore a SerializableObject)
- *         T2 è un tipo primitivo o un SerializableObject (NON puntatore a SerializableObject)
- * - std::array<T,size_t,...> dove:
- *         T è un tipo primitivo o un SerializableObject (NON puntatore a SerializableObject)
- *         size_t è la dimensione dell'array
  */
 namespace Serializer {
 
     std::streampos getPosition(std::ifstream& binaryFile);
 
     void restorePosition(std::ifstream& binaryFile, const std::streampos& position);
-
-    template <typename... Args>
-    void serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args);
-
-    template <typename... Args>
-    void deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args);
 
     template <typename T>
     void serialize(const T& obj, std::ofstream& binaryFile);

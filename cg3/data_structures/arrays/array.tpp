@@ -147,12 +147,12 @@ void cg3::Array<T, N>::clear() {
 
 template<class T, size_t N>
 void cg3::Array<T, N>::serialize(std::ofstream &binaryFile) const {
-    cg3::Serializer::serializeObjectAttributes("cg3Array" + std::to_string(N) + "D", binaryFile, sizes, v);
+    cg3::serializeObjectAttributes("cg3Array" + std::to_string(N) + "D", binaryFile, sizes, v);
 }
 
 template<class T, size_t N>
 void cg3::Array<T, N>::deserialize(std::ifstream &binaryFile) {
-    cg3::Serializer::deserializeObjectAttributes("cg3Array"  + std::to_string(N)+ "D", binaryFile, sizes, v);
+    cg3::deserializeObjectAttributes("cg3Array"  + std::to_string(N)+ "D", binaryFile, sizes, v);
 }
 
 template<class T, size_t N>

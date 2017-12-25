@@ -108,12 +108,12 @@ inline bool Segment<T>::operator >= (const Segment& otherSegment) const {
 
 template<class T>
 inline void Segment<T>::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
+    serializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
 }
 
 template<class T>
 inline void Segment<T>::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
+    deserializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
 }
 
 

@@ -36,11 +36,11 @@ bool Line::pointLiesOnLine(const Pointd& p) const{
 }
 
 void Line::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3Line", binaryFile, p0, dir);
+    serializeObjectAttributes("cg3Line", binaryFile, p0, dir);
 }
 
 void Line::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3Line", binaryFile, p0, dir);
+    deserializeObjectAttributes("cg3Line", binaryFile, p0, dir);
 }
 
 }

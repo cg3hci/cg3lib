@@ -606,11 +606,11 @@ inline double& BoundingBox::operator()(unsigned int i) {
 }
 
 inline void BoundingBox::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
+    serializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
 }
 
 inline void BoundingBox::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
+    deserializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
 }
 
 }

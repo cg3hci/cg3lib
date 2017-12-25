@@ -71,16 +71,12 @@ void RegularLattice<VT>::setVertexProperty(const Pointd &p, const VT &property) 
 
 template<class VT>
 void RegularLattice<VT>::serialize(std::ofstream &binaryFile) const {
-    /**
-      * @todo
-      */
+    cg3::serializeObjectAttributes("cg3RegularLattice", binaryFile, bb, unit, mresX, mresY, mresZ, vertexProperties);
 }
 
 template<class VT>
 void RegularLattice<VT>::deserialize(std::ifstream &binaryFile) {
-    /**
-      * @todo
-      */
+    cg3::deserializeObjectAttributes("cg3RegularLattice", binaryFile, bb, unit, mresX, mresY, mresZ, vertexProperties);
 }
 
 template<class VT>

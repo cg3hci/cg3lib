@@ -72,11 +72,11 @@ bool Plane::getIntersection(Pointd& intersection, const Line& l) const {
 #endif
 
 void Plane::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3Plane", binaryFile, normal, d);
+    serializeObjectAttributes("cg3Plane", binaryFile, normal, d);
 }
 
 void Plane::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3Plane", binaryFile, normal, d);
+    deserializeObjectAttributes("cg3Plane", binaryFile, normal, d);
 }
 
 

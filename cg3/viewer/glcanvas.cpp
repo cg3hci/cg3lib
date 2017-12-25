@@ -134,14 +134,14 @@ void GLcanvas::resetPointOfView() {
 void GLcanvas::serializePointOfView(std::ofstream &file) {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
-    Serializer::serializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
+    serializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
 }
 
 bool GLcanvas::deserializePointOfView(std::ifstream &file) {
     qglviewer::Vec v;
     qglviewer::Quaternion q;
     try {
-        Serializer::deserializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
+        deserializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
         this->camera()->setPosition(v);
         this->camera()->setOrientation(q);
         return true;

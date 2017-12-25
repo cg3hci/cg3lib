@@ -1,6 +1,8 @@
 #ifndef CG3_SERIALIZE_QT_H
 #define CG3_SERIALIZE_QT_H
 
+#include "serialize.h"
+
 #ifdef QT_CORE_LIB
 #include <QColor>
 #endif //QT_CORE_LIB

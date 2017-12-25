@@ -13,8 +13,8 @@
 namespace cg3 {
 
 template <class VT>
-class RegularLattice : public cg3::SerializableObject
-{
+class RegularLattice : public cg3::SerializableObject {
+
 public:
     RegularLattice();
     RegularLattice(const cg3::BoundingBox& bb, double unit, bool outsideBB = true);

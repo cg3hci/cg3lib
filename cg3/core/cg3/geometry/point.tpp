@@ -461,12 +461,12 @@ inline void Point<T>::rotate(double matrix[3][3], const Point<T>& centroid) {
 
 template<class T>
 void Point<T>::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
+    serializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
 }
 
 template<class T>
 void Point<T>::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
+    deserializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
 }
 
 template <class T>

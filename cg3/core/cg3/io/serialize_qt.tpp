@@ -11,7 +11,7 @@ namespace cg3 {
  */
 inline void Serializer::serialize(const QColor& obj, std::ofstream& binaryFile){
     int r = obj.red(), g = obj.green(), b = obj.blue(), a = obj.alpha();
-    Serializer::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
+    cg3::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
 }
 
 /**
@@ -22,7 +22,7 @@ inline void Serializer::serialize(const QColor& obj, std::ofstream& binaryFile){
  */
 inline void Serializer::deserialize(QColor& obj, std::ifstream& binaryFile){
     int r, g, b, a;
-    Serializer::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
+    cg3::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
     obj.setRgb(r,g,b,a);
 }
 #endif //QT_CORE_LIB

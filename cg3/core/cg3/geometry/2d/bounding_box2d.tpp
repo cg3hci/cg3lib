@@ -75,11 +75,11 @@ inline bool BoundingBox2D::isInside(const Point2Dd& p) const {
 }
 
 inline void BoundingBox2D::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3BoundingBox2D", binaryFile, minCoord, maxCoord);
+    serializeObjectAttributes("cg3BoundingBox2D", binaryFile, minCoord, maxCoord);
 }
 
 inline void BoundingBox2D::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3BoundingBox2D", binaryFile, minCoord, maxCoord);
+    deserializeObjectAttributes("cg3BoundingBox2D", binaryFile, minCoord, maxCoord);
 }
 
 }
