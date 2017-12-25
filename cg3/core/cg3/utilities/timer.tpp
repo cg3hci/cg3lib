@@ -14,12 +14,8 @@ inline Timer::Timer (const std::string& caption, bool _start) : caption(caption)
         start();
 }
 
-inline void Timer::start(){
-    #ifdef _WIN32
+inline void Timer::start() {
     begin = std::chrono::high_resolution_clock::now();
-    #else
-    gettimeofday(&begin, NULL);
-    #endif
 }
 
 inline void Timer::stopAndPrint() {
@@ -28,11 +24,7 @@ inline void Timer::stopAndPrint() {
 }
 
 inline void Timer::stop() {
-    #ifdef _WIN32
     end = std::chrono::high_resolution_clock::now();
-    #else
-    gettimeofday(&end, NULL);
-    #endif
     isStopped = true;
 }
 
@@ -43,26 +35,13 @@ inline void Timer::print () {
 
 inline double Timer::delay() {
     double secs;
-    #ifdef _WIN32
-    if (isStopped)
-        secs = (double) (std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count())/1000;
+    if (isStopped) {
+        secs = (double) (std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count())/1000000;
+    }
     else {
         std::chrono::high_resolution_clock::time_point s = std::chrono::high_resolution_clock::now();
-        secs = (double) (std::chrono::duration_cast<std::chrono::microseconds>(s - begin).count())/1000;
+        secs = (double) (std::chrono::duration_cast<std::chrono::microseconds>(s - begin).count())/1000000;
     }
-    #else
-    if (isStopped)
-        secs =
-            (end.tv_sec - begin.tv_sec) +
-            ((end.tv_usec - begin.tv_usec)/1000000.0);
-    else {
-        timeval s;
-        gettimeofday(&s, NULL);
-        secs =
-            (s.tv_sec - begin.tv_sec) +
-            ((s.tv_usec - begin.tv_usec)/1000000.0);
-    }
-    #endif
     return secs;
 }
 

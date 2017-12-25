@@ -296,12 +296,12 @@ bool BipartiteGraph<T1, T2>::modifyRightNode(const T2& old, const T2& newInfo) {
 
 template<class T1, class T2>
 void BipartiteGraph<T1, T2>::serialize(std::ofstream &binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3BipartiteGraph", binaryFile, mapL, mapR, nodesL, nodesR, unusedLNodes, unusedRNodes);
+    cg3::serializeObjectAttributes("cg3BipartiteGraph", binaryFile, mapL, mapR, nodesL, nodesR, unusedLNodes, unusedRNodes);
 }
 
 template<class T1, class T2>
 void BipartiteGraph<T1, T2>::deserialize(std::ifstream &binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3BipartiteGraph", binaryFile, mapL, mapR, nodesL, nodesR, unusedLNodes, unusedRNodes);
+    cg3::deserializeObjectAttributes("cg3BipartiteGraph", binaryFile, mapL, mapR, nodesL, nodesR, unusedLNodes, unusedRNodes);
 }
 
 template<class T1, class T2>

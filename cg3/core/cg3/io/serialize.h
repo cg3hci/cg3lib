@@ -13,6 +13,7 @@
 
 #include <string>
 #include <set>
+#include <unordered_set>
 #include <vector>
 #include <list>
 #include <map>
@@ -68,6 +69,12 @@ namespace Serializer {
 
     template <typename T, typename ...A> void
     deserialize(std::set<T, A...> &s, std::ifstream& binaryFile);
+
+    template <typename T, typename ...A>
+    void serialize(const std::unordered_set<T, A...> &s, std::ofstream& binaryFile);
+
+    template <typename T, typename ...A> void
+    deserialize(std::unordered_set<T, A...> &s, std::ifstream& binaryFile);
 
     template <typename ...A> void
     serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile);

@@ -44,20 +44,7 @@ inline typename BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator BipartiteGraph<
 }
 
 template <class T1, class T2>
-inline typename BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::operator --() {
-    --pos;
-    return *this;
-}
-
-template <class T1, class T2>
-inline typename BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::operator --(int) {
-    AdjacentLeftNodeIterator oldIt;
-    --pos;
-    return oldIt;
-}
-
-template <class T1, class T2>
-inline BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::AdjacentLeftNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph& g): g(&g), pos(it){
+inline BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator::AdjacentLeftNodeIterator(std::unordered_set<unsigned int>::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
 }
 
 //AdjacentRightNodeIterator
@@ -95,20 +82,7 @@ inline typename BipartiteGraph<T1, T2>::AdjacentRightNodeIterator BipartiteGraph
 }
 
 template <class T1, class T2>
-inline typename BipartiteGraph<T1, T2>::AdjacentRightNodeIterator BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::operator --() {
-    --pos;
-    return *this;
-}
-
-template <class T1, class T2>
-inline typename BipartiteGraph<T1, T2>::AdjacentRightNodeIterator BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::operator --(int) {
-    AdjacentRightNodeIterator oldIt;
-    --pos;
-    return oldIt;
-}
-
-template <class T1, class T2>
-inline BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::AdjacentRightNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph& g): g(&g), pos(it){
+inline BipartiteGraph<T1, T2>::AdjacentRightNodeIterator::AdjacentRightNodeIterator(std::unordered_set<unsigned int>::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
 }
 
 //LeftNodeIterator

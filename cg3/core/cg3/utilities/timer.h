@@ -11,11 +11,7 @@
 #include <time.h>
 #include <iostream>
 #include <string>
-#ifdef _WIN32
 #include <chrono>
-#else
-#include <sys/time.h>
-#endif
 
 namespace cg3 {
 
@@ -35,12 +31,8 @@ class Timer {
 
     private:
         std::string caption;
-        #ifdef _WIN32
         std::chrono::high_resolution_clock clock;
         std::chrono::high_resolution_clock::time_point begin, end;
-        #else
-        timeval begin, end;
-        #endif
         bool isStopped;
 };
 

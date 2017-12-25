@@ -35,11 +35,7 @@ inline void Serializer::internal::deserializeEigen(Eigen::PlainObjectBase<T> &m,
                 Serializer::deserialize(tmp(i,j), binaryFile);
             }
         }
-        #ifndef _WIN32
-        m = std::move(tmp);
-        #else
         m = tmp;
-        #endif
     }
     catch(std::ios_base::failure& e){
         restorePosition(binaryFile, begin);

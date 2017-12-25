@@ -24,13 +24,11 @@ class BipartiteGraph<T1, T2>::AdjacentLeftNodeIterator{
 
         AdjacentLeftNodeIterator operator ++ ();
         AdjacentLeftNodeIterator operator ++ (int);
-        AdjacentLeftNodeIterator operator -- ();
-        AdjacentLeftNodeIterator operator -- (int);
 
     protected:
         const BipartiteGraph* g;
-        std::set<unsigned int>::iterator pos;
-        AdjacentLeftNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph &g);
+        std::unordered_set<unsigned int>::const_iterator pos;
+        AdjacentLeftNodeIterator(std::unordered_set<unsigned int>::const_iterator it, const BipartiteGraph &g);
 
 
 };
@@ -47,13 +45,11 @@ class BipartiteGraph<T1, T2>::AdjacentRightNodeIterator{
 
         AdjacentRightNodeIterator operator ++ ();
         AdjacentRightNodeIterator operator ++ (int);
-        AdjacentRightNodeIterator operator -- ();
-        AdjacentRightNodeIterator operator -- (int);
 
     protected:
         const BipartiteGraph* g;
-        std::set<unsigned int>::iterator pos;
-        AdjacentRightNodeIterator(std::set<unsigned int>::iterator it, const BipartiteGraph &g);
+        std::unordered_set<unsigned int>::const_iterator pos;
+        AdjacentRightNodeIterator(std::unordered_set<unsigned int>::const_iterator it, const BipartiteGraph &g);
 
 
 };

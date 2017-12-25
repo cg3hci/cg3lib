@@ -56,16 +56,16 @@ class SerializableObject {
          * The serialize function should serialize all the data of your class.
          * Iff your class is a simple class without manually managed resources, and all of its
          * attributes are SerializableObjects (or it exists a specialized function in the Serializer
-         * namespace) you can easily use the helpers Serializer::serializeObjectAttributes():
+         * namespace) you can easily use the helpers cg3::serializeObjectAttributes():
          *
          * \code{.cpp}
          * void serialize(std::ofstream& binaryFile){
          *     //"MyClass" should be a string containing the name of your class.
-         *     Serializer::serializeObjectAttributes("MyClass", binaryFile, attr1, attr2, attr3);
+         *     cg3::serializeObjectAttributes("MyClass", binaryFile, attr1, attr2, attr3);
          * }
          * \endcode
          *
-         * The helper function Serializer::serializeObjectAttributes() accepts a variabile number of
+         * The helper function cg3::serializeObjectAttributes() accepts a variabile number of
          * arguments.
          *
          * @param[in] binaryFile : ofstream where we want to serialize the object
@@ -101,18 +101,18 @@ class SerializableObject {
          *
          * Iff your class is a simple class without manually managed resources, and all of its
          * attributes are SerializableObjects (or it exists a specialized function in the Serializer
-         * namespace) you can easily use the helpers Serializer::serializeObjectAttributes():
+         * namespace) you can easily use the helpers cg3::deserializeObjectAttributes():
          *
          * \code{.cpp}
          * void deserialize(std::ifstream& binaryFile){
          *     //"MyClass" should be a string containing the name of your class.
-         *     Serializer::deserializeObjectAttributes("MyClass", binaryFile, attr1, attr2, attr3);
+         *     cg3::deserializeObjectAttributes("MyClass", binaryFile, attr1, attr2, attr3);
          * }
          * \endcode
          *
-         * The helper function Serializer::deserializeObjectAttributes() accepts a variabile number of
+         * The helper function cg3::deserializeObjectAttributes() accepts a variabile number of
          * arguments. The argument passed should be exactly the same of the argument passed to the function
-         * Serializer::serializeObjectAttributes() in the serialize function.
+         * cg3::serializeObjectAttributes() in the serialize function.
          *
          * @param[in] binaryFile : ifstream where we want to deserialize the object
          */

@@ -9,7 +9,7 @@
 #ifndef CG3_UNDIRECTED_NODE_H
 #define CG3_UNDIRECTED_NODE_H
 
-#include <set>
+#include <unordered_set>
 #include <cg3/io/serialize.h>
 
 namespace cg3 {
@@ -28,8 +28,8 @@ class UndirectedNode : SerializableObject {
         bool isAdjacent(unsigned int node) const;
         void deleteAdjacent(unsigned int node);
         void clearAdjacentNodes();
-        std::set<unsigned int>::iterator begin() const;
-        std::set<unsigned int>::iterator end() const;
+        std::unordered_set<unsigned int>::const_iterator begin() const;
+        std::unordered_set<unsigned int>::const_iterator end() const;
         unsigned int sizeAdjacentNodes() const;
 
         // SerializableObject interface
@@ -38,7 +38,7 @@ class UndirectedNode : SerializableObject {
 
     protected:
         T info;
-        std::set<unsigned int> adjacentNodes;
+        std::unordered_set<unsigned int> adjacentNodes;
 
 
 };
@@ -87,12 +87,12 @@ void UndirectedNode<T>::clearAdjacentNodes() {
 }
 
 template <class T>
-std::set<unsigned int>::iterator UndirectedNode<T>::begin() const {
+std::unordered_set<unsigned int>::const_iterator UndirectedNode<T>::begin() const {
     return adjacentNodes.begin();
 }
 
 template <class T>
-std::set<unsigned int>::iterator UndirectedNode<T>::end() const {
+std::unordered_set<unsigned int>::const_iterator UndirectedNode<T>::end() const {
     return adjacentNodes.end();
 }
 
@@ -103,12 +103,12 @@ unsigned int UndirectedNode<T>::sizeAdjacentNodes() const {
 
 template<class T>
 void UndirectedNode<T>::serialize(std::ofstream &binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3UndirectedNode", binaryFile, info, adjacentNodes);
+    cg3::serializeObjectAttributes("cg3UndirectedNode", binaryFile, info, adjacentNodes);
 }
 
 template<class T>
 void UndirectedNode<T>::deserialize(std::ifstream &binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3UndirectedNode", binaryFile, info, adjacentNodes);
+    cg3::deserializeObjectAttributes("cg3UndirectedNode", binaryFile, info, adjacentNodes);
 }
 
 }

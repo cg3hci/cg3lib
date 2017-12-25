@@ -10,11 +10,11 @@
 
 namespace cg3 {
 
-inline Dcel::Dcel(const char *filename) {
+inline Dcel::Dcel(const char *filename) : nVertices(0), nHalfEdges(0), nFaces(0) {
     loadFromFile(std::string(filename));
 }
 
-inline Dcel::Dcel(const std::string& filename) {
+inline Dcel::Dcel(const std::string& filename) : nVertices(0), nHalfEdges(0), nFaces(0){
     loadFromFile(filename);
 }
 

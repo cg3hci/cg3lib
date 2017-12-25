@@ -33,7 +33,7 @@ inline void serializeObjectAttributes(const std::string& s, std::ofstream& binar
 }
 
 /**
- * @brief Serializer::deserializeObjectAttributes
+ * @brief deserializeObjectAttributes
  *
  * Allows an easy deserialization of a series of arguments from a binary file.
  * The arguments will be deserialized in the order they are passed, after the first input string,
@@ -107,7 +107,7 @@ inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::st
  */
 template <typename T>
 inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::serialize specialization for this type!");
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value || std::is_pointer<T>::value, "Please provide cg3::Serializer::serialize specialization for this type!");
     if (std::is_base_of<SerializableObject, T>::value){
         SerializableObject* o =(SerializableObject*) &obj;
         o->serialize(binaryFile);
@@ -137,7 +137,7 @@ inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
  */
 template <typename T>
 inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile){
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::deserialize specialization for this type!");
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value || std::is_pointer<T>::value, "Please provide cg3::Serializer::deserialize specialization for this type!");
     std::streampos begin = binaryFile.tellg();
     if (std::is_base_of<SerializableObject, T>::value){
         SerializableObject* o =(SerializableObject*) &obj;
@@ -254,6 +254,55 @@ inline void Serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryF
     try {
         Serializer::deserialize(str, binaryFile);
         if (str != "stdset")
+            throw std::ios_base::failure("Mismatching String: " + str + " != stdset");
+        Serializer::deserialize(size, binaryFile);
+        for (unsigned int it = 0; it < size; ++it){
+            T obj;
+            Serializer::deserialize(obj, binaryFile);
+            tmp.insert(obj);
+        }
+        s = std::move(tmp);
+    }
+    catch(std::ios_base::failure& e){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::set"));
+    }
+    catch(...){
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of std::set");
+    }
+}
+
+/**
+ * \~English
+ * @brief Serializer::serialize
+ * @param[in] s: std::unordered_set
+ * @param binaryFile
+ */
+template <typename T, typename ...A>
+inline void Serializer::serialize(const std::unordered_set<T, A...> &s, std::ofstream& binaryFile){
+    unsigned long long int size = s.size();
+    Serializer::serialize("stdunorderedset", binaryFile);
+    Serializer::serialize(size, binaryFile);
+    for (typename std::unordered_set<T, A...>::const_iterator it = s.begin(); it != s.end(); ++it)
+        Serializer::serialize((*it), binaryFile);
+}
+
+/**
+ * \~English
+ * @brief Serializer::deserialize
+ * @param[out] s: std::unordered_set
+ * @param binaryFile
+ */
+template <typename T, typename ...A>
+inline void Serializer::deserialize(std::unordered_set<T, A...> &s, std::ifstream& binaryFile){
+    std::string str;
+    std::unordered_set<T, A...> tmp;
+    unsigned long long int size;
+    std::streampos begin = binaryFile.tellg();
+    try {
+        Serializer::deserialize(str, binaryFile);
+        if (str != "stdunorderedset")
             throw std::ios_base::failure("Mismatching String: " + str + " != stdset");
         Serializer::deserialize(size, binaryFile);
         for (unsigned int it = 0; it < size; ++it){
