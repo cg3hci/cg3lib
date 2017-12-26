@@ -47,10 +47,16 @@ namespace Serializer {
     void restorePosition(std::ifstream& binaryFile, const std::streampos& position);
 
     template <typename T>
-    void serialize(const T& obj, std::ofstream& binaryFile);
+    void serialize(const T& obj, std::ofstream& binaryFile, typename std::enable_if<std::is_pointer<T>::value >::type* = 0);
 
     template <typename T>
-    void deserialize(T& obj, std::ifstream& binaryFile);
+    void serialize(const T& obj, std::ofstream& binaryFile, typename std::enable_if<!std::is_pointer<T>::value >::type* = 0);
+
+    template <typename T>
+    void deserialize(T& obj, std::ifstream& binaryFile, typename std::enable_if<std::is_pointer<T>::value >::type* = 0);
+
+    template <typename T>
+    void deserialize(T& obj, std::ifstream& binaryFile, typename std::enable_if<!std::is_pointer<T>::value >::type* = 0);
 
     void serialize(const char * str, std::ofstream& binaryFile);
 

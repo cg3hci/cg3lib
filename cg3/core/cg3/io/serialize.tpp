@@ -99,6 +99,7 @@ inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::st
  * - All primitive types;
  * - All classes that have correctly implemented the abstract class SerializableObject
  *
+ * For pointers, see the dedicated specialization.
  * This method will be called if there is not a specialized "serialize" function for the type of object
  * that you are passing as first parameter (see specialized methods).
  *
@@ -106,14 +107,45 @@ inline void Serializer::restorePosition(std::ifstream& binaryFile, const std::st
  * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
  */
 template <typename T>
-inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value || std::is_pointer<T>::value, "Please provide cg3::Serializer::serialize specialization for this type!");
+inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile, typename std::enable_if<!std::is_pointer<T>::value >::type*){
+    #ifndef CG3_IGNORE_TYPESAFE_SERIALIZATION_CHECK
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::serialize specialization for this type!");
+    #endif
     if (std::is_base_of<SerializableObject, T>::value){
         SerializableObject* o =(SerializableObject*) &obj;
         o->serialize(binaryFile);
     }
     else{ //primitive type serialization
         binaryFile.write(reinterpret_cast<const char*>(&obj), sizeof(T));
+    }
+}
+
+/**
+ * \~English
+ * @brief Serializer::serialize
+ *
+ * This function allows to serialize on a std::ofstream opened in binary mode:
+ *
+ * - All pointers to primitive types;
+ * - All pointers classes that have correctly implemented the abstract class SerializableObject
+ *
+ * It will serialize automatically the pointed object saving also the fact that it was a pointer to the object.
+ * This method will be called if there is not a specialized "serialize" function for the type of pointer
+ * that you are passing as first parameter (see specialized methods).
+ *
+ * @warning this method is meant to be used only for pointers that are "unique". The deserialization of a pointer will result in a
+ * new dynamically allocated object. Example: if you pass three times a pointer to the same object, in the file will be stored three different
+ * istances of that object. The deserialization will create three different istances to the object and therefore three different pointers.
+ * @param[in] obj: object which we want serialize
+ * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
+ */
+template <typename T>
+inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile, typename std::enable_if<std::is_pointer<T>::value >::type*){
+    if (obj == nullptr)
+        serialize("cg3nullptr", binaryFile);
+    else {
+        serialize("cg3p", binaryFile);
+        serialize(*obj, binaryFile);
     }
 }
 
@@ -126,6 +158,7 @@ inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
  * - All primitive types
  * - All classes that have correctly implemented the abstract class SerializableObject
  *
+ * For pointers, see the dedicated specialization.
  * All you have to do is to call all the deserialize methods in the same order of the methods
  * serialize.
  *
@@ -136,8 +169,10 @@ inline void Serializer::serialize(const T& obj, std::ofstream& binaryFile){
  * @param[in] binaryFile: std::ifstream opened in binary mode on the file we want to deserialize
  */
 template <typename T>
-inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile){
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value || std::is_pointer<T>::value, "Please provide cg3::Serializer::deserialize specialization for this type!");
+inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile, typename std::enable_if<!std::is_pointer<T>::value >::type*){
+    #ifndef CG3_IGNORE_TYPESAFE_SERIALIZATION_CHECK
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::deserialize specialization for this type!");
+    #endif
     std::streampos begin = binaryFile.tellg();
     if (std::is_base_of<SerializableObject, T>::value){
         SerializableObject* o =(SerializableObject*) &obj;
@@ -161,18 +196,99 @@ inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile){
     }
 }
 
+/**
+ * \~English
+ * @brief Serializer::deserialize - specialization for pointers
+ *
+ * This function allows to deserialize on a std::ifstream opened in binary mode:
+ *
+ * - All pointers to primitive types
+ * - All pointers to classes that have correctly implemented the abstract class SerializableObject
+ *
+ * It allocates dynamic memory for every object which is deserialized. The pointer will point to the
+ * dynamically allocated object that has been deserialized.
+ *
+ * All you have to do is to call all the deserialize methods in the same order of the methods
+ * serialize.
+ *
+ * This method will be called if there is not a specialized "deserialize" method for the type of pointer
+ * that you are passing as first parameter (see specialized methods below).
+ *
+ * @warning this method is meant to be used only for pointers that are "unique". The deserialization of a pointer will result in a
+ * new dynamically allocated object. Example: if you pass three times a pointer to the same object, in the file will be stored three different
+ * istances of that object. The deserialization will create three different istances to the object and therefore three different pointers.
+ * @param[out] obj: the object that we want to load
+ * @param[in] binaryFile: std::ifstream opened in binary mode on the file we want to deserialize
+ */
+template <typename T>
+inline void Serializer::deserialize(T& obj, std::ifstream& binaryFile, typename std::enable_if<std::is_pointer<T>::value >::type*){
+    std::streampos begin = binaryFile.tellg();
+    T tmp = nullptr;
+    try {
+        std::string s;
+        deserialize(s, binaryFile);
+        if (s == "cg3nullptr"){
+            obj = nullptr;
+        }
+        else if (s == "cg3p"){
+            tmp = new typename std::remove_pointer<T>::type ();
+            deserialize(*tmp, binaryFile);
+            obj = tmp;
+        }
+        else
+            throw std::ios_base::failure("Mismatching String: expected a pointer.\n");
+    }
+    catch(std::ios_base::failure& e){
+        if (tmp != nullptr) delete tmp;
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom " + internal::typeName<decltype(obj)>(false, false, false)));
+    }
+    catch(...){
+        if (tmp != nullptr) delete tmp;
+        restorePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
+    }
+}
+
+/**
+ * @brief Serializer::serialize
+ *
+ * Specialization for literal strings. A serialized literal string can be deserialized in a std::string.
+ *
+ * @param str
+ * @param binaryFile
+ */
 inline void Serializer::serialize(const char * str, std::ofstream& binaryFile){
     unsigned long long int size = std::strlen(str);
     Serializer::serialize(size, binaryFile);
     binaryFile.write(str, size);
 }
 
+/**
+ * @brief Serializer::serialize
+ *
+ * Specialization for std::string
+ *
+ * @param str
+ * @param binaryFile
+ */
 inline void Serializer::serialize(const std::string& str, std::ofstream& binaryFile){
     unsigned long long int size = str.size();
     Serializer::serialize(size, binaryFile);
     binaryFile.write(&str[0],size);
 }
 
+/**
+ * @brief Serializer::deserialize
+ *
+ * Specialization for std::string.
+ * If there were an error on reading the object, it will restore the position of the stream
+ * BEFORE the reading was started, and an exception will be thrown.
+ *
+ * @throws std::ios_base::failure if there were an error on reading the string.
+ * @param str
+ * @param binaryFile
+ */
 inline void Serializer::deserialize(std::string& str, std::ifstream& binaryFile){
     unsigned long long int size;
     std::string tmp;
