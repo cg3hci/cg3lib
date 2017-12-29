@@ -85,6 +85,7 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/cgal_convexhull2d.h \
         $$PWD/cgal/2d/cgal_intersections2d.h \
         $$PWD/cgal/2d/cgal_minimumbbox2d.h \
+        $$PWD/cgal/2d/cgal_voronoi2d.h \
         $$PWD/cgal/2d/cgal_triangulation2d.h
 
     SOURCES += \
@@ -99,9 +100,9 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/cgal_convexhull2d.tpp \
         $$PWD/cgal/2d/cgal_intersections2d.cpp \
         $$PWD/cgal/2d/cgal_minimumbbox2d.cpp \
+        $$PWD/cgal/2d/cgal_voronoi2d.cpp \
         $$PWD/cgal/2d/cgal_triangulation2d.cpp
 }
 else {
     message(CGAL not installed properly!)
 }
-
