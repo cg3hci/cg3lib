@@ -73,7 +73,7 @@ void GLcanvas::drawWithNames() {
     setBackgroundColor(clearColor);
 
     for(int i=0; i<(int)drawlist.size(); ++i){
-        if (/*(drawlist[i])->isVisible() &&*/ objVisibility[i]){
+        if (objVisibility[i]){
             const PickableObject* obj = dynamic_cast<const PickableObject*>(drawlist[i]);
             if (obj) // se il drawable object è anche un pickable object, allora chiamo la draw with names
                 obj->drawWithNames();

@@ -55,6 +55,9 @@ class BoundingBox2D : SerializableObject{
         Point2Dd minCoord, maxCoord;
 };
 
+template <class InputContainer>
+BoundingBox2D getBoundingBox(const InputContainer& container);
+
 }
 
 #include "bounding_box2d.tpp"

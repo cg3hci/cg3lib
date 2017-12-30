@@ -117,6 +117,11 @@ void MainWindow::saveSnapshot() {
     ui->glCanvas->saveSnapshot();
 }
 
+void MainWindow::saveSnapshot(const std::string &filename) {
+    ui->glCanvas->update();
+    ui->glCanvas->saveSnapshot(QString::fromStdString(filename), true);
+}
+
 /**
  * @brief Visualizza gli assi xyz in base al booleano passato in input.
  *

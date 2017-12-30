@@ -82,4 +82,18 @@ inline void BoundingBox2D::deserialize(std::ifstream& binaryFile) {
     deserializeObjectAttributes("cg3BoundingBox2D", binaryFile, minCoord, maxCoord);
 }
 
+template<class InputContainer>
+BoundingBox2D getBoundingBox(const InputContainer& container) {
+    BoundingBox2D bb;
+    if (container.begin() == container.end())
+        return BoundingBox2D();
+    bb.min() = *container.begin();
+    bb.max() = *container.begin();
+    for (const cg3::Point2Dd& p : container){
+        bb.min() = bb.min().min(p);
+        bb.max() = bb.max().max(p);
+    }
+    return bb;
+}
+
 }

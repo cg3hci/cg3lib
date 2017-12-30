@@ -62,6 +62,7 @@ class MainWindow : public QMainWindow {
         void enableZoom();
         void setSelectLeftButton();
         void saveSnapshot();
+        void saveSnapshot(const std::string& filename);
         void drawAxis(bool);
         void savePointOfView();
         void loadPointOfView();
