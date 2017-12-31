@@ -9,7 +9,6 @@
 #define CG3_SERIALIZE_H
 
 #include "serializable_object.h"
-#include "../utilities/traits.h"
 
 #include <string>
 #include <set>
@@ -40,7 +39,7 @@ namespace cg3 {
  * Please, if you can, add serialize/deserialize methods for all types you need that don't work
  * with the standard "serialize"/"deserialize" methods!
  */
-namespace Serializer {
+namespace serializer {
 
     std::streampos getPosition(std::ifstream& binaryFile);
 

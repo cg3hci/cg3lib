@@ -83,7 +83,6 @@ HEADERS += \
     $$PWD/core/cg3/utilities/string.h \
     $$PWD/core/cg3/utilities/system.h \
     $$PWD/core/cg3/utilities/timer.h \
-    $$PWD/core/cg3/utilities/traits.h \
     $$PWD/core/cg3/utilities/vector.h \
     $$PWD/core/cg3/utilities/utils.h
 

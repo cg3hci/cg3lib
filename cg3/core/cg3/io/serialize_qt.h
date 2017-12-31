@@ -8,7 +8,7 @@
 #endif //QT_CORE_LIB
 
 namespace cg3 {
-namespace Serializer {
+namespace serializer {
 
 #ifdef QT_CORE_LIB
 void serialize(const QColor& obj, std::ofstream& binaryFile);

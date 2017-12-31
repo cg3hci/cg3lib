@@ -5,7 +5,7 @@
 #include <Eigen/Core>
 
 namespace cg3 {
-namespace Serializer {
+namespace serializer {
 
 namespace internal {
     template <typename T>

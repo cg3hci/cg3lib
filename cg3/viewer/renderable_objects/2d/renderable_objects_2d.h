@@ -25,7 +25,7 @@
 
 namespace cg3 {
 
-namespace viewer2d {
+namespace viewer {
 
 static inline void drawPoint2D(const Point2Dd& p, const QColor& c, int size);
 

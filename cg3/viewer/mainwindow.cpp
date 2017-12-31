@@ -284,42 +284,42 @@ void MainWindow::disableDebugObjects() {
 
 void MainWindow::addDebugSphere(const Pointd& center, double radius, const QColor& color, int precision) {
     if (debugObjectsEnabled == true){
-        debugObjects.addDebugSphere(center, radius, color, precision);
+        debugObjects.addSphere(center, radius, color, precision);
         ui->glCanvas->update();
     }
 }
 
 void MainWindow::clearDebugSpheres() {
     if (debugObjectsEnabled == true){
-        debugObjects.clearDebugSpheres();
+        debugObjects.clearSpheres();
         ui->glCanvas->update();
     }
 }
 
 void MainWindow::addDebugCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
     if (debugObjectsEnabled == true){
-        debugObjects.addDebugCylinder(a,b,radius, color);
+        debugObjects.addCylinder(a,b,radius, color);
         ui->glCanvas->update();
     }
 }
 
 void MainWindow::clearDebugCylinders() {
     if (debugObjectsEnabled == true){
-        debugObjects.clearDebugCylinders();
+        debugObjects.clearCylinders();
         ui->glCanvas->update();
     }
 }
 
 void MainWindow::addDebugLine(const Pointd &a, const Pointd &b, int width, const QColor color) {
     if (debugObjectsEnabled == true){
-        debugObjects.addDebugLine(a,b,width, color);
+        debugObjects.addLine(a,b,width, color);
         ui->glCanvas->update();
     }
 }
 
 void MainWindow::clearDebugLines() {
     if (debugObjectsEnabled == true){
-        debugObjects.clearDebugLines();
+        debugObjects.clearLines();
         ui->glCanvas->update();
     }
 }

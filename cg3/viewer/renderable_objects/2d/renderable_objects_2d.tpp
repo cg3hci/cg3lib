@@ -18,7 +18,7 @@ namespace cg3 {
  * @param c: color of the point
  * @param size: size of the point (default: 8)
  */
-static inline void viewer2d::drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8) {
+static inline void viewer::drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8) {
     glEnable(GL_POINT_SMOOTH);
     glPointSize(size);
     glBegin(GL_POINTS);
@@ -41,7 +41,7 @@ static inline void viewer2d::drawPoint2D(const Point2Dd& p, const QColor& c, int
  * @param c: color of the line
  * @param width: width of the line (default: 3)
  */
-static inline void viewer2d::drawLine2D(const Point2Dd& a, const Point2Dd& b, const QColor& c, int width) {
+static inline void viewer::drawLine2D(const Point2Dd& a, const Point2Dd& b, const QColor& c, int width) {
 
     glLineWidth(width);
 
@@ -55,12 +55,12 @@ static inline void viewer2d::drawLine2D(const Point2Dd& a, const Point2Dd& b, co
     glEnd();
 }
 
-static inline void viewer2d::drawTriangle2D(const std::array<Point2Dd, 3>& arr, const QColor& c, int width, bool fill) {
+static inline void viewer::drawTriangle2D(const std::array<Point2Dd, 3>& arr, const QColor& c, int width, bool fill) {
     drawTriangle2D(arr[0], arr[1], arr[2], c, width, fill);
 }
 
 
-static inline void viewer2d::drawTriangle2D(const Point2Dd &p1, const Point2Dd &p2, const Point2Dd &p3, const QColor &c, int width, bool fill) {
+static inline void viewer::drawTriangle2D(const Point2Dd &p1, const Point2Dd &p2, const Point2Dd &p3, const QColor &c, int width, bool fill) {
     if (width != 0){
         drawLine2D(p1, p2, c, width);
         drawLine2D(p2, p3, c, width);
@@ -75,7 +75,7 @@ static inline void viewer2d::drawTriangle2D(const Point2Dd &p1, const Point2Dd &
     }
 }
 
-static inline void viewer2d::drawQuad2D(const std::array<Point2Dd, 4>& points, const QColor &c, int width, bool fill) {
+static inline void viewer::drawQuad2D(const std::array<Point2Dd, 4>& points, const QColor &c, int width, bool fill) {
     for (unsigned int i = 0; i < 4; i++){
         drawLine2D(points[i], points[(i+1)%4], c, width);
     }
@@ -93,7 +93,7 @@ static inline void viewer2d::drawQuad2D(const std::array<Point2Dd, 4>& points, c
     }
 }
 
-static inline void viewer2d::drawQuad2D(const Point2Dd &p1, const Point2Dd &p2, const Point2Dd &p3, const Point2Dd &p4, const QColor &c, int width, bool fill) {
+static inline void viewer::drawQuad2D(const Point2Dd &p1, const Point2Dd &p2, const Point2Dd &p3, const Point2Dd &p4, const QColor &c, int width, bool fill) {
     std::array<Point2Dd, 4> arr = {p1, p2, p3, p4};
     drawQuad2D(arr, c, width, fill);
 }

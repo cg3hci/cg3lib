@@ -13,9 +13,9 @@
 
 namespace cg3 {
 
-class DrawableDebugObjects : public DrawableObject{
+class DrawableObjects : public DrawableObject{
     public:
-        DrawableDebugObjects();
+        DrawableObjects();
 
         // DrawableObject interface
         void draw() const;
@@ -24,13 +24,15 @@ class DrawableDebugObjects : public DrawableObject{
         bool isVisible() const;
         void setVisible(bool b);
 
-        void addDebugSphere(const Pointd& center, double radius, const QColor &color, int precision = 4);
-        void clearDebugSpheres();
-        void addDebugCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color);
-        void clearDebugCylinders();
+        void updateBoundingBox();
+        unsigned int numberObjects() const;
 
-        void addDebugLine(const Pointd& a, const Pointd& b, int width, const QColor color);
-        void clearDebugLines();
+        void addSphere(const Pointd& center, double radius, const QColor &color, int precision = 4);
+        void clearSpheres();
+        void addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color);
+        void clearCylinders();
+        void addLine(const Pointd& a, const Pointd& b, int width, const QColor color);
+        void clearLines();
 
     protected:
         typedef struct {
@@ -51,11 +53,12 @@ class DrawableDebugObjects : public DrawableObject{
                 int width;
                 QColor color;
         } Line;
-        std::vector<Sphere> debugSpheres;
-        std::vector<Cylinder> debugCylinders;
-        std::vector<Line> debugLines;
+        std::vector<Sphere> spheres;
+        std::vector<Cylinder> cylinders;
+        std::vector<Line> lines;
 
         bool visible;
+        BoundingBox bb;
 };
 
 }

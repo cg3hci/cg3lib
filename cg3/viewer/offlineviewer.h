@@ -3,11 +3,9 @@
   * This Source Code Form is subject to the terms of the GNU GPL 3.0
   *
   * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
-  * @author Marco Livesu (marco.livesu@gmail.com)
   */
-
-#ifndef CG3_GL_CANVAS_H
-#define CG3_GL_CANVAS_H
+#ifndef CG3_OFFLINEVIEWER_H
+#define CG3_OFFLINEVIEWER_H
 
 #ifdef WIN32
 #include "windows.h"
@@ -26,30 +24,19 @@
 #include <vector>
 
 #include <cg3/geometry/bounding_box.h>
-#include <cg3/geometry/2d/point2d.h>
 #include "interfaces/drawable_object.h"
-#include "interfaces/pickable_object.h"
-#include <qmessagebox.h>
+#include "drawable_objects/drawable_objects.h"
 
-namespace cg3 {
 
-namespace viewer {
-
-class GLCanvas : public QGLViewer {
-
-        Q_OBJECT
-
+class OfflineViewer : public QGLViewer {
     public:
-
-        GLCanvas(QWidget * parent = nullptr);
+        OfflineViewer();
 
         //QGLViewer Override:
-        void init();
         void draw();
-        void drawWithNames();
-        void postSelection(const QPoint& point);
 
-        //GLCanvas methods:
+        //OfflineViewer methods:
+        void changeResolution(unsigned int w, unsigned int h);
         void clear();
         void fitScene();
         void fitScene(const cg3::Pointd &center, double radius);
@@ -68,20 +55,16 @@ class GLCanvas : public QGLViewer {
         void savePointOfView(const std::string& filename);
         bool loadPointOfView(const std::string& filename);
 
-    signals:
-        void objectPicked(unsigned int);
-        void point2DClicked(cg3::Point2Dd);
-    private:
+        void saveSnapshot();
+        void saveSnapshot(const std::string& filename);
+        void drawAxis(bool b);
 
+    private:
         QColor clearColor;
         std::vector<const cg3::DrawableObject *> drawlist;
         std::vector<bool> objVisibility;
+        cg3::DrawableObjects obj;
 
-        qglviewer::Vec orig, dir, selectedPoint;
 };
 
-}
-
-}
-
-#endif // CG3_GL_CANVAS_H
+#endif // CG3_OFFLINEVIEWER_H

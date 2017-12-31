@@ -30,7 +30,7 @@
 #include "interfaces/pickable_object.h"
 #include "utilities/loadersaver.h"
 #include <cg3/geometry/bounding_box.h>
-#include "drawable_objects/drawable_debug_objects.h"
+#include "drawable_objects/drawable_objects.h"
 #include "utilities/consolestream.h"
 #include <cg3/geometry/2d/point2d.h>
 
@@ -172,7 +172,7 @@ private:
         boost::bimap<int, const cg3::DrawableObject*> mapObjects;
         int nMeshes;
         bool first;
-        cg3::DrawableDebugObjects debugObjects;
+        cg3::DrawableObjects debugObjects;
         bool debugObjectsEnabled;
 };
 

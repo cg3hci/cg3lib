@@ -12,7 +12,7 @@
 
 namespace cg3 {
 
-namespace libgil {
+namespace libigl {
 
 inline bool isEdgeManifold(const SimpleEigenMesh& input);
 

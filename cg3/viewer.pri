@@ -61,7 +61,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 
     HEADERS += \
         $$PWD/viewer/glcanvas.h \
-        $$PWD/viewer/mainwindow.h \
+        $$PWD/viewer/offlineviewer.h \
+        $$PWD/viewer/drawable_objects/drawable_objects.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
         $$PWD/viewer/interfaces/drawable_mesh.h \
@@ -69,22 +70,21 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/consolestream.h \
         $$PWD/viewer/renderable_objects/renderable_objects.h \
         $$PWD/viewer/renderable_objects/2d/renderable_objects_2d.h \
-        $$PWD/viewer/drawable_objects/drawable_bounding_box2d.h \
-        $$PWD/viewer/drawable_objects/drawable_debug_objects.h
+        $$PWD/viewer/drawable_objects/drawable_bounding_box2d.h
 
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
         $$PWD/viewer/mainwindow.cpp \
+        $$PWD/viewer/offlineviewer.cpp \
+        $$PWD/viewer/drawable_objects/drawable_objects.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
         $$PWD/viewer/utilities/consolestream.tpp \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2d.cpp \
-        $$PWD/viewer/drawable_objects/drawable_debug_objects.cpp \
         $$PWD/viewer/renderable_objects/renderable_objects.tpp \
         $$PWD/viewer/renderable_objects/2d/renderable_objects_2d.tpp
 
-    FORMS += \
-        $$PWD/viewer/mainwindow.ui
+    FORMS +=
 
     CG3_DCEL {
         HEADERS += \
@@ -132,3 +132,9 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
+
+HEADERS += \
+    $$PWD/viewer/mainwindow.h
+
+FORMS += \
+    $$PWD/viewer/mainwindow.ui

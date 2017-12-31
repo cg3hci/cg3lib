@@ -12,26 +12,41 @@
 #include <cg3/geometry/plane.h>
 #include <cg3/geometry/2d/point2d.h>
 
-using namespace cg3;
+namespace cg3 {
 
-GLcanvas::GLcanvas(QWidget * parent) : clearColor(Qt::white) {
+namespace viewer {
+
+GLCanvas::GLCanvas(QWidget * parent) : clearColor(Qt::white) {
     setParent(parent);
 }
 
-GLcanvas::~GLcanvas() {
-}
-
-void GLcanvas::init() {
+void GLCanvas::init() {
     setFPSIsDisplayed(true);
     camera()->frame()->setSpinningSensitivity(100.0);
 }
 
-void GLcanvas::clear() {
-    drawlist.clear();
-    objVisibility.clear();
+void GLCanvas::draw() {
+    setBackgroundColor(clearColor);
+
+    for(unsigned int i=0; i<drawlist.size(); ++i) {
+        if (objVisibility[i])
+            drawlist[i]->draw();
+    }
 }
 
-void GLcanvas::postSelection(const QPoint& point) {
+void GLCanvas::drawWithNames() {
+    setBackgroundColor(clearColor);
+
+    for(int i=0; i<(int)drawlist.size(); ++i){
+        if (objVisibility[i]){
+            const PickableObject* obj = dynamic_cast<const PickableObject*>(drawlist[i]);
+            if (obj) // se il drawable object è anche un pickable object, allora chiamo la draw with names
+                obj->drawWithNames();
+        }
+    }
+}
+
+void GLCanvas::postSelection(const QPoint& point) {
   // Find the selectedPoint coordinates, using camera()->pointUnderPixel().
   bool found;
   selectedPoint = camera()->pointUnderPixel(point, found);
@@ -69,28 +84,12 @@ void GLcanvas::postSelection(const QPoint& point) {
       }
 }
 
-void GLcanvas::drawWithNames() {
-    setBackgroundColor(clearColor);
-
-    for(int i=0; i<(int)drawlist.size(); ++i){
-        if (objVisibility[i]){
-            const PickableObject* obj = dynamic_cast<const PickableObject*>(drawlist[i]);
-            if (obj) // se il drawable object è anche un pickable object, allora chiamo la draw with names
-                obj->drawWithNames();
-        }
-    }
+void GLCanvas::clear() {
+    drawlist.clear();
+    objVisibility.clear();
 }
 
-void GLcanvas::draw() {
-    setBackgroundColor(clearColor);
-
-    for(int i=0; i<(int)drawlist.size(); ++i) {
-        if (objVisibility[i])
-            drawlist[i]->draw();
-    }
-}
-
-unsigned int GLcanvas::pushObj(const DrawableObject* obj, bool visible) {
+unsigned int GLCanvas::pushObj(const DrawableObject* obj, bool visible) {
     drawlist.push_back(obj);
     objVisibility.push_back(visible);
     update();
@@ -98,7 +97,7 @@ unsigned int GLcanvas::pushObj(const DrawableObject* obj, bool visible) {
     return (unsigned int)drawlist.size();
 }
 
-void GLcanvas::deleteObj(const DrawableObject* obj) {
+void GLCanvas::deleteObj(const DrawableObject* obj) {
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         drawlist.erase(it);
@@ -107,7 +106,7 @@ void GLcanvas::deleteObj(const DrawableObject* obj) {
     }
 }
 
-void GLcanvas::setVisibility(const DrawableObject* obj, bool visible) {
+void GLCanvas::setVisibility(const DrawableObject* obj, bool visible) {
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = it - drawlist.begin();
@@ -115,7 +114,7 @@ void GLcanvas::setVisibility(const DrawableObject* obj, bool visible) {
     }
 }
 
-bool GLcanvas::isVisible(const DrawableObject* obj) {
+bool GLCanvas::isVisible(const DrawableObject* obj) {
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = it - drawlist.begin();
@@ -124,20 +123,20 @@ bool GLcanvas::isVisible(const DrawableObject* obj) {
     return false;
 }
 
-void GLcanvas::resetPointOfView() {
+void GLCanvas::resetPointOfView() {
     qglviewer::Vec v(0,0,2.61313);
     qglviewer::Quaternion q(0,0,0,1);
     camera()->setPosition(v);
     camera()->setOrientation(q);
 }
 
-void GLcanvas::serializePointOfView(std::ofstream &file) {
+void GLCanvas::serializePointOfView(std::ofstream &file) {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
     serializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
 }
 
-bool GLcanvas::deserializePointOfView(std::ifstream &file) {
+bool GLCanvas::deserializePointOfView(std::ifstream &file) {
     qglviewer::Vec v;
     qglviewer::Quaternion q;
     try {
@@ -151,7 +150,7 @@ bool GLcanvas::deserializePointOfView(std::ifstream &file) {
     }
 }
 
-void GLcanvas::savePointOfView(const std::string &filename) {
+void GLCanvas::savePointOfView(const std::string &filename) {
     std::ofstream file;
     file.open(filename, std::ios::out | std::ios::binary);
 
@@ -160,7 +159,7 @@ void GLcanvas::savePointOfView(const std::string &filename) {
     file.close();
 }
 
-bool GLcanvas::loadPointOfView(const std::string &filename) {
+bool GLCanvas::loadPointOfView(const std::string &filename) {
 
     std::ifstream file;
     file.open(filename, std::ios::in | std::ios::binary);
@@ -172,44 +171,39 @@ bool GLcanvas::loadPointOfView(const std::string &filename) {
     return ok;
 }
 
-void GLcanvas::fitScene() {
+void GLCanvas::fitScene() {
     Pointd sceneCenter(0,0,0);
     double sceneRadius = 0.0;
     int   count  = 0;
 
     if (getNumberVisibleObjects() == 0) sceneRadius = 1.0;
     else {
-        double minx = DBL_MAX;
-        double maxx = -DBL_MAX;
-        double miny = DBL_MAX;
-        double maxy = -DBL_MAX;
-        double minz = DBL_MAX;
-        double maxz = -DBL_MAX;
+        const double dmax = std::numeric_limits<double>::max();
+        const double dmin = std::numeric_limits<double>::min();
+        BoundingBox bb(Pointd(dmax, dmax, dmax), Pointd(dmin, dmin, dmin));
 
         for(int i=0; i<(int)drawlist.size(); ++i) {
             const DrawableObject * obj = drawlist[i];
-            if (objVisibility[i] /*&& obj->isVisible()*/ && obj->sceneRadius() > std::numeric_limits<float>::epsilon()) {
+            if (objVisibility[i] && obj->sceneRadius() > std::numeric_limits<float>::epsilon()) {
                 Pointd objCenter = obj->sceneCenter();
                 double objRadius = obj->sceneRadius();
 
-                minx = std::min((objCenter + Pointd(-objRadius,0,0)).x(), minx);
-                maxx = std::max((objCenter + Pointd(objRadius,0,0)).x(), maxx);
+                bb.minX() = std::min((objCenter + Pointd(-objRadius,0,0)).x(), bb.minX());
+                bb.maxX() = std::max((objCenter + Pointd( objRadius,0,0)).x(), bb.maxX());
 
-                miny = std::min((objCenter + Pointd(0,-objRadius,0)).y(), miny);
-                maxy = std::max((objCenter + Pointd(0,objRadius,0)).y(), maxy);
+                bb.minY() = std::min((objCenter + Pointd(0,-objRadius,0)).y(), bb.minY());
+                bb.maxY() = std::max((objCenter + Pointd(0, objRadius,0)).y(), bb.maxY());
 
-                minz = std::min((objCenter + Pointd(0,0,-objRadius)).z(), minz);
-                maxz = std::max((objCenter + Pointd(0,0,objRadius)).z(), maxz);
+                bb.minZ() = std::min((objCenter + Pointd(0,0,-objRadius)).z(), bb.minZ());
+                bb.maxZ() = std::max((objCenter + Pointd(0,0, objRadius)).z(), bb.maxZ());
 
                 ++count;
             }
         }
         if (count == 0){
-            minx = miny = minz = -1;
-            maxx = maxy = maxz = 1;
+            bb.min() = Pointd(-1,-1,-1);
+            bb.max() = Pointd( 1, 1, 1);
         }
-
-        BoundingBox bb(Pointd(minx, miny, minz), Pointd(maxx, maxy, maxz));
 
         sceneRadius = bb.diag() / 2;
         sceneCenter = bb.center();
@@ -221,22 +215,22 @@ void GLcanvas::fitScene() {
     showEntireScene();
 }
 
-void GLcanvas::fitScene(const Pointd& center, double radius) {
+void GLCanvas::fitScene(const Pointd& center, double radius) {
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), center.z()));
     setSceneRadius(radius);
     showEntireScene();
 }
 
-void GLcanvas::setClearColor(const QColor &color) {
+void GLCanvas::setClearColor(const QColor &color) {
     clearColor = color;
     update();
 }
 
-BoundingBox GLcanvas::getFullBoundingBox() {
+BoundingBox GLCanvas::getFullBoundingBox() const {
     BoundingBox bb;
     for(int i=0; i<(int)drawlist.size(); ++i) {
         const DrawableObject * obj = drawlist[i];
-        if (objVisibility[i] /*&& obj->isVisible()*/ && obj->sceneRadius() > 0) {
+        if (objVisibility[i] && obj->sceneRadius() > 0) {
             Pointd center = obj->sceneCenter();
             bb.setMin(bb.getMin().min(Pointd(center.x() - obj->sceneRadius(), center.y() - obj->sceneRadius(), center.z() - obj->sceneRadius())));
             bb.setMax(bb.getMax().max(Pointd(center.x() + obj->sceneRadius(), center.y() + obj->sceneRadius(), center.z() + obj->sceneRadius())));
@@ -245,10 +239,14 @@ BoundingBox GLcanvas::getFullBoundingBox() {
     return bb;
 }
 
-int GLcanvas::getNumberVisibleObjects() {
+int GLCanvas::getNumberVisibleObjects() const {
     int count = 0;
     for(int i=0; i<(int)drawlist.size(); ++i) {
         if (objVisibility[i]) count++;
     }
     return count;
+}
+
+}
+
 }

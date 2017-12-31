@@ -1,0 +1,124 @@
+/**
+  * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+  * This Source Code Form is subject to the terms of the GNU GPL 3.0
+  *
+  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+  */
+
+#include "drawable_objects.h"
+#include "../renderable_objects/renderable_objects.h"
+#include "../renderable_objects/2d/renderable_objects_2d.h"
+
+
+namespace cg3 {
+
+DrawableObjects::DrawableObjects() : visible(true) {
+}
+
+void DrawableObjects::draw() const {
+    if (visible){
+        for (const Sphere& s : spheres){
+            viewer::drawSphere(s.center, s.radius, s.color, s.precision);
+        }
+        for (const Cylinder& c : cylinders){
+            viewer::drawCylinder(c.a, c.b, c.radius, c.radius, c.color);
+        }
+        for (const Line& l : lines){
+            viewer::drawLine(l.a, l.b, l.color, l.width);
+        }
+    }
+}
+
+Pointd DrawableObjects::sceneCenter() const {
+    if (bb.diag() > 0)
+        return bb.center();
+    return Pointd();
+}
+
+double DrawableObjects::sceneRadius() const {
+    if (bb.diag() > 0)
+        return bb.diag()/2;
+    return -1;
+}
+
+bool DrawableObjects::isVisible() const {
+    return visible;
+}
+
+void DrawableObjects::setVisible(bool b) {
+    visible = b;
+}
+
+void DrawableObjects::updateBoundingBox() {
+    if (numberObjects() == 0) {
+        bb = BoundingBox();
+    }
+    else {
+        const double dmax = std::numeric_limits<double>::max();
+        const double dmin = std::numeric_limits<double>::min();
+        bb = BoundingBox(Pointd(dmax, dmax, dmax), Pointd(dmin, dmin, dmin));
+    }
+    for (const Sphere& s : spheres){
+        bb.min() = bb.min().min(s.center);
+        bb.max() = bb.max().max(s.center);
+    }
+    for (const Cylinder& c : cylinders){
+        bb.min() = bb.min().min(c.a);
+        bb.min() = bb.min().min(c.b);
+        bb.max() = bb.max().max(c.a);
+        bb.max() = bb.max().max(c.b);
+    }
+    for (const Line& l : lines){
+        bb.min() = bb.min().min(l.a);
+        bb.min() = bb.min().min(l.b);
+        bb.max() = bb.max().max(l.a);
+        bb.max() = bb.max().max(l.b);
+    }
+}
+
+unsigned int DrawableObjects::numberObjects() const {
+    return spheres.size() + cylinders.size() + lines.size();
+}
+
+void DrawableObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision) {
+    Sphere s = {center, radius, color, precision};
+    spheres.push_back(s);
+    bb.min() = bb.min().min(center);
+    bb.max() = bb.max().max(center);
+}
+
+void DrawableObjects::clearSpheres() {
+    spheres.clear();
+    updateBoundingBox();
+}
+
+void DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
+    Cylinder c = {a, b, radius, color};
+    cylinders.push_back(c);
+
+    bb.min() = bb.min().min(a);
+    bb.min() = bb.min().min(b);
+    bb.max() = bb.max().max(a);
+    bb.max() = bb.max().max(b);
+}
+
+void DrawableObjects::clearCylinders() {
+    cylinders.clear();
+    updateBoundingBox();
+}
+
+void DrawableObjects::addLine(const Pointd &a, const Pointd &b, int width, const QColor color) {
+    Line l = {a, b, width, color};
+    lines.push_back(l);
+    bb.min() = bb.min().min(a);
+    bb.min() = bb.min().min(b);
+    bb.max() = bb.max().max(a);
+    bb.max() = bb.max().max(b);
+}
+
+void DrawableObjects::clearLines() {
+    lines.clear();
+    updateBoundingBox();
+}
+
+}
