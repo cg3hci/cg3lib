@@ -11,6 +11,10 @@
 #include <streambuf>
 #include <QTextEdit>
 
+namespace cg3 {
+
+namespace viewer {
+
 /**
  * @brief The ConsoleStream class
  * @link https://stackoverflow.com/questions/9211298/redirect-stdcout-to-qtextedit
@@ -38,6 +42,10 @@ private:
     QTextEdit* textEdit;
 
 };
+
+}
+
+}
 
 #include "consolestream.tpp"
 

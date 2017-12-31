@@ -10,6 +10,10 @@
 
 #include <cg3/utilities/const.h>
 
+namespace cg3 {
+
+namespace viewer {
+
 inline ConsoleStream::ConsoleStream(std::ostream &stream, std::ostream &stream2, QTextEdit* text_edit) : std::basic_streambuf<char>(), stream(stream), stream2(stream2) {
     textEdit = text_edit;
     oldBuffer = stream.rdbuf();
@@ -47,4 +51,8 @@ inline std::streamsize ConsoleStream::xsputn(const char *p, std::streamsize n) {
     textEdit->append(p);
     textEdit->update();
     return textEdit->toPlainText().size();
+}
+
+}
+
 }

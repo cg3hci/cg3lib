@@ -12,13 +12,15 @@
 #include <QColorDialog>
 #include <iostream>
 
-using namespace cg3;
+namespace cg3 {
+
+namespace viewer {
 
 /**
  * @brief Crea un DcelManager
  * @param parent
  */
-DcelManager::DcelManager(QWidget *parent) : QFrame(parent), ui(new Ui::DcelManager), mainWindow((MainWindow&)*parent), drawableDcel(nullptr) {
+DcelManager::DcelManager(QWidget *parent) : QFrame(parent), ui(new Ui::DcelManager), mainWindow((cg3::viewer::MainWindow&)*parent), drawableDcel(nullptr) {
     ui->setupUi(this);
     dcells.addSupportedExtension("obj","ply","dcel");
 }
@@ -279,4 +281,8 @@ void DcelManager::on_boundingBoxCheckBox_stateChanged(int state) {
 void DcelManager::on_facesWireframeDcelCheckBox_stateChanged(int state) {
     drawableDcel->setFacesWireframe(state == Qt::Checked);
     mainWindow.updateGlCanvas();
+}
+
+}
+
 }

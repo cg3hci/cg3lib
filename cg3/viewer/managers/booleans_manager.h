@@ -11,7 +11,11 @@
 #include <QFrame>
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/utilities/loadersaver.h>
-#include "../../drawable_objects/drawable_eigenmesh.h"
+#include "../drawable_objects/drawable_eigenmesh.h"
+
+namespace cg3 {
+
+namespace viewer {
 
 namespace Ui {
     class BooleansManager;
@@ -106,12 +110,16 @@ class BooleansManager : public QFrame {
 
     private:
         Ui::BooleansManager *ui;
-        MainWindow& mainWindow;
+        cg3::viewer::MainWindow& mainWindow;
         std::vector<cg3::DrawableEigenMesh*> meshes;
         cg3::DrawableEigenMesh* result;
         cg3::Vec3 lastAxis;
         double lastAngle;
         cg3::viewer::LoaderSaver objls;
 };
+
+}
+
+}
 
 #endif // CG3_BOOLEANS_MANAGER_H

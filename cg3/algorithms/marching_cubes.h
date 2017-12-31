@@ -15,9 +15,6 @@ namespace cg3 {
 /**
  * @todo
  */
-namespace marchingCubes {
-
-}
 
 }
 

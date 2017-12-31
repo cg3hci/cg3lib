@@ -15,7 +15,9 @@
 #include "utilities/consolestream.h"
 #include <experimental/filesystem>
 
-using namespace cg3;
+namespace cg3 {
+
+namespace viewer {
 
 /**
  * @brief Crea una nuova mainWindow composta da canvas, toolBox avente 0 frame e scrollArea.
@@ -513,4 +515,8 @@ void MainWindow::on_action2D_Mode_triggered() {
 
 void MainWindow::on_action3D_Mode_triggered() {
     set2DMode(false);
+}
+
+}
+
 }

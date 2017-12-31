@@ -14,8 +14,6 @@
 
 namespace cg3 {
 
-namespace graphs {
-
 template <class T>
 class UndirectedNode : SerializableObject {
     public:
@@ -109,8 +107,6 @@ void UndirectedNode<T>::serialize(std::ofstream &binaryFile) const {
 template<class T>
 void UndirectedNode<T>::deserialize(std::ifstream &binaryFile) {
     cg3::deserializeObjectAttributes("cg3UndirectedNode", binaryFile, info, adjacentNodes);
-}
-
 }
 
 }

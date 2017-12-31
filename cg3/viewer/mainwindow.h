@@ -34,6 +34,10 @@
 #include "utilities/consolestream.h"
 #include <cg3/geometry/2d/point2d.h>
 
+namespace cg3 {
+
+namespace viewer {
+
 namespace Ui {
     class MainWindow;
 }
@@ -175,5 +179,9 @@ private:
         cg3::DrawableObjects debugObjects;
         bool debugObjectsEnabled;
 };
+
+}
+
+}
 
 #endif // CG3_MAINWINDOW_H

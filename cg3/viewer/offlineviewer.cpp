@@ -6,7 +6,9 @@
   */
 #include "offlineviewer.h"
 
-using namespace cg3;
+namespace cg3 {
+
+namespace viewer {
 
 OfflineViewer::OfflineViewer() {
     resize(QSize(1920, 1080));
@@ -201,4 +203,8 @@ void OfflineViewer::saveSnapshot(const std::string& filename) {
 void OfflineViewer::drawAxis(bool b) {
     setAxisIsDrawn(b);
     update();
+}
+
+}
+
 }

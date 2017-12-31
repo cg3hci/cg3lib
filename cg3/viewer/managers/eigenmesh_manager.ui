@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EigenMeshManager</class>
- <widget class="QFrame" name="EigenMeshManager">
+ <class>cg3::viewer::EigenMeshManager</class>
+ <widget class="QFrame" name="cg3::viewer::EigenMeshManager">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>313</width>
-    <height>321</height>
+    <width>483</width>
+    <height>434</height>
    </rect>
   </property>
   <property name="windowTitle">

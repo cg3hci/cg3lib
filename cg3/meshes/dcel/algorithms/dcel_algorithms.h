@@ -13,7 +13,7 @@
 
 namespace cg3 {
 
-namespace DcelAlgorithms {
+namespace dcelAlgorithms {
     void getVectorFaces(std::vector<const Dcel::Face*> &vector, const Dcel& d);
     void getVectorFaces(std::vector<Dcel::Face*> &vector, Dcel& d);
 
@@ -34,7 +34,7 @@ namespace DcelAlgorithms {
 }
 
 template <typename InputIterator>
-BoundingBox DcelAlgorithms::getBoundingBoxOfFaces(InputIterator first, InputIterator last){
+BoundingBox dcelAlgorithms::getBoundingBoxOfFaces(InputIterator first, InputIterator last){
     BoundingBox bb;
     const Dcel::Face* f = *first;
     bb.setMin(f->getOuterHalfEdge()->getFromVertex()->getCoordinate());
@@ -59,7 +59,7 @@ BoundingBox DcelAlgorithms::getBoundingBoxOfFaces(InputIterator first, InputIter
  * @param c: a structure which contains a single parameter operator () that takes a face and returns a bool
  */
 template <typename Comp>
-std::set<const Dcel::Face*> DcelAlgorithms::flood(const Dcel::Face* seed, Comp c){
+std::set<const Dcel::Face*> dcelAlgorithms::flood(const Dcel::Face* seed, Comp c){
     std::set<const Dcel::Face*> faces;
     std::vector<const Dcel::Face *> stack_faces; // only triangles with same label of the patch will stay on the stack
 
@@ -86,7 +86,7 @@ std::set<const Dcel::Face*> DcelAlgorithms::flood(const Dcel::Face* seed, Comp c
 }
 
 template <typename InputIterator>
-std::vector< std::set<const Dcel::Face*> > DcelAlgorithms::getConnectedComponents(InputIterator first, InputIterator last){
+std::vector< std::set<const Dcel::Face*> > dcelAlgorithms::getConnectedComponents(InputIterator first, InputIterator last){
     struct Comp{
         const std::set<const Dcel::Face*> &cf;
         Comp(const std::set<const Dcel::Face*> &cf) : cf(cf) {}

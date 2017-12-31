@@ -15,7 +15,7 @@ namespace cg3 {
  * @param vector
  * @param d
  */
-void DcelAlgorithms::getVectorFaces(std::vector<const Dcel::Face*>& vector, const Dcel& d) {
+void dcelAlgorithms::getVectorFaces(std::vector<const Dcel::Face*>& vector, const Dcel& d) {
     int i = 0;
     vector.resize(d.getNumberFaces());
     for (const Dcel::Face* f : d.faceIterator()){
@@ -23,7 +23,7 @@ void DcelAlgorithms::getVectorFaces(std::vector<const Dcel::Face*>& vector, cons
     }
 }
 
-void DcelAlgorithms::getVectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d) {
+void dcelAlgorithms::getVectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d) {
     int i = 0;
     vector.resize(d.getNumberFaces());
     for (Dcel::Face* f : d.faceIterator()){
@@ -31,7 +31,7 @@ void DcelAlgorithms::getVectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d) {
     }
 }
 
-void DcelAlgorithms::getVectorMesh(std::vector<Pointd>& coords, std::vector<std::vector<int> >& faces, const Dcel& d, std::vector<const Dcel::Vertex*>& mappingVertices, std::vector<const Dcel::Face*>& mappingFaces) {
+void dcelAlgorithms::getVectorMesh(std::vector<Pointd>& coords, std::vector<std::vector<int> >& faces, const Dcel& d, std::vector<const Dcel::Vertex*>& mappingVertices, std::vector<const Dcel::Face*>& mappingFaces) {
     std::map<const Dcel::Vertex*, int> vertices;
     int nv = 0, nf = 0;
     coords.resize(d.getNumberVertices());
@@ -55,7 +55,7 @@ void DcelAlgorithms::getVectorMesh(std::vector<Pointd>& coords, std::vector<std:
     }
 }
 
-void DcelAlgorithms::smartColoring(Dcel& d) {
+void dcelAlgorithms::smartColoring(Dcel& d) {
     struct adjComp {
         std::set<Dcel::Face*> getAdjacences(Dcel::Face* f){
             std::set<Dcel::Face*> adjacents;

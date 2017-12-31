@@ -19,8 +19,6 @@
 #endif //CG3_DCEL_DEFINED
 
 namespace cg3 {
-
-namespace meshConversions {
     #ifdef CG3_EIGENMESH_DEFINED
     void eigenMeshToTrimesh(cinolib::Trimesh& m, const cg3::SimpleEigenMesh& simpleEigenMesh);
     #endif //CG3_EIGENMESH_DEFINED
@@ -28,8 +26,6 @@ namespace meshConversions {
     #ifdef CG3_DCEL_DEFINED
     void dcelToTrimesh(cinolib::Trimesh& m, const cg3::Dcel &d);
     #endif //CG3_DCEL_DEFINED
-}
-
 }
 
 #endif // CG3_CINOLIB_MESH_CONVERSIONS_H

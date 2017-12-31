@@ -28,13 +28,13 @@ bool BipartiteGraph<T1, T2>::addLeftNode(const T1& info) {
     if (mapL.find(info) == mapL.end()){
         if (unusedLNodes.size() == 0){
             mapL[info] = (unsigned int)nodesL.size();
-            nodesL.push_back(graphs::UndirectedNode<T1>(info));
+            nodesL.push_back(UndirectedNode<T1>(info));
         }
         else {
             unsigned int id = *(unusedLNodes.begin());
             unusedLNodes.erase(unusedLNodes.begin());
             mapL[info] = id;
-            nodesL[id] = graphs::UndirectedNode<T1>(info);
+            nodesL[id] = UndirectedNode<T1>(info);
         }
         return true;
     }
@@ -53,13 +53,13 @@ bool BipartiteGraph<T1, T2>::addRightNode(const T2& info) {
     if (mapR.find(info) == mapR.end()){
         if (unusedRNodes.size() == 0){
             mapR[info] = (unsigned int)nodesR.size();
-            nodesR.push_back(graphs::UndirectedNode<T2>(info));
+            nodesR.push_back(UndirectedNode<T2>(info));
         }
         else {
             unsigned int id = *(unusedRNodes.begin());
             unusedRNodes.erase(unusedRNodes.begin());
             mapR[info] = id;
-            nodesR[id] = graphs::UndirectedNode<T2>(info);
+            nodesR[id] = UndirectedNode<T2>(info);
         }
         return true;
     }
@@ -263,7 +263,7 @@ template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::modifyLeftNode(const T1& old, const T1& newInfo) {
     try {
         int uid = getIdLeftNode(old);
-        nodesL[uid] = cg3::graphs::UndirectedNode<T1>(newInfo);
+        nodesL[uid] = cg3::UndirectedNode<T1>(newInfo);
         mapL.erase(old);
         mapL[newInfo] = uid;
         return true;
@@ -284,7 +284,7 @@ template<class T1, class T2>
 bool BipartiteGraph<T1, T2>::modifyRightNode(const T2& old, const T2& newInfo) {
     try {
         int vid = getIdRightNode(old);
-        nodesR[vid] = cg3::graphs::UndirectedNode<T2>(newInfo);
+        nodesR[vid] = cg3::UndirectedNode<T2>(newInfo);
         mapR.erase(old);
         mapR[newInfo] = vid;
         return true;

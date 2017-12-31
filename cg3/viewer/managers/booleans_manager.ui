@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BooleansManager</class>
- <widget class="QFrame" name="BooleansManager">
+ <class>cg3::viewer::BooleansManager</class>
+ <widget class="QFrame" name="cg3::viewer::BooleansManager">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>411</width>
-    <height>645</height>
+    <width>880</width>
+    <height>1130</height>
    </rect>
   </property>
   <property name="windowTitle">

@@ -10,12 +10,14 @@
 
 #include <QFileDialog>
 
-using namespace cg3;
+namespace cg3 {
+
+namespace viewer {
 
 EigenMeshManager::EigenMeshManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::EigenMeshManager),
-    mainWindow((MainWindow&)*parent),
+    mainWindow((cg3::viewer::MainWindow&)*parent),
     mesh (nullptr) {
     ui->setupUi(this);
     objls.addSupportedExtension("obj", "ply");
@@ -147,4 +149,8 @@ void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked) {
 void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1) {
     mesh->setVisibleBoundingBox(arg1 == Qt::Checked);
     mainWindow.updateGlCanvas();
+}
+
+}
+
 }

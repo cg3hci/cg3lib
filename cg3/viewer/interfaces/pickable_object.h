@@ -8,6 +8,8 @@
 #ifndef CG3_PICKABLE_OBJECT_H
 #define CG3_PICKABLE_OBJECT_H
 
+namespace cg3 {
+
 /**
  * \~English
  * @interface PickableObject
@@ -37,5 +39,7 @@ class PickableObject
         virtual void drawWithNames() const = 0; /**< \~English @brief Disegna tutti gli oggetti cliccabili dell'oggetto
                                                      \~Italian @brief Draws all the pickable objects of the object */
 };
+
+}
 
 #endif // CG3_PICKABLE_OBJECT_H

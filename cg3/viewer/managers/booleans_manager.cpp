@@ -14,12 +14,14 @@
 #include <cg3/meshes/eigenmesh/algorithms/eigenmesh_algorithms.h>
 #include <cg3/libigl/booleans.h>
 
-using namespace cg3;
+namespace cg3 {
+
+namespace viewer {
 
 BooleansManager::BooleansManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::BooleansManager),
-    mainWindow((MainWindow&)*parent),
+    mainWindow((cg3::viewer::MainWindow&)*parent),
     result(nullptr){
     meshes.resize(2);
     meshes[0] = meshes[1] = nullptr;
@@ -477,4 +479,8 @@ void BooleansManager::on_scalePushButton_clicked() {
         result->scale(scaleFactor);
     }
     mainWindow.updateGlCanvas();
+}
+
+}
+
 }

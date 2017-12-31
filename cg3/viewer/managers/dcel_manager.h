@@ -10,9 +10,13 @@
 
 #include <QFrame>
 #include <QColor>
-#include "../../drawable_objects/drawable_dcel.h"
+#include "../drawable_objects/drawable_dcel.h"
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/utilities/loadersaver.h>
+
+namespace cg3 {
+
+namespace viewer {
 
 namespace Ui {
     class DcelManager;
@@ -54,9 +58,13 @@ class DcelManager : public QFrame {
 
     private:
         Ui::DcelManager* ui; //puntatore al QFrame (da cui è possibile richiamare gli oggetti della ui)
-        MainWindow& mainWindow; //puntatore alla mainWindow
+        cg3::viewer::MainWindow& mainWindow; //puntatore alla mainWindow
         cg3::DrawableDcel* drawableDcel; //puntatore alla DrawableDcel gestita dal DcelManager
         cg3::viewer::LoaderSaver dcells;
 };
+
+}
+
+}
 
 #endif // CG3_DCELMANAGER_H

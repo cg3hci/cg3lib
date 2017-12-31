@@ -61,7 +61,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 
     HEADERS += \
         $$PWD/viewer/glcanvas.h \
-        $$PWD/viewer/offlineviewer.h \
+        $$PWD/viewer/mainwindow.h \
+        $$PWD/viewer/offlineviewer.h \  
         $$PWD/viewer/drawable_objects/drawable_objects.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
@@ -84,47 +85,48 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/renderable_objects/renderable_objects.tpp \
         $$PWD/viewer/renderable_objects/2d/renderable_objects_2d.tpp
 
-    FORMS +=
+    FORMS += \
+        $$PWD/viewer/mainwindow.ui
 
     CG3_DCEL {
         HEADERS += \
             $$PWD/viewer/drawable_objects/drawable_dcel.h \
             $$PWD/viewer/pickable_objects/pickable_dcel.h \
-            $$PWD/viewer/managers/dcel_manager/dcel_manager.h
+            $$PWD/viewer/managers/dcel_manager.h
 
         SOURCES += \
             $$PWD/viewer/drawable_objects/drawable_dcel.cpp \
             $$PWD/viewer/pickable_objects/pickable_dcel.cpp \
-            $$PWD/viewer/managers/dcel_manager/dcel_manager.cpp
+            $$PWD/viewer/managers/dcel_manager.cpp
 
         FORMS += \
-            $$PWD/viewer/managers/dcel_manager/dcel_manager.ui
+            $$PWD/viewer/managers/dcel_manager.ui
     }
 
     CG3_EIGENMESH {
         HEADERS += \
             $$PWD/viewer/drawable_objects/drawable_eigenmesh.h \
             $$PWD/viewer/pickable_objects/pickable_eigenmesh.h \
-            $$PWD/viewer/managers/eigenmesh_manager/eigenmesh_manager.h
+            $$PWD/viewer/managers/eigenmesh_manager.h
 
         SOURCES += \
             $$PWD/viewer/drawable_objects/drawable_eigenmesh.cpp \
             $$PWD/viewer/pickable_objects/pickable_eigenmesh.cpp \
-            $$PWD/viewer/managers/eigenmesh_manager/eigenmesh_manager.cpp
+            $$PWD/viewer/managers/eigenmesh_manager.cpp
 
         FORMS += \
-            $$PWD/viewer/managers/eigenmesh_manager/eigenmesh_manager.ui
+            $$PWD/viewer/managers/eigenmesh_manager.ui
 
         contains(DEFINES, CG3_CGAL_DEFINED){
             contains(DEFINES, CG3_LIBIGL_DEFINED){
                 HEADERS += \
-                    $$PWD/viewer/managers/booleans_manager/booleans_manager.h
+                    $$PWD/viewer/managers/booleans_manager.h
 
                 SOURCES += \
-                    $$PWD/viewer/managers/booleans_manager/booleans_manager.cpp
+                    $$PWD/viewer/managers/booleans_manager.cpp
 
                 FORMS += \
-                    $$PWD/viewer/managers/booleans_manager/booleans_manager.ui
+                    $$PWD/viewer/managers/booleans_manager.ui
             }
         }
     }
@@ -132,9 +134,3 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
-
-HEADERS += \
-    $$PWD/viewer/mainwindow.h
-
-FORMS += \
-    $$PWD/viewer/mainwindow.ui

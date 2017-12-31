@@ -11,7 +11,7 @@
 
 namespace cg3 {
 
-namespace marchingCubes {
+namespace internal {
 
 static std::vector< std::vector<int> > triTable = {
     {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},  //0

@@ -71,8 +71,8 @@ class BipartiteGraph<T1, T2>::LeftNodeIterator{
 
     protected:
         const BipartiteGraph* g;
-        typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator pos;
-        LeftNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph &g);
+        typename std::vector<cg3::UndirectedNode<T1> >::const_iterator pos;
+        LeftNodeIterator(typename std::vector<cg3::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph &g);
 
 
 };
@@ -94,8 +94,8 @@ class BipartiteGraph<T1, T2>::RightNodeIterator{
 
     protected:
         const BipartiteGraph* g;
-        typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator pos;
-        RightNodeIterator(typename std::vector<cg3::graphs::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph &g);
+        typename std::vector<cg3::UndirectedNode<T2> >::const_iterator pos;
+        RightNodeIterator(typename std::vector<cg3::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph &g);
 
 
 };

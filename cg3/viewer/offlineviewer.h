@@ -27,6 +27,9 @@
 #include "interfaces/drawable_object.h"
 #include "drawable_objects/drawable_objects.h"
 
+namespace cg3 {
+
+namespace viewer {
 
 class OfflineViewer : public QGLViewer {
     public:
@@ -66,5 +69,9 @@ class OfflineViewer : public QGLViewer {
         cg3::DrawableObjects obj;
 
 };
+
+}
+
+}
 
 #endif // CG3_OFFLINEVIEWER_H

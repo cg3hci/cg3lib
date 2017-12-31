@@ -78,8 +78,8 @@ protected:
         std::map<T1, unsigned int> mapL;
         std::map<T2, unsigned int> mapR;
 
-        std::vector<graphs::UndirectedNode<T1> > nodesL;
-        std::vector<graphs::UndirectedNode<T2> > nodesR;
+        std::vector<UndirectedNode<T1> > nodesL;
+        std::vector<UndirectedNode<T2> > nodesR;
 
         std::set<unsigned int> unusedLNodes;
         std::set<unsigned int> unusedRNodes;
