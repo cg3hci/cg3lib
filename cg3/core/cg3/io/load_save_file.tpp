@@ -6,6 +6,7 @@
   */
 
 #include "load_save_file.h"
+#include "../utilities/tokenizer.h"
 
 namespace cg3 {
 
@@ -52,27 +53,21 @@ inline void loadSave::ObjManager::manageFileNames(const std::string &objfilename
 }
 
 inline bool loadSave::ObjManager::loadMtlFile(const std::string &mtuFile, std::map<std::string, Color> &mapColors){
-    typedef boost::char_separator<char>     CharSeparator;
-    typedef boost::tokenizer<CharSeparator> Tokenizer;
-    typedef Tokenizer::iterator             TokenizerIterator;
-
-    CharSeparator spaceSeparator(" ");
-
     std::ifstream mtufile(mtuFile.c_str());
     std::string line;
     if (mtufile.is_open()){
         while(std::getline(mtufile,line)) {
-            Tokenizer spaceTokenizer(line, spaceSeparator);
+            cg3::Tokenizer spaceTokenizer(line, ' ');
 
             if (spaceTokenizer.begin() != spaceTokenizer.end()){
 
-                TokenizerIterator token = spaceTokenizer.begin();
+                cg3::Tokenizer::iterator token = spaceTokenizer.begin();
                 if (*token == "newmtl"){
                     ++token;
                     std::string colorname = *token;
                     do {
                         std::getline(mtufile,line);
-                        spaceTokenizer = Tokenizer(line, spaceSeparator);
+                        spaceTokenizer = Tokenizer(line, ' ');
                         token = spaceTokenizer.begin();
                     } while (*token != "Kd");
                     std::string r = *(++token);
@@ -314,13 +309,6 @@ template <typename T, typename V, typename C, typename W>
 bool loadSave::loadMeshFromObj(const std::string& filename, std::list<T>& coords, std::list<V>& faces, loadSave::MeshType & meshType, int &modality, std::list<C> &verticesNormals, std::list<Color> &verticesColors, std::list<Color> &faceColors, std::list<W> &faceSizes) {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
 
-    typedef boost::char_separator<char>     CharSeparator;
-    typedef boost::tokenizer<CharSeparator> Tokenizer;
-    typedef Tokenizer::iterator             TokenizerIterator;
-
-    CharSeparator spaceSeparator(" ");
-    CharSeparator slashSeparator("/");
-
     static std::string vertex = "v";
     static std::string vertexNormal = "vn";
     static std::string face   = "f";
@@ -344,11 +332,11 @@ bool loadSave::loadMeshFromObj(const std::string& filename, std::list<T>& coords
     }
     while(std::getline(file,line)) {
 
-        Tokenizer spaceTokenizer(line, spaceSeparator);
+        cg3::Tokenizer spaceTokenizer(line, ' ');
 
         if (spaceTokenizer.begin() != spaceTokenizer.end()) {
 
-            TokenizerIterator token = spaceTokenizer.begin();
+            cg3::Tokenizer::iterator token = spaceTokenizer.begin();
             std::string header = *token;
 
             if (header == "mtllib"){
@@ -436,9 +424,9 @@ bool loadSave::loadMeshFromObj(const std::string& filename, std::list<T>& coords
                         meshType = POLYGON_MESH;
                 }
 
-                std::vector<Tokenizer> slashTokenizer;
+                std::vector<cg3::Tokenizer> slashTokenizer;
                 for (unsigned int i=0; i<dummy.size(); i++){
-                    Tokenizer t(dummy[i], slashSeparator);
+                    cg3::Tokenizer t(dummy[i], ' ');
                     slashTokenizer.push_back(t);
                 }
 
@@ -640,9 +628,6 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Plain
 
 template <typename T, typename V, typename C, typename W>
 bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords, std::list<V>& faces, loadSave::MeshType& meshType, int& modality, std::list<C>& verticesNormals, std::list<Color>& verticesColors, std::list<Color>& faceColors, std::list<W>& faceSizes) {
-    typedef boost::char_separator<char>     CharSeparator;
-    typedef boost::tokenizer<CharSeparator> Tokenizer;
-    typedef Tokenizer::iterator             TokenizerIterator;
     typedef enum {VERTEX, FACE, OTHER} ElementType;
     typedef enum {unknown = -1, x, y, z, nx, ny, nz, red, green, blue, alpha, list} PropertyName;
     typedef enum {UCHAR, FLOAT} PropertyType;
@@ -650,8 +635,6 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
         PropertyName name;
         PropertyType type;
     } Property;
-
-    CharSeparator spaceSeparator(" ");
 
     std::ifstream file(filename.c_str());
     std::string   line;
@@ -676,9 +659,9 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
     do {
         error = !(std::getline(file,line));
         if (!error){
-            Tokenizer spaceTokenizer(line, spaceSeparator);
+            cg3::Tokenizer spaceTokenizer(line, ' ');
             if (spaceTokenizer.begin() == spaceTokenizer.end()) continue;
-            TokenizerIterator token = spaceTokenizer.begin();
+            cg3::Tokenizer::iterator token = spaceTokenizer.begin();
             headerLine = *token;
             if (headerLine == "element") { //new type of element read
                 std::string s = *(++token);
@@ -749,12 +732,12 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
 
 
     while(std::getline(file,line)) {
-        Tokenizer spaceTokenizer(line, spaceSeparator);
+        cg3::Tokenizer spaceTokenizer(line, ' ');
 
         if (spaceTokenizer.begin() == spaceTokenizer.end()) continue;
 
         if (nv < nVer){ //reading vertices
-            TokenizerIterator token = spaceTokenizer.begin();
+            cg3::Tokenizer::iterator token = spaceTokenizer.begin();
             std::array<double, 6> cnv;
             Color c;
 
@@ -817,7 +800,7 @@ bool loadSave::loadMeshFromPly(const std::string& filename, std::list<T>& coords
             nv++;
         }
         else if (nf < nFac){ //reading faces
-            TokenizerIterator token = spaceTokenizer.begin();
+            cg3::Tokenizer::iterator token = spaceTokenizer.begin();
             std::vector<int> indices;
             Color c;
 

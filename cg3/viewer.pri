@@ -62,7 +62,6 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
     HEADERS += \
         $$PWD/viewer/glcanvas.h \
         $$PWD/viewer/mainwindow.h \
-        $$PWD/viewer/offlineviewer.h \  
         $$PWD/viewer/drawable_objects/drawable_objects.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
@@ -76,7 +75,6 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
         $$PWD/viewer/mainwindow.cpp \
-        $$PWD/viewer/offlineviewer.cpp \
         $$PWD/viewer/drawable_objects/drawable_objects.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \

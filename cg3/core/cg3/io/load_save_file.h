@@ -14,7 +14,6 @@
 #include <map>
 #include <fstream>
 #include <sstream>
-#include <boost/tokenizer.hpp>
 #include "../utilities/color.h"
 #include <clocale>
 

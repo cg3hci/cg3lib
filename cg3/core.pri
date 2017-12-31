@@ -83,6 +83,7 @@ HEADERS += \
     $$PWD/core/cg3/utilities/string.h \
     $$PWD/core/cg3/utilities/system.h \
     $$PWD/core/cg3/utilities/timer.h \
+    $$PWD/core/cg3/utilities/tokenizer.h \
     $$PWD/core/cg3/utilities/vector.h \
     $$PWD/core/cg3/utilities/utils.h
 
@@ -96,6 +97,7 @@ SOURCES += \
     $$PWD/core/cg3/utilities/string.tpp \
     $$PWD/core/cg3/utilities/system.tpp \
     $$PWD/core/cg3/utilities/timer.tpp \
+    $$PWD/core/cg3/utilities/tokenizer.tpp \
     $$PWD/core/cg3/utilities/vector.tpp \
     $$PWD/core/cg3/utilities/utils.tpp
 
