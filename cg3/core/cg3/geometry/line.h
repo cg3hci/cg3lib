@@ -32,4 +32,15 @@ class Line : SerializableObject{
 
 }
 
+//hash specialization
+namespace std {
+
+template <>
+struct hash<cg3::Line> {
+    size_t operator()(const cg3::Line& k) const;
+};
+
+}
+
+
 #endif // LINE_H

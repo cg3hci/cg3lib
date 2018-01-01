@@ -97,3 +97,10 @@ BoundingBox2D getBoundingBox(const InputContainer& container) {
 }
 
 }
+
+//hash specialization
+inline std::size_t std::hash<cg3::BoundingBox2D>::operator()(const cg3::BoundingBox2D &k) const {
+    std::size_t h=0;
+    cg3::hashCombine(h, k.min(), k.max());
+    return h;
+}

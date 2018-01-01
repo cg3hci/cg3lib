@@ -73,7 +73,7 @@ class MainWindow : public QMainWindow {
         void savePointOfView(std::string filename);
         void loadPointOfView(std::string filename);
         void setBackgroundColor(const QColor &);
-        void set2DMode(bool b);
+        void set2DMode(bool b = true);
 
         //DrawableObjects for the Canvas
         void pushObj(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);

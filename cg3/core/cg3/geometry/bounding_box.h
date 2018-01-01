@@ -137,6 +137,7 @@ typedef BoundingBox Box;
 
 }
 
+//hash specialization
 namespace std {
 
 template <>

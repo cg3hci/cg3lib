@@ -582,6 +582,7 @@ inline double area(const Point2D<T>& p0, const Point2D<T>& p1, const Point2D<T>&
 
 }
 
+//hash specialization
 template<typename T>
 inline std::size_t std::hash<cg3::Point2D<T> >::operator()(const cg3::Point2D<T> &k) const {
     std::size_t h=0;

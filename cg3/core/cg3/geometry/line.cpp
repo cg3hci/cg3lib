@@ -44,3 +44,10 @@ void Line::deserialize(std::ifstream& binaryFile) {
 }
 
 }
+
+//hash specialization
+inline std::size_t std::hash<cg3::Line>::operator()(const cg3::Line &k) const{
+    std::size_t h = 0;
+    cg3::hashCombine(h, k.getStartingPoint(), k.getDir());
+    return h;
+}

@@ -116,6 +116,7 @@ typedef Point2D<double> Vec2;
 
 }
 
+//hash specialization
 namespace std {
 
 template <typename T>

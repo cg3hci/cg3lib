@@ -56,6 +56,32 @@ std::vector<std::vector<cg3::Point2Dd> > computeVoronoiDiagram(const std::vector
     return voronoi;
 }
 
+void computeVoronoiDiagram(const std::vector<Point2Dd>& sites, std::vector<Point2Dd>& vl, std::vector<std::vector<unsigned int> >& fl) {
+    std::vector<std::vector<cg3::Point2Dd> > vd = computeVoronoiDiagram(sites);
+    vl.clear();
+    fl.clear();
+    std::map<cg3::Point2Dd, unsigned int> vertMap;
+    unsigned int nv = 0;
+    fl.reserve(vd.size());
+    for (const std::vector<cg3::Point2Dd>& vf : vd){
+        std::vector<unsigned int> face;
+        face.reserve(vf.size());
+        for (const cg3::Point2Dd& p : vf){
+            std::map<cg3::Point2Dd, unsigned int>::iterator vit = vertMap.find(p);
+            if (vit == vertMap.end()){ // vertex doesn't exist in the list
+                vertMap[p] = nv;
+                vl.push_back(p);
+                face.push_back(nv);
+                nv++;
+            }
+            else {
+                face.push_back(vit->second);
+            }
+        }
+        fl.push_back(face);
+    }
+}
+
 }
 
 }

@@ -5,7 +5,6 @@
   * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
   */
 
-#include <boost/tokenizer.hpp>
 #include "dcel_face_iterators.h"
 #include "dcel_vertex_iterators.h"
 #include "dcel_iterators.h"
@@ -33,10 +32,9 @@ namespace cg3 {
  ****************/
 
 /**
- * \~Italian
- * @brief Costruttore vuoto.
+ * @brief Empty constructor
  *
- * Crea una Dcel vuota, con 0 vertici, 0 half edge e 0 facce.
+ * Creates an empty Dcel: 0 vertices, 0 half edges and 0 faces.
  */
 Dcel::Dcel() : nVertices(0), nHalfEdges(0), nFaces(0) {
 }

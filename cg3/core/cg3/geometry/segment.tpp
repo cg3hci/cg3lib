@@ -126,3 +126,11 @@ std::ostream& operator<<(std::ostream& o, const Segment<T>& seg) {
 }
 
 }
+
+//hash specialization
+template<typename T>
+inline std::size_t std::hash<cg3::Segment<T> >::operator()(const cg3::Segment<T> &k) const {
+    std::size_t h=0;
+    cg3::hashCombine(h, k.getP1(), k.getP2());
+    return h;
+}

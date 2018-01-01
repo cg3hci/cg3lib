@@ -23,6 +23,8 @@ class Tokenizer {
         iterator begin();
         iterator end();
 
+        unsigned long int size()const ;
+
     private:
         void split();
         const char* string;

@@ -42,6 +42,7 @@ typedef VD::Halfedge_handle           Halfedge_handle;
 typedef VD::Ccb_halfedge_circulator   Ccb_halfedge_circulator;
 
 std::vector<std::vector<cg3::Point2Dd>> computeVoronoiDiagram(const std::vector<cg3::Point2Dd>& sites);
+void computeVoronoiDiagram(const std::vector<Point2Dd> &sites, std::vector<cg3::Point2Dd>& vl, std::vector<std::vector<unsigned int> >&fl);
 
 }
 

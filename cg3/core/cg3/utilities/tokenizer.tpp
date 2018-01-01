@@ -27,6 +27,10 @@ inline Tokenizer::iterator Tokenizer::end() {
     return splitted.end();
 }
 
+inline unsigned long Tokenizer::size() const {
+    return splitted.size();
+}
+
 /**
  * @brief Tokenizer::split
  * @link https://stackoverflow.com/questions/53849/how-do-i-tokenize-a-string-in-c
@@ -34,12 +38,15 @@ inline Tokenizer::iterator Tokenizer::end() {
 inline void Tokenizer::split() {
     const char* str = string;
     splitted.clear();
-    do {
-        const char *begin = str;
-        while(*str != separator && *str)
-            str++;
-        splitted.push_back(std::string(begin, str));
-    } while ('\0' != *str++);
+    if (*str != '\0'){
+        do {
+            const char *begin = str;
+            while(*str != separator && *str)
+                str++;
+            if (begin != str)
+                splitted.push_back(std::string(begin, str));
+        } while ('\0' != *str++);
+    }
 }
 
 }

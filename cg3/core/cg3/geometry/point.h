@@ -164,6 +164,7 @@ using Point3D = Point<T>; /**< \~English @brief alias of Point */
 
 }
 
+//hash specialization
 namespace std {
 
 template <typename T>

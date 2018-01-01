@@ -649,6 +649,7 @@ inline std::string to_string(const Point<T> &p) {
 
 }
 
+//hash specialization
 template<typename T>
 inline std::size_t std::hash<cg3::Point<T> >::operator()(const cg3::Point<T>& k) const {
     std::size_t h=0;

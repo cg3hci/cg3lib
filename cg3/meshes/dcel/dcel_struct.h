@@ -27,43 +27,38 @@ namespace  cinolib{
 namespace cg3 {
 
 /**
- * \~Italian
  * @class Dcel
- * @brief Struttura dati Double Conntected Edge List.
+ * @brief Double Connected Edge List data structure.
  *
- * La classe Dcel è composta principalmente da tre liste di:
+ * The Dcel class is composed by three main lists of:
  * - Dcel::Vertex*
  * - Dcel::HalfEdge*
  * - Dcel::Face*
  *
- *
- * La struttura è Half-Edge based: tutte le relazioni di adiacenza e incidenza locali di un half edge sono contenuti
- * all'interno della classe Dcel::HalfEdge, ci si può accedere mediante semplici operazioni di get e si possono modificare
- * mediante semplici operazioni di set. Dcel::Vertex e Dcel::Face hanno invece dei riferimenti ad alcuni degli half edge incidenti
- * (nel caso del Dcel::Vertex solo uno, nel caso della Dcel::Face uno esterno e uno per ogni buco), e le restanti adiacenze/incidenze
- * sono reperibili mediante le operazioni messe a disposizione da Dcel::HalfEdge.
- * La Dcel mette a disposizione degli iteratori per poter accedere a tutti i Vertici, Half Edge e Facce contenunti in essa
- * e non permette di poter accedere direttamente ai vettori che li contengono, per poter preservare quelli che sono i dettagli
- * implementativi che permettono al programmatore di utilizzare una struttura dati il più sicura possibile.
- *
- * Si può ciclare, per esempio, su tutti i vertici contenuti nella Dcel con l'iteratore sui vertici:
- *
+ * The data structure is half-edge based: all the local adjacence and incidence relations are stored inside the Dcel::HalfEdge.
+ * It is possible to modify these relations by simply use set methods. Dcel::Vertex and Dcel::Face contain some pointers to incident
+ * half edges (Dcel::Vertex contains an outgoing half edge, Dcel::Face contains an incident outer half edge and one inner half edge
+ * for every hole of the face), all the other adjacent/incident relations can be obtained through the half edges.
+ * Dcel allows to access all its elements through iterators. For example, we can iterate through all the vertices of a Dcel d in the
+ * following way:
  * \code{.cpp}
  * for (Dcel::VertexIterator vit = d.vertexBegin(); vit != d.vertexEnd(); ++vit){
  *     Dcel::Vertex* v = *vit;
- *     // operazioni su v
+ *     // use v here
  * }
  * \endcode
  *
- * La stessa cosa si può fare con Dcel::HalfEdgeIterator e Dcel::FaceIterator. Per ciclare su const Dcel, invece, ci sono gli iteratori
- * Dcel::ConstVertexIterator, Dcel::ConstHalfEdgeIterator e Dcel::ConstFaceIterator.
- * La classi Dcel::Vertex e Dcel::Face mettono a disposizione altri iteratori (vedere le relative pagine), tuttavia i loro iteratori sono
- * completamente diversi rispetto a questi. Gli iteratori della Dcel servono per ciclare su tutti gli elementi contenuti nella Dcel, senza
- * tenere conto di nessuna relazione di adiacenza o incidenza.
+ * or:
  *
- * Gli iteratori presenti in Dcel::Vertex e Dcel::Face invece servono solo ed esclusivamente a visitare tutte le componenti adiacenti o incidenti
- * ad un Dcel::Vertex o una Dcel::Face. Non vi sono iteratori nella classe Dcel::HalfEdge in quanto tutte le relazioni di incidenza/adiacenza
- * sono ottenibili mediante operazioni di get.
+ * \code{.cpp}
+ * for (Dcel::Vertex* v : d.vertexIterator()){
+ *     // use v here
+ * }
+ * \endcode
+ *
+ * We can do the same thing with Dcel::HalfEdge and Dcel::Face. For const Dcel, you can use const iterators.
+ * Dcel::Vertex and Dcel::Face classes have also other type of iterators (which are mostly circular iterators)
+ * that allows to access to incident/adjacent elements. See the documentation for all the specific iterators.
  */
 
 class Dcel : public SerializableObject {

@@ -60,6 +60,16 @@ BoundingBox2D getBoundingBox(const InputContainer& container);
 
 }
 
+//hash specialization
+namespace std {
+
+template<>
+struct hash<cg3::BoundingBox2D> {
+    size_t operator()(const cg3::BoundingBox2D& k) const;
+};
+
+}
+
 #include "bounding_box2d.tpp"
 
 #endif // CG3_BOUNDINGBOX2D_H

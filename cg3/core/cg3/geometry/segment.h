@@ -82,6 +82,16 @@ typedef Segment3D<double> Segment3Di;
 
 }
 
+//hash specialization
+namespace std {
+
+template <typename T>
+struct hash<cg3::Segment<T>> {
+    size_t operator()(const cg3::Segment<T>& k) const;
+};
+
+}
+
 #include "segment.tpp"
 
 
