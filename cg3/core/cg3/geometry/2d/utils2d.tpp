@@ -278,11 +278,21 @@ namespace cg3 {
         return determinant3x3(m);
     }
 
-    inline bool isPolygonCounterClockwise(const std::vector<Point2Dd>& polygon) {
+    /**
+     * @brief isPolygonCounterClockwise
+     * @param polygon: a container of Point2D representing a regular polygon
+     * @return true if the points of the polygon are stored in counterclockwise order
+     */
+    template <typename Container>
+    inline bool isPolygonCounterClockwise(const Container& polygon) {
         double sum = 0;
-        for (unsigned int i = 0; i < polygon.size(); i++){
-            Point2Dd p1 = polygon[i];
-            Point2Dd p2 = polygon[(i+1)%polygon.size()];
+        for (typename Container::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
+            typename Container::const_iterator next = it;
+            next++;
+            if (next == polygon.end())
+                next = polygon.begin();
+            const Point2Dd& p1 = *it;
+            const Point2Dd& p2 = *next;
             sum += (p2.x() - p1.x()) * (p2.y()+p1.y());
         }
         if (sum > 0)

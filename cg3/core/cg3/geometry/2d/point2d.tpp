@@ -208,13 +208,13 @@ inline bool Point2D<T>::operator >(const Point2D<T>& otherPoint) const {
     return false;
 }
 
-template <class T>
 /**
  * @brief Point2D<T>::operator <=
  * Lexicographical order of points: check first for x coord, and if they are equal, y.
  * @param otherPoint
  * @return true if this point is <= than other point, false otherwise.
  */
+template <class T>
 inline bool Point2D<T>::operator <=(const Point2D<T>& otherPoint) const {
     return *this == otherPoint || *this < otherPoint;
 }
@@ -516,11 +516,23 @@ inline void Point2D<T>::rot(T matrix[][2]){
     yCoord = p.y();
 }
 
+/**
+ * @brief Point2D<T>::serialize
+ * Serialzies a Point2D in a binary file
+ * @param binaryFile
+ * @see the cg3::SerializableObject class
+ */
 template<class T>
 void Point2D<T>::serialize(std::ofstream& binaryFile) const {
     serializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);
 }
 
+/**
+ * @brief Point2D<T>::deserialize
+ * Deserialzies a Point2D from a binary file
+ * @param binaryFile
+ * @see the cg3::SerializableObject class
+ */
 template<class T>
 void Point2D<T>::deserialize(std::ifstream& binaryFile) {
     deserializeObjectAttributes("cg3Point2D", binaryFile, xCoord, yCoord);

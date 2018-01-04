@@ -34,7 +34,8 @@ namespace cg3 {
  *
  * @author Alessandro Muntoni
  */
-template <class T> class Point2D : SerializableObject {
+template <class T>
+class Point2D : SerializableObject {
 public:
     Point2D(T x = 0.0, T y = 0.0);
 #ifdef CG3_WITH_EIGEN

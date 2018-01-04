@@ -48,7 +48,8 @@ namespace cg3 {
             const std::vector<Point2Dd>& points,
             const std::vector<std::vector<Point2Dd>>& triangles);
 
-    inline bool isPolygonCounterClockwise(const std::vector<Point2Dd>& polygon);
+    template <typename Container>
+    inline bool isPolygonCounterClockwise(const Container& polygon);
 }
 
 #include "utils2d.tpp"
