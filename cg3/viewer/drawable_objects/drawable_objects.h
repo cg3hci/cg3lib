@@ -29,6 +29,8 @@ class DrawableObjects : public DrawableObject{
 
         void addSphere(const Pointd& center, double radius, const QColor &color, int precision = 4);
         void clearSpheres();
+        void addPoint(const Pointd& p, const QColor &color, int size = 8);
+        void clearPoints();
         void addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color);
         void clearCylinders();
         void addLine(const Pointd& a, const Pointd& b, int width, const QColor color);
@@ -48,6 +50,11 @@ class DrawableObjects : public DrawableObject{
                 QColor color;
         } Cylinder;
         typedef struct {
+                Pointd p;
+                QColor color;
+                int size;
+        } Point;
+        typedef struct {
                 Pointd a;
                 Pointd b;
                 int width;
@@ -56,6 +63,7 @@ class DrawableObjects : public DrawableObject{
         std::vector<Sphere> spheres;
         std::vector<Cylinder> cylinders;
         std::vector<Line> lines;
+        std::vector<Point> points;
 
         bool visible;
         BoundingBox bb;

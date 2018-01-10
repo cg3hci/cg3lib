@@ -10,6 +10,27 @@
 namespace cg3 {
 
 /**
+ * @brief Viewer::drawPoint
+ *
+ * Draws a point on the plane (coord z = 0 if 3D).
+ *
+ * @param p: coordinates of the point
+ * @param c: color of the point
+ * @param size: size of the point (default: 8)
+ */
+static inline void viewer::drawPoint(const Pointd& p, const QColor& c, int size) {
+    glEnable(GL_POINT_SMOOTH);
+    glPointSize(size);
+    glBegin(GL_POINTS);
+
+    glColor3f(c.redF(), c.greenF(), c.blueF());
+
+    glVertex3d(p.x(), p.y(), p.z());
+
+    glEnd();
+}
+
+/**
  * @brief Viewer::drawSphere
  *
  * Draws a sphere with opengl

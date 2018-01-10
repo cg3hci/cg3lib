@@ -89,6 +89,8 @@ class MainWindow : public QMainWindow {
         void disableDebugObjects();
         void addDebugSphere(const cg3::Pointd& center, double radius, const QColor &color, int precision = 4);
         void clearDebugSpheres();
+        void addDebugPoint(const cg3::Pointd& point, const QColor& color, int size = 8);
+        void clearDebugPoints();
         void addDebugCylinder(const cg3::Pointd& a, const cg3::Pointd& b, double radius, const QColor color);
         void clearDebugCylinders();
         void addDebugLine(const cg3::Pointd& a, const cg3::Pointd& b, int width, const QColor color);

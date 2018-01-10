@@ -302,6 +302,20 @@ void MainWindow::clearDebugSpheres() {
     }
 }
 
+void MainWindow::addDebugPoint(const Pointd& point, const QColor& color, int size) {
+    if (debugObjectsEnabled == true){
+        debugObjects.addPoint(point, color, size);
+        ui->glCanvas->update();
+    }
+}
+
+void MainWindow::clearDebugPoints() {
+    if (debugObjectsEnabled == true){
+        debugObjects.clearPoints();
+        ui->glCanvas->update();
+    }
+}
+
 void MainWindow::addDebugCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
     if (debugObjectsEnabled == true){
         debugObjects.addCylinder(a,b,radius, color);

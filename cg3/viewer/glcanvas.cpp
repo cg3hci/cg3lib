@@ -47,41 +47,35 @@ void GLCanvas::drawWithNames() {
 }
 
 void GLCanvas::postSelection(const QPoint& point) {
-  // Find the selectedPoint coordinates, using camera()->pointUnderPixel().
-  bool found;
-  selectedPoint = camera()->pointUnderPixel(point, found);
-  selectedPoint -= 0.01f*dir; // Small offset to make point clearly visible.
-  unsigned int idObject = selectedName();
-  // Note that "found" is different from (selectedObjectId()>=0) because of the size of the select region.
+    // Find the selectedPoint coordinates, using camera()->pointUnderPixel().
+    bool found;
+    selectedPoint = camera()->pointUnderPixel(point, found);
+    selectedPoint -= 0.01f*dir; // Small offset to make point clearly visible.
+    unsigned int idObject = selectedName();
+    // Note that "found" is different from (selectedObjectId()>=0) because of the size of the selected region.
 
-  if ((int) idObject == -1){
-      qglviewer::Vec orig, dir;
-      //qglviewer::Vec vdir;
-      qglviewer::Vec scenter = camera()->sceneCenter();
-      Pointd pointCenter(scenter.x, scenter.y, scenter.z);
-      camera()->convertClickToLine(point, orig, dir);
-      Line line(Pointd(orig.x, orig.y, orig.z), Vec3(dir.x, dir.y, dir.z));
-      Plane plane(Vec3(0,0,1),0);
-      Pointd inters;
-      bool b = plane.getIntersection(inters, line);
-      inters += pointCenter;
-      if (b){
-          //QMessageBox::information(this, "Point", "Coord Point: " + QString::number(point.x()) + "," + QString::number(point.y()) + "\n"
-          //                         + "Point Clicked: " + QString::number(inters.x()) + "," + QString::number(inters.y()));
-          emit point2DClicked(Point2Dd(inters.x(), inters.y()));
-      }
-      else {
-          QMessageBox::information(this, "No selection", "No Intersection between Clicked Point and Z plane");
-      }
-  }
-  else
-      for(int i=0; i<(int)drawlist.size(); ++i){
-          const PickableObject* po = dynamic_cast<const PickableObject*>(drawlist[i]);
-          if (po) { // se è un PickableObject, allora faccio la emit sull'object!
-              emit objectPicked(idObject);
-              update();
-          }
-      }
+    if ((int) idObject == -1){
+        qglviewer::Vec orig, dir;
+        camera()->convertClickToLine(point, orig, dir);
+        Line line(Pointd(orig.x, orig.y, orig.z), Vec3(dir.x, dir.y, dir.z));
+        Plane plane(Vec3(0,0,1),0);
+        Pointd inters;
+        bool b = plane.getIntersection(inters, line);
+        if (b) {
+            emit point2DClicked(Point2Dd(inters.x(), inters.y()));
+        }
+        else {
+            QMessageBox::information(this, "No selection", "No Intersection between Clicked Point and Z plane");
+        }
+    }
+    else
+        for(int i=0; i<(int)drawlist.size(); ++i){
+            const PickableObject* po = dynamic_cast<const PickableObject*>(drawlist[i]);
+            if (po) { // se è un PickableObject, allora faccio la emit sull'object!
+                emit objectPicked(idObject);
+                update();
+            }
+        }
 }
 
 void GLCanvas::clear() {
@@ -200,7 +194,7 @@ void GLCanvas::fitScene() {
                 ++count;
             }
         }
-        if (count == 0){
+        if (count == 0) {
             bb.min() = Pointd(-1,-1,-1);
             bb.max() = Pointd( 1, 1, 1);
         }
@@ -211,7 +205,6 @@ void GLCanvas::fitScene() {
 
     setSceneCenter(qglviewer::Vec(sceneCenter.x(), sceneCenter.y(), sceneCenter.z()));
     setSceneRadius(sceneRadius);
-
     showEntireScene();
 }
 

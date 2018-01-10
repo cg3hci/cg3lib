@@ -20,6 +20,9 @@ void DrawableObjects::draw() const {
         for (const Sphere& s : spheres){
             viewer::drawSphere(s.center, s.radius, s.color, s.precision);
         }
+        for (const Point& p : points){
+            viewer::drawPoint(p.p, p.color, p.size);
+        }
         for (const Cylinder& c : cylinders){
             viewer::drawCylinder(c.a, c.b, c.radius, c.radius, c.color);
         }
@@ -36,8 +39,8 @@ Pointd DrawableObjects::sceneCenter() const {
 }
 
 double DrawableObjects::sceneRadius() const {
-    if (bb.diag() > 0)
-        return bb.diag()/2;
+    //if (bb.diag() > 0)
+    //    return bb.diag()/2;
     return -1;
 }
 
@@ -61,6 +64,10 @@ void DrawableObjects::updateBoundingBox() {
     for (const Sphere& s : spheres){
         bb.min() = bb.min().min(s.center);
         bb.max() = bb.max().max(s.center);
+    }
+    for (const Point& p : points){
+        bb.min() = bb.min().min(p.p);
+        bb.max() = bb.max().max(p.p);
     }
     for (const Cylinder& c : cylinders){
         bb.min() = bb.min().min(c.a);
@@ -89,6 +96,18 @@ void DrawableObjects::addSphere(const Pointd& center, double radius, const QColo
 
 void DrawableObjects::clearSpheres() {
     spheres.clear();
+    updateBoundingBox();
+}
+
+void DrawableObjects::addPoint(const Pointd& p, const QColor& color, int size) {
+    Point pp = {p, color, size};
+    points.push_back(pp);
+    bb.min() = bb.min().min(p);
+    bb.max() = bb.max().max(p);
+}
+
+void DrawableObjects::clearPoints() {
+    points.clear();
     updateBoundingBox();
 }
 

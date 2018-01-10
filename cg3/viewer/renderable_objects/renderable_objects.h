@@ -27,6 +27,8 @@ namespace cg3 {
 
 namespace viewer {
 
+static inline void drawPoint(const Pointd& p, const QColor& c, int size = 8);
+
 static inline void drawSphere(const Pointd& center, float radius, const QColor& color, int precision = 4);
 
 static inline void drawCylinder(const Pointd& a, const Pointd& b, float top_radius, float bottom_radius, const QColor& color);
