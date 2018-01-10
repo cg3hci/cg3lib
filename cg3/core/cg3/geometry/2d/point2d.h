@@ -24,7 +24,6 @@
 namespace cg3 {
 
 /**
- * \~Engish
  * @class Point2D
  * @brief The Point2D class models a point or a vector in a 2D plane.
  *

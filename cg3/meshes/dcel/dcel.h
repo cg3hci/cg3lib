@@ -3,6 +3,7 @@
   * This Source Code Form is subject to the terms of the GNU GPL 3.0
   *
   * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+  * @author Andreas Scalas (andreasscalas@tiscali.it)
   */
 
 #ifndef CG3_DCEL_H
@@ -13,7 +14,7 @@
 #include "dcel_iterators.h"
 
 /**
- * @mainpage Dcel
+ * @page Dcel
  * \~Italian
  * # 1 Introduzione
  * Questa libreria è stata progettata per poter sviluppare degli algoritmi su mesh tridimensionali utilizzando una struttura dati
@@ -249,21 +250,12 @@
  * - Dcel::HalfEdge \n
  * - Dcel::Face \n
  *
- * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @author Andreas Scalas (andreasscalas@tiscali.it)
- * @version 1.0
- * @copyright Alessandro Muntoni 2016.
- *
  *
  * \~English
  * # 1 Introduction
  * This library has been designed to allow the developemento of algorithms on three-dimensional meshes using a data structure
  * preactical and easy, having all the necessary tools to make all the basic and advanced operations of navigation on the mesh.
  *
- * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
- * @author Andreas Scalas (andreasscalas@tiscali.it)
- * @version 1.0
- * @copyright Alessandro Muntoni 2016.
  **/
 
 #endif // CG3_DCEL_H
