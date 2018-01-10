@@ -3,13 +3,11 @@
   * This Source Code Form is subject to the terms of the GNU GPL 3.0
   *
   * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
-  */
-
+*/
 #ifndef CG3_CGAL_INTERSECTIONS2D_H
 #define CG3_CGAL_INTERSECTIONS2D_H
 
-#include "cg3/geometry/segment.h"
-
+#include "cg3/geometry/2d/segment2d.h"
 
 namespace cg3 {
 namespace cgal {

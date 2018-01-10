@@ -10,7 +10,7 @@
 
 #include "cg3/utilities/utils.h"
 
-#include "cg3/geometry/segment.h"
+#include "cg3/geometry/2d/segment2d.h"
 
 namespace cg3 {
 

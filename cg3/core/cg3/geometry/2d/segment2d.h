@@ -9,4 +9,15 @@
 
 #include "../segment.h"
 
+namespace cg3 {
+
+template <class T>
+using Segment2D = Segment<Point2D<T>>;
+
+typedef Segment2D<double> Segment2Dd;
+
+typedef Segment2D<double> Segment2Di;
+
+
+}
 #endif // CG3_SEGMENT2D_H
