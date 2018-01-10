@@ -66,6 +66,10 @@ void MainWindow::fitScene() {
     ui->glCanvas->fitScene();
 }
 
+void MainWindow::fitScene(const Point2Dd& center, double radius) {
+    ui->glCanvas->fitScene(Pointd(center.x(), center.y(), 0), radius);
+}
+
 void MainWindow::fitScene(const Pointd& center, double radius) {
     ui->glCanvas->fitScene(center, radius);
 }
