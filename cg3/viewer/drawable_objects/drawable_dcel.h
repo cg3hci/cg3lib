@@ -16,18 +16,12 @@
 namespace cg3 {
 
 /**
- * \~Italian
  * @class DrawableDcel
  *
- * @brief Classe che eredita dalla classe Dcel e dall'interfaccia DrawalbleObject.
- * Rende visualizzabile in una canvas la Dcel.
- * Tuttavia, se si effettuano modifiche sulla Dcel (utilizzando quindi i metodi classici della Dcel),
- * queste non saranno immediatamente visibili sulla DrawableDcel. Per rendere visibili eventuali modifiche,
- * è necessario chiamare il metodo update().
+ * @brief Class which allows to draw a Dcel in the Viewer.
+ * In order to make visible any change made in the Dcel, you must execute the method DrawableDcel::update().
  *
- * @warning il metodo update() non è particolarmente efficiente se chiamato ad ogni draw() (ossia ad ogni render
- * della dcel); è quindi caldamente consigliato chiamare il metodo update() solamente quando si vuole visualizzare
- * le modifiche effettuate sulla dcel.
+ * @warning if you need performance, do not call update() inside a draw method; call it only when you made some modifications in the dcel.
  */
 class DrawableDcel : public Dcel, public DrawableMesh {
     public:

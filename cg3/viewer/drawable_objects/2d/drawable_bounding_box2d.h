@@ -14,8 +14,12 @@
 
 namespace cg3 {
 
-class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject
-{
+/**
+ * @brief The DrawableBoundingBox2D class
+ *
+ * DrawableObject which draws a 2D Bounding Box.
+ */
+class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject {
     public:
         DrawableBoundingBox2D();
         DrawableBoundingBox2D(const BoundingBox2D& b);
@@ -27,15 +31,20 @@ class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject
         Pointd sceneCenter() const;
         double sceneRadius() const;
 
+        void setEdgeColor(const QColor& c);
+        void setPointColor(const QColor& c);
+        void setEdgeWidth(int w);
+        void setPointSize(int s);
+
     private:
 
         void drawEdges() const;
         void drawPoints() const;
 
         int pointSize;
-        Color colorPoint;
+        Color pointColor;
         int edgeWidth;
-        Color colorEdge;
+        Color edgeColor;
 };
 
 }

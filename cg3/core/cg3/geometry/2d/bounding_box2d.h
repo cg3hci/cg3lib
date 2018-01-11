@@ -51,7 +51,7 @@ class BoundingBox2D : SerializableObject{
         void serialize(std::ofstream& binaryFile) const;
         void deserialize(std::ifstream& binaryFile);
 
-    private:
+    protected:
         Point2Dd minCoord, maxCoord;
 };
 

@@ -16,10 +16,10 @@
 
 namespace cg3 {
 
-DrawableBoundingBox2D::DrawableBoundingBox2D() : BoundingBox2D(), pointSize(2), colorPoint(), edgeWidth(1), colorEdge() {
+DrawableBoundingBox2D::DrawableBoundingBox2D() : BoundingBox2D(), pointSize(2), pointColor(), edgeWidth(1), edgeColor() {
 }
 
-DrawableBoundingBox2D::DrawableBoundingBox2D(const BoundingBox2D& b) : BoundingBox2D(b), pointSize(2), colorPoint(), edgeWidth(1), colorEdge() {
+DrawableBoundingBox2D::DrawableBoundingBox2D(const BoundingBox2D& b) : BoundingBox2D(b), pointSize(2), pointColor(), edgeWidth(1), edgeColor() {
 }
 
 DrawableBoundingBox2D::DrawableBoundingBox2D(const Point2Dd& min, const Point2Dd& max) : DrawableBoundingBox2D(BoundingBox2D(min, max))
@@ -40,26 +40,34 @@ double DrawableBoundingBox2D::sceneRadius() const {
     return diag();
 }
 
+void DrawableBoundingBox2D::setEdgeColor(const QColor& c) {
+    edgeColor = c;
+}
+
+void DrawableBoundingBox2D::setPointColor(const QColor& c) {
+    pointColor = c;
+}
+
+void DrawableBoundingBox2D::setEdgeWidth(int w) {
+    edgeWidth = w;
+}
+
+void DrawableBoundingBox2D::setPointSize(int s) {
+    pointSize = s;
+}
+
 void DrawableBoundingBox2D::drawEdges() const {
-    viewer::drawLine2D(Point2Dd(min().x(), min().y()), Point2Dd(max().x(), min().y()), colorEdge, edgeWidth);
-    viewer::drawLine2D(Point2Dd(max().x(), min().y()), Point2Dd(max().x(), max().y()), colorEdge, edgeWidth);
-    viewer::drawLine2D(Point2Dd(max().x(), max().y()), Point2Dd(min().x(), max().y()), colorEdge, edgeWidth);
-    viewer::drawLine2D(Point2Dd(min().x(), max().y()), Point2Dd(min().x(), min().y()), colorEdge, edgeWidth);
+    viewer::drawLine2D(Point2Dd(min().x(), min().y()), Point2Dd(max().x(), min().y()), edgeColor, edgeWidth);
+    viewer::drawLine2D(Point2Dd(max().x(), min().y()), Point2Dd(max().x(), max().y()), edgeColor, edgeWidth);
+    viewer::drawLine2D(Point2Dd(max().x(), max().y()), Point2Dd(min().x(), max().y()), edgeColor, edgeWidth);
+    viewer::drawLine2D(Point2Dd(min().x(), max().y()), Point2Dd(min().x(), min().y()), edgeColor, edgeWidth);
 }
 
 void DrawableBoundingBox2D::drawPoints() const {
-    glEnable(GL_POINT_SMOOTH);
-    glPointSize(pointSize);
-    glBegin(GL_POINTS);
-
-    glColor3f(colorPoint.redF(), colorPoint.greenF(), colorPoint.blueF());
-
-    glVertex2d(min().x(), min().y());
-    glVertex2d(min().x(), max().y());
-    glVertex2d(max().x(), min().y());
-    glVertex2d(max().x(), max().y());
-
-    glEnd();
+    viewer::drawPoint2D(minCoord, pointColor, pointSize);
+    viewer::drawPoint2D(cg3::Point2Dd(minCoord.x(), maxCoord.y()), pointColor, pointSize);
+    viewer::drawPoint2D(cg3::Point2Dd(maxCoord.x(), minCoord.y()), pointColor, pointSize);
+    viewer::drawPoint2D(maxCoord, pointColor, pointSize);
 }
 
 }
