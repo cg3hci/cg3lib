@@ -10,16 +10,16 @@
 
 #include <cg3/geometry/2d/bounding_box2d.h>
 #include <cg3/utilities/color.h>
-#include "../interfaces/drawable_object.h"
+#include "../../interfaces/drawable_object.h"
 
 namespace cg3 {
 
 class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject
 {
     public:
-        DrawableBoundingBox2D(double thirdCoord = 0);
-        DrawableBoundingBox2D(const BoundingBox2D& b, double thirdCoord = 0);
-        DrawableBoundingBox2D(const Point2Dd& min, const Point2Dd& max, double thirdCoord = 0);
+        DrawableBoundingBox2D();
+        DrawableBoundingBox2D(const BoundingBox2D& b);
+        DrawableBoundingBox2D(const Point2Dd& min, const Point2Dd& max);
 
 
         // DrawableObject interface
@@ -36,8 +36,6 @@ class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject
         Color colorPoint;
         int edgeWidth;
         Color colorEdge;
-
-        double thirdCoord;
 };
 
 }

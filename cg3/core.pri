@@ -39,7 +39,8 @@ HEADERS += \
     $$PWD/core/cg3/geometry/transformations.h \
     $$PWD/core/cg3/geometry/utils3d.h \
     $$PWD/core/cg3/geometry/2d/bounding_box2d.h \
-    $$PWD/core/cg3/geometry/2d/intersections2d.h\
+    $$PWD/core/cg3/geometry/2d/intersections2d.h \
+    $$PWD/core/cg3/geometry/2d/line2d.h \
     $$PWD/core/cg3/geometry/2d/point2d.h \
     $$PWD/core/cg3/geometry/2d/segment2d.h \
     $$PWD/core/cg3/geometry/2d/utils2d.h
@@ -54,6 +55,7 @@ SOURCES += \
     $$PWD/core/cg3/geometry/utils3d.tpp \
     $$PWD/core/cg3/geometry/2d/bounding_box2d.tpp \
     $$PWD/core/cg3/geometry/2d/intersections2d.cpp \
+    $$PWD/core/cg3/geometry/2d/line2d.cpp \
     $$PWD/core/cg3/geometry/2d/point2d.tpp \
     $$PWD/core/cg3/geometry/2d/utils2d.tpp
 

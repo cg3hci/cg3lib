@@ -29,7 +29,8 @@ namespace viewer {
 
 static inline void drawPoint2D(const Point2Dd& p, const QColor& c, int size);
 
-static inline void drawLine2D(const Point2Dd&a, const Point2Dd& b, const QColor& c, int width = 3);
+template<typename T1, typename T2>
+static inline void drawLine2D(const Point2D<T1>&a, const Point2D<T2>& b, const QColor& c, int width = 3);
 
 static inline void drawTriangle2D(const std::array<Point2Dd, 3>& arr, const QColor& c, int width = 3, bool fill = false);
 
@@ -43,6 +44,6 @@ static inline void drawQuad2D(const Point2Dd& p1, const Point2Dd& p2, const Poin
 
 }
 
-#include "renderable_objects_2d.tpp"
+#include "renderable_objects2d.tpp"
 
 #endif // CG3_RENDERABLE_OBJECTS2D_H

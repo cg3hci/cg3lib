@@ -7,7 +7,7 @@
 
 #include "drawable_objects.h"
 #include "../renderable_objects/renderable_objects.h"
-#include "../renderable_objects/2d/renderable_objects_2d.h"
+#include "../renderable_objects/2d/renderable_objects2d.h"
 
 
 namespace cg3 {

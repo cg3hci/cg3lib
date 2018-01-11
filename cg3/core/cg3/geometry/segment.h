@@ -21,7 +21,7 @@ namespace cg3 {
  * by two end-points
  */
 template <class T>
-class Segment : SerializableObject {
+class Segment : public SerializableObject {
 
 public:
 
@@ -53,7 +53,7 @@ public:
     /* Utilities */
     std::string toString() const;
 
-private:
+protected:
 
     /* Fields */
     T p1;

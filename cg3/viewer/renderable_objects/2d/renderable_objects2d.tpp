@@ -5,7 +5,7 @@
   * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
   */
 
-#include "renderable_objects_2d.h"
+#include "renderable_objects2d.h"
 
 /**
  * @brief Viewer::drawPoint2D
@@ -39,7 +39,8 @@ static inline void cg3::viewer::drawPoint2D(const Point2Dd& p, const QColor& c, 
  * @param c: color of the line
  * @param width: width of the line (default: 3)
  */
-static inline void cg3::viewer::drawLine2D(const Point2Dd& a, const Point2Dd& b, const QColor& c, int width) {
+template <typename T1, typename T2>
+static inline void cg3::viewer::drawLine2D(const Point2D<T1>& a, const Point2D<T2>& b, const QColor& c, int width) {
 
     glLineWidth(width);
 
@@ -47,8 +48,8 @@ static inline void cg3::viewer::drawLine2D(const Point2Dd& a, const Point2Dd& b,
 
     glColor3f(c.redF(), c.greenF(), c.blueF());
 
-    glVertex2f(a.x(), a.y());
-    glVertex2f(b.x(), b.y());
+    glVertex2d(a.x(), a.y());
+    glVertex2d(b.x(), b.y());
 
     glEnd();
 }
