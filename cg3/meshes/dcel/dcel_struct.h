@@ -28,6 +28,9 @@ namespace cg3 {
 
 /**
  * @class Dcel
+ *
+ * Main Dcel Page: @ref DcelPage
+ *
  * @brief Double Connected Edge List data structure.
  *
  * The Dcel class is composed by three main lists of:

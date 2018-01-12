@@ -14,141 +14,113 @@
 #include "dcel_iterators.h"
 
 /**
- * @page Dcel
- * \~Italian
- * # 1 Introduzione
- * Questa libreria è stata progettata per poter sviluppare degli algoritmi su mesh tridimensionali utilizzando una struttura dati
- * comoda e funzionale, avente tutti gli strumenti necessari per poter effettuare le operazioni di navigazione di base e anche avanzata.
- * Rispetto alle strutture dati presenti nelle librerie più utilizzate (CGAL, OpenMesh), questra struttura dati permette di gestire
- * mesh composte da poligoni generici che possono avere anche buchi.
- * È organizzata per essere utilizzata mediante puntatori, in modo da avere i riferimenti diretti ad ogni oggetto si voglia manipolare,
- * e fornisce una serie funzioni e metodi che sono sviluppati per lavorare su mesh manifold e chiuse. \n
- * Non mi assumo alcuna responsabilità riguardo la correttezza del codice; tuttavia, nel caso in cui fossero trovati dei bug, per
- * favore segnalateli al mio indirizzo email (muntoni.alessandro@gmail.com) in modo tale che possano essere corretti.
- * La libreria è rilasciata sotto licenza GNU GPL.\n
+ * @page DcelPage
+ * @title cg3::Dcel
  *
+ * # 1 Introduction
+ * The cg3::Dcel data structure has been designed to allow the a practical and easy developement of algorithms with a double connected
+ * half edge list, providing useful and powerful tools for a fast navigation of surfaces. It is designed to be used with pointers, allowing
+ * to manipulate directly all the elements that compose the surface.
+ * The base cg3::Dcel supports perfectly triangle meshes. It supports also polygonal meshes (polygons can also have holes), but for these
+ * you will need to enable the cg3::cgal module.
  *
- * # 2 Installazione
- * La Dcel è stata sviluppata utilizzando un ambiente QT per gestirne la visualizzazione in un'applicazione semplice e intuitiva,
- * tuttavia può essere anche utilizzata in modo standalone.
- * Per compilare, la Dcel richiede l'installazione di:
- * - GCC (≥ 4.8) (flag C++11);
- * - QT (≥ 5.2);
- * - Boost (≥ 1.54).
+ * # 2 Overview
+ * The Double-Connected Edge-List (Dcel) is a data structures that implements and manages elements in order to model a 3D surface mesh,
+ * in order that all the adjacency and incidency informations between the components will be accessibile in a constant time. The Dcel is
+ * composed of:
+ * - Vertices (Dcel::Vertex)
+ * - Half Edges (Dcel::HalfEdge)
+ * - Faces (Dcel::Face)
  *
+ * Vertices are composed of:
+ * - Coordinate: a 3D point (cg3::Point);
+ * - Normal: a 3D vector which represent the normal to the vertex (cg3::Point);
+ * - Incident Half Edge: a pointer to one of the incident outgoing half edges from the vertex;
+ * - Cardinality: number of edges (not half edges!) incident to the vertex;
+ * - Flag: an integer value assignable by the user to the vertex.
  *
- * È inoltre possibile usufruire di alcune funzionalità aggiuntive nel caso in cui sia installata la libreria CGAL.
- * Tali funzionalità sono molto utili soprattutto quando si ha intenzione di gestire una mesh composta da poligoni generici.
- * In questo caso, è sufficiente aggiungere la definizione della costante letterale CGAL_DEFINED per abilitare tali funzionalità.
- * Nel caso si voglia utilizzare anche il visualizzatore che permette di visualizzare e interagire con la Dcel mediante le classi
- * DrawableDcel e PickableDcel, è necessario installare anche la libreria libQGLViewer.
+ * Half Edges are composed of:
+ * - From Vertex: pointer to the from vertex;
+ * - To Vertex: pointer to the to vertex;
+ * - Twin Half Edge: pointer to the half edge twin (same incident vertices, opposite direction);
+ * - Previous Half Edge: pointer to the previous half edge in the incident face;
+ * - Next Half Edge: pointer to the next half edge in the incident face;
+ * - Incident Face: pointer to the incident face;
+ * - Flag: an integer value assignable by the user to the half edge.
  *
+ * Faces are composed of:
+ * - Outer Half Edge: Pointer to one of the half edges on the border of the face;
+ * - Inner Half Edges: list of inner half edges of the face, one for every hole of the face;
+ * - Normal: a 3D vector which represent the normal to the face (cg3::Point);
+ * - Area: area of the face;
+ * - Color: color associated to the face;
+ * - Flag: an integer value assignable by the user to the face.
  *
- * # 3 Overview
- * La Double-Connected Edge-List (Dcel)  è una struttura dati che si occupa di implementare e gestire gli elementi necessari a modellare
- * una mesh tridimensionale, in modo tale che tutte le informazioni di adiacenza e incidenza tra le componenti siano accessibili in tempo
- * costante. Una Dcel è composta da:
- * - Vertici (Dcel::Vertex);
- * - Mezzi Spigoli (Dcel::HalfEdge);
- * - Facce (Dcel::Face).
+ * The main purpose of the Dcel class is to put together three lists of components above and link them together, in order to have an
+ * efficient access to all the adjacencies and incidences between the components. The class allows to have access to the single components
+ * of every Vertex, Half Edge and Face, and also to make global operations on the surface stored in the Dcel, allowing efficient insertion,
+ * modification and deletion of every component.
+ * The class is inspired to the classic DCEL model described in Computational  Geometry: Algorithms and Applications; vertices, half edges and
+ * faces are stored in three different lists, and the links between the components are made using pointers.
  *
+ * # 3 How to use cg3::Dcel
  *
- * I Vertici sono composti da:
- * - Coordinate: punti definiti in uno spazio tridimensionale (vedi classe Point);
- * - Vettore Normale: solitamente è definito come la media delle normali alle facce incidenti sul vertice;
- * - Incident Half Edge: puntatore ad uno degli half edge incidenti sul vertice;
- * - Cardinalità: numero degli spigoli (non degli half edge!) incidenti sul vertice.
- * - Flag: valore associato alla faccia assegnabile a piacimento dall'utente.
- *
- *
- * Gli Half Edge sono composti da:
- * - From Vertex: puntatore al vertice da cui l'half edge è uscente;
- * - To Vertex: puntatore al vertice su cui l'half edge è entrante;
- * - Twin Half Edge: puntatore all'half edge gemello;
- * - Previous Half Edge: puntatore all'half edge precedente;
- * - Next Half Edge: puntatore all'half edge successivo;
- * - Incident Face: puntatore alla faccia incidente all'half edge.
- * - Flag: valore associato alla faccia assegnabile a piacimento dall'utente.
- *
- *
- * Le Facce sono composte da:
- * - Half Edge Esterno: puntatore ad uno degli half edge sul bordo esterno della faccia;
- * - Lista di Half Edge Interni: per ogni buco presente nella faccia (se ce ne sono), vi è il puntatore ad uno degli half edge sul suo bordo interno.
- * - Vettore Normale: vettore normale alla faccia;
- * - Area: area della faccia;
- * - Colore: colore associato alla faccia;
- * - Flag: valore associato alla faccia assegnabile a piacimento dall'utente.
- *
- *
- * Il compito della classe Dcel è quello di mettere insieme tutti i componenti, modellarne le relazioni di adiacenza e topologia sulla
- * base di quanto specificato dall'utente, rendere disponibili, quando necessario, le informazioni relative a un singolo componente (sia
- * esso un vertice, un half-edge o una faccia) e consentirne la modifica ed eventualmente la rimozione.
- * Il modello di ispirazione è quello classico, presentato anche in Computational  Geometry: Algorithms and Applications; i vertici, gli
- * half-edge e le facce sono inserite in tre array separati (non accessibili direttamente), e i collegamenti tra elementi appartenenti
- * agli array (es: un vertice che funge da origine per l'half-edge) sono gestiti utilizzando puntatori.
- * Le operazioni di inserimento, modifica e cancellazione di vertici, half edge e facce sono effettuate in tempo costante.
- *
- *
- * # 4 Come usare la Dcel
- *
- * In questa sezione viene data una piccola introduzione all'utilizzo della Dcel. Verranno fatti degli esempi di utilizzo sui vertici, ma
- * questi potranno poi essere estesi anche a half edge e facce. \n
- * Una istanza di una Dcel può essere semplicemente creata come segue:\n
+ * A cg3::Dcel istance can be created as a simple variable: \n
  *
  * \code{.cpp}
- * Dcel d;
+ * cg3::Dcel d;
  * \endcode
  *
- * Una mesh può essere caricata da file:
+ * A dcel can be loaded from file, using a constructor a the method Dcel::loadFromFile:
  *
  * \code{.cpp}
+ * cg3::Dcel d("mesh.ply");
  * d.loadFromObjFile("mesh.obj");
- * d.loadFromPlyFile("mesh.ply");
+ * d.loadFromPlyFile("mesh2.ply");
  * \endcode
  *
- * e successivamente salvata su file:
+ * A Dcel can be also stored on file, using methods for the supported formats:
  *
  * \code{.cpp}
  * d.saveOnObjFile("mesh.obj");
  * d.saveOnPlyFile("mesh.ply");
  * \endcode
  *
- * Questi formati sono supportati in modalità testuale.
- * Vi è anche la possibilità di salvare e caricare una Dcel utilizzando un formato appositamente creato per la stessa.
+ * It exists also a specified format "dcel" for cg3::Dcel meshes:
  *
  * \code{.cpp}
- * d.loadFromDcelFile("mesh.dcel");
+ * d.loadFromDcelFile("mesh.dcel"); // or d.loadFromFile("mesh.dcel");
  * //some operations
  * d.saveOnDcelFile("newmesh.dcel");
  * \endcode
  *
- * È anche possibile caricare manualmente tutte le componenti nella Dcel:
+ * It is also possible to create and load manually all the components to the Dcel:
  *
  * \code{.cpp}
- * Dcel::Vertex* v = d.addVertex(); // v è un puntatore al vertice appena inserito nella Dcel
- * v->setCoordinate(Pointd(0.0, 0.1, 0.2)); // setto le coordinate del vertice
- * Dcel::HalfEdge* he = d.addHalfEdge(); // he è un puntatore all'half edge appena inserito nella Dcel
- * he->setFromVertex(v); // v diventa il from vertex di he
- * Dcel::Face* f = d.addFace(); // f è un puntatore alla faccia appena inserita nella Dcel
- * f->setOuterHalfEdge(he); // he diventa l'half edge sul bordo esterno della faccia
- * he->setFace(f); // f diventa la faccia incidente all'half edge he
+ * cg3::Dcel::Vertex* v = d.addVertex(); // v is a pointer to the vertex of the Dcel
+ * v->setCoordinate(Pointd(0.0, 0.1, 0.2)); // setting the coordinate of the vertex
+ * cg3::Dcel::HalfEdge* he = d.addHalfEdge(); // he is a pointer to the inserted half edge of the Dcel
+ * he->setFromVertex(v); // v becomes the "from vertex" of he
+ * cg3::Dcel::Face* f = d.addFace(); // f is a pointer to the inserted face of the Dcel
+ * f->setOuterHalfEdge(he); // he becomes the outer half edge of the face f
+ * he->setFace(f); // f becomes the incident face of he
  * \endcode
  *
- * Nel momento in cui viene eseguito il metodo \c add_vertex() , viene inserito un vertice nella Dcel. Viene restituito un \c Dcel::Vertex* ,
- * ossia un puntatore al vertice presente nella Dcel. Dal momento in cui viene inserito, per poter manipolare il vertice presente sulla Dcel
- * bisognerà usare il puntatore \c v . Ovviamente, il discorso è invariato anche per quanto riguarda gli half edge e le facce.
- * Al momento dell'inserimento di un oggetto nella Dcel viene assegnato ad esso anche un ID univoco e non modificabile che permette una facile identificazione
- * delle componenti della Dcel  da parte dell'utente. Tale ID è valido solamente nel periodo in cui il vertice si trova nella Dcel. Ciò significa che,
- * nel caso in cui il vertice venga eliminato dalla Dcel, il suo ID potrà essere riutilizzato per altri vertici che verranno inseriti.
+ * When the method \c addVertex() is exectued, a new vertex is added to the Dcel. The method returns a  \c cg3::Dcel::Vertex*.
+ * After adding the vertex, it will be necessary to use its pointer \c v to manipulate it. The same is valid for cg3::Dcel::HalfEdge and cg3::Dcel::Face.
+ * After the element is inserted in the Dcel, an unique and non-mutable ID will be assigned to it. This ID allows to easily identify the elements.
+ * Elements can be also extracted from the Dcel using the ID:
  *
- * Si noti come è necessario utilizzare il puntatore di un oggetto già inserito precedentemente nella Dcel per settare i campi degli oggetti Dcel::Vertex, Dcel::HalfEdge e Dcel::Face.
- * Quando viene creato un oggetto \c Dcel::Vertex , \c Dcel::HalfEdge o \c Dcel::Face , le sue componenti che dovrebbero fare riferimento ad
- * altri oggetti presenti nella Dcel (per esempio la componente \c incidentHalfEdge nella classe \c Dcel::Vertex ) vengono inizializzate a
- * \c nullptr e dovrebbero essere modificate non appena si possiede il riferimento all'oggetto stesso nella Dcel. Nel momento in cui si eseguono dei
- * metodi che necessitano di queste componenti, nel caso in cui le componenti stesse siano ancora settate a \c nullptr o contengano degli elementi non
- * disponibili (per esempio, elementi eliminati dalla Dcel senza averne aggiornato anche i riferimenti), allora si genera un errore di \e Segmentation \e Fault,
- * che non può essere gestito.\n
- * Per l'eliminazione di un elemento della Dcel, è disponibile il metodo:\n
+ * \code{.cpp}
+ * cg3::Dcel::Vertex* v = d.getVertex(12); // v will be a pointer to the vertex with ID = 12
+ * \endcode
+ *
+ * This ID is unique and valid only in the time when the vertex is stored in the Dcel. If a vertex with some ID is deleted from the Dcel, its ID can be used
+ * for some other vertices that will be added to the Dcel after.
+ *
+ * When an element in the Dcel is created, all the links will be initialized with \c nullptr value. If, for example, a cg3::Dcel::HalfEdge has its twin with value \c nullptr,
+ * it means that the half edge has no twin. Before using pointer fields of the Dcel elements, be careful and check if they are different from \c nullptr.
+ * To delete an element from the Dcel, it is possible to use the following method :\n
  *
  * \code{.cpp}
  * d.deleteVertex(v);
@@ -165,13 +137,13 @@
  * È possibile inoltre resettare una Dcel:
  *
  * \code{.cpp}
- * d.reset();
+ * d.clear();
  * \endcode
  *
  * Il metodo reset si occupa di eliminare tutte le componenti della Dcel. Alla fine di tale metodo, \c d conterrà 0 vertici, 0 half edge e 0 facce.
  *
  *
- * # 5 Iteratori
+ * # 4 Iterators
  *
  * È possibile scorrere gli elementi della Dcel utilizzando gli iteratori (di cui vi sono anche i relativi iteratori \c const):\n
  *
@@ -249,13 +221,7 @@
  * - Dcel::Vertex \n
  * - Dcel::HalfEdge \n
  * - Dcel::Face \n
- *
- *
- * \~English
- * # 1 Introduction
- * This library has been designed to allow the developemento of algorithms on three-dimensional meshes using a data structure
- * preactical and easy, having all the necessary tools to make all the basic and advanced operations of navigation on the mesh.
- *
  **/
+
 
 #endif // CG3_DCEL_H
