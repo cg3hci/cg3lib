@@ -10,7 +10,7 @@
 namespace cg3 {
 
 #ifdef CG3_EIGENMESH_DEFINED
-void eigenMeshToTrimesh(cinolib::Trimesh& m, const SimpleEigenMesh& simpleEigenMesh) {
+void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEigenMesh) {
     unsigned int nVertices=simpleEigenMesh.getNumberVertices();
     unsigned int nFaces=simpleEigenMesh.getNumberFaces();
 
@@ -33,12 +33,12 @@ void eigenMeshToTrimesh(cinolib::Trimesh& m, const SimpleEigenMesh& simpleEigenM
         tris[j+1]=simpleEigenMesh.getFace(i).y();
         tris[j+2]=simpleEigenMesh.getFace(i).z();
     }
-    m = cinolib::Trimesh(coords, tris);
+    m = cinolib::Trimesh<>(coords, tris);
 }
 #endif
 
 #ifdef CG3_DCEL_DEFINED
-void dcelToTrimesh(cinolib::Trimesh& m, const Dcel& d) {
+void dcelToTrimesh(cinolib::Trimesh<>& m, const Dcel& d) {
     unsigned int nVertices=d.getNumberVertices();
     unsigned int nFaces=d.getNumberFaces();
 
@@ -72,7 +72,7 @@ void dcelToTrimesh(cinolib::Trimesh& m, const Dcel& d) {
         }
         i++;
     }
-    m = cinolib::Trimesh(coords, tris);
+    m = cinolib::Trimesh<>(coords, tris);
 }
 #endif
 

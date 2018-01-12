@@ -22,7 +22,7 @@
 #endif //EIGENMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
-#include <cinolib/meshes/trimesh/trimesh.h>
+#include <cinolib/meshes/trimesh.h>
 #endif //CG3_CINOLIB_DEFINED
 
 namespace cg3 {
@@ -164,7 +164,7 @@ Dcel::Dcel(const cg3::EigenMesh& eigenMesh) {
 #endif // CG3_EIGNEMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
-Dcel::Dcel(const cinolib::Trimesh& trimesh) {
+Dcel::Dcel(const cinolib::Trimesh<> &trimesh) {
     copyFrom(trimesh);
 }
 #endif //CG3_CINOLIB_DEFINED
@@ -1695,7 +1695,7 @@ void Dcel::copyFrom(const EigenMesh& eigenMesh) {
 #endif // CG3_EIGENMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
-void Dcel::copyFrom(const cinolib::Trimesh& trimesh) {
+void Dcel::copyFrom(const cinolib::Trimesh<> &trimesh) {
     clear();
 
     std::vector<Vertex*> vertices;
@@ -1706,9 +1706,9 @@ void Dcel::copyFrom(const cinolib::Trimesh& trimesh) {
     bool first = true;
 
 
-    for (unsigned int i = 0; i < (unsigned int)trimesh.num_vertices(); i++) {
+    for (unsigned int i = 0; i < (unsigned int)trimesh.num_verts(); i++) {
 
-        Pointd coord(trimesh.vertex(i));
+        Pointd coord(trimesh.vert(i));
 
         if (first) {
             boundingBox.setMin(coord);
@@ -1729,10 +1729,10 @@ void Dcel::copyFrom(const cinolib::Trimesh& trimesh) {
         vertices.push_back(vid);
     }
 
-    for (unsigned int i = 0; i < (unsigned int)trimesh.num_triangles(); i++) {
+    for (unsigned int i = 0; i < (unsigned int)trimesh.num_polys(); i++) {
 
         std::vector<int> nid;
-        Pointi ff(trimesh.triangle_vertex_id(i, 0), trimesh.triangle_vertex_id(i, 1), trimesh.triangle_vertex_id(i, 2));
+        Pointi ff(trimesh.poly_vert_id(i, 0), trimesh.poly_vert_id(i, 1), trimesh.poly_vert_id(i, 2));
         nid.push_back(ff.x());
         nid.push_back(ff.y());
         nid.push_back(ff.z());

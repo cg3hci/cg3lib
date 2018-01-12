@@ -19,10 +19,8 @@ namespace cg3 {
 #endif
 
 #ifdef CG3_CINOLIB_DEFINED
-namespace  cinolib{
-    class Trimesh;
-}
-#endif
+#include <cinolib/meshes/trimesh.h>
+#endif //CG3_CINOLIB_DEFINED
 
 namespace cg3 {
 
@@ -107,7 +105,7 @@ class Dcel : public SerializableObject {
         Dcel(const cg3::EigenMesh &eigenMesh);
         #endif // CG3_EIGENMESH_DEFINED
         #ifdef CG3_CINOLIB_DEFINED
-        Dcel(const cinolib::Trimesh &trimesh);
+        Dcel(const cinolib::Trimesh<> &trimesh);
         #endif //CG3_CINOLIB_DEFINED
         ~Dcel();
 
@@ -242,7 +240,7 @@ class Dcel : public SerializableObject {
         void copyFrom(const EigenMesh &eigenMesh);
         #endif // CG3_EIGENMESH_DEFINED
         #ifdef CG3_CINOLIB_DEFINED
-        void copyFrom(const cinolib::Trimesh &trimesh);
+        void copyFrom(const cinolib::Trimesh<> &trimesh);
         #endif //CG3_CINOLIB_DEFINED
 };
 

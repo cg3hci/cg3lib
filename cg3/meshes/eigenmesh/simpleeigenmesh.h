@@ -17,9 +17,7 @@
 #include <cg3/utilities/eigen.h>
 
 #ifdef CG3_CINOLIB_DEFINED
-namespace cinolib {
-    class Trimesh;
-}
+#include <cinolib/meshes/trimesh.h>
 #endif
 
 namespace cg3 {
@@ -62,7 +60,7 @@ class SimpleEigenMesh : public SerializableObject {
         template<typename T> SimpleEigenMesh(const Trimesh<T>& trimesh);
         #endif
         #ifdef CG3_CINOLIB_DEFINED
-        SimpleEigenMesh(const cinolib::Trimesh& trimesh);
+        SimpleEigenMesh(const cinolib::Trimesh<> &trimesh);
         #endif
 
         const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& getVerticesMatrix() const;

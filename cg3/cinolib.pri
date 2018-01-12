@@ -14,7 +14,7 @@ exists($$(CINOLIB_HOME)){
     macx{
         QMAKE_CXXFLAGS   = -Wno-c++11-extensions
     }
-    INCLUDEPATH     += $$(CINOLIB_HOME) #-> link to cinolib
+    INCLUDEPATH     += $$(CINOLIB_HOME)/include/ #-> link to cinolib
 
     QMAKE_CXXFLAGS += -isystem $$(CINOLIB_HOME) #-> link to cinolib
 

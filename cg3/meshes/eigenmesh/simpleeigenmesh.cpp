@@ -17,10 +17,6 @@
 #include "trimesh/trimesh.h"
 #endif
 
-#ifdef CG3_CINOLIB_DEFINED
-#include <cinolib/meshes/trimesh/trimesh.h>
-#endif
-
 namespace cg3 {
 
 #ifdef  CG3_DCEL_DEFINED
@@ -47,15 +43,15 @@ SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel) {
 #endif // CG3_DCEL_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
-SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh& trimesh) {
-    resizeVertices(trimesh.num_vertices());
-    resizeFaces(trimesh.num_triangles());
-    for (int i = 0; i <trimesh.num_vertices(); i++){
-        cinolib::vec3d v = trimesh.vertex(i);
+SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh) {
+    resizeVertices(trimesh.num_verts());
+    resizeFaces(trimesh.num_polys());
+    for (unsigned int i = 0; i <trimesh.num_verts(); i++){
+        cinolib::vec3d v = trimesh.vert(i);
         setVertex(i, v.x(), v.y(), v.z());
     }
-    for (int i = 0; i < trimesh.num_triangles(); i++){
-        setFace(i, trimesh.triangle_vertex_id(i,0), trimesh.triangle_vertex_id(i,1), trimesh.triangle_vertex_id(i,2));
+    for (unsigned int i = 0; i < trimesh.num_polys(); i++){
+        setFace(i, trimesh.poly_vert_id(i,0), trimesh.poly_vert_id(i,1), trimesh.poly_vert_id(i,2));
     }
 }
 #endif
