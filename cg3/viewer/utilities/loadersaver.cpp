@@ -29,7 +29,10 @@ LoaderSaver::LoaderSaver(const std::string &initialPath) : actualPath(initialPat
  * Adds a supported extension to the LoaderSaver.
  * Allows to open/save files of the given extension.
  *
- * @example ls.addSupportedExtension("txt");
+ * Example:\n
+ * \code{.cpp}
+ * ls.addSupportedExtension("txt");
+ * \endcode
  * @param extension: a string containing the extension, without dot.
  */
 void LoaderSaver::addSupportedExtension(const std::string &extension) {

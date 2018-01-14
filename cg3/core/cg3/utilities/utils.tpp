@@ -130,7 +130,7 @@ inline std::map<T, Color> smartColoring(const std::vector<T> &elements, AdjCompa
  * @brief typeName
  * Returns the type of T as a std::string
  *
- * @example
+ * Example.\n
  * \code{.cpp}
  * int i;
  * std::cout << "Type of i is " << typeName<decltype(i)>() << "\n";

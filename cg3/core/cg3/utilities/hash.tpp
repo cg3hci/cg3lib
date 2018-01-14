@@ -16,7 +16,7 @@ inline void hashCombine(std::size_t& seed) {
 /**
  * @brief hashCombine
  * @link https://stackoverflow.com/questions/2590677/how-do-i-combine-hash-values-in-c0x
- * @example
+ * Example:\n
  * \code{.cpp}
  * std::size_t h=0;
  * hashCombine(h, obj1, obj2, obj3);
