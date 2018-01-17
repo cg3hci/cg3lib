@@ -111,7 +111,7 @@ void grahamScanOnContainer(const InputIterator first, const InputIterator end, O
     do
     {
         it1++;
-    } while (it1 != last && !cg3::isPointAtLeft(*first, *last, *it1));
+    } while (it1 != last && !cg3::isPointAtRight(*first, *last, *it1));
 
     if (it1 != last) {
         //Initialize stack with the first element which could be in the convex hull
@@ -128,8 +128,8 @@ void grahamScanOnContainer(const InputIterator first, const InputIterator end, O
         for (it1++; it1 != last; it1++) {
             //Skip point for which last element is on the right of
             //it1 - it2 segment
-            if (cg3::isPointAtLeft(*it1, *it2, *last)) {
-                while (!cg3::isPointAtLeft(*it2, *it3, *it1)) {
+            if (cg3::isPointAtRight(*it1, *it2, *last)) {
+                while (!cg3::isPointAtRight(*it2, *it3, *it1)) {
                     //Pop from stack
                     stack.pop_back();
 

@@ -39,7 +39,7 @@ namespace cg3 {
     template<typename T>
     inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
         double det = pointSegmentPositionDeterminant(s1, s2, p);       
-        return det < -std::numeric_limits<double>::epsilon();
+        return det > std::numeric_limits<double>::epsilon();
     }
 
     /**
@@ -69,7 +69,7 @@ namespace cg3 {
     template<typename T>
     inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
         double det = pointSegmentPositionDeterminant(s1, s2, p);
-        return det > std::numeric_limits<double>::epsilon();
+        return det < -std::numeric_limits<double>::epsilon();
     }
 
     /**

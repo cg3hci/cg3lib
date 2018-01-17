@@ -208,7 +208,7 @@ void processConvexHull(
         if (
                 point < *firstUpper ||
                 point > *lastUpper ||
-                cg3::isPointAtLeft(*firstUpper, *lastUpper, point))
+                cg3::isPointAtRight(*firstUpper, *lastUpper, point))
         {
             std::pair<SetIt, bool> pairUpperIt = upper.insert(point);
             SetIt upperIt = pairUpperIt.first;
@@ -231,7 +231,7 @@ void processConvexHull(
             if (
                     upperPrev != upper.end() &&
                     upperNext != upper.end() &&
-                    !cg3::isPointAtLeft(*upperPrev, *upperNext, *upperIt))
+                    !cg3::isPointAtRight(*upperPrev, *upperNext, *upperIt))
             {
                 upper.erase(upperIt);
             }
@@ -242,7 +242,7 @@ void processConvexHull(
                     upperPrevPrev--;
 
                     while (*upperPrev != *firstUpper &&
-                           !cg3::isPointAtLeft(*upperPrevPrev, *upperIt, *upperPrev)) {
+                           !cg3::isPointAtRight(*upperPrevPrev, *upperIt, *upperPrev)) {
                         upperPrevPrev--;
                         upper.erase(upperPrev--);
                     }
@@ -254,7 +254,7 @@ void processConvexHull(
                     upperNextNext++;
 
                     while (*upperNext != *lastUpper &&
-                           !cg3::isPointAtLeft(*upperIt, *upperNextNext, *upperNext)) {
+                           !cg3::isPointAtRight(*upperIt, *upperNextNext, *upperNext)) {
                         upperNextNext++;
                         upper.erase(upperNext++);
                     }
@@ -281,7 +281,7 @@ void processConvexHull(
         if (
                 point > *firstLower ||
                 point < *lastLower ||
-                cg3::isPointAtLeft(*firstLower, *lastLower, point))
+                cg3::isPointAtRight(*firstLower, *lastLower, point))
         {
             std::pair<SetIt, bool> pairLowerIt = lower.insert(point);
             SetIt lowerIt = pairLowerIt.first;
@@ -304,7 +304,7 @@ void processConvexHull(
             if (
                     lowerPrev != lower.end() &&
                     lowerNext != lower.end() &&
-                    !cg3::isPointAtLeft(*lowerPrev, *lowerNext, *lowerIt))
+                    !cg3::isPointAtRight(*lowerPrev, *lowerNext, *lowerIt))
             {
                 lower.erase(lowerIt);
             }
@@ -315,7 +315,7 @@ void processConvexHull(
                     lowerPrevPrev++;
 
                     while (*lowerPrev != *firstLower &&
-                           !cg3::isPointAtLeft(*lowerPrevPrev, *lowerIt, *lowerPrev)) {
+                           !cg3::isPointAtRight(*lowerPrevPrev, *lowerIt, *lowerPrev)) {
                         lowerPrevPrev++;
                         lower.erase(lowerPrev++);
                     }
@@ -327,7 +327,7 @@ void processConvexHull(
                     lowerNextNext--;
 
                     while (*lowerNext != *lastLower &&
-                           !cg3::isPointAtLeft(*lowerIt, *lowerNextNext, *lowerNext)) {
+                           !cg3::isPointAtRight(*lowerIt, *lowerNextNext, *lowerNext)) {
                         lowerNextNext--;
                         lower.erase(lowerNext--);
                     }
