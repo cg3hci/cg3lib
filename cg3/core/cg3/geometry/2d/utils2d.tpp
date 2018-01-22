@@ -19,7 +19,7 @@ namespace cg3 {
     inline double determinant3x3(double m[][3]);
 
     template<typename T>
-    inline double pointSegmentPositionDeterminant(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p);
+    inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p);
 
 
 
@@ -38,7 +38,7 @@ namespace cg3 {
      */
     template<typename T>
     inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        double det = pointSegmentPositionDeterminant(s1, s2, p);       
+        double det = positionOfPointWithRespectToSegment(s1, s2, p);
         return det > std::numeric_limits<double>::epsilon();
     }
 
@@ -68,7 +68,7 @@ namespace cg3 {
      */
     template<typename T>
     inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        double det = pointSegmentPositionDeterminant(s1, s2, p);
+        double det = positionOfPointWithRespectToSegment(s1, s2, p);
         return det < -std::numeric_limits<double>::epsilon();
     }
 
@@ -100,7 +100,7 @@ namespace cg3 {
      */
     template<typename T>
     inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        double det = pointSegmentPositionDeterminant(s1, s2, p);
+        double det = positionOfPointWithRespectToSegment(s1, s2, p);
         return cg3::epsilonEqual(det, 0.0);
     }
 
@@ -260,22 +260,8 @@ namespace cg3 {
      *
      */
     template<typename T>
-    inline double pointSegmentPositionDeterminant(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        double m[3][3];
-
-        m[0][0] = (double) s1.x();
-        m[0][1] = (double) s1.y();
-        m[0][2] = 1.0;
-
-        m[1][0] = (double) s2.x();
-        m[1][1] = (double) s2.y();
-        m[1][2] = 1.0;
-
-        m[2][0] = (double) p.x();
-        m[2][1] = (double) p.y();
-        m[2][2] = 1.0;
-
-        return determinant3x3(m);
+    inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+        return ((s2.x() - s1.x())*(p.y() - s1.y()) - (s2.y() - s1.y())*(p.x() - s1.x()));
     }
 
     /**
