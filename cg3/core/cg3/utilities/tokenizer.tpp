@@ -29,7 +29,7 @@ inline Tokenizer::iterator Tokenizer::end() {
 }
 
 inline unsigned long Tokenizer::size() const {
-    return splitted.size();
+    return (unsigned long) splitted.size();
 }
 
 /**

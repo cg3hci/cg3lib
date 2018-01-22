@@ -84,7 +84,7 @@ void DrawableObjects::updateBoundingBox() {
 }
 
 unsigned int DrawableObjects::numberObjects() const {
-    return spheres.size() + cylinders.size() + lines.size();
+    return (unsigned int) (spheres.size() + cylinders.size() + lines.size());
 }
 
 void DrawableObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision) {
