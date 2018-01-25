@@ -14,6 +14,10 @@
 
 namespace cg3 {
 
+/**
+ * @brief The Plane class
+ * Stores a plane on the form \f$ax + by + cz + d = 0\f$.
+ */
 class Plane : SerializableObject {
     public:
         Plane(const Vec3& normal, double d);
@@ -26,7 +30,7 @@ class Plane : SerializableObject {
         double getD() const;
 
 
-        bool pointBelonging(const Pointd& p) const;
+        bool pointLiesOnPlane(const Pointd& p) const;
         #ifdef CG3_WITH_EIGEN
         bool getIntersection(Pointd&intersection, const Line &l) const;
         #endif

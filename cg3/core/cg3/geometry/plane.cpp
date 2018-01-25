@@ -25,19 +25,16 @@ Plane::Plane(const Pointd& p1, const Pointd& p2, const Pointd& p3){
     Vec3 v2 (p3 - p1);
     normal = v1.cross(v2);
     normal.normalize();
-    d = normal.x() * p1.x() + normal.y() * p1.y() + normal.z() * p1.z();
+    d = -(normal.x() * p1.x() + normal.y() * p1.y() + normal.z() * p1.z());
 }
 
 /**
- * @brief Line::pointBelonging Metodo che si occupa di controllare se un punto appartiene alla retta
- * @param p il punto del quale contollare l'appartenenza
- * @return true se il punto appartiene alla retta, false viceversa
+ * @brief Plane::pointLiesOnPlane checks if a point lies on the plane.
+ * @param p
+ * @return true if the point lies on the plane, false otherwise
  */
-bool Plane::pointBelonging(const Pointd &p) const{
-
+bool Plane::pointLiesOnPlane(const Pointd &p) const{
     int sum = normal.x()*p.x() + normal.y()*p.y() + normal.z()*p.z() + d;
-    //Se il punto appartiene al piano, allora l'equazione del piano deve essere
-    //verificata sostituendo alle variabili i valori del punto
     if(sum == 0)
         return true;
     else
