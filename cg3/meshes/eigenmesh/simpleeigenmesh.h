@@ -52,6 +52,7 @@ class SimpleEigenMesh : public SerializableObject {
 
     public:
         SimpleEigenMesh();
+        SimpleEigenMesh(const std::string& filename);
         template <typename T, typename U> SimpleEigenMesh(const Eigen::PlainObjectBase<T> &V, const Eigen::PlainObjectBase<U> &F);
         #ifdef  CG3_DCEL_DEFINED
         SimpleEigenMesh(const Dcel& dcel);
@@ -127,6 +128,10 @@ class SimpleEigenMesh : public SerializableObject {
  */
 
 inline SimpleEigenMesh::SimpleEigenMesh() {
+}
+
+inline SimpleEigenMesh::SimpleEigenMesh(const std::string &filename) {
+    readFromFile(filename);
 }
 
 template <typename T, typename U>

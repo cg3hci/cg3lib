@@ -36,6 +36,7 @@ class EigenMesh : public SimpleEigenMesh {
 
     public:
         EigenMesh();
+        EigenMesh(const std::string& filename);
         EigenMesh(const SimpleEigenMesh &m);
         EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F);
         EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F, const Eigen::MatrixXf& CV, const Eigen::MatrixXf& CF);
@@ -134,6 +135,10 @@ inline EigenMesh::EigenMesh(const Trimesh<T>& trimesh) : SimpleEigenMesh(trimesh
     updateBoundingBox();
 }
 #endif
+
+inline EigenMesh::EigenMesh(const std::string &filename) {
+    readFromFile(filename);
+}
 
 inline const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> &EigenMesh::getVerticesNormalsMatrix() const {
     return NV;

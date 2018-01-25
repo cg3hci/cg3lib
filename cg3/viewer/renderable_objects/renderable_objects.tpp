@@ -138,6 +138,16 @@ static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, cons
     glPopAttrib();
 }
 
+static inline void viewer::drawQuad(const Pointd &a, const Pointd &b, const Pointd &c, const Pointd &d, int width) {
+    glBegin(GL_QUADS);
+    glLineWidth(width);
+    glVertex3f(a.x(), a.y(), a.z());
+    glVertex3f(b.x(), b.y(), b.z());
+    glVertex3f(c.x(), c.y(), c.z());
+    glVertex3f(d.x(), d.y(), d.z());
+    glEnd();
+}
+
 /**
  * @brief Viewer::drawBox
  *

@@ -37,6 +37,8 @@ static inline void drawLine(const Pointd &a, const Pointd &b, const QColor& c, i
 
 static inline void drawDashedLine(const Pointd &a, const Pointd &b, const QColor& c, int width = 3);
 
+static inline void drawQuad(const Pointd & a, const Pointd& b, const Pointd&c, const Pointd& d, int width = 3);
+
 static inline void drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width = 3);
 
 static inline void drawBox(const std::vector<Pointd> &p, const QColor& c, int width = 3);

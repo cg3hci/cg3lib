@@ -7,7 +7,7 @@
  */
 
 #include "plane.h"
-
+#include <cg3/utilities/utils.h>
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/QR>
 #endif
@@ -15,9 +15,11 @@
 namespace cg3 {
 
 Plane::Plane(const Vec3& normal, double d) : normal(normal), d(d) {
+    normalize();
 }
 
 Plane::Plane(double a, double b, double c, double d) : normal(a, b, c), d(d){
+    normalize();
 }
 
 Plane::Plane(const Pointd& p1, const Pointd& p2, const Pointd& p3){
@@ -26,6 +28,27 @@ Plane::Plane(const Pointd& p1, const Pointd& p2, const Pointd& p3){
     normal = v1.cross(v2);
     normal.normalize();
     d = -(normal.x() * p1.x() + normal.y() * p1.y() + normal.z() * p1.z());
+}
+
+double Plane::getA() const{
+    return normal.x();
+}
+
+double Plane::getB() const{
+    return normal.y();
+}
+
+double Plane::getC() const{
+    return normal.z();
+}
+
+double Plane::getD() const{
+    return d;
+}
+
+void Plane::normalize() {
+    double oldLength = normal.normalize();
+    d /= oldLength;
 }
 
 /**
@@ -77,20 +100,6 @@ void Plane::deserialize(std::ifstream& binaryFile) {
 }
 
 
-double Plane::getA() const{
-    return normal.x();
-}
 
-double Plane::getB() const{
-    return normal.y();
-}
-
-double Plane::getC() const{
-    return normal.z();
-}
-
-double Plane::getD() const{
-    return d;
-}
 
 }

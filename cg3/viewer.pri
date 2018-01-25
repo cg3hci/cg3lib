@@ -134,3 +134,9 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
+
+HEADERS += \
+    $$PWD/viewer/drawable_objects/drawable_plane.h
+
+SOURCES += \
+    $$PWD/viewer/drawable_objects/drawable_plane.cpp

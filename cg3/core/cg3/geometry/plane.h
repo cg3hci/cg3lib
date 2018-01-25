@@ -29,6 +29,7 @@ class Plane : SerializableObject {
         double getC() const;
         double getD() const;
 
+        void normalize();
 
         bool pointLiesOnPlane(const Pointd& p) const;
         #ifdef CG3_WITH_EIGEN
