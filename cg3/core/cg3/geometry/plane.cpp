@@ -56,9 +56,9 @@ void Plane::normalize() {
  * @param p
  * @return true if the point lies on the plane, false otherwise
  */
-bool Plane::pointLiesOnPlane(const Pointd &p) const{
-    int sum = normal.x()*p.x() + normal.y()*p.y() + normal.z()*p.z() + d;
-    if(sum == 0)
+bool Plane::pointLiesOnPlane(const Pointd &p, double epsilon) const{
+    double sum = normal.x()*p.x() + normal.y()*p.y() + normal.z()*p.z() + d;
+    if(cg3::epsilonEqual(sum, 0.0, epsilon))
         return true;
     else
         return false;

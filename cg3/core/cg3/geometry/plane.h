@@ -11,6 +11,7 @@
 
 #include "point.h"
 #include "line.h"
+#include <cg3/utilities/const.h>
 
 namespace cg3 {
 
@@ -31,7 +32,7 @@ class Plane : SerializableObject {
 
         void normalize();
 
-        bool pointLiesOnPlane(const Pointd& p) const;
+        bool pointLiesOnPlane(const Pointd& p, double epsilon = CG3_EPSILON) const;
         #ifdef CG3_WITH_EIGEN
         bool getIntersection(Pointd&intersection, const Line &l) const;
         #endif
