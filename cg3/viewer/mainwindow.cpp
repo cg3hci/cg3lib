@@ -288,62 +288,6 @@ void MainWindow::disableDebugObjects() {
     ui->glCanvas->update();
 }
 
-void MainWindow::addDebugSphere(const Pointd& center, double radius, const QColor& color, int precision) {
-    if (debugObjectsEnabled == true){
-        debugObjects.addSphere(center, radius, color, precision);
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::clearDebugSpheres() {
-    if (debugObjectsEnabled == true){
-        debugObjects.clearSpheres();
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::addDebugPoint(const Pointd& point, const QColor& color, int size) {
-    if (debugObjectsEnabled == true){
-        debugObjects.addPoint(point, color, size);
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::clearDebugPoints() {
-    if (debugObjectsEnabled == true){
-        debugObjects.clearPoints();
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::addDebugCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
-    if (debugObjectsEnabled == true){
-        debugObjects.addCylinder(a,b,radius, color);
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::clearDebugCylinders() {
-    if (debugObjectsEnabled == true){
-        debugObjects.clearCylinders();
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::addDebugLine(const Pointd &a, const Pointd &b, int width, const QColor color) {
-    if (debugObjectsEnabled == true){
-        debugObjects.addLine(a,b,width, color);
-        ui->glCanvas->update();
-    }
-}
-
-void MainWindow::clearDebugLines() {
-    if (debugObjectsEnabled == true){
-        debugObjects.clearLines();
-        ui->glCanvas->update();
-    }
-}
-
 void MainWindow::setFullScreen(bool b) {
     ui->glCanvas->setFullScreen(b);
     if (!b)

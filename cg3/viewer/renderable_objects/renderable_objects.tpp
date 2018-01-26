@@ -138,6 +138,21 @@ static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, cons
     glPopAttrib();
 }
 
+static inline void viewer::drawTriangle(const Pointd &p1, const Pointd &p2, const Pointd &p3, const QColor &c, int width, bool fill) {
+    if (width != 0){
+        cg3::viewer::drawLine(p1, p2, c, width);
+        cg3::viewer::drawLine(p2, p3, c, width);
+        cg3::viewer::drawLine(p3, p1, c, width);
+    }
+    if (fill) {
+        glBegin(GL_TRIANGLES); //Begin triangle coordinates
+        glVertex3f(p1.x(), p1.y(), p1.z());
+        glVertex3f(p2.x(), p2.y(), p2.z());
+        glVertex3f(p3.x(), p3.y(), p3.z());
+        glEnd(); //End triangle coordinates
+    }
+}
+
 static inline void viewer::drawQuad(const Pointd &a, const Pointd &b, const Pointd &c, const Pointd &d, int width) {
     glBegin(GL_QUADS);
     glLineWidth(width);

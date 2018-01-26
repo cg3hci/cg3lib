@@ -91,6 +91,10 @@ bool Plane::getIntersection(Pointd& intersection, const Line& l) const {
 }
 #endif
 
+double Plane::pointDistance(const Pointd& p) const {
+    return (normal.dot(p - (normal*d)));
+}
+
 void Plane::serialize(std::ofstream& binaryFile) const {
     serializeObjectAttributes("cg3Plane", binaryFile, normal, d);
 }
@@ -98,8 +102,5 @@ void Plane::serialize(std::ofstream& binaryFile) const {
 void Plane::deserialize(std::ifstream& binaryFile) {
     deserializeObjectAttributes("cg3Plane", binaryFile, normal, d);
 }
-
-
-
 
 }

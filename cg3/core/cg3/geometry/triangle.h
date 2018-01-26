@@ -17,15 +17,20 @@ class Triangle : public SerializableObject {
     public:
         Triangle();
         Triangle(const V& v1, const V& v2, const V& v3);
+
         V normal() const;
         double area() const;
+        V v1() const;
+        V v2() const;
+        V v3() const;
+        V barycenter() const;
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;
         void deserialize(std::ifstream& binaryFile);
 
     protected:
-        V v1, v2, v3;
+        V _v1, _v2, _v3;
 };
 
 /* ----- Common typedefs (1D, 2D, 3D double) ----- */

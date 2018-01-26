@@ -87,14 +87,6 @@ class MainWindow : public QMainWindow {
         //Debug Objects
         void enableDebugObjects();
         void disableDebugObjects();
-        void addDebugSphere(const cg3::Pointd& center, double radius, const QColor &color, int precision = 4);
-        void clearDebugSpheres();
-        void addDebugPoint(const cg3::Pointd& point, const QColor& color, int size = 8);
-        void clearDebugPoints();
-        void addDebugCylinder(const cg3::Pointd& a, const cg3::Pointd& b, double radius, const QColor color);
-        void clearDebugCylinders();
-        void addDebugLine(const cg3::Pointd& a, const cg3::Pointd& b, int width, const QColor color);
-        void clearDebugLines();
 
         //Window Options:
         void setFullScreen(bool);
@@ -106,6 +98,8 @@ class MainWindow : public QMainWindow {
         QFrame *getManager(unsigned int i);
         void renameManager(unsigned int i, std::string s);
         void setCurrentIndexToolBox(unsigned int i);
+
+        cg3::DrawableObjects debugObjects;
 
     signals:
         /**
@@ -179,7 +173,6 @@ private:
         boost::bimap<int, const cg3::DrawableObject*> mapObjects;
         int nMeshes;
         bool first;
-        cg3::DrawableObjects debugObjects;
         bool debugObjectsEnabled;
 };
 

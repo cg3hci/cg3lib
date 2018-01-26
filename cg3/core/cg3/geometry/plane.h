@@ -36,6 +36,7 @@ class Plane : SerializableObject {
         #ifdef CG3_WITH_EIGEN
         bool getIntersection(Pointd&intersection, const Line &l) const;
         #endif
+        double pointDistance(const Pointd& p) const;
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;

@@ -18,6 +18,7 @@ class DrawableEigenMesh : public EigenMesh, public DrawableMesh {
         DrawableEigenMesh();
         DrawableEigenMesh(const SimpleEigenMesh &m);
         DrawableEigenMesh(const EigenMesh &m);
+        DrawableEigenMesh(const std::string &filename);
 
         // DrawableObject interface
         void draw() const;

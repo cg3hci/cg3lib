@@ -29,6 +29,9 @@ void DrawableObjects::draw() const {
         for (const Line& l : lines){
             viewer::drawLine(l.a, l.b, l.color, l.width);
         }
+        for (const Triangle& t : triangles){
+            viewer::drawTriangle(t.a, t.b, t.c, t.color, t.width, t.fill);
+        }
     }
 }
 
@@ -126,7 +129,7 @@ void DrawableObjects::clearCylinders() {
     updateBoundingBox();
 }
 
-void DrawableObjects::addLine(const Pointd &a, const Pointd &b, int width, const QColor color) {
+void DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor color, int width) {
     Line l = {a, b, width, color};
     lines.push_back(l);
     bb.min() = bb.min().min(a);
@@ -137,6 +140,22 @@ void DrawableObjects::addLine(const Pointd &a, const Pointd &b, int width, const
 
 void DrawableObjects::clearLines() {
     lines.clear();
+    updateBoundingBox();
+}
+
+void DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width, bool fill) {
+    Triangle t {a, b, c, width, color, fill};
+    triangles.push_back(t);
+    bb.min() = bb.min().min(a);
+    bb.min() = bb.min().min(b);
+    bb.min() = bb.min().min(c);
+    bb.max() = bb.max().max(a);
+    bb.max() = bb.max().max(b);
+    bb.max() = bb.max().max(c);
+}
+
+void DrawableObjects::clearTriangles() {
+    triangles.clear();
     updateBoundingBox();
 }
 
