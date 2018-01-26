@@ -10,8 +10,6 @@
 #define CG3_SEGMENT_H
 
 #include "point.h"
-#include "2d/point2d.h"
-
 #include <ostream>
 
 namespace cg3 {
@@ -74,8 +72,11 @@ using Segment3D = Segment<Point<T>>;
 typedef Segment1D<double> Segment1Dd;
 typedef Segment3D<double> Segment3Dd;
 
-typedef Segment1D<double> Segment1Di;
-typedef Segment3D<double> Segment3Di;
+typedef Segment1D<float> Segment1Df;
+typedef Segment3D<float> Segment3Df;
+
+typedef Segment1D<int> Segment1Di;
+typedef Segment3D<int> Segment3Di;
 
 }
 
