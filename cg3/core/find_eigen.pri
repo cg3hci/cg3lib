@@ -29,9 +29,17 @@ else {
             MODULES += CG3_WITH_EIGEN
             INCLUDEPATH += -I /libs/include/eigen3/
         }
-        else{
-            MODULES += CG3_WITHOUT_EIGEN
+        else {
+            exists(/usr/local/Cellar/eigen/3.3.4/include/eigen3){
+                DEFINES += CG3_WITH_EIGEN
+                MODULES += CG3_WITH_EIGEN
+                INCLUDEPATH += -I /usr/local/Cellar/eigen/3.3.4/include/eigen3
+            }
+            else{
+                MODULES += CG3_WITHOUT_EIGEN
+            }
         }
+
     }
 
     win32 {

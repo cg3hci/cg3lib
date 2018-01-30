@@ -160,7 +160,7 @@ private:
         #ifdef WIN32
         const std::string configFolderDirectory = std::string(std::getenv("USERPROFILE")) + "\\AppData\\Roaming\\cg3lib\\";
         #elif __APPLE__
-        const std::string configFolderDirectory = std::string("/Users/") + std::getenv("USER") + "/Library/Preferences/cg3lib/"
+        const std::string configFolderDirectory = std::string("/Users/") + std::getenv("USER") + "/Library/Preferences/cg3lib/";
         #elif __linux__
         const std::string configFolderDirectory = std::string(std::getenv("HOME")) + "/.config/cg3lib/";
         #endif

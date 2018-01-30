@@ -13,7 +13,9 @@
 #include <QColorDialog>
 #include <cg3/geometry/plane.h>
 #include "utilities/consolestream.h"
+#ifndef __APPLE__
 #include <experimental/filesystem>
+#endif
 
 namespace cg3 {
 
@@ -52,8 +54,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->glCanvas->setSnapshotQuality(100);
     ui->glCanvas->setSnapshotFormat("PNG");
 
+    #ifndef __APPLE__
     if (! std::experimental::filesystem::exists(configFolderDirectory.c_str()))
         std::experimental::filesystem::create_directory(configFolderDirectory.c_str());
+    #else
+    system((std::string("mkdir ") + configFolderDirectory).c_str());
+    #endif
 }
 
 MainWindow::~MainWindow() {

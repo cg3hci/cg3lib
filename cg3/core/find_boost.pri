@@ -20,7 +20,14 @@ else {
     macx{
         exists(/libs/include/boost/){
             INCLUDEPATH += -I /libs/include/boost/
+            INCLUDEPATH += -I /libs/include/
             DEFINES += CG3_WITH_BOOST
+        }
+        else {
+            exists(/usr/local/Cellar/boost/1.66.0/include/){
+                INCLUDEPATH += -I /usr/local/Cellar/boost/1.66.0/include/
+                DEFINES += CG3_WITH_BOOST
+            }
         }
     }
 
