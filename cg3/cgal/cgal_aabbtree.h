@@ -75,7 +75,9 @@ namespace cgal {
 
             #ifdef  CG3_EIGENMESH_DEFINED
             void getIntersectEigenFaces(const Pointd& p1, const Pointd &p2, std::vector<int> &outputList);
+            unsigned int getNearestEigenFace(const Pointd& p) const;
             #endif
+
         protected:
             typedef enum {DCEL, TRIMESH, EIGENMESH} TreeType;
             typedef CGAL::Simple_cartesian<double> K;

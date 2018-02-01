@@ -46,6 +46,10 @@ double Plane::getD() const{
     return d;
 }
 
+Vec3 Plane::getNormal() const {
+    return normal;
+}
+
 void Plane::normalize() {
     double oldLength = normal.normalize();
     d /= oldLength;

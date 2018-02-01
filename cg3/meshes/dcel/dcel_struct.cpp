@@ -156,6 +156,7 @@ Dcel::Dcel(Dcel&& dcel) {
 #ifdef  CG3_EIGENMESH_DEFINED
 Dcel::Dcel(const cg3::SimpleEigenMesh& eigenMesh) {
     copyFrom(eigenMesh);
+    updateVertexNormals();
 }
 
 Dcel::Dcel(const cg3::EigenMesh& eigenMesh) {
@@ -1690,6 +1691,7 @@ void Dcel::copyFrom(const EigenMesh& eigenMesh) {
     }
     for (Dcel::Vertex* v : vertexIterator()){
         v->setNormal(eigenMesh.getVertexNormal(v->getId()));
+        v->setColor(eigenMesh.getVertexColor(v->getId()));
     }
 }
 #endif // CG3_EIGENMESH_DEFINED

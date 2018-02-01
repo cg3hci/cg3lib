@@ -398,6 +398,7 @@ const Dcel::Face* cgal::AABBTree::getNearestDcelFace(const Pointd& p) const {
 }
 
 const Dcel::Vertex*cgal::AABBTree::getNearestDcelVertex(const Pointd& p) const {
+    assert(treeType == DCEL);
     const Dcel::Face* closestFace = getNearestDcelFace(p);
     const Dcel::Vertex* closest = nullptr;
     double dist = std::numeric_limits<double>::max();
@@ -427,6 +428,18 @@ void cgal::AABBTree::getIntersectEigenFaces(const Pointd& p1, const Pointd &p2, 
         std::map<CGALTriangle, int, cmpCGALTriangle>::const_iterator mit = mapCgalTrianglesToIdTriangles.find(t);
         outputList.push_back(mit->second);
     }
+}
+
+unsigned int cgal::AABBTree::getNearestEigenFace(const Pointd& p) const {
+    assert(treeType == EIGENMESH);
+    CGALPoint query(p.x(), p.y(), p.z());
+    AABB_triangle_traits::Point_and_primitive_id ppid = tree.closest_point_and_primitive(query);
+    const Tree::Primitive_id tp = ppid.second;
+    const CGALTriangle t = *tp;
+    std::map<CGALTriangle, int, cmpCGALTriangle>::const_iterator mit = mapCgalTrianglesToIdTriangles.find(t);
+    assert(mit != mapCgalTrianglesToIdTriangles.end());
+    return mit->second;
+
 }
 #endif
 

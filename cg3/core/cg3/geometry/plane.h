@@ -29,6 +29,7 @@ class Plane : SerializableObject {
         double getB() const;
         double getC() const;
         double getD() const;
+        Vec3 getNormal() const;
 
         void normalize();
 

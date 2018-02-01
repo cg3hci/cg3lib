@@ -73,6 +73,7 @@ class EigenMesh : public SimpleEigenMesh {
         Vec3 getVertexNormal(unsigned int v) const;
         void setVertexNormal(const Vec3& n, unsigned int v);
         Color getFaceColor(unsigned int f) const;
+        Color getVertexColor(unsigned int v) const;
         virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
         virtual BoundingBox getBoundingBox() const;
         virtual void translate(const Pointd &p);
@@ -237,6 +238,15 @@ inline Color EigenMesh::getFaceColor(unsigned int f) const {
     c.setRedF((float)CF(f,0));
     c.setGreenF((float)CF(f,1));
     c.setBlueF((float)CF(f,2));
+    return c;
+}
+
+inline Color EigenMesh::getVertexColor(unsigned int v) const {
+    assert (v < (unsigned int)V.rows());
+    Color c;
+    c.setRedF((float)CV(v,0));
+    c.setGreenF((float)CV(v,1));
+    c.setBlueF((float)CV(v,2));
     return c;
 }
 
