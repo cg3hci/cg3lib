@@ -44,7 +44,7 @@ void clearHelper(Node*& rootNode) {
  */
 template <class Node, class T>
 Node* copySubtreeHelper(
-        Node* rootNode,
+        const Node* rootNode,
         Node* parent)
 {
     if (rootNode == nullptr)

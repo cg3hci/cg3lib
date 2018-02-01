@@ -89,7 +89,7 @@ RangeTree<K,T>::RangeTree(const RangeTree<K,T>& bst) :
     lessComparator(bst.lessComparator),
     customComparators(bst.customComparators)
 {
-    this->root = this->copyRangeTreeSubtree(this->root);
+    this->root = this->copyRangeTreeSubtree(bst.root);
     this->entries = bst.entries;
 }
 
@@ -665,7 +665,7 @@ void RangeTree<K,T>::initialize()
 
 template <class K, class T>
 typename RangeTree<K,T>::Node* RangeTree<K,T>::copyRangeTreeSubtree(
-        Node* rootNode,
+        const Node* rootNode,
         Node* parent)
 {
     if (rootNode == nullptr)

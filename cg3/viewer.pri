@@ -20,7 +20,12 @@ unix:!macx{
     QMAKE_CXXFLAGS += -std=c++11
 
     LIBS += /usr/lib/x86_64-linux-gnu/libGLU.so
-    LIBS += -lQGLViewer
+    exists (/usr/lib/x86_64-linux-gnu/libQGLViewer.so) {
+        LIBS += -lQGLViewer
+    }
+    exists (/usr/lib/x86_64-linux-gnu/libQGLViewer-qt5.so) {
+        LIBS += -lQGLViewer-qt5
+    }
     LIBS += -lstdc++fs
 }
 

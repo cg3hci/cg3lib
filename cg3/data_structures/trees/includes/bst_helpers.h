@@ -22,7 +22,7 @@ namespace internal {
 
     template <class Node, class T>
     inline Node* copySubtreeHelper(
-            Node* rootNode,
+            const Node* rootNode,
             Node* parent = nullptr);
 
 

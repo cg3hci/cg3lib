@@ -169,7 +169,7 @@ private:
     void initialize();
 
     Node* copyRangeTreeSubtree(
-            Node* rootNode,
+            const Node* rootNode,
             Node* parent = nullptr);
 
 
