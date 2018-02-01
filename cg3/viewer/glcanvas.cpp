@@ -94,9 +94,9 @@ unsigned int GLCanvas::pushObj(const DrawableObject* obj, bool visible) {
 void GLCanvas::deleteObj(const DrawableObject* obj) {
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
-        drawlist.erase(it);
-        int pos = it - drawlist.begin();
+        int pos = std::distance(drawlist.begin(), it);
         objVisibility.erase(objVisibility.begin()+pos);
+        drawlist.erase(it);
     }
 }
 

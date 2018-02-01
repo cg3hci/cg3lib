@@ -32,9 +32,11 @@ else {
     }
 
     win32 {
-        exists(C:/dev/boost){
-            INCLUDEPATH += -I C:/dev/boost
+        BOOSTPATH = C:/libs/boost
+
+        exists($$BOOSTPATH){
             DEFINES += CG3_WITH_BOOST
+            INCLUDEPATH += -I $$quote($$BOOSTPATH)
         }
     }
 }

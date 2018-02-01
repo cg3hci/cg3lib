@@ -43,10 +43,12 @@ else {
     }
 
     win32 {
-        exists(C:/dev/eigen3){
+        EIGENPATH = C:/libs/eigen3
+
+        exists($$EIGENPATH){
             DEFINES += CG3_WITH_EIGEN
             MODULES += CG3_WITH_EIGEN
-            INCLUDEPATH += -I C:/dev/eigen3
+            INCLUDEPATH += -I $$quote($$EIGENPATH)
         }
         else{
             MODULES += CG3_WITHOUT_EIGEN
