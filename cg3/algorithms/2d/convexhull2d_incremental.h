@@ -4,8 +4,8 @@
  *
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-#ifndef CG3_CONVEXHULL2D_ITERATIVE_H
-#define CG3_CONVEXHULL2D_ITERATIVE_H
+#ifndef CG3_CONVEXHULL2D_INCREMENTAL_H
+#define CG3_CONVEXHULL2D_INCREMENTAL_H
 
 #include <set>
 
@@ -15,22 +15,22 @@
 namespace cg3 {
 
 /**
- * @brief Iterative convex hull data structure
+ * @brief Incremental convex hull data structure
  */
 template <class T>
-class IterativeConvexHull2D {
+class IncrementalConvexHull {
 
 public:
 
     /* Constructors / destructors */
 
-    IterativeConvexHull2D();
+    IncrementalConvexHull();
 
     template <class InputContainer>
-    IterativeConvexHull2D(const InputContainer& container);
+    IncrementalConvexHull(const InputContainer& container);
 
     template <class InputIterator>
-    IterativeConvexHull2D(const InputIterator first, const InputIterator end);
+    IncrementalConvexHull(const InputIterator first, const InputIterator end);
 
 
     /* Methods */
@@ -64,11 +64,11 @@ private:
 template <class T = double>
 inline void addPointToConvexHull(
         const Point2D<T>& point,
-        IterativeConvexHull2D<Point2D<T>>& iterativeConvexHull2D);
+        IncrementalConvexHull<Point2D<T>>& incrementalConvexHull2D);
 
 }
 
-#include "convexhull2d_iterative.tpp"
+#include "convexhull2d_incremental.tpp"
 
 
-#endif // CG3_CONVEXHULL2DITERATIVE_H
+#endif // CG3_CONVEXHULL2DINCREMENTAL_H

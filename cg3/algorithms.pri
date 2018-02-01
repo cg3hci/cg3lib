@@ -18,7 +18,7 @@ HEADERS += \
     $$PWD/algorithms/convexhull.h \
     $$PWD/algorithms/marching_cubes.h \
     $$PWD/algorithms/2d/convexhull2d.h \
-    $$PWD/algorithms/2d/convexhull2d_iterative.h \
+    $$PWD/algorithms/2d/convexhull2d_incremental.h \
     $$PWD/algorithms/graph_algorithms.h \
     $$PWD/algorithms/sphere_coverage.h \
     $$PWD/algorithms/global_optimal_rotation_matrix.h
@@ -26,8 +26,8 @@ HEADERS += \
 SOURCES += \
     $$PWD/algorithms/convexhull.tpp \
     $$PWD/algorithms/marching_cubes.cpp \
-    $$PWD/algorithms/2d/convexhull2d.tpp \
-    $$PWD/algorithms/2d/convexhull2d_iterative.tpp \
+    $$PWD/algorithms/2d/convexhull2d.tpp  \
+    $$PWD/algorithms/2d/convexhull2d_incremental.tpp \
     $$PWD/algorithms/graph_algorithms.tpp \
     $$PWD/algorithms/sphere_coverage.tpp \
     $$PWD/algorithms/global_optimal_rotation_matrix.cpp

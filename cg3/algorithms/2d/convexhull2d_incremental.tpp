@@ -4,7 +4,7 @@
  *
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-#include "convexhull2d_iterative.h"
+#include "convexhull2d_incremental.h"
 
 namespace cg3 {
 
@@ -22,7 +22,7 @@ void processConvexHull(
 }
 
 
-/* ----- ITERATIVE CONVEX HULL 2D IMPLEMENTATION ----- */
+/* ----- INCREMENTAL CONVEX HULL 2D IMPLEMENTATION ----- */
 
 
 /* CONSTRUCTORS/DESTRUCTORS */
@@ -31,7 +31,7 @@ void processConvexHull(
  * @brief Constructor for empty datastructure
  */
 template <class T>
-IterativeConvexHull2D<T>::IterativeConvexHull2D() {
+IncrementalConvexHull<T>::IncrementalConvexHull() {
 
 }
 
@@ -42,7 +42,7 @@ IterativeConvexHull2D<T>::IterativeConvexHull2D() {
  * @param[in] end End iterator of the input container
  */
 template <class T> template <class InputIterator>
-IterativeConvexHull2D<T>::IterativeConvexHull2D(
+IncrementalConvexHull<T>::IncrementalConvexHull(
         const InputIterator first,
         const InputIterator end)
 {
@@ -55,7 +55,7 @@ IterativeConvexHull2D<T>::IterativeConvexHull2D(
  * @param[in] points Container of the points of the shape
  */
 template <class T> template <class InputContainer>
-IterativeConvexHull2D<T>::IterativeConvexHull2D(const InputContainer& container)
+IncrementalConvexHull<T>::IncrementalConvexHull(const InputContainer& container)
 {
     this->addPoints(container.begin(), container.end());
 }
@@ -69,7 +69,7 @@ IterativeConvexHull2D<T>::IterativeConvexHull2D(const InputContainer& container)
  * @param[in] end End iterator of the input container
  */
 template <class T> template <class InputIterator>
-void IterativeConvexHull2D<T>::addPoints(const InputIterator first, const InputIterator end) {
+void IncrementalConvexHull<T>::addPoints(const InputIterator first, const InputIterator end) {
     for (InputIterator it = first; it != end; it++) {
         this->addPoint(*it);
     }
@@ -81,7 +81,7 @@ void IterativeConvexHull2D<T>::addPoints(const InputIterator first, const InputI
  * @param[in] points Container of the points of the shape
  */
 template <class T> template <class InputContainer>
-void IterativeConvexHull2D<T>::addPoints(const InputContainer& container)
+void IncrementalConvexHull<T>::addPoints(const InputContainer& container)
 {
     this->addPoints(container.begin(), container.end());
 }
@@ -94,7 +94,7 @@ void IterativeConvexHull2D<T>::addPoints(const InputContainer& container)
  * @param[in] point Input point
  */
 template <class T>
-void IterativeConvexHull2D<T>::addPoint(const Point2D<T>& point) {
+void IncrementalConvexHull<T>::addPoint(const Point2D<T>& point) {
     internal::processConvexHull<T>(point, this->upper, this->lower);
 }
 
@@ -103,7 +103,7 @@ void IterativeConvexHull2D<T>::addPoint(const Point2D<T>& point) {
  * @param[out] out Output iterator
  */
 template <class T> template <class OutputIterator>
-void IterativeConvexHull2D<T>::getConvexHull(OutputIterator out) {
+void IncrementalConvexHull<T>::getConvexHull(OutputIterator out) {
 
     if (this->upper.size() > 1) {
 
@@ -151,7 +151,7 @@ void IterativeConvexHull2D<T>::getConvexHull(OutputIterator out) {
  * @brief Clear convex hull
  */
 template <class T>
-void IterativeConvexHull2D<T>::clear() {
+void IncrementalConvexHull<T>::clear() {
     upper.clear();
     lower.clear();
 }
@@ -165,9 +165,9 @@ void IterativeConvexHull2D<T>::clear() {
 template <class T>
 void addPointToConvexHull(
         const Point2D<T>& point,
-        IterativeConvexHull2D<T>& iterativeConvexHull2D)
+        IncrementalConvexHull<T>& incrementalConvexHull2D)
 {
-    iterativeConvexHull2D.addPoint(point);
+    incrementalConvexHull2D.addPoint(point);
 }
 
 
@@ -177,7 +177,7 @@ void addPointToConvexHull(
 namespace internal {
 
 /**
- * @brief Algorithm step for processing iterative convex hull
+ * @brief Algorithm step for processing incremental convex hull
  *
  * @param[in] point Added point
  * @param[out] upper Current upper convex hull
