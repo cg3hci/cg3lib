@@ -9,6 +9,8 @@
 exists($$(BOOST_HOME)){
     DEFINES += CG3_WITH_BOOST
     INCLUDEPATH += -I $$(BOOST_HOME)
+
+    BOOSTPATH = $$(BOOST_HOME)
 }
 else {
     unix:!macx{

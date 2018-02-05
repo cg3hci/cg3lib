@@ -19,7 +19,7 @@ namespace cgal {
  * @param[in] container Container of the points of the shape
  * @param[out] convexHull Output container for the convex hull
  */
-template <class T = double, class InputContainer, class OutputContainer>
+template <class T, class InputContainer, class OutputContainer>
 void getCGALConvexHull2D(
         const InputContainer& points,
         OutputContainer& convexHull)
@@ -33,7 +33,7 @@ void getCGALConvexHull2D(
  * @param[in] end End iterator of the input container
  * @param[out] outIt Output iterator for the container containing the convex hull
  */
-template <class T = double, class InputIterator, class OutputIterator>
+template <class T, class InputIterator, class OutputIterator>
 void getCGALConvexHull2D(
         InputIterator first,
         InputIterator end,

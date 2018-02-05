@@ -10,6 +10,8 @@ exists($$(EIGEN_HOME)){
     DEFINES += CG3_WITH_EIGEN
     MODULES += CG3_WITH_EIGEN
     INCLUDEPATH += -I $$(EIGEN_HOME)
+
+    EIGENPATH = $$(EIGEN_HOME)
 }
 else {
     unix:!macx{

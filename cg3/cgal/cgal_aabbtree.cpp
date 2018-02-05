@@ -196,12 +196,12 @@ int cgal::AABBTree::getNumberIntersectedPrimitives(const Pointd& p1, const Point
     CGALPoint pa(p1.x(), p1.y(), p1.z());
     CGALPoint pb(p2.x(), p2.y(), p2.z());
     CGALRay ray_query(pa,pb);
-    return tree.number_of_intersected_primitives(ray_query);
+    return (int) tree.number_of_intersected_primitives(ray_query);
 }
 
 int cgal::AABBTree::getNumberIntersectedPrimitives(const BoundingBox& b) const {
     CGALBoundingBox bb(b.getMinX(), b.getMinY(), b.getMinZ(), b.getMaxX(), b.getMaxY(), b.getMaxZ());
-    return tree.number_of_intersected_primitives(bb);
+    return (int) tree.number_of_intersected_primitives(bb);
 }
 
 double cgal::AABBTree::getSquaredDistance(const Pointd& p) const {
