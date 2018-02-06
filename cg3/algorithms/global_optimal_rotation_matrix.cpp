@@ -8,6 +8,10 @@
 #include "global_optimal_rotation_matrix.h"
 #include <cg3/geometry/transformations.h>
 
+#ifdef CG3_EIGENMESH_DEFINED
+#include <cg3/meshes/eigenmesh/eigenmesh.h>
+#endif
+
 namespace cg3 {
 
 void defineRotation(const cg3::Vec3& zAxis, cg3::Vec3& rotationAxis, double& angle) {
@@ -35,6 +39,39 @@ Eigen::Matrix3d globalOptimalRotationMatrix(const cg3::Dcel& inputMesh, unsigned
         double L1_extent = 0.0;
         for(const Dcel::Face* f : inputMesh.faceIterator()) {
             Vec3 n = f->getNormal();
+            n.rotate(mr);
+            L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
+        }
+
+        priorizitedOrientations.insert(std::make_pair(L1_extent,zAxis));
+    }
+
+    Vec3  bestZ  = priorizitedOrientations.begin()->second;
+
+    Vec3  axis;
+    double angle;
+    bestZ.normalize();
+    defineRotation(bestZ, axis, angle);
+
+    return cg3::getRotationMatrix(Vec3(axis), angle);
+}
+#endif
+
+#ifdef CG3_EIGENMESH_DEFINED
+Eigen::Matrix3d globalOptimalRotationMatrix(const SimpleEigenMesh& inputMesh, unsigned int nDirs, bool deterministic) {
+    std::vector<Vec3> dirPool = cg3::sphereCoverage(nDirs, deterministic);
+
+    std::set<std::pair<double,Vec3>> priorizitedOrientations;
+    for(Vec3& zAxis : dirPool) {
+        Vec3 axis;
+        double angle;
+        zAxis.normalize();
+        defineRotation(zAxis, axis, angle);
+        Eigen::Matrix3d mr = getRotationMatrix(axis, angle);
+
+        double L1_extent = 0.0;
+        for(unsigned int f = 0; f < inputMesh.getNumberFaces(); f++) {
+            Vec3 n = inputMesh.getFaceNormal(f);
             n.rotate(mr);
             L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
         }

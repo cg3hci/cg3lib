@@ -21,6 +21,9 @@ namespace cg3 {
 #ifdef CG3_DCEL_DEFINED
 Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel& inputMesh, unsigned int nDirs = 1000, bool deterministic = false);
 #endif // CG3_DCEL_DEFINED
+#ifdef CG3_EIGENMESH_DEFINED
+Eigen::Matrix3d globalOptimalRotationMatrix(const SimpleEigenMesh& inputMesh, unsigned int nDirs = 1000, bool deterministic = false);
+#endif // CG3_EIGENMESH_DEFINED
 #endif // CG3_WITH_EIGEN
 
 }
