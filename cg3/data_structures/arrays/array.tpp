@@ -120,11 +120,11 @@ void cg3::Array<T, N>::conservativeResize(Sizes... s) {
         newTotalSize*=newSizes[i];
     std::vector<T> newVector(newTotalSize);
 
-    for (unsigned long int i = 0; i < v.size() || i < newTotalSize; i++){
+    for (unsigned long int i = 0; i < v.size(); i++){
         std::array<unsigned long int, N> indices = reverseIndex(i);
         bool outOfBound = false;
         for (unsigned long int j = 0; j < N; j++)
-            if (indices[j] >= newSizes[j])
+            if (indices[j] >= newSizes[j] || indices[j] >= sizes[j])
                 outOfBound = true;
         if (!outOfBound){
             newVector[getIndex(indices.data(), newSizes)] = v[i];
