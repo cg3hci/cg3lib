@@ -49,4 +49,48 @@ namespace cg3 {
         return sign*angle;
     }
 
+
+    /**
+     * @brief Get orthogonal projection of a point in a plane
+     * @param plane Projection plane
+     * @param point Point to be projected
+     * @return Projected point
+     */
+    inline Pointd orthogonalProjectionOnAPlane(
+            const Plane& plane,
+            const Pointd& point)
+    {
+        //TO BE TESTED
+
+        const Vec3& planeNormal = plane.getNormal();
+        const double d = plane.getD();
+
+        cg3::Pointd planePoint = planeNormal*d;
+
+        return orthogonalProjectionOnAPlane(planeNormal, planePoint, point);
+    }
+
+    /**
+     * @brief Get orthogonal projection of a point in a plane given a plane point
+     * @param planeNormal Projection plane normal
+     * @param planePoint Projection plane point
+     * @param point Point to be projected
+     * @return Projected point
+     */
+    inline Pointd orthogonalProjectionOnAPlane(
+            const Vec3& planeNormal,
+            const Pointd& planePoint,
+            const Pointd& point)
+    {
+
+        //TO BE TESTED
+
+        double t = - planeNormal.dot(point) + planeNormal.dot(planePoint);
+
+        Pointd projectedPoint = point + (planeNormal * t);
+
+        return projectedPoint;
+    }
+
+
 }

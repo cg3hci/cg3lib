@@ -11,6 +11,8 @@
 
 #include "cg3/geometry/2d/point2d.h"
 #include "cg3/geometry/segment.h"
+#include "cg3/geometry/plane.h"
+#include "cg3/geometry/triangle.h"
 
 namespace cg3 {
 
@@ -50,6 +52,9 @@ namespace cg3 {
 
     template <typename Container>
     inline bool isPolygonCounterClockwise(const Container& polygon);
+
+    template<class T>
+    inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<T>& triangle);
 }
 
 #include "utils2d.tpp"

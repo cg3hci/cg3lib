@@ -286,4 +286,32 @@ namespace cg3 {
         else
             return true;
     }
+
+    /**
+     * @brief Reorder vertices of a 2D triangle in counter-clockwise order
+     * Taken from
+     * https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
+     *
+     * @param[out] triangle Triangle to be reordered counter-clockwise. It must be a 2D triangle.
+     */
+    template<class T>
+    inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<T>& triangle) {
+        const T& p1 = triangle.v1();
+        const T& p2 = triangle.v2();
+        const T& p3 = triangle.v3();
+
+        double area =
+                (p2.x()-p1.x()) * (p2.y()+p1.y()) +
+                (p3.x()-p2.x()) * (p3.y()+p2.y()) +
+                (p1.x()-p3.x()) * (p1.y()+p3.y());
+
+        //If it is clockwise
+        if (area >= 0) {
+            //Swap first and last vertex
+            triangle.setV1(p3);
+            triangle.setV3(p1);
+        }
+    }
+
+
 }

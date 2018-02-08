@@ -20,11 +20,11 @@ static Point2Dd point2DDummy;
 
 }
 
-bool checkSegmentIntersection(
+bool checkSegmentIntersection2D(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
         const bool ignoreEndPoints);
 
-void checkSegmentIntersection(
+void checkSegmentIntersection2D(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
         char& code,
         const double eps = cg3::CG3_EPSILON,

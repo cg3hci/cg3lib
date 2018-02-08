@@ -37,14 +37,14 @@ bool isBetween(
  * @param[in] ignoreEndPoints Ignore if endpoints are the same
  * @return True if segments have an intersection
  */
-bool checkSegmentIntersection(
+bool checkSegmentIntersection2D(
         const Segment2Dd& seg1,
         const Segment2Dd& seg2,
         const bool ignoreEndPoints)
 {
     char code;
 
-    cg3::checkSegmentIntersection(seg1, seg2, code);
+    cg3::checkSegmentIntersection2D(seg1, seg2, code);
 
     //Intersection found
     if (code == '1')
@@ -66,7 +66,7 @@ bool checkSegmentIntersection(
  * @param[in] eps Epsilon for operations
  * @param[out] intersectionPoint Point in which the segment intersect
  */
-void checkSegmentIntersection(
+void checkSegmentIntersection2D(
         const Segment2Dd& seg1,
         const Segment2Dd& seg2,
         char& code,
