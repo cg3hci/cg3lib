@@ -182,6 +182,12 @@ void MainWindow::set2DMode(bool b) {
     }
 }
 
+void MainWindow::setCameraDirection(const cg3::Vec3& vec) {
+    qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
+    qglVec.normalize();
+
+    ui->glCanvas->camera()->setViewDirection(qglVec);
+}
 
 /**
  * @brief Aggiunge un DrawableObject alla scena e la relativa checkBox nella scrollBar.
