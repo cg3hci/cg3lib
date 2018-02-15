@@ -28,7 +28,7 @@ namespace cg3 {
  * is performed following "Introduction to Algorithms" (Cormen, 2011).
  * No duplicates are allowed.
  */
-template <class K, class T = K>
+template <class K, class T = K, class C = DefaultComparatorType<K>>
 class BSTInner
 {
 
@@ -38,34 +38,32 @@ public:
 
     typedef internal::BSTNode<K,T> Node;
 
-    typedef LessComparatorType<K> LessComparator;
+    typedef TreeGenericIterator<BSTInner<K,T,C>, Node> generic_iterator;
 
-    typedef TreeGenericIterator<BSTInner<K,T>, Node> generic_iterator;
+    typedef TreeIterator<BSTInner<K,T,C>, Node, T> iterator;
+    typedef TreeIterator<BSTInner<K,T,C>, Node, const T> const_iterator;
 
-    typedef TreeIterator<BSTInner<K,T>, Node, T> iterator;
-    typedef TreeIterator<BSTInner<K,T>, Node, const T> const_iterator;
+    typedef TreeReverseIterator<BSTInner<K,T,C>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<BSTInner<K,T,C>, Node, const T> const_reverse_iterator;
 
-    typedef TreeReverseIterator<BSTInner<K,T>, Node, T> reverse_iterator;
-    typedef TreeReverseIterator<BSTInner<K,T>, Node, const T> const_reverse_iterator;
+    typedef TreeInsertIterator<BSTInner<K,T,C>, K> insert_iterator;
 
-    typedef TreeInsertIterator<BSTInner<K,T>, K> insert_iterator;
-
-    typedef TreeRangeBasedIterator<BSTInner<K,T>> RangeBasedIterator;
-    typedef TreeRangeBasedConstIterator<BSTInner<K,T>> RangeBasedConstIterator;
-    typedef TreeRangeBasedReverseIterator<BSTInner<K,T>> RangeBasedReverseIterator;
-    typedef TreeRangeBasedConstReverseIterator<BSTInner<K,T>> RangeBasedConstReverseIterator;
+    typedef TreeRangeBasedIterator<BSTInner<K,T,C>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<BSTInner<K,T,C>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<BSTInner<K,T,C>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<BSTInner<K,T,C>> RangeBasedConstReverseIterator;
 
 
     /* Constructors/destructor */
 
-    BSTInner(const LessComparator customComparator = &internal::defaultComparator<K>);
+    BSTInner(const C customComparator = &internal::defaultComparator<K>);
     BSTInner(const std::vector<std::pair<K,T>>& vec,
-             const LessComparator customComparator = &internal::defaultComparator<K>);
+             const C customComparator = &internal::defaultComparator<K>);
     BSTInner(const std::vector<K>& vec,
-             const LessComparator customComparator = &internal::defaultComparator<K>);
+             const C customComparator = &internal::defaultComparator<K>);
 
-    BSTInner(const BSTInner<K,T>& bst);
-    BSTInner(BSTInner<K,T>&& bst);
+    BSTInner(const BSTInner<K,T,C>& bst);
+    BSTInner(BSTInner<K,T,C>&& bst);
 
     ~BSTInner();
 
@@ -137,8 +135,8 @@ public:
 
     /* Swap function and assignment */
 
-    inline BSTInner<K,T>& operator= (BSTInner<K,T> bst);
-    inline void swap(BSTInner<K,T>& bst);
+    inline BSTInner<K,T,C>& operator= (BSTInner<K,T,C> bst);
+    inline void swap(BSTInner<K,T,C>& bst);
 
 protected:
 
@@ -148,7 +146,7 @@ protected:
 
     TreeSize entries;
 
-    LessComparator lessComparator;
+    C comparator;
 
 
 private:
@@ -159,8 +157,8 @@ private:
 
 };
 
-template <class K, class T>
-void swap(BSTInner<K,T>& b1, BSTInner<K,T>& b2);
+template <class K, class T, class C>
+void swap(BSTInner<K,T,C>& b1, BSTInner<K,T,C>& b2);
 
 }
 

@@ -25,12 +25,12 @@ namespace cg3 {
  * @param[in] customComparators Vector of comparators for each
  * dimension of the range tree
  */
-template <class K, class T>
-RangeTree<K,T>::RangeTree(
+template <class K, class T, class C>
+RangeTree<K,T,C>::RangeTree(
         const unsigned int dimension,
-        const std::vector<LessComparator>& customComparators) :
+        const std::vector<C>& customComparators) :
     dim(dimension),
-    lessComparator(customComparators[dimension-1]),
+    comparator(customComparators[dimension-1]),
     customComparators(customComparators)
 {
     this->initialize();
@@ -44,13 +44,13 @@ RangeTree<K,T>::RangeTree(
  * @param[in] customComparators Vector of comparators for each
  * dimension of the range tree
  */
-template <class K, class T>
-RangeTree<K,T>::RangeTree(
+template <class K, class T, class C>
+RangeTree<K,T,C>::RangeTree(
         const unsigned int dimension,
         const std::vector<std::pair<K,T>>& vec,
-        const std::vector<LessComparator>& customComparators) :
+        const std::vector<C>& customComparators) :
     dim(dimension),
-    lessComparator(customComparators[dimension-1]),
+    comparator(customComparators[dimension-1]),
     customComparators(customComparators)
 {
     this->initialize();
@@ -66,13 +66,13 @@ RangeTree<K,T>::RangeTree(
  * @param[in] customComparators Vector of comparators for each
  * dimension of the range tree
  */
-template <class K, class T>
-RangeTree<K,T>::RangeTree(
+template <class K, class T, class C>
+RangeTree<K,T,C>::RangeTree(
         const unsigned int dimension,
         const std::vector<K>& vec,
-        const std::vector<LessComparator>& customComparators) :
+        const std::vector<C>& customComparators) :
     dim(dimension),
-    lessComparator(customComparators[dimension-1]),
+    comparator(customComparators[dimension-1]),
     customComparators(customComparators)
 {
     this->initialize();
@@ -83,10 +83,10 @@ RangeTree<K,T>::RangeTree(
  * @brief Copy constructor
  * @param rangeTree Range tree
  */
-template <class K, class T>
-RangeTree<K,T>::RangeTree(const RangeTree<K,T>& bst) :
+template <class K, class T, class C>
+RangeTree<K,T,C>::RangeTree(const RangeTree<K,T,C>& bst) :
     dim(bst.dim),
-    lessComparator(bst.lessComparator),
+    comparator(bst.comparator),
     customComparators(bst.customComparators)
 {
     this->root = this->copyRangeTreeSubtree(bst.root);
@@ -97,10 +97,10 @@ RangeTree<K,T>::RangeTree(const RangeTree<K,T>& bst) :
  * @brief Move constructor
  * @param rangeTree Range tree
  */
-template <class K, class T>
-RangeTree<K,T>::RangeTree(RangeTree<K,T>&& bst) :
+template <class K, class T, class C>
+RangeTree<K,T,C>::RangeTree(RangeTree<K,T,C>&& bst) :
     dim(bst.dim),
-    lessComparator(bst.lessComparator),
+    comparator(bst.comparator),
     customComparators(bst.customComparators)
 {
     this->root = bst.root;
@@ -111,8 +111,8 @@ RangeTree<K,T>::RangeTree(RangeTree<K,T>&& bst) :
 /**
  * @brief Destructor
  */
-template <class K, class T>
-RangeTree<K,T>::~RangeTree() {
+template <class K, class T, class C>
+RangeTree<K,T,C>::~RangeTree() {
     this->clear();
 }
 
@@ -128,8 +128,8 @@ RangeTree<K,T>::~RangeTree() {
  *
  * @param[in] vec Vector of values
  */
-template <class K, class T>
-void RangeTree<K,T>::construction(const std::vector<K>& vec) {
+template <class K, class T, class C>
+void RangeTree<K,T,C>::construction(const std::vector<K>& vec) {
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -147,8 +147,8 @@ void RangeTree<K,T>::construction(const std::vector<K>& vec) {
  *
  * @param[in] vec Vector of pairs of keys/values
  */
-template <class K, class T>
-void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
+template <class K, class T, class C>
+void RangeTree<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
     this->clear();
 
     if (vec.size() == 0)
@@ -157,7 +157,7 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    internal::PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(comparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -168,10 +168,10 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the bottom up helper
-    this->entries = internal::constructionBottomUpHelperLeaf(
+    this->entries = internal::constructionBottomUpHelperLeaf<Node,K,C>(
                 sortedNodes,
                 this->root,
-                lessComparator);
+                comparator);
 
     //Update the height of nodes and create their AABBs
     for (Node*& node : sortedNodes) {
@@ -201,8 +201,8 @@ void RangeTree<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(const K& key) {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::insert(const K& key) {
     return insert(key, key);
 }
 
@@ -217,15 +217,15 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(const K& key) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::insert(
         const K& key, const T& value)
 {
     //Create new node
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = internal::insertNodeHelperLeaf(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperLeaf<Node,K,C>(newNode, this->root, comparator);
 
     //If node has been inserted
     if (result != nullptr) {
@@ -279,10 +279,10 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::insert(
  * @param[in] key Key of the node
  * @return True if item has been found and then erased, false otherwise
  */
-template <class K, class T>
-bool RangeTree<K,T>::erase(const K& key) {
+template <class K, class T, class C>
+bool RangeTree<K,T,C>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
     //If the node has been found
     if (node != nullptr) {
@@ -314,14 +314,14 @@ bool RangeTree<K,T>::erase(const K& key) {
  * @return The iterator pointing to the BST node if the element
  * is contained in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename RangeTree<K,T>::iterator RangeTree<K,T>::find(const K& key) {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::find(const K& key) {
     //If the range tree is not for the first dimension, go to next dimension
     if (dim > 1)
         return this->root->assRangeTree->find(key);
 
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -334,8 +334,8 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::find(const K& key) {
  * @brief Clear the tree, delete all its elements
  *
  */
-template <class K, class T>
-void RangeTree<K,T>::clear() {
+template <class K, class T, class C>
+void RangeTree<K,T,C>::clear() {
     //Clear entire tree
     internal::clearHelper(this->root);
 
@@ -351,8 +351,8 @@ void RangeTree<K,T>::clear() {
  *
  * @return Number of entries
  */
-template <class K, class T>
-size_t RangeTree<K,T>::size() {
+template <class K, class T, class C>
+size_t RangeTree<K,T,C>::size() {
     return this->entries;
 }
 
@@ -361,8 +361,8 @@ size_t RangeTree<K,T>::size() {
  *
  * @return True if the range tree is empty
  */
-template <class K, class T>
-bool RangeTree<K,T>::empty()
+template <class K, class T, class C>
+bool RangeTree<K,T,C>::empty()
 {
     return (this->size() == 0);
 }
@@ -374,8 +374,8 @@ bool RangeTree<K,T>::empty()
  *
  * @return Max height of the tree
  */
-template <class K, class T>
-size_t RangeTree<K,T>::getHeight()
+template <class K, class T, class C>
+size_t RangeTree<K,T,C>::getHeight()
 {
     return internal::getHeightHelper(this->root);
 }
@@ -393,8 +393,8 @@ size_t RangeTree<K,T>::getHeight()
  * pointing to the nodes in the deepest range tree which have keys enclosed
  * in the input range
  */
-template <class K, class T>template <class OutputIterator>
-void RangeTree<K,T>::rangeQuery(
+template <class K, class T, class C>template <class OutputIterator>
+void RangeTree<K,T,C>::rangeQuery(
         const K& start, const K& end,
         OutputIterator out)
 {
@@ -419,8 +419,8 @@ void RangeTree<K,T>::rangeQuery(
  *
  * @return The iterator pointing to the minimum node
  */
-template <class K, class T>
-typename RangeTree<K,T>::iterator RangeTree<K,T>::getMin() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMin() {
     if (dim > 1) {
         return this->root->assRangeTree->getMin();
     }
@@ -432,8 +432,8 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::getMin() {
  *
  * @return The iterator pointing to the maximum node
  */
-template <class K, class T>
-typename RangeTree<K,T>::iterator RangeTree<K,T>::getMax() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMax() {
     if (dim > 1) {
         return this->root->assRangeTree->getMax();
     }
@@ -449,8 +449,8 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::getMax() {
  * @return The iterator pointing to the successor node (end
  * iterator if it has no successor)
  */
-template <class K, class T>
-typename RangeTree<K,T>::generic_iterator RangeTree<K,T>::getNext(generic_iterator it) {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getNext(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -465,8 +465,8 @@ typename RangeTree<K,T>::generic_iterator RangeTree<K,T>::getNext(generic_iterat
  * @return The iterator pointing to the predecessor node (end
  * iterator if it has no predecessor)
  */
-template <class K, class T>
-typename RangeTree<K,T>::generic_iterator RangeTree<K,T>::getPrev(generic_iterator it) {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getPrev(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -481,8 +481,8 @@ typename RangeTree<K,T>::generic_iterator RangeTree<K,T>::getPrev(generic_iterat
 /**
  * @brief Begin iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::iterator RangeTree<K,T>::begin() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::begin() {
     if (dim > 1) {
         return this->root->assRangeTree->begin();
     }
@@ -492,8 +492,8 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::begin() {
 /**
  * @brief End iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::iterator RangeTree<K,T>::end() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::end() {
     return iterator(this, nullptr);
 }
 
@@ -501,8 +501,8 @@ typename RangeTree<K,T>::iterator RangeTree<K,T>::end() {
 /**
  * @brief Begin const iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::const_iterator RangeTree<K,T>::cbegin() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cbegin() {
     if (dim > 1) {
         return this->root->assRangeTree->cbegin();
     }
@@ -512,8 +512,8 @@ typename RangeTree<K,T>::const_iterator RangeTree<K,T>::cbegin() {
 /**
  * @brief End const iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::const_iterator RangeTree<K,T>::cend() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cend() {
     return const_iterator(this, nullptr);
 }
 
@@ -521,8 +521,8 @@ typename RangeTree<K,T>::const_iterator RangeTree<K,T>::cend() {
 /**
  * @brief Begin reverse iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::reverse_iterator RangeTree<K,T>::rbegin() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rbegin() {
     if (dim > 1) {
         return this->root->assRangeTree->rbegin();
     }
@@ -532,8 +532,8 @@ typename RangeTree<K,T>::reverse_iterator RangeTree<K,T>::rbegin() {
 /**
  * @brief End reverse iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::reverse_iterator RangeTree<K,T>::rend() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rend() {
     return reverse_iterator(this, nullptr);
 }
 
@@ -541,8 +541,8 @@ typename RangeTree<K,T>::reverse_iterator RangeTree<K,T>::rend() {
 /**
  * @brief Begin const reverse iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::const_reverse_iterator RangeTree<K,T>::crbegin() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crbegin() {
     if (dim > 1) {
         return this->root->assRangeTree->crbegin();
     }
@@ -552,8 +552,8 @@ typename RangeTree<K,T>::const_reverse_iterator RangeTree<K,T>::crbegin() {
 /**
  * @brief End const reverse iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::const_reverse_iterator RangeTree<K,T>::crend() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crend() {
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -562,8 +562,8 @@ typename RangeTree<K,T>::const_reverse_iterator RangeTree<K,T>::crend() {
 /**
  * @brief Insert output iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::insert_iterator RangeTree<K,T>::inserter() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::insert_iterator RangeTree<K,T,C>::inserter() {
     return insert_iterator(this);
 }
 
@@ -574,8 +574,8 @@ typename RangeTree<K,T>::insert_iterator RangeTree<K,T>::inserter() {
  *
  * @return Range based iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::RangeBasedIterator RangeTree<K,T>::getIterator() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::RangeBasedIterator RangeTree<K,T,C>::getIterator() {
     return RangeBasedIterator(this);
 }
 
@@ -584,8 +584,8 @@ typename RangeTree<K,T>::RangeBasedIterator RangeTree<K,T>::getIterator() {
  *
  * @return Range based const iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::RangeBasedConstIterator RangeTree<K,T>::getConstIterator() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::RangeBasedConstIterator RangeTree<K,T,C>::getConstIterator() {
     return RangeBasedConstIterator(this);
 }
 
@@ -594,8 +594,8 @@ typename RangeTree<K,T>::RangeBasedConstIterator RangeTree<K,T>::getConstIterato
  *
  * @return Range based reverse iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::RangeBasedReverseIterator RangeTree<K,T>::getReverseIterator() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::RangeBasedReverseIterator RangeTree<K,T,C>::getReverseIterator() {
     return RangeBasedReverseIterator(this);
 }
 
@@ -604,8 +604,8 @@ typename RangeTree<K,T>::RangeBasedReverseIterator RangeTree<K,T>::getReverseIte
  *
  * @return Range based const reverse iterator
  */
-template <class K, class T>
-typename RangeTree<K,T>::RangeBasedConstReverseIterator RangeTree<K,T>::getConstReverseIterator() {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::RangeBasedConstReverseIterator RangeTree<K,T,C>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
 }
 
@@ -617,8 +617,8 @@ typename RangeTree<K,T>::RangeBasedConstReverseIterator RangeTree<K,T>::getConst
  * @param[out] bst Parameter BST
  * @return This object
  */
-template <class K, class T>
-RangeTree<K,T>& RangeTree<K,T>::operator= (RangeTree<K,T> bst) {
+template <class K, class T, class C>
+RangeTree<K,T,C>& RangeTree<K,T,C>::operator= (RangeTree<K,T,C> bst) {
     swap(bst);
     return *this;
 }
@@ -628,12 +628,12 @@ RangeTree<K,T>& RangeTree<K,T>::operator= (RangeTree<K,T> bst) {
  * @brief Swap BST with another one
  * @param[out] bst BST to be swapped with this object
  */
-template <class K, class T>
-void RangeTree<K,T>::swap(RangeTree<K,T>& bst) {
+template <class K, class T, class C>
+void RangeTree<K,T,C>::swap(RangeTree<K,T,C>& bst) {
     using std::swap;
     swap(this->root, bst.root);
     swap(this->entries, bst.entries);
-    swap(this->lessComparator, bst.lessComparator);
+    swap(this->comparator, bst.comparator);
     swap(this->customComparators, bst.customComparators);
     swap(this->dim, bst.dim);
 }
@@ -644,8 +644,8 @@ void RangeTree<K,T>::swap(RangeTree<K,T>& bst) {
  * @param b1 First BST
  * @param b2 Second BST
  */
-template <class K, class T>
-void swap(RangeTree<K,T>& b1, RangeTree<K,T>& b2) {
+template <class K, class T, class C>
+void swap(RangeTree<K,T,C>& b1, RangeTree<K,T,C>& b2) {
     b1.swap(b2);
 }
 
@@ -655,16 +655,16 @@ void swap(RangeTree<K,T>& b1, RangeTree<K,T>& b2) {
 /**
  * @brief Initialization of the range tree
  */
-template <class K, class T>
-void RangeTree<K,T>::initialize()
+template <class K, class T, class C>
+void RangeTree<K,T,C>::initialize()
 {
     this->root = nullptr;
     this->entries = 0;
 }
 
 
-template <class K, class T>
-typename RangeTree<K,T>::Node* RangeTree<K,T>::copyRangeTreeSubtree(
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::copyRangeTreeSubtree(
         const Node* rootNode,
         Node* parent)
 {
@@ -680,7 +680,7 @@ typename RangeTree<K,T>::Node* RangeTree<K,T>::copyRangeTreeSubtree(
         newNode->value = new T(*(rootNode->value));
 
     if (rootNode->assRangeTree != nullptr)
-        newNode->assRangeTree = new RangeTree<K,T>(*(rootNode->assRangeTree));
+        newNode->assRangeTree = new RangeTree<K,T,C>(*(rootNode->assRangeTree));
 
     return newNode;
 }
@@ -696,13 +696,13 @@ typename RangeTree<K,T>::Node* RangeTree<K,T>::copyRangeTreeSubtree(
  * @param[out] out Container containing the nodes which have keys enclosed
  * in the input range
  */
-template <class K, class T>
-void RangeTree<K,T>::rangeQueryHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::rangeQueryHelper(
         const K& start, const K& end,
         std::vector<Node*>& out)
 {
     //Find split node
-    Node* splitNode = internal::findSplitNodeHelperLeaf(start, end, this->root, lessComparator);
+    Node* splitNode = internal::findSplitNodeHelperLeaf(start, end, this->root, comparator);
 
     if (splitNode == nullptr)
         return;
@@ -710,8 +710,8 @@ void RangeTree<K,T>::rangeQueryHelper(
     //If the split node is a leaf
     if (splitNode->isLeaf()) {
         //Report the node if it is contained in the range
-        if (internal::isGreaterOrEqual(splitNode->key, start, lessComparator) &&
-                internal::isLessOrEqual(splitNode->key, end, lessComparator))
+        if (internal::isGreaterOrEqual(splitNode->key, start, comparator) &&
+                internal::isLessOrEqual(splitNode->key, end, comparator))
         {
             this->rangeSearchInNextDimensionHelper(splitNode, start, end, out);
         }
@@ -721,7 +721,7 @@ void RangeTree<K,T>::rangeQueryHelper(
         //Follow path from splitNode to start and report right subtrees
         Node* vl = splitNode->left;
         while (!vl->isLeaf()) {
-            if (internal::isLess(start, vl->key, lessComparator)) {
+            if (internal::isLess(start, vl->key, comparator)) {
                 this->rangeSearchInNextDimensionHelper(vl->right, start, end, out);
                 vl = vl->left;
             }
@@ -730,8 +730,8 @@ void RangeTree<K,T>::rangeQueryHelper(
             }
         }
         //Report the node if it is contained in the range
-        if (internal::isGreaterOrEqual(vl->key, start, lessComparator) &&
-                internal::isLessOrEqual(vl->key, end, lessComparator))
+        if (internal::isGreaterOrEqual(vl->key, start, comparator) &&
+                internal::isLessOrEqual(vl->key, end, comparator))
         {
             this->rangeSearchInNextDimensionHelper(vl, start, end, out);
         }
@@ -739,7 +739,7 @@ void RangeTree<K,T>::rangeQueryHelper(
         //Follow path from splitNode to end and report left subtrees
         Node* vr = splitNode->right;
         while (!vr->isLeaf()) {
-            if (internal::isGreaterOrEqual(end, vr->key, lessComparator)) {
+            if (internal::isGreaterOrEqual(end, vr->key, comparator)) {
                 this->rangeSearchInNextDimensionHelper(vr->left, start, end, out);
                 vr = vr->right;
             }
@@ -748,8 +748,8 @@ void RangeTree<K,T>::rangeQueryHelper(
             }
         }
         //Report the node if it is contained in the range
-        if (internal::isGreaterOrEqual(vr->key, start, lessComparator) &&
-                internal::isLessOrEqual(vr->key, end, lessComparator)) {
+        if (internal::isGreaterOrEqual(vr->key, start, comparator) &&
+                internal::isLessOrEqual(vr->key, end, comparator)) {
             this->rangeSearchInNextDimensionHelper(vr, start, end, out);
         }
     }
@@ -766,8 +766,8 @@ void RangeTree<K,T>::rangeQueryHelper(
  * @param[out] out Container containing the nodes which have keys enclosed
  * in the input range
  */
-template <class K, class T>
-void RangeTree<K,T>::rangeSearchInNextDimensionHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::rangeSearchInNextDimensionHelper(
         Node* node,
         const K& start,
         const K& end,
@@ -791,12 +791,12 @@ void RangeTree<K,T>::rangeSearchInNextDimensionHelper(
  *
  * @param[in] node Node
  */
-template <class K, class T>
-void RangeTree<K,T>::createAssociatedTreeHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::createAssociatedTreeHelper(
         Node *node)
 {
     if (dim > 1) {
-        node->assRangeTree = new RangeTree<K,T>(this->dim-1, this->customComparators);
+        node->assRangeTree = new RangeTree<K,T,C>(this->dim-1, this->customComparators);
     }
 }
 
@@ -808,8 +808,8 @@ void RangeTree<K,T>::createAssociatedTreeHelper(
  *
  * @param[in] node Node
  */
-template <class K, class T>
-void RangeTree<K,T>::createParentAssociatedTreeHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::createParentAssociatedTreeHelper(
         Node *node)
 {
     if (this->dim > 1) {
@@ -832,8 +832,8 @@ void RangeTree<K,T>::createParentAssociatedTreeHelper(
  * @param[in] key Key of new node
  * @param[in] value Value of new node
  */
-template <class K, class T>
-typename RangeTree<K,T>::Node* RangeTree<K,T>::insertIntoAssociatedTreeHelper(
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::insertIntoAssociatedTreeHelper(
         Node* node,
         const K& key,
         const T& value)
@@ -858,8 +858,8 @@ typename RangeTree<K,T>::Node* RangeTree<K,T>::insertIntoAssociatedTreeHelper(
  * @param[in] value Value of new node
  * @param[in] dim Dimension of the range tree
  */
-template <class K, class T>
-typename RangeTree<K,T>::Node* RangeTree<K,T>::insertIntoParentAssociatedTreesHelper(
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::insertIntoParentAssociatedTreesHelper(
         Node* node,
         const K& key,
         const T& value)
@@ -885,8 +885,8 @@ typename RangeTree<K,T>::Node* RangeTree<K,T>::insertIntoParentAssociatedTreesHe
  * associated range tree
  * @param[in] key Key of the node to be deleted
  */
-template <class K, class T>
-void RangeTree<K,T>::eraseFromAssociatedTreeHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::eraseFromAssociatedTreeHelper(
         Node* node,
         const K& key)
 {
@@ -905,8 +905,8 @@ void RangeTree<K,T>::eraseFromAssociatedTreeHelper(
  * @param[in] node Node from which the climbing starts
  * @param[in] key Key of new node
  */
-template <class K, class T>
-void RangeTree<K,T>::eraseFromParentAssociatedTreesHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::eraseFromParentAssociatedTreesHelper(
         Node* node,
         const K& key)
 {
@@ -932,8 +932,8 @@ void RangeTree<K,T>::eraseFromParentAssociatedTreesHelper(
  *
  * @param[in] node Starting node
  */
-template <class K, class T>
-void RangeTree<K,T>::rebalanceRangeTreeHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::rebalanceRangeTreeHelper(
         Node* node)
 {
     //Null handler
@@ -1009,8 +1009,8 @@ void RangeTree<K,T>::rebalanceRangeTreeHelper(
  * @param[in] node Starting node
  * @param[in] node Root node of the BST
  */
-template <class K, class T>
-void RangeTree<K,T>::updateHeightAndRebalanceRangeTreeHelper(
+template <class K, class T, class C>
+void RangeTree<K,T,C>::updateHeightAndRebalanceRangeTreeHelper(
         Node* node)
 {
     internal::updateHeightHelper(node);
@@ -1026,8 +1026,8 @@ void RangeTree<K,T>::updateHeightAndRebalanceRangeTreeHelper(
  * @param[in] dim Dimension of the range tree
  * @return New node in the position of the original node after the rotation
  */
-template <class K, class T>
-typename RangeTree<K,T>::Node* RangeTree<K,T>::leftRotateRangeTreeHelper(Node* a) {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::leftRotateRangeTreeHelper(Node* a) {
     //Rotate left
     Node* b = internal::leftRotateHelper(a);
 
@@ -1061,8 +1061,8 @@ typename RangeTree<K,T>::Node* RangeTree<K,T>::leftRotateRangeTreeHelper(Node* a
  * @param[in] a Node to be rotated
  * @return New node in the position of the original node after the rotation
  */
-template <class K, class T>
-typename RangeTree<K,T>::Node* RangeTree<K,T>::rightRotateRangeTreeHelper(Node* a) {
+template <class K, class T, class C>
+typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::rightRotateRangeTreeHelper(Node* a) {
     //Rotate right
     Node* b = rightRotateHelper(a);
 

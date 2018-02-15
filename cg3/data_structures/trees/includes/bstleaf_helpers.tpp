@@ -19,11 +19,11 @@ namespace internal {
  *
  * @param[in] newNode Node to be inserted
  * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
+ * @param[in] comparator Less comparator for keys
  * @return Pointer to the node if the node has been inserted, nullptr otherwise
  */
-template <class Node, class K>
-Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator) {
+template <class Node, class K, class C>
+Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, C& comparator) {
     //If the tree is empty
     if (rootNode == nullptr) {
         //Insert the node as the root
@@ -39,7 +39,7 @@ Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K
 
     //Travel in the BST until the node is a leaf
     while (!node->isLeaf()) {
-        if (isLess(newNode->key, node->key, lessComparator)) {
+        if (isLess(newNode->key, node->key, comparator)) {
             node = node->left;
         }
         else {
@@ -49,7 +49,7 @@ Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K
     }
 
     //If the value is already in the BST
-    if (isEqual(node->key, newNode->key, lessComparator)) {
+    if (isEqual(node->key, newNode->key, comparator)) {
         delete newNode;
         newNode = nullptr;
     }
@@ -58,7 +58,7 @@ Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, LessComparatorType<K
     else {
         Node* newParent = nullptr;
 
-        if (isLess(newNode->key, node->key, lessComparator)) {
+        if (isLess(newNode->key, node->key, comparator)) {
             //Create new parent for the two nodes
             newParent = new Node(node->key);
 
@@ -143,17 +143,17 @@ Node* eraseNodeHelperLeaf(Node*& node, Node*& rootNode)
  *
  * @param[in] key Key of the node to be found
  * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
+ * @param[in] comparator Less comparator for keys
  *
  * @return If the node with a given value is found, then its pointer
  * is returned. Otherwise a null pointer is returned.
  *
  */
-template <class Node, class K>
+template <class Node, class K, class C>
 Node* findNodeHelperLeaf(
         const K& key,
         Node*& rootNode,
-        LessComparatorType<K> lessComparator)
+        C& comparator)
 {
     if (rootNode == nullptr)
         return nullptr;
@@ -162,7 +162,7 @@ Node* findNodeHelperLeaf(
 
     //Travel in the BST until a leaf is found
     while (!node->isLeaf()) {
-        if (isLess(key, node->key, lessComparator)) {
+        if (isLess(key, node->key, comparator)) {
             node = node->left;
         }
         else {
@@ -172,7 +172,7 @@ Node* findNodeHelperLeaf(
     }
 
     //If node has the input key, then the node is found
-    if (isEqual(node->key, key, lessComparator)) {
+    if (isEqual(node->key, key, comparator)) {
         return node;
     }
 
@@ -185,18 +185,18 @@ Node* findNodeHelperLeaf(
  *
  * @param[in] key Input key
  * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
+ * @param[in] comparator Less comparator for keys
  *
  * @return If the node with a key equal/lower than the input key is found, then
  * its pointer is returned. Otherwise, if there is not any entry equal/lower than
  * the input key, a null pointer is returned.
  *
  */
-template <class Node, class K>
+template <class Node, class K, class C>
 Node* findLowerHelperLeaf(
         const K& key,
         Node*& rootNode,
-        LessComparatorType<K> lessComparator
+        C& comparator
 ) {
     if (rootNode == nullptr)
         return nullptr;
@@ -205,7 +205,7 @@ Node* findLowerHelperLeaf(
 
     //Travel in the BST until a leaf is found
     while (!node->isLeaf()) {
-        if (isLess(key, node->key, lessComparator)) {
+        if (isLess(key, node->key, comparator)) {
             node = node->left;
         }
         else {
@@ -215,7 +215,7 @@ Node* findLowerHelperLeaf(
     }
 
     //If the input key is lower
-    if (isLess(key, node->key, lessComparator)) {
+    if (isLess(key, node->key, comparator)) {
         return getPredecessorHelperLeaf(node);
     }
     //If the input key is greater or equal
@@ -229,18 +229,18 @@ Node* findLowerHelperLeaf(
  *
  * @param[in] key Input key
  * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
+ * @param[in] comparator Less comparator for keys
  *
  * @return If the node with a key upper than the input key is found, then
  * its pointer is returned. Otherwise, if there is not any entry upper
  * than the input key, a null pointer is returned.
  *
  */
-template <class Node, class K>
+template <class Node, class K, class C>
 Node* findUpperHelperLeaf(
         const K& key,
         Node*& rootNode,
-        LessComparatorType<K> lessComparator
+        C& comparator
 ) {
     if (rootNode == nullptr)
         return nullptr;
@@ -249,7 +249,7 @@ Node* findUpperHelperLeaf(
 
     //Travel in the BST until a leaf is found
     while (!node->isLeaf()) {
-        if (isLess(key, node->key, lessComparator)) {
+        if (isLess(key, node->key, comparator)) {
             node = node->left;
         }
         else {
@@ -259,7 +259,7 @@ Node* findUpperHelperLeaf(
     }
 
     //If the input key is lower
-    if (isGreaterOrEqual(key, node->key, lessComparator)) {
+    if (isGreaterOrEqual(key, node->key, comparator)) {
         return getSuccessorHelperLeaf(node);
     }
     //If the input key is greater or equal
@@ -280,15 +280,15 @@ Node* findUpperHelperLeaf(
  * @param[in] start Start index of the partition of the vector to be inserted
  * @param[in] end End index of the partition of the vector to be inserted
  * @param[out] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
+ * @param[in] comparator Less comparator for keys
  * @return Number of entries inserted in the BST
  */
-template <class Node, class K>
+template <class Node, class K, class C>
 TreeSize constructionMedianHelperLeaf(
         std::vector<Node*>& sortedNodes,
         const TreeSize start, const TreeSize end,
         Node*& rootNode,
-        LessComparatorType<K> lessComparator)
+        C& comparator)
 {
     TreeSize numberOfEntries = 0;
 
@@ -302,7 +302,7 @@ TreeSize constructionMedianHelperLeaf(
     Node* node = sortedNodes.at(mid);
 
     //Creating node and inserting it in the root node
-    if (insertNodeHelperLeaf(node, rootNode, lessComparator) != nullptr) {
+    if (insertNodeHelperLeaf(node, rootNode, comparator) != nullptr) {
         numberOfEntries++;
     }    
     //If it has not been inserted
@@ -317,8 +317,8 @@ TreeSize constructionMedianHelperLeaf(
     TreeSize secondHalfStart = mid + 1;
 
     //Recursive calls
-    numberOfEntries += constructionMedianHelperLeaf(sortedNodes, start, firstHalfEnd, rootNode, lessComparator);
-    numberOfEntries += constructionMedianHelperLeaf(sortedNodes, secondHalfStart, end, rootNode, lessComparator);
+    numberOfEntries += constructionMedianHelperLeaf(sortedNodes, start, firstHalfEnd, rootNode, comparator);
+    numberOfEntries += constructionMedianHelperLeaf(sortedNodes, secondHalfStart, end, rootNode, comparator);
 
     return numberOfEntries;
 }
@@ -332,11 +332,11 @@ TreeSize constructionMedianHelperLeaf(
  * @param[in] rootNode Root node of the BST
  * @returns Number of entries inserted in the BST
  */
-template <class Node, class K>
+template <class Node, class K, class C>
 TreeSize constructionBottomUpHelperLeaf(
         std::vector<Node*>& sortedNodes,
         Node*& rootNode,
-        LessComparatorType<K> lessComparator)
+        C& comparator)
 {
     TreeSize numberOfEntries = 0;
 
@@ -348,7 +348,7 @@ TreeSize constructionBottomUpHelperLeaf(
         Node* node = sortedNodes.at(i);
 
         //Avoid duplicates
-        if (i == 0 || !isEqual(lastValue, node->key, lessComparator)) {
+        if (i == 0 || !isEqual(lastValue, node->key, comparator)) {
             nodes->push_back(node);
 
             numberOfEntries++;
@@ -431,25 +431,25 @@ TreeSize constructionBottomUpHelperLeaf(
  * @param[in] end End value of the range
  * @param[out] out Vector of node with keys that are enclosed in the input range
  * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
+ * @param[in] comparator Less comparator for keys
  */
-template <class Node, class K>
+template <class Node, class K, class C>
 void rangeQueryHelperLeaf(
         const K& start, const K& end,
         std::vector<Node*> &out,
         Node* rootNode,
-        LessComparatorType<K> lessComparator)
+        C& comparator)
 {
     //Find split node
-    Node* splitNode = findSplitNodeHelperLeaf(start, end, rootNode, lessComparator);
+    Node* splitNode = findSplitNodeHelperLeaf(start, end, rootNode, comparator);
     if (splitNode == nullptr)
         return;
 
     //If the split node is a leaf
     if (splitNode->isLeaf()) {
         //Report the node if it is contained in the range
-        if (isGreaterOrEqual(splitNode->key, start, lessComparator) &&
-                isLessOrEqual(splitNode->key, end, lessComparator))
+        if (isGreaterOrEqual(splitNode->key, start, comparator) &&
+                isLessOrEqual(splitNode->key, end, comparator))
         {
             reportSubTreeHelperLeaf(splitNode, out);
         }
@@ -459,7 +459,7 @@ void rangeQueryHelperLeaf(
         //Follow path from splitNode to start and report right subtrees
         Node* vl = splitNode->left;
         while (!vl->isLeaf()) {
-            if (isLess(start, vl->key, lessComparator)) {
+            if (isLess(start, vl->key, comparator)) {
                 reportSubTreeHelperLeaf(vl->right, out);
                 vl = vl->left;
             }
@@ -468,8 +468,8 @@ void rangeQueryHelperLeaf(
             }
         }
         //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vl->key, start, lessComparator) &&
-                isLessOrEqual(vl->key, end, lessComparator))
+        if (isGreaterOrEqual(vl->key, start, comparator) &&
+                isLessOrEqual(vl->key, end, comparator))
         {
             reportSubTreeHelperLeaf(vl, out);
         }
@@ -477,7 +477,7 @@ void rangeQueryHelperLeaf(
         //Follow path from splitNode to end and report left subtrees
         Node* vr = splitNode->right;
         while (!vr->isLeaf()) {
-            if (isGreaterOrEqual(end, vr->key, lessComparator)) {
+            if (isGreaterOrEqual(end, vr->key, comparator)) {
                 reportSubTreeHelperLeaf(vr->left, out);
                 vr = vr->right;
             }
@@ -486,7 +486,7 @@ void rangeQueryHelperLeaf(
             }
         }
         //Report the node if it is contained in the range
-        if (isGreaterOrEqual(vr->key, start, lessComparator) && isLessOrEqual(vr->key, end, lessComparator)) {
+        if (isGreaterOrEqual(vr->key, start, comparator) && isLessOrEqual(vr->key, end, comparator)) {
             reportSubTreeHelperLeaf(vr, out);
         }
     }
@@ -499,14 +499,14 @@ void rangeQueryHelperLeaf(
  * @param[in] start Starting value of the range
  * @param[in] end End value of the range
  * @param[in] rootNode Root node of the BST
- * @param[in] lessComparator Less comparator for keys
+ * @param[in] comparator Less comparator for keys
  * @return Split node of the BST. Returns nullptr if the tree is empty
  */
-template <class Node, class K>
+template <class Node, class K, class C>
 Node* findSplitNodeHelperLeaf(
         const K& start, const K& end,
         Node* rootNode,
-        LessComparatorType<K> lessComparator)
+        C& comparator)
 {
     if (rootNode == nullptr)
         return nullptr;
@@ -515,14 +515,14 @@ Node* findSplitNodeHelperLeaf(
     //Follow path until a leaf is found
     while (!v->isLeaf()) {
         //If both path follow left subtree
-        if (isLess(start, v->key, lessComparator)
-                && isLess(end, v->key, lessComparator))
+        if (isLess(start, v->key, comparator)
+                && isLess(end, v->key, comparator))
         {
             v = v->left;
         }
         //If both path follow right subtree
-        else if (isGreaterOrEqual(start, v->key, lessComparator) &&
-                 isGreaterOrEqual(end, v->key, lessComparator))
+        else if (isGreaterOrEqual(start, v->key, comparator) &&
+                 isGreaterOrEqual(end, v->key, comparator))
         {
             v = v->right;
         }

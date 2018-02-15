@@ -34,7 +34,7 @@ namespace cg3 {
  * searches in just a subset of the dimensions of the object.
  *
  */
-template <class K, class T = K>
+template <class K, class T = K, class C = DefaultComparatorType<K>>
 class RangeTree
 {
 
@@ -43,40 +43,40 @@ public:
 
     /* Typedefs */
 
-    typedef internal::RangeTreeNode<K,T> Node;
+    typedef internal::RangeTreeNode<K,T,C> Node;
 
-    typedef LessComparatorType<K> LessComparator;
+    typedef DefaultComparatorType<K> DefaultComparator;
 
-    typedef TreeGenericIterator<RangeTree<K,T>, Node> generic_iterator;
+    typedef TreeGenericIterator<RangeTree<K,T,C>, Node> generic_iterator;
 
-    typedef TreeIterator<RangeTree<K,T>, Node, T> iterator;
-    typedef TreeIterator<RangeTree<K,T>, Node, const T> const_iterator;
+    typedef TreeIterator<RangeTree<K,T,C>, Node, T> iterator;
+    typedef TreeIterator<RangeTree<K,T,C>, Node, const T> const_iterator;
 
-    typedef TreeReverseIterator<RangeTree<K,T>, Node, T> reverse_iterator;
-    typedef TreeReverseIterator<RangeTree<K,T>, Node, const T> const_reverse_iterator;
+    typedef TreeReverseIterator<RangeTree<K,T,C>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<RangeTree<K,T,C>, Node, const T> const_reverse_iterator;
 
-    typedef TreeInsertIterator<RangeTree<K,T>, K> insert_iterator;
+    typedef TreeInsertIterator<RangeTree<K,T,C>, K> insert_iterator;
 
-    typedef TreeRangeBasedIterator<RangeTree<K,T>> RangeBasedIterator;
-    typedef TreeRangeBasedConstIterator<RangeTree<K,T>> RangeBasedConstIterator;
-    typedef TreeRangeBasedReverseIterator<RangeTree<K,T>> RangeBasedReverseIterator;
-    typedef TreeRangeBasedConstReverseIterator<RangeTree<K,T>> RangeBasedConstReverseIterator;
+    typedef TreeRangeBasedIterator<RangeTree<K,T,C>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<RangeTree<K,T,C>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<RangeTree<K,T,C>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<RangeTree<K,T,C>> RangeBasedConstReverseIterator;
 
 
 
     /* Constructors/destructor */
 
     RangeTree(const unsigned int dim,
-              const std::vector<LessComparator>& customComparators);
+              const std::vector<C>& customComparators);
     RangeTree(const unsigned int dim,
               const std::vector<std::pair<K,T>>& vec,
-              const std::vector<LessComparator>& customComparators);
+              const std::vector<C>& customComparators);
     RangeTree(const unsigned int dim,
               const std::vector<K>& vec,
-              const std::vector<LessComparator>& customComparators);
+              const std::vector<C>& customComparators);
 
-    RangeTree(const RangeTree<K,T>& bst);
-    RangeTree(RangeTree<K,T>&& bst);
+    RangeTree(const RangeTree<K,T,C>& bst);
+    RangeTree(RangeTree<K,T,C>&& bst);
 
     ~RangeTree();
 
@@ -144,8 +144,8 @@ public:
 
     /* Swap function and assignment */
 
-    inline RangeTree<K,T>& operator= (RangeTree<K,T> bst);
-    inline void swap(RangeTree<K,T>& bst);
+    inline RangeTree<K,T,C>& operator= (RangeTree<K,T,C> bst);
+    inline void swap(RangeTree<K,T,C>& bst);
 
 protected:
 
@@ -158,8 +158,8 @@ protected:
 
     unsigned int dim;
 
-    LessComparator lessComparator;
-    std::vector<LessComparator> customComparators;
+    C comparator;
+    std::vector<C> customComparators;
 
 
 private:
@@ -233,8 +233,8 @@ private:
 };
 
 
-template <class K, class T>
-void swap(RangeTree<K,T>& b1, RangeTree<K,T>& b2);
+template <class K, class T, class C>
+void swap(RangeTree<K,T,C>& b1, RangeTree<K,T,C>& b2);
 
 }
 

@@ -10,7 +10,7 @@ namespace cg3 {
     typedef unsigned long long int TreeSize;
 
     template <class K>
-    using LessComparatorType = bool(*)(const K& key1, const K& key2);
+    using DefaultComparatorType = bool(*)(const K& key1, const K& key2);
 
 
 namespace internal {
@@ -26,58 +26,58 @@ namespace internal {
 
     /* Comparator functions */
 
-    template <class K>
+    template <class K, class C>
     inline bool isLess(
             const K& a,
             const K& b,
-            LessComparatorType<K> lessComparator)
+            C& comparator)
     {
-        return lessComparator(a,b);
+        return comparator(a,b);
     }
-    template <class K>
+    template <class K, class C>
     inline bool isEqual(
             const K& a,
             const K& b,
-            LessComparatorType<K> lessComparator)
+            C& comparator)
     {
-        return !(isLess(a,b,lessComparator) || isLess(b,a,lessComparator));
+        return !(isLess(a,b,comparator) || isLess(b,a,comparator));
     }
-    template <class K>
+    template <class K, class C>
     inline bool isLessOrEqual(
             const K& a,
             const K& b,
-            LessComparatorType<K> lessComparator)
+            C& comparator)
     {
-        return isLess(a,b,lessComparator) || isEqual(a,b,lessComparator);
+        return isLess(a,b,comparator) || isEqual(a,b,comparator);
     }
-    template <class K>
+    template <class K, class C>
     inline bool isGreater(
             const K& a,
             const K& b,
-            LessComparatorType<K> lessComparator)
+            C& comparator)
     {
-        return isLess(b,a,lessComparator);
+        return isLess(b,a,comparator);
     }
-    template <class K>
+    template <class K, class C>
     inline bool isGreaterOrEqual(
             const K& a,
             const K& b,
-            LessComparatorType<K> lessComparator)
+            C& comparator)
     {
-        return !isLess(a,b,lessComparator);
+        return !isLess(a,b,comparator);
     }
 
 
     /* Utilities */
 
     /** Comparator for pairs (needed for std::sort) */
-    template <class K, class T>
+    template <class K, class T, class C = DefaultComparatorType<K>>
     class PairComparator {
 
     public:
 
-        PairComparator(const LessComparatorType<K> lessComparator) :
-            keyComparator(lessComparator)
+        PairComparator(const C& comparator) :
+            keyComparator(comparator)
         { }
 
         inline bool operator()(
@@ -89,7 +89,7 @@ namespace internal {
 
     private:
 
-        const LessComparatorType<K> keyComparator;
+        const C keyComparator;
 
     };
 

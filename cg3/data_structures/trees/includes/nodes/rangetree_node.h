@@ -12,7 +12,7 @@
 namespace cg3 {
 
 
-template <class K, class T>
+template <class K, class T, class C>
 class RangeTree;
 
 
@@ -22,7 +22,7 @@ namespace internal {
  * @brief The node of the binary search tree
  *
  */
-template <class K, class T>
+template <class K, class T, class C>
 class RangeTreeNode {
 
 public:
@@ -40,7 +40,7 @@ public:
     K key;
     T* value;
 
-    RangeTree<K,T>* assRangeTree;
+    RangeTree<K,T,C>* assRangeTree;
 
     RangeTreeNode* parent;
     RangeTreeNode* left;

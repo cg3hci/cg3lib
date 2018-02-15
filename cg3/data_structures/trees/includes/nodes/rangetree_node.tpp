@@ -16,8 +16,8 @@ namespace internal {
 /**
  * @brief Constructor with key and value
  */
-template <class K, class T>
-RangeTreeNode<K,T>::RangeTreeNode(
+template <class K, class T, class C>
+RangeTreeNode<K,T,C>::RangeTreeNode(
         const K& key,
         const T& value)
 {
@@ -27,8 +27,8 @@ RangeTreeNode<K,T>::RangeTreeNode(
 /**
  * @brief Constructor with only key
  */
-template <class K, class T>
-RangeTreeNode<K,T>::RangeTreeNode(const K& key)
+template <class K, class T, class C>
+RangeTreeNode<K,T,C>::RangeTreeNode(const K& key)
 {
     init(key, nullptr);
 }
@@ -36,8 +36,8 @@ RangeTreeNode<K,T>::RangeTreeNode(const K& key)
 /**
  * @brief Destructor
  */
-template <class K, class T>
-RangeTreeNode<K,T>::~RangeTreeNode()
+template <class K, class T, class C>
+RangeTreeNode<K,T,C>::~RangeTreeNode()
 {
     if (this->value != nullptr) {
         delete this->value;
@@ -58,8 +58,8 @@ RangeTreeNode<K,T>::~RangeTreeNode()
 /**
  * @brief Initialization of the node given key and value
  */
-template <class K, class T>
-void RangeTreeNode<K,T>::init(const K& key, T* value) {
+template <class K, class T, class C>
+void RangeTreeNode<K,T,C>::init(const K& key, T* value) {
     this->key = key;
     this->value = value;
 
@@ -78,8 +78,8 @@ void RangeTreeNode<K,T>::init(const K& key, T* value) {
  *
  * @return True if the node is a leaf
  */
-template <class K, class T>
-bool RangeTreeNode<K,T>::isLeaf() const {
+template <class K, class T, class C>
+bool RangeTreeNode<K,T,C>::isLeaf() const {
     return (left == nullptr) && (right == nullptr);
 }
 

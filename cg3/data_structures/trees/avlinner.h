@@ -28,7 +28,7 @@ namespace cg3 {
  * is performed following "Introduction to Algorithms" (Cormen, 2011).
  * No duplicates are allowed.
  */
-template <class K, class T = K>
+template <class K, class T = K, class C = DefaultComparatorType<K>>
 class AVLInner
 {
 
@@ -38,34 +38,32 @@ public:
 
     typedef internal::AVLNode<K,T> Node;
 
-    typedef LessComparatorType<K> LessComparator;
+    typedef TreeGenericIterator<AVLInner<K,T,C>, Node> generic_iterator;
 
-    typedef TreeGenericIterator<AVLInner<K,T>, Node> generic_iterator;
+    typedef TreeIterator<AVLInner<K,T,C>, Node, T> iterator;
+    typedef TreeIterator<AVLInner<K,T,C>, Node, const T> const_iterator;
 
-    typedef TreeIterator<AVLInner<K,T>, Node, T> iterator;
-    typedef TreeIterator<AVLInner<K,T>, Node, const T> const_iterator;
+    typedef TreeReverseIterator<AVLInner<K,T,C>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<AVLInner<K,T,C>, Node, const T> const_reverse_iterator;
 
-    typedef TreeReverseIterator<AVLInner<K,T>, Node, T> reverse_iterator;
-    typedef TreeReverseIterator<AVLInner<K,T>, Node, const T> const_reverse_iterator;
+    typedef TreeInsertIterator<AVLInner<K,T,C>, K> insert_iterator;
 
-    typedef TreeInsertIterator<AVLInner<K,T>, K> insert_iterator;
-
-    typedef TreeRangeBasedIterator<AVLInner<K,T>> RangeBasedIterator;
-    typedef TreeRangeBasedConstIterator<AVLInner<K,T>> RangeBasedConstIterator;
-    typedef TreeRangeBasedReverseIterator<AVLInner<K,T>> RangeBasedReverseIterator;
-    typedef TreeRangeBasedConstReverseIterator<AVLInner<K,T>> RangeBasedConstReverseIterator;
+    typedef TreeRangeBasedIterator<AVLInner<K,T,C>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<AVLInner<K,T,C>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<AVLInner<K,T,C>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<AVLInner<K,T,C>> RangeBasedConstReverseIterator;
 
 
     /* Constructors/destructor */
 
-    AVLInner(const LessComparator customComparator = &internal::defaultComparator<K>);
+    AVLInner(const C customComparator = &internal::defaultComparator<K>);
     AVLInner(const std::vector<std::pair<K,T>>& vec,
-             const LessComparator customComparator = &internal::defaultComparator<K>);
+             const C customComparator = &internal::defaultComparator<K>);
     AVLInner(const std::vector<K>& vec,
-             const LessComparator customComparator = &internal::defaultComparator<K>);
+             const C customComparator = &internal::defaultComparator<K>);
 
-    AVLInner(const AVLInner<K,T>& bst);
-    AVLInner(AVLInner<K,T>&& bst);
+    AVLInner(const AVLInner<K,T,C>& bst);
+    AVLInner(AVLInner<K,T,C>&& bst);
 
     ~AVLInner();
 
@@ -137,8 +135,8 @@ public:
 
     /* Swap function and assignment */
 
-    inline AVLInner<K,T>& operator= (AVLInner<K,T> bst);
-    inline void swap(AVLInner<K,T>& bst);
+    inline AVLInner<K,T,C>& operator= (AVLInner<K,T,C> bst);
+    inline void swap(AVLInner<K,T,C>& bst);
 
 protected:
 
@@ -148,7 +146,7 @@ protected:
 
     TreeSize entries;
 
-    LessComparator lessComparator;
+    C comparator;
 
 
 private:
@@ -159,8 +157,8 @@ private:
 
 };
 
-template <class K, class T>
-void swap(AVLInner<K,T>& b1, AVLInner<K,T>& b2);
+template <class K, class T, class C>
+void swap(AVLInner<K,T,C>& b1, AVLInner<K,T,C>& b2);
 
 
 }

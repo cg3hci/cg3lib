@@ -27,7 +27,7 @@ namespace cg3 {
  * Keys and values are saved only in the leaves
  * No duplicates are allowed.
  */
-template <class K, class T = K>
+template <class K, class T = K, class C = DefaultComparatorType<K>>
 class BSTLeaf
 {
 
@@ -37,35 +37,33 @@ public:
 
     typedef internal::BSTNode<K,T> Node;
 
-    typedef LessComparatorType<K> LessComparator;
+    typedef TreeGenericIterator<BSTLeaf<K,T,C>, Node> generic_iterator;
 
-    typedef TreeGenericIterator<BSTLeaf<K,T>, Node> generic_iterator;
+    typedef TreeIterator<BSTLeaf<K,T,C>, Node, T> iterator;
+    typedef TreeIterator<BSTLeaf<K,T,C>, Node, const T> const_iterator;
 
-    typedef TreeIterator<BSTLeaf<K,T>, Node, T> iterator;
-    typedef TreeIterator<BSTLeaf<K,T>, Node, const T> const_iterator;
+    typedef TreeReverseIterator<BSTLeaf<K,T,C>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<BSTLeaf<K,T,C>, Node, const T> const_reverse_iterator;
 
-    typedef TreeReverseIterator<BSTLeaf<K,T>, Node, T> reverse_iterator;
-    typedef TreeReverseIterator<BSTLeaf<K,T>, Node, const T> const_reverse_iterator;
+    typedef TreeInsertIterator<BSTLeaf<K,T,C>, K> insert_iterator;
 
-    typedef TreeInsertIterator<BSTLeaf<K,T>, K> insert_iterator;
-
-    typedef TreeRangeBasedIterator<BSTLeaf<K,T>> RangeBasedIterator;
-    typedef TreeRangeBasedConstIterator<BSTLeaf<K,T>> RangeBasedConstIterator;
-    typedef TreeRangeBasedReverseIterator<BSTLeaf<K,T>> RangeBasedReverseIterator;
-    typedef TreeRangeBasedConstReverseIterator<BSTLeaf<K,T>> RangeBasedConstReverseIterator;
+    typedef TreeRangeBasedIterator<BSTLeaf<K,T,C>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<BSTLeaf<K,T,C>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<BSTLeaf<K,T,C>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<BSTLeaf<K,T,C>> RangeBasedConstReverseIterator;
 
 
 
     /* Constructors/destructor */
 
-    BSTLeaf(const LessComparator customComparator = &internal::defaultComparator<K>);
+    BSTLeaf(const C customComparator = &internal::defaultComparator<K>);
     BSTLeaf(const std::vector<std::pair<K,T>>& vec,
-            const LessComparator customComparator = &internal::defaultComparator<K>);
+            const C customComparator = &internal::defaultComparator<K>);
     BSTLeaf(const std::vector<K>& vec,
-            const LessComparator customComparator = &internal::defaultComparator<K>);
+            const C customComparator = &internal::defaultComparator<K>);
 
-    BSTLeaf(const BSTLeaf<K,T>& bst);
-    BSTLeaf(BSTLeaf<K,T>&& bst);
+    BSTLeaf(const BSTLeaf<K,T,C>& bst);
+    BSTLeaf(BSTLeaf<K,T,C>&& bst);
 
     ~BSTLeaf();
 
@@ -138,8 +136,8 @@ public:
 
     /* Swap function and assignment */
 
-    inline BSTLeaf<K,T>& operator= (BSTLeaf<K,T> bst);
-    inline void swap(BSTLeaf<K,T>& bst);
+    inline BSTLeaf<K,T,C>& operator= (BSTLeaf<K,T,C> bst);
+    inline void swap(BSTLeaf<K,T,C>& bst);
 
 protected:
 
@@ -149,7 +147,7 @@ protected:
 
     TreeSize entries;
 
-    LessComparator lessComparator;
+    C comparator;
 
 
 private:
@@ -161,8 +159,8 @@ private:
 };
 
 
-template <class K, class T>
-void swap(BSTLeaf<K,T>& b1, BSTLeaf<K,T>& b2);
+template <class K, class T, class C>
+void swap(BSTLeaf<K,T,C>& b1, BSTLeaf<K,T,C>& b2);
 
 
 }

@@ -23,9 +23,9 @@ namespace cg3 {
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-BSTLeaf<K,T>::BSTLeaf(const LessComparator customComparator) :
-    lessComparator(customComparator)
+template <class K, class T, class C>
+BSTLeaf<K,T,C>::BSTLeaf(const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
 }
@@ -37,11 +37,11 @@ BSTLeaf<K,T>::BSTLeaf(const LessComparator customComparator) :
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-BSTLeaf<K,T>::BSTLeaf(
+template <class K, class T, class C>
+BSTLeaf<K,T,C>::BSTLeaf(
         const std::vector<std::pair<K,T>>& vec,
-        const LessComparator customComparator) :
-    lessComparator(customComparator)
+        const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -55,11 +55,11 @@ BSTLeaf<K,T>::BSTLeaf(
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-BSTLeaf<K,T>::BSTLeaf(
+template <class K, class T, class C>
+BSTLeaf<K,T,C>::BSTLeaf(
         const std::vector<K>& vec,
-        const LessComparator customComparator) :
-    lessComparator(customComparator)
+        const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -69,9 +69,9 @@ BSTLeaf<K,T>::BSTLeaf(
  * @brief Copy constructor
  * @param bst BST
  */
-template <class K, class T>
-BSTLeaf<K,T>::BSTLeaf(const BSTLeaf<K,T>& bst) :
-    lessComparator(bst.lessComparator)
+template <class K, class T, class C>
+BSTLeaf<K,T,C>::BSTLeaf(const BSTLeaf<K,T,C>& bst) :
+    comparator(bst.comparator)
 {
     this->root = internal::copySubtreeHelper<Node,T>(bst.root);
     this->entries = bst.entries;
@@ -81,9 +81,9 @@ BSTLeaf<K,T>::BSTLeaf(const BSTLeaf<K,T>& bst) :
  * @brief Move constructor
  * @param bst BST
  */
-template <class K, class T>
-BSTLeaf<K,T>::BSTLeaf(BSTLeaf<K,T>&& bst) :
-    lessComparator(bst.lessComparator)
+template <class K, class T, class C>
+BSTLeaf<K,T,C>::BSTLeaf(BSTLeaf<K,T,C>&& bst) :
+    comparator(bst.comparator)
 {
     this->root = bst.root;
     bst.root = nullptr;
@@ -93,8 +93,8 @@ BSTLeaf<K,T>::BSTLeaf(BSTLeaf<K,T>&& bst) :
 /**
  * @brief Destructor
  */
-template <class K, class T>
-BSTLeaf<K,T>::~BSTLeaf() {
+template <class K, class T, class C>
+BSTLeaf<K,T,C>::~BSTLeaf() {
     this->clear();
 }
 
@@ -113,8 +113,8 @@ BSTLeaf<K,T>::~BSTLeaf() {
  *
  * @param[in] vec Vector of values
  */
-template <class K, class T>
-void BSTLeaf<K,T>::construction(const std::vector<K>& vec) {
+template <class K, class T, class C>
+void BSTLeaf<K,T,C>::construction(const std::vector<K>& vec) {
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -132,8 +132,8 @@ void BSTLeaf<K,T>::construction(const std::vector<K>& vec) {
  *
  * @param[in] vec Vector of pairs of keys/values
  */
-template <class K, class T>
-void BSTLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
+template <class K, class T, class C>
+void BSTLeaf<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
     this->clear();
 
     if (vec.size() == 0)
@@ -142,7 +142,7 @@ void BSTLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    internal::PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(comparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -153,10 +153,10 @@ void BSTLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the bottom up construction helper
-    this->entries = internal::constructionBottomUpHelperLeaf(
+    this->entries = internal::constructionBottomUpHelperLeaf<Node,K,C>(
                 sortedNodes,
                 this->root,
-                lessComparator);
+                comparator);
 }
 
 
@@ -169,8 +169,8 @@ void BSTLeaf<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::insert(const K& key) {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::insert(const K& key) {
     return insert(key, key);
 }
 
@@ -185,15 +185,15 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::insert(const K& key) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::insert(
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::insert(
         const K& key, const T& value)
 {
     //Create new node
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = internal::insertNodeHelperLeaf(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperLeaf<Node,K,C>(newNode, this->root, comparator);
 
     //If node has been inserted
     if (result != nullptr) {
@@ -219,10 +219,10 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::insert(
  * @param[in] key Key of the node
  * @return True if item has been found and then erased, false otherwise
  */
-template <class K, class T>
-bool BSTLeaf<K,T>::erase(const K& key) {
+template <class K, class T, class C>
+bool BSTLeaf<K,T,C>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
     //If the node has been found
     if (node != nullptr) {
@@ -243,8 +243,8 @@ bool BSTLeaf<K,T>::erase(const K& key) {
  *
  * @param[in] it A generic iterator pointing to the node to be erased
  */
-template <class K, class T>
-void BSTLeaf<K,T>::erase(generic_iterator it) {
+template <class K, class T, class C>
+void BSTLeaf<K,T,C>::erase(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -271,10 +271,10 @@ void BSTLeaf<K,T>::erase(generic_iterator it) {
  * @return The iterator pointing to the BST node if the element
  * is contained in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::find(const K& key) {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::find(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -290,10 +290,10 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::find(const K& key) {
  * @return The iterator pointing to the BST node if the element (lower/equal)
  * exists in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::findLower(const K& key) {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findLower(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findLowerHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findLowerHelperLeaf(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -305,10 +305,10 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::findLower(const K& key) {
  * @return The iterator pointing to the BST node if the element (upper)
  * exists in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::findUpper(const K& key) {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findUpper(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findUpperHelperLeaf(key, this->root, lessComparator);
+    Node* node = internal::findUpperHelperLeaf(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -321,8 +321,8 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::findUpper(const K& key) {
  * @brief Clear the tree, delete all its elements
  *
  */
-template <class K, class T>
-void BSTLeaf<K,T>::clear() {
+template <class K, class T, class C>
+void BSTLeaf<K,T,C>::clear() {
     //Clear entire tree
     internal::clearHelper(this->root);
 
@@ -338,8 +338,8 @@ void BSTLeaf<K,T>::clear() {
  *
  * @return Number of entries in the BST
  */
-template <class K, class T>
-TreeSize BSTLeaf<K,T>::size() {
+template <class K, class T, class C>
+TreeSize BSTLeaf<K,T,C>::size() {
     return this->entries;
 }
 
@@ -348,8 +348,8 @@ TreeSize BSTLeaf<K,T>::size() {
  *
  * @return True if the BST is empty, false otherwise
  */
-template <class K, class T>
-bool BSTLeaf<K,T>::empty() {
+template <class K, class T, class C>
+bool BSTLeaf<K,T,C>::empty() {
     return (this->size() == 0);
 }
 
@@ -360,8 +360,8 @@ bool BSTLeaf<K,T>::empty() {
  *
  * @return Max height of the tree
  */
-template <class K, class T>
-TreeSize BSTLeaf<K,T>::getHeight()
+template <class K, class T, class C>
+TreeSize BSTLeaf<K,T,C>::getHeight()
 {
     return internal::getHeightRecursiveHelper(this->root);
 }
@@ -377,8 +377,8 @@ TreeSize BSTLeaf<K,T>::getHeight()
  * @param[out] out Output iterator for the container containing the iterators
  * pointing to the nodes which have keys enclosed in the input range
  */
-template <class K, class T> template <class OutputIterator>
-void BSTLeaf<K,T>::rangeQuery(
+template <class K, class T, class C> template <class OutputIterator>
+void BSTLeaf<K,T,C>::rangeQuery(
         const K& start, const K& end,
         OutputIterator out)
 {
@@ -386,7 +386,7 @@ void BSTLeaf<K,T>::rangeQuery(
     std::vector<Node*> nodeOutput;
 
     //Execute range query
-    internal::rangeQueryHelperLeaf(start, end, nodeOutput, this->root, lessComparator);
+    internal::rangeQueryHelperLeaf(start, end, nodeOutput, this->root, comparator);
 
     for (Node* node : nodeOutput) {
         *out = iterator(this, node);
@@ -404,8 +404,8 @@ void BSTLeaf<K,T>::rangeQuery(
  *
  * @return The iterator pointing to the minimum node
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::getMin() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMin() {
     return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
@@ -414,8 +414,8 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::getMin() {
  *
  * @return The iterator pointing to the maximum node
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::getMax() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMax() {
     return iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
@@ -428,8 +428,8 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::getMax() {
  * @return The iterator pointing to the successor node (end
  * iterator if it has no successor)
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::generic_iterator BSTLeaf<K,T>::getNext(generic_iterator it) {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getNext(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -444,8 +444,8 @@ typename BSTLeaf<K,T>::generic_iterator BSTLeaf<K,T>::getNext(generic_iterator i
  * @return The iterator pointing to the predecessor node (end
  * iterator if it has no predecessor)
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::generic_iterator BSTLeaf<K,T>::getPrev(generic_iterator it) {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getPrev(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -460,16 +460,16 @@ typename BSTLeaf<K,T>::generic_iterator BSTLeaf<K,T>::getPrev(generic_iterator i
 /**
  * @brief Begin iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::begin() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::begin() {
     return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
  * @brief End iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::end() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::end() {
     return iterator(this, nullptr);
 }
 
@@ -477,16 +477,16 @@ typename BSTLeaf<K,T>::iterator BSTLeaf<K,T>::end() {
 /**
  * @brief Begin const iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::const_iterator BSTLeaf<K,T>::cbegin() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cbegin() {
     return const_iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
 /**
  * @brief End const iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::const_iterator BSTLeaf<K,T>::cend() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cend() {
     return const_iterator(this, nullptr);
 }
 
@@ -494,16 +494,16 @@ typename BSTLeaf<K,T>::const_iterator BSTLeaf<K,T>::cend() {
 /**
  * @brief Begin reverse iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::reverse_iterator BSTLeaf<K,T>::rbegin() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rbegin() {
     return reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**
  * @brief End reverse iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::reverse_iterator BSTLeaf<K,T>::rend() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rend() {
     return reverse_iterator(this, nullptr);
 }
 
@@ -511,16 +511,16 @@ typename BSTLeaf<K,T>::reverse_iterator BSTLeaf<K,T>::rend() {
 /**
  * @brief Begin const reverse iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::const_reverse_iterator BSTLeaf<K,T>::crbegin() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crbegin() {
     return const_reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
 /**
  * @brief End const reverse iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::const_reverse_iterator BSTLeaf<K,T>::crend() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crend() {
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -529,8 +529,8 @@ typename BSTLeaf<K,T>::const_reverse_iterator BSTLeaf<K,T>::crend() {
 /**
  * @brief Insert output iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::insert_iterator BSTLeaf<K,T>::inserter() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::insert_iterator BSTLeaf<K,T,C>::inserter() {
     return insert_iterator(this);
 }
 
@@ -541,8 +541,8 @@ typename BSTLeaf<K,T>::insert_iterator BSTLeaf<K,T>::inserter() {
  *
  * @return Range based iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::RangeBasedIterator BSTLeaf<K,T>::getIterator() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::RangeBasedIterator BSTLeaf<K,T,C>::getIterator() {
     return RangeBasedIterator(this);
 }
 
@@ -551,8 +551,8 @@ typename BSTLeaf<K,T>::RangeBasedIterator BSTLeaf<K,T>::getIterator() {
  *
  * @return Range based const iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::RangeBasedConstIterator BSTLeaf<K,T>::getConstIterator() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::RangeBasedConstIterator BSTLeaf<K,T,C>::getConstIterator() {
     return RangeBasedConstIterator(this);
 }
 
@@ -561,8 +561,8 @@ typename BSTLeaf<K,T>::RangeBasedConstIterator BSTLeaf<K,T>::getConstIterator() 
  *
  * @return Range based reverse iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::RangeBasedReverseIterator BSTLeaf<K,T>::getReverseIterator() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::RangeBasedReverseIterator BSTLeaf<K,T,C>::getReverseIterator() {
     return RangeBasedReverseIterator(this);
 }
 
@@ -571,8 +571,8 @@ typename BSTLeaf<K,T>::RangeBasedReverseIterator BSTLeaf<K,T>::getReverseIterato
  *
  * @return Range based const reverse iterator
  */
-template <class K, class T>
-typename BSTLeaf<K,T>::RangeBasedConstReverseIterator BSTLeaf<K,T>::getConstReverseIterator() {
+template <class K, class T, class C>
+typename BSTLeaf<K,T,C>::RangeBasedConstReverseIterator BSTLeaf<K,T,C>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
 }
 
@@ -584,8 +584,8 @@ typename BSTLeaf<K,T>::RangeBasedConstReverseIterator BSTLeaf<K,T>::getConstReve
  * @param[out] bst Parameter BST
  * @return This object
  */
-template <class K, class T>
-BSTLeaf<K,T>& BSTLeaf<K,T>::operator= (BSTLeaf<K,T> bst) {
+template <class K, class T, class C>
+BSTLeaf<K,T,C>& BSTLeaf<K,T,C>::operator= (BSTLeaf<K,T,C> bst) {
     swap(bst);
     return *this;
 }
@@ -595,12 +595,12 @@ BSTLeaf<K,T>& BSTLeaf<K,T>::operator= (BSTLeaf<K,T> bst) {
  * @brief Swap BST with another one
  * @param[out] bst BST to be swapped with this object
  */
-template <class K, class T>
-void BSTLeaf<K,T>::swap(BSTLeaf<K,T>& bst) {
+template <class K, class T, class C>
+void BSTLeaf<K,T,C>::swap(BSTLeaf<K,T,C>& bst) {
     using std::swap;
     swap(this->root, bst.root);
     swap(this->entries, bst.entries);
-    swap(this->lessComparator, bst.lessComparator);
+    swap(this->comparator, bst.comparator);
 }
 
 
@@ -609,8 +609,8 @@ void BSTLeaf<K,T>::swap(BSTLeaf<K,T>& bst) {
  * @param b1 First BST
  * @param b2 Second BST
  */
-template <class K, class T>
-void swap(BSTLeaf<K,T>& b1, BSTLeaf<K,T>& b2) {
+template <class K, class T, class C>
+void swap(BSTLeaf<K,T,C>& b1, BSTLeaf<K,T,C>& b2) {
     b1.swap(b2);
 }
 
@@ -621,8 +621,8 @@ void swap(BSTLeaf<K,T>& b1, BSTLeaf<K,T>& b2) {
 /**
  * @brief Initialization of the BST
  */
-template <class K, class T>
-void BSTLeaf<K,T>::initialize()
+template <class K, class T, class C>
+void BSTLeaf<K,T,C>::initialize()
 {
     this->root = nullptr;
     this->entries = 0;

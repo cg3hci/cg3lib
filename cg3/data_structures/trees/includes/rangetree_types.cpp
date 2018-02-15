@@ -101,9 +101,9 @@ bool point3DDimensionComparatorZ(const Pointd& o1, const Pointd& o2) {
  * @brief Get the comparators for each dimension of a 2D point
  * @return Vector of comparators
  */
-std::vector<LessComparatorType<Point2Dd>> getComparatorsForPoint2D() {
+std::vector<DefaultComparatorType<Point2Dd>> getComparatorsForPoint2D() {
     //Creating vector of comparators for each dimension
-    std::vector<LessComparatorType<Point2Dd>> customComparators;
+    std::vector<DefaultComparatorType<Point2Dd>> customComparators;
 
     customComparators.push_back(&point2DDimensionComparatorX);
     customComparators.push_back(&point2DDimensionComparatorY);
@@ -116,9 +116,9 @@ std::vector<LessComparatorType<Point2Dd>> getComparatorsForPoint2D() {
  * @brief Get the comparators for each dimension of a 3D point
  * @return Vector of comparators
  */
-std::vector<LessComparatorType<Pointd>> getComparatorsForPoint3D() {
+std::vector<DefaultComparatorType<Pointd>> getComparatorsForPoint3D() {
     //Creating vector of comparators for each dimension
-    std::vector<LessComparatorType<Pointd>> customComparators;
+    std::vector<DefaultComparatorType<Pointd>> customComparators;
 
     customComparators.push_back(&point3DDimensionComparatorX);
     customComparators.push_back(&point3DDimensionComparatorY);

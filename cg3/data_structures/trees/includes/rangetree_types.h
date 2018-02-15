@@ -22,8 +22,8 @@ inline bool point2DDimensionComparatorY(const Pointd& o1, const Pointd& o2);
 inline bool point2DDimensionComparatorZ(const Pointd& o1, const Pointd& o2);
 
 /* Get vector of comparators for 2D and 3D points */
-std::vector<LessComparatorType<Point2Dd>> getComparatorsForPoint2D();
-std::vector<LessComparatorType<Pointd>> getComparatorsForPoint3D();
+std::vector<DefaultComparatorType<Point2Dd>> getComparatorsForPoint2D();
+std::vector<DefaultComparatorType<Pointd>> getComparatorsForPoint3D();
 
 }
 

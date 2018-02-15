@@ -27,7 +27,7 @@ namespace cg3 {
  * Keys and values are saved only in the leaves.
  * No duplicates are allowed.
  */
-template <class K, class T = K>
+template <class K, class T = K, class C = DefaultComparatorType<K>>
 class AVLLeaf
 {
 
@@ -37,35 +37,33 @@ public:
 
     typedef internal::AVLNode<K,T> Node;
 
-    typedef LessComparatorType<K> LessComparator;
+    typedef TreeGenericIterator<AVLLeaf<K,T,C>, Node> generic_iterator;
 
-    typedef TreeGenericIterator<AVLLeaf<K,T>, Node> generic_iterator;
+    typedef TreeIterator<AVLLeaf<K,T,C>, Node, T> iterator;
+    typedef TreeIterator<AVLLeaf<K,T,C>, Node, const T> const_iterator;
 
-    typedef TreeIterator<AVLLeaf<K,T>, Node, T> iterator;
-    typedef TreeIterator<AVLLeaf<K,T>, Node, const T> const_iterator;
+    typedef TreeReverseIterator<AVLLeaf<K,T,C>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<AVLLeaf<K,T,C>, Node, const T> const_reverse_iterator;
 
-    typedef TreeReverseIterator<AVLLeaf<K,T>, Node, T> reverse_iterator;
-    typedef TreeReverseIterator<AVLLeaf<K,T>, Node, const T> const_reverse_iterator;
+    typedef TreeInsertIterator<AVLLeaf<K,T,C>, K> insert_iterator;
 
-    typedef TreeInsertIterator<AVLLeaf<K,T>, K> insert_iterator;
-
-    typedef TreeRangeBasedIterator<AVLLeaf<K,T>> RangeBasedIterator;
-    typedef TreeRangeBasedConstIterator<AVLLeaf<K,T>> RangeBasedConstIterator;
-    typedef TreeRangeBasedReverseIterator<AVLLeaf<K,T>> RangeBasedReverseIterator;
-    typedef TreeRangeBasedConstReverseIterator<AVLLeaf<K,T>> RangeBasedConstReverseIterator;
+    typedef TreeRangeBasedIterator<AVLLeaf<K,T,C>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<AVLLeaf<K,T,C>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<AVLLeaf<K,T,C>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<AVLLeaf<K,T,C>> RangeBasedConstReverseIterator;
 
 
 
     /* Constructors/destructor */
 
-    AVLLeaf(const LessComparator customComparator = &internal::defaultComparator<K>);
+    AVLLeaf(const C customComparator = &internal::defaultComparator<K>);
     AVLLeaf(const std::vector<std::pair<K,T>>& vec,
-            const LessComparator customComparator = &internal::defaultComparator<K>);
+            const C customComparator = &internal::defaultComparator<K>);
     AVLLeaf(const std::vector<K>& vec,
-            const LessComparator customComparator = &internal::defaultComparator<K>);
+            const C customComparator = &internal::defaultComparator<K>);
 
-    AVLLeaf(const AVLLeaf<K,T>& bst);
-    AVLLeaf(AVLLeaf<K,T>&& bst);
+    AVLLeaf(const AVLLeaf<K,T,C>& bst);
+    AVLLeaf(AVLLeaf<K,T,C>&& bst);
 
     ~AVLLeaf();
 
@@ -137,8 +135,8 @@ public:
 
     /* Swap function and assignment */
 
-    inline AVLLeaf<K,T>& operator= (AVLLeaf<K,T> bst);
-    inline void swap(AVLLeaf<K,T>& bst);
+    inline AVLLeaf<K,T,C>& operator= (AVLLeaf<K,T,C> bst);
+    inline void swap(AVLLeaf<K,T,C>& bst);
 
 protected:
 
@@ -148,7 +146,7 @@ protected:
 
     TreeSize entries;
 
-    LessComparator lessComparator;
+    C comparator;
 
 
 private:
@@ -159,8 +157,8 @@ private:
 
 };
 
-template <class K, class T>
-void swap(AVLLeaf<K,T>& b1, AVLLeaf<K,T>& b2);
+template <class K, class T, class C>
+void swap(AVLLeaf<K,T,C>& b1, AVLLeaf<K,T,C>& b2);
 
 }
 

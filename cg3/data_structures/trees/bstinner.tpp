@@ -23,9 +23,9 @@ namespace cg3 {
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-BSTInner<K,T>::BSTInner(const LessComparator customComparator) :
-    lessComparator(customComparator)
+template <class K, class T, class C>
+BSTInner<K,T,C>::BSTInner(const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
 }
@@ -37,11 +37,11 @@ BSTInner<K,T>::BSTInner(const LessComparator customComparator) :
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-BSTInner<K,T>::BSTInner(
+template <class K, class T, class C>
+BSTInner<K,T,C>::BSTInner(
         const std::vector<std::pair<K,T>>& vec,
-        const LessComparator customComparator) :
-    lessComparator(customComparator)
+        const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -55,11 +55,11 @@ BSTInner<K,T>::BSTInner(
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-BSTInner<K,T>::BSTInner(
+template <class K, class T, class C>
+BSTInner<K,T,C>::BSTInner(
         const std::vector<K>& vec,
-        const LessComparator customComparator) :
-    lessComparator(customComparator)
+        const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -69,9 +69,9 @@ BSTInner<K,T>::BSTInner(
  * @brief Copy constructor
  * @param bst BST
  */
-template <class K, class T>
-BSTInner<K,T>::BSTInner(const BSTInner<K,T>& bst) :
-    lessComparator(bst.lessComparator)
+template <class K, class T, class C>
+BSTInner<K,T,C>::BSTInner(const BSTInner<K,T,C>& bst) :
+    comparator(bst.comparator)
 {
     this->root = internal::copySubtreeHelper<Node,T>(bst.root);
     this->entries = bst.entries;
@@ -81,9 +81,9 @@ BSTInner<K,T>::BSTInner(const BSTInner<K,T>& bst) :
  * @brief Move constructor
  * @param bst BST
  */
-template <class K, class T>
-BSTInner<K,T>::BSTInner(BSTInner<K,T>&& bst) :
-    lessComparator(bst.lessComparator)
+template <class K, class T, class C>
+BSTInner<K,T,C>::BSTInner(BSTInner<K,T,C>&& bst) :
+    comparator(bst.comparator)
 {
     this->root = bst.root;
     bst.root = nullptr;
@@ -93,8 +93,8 @@ BSTInner<K,T>::BSTInner(BSTInner<K,T>&& bst) :
 /**
  * @brief Destructor
  */
-template <class K, class T>
-BSTInner<K,T>::~BSTInner() {
+template <class K, class T, class C>
+BSTInner<K,T,C>::~BSTInner() {
     this->clear();
 }
 
@@ -113,8 +113,8 @@ BSTInner<K,T>::~BSTInner() {
  *
  * @param[in] vec Vector of values
  */
-template <class K, class T>
-void BSTInner<K,T>::construction(const std::vector<K>& vec) {
+template <class K, class T, class C>
+void BSTInner<K,T,C>::construction(const std::vector<K>& vec) {
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -132,8 +132,8 @@ void BSTInner<K,T>::construction(const std::vector<K>& vec) {
  *
  * @param[in] vec Vector of pairs of keys/values
  */
-template <class K, class T>
-void BSTInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
+template <class K, class T, class C>
+void BSTInner<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
     this->clear();
 
     if (vec.size() == 0)
@@ -142,7 +142,7 @@ void BSTInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    internal::PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(comparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -153,12 +153,12 @@ void BSTInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the recursive helper
-    this->entries = internal::constructionMedianHelperInner(
+    this->entries = internal::constructionMedianHelperInner<Node,K,C>(
                 sortedNodes,
                 0,
                 sortedNodes.size(),
                 this->root,
-                lessComparator);
+                comparator);
 }
 
 
@@ -171,8 +171,8 @@ void BSTInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::insert(const K& key) {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::insert(const K& key) {
     return insert(key, key);
 }
 
@@ -187,15 +187,15 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::insert(const K& key) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::insert(
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::insert(
         const K& key, const T& value)
 {
     //Create new node
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = internal::insertNodeHelperInner(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperInner<Node,K,C>(newNode, this->root, comparator);
 
     //If node has been inserted
     if (result != nullptr) {
@@ -221,10 +221,10 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::insert(
  * @param[in] key Key of the node
  * @return True if item has been found and then erased, false otherwise
  */
-template <class K, class T>
-bool BSTInner<K,T>::erase(const K& key) {
+template <class K, class T, class C>
+bool BSTInner<K,T,C>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperInner(key, this->root, comparator);
 
     //If the node has been found
     if (node != nullptr) {
@@ -245,8 +245,8 @@ bool BSTInner<K,T>::erase(const K& key) {
  *
  * @param[in] it A generic iterator pointing to the node to be erased
  */
-template <class K, class T>
-void BSTInner<K,T>::erase(generic_iterator it) {
+template <class K, class T, class C>
+void BSTInner<K,T,C>::erase(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -274,10 +274,10 @@ void BSTInner<K,T>::erase(generic_iterator it) {
  * @return The iterator pointing to the BST node if the element
  * is contained in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::find(const K& key) {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::find(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperInner(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -293,10 +293,10 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::find(const K& key) {
  * @return The iterator pointing to the BST node if the element (lower/equal)
  * exists in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::findLower(const K& key) {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::findLower(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findLowerHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findLowerHelperInner(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -308,10 +308,10 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::findLower(const K& key) {
  * @return The iterator pointing to the BST node if the element (upper)
  * exists in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::findUpper(const K& key) {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::findUpper(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findUpperHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findUpperHelperInner(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -324,8 +324,8 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::findUpper(const K& key) {
  * @brief Clear the tree, delete all its elements
  *
  */
-template <class K, class T>
-void BSTInner<K,T>::clear() {
+template <class K, class T, class C>
+void BSTInner<K,T,C>::clear() {
     //Clear entire tree
     internal::clearHelper(this->root);
 
@@ -341,8 +341,8 @@ void BSTInner<K,T>::clear() {
  *
  * @return Number of entries in the BST
  */
-template <class K, class T>
-TreeSize BSTInner<K,T>::size() {
+template <class K, class T, class C>
+TreeSize BSTInner<K,T,C>::size() {
     return this->entries;
 }
 
@@ -351,8 +351,8 @@ TreeSize BSTInner<K,T>::size() {
  *
  * @return True if the BST is empty, false otherwise
  */
-template <class K, class T>
-bool BSTInner<K,T>::empty() {
+template <class K, class T, class C>
+bool BSTInner<K,T,C>::empty() {
     return (this->size() == 0);
 }
 
@@ -363,8 +363,8 @@ bool BSTInner<K,T>::empty() {
  *
  * @return Max height of the tree
  */
-template <class K, class T>
-TreeSize BSTInner<K,T>::getHeight()
+template <class K, class T, class C>
+TreeSize BSTInner<K,T,C>::getHeight()
 {
     return internal::getHeightRecursiveHelper(this->root);
 }
@@ -380,8 +380,8 @@ TreeSize BSTInner<K,T>::getHeight()
  * @param[out] out Output iterator for the container containing the iterators
  * pointing to the nodes which have keys enclosed in the input range
  */
-template <class K, class T> template <class OutputIterator>
-void BSTInner<K,T>::rangeQuery(
+template <class K, class T, class C> template <class OutputIterator>
+void BSTInner<K,T,C>::rangeQuery(
         const K& start, const K& end,
         OutputIterator out)
 {
@@ -389,7 +389,7 @@ void BSTInner<K,T>::rangeQuery(
     std::vector<Node*> nodeOutput;
 
     //Execute range query
-    internal::rangeQueryHelperInner(start, end, nodeOutput, this->root, lessComparator);
+    internal::rangeQueryHelperInner(start, end, nodeOutput, this->root, comparator);
 
     for (Node* node : nodeOutput) {
         *out = iterator(this, node);
@@ -406,8 +406,8 @@ void BSTInner<K,T>::rangeQuery(
  *
  * @return The iterator pointing to the minimum node
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::getMin() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::getMin() {
     return iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
@@ -416,8 +416,8 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::getMin() {
  *
  * @return The iterator pointing to the maximum node
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::getMax() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::getMax() {
     return iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
@@ -430,8 +430,8 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::getMax() {
  * @return The iterator pointing to the successor node (end
  * iterator if it has no successor)
  */
-template <class K, class T>
-typename BSTInner<K,T>::generic_iterator BSTInner<K,T>::getNext(generic_iterator it) {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::generic_iterator BSTInner<K,T,C>::getNext(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -446,8 +446,8 @@ typename BSTInner<K,T>::generic_iterator BSTInner<K,T>::getNext(generic_iterator
  * @return The iterator pointing to the predecessor node (end
  * iterator if it has no predecessor)
  */
-template <class K, class T>
-typename BSTInner<K,T>::generic_iterator BSTInner<K,T>::getPrev(generic_iterator it) {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::generic_iterator BSTInner<K,T,C>::getPrev(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -462,16 +462,16 @@ typename BSTInner<K,T>::generic_iterator BSTInner<K,T>::getPrev(generic_iterator
 /**
  * @brief Begin iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::begin() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::begin() {
     return iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
 /**
  * @brief End iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::iterator BSTInner<K,T>::end() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::iterator BSTInner<K,T,C>::end() {
     return iterator(this, nullptr);
 }
 
@@ -479,16 +479,16 @@ typename BSTInner<K,T>::iterator BSTInner<K,T>::end() {
 /**
  * @brief Begin const iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::const_iterator BSTInner<K,T>::cbegin() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::const_iterator BSTInner<K,T,C>::cbegin() {
     return const_iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
 /**
  * @brief End const iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::const_iterator BSTInner<K,T>::cend() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::const_iterator BSTInner<K,T,C>::cend() {
     return const_iterator(this, nullptr);
 }
 
@@ -496,16 +496,16 @@ typename BSTInner<K,T>::const_iterator BSTInner<K,T>::cend() {
 /**
  * @brief Begin reverse iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::reverse_iterator BSTInner<K,T>::rbegin() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::reverse_iterator BSTInner<K,T,C>::rbegin() {
     return reverse_iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
 /**
  * @brief End reverse iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::reverse_iterator BSTInner<K,T>::rend() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::reverse_iterator BSTInner<K,T,C>::rend() {
     return reverse_iterator(this, nullptr);
 }
 
@@ -513,16 +513,16 @@ typename BSTInner<K,T>::reverse_iterator BSTInner<K,T>::rend() {
 /**
  * @brief Begin const reverse iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::const_reverse_iterator BSTInner<K,T>::crbegin() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::const_reverse_iterator BSTInner<K,T,C>::crbegin() {
     return const_reverse_iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
 /**
  * @brief End const reverse iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::const_reverse_iterator BSTInner<K,T>::crend() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::const_reverse_iterator BSTInner<K,T,C>::crend() {
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -531,8 +531,8 @@ typename BSTInner<K,T>::const_reverse_iterator BSTInner<K,T>::crend() {
 /**
  * @brief Insert output iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::insert_iterator BSTInner<K,T>::inserter() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::insert_iterator BSTInner<K,T,C>::inserter() {
     return insert_iterator(this);
 }
 
@@ -543,8 +543,8 @@ typename BSTInner<K,T>::insert_iterator BSTInner<K,T>::inserter() {
  *
  * @return Range based iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::RangeBasedIterator BSTInner<K,T>::getIterator() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::RangeBasedIterator BSTInner<K,T,C>::getIterator() {
     return RangeBasedIterator(this);
 }
 
@@ -553,8 +553,8 @@ typename BSTInner<K,T>::RangeBasedIterator BSTInner<K,T>::getIterator() {
  *
  * @return Range based const iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::RangeBasedConstIterator BSTInner<K,T>::getConstIterator() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::RangeBasedConstIterator BSTInner<K,T,C>::getConstIterator() {
     return RangeBasedConstIterator(this);
 }
 
@@ -563,8 +563,8 @@ typename BSTInner<K,T>::RangeBasedConstIterator BSTInner<K,T>::getConstIterator(
  *
  * @return Range based reverse iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::RangeBasedReverseIterator BSTInner<K,T>::getReverseIterator() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::RangeBasedReverseIterator BSTInner<K,T,C>::getReverseIterator() {
     return RangeBasedReverseIterator(this);
 }
 
@@ -573,8 +573,8 @@ typename BSTInner<K,T>::RangeBasedReverseIterator BSTInner<K,T>::getReverseItera
  *
  * @return Range based const reverse iterator
  */
-template <class K, class T>
-typename BSTInner<K,T>::RangeBasedConstReverseIterator BSTInner<K,T>::getConstReverseIterator() {
+template <class K, class T, class C>
+typename BSTInner<K,T,C>::RangeBasedConstReverseIterator BSTInner<K,T,C>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
 }
 
@@ -586,8 +586,8 @@ typename BSTInner<K,T>::RangeBasedConstReverseIterator BSTInner<K,T>::getConstRe
  * @param[out] bst Parameter BST
  * @return This object
  */
-template <class K, class T>
-BSTInner<K,T>& BSTInner<K,T>::operator= (BSTInner<K,T> bst) {
+template <class K, class T, class C>
+BSTInner<K,T,C>& BSTInner<K,T,C>::operator= (BSTInner<K,T,C> bst) {
     swap(bst);
     return *this;
 }
@@ -597,12 +597,12 @@ BSTInner<K,T>& BSTInner<K,T>::operator= (BSTInner<K,T> bst) {
  * @brief Swap BST with another one
  * @param[out] bst BST to be swapped with this object
  */
-template <class K, class T>
-void BSTInner<K,T>::swap(BSTInner<K,T>& bst) {
+template <class K, class T, class C>
+void BSTInner<K,T,C>::swap(BSTInner<K,T,C>& bst) {
     using std::swap;
     swap(this->root, bst.root);
     swap(this->entries, bst.entries);
-    swap(this->lessComparator, bst.lessComparator);
+    swap(this->comparator, bst.comparator);
 }
 
 
@@ -611,8 +611,8 @@ void BSTInner<K,T>::swap(BSTInner<K,T>& bst) {
  * @param b1 First BST
  * @param b2 Second BST
  */
-template <class K, class T>
-void swap(BSTInner<K,T>& b1, BSTInner<K,T>& b2) {
+template <class K, class T, class C>
+void swap(BSTInner<K,T,C>& b1, BSTInner<K,T,C>& b2) {
     b1.swap(b2);
 }
 
@@ -622,8 +622,8 @@ void swap(BSTInner<K,T>& b1, BSTInner<K,T>& b2) {
 /**
  * @brief Initialization of the BST
  */
-template <class K, class T>
-void BSTInner<K,T>::initialize()
+template <class K, class T, class C>
+void BSTInner<K,T,C>::initialize()
 {
     this->root = nullptr;
     this->entries = 0;

@@ -33,7 +33,7 @@ enum AABBValueType { MIN, MAX };
  * a FAT AABB tree: the AABB of each node is the AABB
  * containing the entire childhood AABBs.
  */
-template <int D, class K, class T = K>
+template <int D, class K, class T = K, class C = DefaultComparatorType<K>>
 class AABBTree
 {
 
@@ -50,38 +50,36 @@ public:
 
     typedef internal::AABBNode<D,K,T> Node;
 
-    typedef LessComparatorType<K> LessComparator;
+    typedef TreeGenericIterator<AABBTree<D,K,T,C>, Node> generic_iterator;
 
-    typedef TreeGenericIterator<AABBTree<D,K,T>, Node> generic_iterator;
+    typedef TreeIterator<AABBTree<D,K,T,C>, Node, T> iterator;
+    typedef TreeIterator<AABBTree<D,K,T,C>, Node, const T> const_iterator;
 
-    typedef TreeIterator<AABBTree<D,K,T>, Node, T> iterator;
-    typedef TreeIterator<AABBTree<D,K,T>, Node, const T> const_iterator;
+    typedef TreeReverseIterator<AABBTree<D,K,T,C>, Node, T> reverse_iterator;
+    typedef TreeReverseIterator<AABBTree<D,K,T,C>, Node, const T> const_reverse_iterator;
 
-    typedef TreeReverseIterator<AABBTree<D,K,T>, Node, T> reverse_iterator;
-    typedef TreeReverseIterator<AABBTree<D,K,T>, Node, const T> const_reverse_iterator;
+    typedef TreeInsertIterator<AABBTree<D,K,T,C>, K> insert_iterator;
 
-    typedef TreeInsertIterator<AABBTree<D,K,T>, K> insert_iterator;
-
-    typedef TreeRangeBasedIterator<AABBTree<D,K,T>> RangeBasedIterator;
-    typedef TreeRangeBasedConstIterator<AABBTree<D,K,T>> RangeBasedConstIterator;
-    typedef TreeRangeBasedReverseIterator<AABBTree<D,K,T>> RangeBasedReverseIterator;
-    typedef TreeRangeBasedConstReverseIterator<AABBTree<D,K,T>> RangeBasedConstReverseIterator;
+    typedef TreeRangeBasedIterator<AABBTree<D,K,T,C>> RangeBasedIterator;
+    typedef TreeRangeBasedConstIterator<AABBTree<D,K,T,C>> RangeBasedConstIterator;
+    typedef TreeRangeBasedReverseIterator<AABBTree<D,K,T,C>> RangeBasedReverseIterator;
+    typedef TreeRangeBasedConstReverseIterator<AABBTree<D,K,T,C>> RangeBasedConstReverseIterator;
 
 
 
     /* Constructors/destructor */
 
     AABBTree(const AABBValueExtractor customAABBExtractor,
-             const LessComparator customComparator = &internal::defaultComparator<K>);
+             const C customComparator = &internal::defaultComparator<K>);
     AABBTree(const std::vector<std::pair<K,T>>& vec,
              const AABBValueExtractor customAABBExtractor,
-             const LessComparator customComparator = &internal::defaultComparator<K>);
+             const C customComparator = &internal::defaultComparator<K>);
     AABBTree(const std::vector<K>& vec,
              const AABBValueExtractor customAABBExtractor,
-             const LessComparator customComparator = &internal::defaultComparator<K>);
+             const C customComparator = &internal::defaultComparator<K>);
 
-    AABBTree(const AABBTree<D,K,T>& bst);
-    AABBTree(AABBTree<D,K,T>&& bst);
+    AABBTree(const AABBTree<D,K,T,C>& bst);
+    AABBTree(AABBTree<D,K,T,C>&& bst);
 
     ~AABBTree();
 
@@ -159,8 +157,8 @@ public:
 
     /* Swap function and assignment */
 
-    inline AABBTree<D,K,T>& operator= (AABBTree<D,K,T> bst);
-    inline void swap(AABBTree<D,K,T>& bst);
+    inline AABBTree<D,K,T,C>& operator= (AABBTree<D,K,T,C> bst);
+    inline void swap(AABBTree<D,K,T,C>& bst);
 
 protected:
 
@@ -170,7 +168,7 @@ protected:
 
     TreeSize entries;
 
-    LessComparator lessComparator;
+    C comparator;
 
     AABBValueExtractor aabbValueExtractor;
 
@@ -236,8 +234,8 @@ private:
 
 };
 
-template <int D, class K, class T>
-void swap(AABBTree<D,K,T>& b1, AABBTree<D,K,T>& b2);
+template <int D, class K, class T, class C>
+void swap(AABBTree<D,K,T,C>& b1, AABBTree<D,K,T,C>& b2);
 
 }
 

@@ -20,53 +20,53 @@ namespace internal {
 
 /* Basic BST operation helpers */
 
-template <class Node, class K>
-inline Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, LessComparatorType<K> lessComparator);
+template <class Node, class K, class C>
+inline Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, C& comparator);
 
 template <class Node>
 inline Node* eraseNodeHelperInner(Node*& node, Node*& rootNode);
 
-template <class Node, class K>
-inline Node* findNodeHelperInner(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
+template <class Node, class K, class C>
+inline Node* findNodeHelperInner(const K& key, Node*& rootNode, C& comparator);
 
-template <class Node, class K>
-inline Node* findLowerHelperInner(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
+template <class Node, class K, class C>
+inline Node* findLowerHelperInner(const K& key, Node*& rootNode, C& comparator);
 
-template <class Node, class K>
-inline Node* findUpperHelperInner(const K& key, Node*& rootNode, LessComparatorType<K> lessComparator);
+template <class Node, class K, class C>
+inline Node* findUpperHelperInner(const K& key, Node*& rootNode, C& comparator);
 
 
 
 /* Construction helpers */
 
-template <class Node, class K>
+template <class Node, class K, class C>
 inline TreeSize constructionMedianHelperInner(
         std::vector<Node*>& sortedNodes,
         const TreeSize start, const TreeSize end,
         Node*& rootNode,
-        LessComparatorType<K> lessComparator);
+        C& comparator);
 
 
 
 /* Range query helpers */
 
-template <class Node, class K>
+template <class Node, class K, class C>
 inline Node* findSplitNodeHelperInner(
         const K& start, const K& end,
         Node* rootNode,
-        LessComparatorType<K> lessComparator);
+        C& comparator);
 
 template <class Node>
 inline void reportSubTreeHelperInner(
         Node* node,
         std::vector<Node*>& out);
 
-template <class Node, class K>
+template <class Node, class K, class C>
 inline void rangeQueryHelperInner(
         const K& start, const K& end,
         std::vector<Node*> &out,
         Node* rootNode,
-        LessComparatorType<K> lessComparator);
+        C& comparator);
 
 
 

@@ -24,9 +24,9 @@ namespace cg3 {
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-AVLInner<K,T>::AVLInner(const LessComparator customComparator) :
-    lessComparator(customComparator)
+template <class K, class T, class C>
+AVLInner<K,T,C>::AVLInner(const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
 }
@@ -38,11 +38,11 @@ AVLInner<K,T>::AVLInner(const LessComparator customComparator) :
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-AVLInner<K,T>::AVLInner(
+template <class K, class T, class C>
+AVLInner<K,T,C>::AVLInner(
         const std::vector<std::pair<K,T>>& vec,
-        const LessComparator customComparator) :
-    lessComparator(customComparator)
+        const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -56,11 +56,11 @@ AVLInner<K,T>::AVLInner(
  * @param[in] customComparator Custom comparator to be used to compare if a key
  * is less than another one. The default comparator is the < operator
  */
-template <class K, class T>
-AVLInner<K,T>::AVLInner(
+template <class K, class T, class C>
+AVLInner<K,T,C>::AVLInner(
         const std::vector<K>& vec,
-        const LessComparator customComparator) :
-    lessComparator(customComparator)
+        const C customComparator) :
+    comparator(customComparator)
 {
     this->initialize();
     this->construction(vec);
@@ -71,9 +71,9 @@ AVLInner<K,T>::AVLInner(
  * @brief Copy constructor
  * @param bst BST
  */
-template <class K, class T>
-AVLInner<K,T>::AVLInner(const AVLInner<K,T>& bst) :
-    lessComparator(bst.lessComparator)
+template <class K, class T, class C>
+AVLInner<K,T,C>::AVLInner(const AVLInner<K,T,C>& bst) :
+    comparator(bst.comparator)
 {
     this->root = internal::copySubtreeHelper<Node,T>(bst.root);
     this->entries = bst.entries;
@@ -83,9 +83,9 @@ AVLInner<K,T>::AVLInner(const AVLInner<K,T>& bst) :
  * @brief Move constructor
  * @param bst BST
  */
-template <class K, class T>
-AVLInner<K,T>::AVLInner(AVLInner<K,T>&& bst) :
-    lessComparator(bst.lessComparator)
+template <class K, class T, class C>
+AVLInner<K,T,C>::AVLInner(AVLInner<K,T,C>&& bst) :
+    comparator(bst.comparator)
 {
     this->root = bst.root;
     bst.root = nullptr;
@@ -95,8 +95,8 @@ AVLInner<K,T>::AVLInner(AVLInner<K,T>&& bst) :
 /**
  * @brief Destructor
  */
-template <class K, class T>
-AVLInner<K,T>::~AVLInner() {
+template <class K, class T, class C>
+AVLInner<K,T,C>::~AVLInner() {
     this->clear();
 }
 
@@ -115,8 +115,8 @@ AVLInner<K,T>::~AVLInner() {
  *
  * @param[in] vec Vector of values
  */
-template <class K, class T>
-void AVLInner<K,T>::construction(const std::vector<K>& vec) {
+template <class K, class T, class C>
+void AVLInner<K,T,C>::construction(const std::vector<K>& vec) {
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -134,8 +134,8 @@ void AVLInner<K,T>::construction(const std::vector<K>& vec) {
  *
  * @param[in] vec Vector of pairs of keys/values
  */
-template <class K, class T>
-void AVLInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
+template <class K, class T, class C>
+void AVLInner<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
     this->clear();
 
     if (vec.size() == 0)
@@ -144,7 +144,7 @@ void AVLInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     std::vector<std::pair<K,T>> sortedVec(vec.begin(), vec.end());
 
     //Sort the collection
-    internal::PairComparator<K,T> pairComparator(lessComparator);
+    internal::PairComparator<K,T> pairComparator(comparator);
     std::sort(sortedVec.begin(), sortedVec.end(), pairComparator);
 
     //Create nodes
@@ -155,12 +155,12 @@ void AVLInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
     }
 
     //Calling the recursive helper
-    this->entries = internal::constructionMedianHelperInner(
+    this->entries = internal::constructionMedianHelperInner<Node,K,C>(
                 sortedNodes,
                 0,
                 sortedNodes.size(),
                 this->root,
-                lessComparator);
+                comparator);
 
     //Update the height of nodes
     for (Node*& node : sortedNodes) {
@@ -180,8 +180,8 @@ void AVLInner<K,T>::construction(const std::vector<std::pair<K,T>>& vec) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::insert(const K& key) {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::insert(const K& key) {
     return insert(key, key);
 }
 
@@ -196,15 +196,15 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::insert(const K& key) {
  * @return The iterator pointing to the node if it has been
  * successfully inserted, end iterator otherwise
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::insert(
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::insert(
         const K& key, const T& value)
 {
     //Create new node
     Node* newNode = new Node(key, value);
 
     //Insert node
-    Node* result = internal::insertNodeHelperInner(newNode, this->root, lessComparator);
+    Node* result = internal::insertNodeHelperInner<Node,K,C>(newNode, this->root, comparator);
 
     //If node has been inserted
     if (result != nullptr) {
@@ -233,10 +233,10 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::insert(
  * @param[in] key Key of the node
  * @return True if item has been found and then erased, false otherwise
  */
-template <class K, class T>
-bool AVLInner<K,T>::erase(const K& key) {
+template <class K, class T, class C>
+bool AVLInner<K,T,C>::erase(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperInner(key, this->root, comparator);
 
     //If the node has been found
     if (node != nullptr) {
@@ -260,8 +260,8 @@ bool AVLInner<K,T>::erase(const K& key) {
  *
  * @param[in] it A generic iterator pointing to the node to be erased
  */
-template <class K, class T>
-void AVLInner<K,T>::erase(generic_iterator it) {
+template <class K, class T, class C>
+void AVLInner<K,T,C>::erase(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -292,10 +292,10 @@ void AVLInner<K,T>::erase(generic_iterator it) {
  * @return The iterator pointing to the BST node if the element
  * is contained in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::find(const K& key) {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::find(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findNodeHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findNodeHelperInner(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -309,10 +309,10 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::find(const K& key) {
  * @return The iterator pointing to the BST node if the element (lower/equal)
  * exists in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::findLower(const K& key) {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::findLower(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findLowerHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findLowerHelperInner(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -326,10 +326,10 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::findLower(const K& key) {
  * @return The iterator pointing to the BST node if the element (upper)
  * exists in the BST, end iterator otherwise
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::findUpper(const K& key) {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::findUpper(const K& key) {
     //Query the BST to find the node
-    Node* node = internal::findUpperHelperInner(key, this->root, lessComparator);
+    Node* node = internal::findUpperHelperInner(key, this->root, comparator);
 
     return iterator(this, node);
 }
@@ -342,8 +342,8 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::findUpper(const K& key) {
  * @brief Clear the tree, delete all its elements
  *
  */
-template <class K, class T>
-void AVLInner<K,T>::clear() {
+template <class K, class T, class C>
+void AVLInner<K,T,C>::clear() {
     //Clear entire tree
     internal::clearHelper(this->root);
 
@@ -359,8 +359,8 @@ void AVLInner<K,T>::clear() {
  *
  * @return Number of entries in the BST
  */
-template <class K, class T>
-TreeSize AVLInner<K,T>::size() {
+template <class K, class T, class C>
+TreeSize AVLInner<K,T,C>::size() {
     return this->entries;
 }
 
@@ -369,8 +369,8 @@ TreeSize AVLInner<K,T>::size() {
  *
  * @return True if the BST is empty, false otherwise
  */
-template <class K, class T>
-bool AVLInner<K,T>::empty() {
+template <class K, class T, class C>
+bool AVLInner<K,T,C>::empty() {
     return (this->size() == 0);
 }
 
@@ -381,8 +381,8 @@ bool AVLInner<K,T>::empty() {
  *
  * @return Max height of the tree
  */
-template <class K, class T>
-TreeSize AVLInner<K,T>::getHeight()
+template <class K, class T, class C>
+TreeSize AVLInner<K,T,C>::getHeight()
 {
     return internal::getHeightHelper(this->root);
 }
@@ -400,8 +400,8 @@ TreeSize AVLInner<K,T>::getHeight()
  * @param[out] out Output iterator for the container containing the iterators
  * pointing to the nodes which have keys enclosed in the input range
  */
-template <class K, class T> template <class OutputIterator>
-void AVLInner<K,T>::rangeQuery(
+template <class K, class T, class C> template <class OutputIterator>
+void AVLInner<K,T,C>::rangeQuery(
         const K& start, const K& end,
         OutputIterator out)
 {
@@ -409,7 +409,7 @@ void AVLInner<K,T>::rangeQuery(
     std::vector<Node*> nodeOutput;
 
     //Execute range query
-    internal::rangeQueryHelperInner(start, end, nodeOutput, this->root, lessComparator);
+    internal::rangeQueryHelperInner(start, end, nodeOutput, this->root, comparator);
 
     for (Node* node : nodeOutput) {
         *out = iterator(this, node);
@@ -426,8 +426,8 @@ void AVLInner<K,T>::rangeQuery(
  *
  * @return The iterator pointing to the minimum node
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::getMin() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::getMin() {
     return iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
@@ -436,8 +436,8 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::getMin() {
  *
  * @return The iterator pointing to the maximum node
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::getMax() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::getMax() {
     return iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
@@ -450,8 +450,8 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::getMax() {
  * @return The iterator pointing to the successor node (end
  * iterator if it has no successor)
  */
-template <class K, class T>
-typename AVLInner<K,T>::generic_iterator AVLInner<K,T>::getNext(generic_iterator it) {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::generic_iterator AVLInner<K,T,C>::getNext(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -466,8 +466,8 @@ typename AVLInner<K,T>::generic_iterator AVLInner<K,T>::getNext(generic_iterator
  * @return The iterator pointing to the predecessor node (end
  * iterator if it has no predecessor)
  */
-template <class K, class T>
-typename AVLInner<K,T>::generic_iterator AVLInner<K,T>::getPrev(generic_iterator it) {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::generic_iterator AVLInner<K,T,C>::getPrev(generic_iterator it) {
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -482,16 +482,16 @@ typename AVLInner<K,T>::generic_iterator AVLInner<K,T>::getPrev(generic_iterator
 /**
  * @brief Begin iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::begin() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::begin() {
     return iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
 /**
  * @brief End iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::iterator AVLInner<K,T>::end() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::iterator AVLInner<K,T,C>::end() {
     return iterator(this, nullptr);
 }
 
@@ -499,16 +499,16 @@ typename AVLInner<K,T>::iterator AVLInner<K,T>::end() {
 /**
  * @brief Begin const iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::const_iterator AVLInner<K,T>::cbegin() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::const_iterator AVLInner<K,T,C>::cbegin() {
     return const_iterator(this, internal::getMinimumHelperInner(this->root));
 }
 
 /**
  * @brief End const iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::const_iterator AVLInner<K,T>::cend() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::const_iterator AVLInner<K,T,C>::cend() {
     return const_iterator(this, nullptr);
 }
 
@@ -516,16 +516,16 @@ typename AVLInner<K,T>::const_iterator AVLInner<K,T>::cend() {
 /**
  * @brief Begin reverse iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::reverse_iterator AVLInner<K,T>::rbegin() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::reverse_iterator AVLInner<K,T,C>::rbegin() {
     return reverse_iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
 /**
  * @brief End reverse iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::reverse_iterator AVLInner<K,T>::rend() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::reverse_iterator AVLInner<K,T,C>::rend() {
     return reverse_iterator(this, nullptr);
 }
 
@@ -533,16 +533,16 @@ typename AVLInner<K,T>::reverse_iterator AVLInner<K,T>::rend() {
 /**
  * @brief Begin const reverse iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::const_reverse_iterator AVLInner<K,T>::crbegin() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::const_reverse_iterator AVLInner<K,T,C>::crbegin() {
     return const_reverse_iterator(this, internal::getMaximumHelperInner(this->root));
 }
 
 /**
  * @brief End const reverse iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::const_reverse_iterator AVLInner<K,T>::crend() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::const_reverse_iterator AVLInner<K,T,C>::crend() {
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -551,8 +551,8 @@ typename AVLInner<K,T>::const_reverse_iterator AVLInner<K,T>::crend() {
 /**
  * @brief Insert output iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::insert_iterator AVLInner<K,T>::inserter() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::insert_iterator AVLInner<K,T,C>::inserter() {
     return insert_iterator(this);
 }
 
@@ -562,8 +562,8 @@ typename AVLInner<K,T>::insert_iterator AVLInner<K,T>::inserter() {
  *
  * @return Range based iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::RangeBasedIterator AVLInner<K,T>::getIterator() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::RangeBasedIterator AVLInner<K,T,C>::getIterator() {
     return RangeBasedIterator(this);
 }
 
@@ -572,8 +572,8 @@ typename AVLInner<K,T>::RangeBasedIterator AVLInner<K,T>::getIterator() {
  *
  * @return Range based const iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::RangeBasedConstIterator AVLInner<K,T>::getConstIterator() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::RangeBasedConstIterator AVLInner<K,T,C>::getConstIterator() {
     return RangeBasedConstIterator(this);
 }
 
@@ -582,8 +582,8 @@ typename AVLInner<K,T>::RangeBasedConstIterator AVLInner<K,T>::getConstIterator(
  *
  * @return Range based reverse iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::RangeBasedReverseIterator AVLInner<K,T>::getReverseIterator() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::RangeBasedReverseIterator AVLInner<K,T,C>::getReverseIterator() {
     return RangeBasedReverseIterator(this);
 }
 
@@ -592,8 +592,8 @@ typename AVLInner<K,T>::RangeBasedReverseIterator AVLInner<K,T>::getReverseItera
  *
  * @return Range based const reverse iterator
  */
-template <class K, class T>
-typename AVLInner<K,T>::RangeBasedConstReverseIterator AVLInner<K,T>::getConstReverseIterator() {
+template <class K, class T, class C>
+typename AVLInner<K,T,C>::RangeBasedConstReverseIterator AVLInner<K,T,C>::getConstReverseIterator() {
     return RangeBasedConstReverseIterator(this);
 }
 
@@ -606,8 +606,8 @@ typename AVLInner<K,T>::RangeBasedConstReverseIterator AVLInner<K,T>::getConstRe
  * @param[out] bst Parameter BST
  * @return This object
  */
-template <class K, class T>
-AVLInner<K,T>& AVLInner<K,T>::operator= (AVLInner<K,T> bst) {
+template <class K, class T, class C>
+AVLInner<K,T,C>& AVLInner<K,T,C>::operator= (AVLInner<K,T,C> bst) {
     swap(bst);
     return *this;
 }
@@ -617,12 +617,12 @@ AVLInner<K,T>& AVLInner<K,T>::operator= (AVLInner<K,T> bst) {
  * @brief Swap BST with another one
  * @param[out] bst BST to be swapped with this object
  */
-template <class K, class T>
-void AVLInner<K,T>::swap(AVLInner<K,T>& bst) {
+template <class K, class T, class C>
+void AVLInner<K,T,C>::swap(AVLInner<K,T,C>& bst) {
     using std::swap;
     swap(this->root, bst.root);
     swap(this->entries, bst.entries);
-    swap(this->lessComparator, bst.lessComparator);
+    swap(this->comparator, bst.comparator);
 }
 
 
@@ -631,8 +631,8 @@ void AVLInner<K,T>::swap(AVLInner<K,T>& bst) {
  * @param b1 First BST
  * @param b2 Second BST
  */
-template <class K, class T>
-void swap(AVLInner<K,T>& b1, AVLInner<K,T>& b2) {
+template <class K, class T, class C>
+void swap(AVLInner<K,T,C>& b1, AVLInner<K,T,C>& b2) {
     b1.swap(b2);
 }
 
@@ -643,8 +643,8 @@ void swap(AVLInner<K,T>& b1, AVLInner<K,T>& b2) {
 /**
  * @brief Initialization of the BST
  */
-template <class K, class T>
-void AVLInner<K,T>::initialize()
+template <class K, class T, class C>
+void AVLInner<K,T,C>::initialize()
 {
     this->root = nullptr;
     this->entries = 0;
