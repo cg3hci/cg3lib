@@ -17,5 +17,6 @@
 #include "face_adjacences.h"
 #include "remove_duplicate_vertices.h"
 #include "remove_unreferenced_vertices.h"
+#include "mesh_distance.h"
 
 #endif // CG3_LIBIGL_H

@@ -74,6 +74,8 @@ public:
     static igl::copyleft::cgal::CSGTree union_(const igl::copyleft::cgal::CSGTree& m1, const SimpleEigenMesh& m2);
     #endif
 
+    static double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
+
 private:
     EigenMeshLibIglAlgorithms() {}
 };

@@ -15,6 +15,7 @@
 #include <igl/is_vertex_manifold.h>
 #include <igl/triangle_triangle_adjacency.h>
 #include <igl/extract_manifold_patches.h>
+#include <igl/hausdorff.h>
 
 namespace cg3 {
 
@@ -349,6 +350,16 @@ igl::copyleft::cgal::CSGTree EigenMeshLibIglAlgorithms::union_(const igl::copyle
     return {m1,{m2.V,m2.F},"u"};
 }
 #endif // CG3_CGAL_DEFINED
+
+
+double EigenMeshLibIglAlgorithms::hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+    Eigen::MatrixXd VA = m1.V, VB = m2.V;
+    Eigen::MatrixXi FA = m1.F, FB = m2.F;
+
+    double hDistance;
+    igl::hausdorff(VA, FA, VB, FB, hDistance);
+    return hDistance;
+}
 
 }
 
