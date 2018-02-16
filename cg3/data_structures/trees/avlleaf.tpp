@@ -25,7 +25,7 @@ namespace cg3 {
  * is less than another one. The default comparator is the < operator
  */
 template <class K, class T, class C>
-AVLLeaf<K,T,C>::AVLLeaf(const C customComparator) :
+AVLLeaf<K,T,C>::AVLLeaf(const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();
@@ -41,7 +41,7 @@ AVLLeaf<K,T,C>::AVLLeaf(const C customComparator) :
 template <class K, class T, class C>
 AVLLeaf<K,T,C>::AVLLeaf(
         const std::vector<std::pair<K,T>>& vec,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();
@@ -59,7 +59,7 @@ AVLLeaf<K,T,C>::AVLLeaf(
 template <class K, class T, class C>
 AVLLeaf<K,T,C>::AVLLeaf(
         const std::vector<K>& vec,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();

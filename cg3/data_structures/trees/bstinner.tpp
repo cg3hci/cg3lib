@@ -24,7 +24,7 @@ namespace cg3 {
  * is less than another one. The default comparator is the < operator
  */
 template <class K, class T, class C>
-BSTInner<K,T,C>::BSTInner(const C customComparator) :
+BSTInner<K,T,C>::BSTInner(const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();
@@ -40,7 +40,7 @@ BSTInner<K,T,C>::BSTInner(const C customComparator) :
 template <class K, class T, class C>
 BSTInner<K,T,C>::BSTInner(
         const std::vector<std::pair<K,T>>& vec,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();
@@ -58,7 +58,7 @@ BSTInner<K,T,C>::BSTInner(
 template <class K, class T, class C>
 BSTInner<K,T,C>::BSTInner(
         const std::vector<K>& vec,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();

@@ -56,11 +56,11 @@ public:
 
     /* Constructors/destructor */
 
-    AVLInner(const C customComparator = &internal::defaultComparator<K>);
+    AVLInner(const C& customComparator = &internal::defaultComparator<K>);
     AVLInner(const std::vector<std::pair<K,T>>& vec,
-             const C customComparator = &internal::defaultComparator<K>);
+             const C& customComparator = &internal::defaultComparator<K>);
     AVLInner(const std::vector<K>& vec,
-             const C customComparator = &internal::defaultComparator<K>);
+             const C& customComparator = &internal::defaultComparator<K>);
 
     AVLInner(const AVLInner<K,T,C>& bst);
     AVLInner(AVLInner<K,T,C>&& bst);

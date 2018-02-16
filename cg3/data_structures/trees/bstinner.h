@@ -56,11 +56,11 @@ public:
 
     /* Constructors/destructor */
 
-    BSTInner(const C customComparator = &internal::defaultComparator<K>);
+    BSTInner(const C& customComparator = &internal::defaultComparator<K>);
     BSTInner(const std::vector<std::pair<K,T>>& vec,
-             const C customComparator = &internal::defaultComparator<K>);
+             const C& customComparator = &internal::defaultComparator<K>);
     BSTInner(const std::vector<K>& vec,
-             const C customComparator = &internal::defaultComparator<K>);
+             const C& customComparator = &internal::defaultComparator<K>);
 
     BSTInner(const BSTInner<K,T,C>& bst);
     BSTInner(BSTInner<K,T,C>&& bst);

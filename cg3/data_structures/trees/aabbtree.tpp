@@ -31,7 +31,7 @@ namespace cg3 {
 template <int D, class K, class T, class C>
 AABBTree<D,K,T,C>::AABBTree(
         const AABBValueExtractor customAABBValueExtractor,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator),
     aabbValueExtractor(customAABBValueExtractor)
 {
@@ -51,7 +51,7 @@ template <int D, class K, class T, class C>
 AABBTree<D,K,T,C>::AABBTree(
         const std::vector<std::pair<K,T>>& vec,
         const AABBValueExtractor customAABBValueExtractor,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator),
     aabbValueExtractor(customAABBValueExtractor)
 {
@@ -73,7 +73,7 @@ template <int D, class K, class T, class C>
 AABBTree<D,K,T,C>::AABBTree(
         const std::vector<K>& vec,
         const AABBValueExtractor customAABBValueExtractor,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator),
     aabbValueExtractor(customAABBValueExtractor)
 {

@@ -25,7 +25,7 @@ namespace cg3 {
  * is less than another one. The default comparator is the < operator
  */
 template <class K, class T, class C>
-AVLInner<K,T,C>::AVLInner(const C customComparator) :
+AVLInner<K,T,C>::AVLInner(const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();
@@ -41,7 +41,7 @@ AVLInner<K,T,C>::AVLInner(const C customComparator) :
 template <class K, class T, class C>
 AVLInner<K,T,C>::AVLInner(
         const std::vector<std::pair<K,T>>& vec,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();
@@ -59,7 +59,7 @@ AVLInner<K,T,C>::AVLInner(
 template <class K, class T, class C>
 AVLInner<K,T,C>::AVLInner(
         const std::vector<K>& vec,
-        const C customComparator) :
+        const C& customComparator) :
     comparator(customComparator)
 {
     this->initialize();
