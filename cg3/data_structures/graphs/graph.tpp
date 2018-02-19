@@ -31,18 +31,24 @@ Graph<T>::Graph(GraphType type) : type(type)
  */
 template <class T>
 Graph<T>::Graph(const Graph& graph) : type(graph.type) {
-    int id = 0;
-    for (Node* node : graph.nodes) {
+    //Vector resizing
+    this->nodes.resize(graph.nodes.size());
+
+    #pragma omp parallel for
+    for (int i = 0; i < graph.nodes.size(); i++) {
+        Node* node = graph.nodes[i];
+
+        //Create new node if the current one is not nullptr
+        Node* copyNode = nullptr;
         if (node != nullptr) {
-            this->nodes.push_back(new Node(*node));
-            this->map.insert(std::make_pair(node->value, id));
-        }
-        else {
-            this->nodes.push_back(nullptr);
+            copyNode = new Node(*node);
         }
 
-        id++;
+        this->nodes[i] = copyNode;
     }
+
+    //Map copy
+    this->map = graph.map;
 }
 
 /**
