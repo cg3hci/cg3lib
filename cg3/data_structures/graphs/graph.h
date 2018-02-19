@@ -30,6 +30,12 @@ enum GraphType { DIRECTED, UNDIRECTED };
  * Note that operations with iterators are usually faster, since the
  * operation with the value has to perform a find operation in a map to get
  * the corresponding node.
+ *
+ * The graph is implemented in order to have the best time complexity but it
+ * is not optimal in memory if we perform delete operations. Indeed, every time
+ * we delete a node, we do not remove an entry from the node vector and we do
+ * not delete it from the node adjacencies: we just set the node as a null pointer.
+ *
  */
 template <class T>
 class Graph

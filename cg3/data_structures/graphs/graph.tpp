@@ -36,8 +36,12 @@ Graph<T>::Graph(const Graph& graph) : type(graph.type) {
         if (node != nullptr) {
             this->nodes.push_back(new Node(*node));
             this->map.insert(std::make_pair(node->value, id));
-            id++;
         }
+        else {
+            this->nodes.push_back(nullptr);
+        }
+
+        id++;
     }
 }
 
