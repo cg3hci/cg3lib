@@ -34,8 +34,8 @@ Graph<T>::Graph(GraphType type) :
 template <class T>
 Graph<T>::Graph(const Graph& graph) :
     type(graph.type),
-    nDeletedNodes(graph.nDeletedNodes),
-    map(graph.map)
+    map(graph.map),
+    nDeletedNodes(graph.nDeletedNodes)
 {
     //Vector resizing
     this->nodes.resize(graph.nodes.size());
