@@ -13,6 +13,8 @@
 
 #include <cfloat>
 
+#define NUMBER_DELETE_FOR_RECOMPACT 10000
+
 namespace cg3 {
 
 enum GraphType { DIRECTED, UNDIRECTED };
@@ -35,6 +37,10 @@ enum GraphType { DIRECTED, UNDIRECTED };
  * is not optimal in memory if we perform delete operations. Indeed, every time
  * we delete a node, we do not remove an entry from the node vector and we do
  * not delete it from the node adjacencies: we just set the node as a null pointer.
+ *
+ * Use recompact() method to clear the nullptr references.
+ * Recompact operation is automatically done after a defined number of deleted nodes
+ * (to avoid memory exhaustion). This number is set to 10000.
  *
  */
 template <class T>
@@ -82,6 +88,7 @@ public:
     ~Graph();
 
 
+
     /* Public methods with values */
 
     NodeIterator addNode(const T& o);
@@ -98,19 +105,22 @@ public:
 
     /* Public methods with iterators */
 
-    bool deleteNode(GenericNodeIterator n);
+    bool deleteNode(GenericNodeIterator it);
 
-    void addEdge(GenericNodeIterator n1, GenericNodeIterator n2, const double weight = 0);
-    void deleteEdge(GenericNodeIterator n1, const GenericNodeIterator n2);
-    bool isAdjacent(const GenericNodeIterator n1, const GenericNodeIterator n2) const;
+    void addEdge(GenericNodeIterator it1, GenericNodeIterator it2, const double weight = 0);
+    void deleteEdge(GenericNodeIterator it1, const GenericNodeIterator it2);
+    bool isAdjacent(const GenericNodeIterator it1, const GenericNodeIterator it2) const;
 
-    double getWeight(const GenericNodeIterator o1, const GenericNodeIterator o2);
-    void setWeight(GenericNodeIterator o1, GenericNodeIterator o2, const double weight);
+    double getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2);
+    void setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const double weight);
 
 
-    /* Clear methods */
+    /* Utility methods */
 
+    size_t numNodes();
+    size_t numEdges();
     void clear();
+    void recompact();
 
 
 
@@ -158,10 +168,11 @@ private:
 
     /* Private fields */
 
-    const GraphType type;
+    GraphType type;
 
     std::vector<Node*> nodes;
     std::map<T, size_t> map;
+    int nDeletedNodes;
 
 };
 
