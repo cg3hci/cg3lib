@@ -66,12 +66,12 @@ public:
 
     /* Constructors/destructor */
 
-    RangeTree(const unsigned int dim,
+    explicit RangeTree(const unsigned int dim,
               const std::vector<C>& customComparators);
-    RangeTree(const unsigned int dim,
+    explicit RangeTree(const unsigned int dim,
               const std::vector<std::pair<K,T>>& vec,
               const std::vector<C>& customComparators);
-    RangeTree(const unsigned int dim,
+    explicit RangeTree(const unsigned int dim,
               const std::vector<K>& vec,
               const std::vector<C>& customComparators);
 

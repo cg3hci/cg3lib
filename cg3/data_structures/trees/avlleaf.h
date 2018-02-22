@@ -56,10 +56,10 @@ public:
 
     /* Constructors/destructor */
 
-    AVLLeaf(const C& customComparator = &internal::defaultComparator<K>);
-    AVLLeaf(const std::vector<std::pair<K,T>>& vec,
+    explicit AVLLeaf(const C& customComparator = &internal::defaultComparator<K>);
+    explicit AVLLeaf(const std::vector<std::pair<K,T>>& vec,
             const C& customComparator = &internal::defaultComparator<K>);
-    AVLLeaf(const std::vector<K>& vec,
+    explicit AVLLeaf(const std::vector<K>& vec,
             const C& customComparator = &internal::defaultComparator<K>);
 
     AVLLeaf(const AVLLeaf<K,T,C>& bst);

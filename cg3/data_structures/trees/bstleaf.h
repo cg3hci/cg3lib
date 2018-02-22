@@ -56,10 +56,10 @@ public:
 
     /* Constructors/destructor */
 
-    BSTLeaf(const C& customComparator = &internal::defaultComparator<K>);
-    BSTLeaf(const std::vector<std::pair<K,T>>& vec,
+    explicit BSTLeaf(const C& customComparator = &internal::defaultComparator<K>);
+    explicit BSTLeaf(const std::vector<std::pair<K,T>>& vec,
             const C& customComparator = &internal::defaultComparator<K>);
-    BSTLeaf(const std::vector<K>& vec,
+    explicit BSTLeaf(const std::vector<K>& vec,
             const C& customComparator = &internal::defaultComparator<K>);
 
     BSTLeaf(const BSTLeaf<K,T,C>& bst);

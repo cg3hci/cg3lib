@@ -10,11 +10,11 @@
 #define CG3_UTILS2D_H
 
 #include "cg3/geometry/2d/point2d.h"
-#include "cg3/geometry/segment.h"
-#include "cg3/geometry/plane.h"
-#include "cg3/geometry/triangle.h"
+#include "cg3/geometry/2d/segment2d.h"
 
 namespace cg3 {
+
+    /* Point/Segment position */
 
     template<typename T>
     inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
@@ -32,29 +32,18 @@ namespace cg3 {
     inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
 
 
-    inline bool isPointLyingInTriangle(
-            const Point2Dd& a,
-            const Point2Dd& b,
-            const Point2Dd& c,
-            const Point2Dd& p,
-            bool includeEndpoints);
+    /* Others */
 
+    template<class T>
     inline bool isPointLyingInCircle(
-            const Point2Dd& a,
-            const Point2Dd& b,
-            const Point2Dd& c,
-            const Point2Dd& p,
-            bool includeEndpoints);
-
-    inline bool isDeulaunayTriangulation(
-            const std::vector<Point2Dd>& points,
-            const std::vector<std::vector<Point2Dd>>& triangles);
+            const Point2D<T>& a,
+            const Point2D<T>& b,
+            const Point2D<T>& c,
+            const Point2D<T>& p,
+            const bool includeBorders);
 
     template <typename Container>
     inline bool isPolygonCounterClockwise(const Container& polygon);
-
-    template<class T>
-    inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<T>& triangle);
 }
 
 #include "utils2d.tpp"

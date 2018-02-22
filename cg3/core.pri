@@ -45,7 +45,8 @@ HEADERS += \
     $$PWD/core/cg3/geometry/2d/point2d.h \
     $$PWD/core/cg3/geometry/2d/segment2d.h \
     $$PWD/core/cg3/geometry/2d/triangle2d.h \
-    $$PWD/core/cg3/geometry/2d/utils2d.h
+    $$PWD/core/cg3/geometry/2d/utils2d.h \
+    $$PWD/core/cg3/geometry/2d/triangle2d_utils.h
 
 SOURCES += \
     $$PWD/core/cg3/geometry/bounding_box.tpp \
@@ -60,7 +61,8 @@ SOURCES += \
     $$PWD/core/cg3/geometry/2d/intersections2d.cpp \
     $$PWD/core/cg3/geometry/2d/line2d.cpp \
     $$PWD/core/cg3/geometry/2d/point2d.tpp \
-    $$PWD/core/cg3/geometry/2d/utils2d.tpp
+    $$PWD/core/cg3/geometry/2d/utils2d.tpp \
+    $$PWD/core/cg3/geometry/2d/triangle2d_utils.tpp
 
 #io
 HEADERS += \

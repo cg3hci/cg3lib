@@ -30,6 +30,9 @@ namespace cg3 {
     template <typename T>
     bool epsilonEqual(const Point<T> &x, const Point<T> &v, double epsilon = CG3_EPSILON);
 
+    template <typename T>
+    bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilon = CG3_EPSILON);
+
     double truncate(double d, unsigned int numberOfDecimalDigitsToKeep);
 
     template <typename T>

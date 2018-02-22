@@ -69,12 +69,12 @@ public:
 
     /* Constructors/destructor */
 
-    AABBTree(const AABBValueExtractor customAABBExtractor,
+    explicit AABBTree(const AABBValueExtractor customAABBExtractor,
              const C& customComparator = &internal::defaultComparator<K>);
-    AABBTree(const std::vector<std::pair<K,T>>& vec,
+    explicit AABBTree(const std::vector<std::pair<K,T>>& vec,
              const AABBValueExtractor customAABBExtractor,
              const C& customComparator = &internal::defaultComparator<K>);
-    AABBTree(const std::vector<K>& vec,
+    explicit AABBTree(const std::vector<K>& vec,
              const AABBValueExtractor customAABBExtractor,
              const C& customComparator = &internal::defaultComparator<K>);
 

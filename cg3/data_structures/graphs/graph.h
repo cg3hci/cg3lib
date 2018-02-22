@@ -40,7 +40,7 @@ enum GraphType { DIRECTED, UNDIRECTED };
  *
  * Use recompact() method to clear the nullptr references.
  * Recompact operation is automatically done after a defined number of deleted nodes
- * (to avoid memory exhaustion). This number is set to 10000.
+ * (to optimize memory usage). This number is set to 10000.
  *
  */
 template <class T>
@@ -80,7 +80,7 @@ public:
 
     /* Constructors / destructor */
 
-    Graph(GraphType type = GraphType::DIRECTED);
+    explicit Graph(GraphType type = GraphType::DIRECTED);
 
     Graph(const Graph<T>& graph);
     Graph(Graph<T>&& graph);

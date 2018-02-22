@@ -14,304 +14,196 @@
 
 namespace cg3 {
 
-    /* ----- USEFUL FUNCTION DECLARATION ----- */
+/* ----- INTERNAL FUNCTION DECLARATION ----- */
 
-    inline double determinant3x3(double m[][3]);
+namespace internal {
 
-    template<typename T>
-    inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p);
+template<typename T>
+inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p);
+
+}
+
+
+
+/* ----- POINT/SEGMENT POSITION ----- */
+
+/**
+ * @brief Check if a point is at the left of the line passing through the segment
+ *
+ * @param[in] s1 First point of the segment
+ * @param[in] s2 Second point of the segment
+ * @param[in] point Input point
+ * @return True if the point is at the left of the line passing through
+ * the segment, false otherwise
+ *
+ */
+template<typename T>
+inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+    double det = internal::positionOfPointWithRespectToSegment(s1, s2, p);
+    return det > std::numeric_limits<double>::epsilon();
+}
+
+/**
+ * @brief Check if a point is at the left of the line passing through the segment
+ *
+ * @param[in] segment Input segment
+ * @param[in] point Input point
+ * @return True if the point is at the left of the line passing through
+ * the segment, false otherwise
+ *
+ */
+template<typename T>
+inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
+    return isPointAtLeft<T>(segment.getP1(), segment.getP2(), point);
+}
+
+/**
+ * @brief Check if a point is at the right of the line passing through the segment
+ *
+ * @param[in] s1 First point of the segment
+ * @param[in] s2 Second point of the segment
+ * @param[in] point Input point
+ * @return True if the point is at the right of the line passing through
+ * the segment, false otherwise
+ *
+ */
+template<typename T>
+inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+    double det = internal::positionOfPointWithRespectToSegment(s1, s2, p);
+    return det < -std::numeric_limits<double>::epsilon();
+}
+
+/**
+ * @brief Check if a point is at the right of the line passing through the segment
+ *
+ * @param[in] segment Input segment
+ * @param[in] point Input point
+ * @return True if the point is at the right of the line passing through
+ * the segment, false otherwise
+ *
+ */
+template<typename T>
+inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
+    return isPointAtRight<T>(segment.getP1(), segment.getP2(), point);
+}
+
+
+/**
+ * @brief Check if a point is collinear to the line passing through the segment
+ * or if the points are collinear
+ *
+ * @param[in] s1 First point of the segment
+ * @param[in] s2 Second point of the segment
+ * @param[in] point Input point
+ * @return True if the point is collinear to the line passing through
+ * the segment, false otherwise
+ *
+ */
+template<typename T>
+inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+    double det = internal::positionOfPointWithRespectToSegment(s1, s2, p);
+    return cg3::epsilonEqual(det, 0.0);
+}
+
+/**
+ * @brief Check if a point is collinear to the line passing through the segment
+ *
+ * @param[in] segment Input segment
+ * @param[in] point Input point
+ * @return True if the point is collinear to the line passing through
+ * the segment, false otherwise
+ *
+ */
+template<typename T>
+inline bool areCollinear(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
+    return areCollinear<T>(segment.getP1(), segment.getP2(), point);
+}
 
 
 
 
-    /* ----- UTILS IMPLEMENTATION ----- */
 
-    /**
-     * @brief Check if a point is at the left of the line passing through the segment
-     *
-     * @param[in] s1 First point of the segment
-     * @param[in] s2 Second point of the segment
-     * @param[in] point Input point
-     * @return True if the point is at the left of the line passing through
-     * the segment, false otherwise
-     *
-     */
-    template<typename T>
-    inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        double det = positionOfPointWithRespectToSegment(s1, s2, p);
-        return det > std::numeric_limits<double>::epsilon();
+
+/* ----- OTHERS ----- */
+
+/**
+ * @brief Check if a point lies inside a circle passing for three points
+ * @param[in] a First coordinate of the circle
+ * @param[in] b Third coordinate of the circle
+ * @param[in] c Second coordinate of the circle
+ * @param[in] p Input point
+ * @param[in] includeBorders True if we want to consider the borders
+ * belonging to the circle inside region
+ * @return True if the point lies inside the circle
+ */
+template <class T>
+inline bool isPointLyingInCircle(
+        const Point2D<T>& a,
+        const Point2D<T>& b,
+        const Point2D<T>& c,
+        const Point2D<T>& p,
+        const bool includeBorders)
+{
+    Eigen::Matrix4d A;
+
+    A << a.x(), a.y(), a.x()*a.x() + a.y()*a.y(), 1,
+            b.x(), b.y(), b.x()*b.x() + b.y()*b.y(), 1,
+            c.x(), c.y(), c.x()*c.x() + c.y()*c.y(), 1,
+            p.x(), p.y(), p.x()*p.x() + p.y()*p.y(), 1;
+
+    if (includeBorders) {
+        return (A.determinant() >= -std::numeric_limits<double>::epsilon());
     }
-
-    /**
-     * @brief Check if a point is at the left of the line passing through the segment
-     *
-     * @param[in] segment Input segment
-     * @param[in] point Input point
-     * @return True if the point is at the left of the line passing through
-     * the segment, false otherwise
-     *
-     */
-    template<typename T>
-    inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
-        return isPointAtLeft<T>(segment.getP1(), segment.getP2(), point);
+    else {
+        return (A.determinant() > 0);
     }
+}
 
-    /**
-     * @brief Check if a point is at the right of the line passing through the segment
-     *
-     * @param[in] s1 First point of the segment
-     * @param[in] s2 Second point of the segment
-     * @param[in] point Input point
-     * @return True if the point is at the right of the line passing through
-     * the segment, false otherwise
-     *
-     */
-    template<typename T>
-    inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        double det = positionOfPointWithRespectToSegment(s1, s2, p);
-        return det < -std::numeric_limits<double>::epsilon();
+/**
+ * @brief isPolygonCounterClockwise
+ * @param polygon: a container of Point2D representing a regular polygon
+ * @return true if the points of the polygon are stored in counterclockwise order
+ */
+template <typename Container>
+inline bool isPolygonCounterClockwise(const Container& polygon) {
+    double sum = 0;
+    for (typename Container::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
+        typename Container::const_iterator next = it;
+        next++;
+        if (next == polygon.end())
+            next = polygon.begin();
+        const Point2Dd& p1 = *it;
+        const Point2Dd& p2 = *next;
+        sum += (p2.x() - p1.x()) * (p2.y()+p1.y());
     }
-
-    /**
-     * @brief Check if a point is at the right of the line passing through the segment
-     *
-     * @param[in] segment Input segment
-     * @param[in] point Input point
-     * @return True if the point is at the right of the line passing through
-     * the segment, false otherwise
-     *
-     */
-    template<typename T>
-    inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
-        return isPointAtRight<T>(segment.getP1(), segment.getP2(), point);
-    }
-
-
-    /**
-     * @brief Check if a point is collinear to the line passing through the segment
-     * or if the points are collinear
-     *
-     * @param[in] s1 First point of the segment
-     * @param[in] s2 Second point of the segment
-     * @param[in] point Input point
-     * @return True if the point is collinear to the line passing through
-     * the segment, false otherwise
-     *
-     */
-    template<typename T>
-    inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        double det = positionOfPointWithRespectToSegment(s1, s2, p);
-        return cg3::epsilonEqual(det, 0.0);
-    }
-
-    /**
-     * @brief Check if a point is collinear to the line passing through the segment
-     *
-     * @param[in] segment Input segment
-     * @param[in] point Input point
-     * @return True if the point is collinear to the line passing through
-     * the segment, false otherwise
-     *
-     */
-    template<typename T>
-    inline bool areCollinear(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
-        return areCollinear<T>(segment.getP1(), segment.getP2(), point);
-    }
-
-
-
-
-
-
-
-
-    /**
-     * @brief Check if a point lies in a triangle (endpoints included)
-     *
-     * Taken from
-     * https://stackoverflow.com/questions/13300904/determine-whether-point-lies-inside-triangle
-     *
-     * @param[in] a First vertex coordinate of the triangle
-     * @param[in] b Second vertex coordinate of the triangle
-     * @param[in] c Third vertex coordinate of the triangle
-     * @param[in] p Input point
-     * @param[in] includeEndpoints True if we want to include the endpoints
-     * @return True if the point lies inside the triangle
-     */
-    inline bool isPointLyingInTriangle(
-            const Point2Dd& a,
-            const Point2Dd& b,
-            const Point2Dd& c,
-            const Point2Dd& p,
-            bool includeEndpoints)
-    {
-        double alpha = ((b.y() - c.y())*(p.x() - c.x()) + (c.x() - b.x())*(p.y() - c.y())) /
-                ((b.y() - c.y())*(a.x() - c.x()) + (c.x() - b.x())*(a.y() - c.y()));
-        double beta = ((c.y() - a.y())*(p.x() - c.x()) + (a.x() - c.x())*(p.y() - c.y())) /
-               ((b.y() - c.y())*(a.x() - c.x()) + (c.x() - b.x())*(a.y() - c.y()));
-        double gamma = 1.0f - alpha - beta;
-
-        if (includeEndpoints) {
-            if (
-                    alpha >= -std::numeric_limits<double>::epsilon() &&
-                    beta >= -std::numeric_limits<double>::epsilon() &&
-                    gamma >= -std::numeric_limits<double>::epsilon())
-            {
-                return true;
-            }
-        }
-        else {
-            if (alpha > 0.0 && beta > 0.0 && gamma > 0.0) {
-                return true;
-            }
-        }
-
+    if (sum > 0)
         return false;
-    }
-
-
-
-    /**
-     * @brief Check if a point lies inside a circle passing for three points
-     * @param[in] a First coordinate of the circle
-     * @param[in] b Third coordinate of the circle
-     * @param[in] c Second coordinate of the circle
-     * @param[in] p Input point
-     * @param[in] includeEndpoints True if we want to include the endpoints
-     * @return True if the point lies inside the circle
-     */
-    inline bool isPointLyingInCircle(
-            const Point2Dd& a,
-            const Point2Dd& b,
-            const Point2Dd& c,
-            const Point2Dd& p,
-            bool includeEndpoints)
-    {
-        Eigen::Matrix4d A;
-
-        A << a.x(), a.y(), a.x()*a.x() + a.y()*a.y(), 1,
-                b.x(), b.y(), b.x()*b.x() + b.y()*b.y(), 1,
-                c.x(), c.y(), c.x()*c.x() + c.y()*c.y(), 1,
-                p.x(), p.y(), p.x()*p.x() + p.y()*p.y(), 1;
-
-        if (includeEndpoints) {
-            return (A.determinant() >= -std::numeric_limits<double>::epsilon());
-        }
-        else {
-            return (A.determinant() > 0);
-        }
-    }
-
-
-
-    /**
-     * @brief Check if the triangulation is a Delaunay triangulation (brute force, O(n^2))
-     * @param points Vector of points
-     * @param triangles Vector of triangles (represented by a vector of three points)
-     * @return
-     */
-    inline bool isDeulaunayTriangulation(
-            const std::vector<Point2Dd>& points,
-            const std::vector<std::vector<Point2Dd>>& trianglePoints)
-    {
-        for (const std::vector<Point2Dd>& triangle : trianglePoints) {
-            const Point2Dd& a = triangle.at(0);
-            const Point2Dd& b = triangle.at(1);
-            const Point2Dd& c = triangle.at(2);
-
-            for (const Point2Dd& p : points) {
-                if (p != a && p != b && p != c) {
-                    if (isPointLyingInCircle(a,b,c,p,false)) {
-                        return false;
-                    }
-                }
-            }
-        }
+    else
         return true;
-    }
+}
 
 
 
 
-    /* ----- USEFUL FUNCTION IMPLEMENTATION ----- */
+/* ----- INTERNAL FUNCTION DEFINITION ----- */
 
-    /**
-     * @brief Get the determinant of a 3x3 double matrix
-     * @return Determinant of the matrix
-     */
-    inline double determinant3x3(double m[][3]) {
-        return
-                (m[0][0] * m[1][1] * m[2][2]) +
-                (m[0][1] * m[1][2] * m[2][0]) +
-                (m[0][2] * m[1][0] * m[2][1]) -
-                (m[0][2] * m[1][1] * m[2][0]) -
-                (m[0][1] * m[1][0] * m[2][2]) -
-                (m[0][0] * m[1][2] * m[2][1]);
-    }
+namespace internal {
 
-    /**
-     * @brief Check if a point is at the left of the line passing through the segment
-     *
-     * @param[in] s1 First point of the segment
-     * @param[in] s2 Second point of the segment
-     * @param[in] point Input point
-     * @return 0 if segment lies on the same line of the segment, 1 if points is at the
-     * right of the segment, -1 if points
-     *
-     */
-    template<typename T>
-    inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
-        return ((s2.x() - s1.x())*(p.y() - s1.y()) - (s2.y() - s1.y())*(p.x() - s1.x()));
-    }
+/**
+ * @brief Check if a point is at the left of the line passing through the segment
+ *
+ * @param[in] s1 First point of the segment
+ * @param[in] s2 Second point of the segment
+ * @param[in] point Input point
+ * @return 0 if segment lies on the same line of the segment, 1 if points is at the
+ * right of the segment, -1 if points
+ *
+ */
+template<typename T>
+inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+    return ((s2.x() - s1.x())*(p.y() - s1.y()) - (s2.y() - s1.y())*(p.x() - s1.x()));
+}
 
-    /**
-     * @brief isPolygonCounterClockwise
-     * @param polygon: a container of Point2D representing a regular polygon
-     * @return true if the points of the polygon are stored in counterclockwise order
-     */
-    template <typename Container>
-    inline bool isPolygonCounterClockwise(const Container& polygon) {
-        double sum = 0;
-        for (typename Container::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
-            typename Container::const_iterator next = it;
-            next++;
-            if (next == polygon.end())
-                next = polygon.begin();
-            const Point2Dd& p1 = *it;
-            const Point2Dd& p2 = *next;
-            sum += (p2.x() - p1.x()) * (p2.y()+p1.y());
-        }
-        if (sum > 0)
-            return false;
-        else
-            return true;
-    }
-
-    /**
-     * @brief Reorder vertices of a 2D triangle in counter-clockwise order
-     * Taken from
-     * https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
-     *
-     * @param[out] triangle Triangle to be reordered counter-clockwise. It must be a 2D triangle.
-     */
-    template<class T>
-    inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<T>& triangle) {
-        const T& p1 = triangle.v1();
-        const T& p2 = triangle.v2();
-        const T& p3 = triangle.v3();
-
-        double area =
-                (p2.x()-p1.x()) * (p2.y()+p1.y()) +
-                (p3.x()-p2.x()) * (p3.y()+p2.y()) +
-                (p1.x()-p3.x()) * (p1.y()+p3.y());
-
-        //If it is clockwise
-        if (area >= 0) {
-            //Swap first and last vertex
-            triangle.setV1(p3);
-            triangle.setV3(p1);
-        }
-    }
-
+}
 
 }

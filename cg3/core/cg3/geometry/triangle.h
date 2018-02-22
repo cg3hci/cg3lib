@@ -22,6 +22,7 @@ class Triangle : public SerializableObject {
         const T& v1() const;
         const T& v2() const;
         const T& v3() const;
+        std::vector<T> getVertices() const;
 
         T& v1();
         T& v2();
@@ -34,7 +35,7 @@ class Triangle : public SerializableObject {
         cg3::Segment<T> side1() const;
         cg3::Segment<T> side2() const;
         cg3::Segment<T> side3() const;
-
+        std::vector<cg3::Segment<T>> getSides() const;
 
         T normal() const;
         double area() const;

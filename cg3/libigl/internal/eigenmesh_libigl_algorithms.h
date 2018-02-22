@@ -43,6 +43,7 @@ public:
     static bool isEdgeManifold(const SimpleEigenMesh& input);
     static bool isVertexManifold(const SimpleEigenMesh& input, Eigen::Matrix<bool, Eigen::Dynamic, 1>& B);
     static std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);
+    static std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh &m);
     static Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m);
     static unsigned int extractManifoldPatches(const SimpleEigenMesh &m, Eigen::Matrix<int, Eigen::Dynamic, 1> &I);
 

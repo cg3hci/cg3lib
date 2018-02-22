@@ -33,6 +33,14 @@ inline const T& Triangle<T>::v3() const {
     return _v3;
 }
 
+template<class T>
+inline std::vector<T> Triangle<T>::getVertices() const {
+    std::vector<T> vertices(3);
+    vertices[0] = v1();
+    vertices[1] = v2();
+    vertices[2] = v3();
+    return vertices;
+}
 
 
 template<class T>
@@ -84,6 +92,15 @@ inline cg3::Segment<T> Triangle<T>::side2() const {
 template<class T>
 inline cg3::Segment<T> Triangle<T>::side3() const {
     return cg3::Segment<T>(_v3, _v1);
+}
+
+template<class T>
+inline std::vector<cg3::Segment<T>> Triangle<T>::getSides() const {
+    std::vector<cg3::Segment<T>> sides(3);    
+    sides[0] = side1();
+    sides[1] = side2();
+    sides[2] = side3();
+    return sides;
 }
 
 
