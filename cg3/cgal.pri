@@ -38,7 +38,7 @@ macx{
 win32{
     contains(DEFINES, CG3_WITH_BOOST){
         CGALPATH = C:/libs/CGAL
-        exists($$(CGAL_DIR)){
+        exists($$(CGAL_HOME)){
             CGALPATH = $$(CGAL_HOME)
         }
 

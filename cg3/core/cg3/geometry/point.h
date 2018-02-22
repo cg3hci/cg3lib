@@ -21,6 +21,8 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #include <cinolib/geometry/vec3.h>
 #pragma GCC diagnostic pop
+#else //__GNUC__
+#include <cinolib/geometry/vec3.h>
 #endif //__GNUC__
 #endif //CG3_CINOLIB_DEFINED
 

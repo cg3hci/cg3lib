@@ -38,6 +38,15 @@ exists($$(LIBIGL_HOME)){
         }
     }
 
+    win32{
+        LIBIGLPATH = C:/libs/libigl
+        exists($$(LIBIGL_HOME)){
+            LIBIGLPATH = $$(LIBIGL_HOME)
+        }
+
+        INCLUDEPATH += $$LIBIGLPATH/include/
+    }
+
     HEADERS += \
         $$PWD/libigl/libigl.h \
         $$PWD/libigl/booleans.h \

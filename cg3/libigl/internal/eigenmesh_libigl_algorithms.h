@@ -16,9 +16,9 @@
 #pragma GCC diagnostic ignored "-Wnon-template-friend"
 #include <igl/copyleft/cgal/CSGTree.h>
 #pragma GCC diagnostic pop
-#else
+#else //__GNUC__
 #include <igl/copyleft/cgal/CSGTree.h>
-#endif
+#endif //__GNUC__
 #endif //CGAL_DEFINED
 
 namespace cg3 {
