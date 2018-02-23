@@ -14,6 +14,7 @@
 #include <igl/is_edge_manifold.h>
 #include <igl/is_vertex_manifold.h>
 #include <igl/triangle_triangle_adjacency.h>
+#include <igl/vertex_triangle_adjacency.h>
 #include <igl/adjacency_list.h>
 #include <igl/extract_manifold_patches.h>
 #include <igl/hausdorff.h>
@@ -222,6 +223,18 @@ Eigen::MatrixXi EigenMeshLibIglAlgorithms::getFaceAdjacences(const SimpleEigenMe
     igl::triangle_triangle_adjacency(FF, TT);
     return TT;
 }
+
+std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::getVertexFaceAdjacencies(const SimpleEigenMesh &m) {
+    std::vector<std::vector<int>> VF;
+    std::vector<std::vector<int>> VFi;
+
+    Eigen::MatrixXi FF = m.F;
+    Eigen::MatrixXd VV = m.V;
+    igl::vertex_triangle_adjacency(VV, FF, VF, VFi);
+
+    return VF;
+}
+
 
 unsigned int EigenMeshLibIglAlgorithms::extractManifoldPatches(const SimpleEigenMesh& m, Eigen::Matrix<int, Eigen::Dynamic, 1>& I) {
     return igl::extract_manifold_patches(m.F, I);

@@ -605,9 +605,9 @@ inline Point<T> Point<T>::operator /= (const Point<T>& otherPoint) {
  */
 template <class T>
 inline Point<T> operator * (const T& scalar, const Point<T>& point) {
-    return Point<T>(point.xCoord * scalar,
-                    point.yCoord * scalar,
-                    point.zCoord * scalar);
+    return Point<T>(point.x() * scalar,
+                    point.y() * scalar,
+                    point.z() * scalar);
 }
 
 template <class T>

@@ -238,7 +238,7 @@ inline void SimpleEigenMesh::setVertex(unsigned int i, const Eigen::VectorXd& p)
 
 inline void SimpleEigenMesh::setVertex(unsigned int i, const Pointd& p) {
     assert (i < (unsigned int)V.rows());
-    V(i,0) = p[0]; V(i,1) = p[1]; V(i,2) = p[2];
+    V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
 }
 
 inline void SimpleEigenMesh::setVertex(unsigned int i, double x, double y, double z) {

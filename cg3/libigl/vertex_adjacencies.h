@@ -14,7 +14,8 @@ namespace cg3 {
 
 namespace libigl {
 
-std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh &m);
+std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh& m);
+std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh& m);
 
 }
 

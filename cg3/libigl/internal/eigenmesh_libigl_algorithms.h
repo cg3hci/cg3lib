@@ -45,6 +45,7 @@ public:
     static std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);
     static std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh &m);
     static Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m);
+    static std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh &m);
     static unsigned int extractManifoldPatches(const SimpleEigenMesh &m, Eigen::Matrix<int, Eigen::Dynamic, 1> &I);
 
     #ifdef  CG3_CGAL_DEFINED
