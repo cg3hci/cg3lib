@@ -19,7 +19,7 @@ bool Graph<T>::AdjacentNodeIterator::operator ==(
 {
     return (this->node == otherIterator.node &&
             this->targetNode == otherIterator.targetNode &&
-            this->graph == this->graph);
+            this->graph == otherIterator.graph);
 }
 
 template <class T>
@@ -63,7 +63,8 @@ void Graph<T>::AdjacentNodeIterator::next() {
 
     do {
         it++;
-    } while (it != map.end() && this->graph->nodes.at(it->first) == nullptr);
+    } while (it != map.end() &&
+             this->graph->nodes.at(it->first) == nullptr);
 
     if (it == map.end())
         this->node = nullptr;

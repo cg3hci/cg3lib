@@ -63,7 +63,7 @@ Graph<T>::Graph(Graph<T>&& graph) {
     this->type = std::move(graph.type);
     this->nodes = std::move(graph.nodes);
     this->map = std::move(graph.map);
-    this->nDeletedNodes = std::move(nDeletedNodes);
+    this->nDeletedNodes = std::move(graph.nDeletedNodes);
 }
 
 
@@ -99,7 +99,7 @@ typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o) {
     map[o] = newId;
     nodes.push_back(newNode);
 
-    return NodeIterator(this, newNode, newNode->id);
+    return NodeIterator(this, newNode);
 }
 
 /**
@@ -115,7 +115,7 @@ bool Graph<T>::deleteNode(const T& o) {
         return false;
 
     //Delete the node
-    Node*& node = nodes.at(mapIt->second);
+    Node* node = nodes.at(mapIt->second);
 
     nodes[node->id] = nullptr;
     delete node;
@@ -147,7 +147,7 @@ typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) {
     typename std::vector<Node*>::iterator it = nodes.begin();
     std::advance(it, node->id);
 
-    return NodeIterator(this, node, node->id);
+    return NodeIterator(this, node);
 }
 
 /**
@@ -159,7 +159,7 @@ typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) {
  */
 template <class T>
 bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight) {
-    //If node does not exists, return false
+    //If one of the nodes does not exists, return false
     Node* node1 = findNodeHelper(o1);
     if (node1 == nullptr)
         return false;
@@ -185,7 +185,7 @@ bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight) {
  */
 template <class T>
 bool Graph<T>::deleteEdge(const T& o1, const T& o2) {
-    //If node does not exists, return false
+    //If one of the nodes does not exists, return false
     Node* node1 = findNodeHelper(o1);
     if (node1 == nullptr)
         return false;
@@ -235,7 +235,7 @@ bool Graph<T>::isAdjacent(const T& o1, const T& o2) const {
  */
 template <class T>
 double Graph<T>::getWeight(const T& o1, const T& o2) {
-    //If node does not exists, return false
+    //If one of the nodes does not exists, return max weight
     Node* node1 = findNodeHelper(o1);
     if (node1 == nullptr)
         return MAX_WEIGHT;
@@ -256,7 +256,7 @@ double Graph<T>::getWeight(const T& o1, const T& o2) {
  */
 template <class T>
 void Graph<T>::setWeight(const T& o1, const T& o2, const double weight) {
-    //If node does not exists, return false
+    //If one of the nodes does not exists, return
     Node* node1 = findNodeHelper(o1);
     if (node1 == nullptr)
         return;
@@ -491,7 +491,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
     if (it == nodes.end())
         return this->nodeIteratorEnd();
 
-    return NodeIterator(this, *it, (*it)->id);
+    return NodeIterator(this, *it);
 }
 
 /**
@@ -500,7 +500,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
  */
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::nodeIteratorEnd() {
-    return NodeIterator(this, nullptr, nodes.size());
+    return NodeIterator(this, nullptr);
 }
 
 /**

@@ -18,7 +18,7 @@ bool Graph<T>::NodeIterator::operator ==(
         const NodeIterator& otherIterator) const
 {
     return (this->node == otherIterator.node &&
-            this->graph == this->graph);
+            this->graph == otherIterator.graph);
 }
 
 template <class T>
@@ -59,12 +59,12 @@ const T& Graph<T>::NodeIterator::operator *() const
 template <class T>
 void Graph<T>::NodeIterator::next() {
     typename std::vector<Node*>::iterator it = this->graph->nodes.begin();
-    std::advance(it, pos);
+    std::advance(it, this->node->id);
 
     do {
         it++;
-        pos++;
-    } while (it != this->graph->nodes.end() && *it == nullptr);
+    } while (it != this->graph->nodes.end() &&
+             *it == nullptr);
 
     if (it == this->graph->nodes.end())
         this->node = nullptr;

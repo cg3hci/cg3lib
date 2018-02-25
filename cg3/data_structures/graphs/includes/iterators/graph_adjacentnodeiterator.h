@@ -20,11 +20,15 @@ private:
 
     /* Constructors */
 
-    inline AdjacentNodeIterator(Graph<T>* graph,
-                                typename Graph<T>::Node* targetNode,
-                                typename Graph<T>::Node* node) :
+    inline AdjacentNodeIterator(
+            Graph<T>* graph,
+            typename Graph<T>::Node* targetNode,
+            typename Graph<T>::Node* node) :
         Graph<T>::GenericNodeIterator(graph, node),
-        targetNode(targetNode) {}
+        targetNode(targetNode)
+    {
+
+    }
 
 public:
 

@@ -20,9 +20,13 @@ private:
 
     /* Constructors */
 
-    inline NodeIterator(Graph<T>* graph, typename Graph<T>::Node* node, size_t pos) :
-        Graph<T>::GenericNodeIterator(graph, node),
-        pos(pos) {}
+    inline NodeIterator(
+            Graph<T>* graph,
+            typename Graph<T>::Node* node) :
+        Graph<T>::GenericNodeIterator(graph, node)
+    {
+
+    }
 
 public:
 
@@ -42,10 +46,6 @@ private:
 
     inline void next();
 
-
-    /* Fields */
-
-    size_t pos;
 
 };
 

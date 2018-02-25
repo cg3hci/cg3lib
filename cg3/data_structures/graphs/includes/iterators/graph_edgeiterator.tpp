@@ -19,7 +19,7 @@ bool Graph<T>::EdgeIterator::operator ==(
 {
     return (this->nodeIt == otherIterator.nodeIt &&
             this->adjIt == otherIterator.adjIt &&
-            this->graph == this->graph);
+            this->graph == otherIterator.graph);
 }
 
 template <class T>

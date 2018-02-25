@@ -172,6 +172,7 @@ private:
 
     std::vector<Node*> nodes;
     std::map<T, size_t> map;
+
     int nDeletedNodes;
 
 };

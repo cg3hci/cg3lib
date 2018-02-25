@@ -26,10 +26,16 @@ private:
 
     /* Constructors */
 
-    inline EdgeIterator(Graph<T>* graph,
-                        typename Graph<T>::NodeIterator nodeIt,
-                        typename Graph<T>::AdjacentNodeIterator adjIt) :
-        graph(graph), nodeIt(nodeIt), adjIt(adjIt) {}
+    inline EdgeIterator(
+            Graph<T>* graph,
+            typename Graph<T>::NodeIterator nodeIt,
+            typename Graph<T>::AdjacentNodeIterator adjIt) :
+        graph(graph),
+        nodeIt(nodeIt),
+        adjIt(adjIt)
+    {
+
+    }
 
 public:
 
