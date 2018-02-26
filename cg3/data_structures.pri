@@ -45,7 +45,8 @@ SOURCES += \
     $$PWD/data_structures/graphs/includes/nodes/graph_node.tpp \
     $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.tpp \
     $$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.tpp \
-    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentnodeiterator.tpp
+    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentnodeiterator.tpp \
+    $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.tpp
 
 # ----- Bipartite graph -----
 
