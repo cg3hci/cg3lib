@@ -541,7 +541,13 @@ typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorBegin() {
  */
 template <class T>
 typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorEnd() {
-    return EdgeIterator(this, this->nodeIteratorEnd(), this->adjacentNodeIteratorEnd(nullptr));
+    return EdgeIterator(
+                this,
+                this->nodeIteratorEnd(),
+                AdjacentNodeIterator(
+                    this,
+                    nullptr,
+                    std::unordered_map<size_t, double>::iterator()));
 }
 
 /**

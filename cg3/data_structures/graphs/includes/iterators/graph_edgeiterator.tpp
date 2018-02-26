@@ -73,18 +73,16 @@ std::pair<const T, const T> Graph<T>::EdgeIterator::operator *() const
 
 template <class T>
 void Graph<T>::EdgeIterator::next() {
-    if (nodeIt == this->graph->nodeIteratorEnd()) {
-        adjIt = this->graph->adjacentNodeIteratorEnd(nullptr);
-        return;
-    }
-
     adjIt++;
 
     while (adjIt == this->graph->adjacentNodeIteratorEnd(nodeIt)) {
         nodeIt++;
 
         if (nodeIt == this->graph->nodeIteratorEnd()) {
-            adjIt = this->graph->adjacentNodeIteratorEnd(nullptr);
+            adjIt = AdjacentNodeIterator(
+                        this->graph,
+                        nullptr,
+                        std::unordered_map<size_t, double>::iterator());
             return;
         }
 
