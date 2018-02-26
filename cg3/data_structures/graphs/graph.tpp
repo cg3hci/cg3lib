@@ -99,7 +99,7 @@ typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o) {
     map[o] = newId;
     nodes.push_back(newNode);
 
-    return NodeIterator(this, newNode);
+    return NodeIterator(this, --this->nodes.end());
 }
 
 /**
@@ -144,10 +144,10 @@ typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) {
     if (node == nullptr)
         return this->nodeIteratorEnd();
 
-    typename std::vector<Node*>::iterator it = nodes.begin();
+    typename std::vector<Node*>::iterator it = this->nodes.begin();
     std::advance(it, node->id);
 
-    return NodeIterator(this, node);
+    return NodeIterator(this, it);
 }
 
 /**
@@ -482,16 +482,8 @@ void Graph<T>::recompact() {
  */
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
-    typename std::vector<typename Graph<T>::Node*>::iterator it;
-    it = nodes.begin();
-    while (it != nodes.end() && *it == nullptr) {
-        it++;
-    }
-
-    if (it == nodes.end())
-        return this->nodeIteratorEnd();
-
-    return NodeIterator(this, *it);
+    typename std::vector<Node*>::iterator it = nodes.begin();
+    return NodeIterator(this, getFirstValidIteratorNode(it));
 }
 
 /**
@@ -500,7 +492,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
  */
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::nodeIteratorEnd() {
-    return NodeIterator(this, nullptr);
+    return NodeIterator(this, this->nodes.end());
 }
 
 /**
@@ -675,23 +667,53 @@ void swap(Graph<T>& g1, Graph<T>& g2) {
 
 
 /**
+ * @brief Get the first valid (pointing to a not deleted node)
+ * node iterator starting from the input one
+ * @param[in] it Input node iterator
+ * @return Valid node iterator
+ */
+template <class T>
+typename std::vector<typename Graph<T>::Node*>::iterator Graph<T>::getFirstValidIteratorNode(
+        typename std::vector<Node*>::iterator it)
+{
+    while (it != nodes.end() &&
+           *it == nullptr)
+    {
+        it++;
+    }
+
+    return it;
+}
+/**
+ * @brief Get the first valid (pointing to a not deleted node)
+ * adjacent node iterator starting from the input one
+ * @param[in] it Input adjacent node iterator
+ * @return Valid adjacent node iterator
+ */
+template<class T>
+std::unordered_map<size_t, double>::iterator Graph<T>::getFirstValidIteratorAdjacent(
+        Node* targetNode,
+        std::unordered_map<size_t, double>::iterator it)
+{
+    while (it != targetNode->adjacentNodes.end() &&
+           this->nodes.at(it->first) == nullptr)
+    {
+        it++;
+    }
+
+    return it;
+}
+
+
+
+/**
  * @brief Begin adjacent node iterator
  * @param[in] node Iterator of the node
  * @return Iterator
  */
 template <class T>
 typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(Node* node) {
-    std::unordered_map<size_t, double>& map = node->adjacentNodes;
-    typename std::unordered_map<size_t, double>::iterator it = map.begin();
-
-    while (it != map.end() && nodes.at(it->first) == nullptr) {
-        it++;
-    }
-
-    if (it == map.end())
-        return this->adjacentNodeIteratorEnd(node);
-
-    return AdjacentNodeIterator(this, node, nodes.at(it->first));
+    return AdjacentNodeIterator(this, node, getFirstValidIteratorAdjacent(node, node->adjacentNodes.begin()));
 }
 
 /**
@@ -701,7 +723,7 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(Node
  */
 template <class T>
 typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(Node* node) {
-    return AdjacentNodeIterator(this, node, nullptr);
+    return AdjacentNodeIterator(this, node, node->adjacentNodes.end());
 }
 
 

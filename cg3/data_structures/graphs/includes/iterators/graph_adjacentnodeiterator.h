@@ -21,15 +21,12 @@ private:
     /* Constructors */
 
     inline AdjacentNodeIterator(
+            Graph<T>* graph);
+
+    inline AdjacentNodeIterator(
             Graph<T>* graph,
-            typename Graph<T>::Node* targetNode,
-            typename Graph<T>::Node* node) :
-        Graph<T>::GenericNodeIterator(graph, node),
-        targetNode(targetNode)
-    {
-
-    }
-
+            Node* targetNode,
+            std::unordered_map<size_t, double>::iterator it);
 public:
 
     /* Iterator operators */
@@ -44,14 +41,15 @@ public:
 
 private:
 
-    /* Protected methods */
+    /* Private methods */
 
     inline void next();
 
 
     /* Fields */
 
-    typename Graph<T>::Node* targetNode;
+    Node* targetNode;
+    std::unordered_map<size_t, double>::iterator it;
 
 };
 

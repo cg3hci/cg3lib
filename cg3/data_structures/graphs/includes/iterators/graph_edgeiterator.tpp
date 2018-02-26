@@ -9,6 +9,20 @@
 namespace cg3 {
 
 
+/* ----- CONSTRUCTORS ----- */
+
+template <class T>
+Graph<T>::EdgeIterator::EdgeIterator(
+        Graph<T>* graph,
+        typename Graph<T>::NodeIterator nodeIt,
+        typename Graph<T>::AdjacentNodeIterator adjIt) :
+    graph(graph),
+    nodeIt(nodeIt),
+    adjIt(adjIt)
+{
+
+}
+
 
 /* ----- OPERATOR OVERLOAD ----- */
 
@@ -17,9 +31,9 @@ template <class T>
 bool Graph<T>::EdgeIterator::operator ==(
         const EdgeIterator& otherIterator) const
 {
-    return (this->nodeIt == otherIterator.nodeIt &&
-            this->adjIt == otherIterator.adjIt &&
-            this->graph == otherIterator.graph);
+    return (this->graph == otherIterator.graph &&
+            this->nodeIt == otherIterator.nodeIt &&
+            this->adjIt == otherIterator.adjIt);
 }
 
 template <class T>
@@ -59,22 +73,22 @@ std::pair<const T, const T> Graph<T>::EdgeIterator::operator *() const
 
 template <class T>
 void Graph<T>::EdgeIterator::next() {
-    if (nodeIt == graph->nodeIteratorEnd()) {
-        adjIt = graph->adjacentNodeIteratorEnd(nullptr);
+    if (nodeIt == this->graph->nodeIteratorEnd()) {
+        adjIt = this->graph->adjacentNodeIteratorEnd(nullptr);
         return;
     }
 
     adjIt++;
 
-    while (adjIt == graph->adjacentNodeIteratorEnd(nodeIt)) {
+    while (adjIt == this->graph->adjacentNodeIteratorEnd(nodeIt)) {
         nodeIt++;
 
-        if (nodeIt == graph->nodeIteratorEnd()) {
-            adjIt = graph->adjacentNodeIteratorEnd(nullptr);
+        if (nodeIt == this->graph->nodeIteratorEnd()) {
+            adjIt = this->graph->adjacentNodeIteratorEnd(nullptr);
             return;
         }
 
-        adjIt = graph->adjacentNodeIteratorBegin(nodeIt);
+        adjIt = this->graph->adjacentNodeIteratorBegin(nodeIt);
     }
 
 }

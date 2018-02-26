@@ -8,6 +8,28 @@
 
 namespace cg3 {
 
+/* ----- CONSTRUCTORS ----- */
+
+template <class T>
+Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
+        Graph<T>* graph) :
+    Graph<T>::GenericNodeIterator(graph)
+{
+
+}
+
+template <class T>
+Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
+        Graph<T>* graph,
+        Node* targetNode,
+        std::unordered_map<size_t, double>::iterator it) :
+    Graph<T>::GenericNodeIterator(graph),
+    targetNode(targetNode),
+    it(it)
+{
+    if (targetNode != nullptr && it != targetNode->adjacentNodes.end())
+        this->node = this->graph->nodes.at(it->first);
+}
 
 
 /* ----- OPERATOR OVERLOAD ----- */
@@ -17,9 +39,10 @@ template <class T>
 bool Graph<T>::AdjacentNodeIterator::operator ==(
         const AdjacentNodeIterator& otherIterator) const
 {
-    return (this->node == otherIterator.node &&
+    return (this->graph == otherIterator.graph &&
+            this->node == otherIterator.node &&
             this->targetNode == otherIterator.targetNode &&
-            this->graph == otherIterator.graph);
+            this->it == otherIterator.it);
 }
 
 template <class T>
@@ -58,18 +81,13 @@ const T& Graph<T>::AdjacentNodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::AdjacentNodeIterator::next() {
-    std::unordered_map<size_t, double>& map = this->targetNode->adjacentNodes;
-    std::unordered_map<size_t, double>::iterator it = map.find(this->node->id);
+    ++this->it;
+    this->it = this->graph->getFirstValidIteratorAdjacent(this->targetNode, this->it);
 
-    do {
-        it++;
-    } while (it != map.end() &&
-             this->graph->nodes.at(it->first) == nullptr);
-
-    if (it == map.end())
-        this->node = nullptr;
-    else
+    if (this->it != targetNode->adjacentNodes.end())
         this->node = this->graph->nodes.at(it->first);
+    else
+        this->node = nullptr;
 }
 
 

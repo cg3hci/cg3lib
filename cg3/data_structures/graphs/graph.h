@@ -10,6 +10,7 @@
 #include <vector>
 #include <set>
 #include <map>
+#include <unordered_map>
 
 #include <cfloat>
 
@@ -153,6 +154,14 @@ private:
 
     inline AdjacentNodeIterator adjacentNodeIteratorBegin(Node* node);
     inline AdjacentNodeIterator adjacentNodeIteratorEnd(Node* node);
+
+    inline typename std::vector<Node*>::iterator getFirstValidIteratorNode(
+            typename std::vector<Node*>::iterator it);
+
+    inline std::unordered_map<size_t, double>::iterator getFirstValidIteratorAdjacent(
+            Node* targetNode,
+            std::unordered_map<size_t, double>::iterator it);
+
 
 
     /* Private functions */

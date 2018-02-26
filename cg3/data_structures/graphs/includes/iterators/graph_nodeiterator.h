@@ -3,6 +3,8 @@
 
 #include "graph_genericnodeiterator.h"
 
+#include <vector>
+
 namespace cg3 {
 
 /**
@@ -21,12 +23,11 @@ private:
     /* Constructors */
 
     inline NodeIterator(
-            Graph<T>* graph,
-            typename Graph<T>::Node* node) :
-        Graph<T>::GenericNodeIterator(graph, node)
-    {
+            Graph<T>* graph);
 
-    }
+    inline NodeIterator(
+            Graph<T>* graph,
+            typename std::vector<Node*>::iterator it);
 
 public:
 
@@ -42,9 +43,14 @@ public:
 
 private:
 
-    /* Protected methods */
+    /* Private methods */
 
     inline void next();
+
+
+    /* Fields */
+
+    typename std::vector<Node*>::iterator it;
 
 
 };

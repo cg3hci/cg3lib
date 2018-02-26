@@ -19,13 +19,11 @@ protected:
     /* Constructors */
 
     inline GenericNodeIterator(
-            Graph<T>* graph,
-            typename Graph<T>::Node* node) :
-        graph(graph),
-        node(node)
-    {
+            Graph<T>* graph);
 
-    }
+    inline GenericNodeIterator(
+            Graph<T>* graph,
+            typename Graph<T>::Node* node);
 
 
     /* Fields */
@@ -35,7 +33,9 @@ protected:
 
 };
 
+
 }
 
+#include "graph_genericnodeiterator.tpp"
 
 #endif // CG3_GRAPH_GENERICNODEITERATOR_H

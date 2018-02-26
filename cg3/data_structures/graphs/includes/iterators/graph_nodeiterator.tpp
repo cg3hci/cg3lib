@@ -9,6 +9,27 @@
 namespace cg3 {
 
 
+/* ----- CONSTRUCTORS ----- */
+
+template <class T>
+Graph<T>::NodeIterator::NodeIterator(
+        Graph<T>* graph) :
+    Graph<T>::GenericNodeIterator(graph)
+{
+
+}
+
+template <class T>
+Graph<T>::NodeIterator::NodeIterator(
+        Graph<T>* graph,
+        typename std::vector<Node*>::iterator it) :
+    Graph<T>::GenericNodeIterator(graph),
+    it(it)
+{
+    if (it != this->graph->nodes.end())
+        this->node = *it;
+}
+
 
 /* ----- OPERATOR OVERLOAD ----- */
 
@@ -17,8 +38,9 @@ template <class T>
 bool Graph<T>::NodeIterator::operator ==(
         const NodeIterator& otherIterator) const
 {
-    return (this->node == otherIterator.node &&
-            this->graph == otherIterator.graph);
+    return (this->graph == otherIterator.graph &&
+            this->node == otherIterator.node &&
+            this->it == otherIterator.it);
 }
 
 template <class T>
@@ -58,18 +80,13 @@ const T& Graph<T>::NodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::NodeIterator::next() {
-    typename std::vector<Node*>::iterator it = this->graph->nodes.begin();
-    std::advance(it, this->node->id);
+    ++this->it;
+    this->it = this->graph->getFirstValidIteratorNode(this->it);
 
-    do {
-        it++;
-    } while (it != this->graph->nodes.end() &&
-             *it == nullptr);
-
-    if (it == this->graph->nodes.end())
-        this->node = nullptr;
-    else
+    if (it != this->graph->nodes.end())
         this->node = *it;
+    else
+        this->node = nullptr;
 }
 
 

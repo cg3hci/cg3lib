@@ -29,13 +29,7 @@ private:
     inline EdgeIterator(
             Graph<T>* graph,
             typename Graph<T>::NodeIterator nodeIt,
-            typename Graph<T>::AdjacentNodeIterator adjIt) :
-        graph(graph),
-        nodeIt(nodeIt),
-        adjIt(adjIt)
-    {
-
-    }
+            typename Graph<T>::AdjacentNodeIterator adjIt);
 
 public:
 
@@ -51,7 +45,7 @@ public:
 
 private:
 
-    /* Protected methods */
+    /* Private methods */
 
     inline void next();
 
