@@ -12,7 +12,7 @@
 #include <map>
 #include <unordered_map>
 
-#include <cfloat>
+#include <limits>
 
 #define NUMBER_DELETE_FOR_RECOMPACT 10000
 
@@ -28,18 +28,18 @@ enum GraphType { DIRECTED, UNDIRECTED };
  *
  * Weights are optional: if not specified, we assume that every edge has
  * cost 0. We also assume that if there is not an edge between two nodes,
- * then the cost is MAX_WEIGHT (DBL_MAX defined in <cfloat>).
+ * then the cost is MAX_WEIGHT (std::numeric_limits<double>::max()/2).
  *
- * Note that operations with iterators are usually faster, since the
- * operation with the value has to perform a find operation in a map to get
- * the corresponding node.
+ * Note that operations with iterators are usually faster, since the operations
+ * that use values have to perform finding the id of the node (a map is used).
  *
  * The graph is implemented in order to have the best time complexity but it
- * is not optimal in memory if we perform delete operations. Indeed, every time
- * we delete a node, we do not remove an entry from the node vector and we do
- * not delete it from the node adjacencies: we just set the node as a null pointer.
+ * is not optimal in memory if we perform delete operations. Indeed the removal
+ * of the node in the graph is implemented with a lazy approach. Every time
+ * we delete a node, we do not remove an entry from the node vector and from the
+ * node adjacency list: we just set a flag.
+ * Use recompact() method to clear the deleted node references.
  *
- * Use recompact() method to clear the nullptr references.
  * Recompact operation is automatically done after a defined number of deleted nodes
  * (to avoid memory exhaustion and optimize its usage). This number is set to 10000.
  *
@@ -59,7 +59,7 @@ public:
 
     /* Public const */
 
-    static constexpr double MAX_WEIGHT = DBL_MAX;
+    static constexpr double MAX_WEIGHT = std::numeric_limits<double>::max()/2;
 
 
     /* Iterator classes */
@@ -81,12 +81,7 @@ public:
 
     /* Constructors / destructor */
 
-    explicit Graph(GraphType type = GraphType::DIRECTED);
-
-    Graph(const Graph<T>& graph);
-    Graph(Graph<T>&& graph);
-
-    ~Graph();
+    explicit Graph(const GraphType& type = GraphType::DIRECTED);
 
 
 
@@ -137,25 +132,20 @@ public:
     EdgeIterator edgeIteratorEnd();
     RangeBasedEdgeIterator edgeIterator();
 
+    AdjacentNodeIterator adjacentNodeIteratorBegin(NodeIterator nodeIt);
+    AdjacentNodeIterator adjacentNodeIteratorEnd(NodeIterator nodeIt);
+    RangeBasedAdjacentNodeIterator adjacentNodeIterator(NodeIterator nodeIt);
+
     AdjacentNodeIterator adjacentNodeIteratorBegin(const T& o);
-    AdjacentNodeIterator adjacentNodeIteratorBegin(NodeIterator node);
     AdjacentNodeIterator adjacentNodeIteratorEnd(const T& o);
-    AdjacentNodeIterator adjacentNodeIteratorEnd(NodeIterator node);
     RangeBasedAdjacentNodeIterator adjacentNodeIterator(const T& o);
-    RangeBasedAdjacentNodeIterator adjacentNodeIterator(NodeIterator node);
-
-
-    /* Swap function and assignment */
-
-    inline Graph<T>& operator= (Graph<T> graph);
-    inline void swap(Graph<T>& graph);
 
 private:
 
     /* Private functions for iterators */
 
-    inline typename std::vector<Node*>::iterator getFirstValidIteratorNode(
-            typename std::vector<Node*>::iterator it);
+    inline typename std::vector<Node>::iterator getFirstValidIteratorNode(
+            typename std::vector<Node>::iterator it);
 
     inline std::unordered_map<size_t, double>::iterator getFirstValidIteratorAdjacent(
             NodeIterator nodeIt,
@@ -171,28 +161,27 @@ private:
 
     /* Helpers */
 
-    inline Node* findNodeHelper(const T& o) const;
-    inline void addEdgeHelper(Node* n1, const Node* n2, const double weight);
-    inline void deleteEdgeHelper(Node* n1, const Node* n2);
-    inline bool isAdjacentHelper(const Node* n1, const Node* n2) const;
+    inline long long int findNodeHelper(const T& o) const;
+    inline void addEdgeHelper(const size_t& id1, const size_t& id2, const double weight);
+    inline void deleteEdgeHelper(const size_t& id1, const size_t& id2);
+    inline bool isAdjacentHelper(const size_t& id1, const size_t& id2) const;
 
-    inline double getWeightHelper(const Node* n1, const Node* n2) const;
-    inline void setWeightHelper(Node* n1, const Node* n2, const double weight);
+    inline double getWeightHelper(const size_t& id1, const size_t& id2) const;
+    inline void setWeightHelper(const size_t& id1, const size_t& id2, const double weight);
 
 
     /* Private fields */
 
     GraphType type;
 
-    std::vector<Node*> nodes;
-    std::map<T, size_t> map;
+    std::vector<Node> nodes; //Vector of nodes
+    std::map<T, size_t> map; //Map to find a node with a value
 
+    std::vector<bool> isDeleted; //Delete flag
     int nDeletedNodes;
 
 };
 
-template <class T>
-void swap(Graph<T>& g1, Graph<T>& g2);
 
 }
 

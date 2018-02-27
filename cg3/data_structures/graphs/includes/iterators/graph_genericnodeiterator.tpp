@@ -16,16 +16,16 @@ Graph<T>::GenericNodeIterator::GenericNodeIterator(
         Graph<T>* graph) :
     graph(graph)
 {
-    this->node = nullptr;
+    this->id = -1;
 }
 
 
 template <class T>
 Graph<T>::GenericNodeIterator::GenericNodeIterator(
         Graph<T>* graph,
-        typename Graph<T>::Node* node) :
+        typename Graph<T>::Node* id) :
     graph(graph),
-    node(node)
+    id(id)
 {
 
 }

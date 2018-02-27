@@ -15,20 +15,20 @@ template <class T>
 Graph<T>::NodeIterator::NodeIterator(
         Graph<T>* graph) :
     Graph<T>::GenericNodeIterator(graph),
-    it(typename std::vector<Node*>::iterator())
+    it(typename std::vector<Node>::iterator())
 {
-    this->node = nullptr;
+
 }
 
 template <class T>
 Graph<T>::NodeIterator::NodeIterator(
         Graph<T>* graph,
-        typename std::vector<Node*>::iterator it) :
+        typename std::vector<Node>::iterator it) :
     Graph<T>::GenericNodeIterator(graph),
     it(it)
 {
     if (it != this->graph->nodes.end())
-        this->node = *it;
+        this->id = it->id;
 }
 
 
@@ -40,8 +40,8 @@ bool Graph<T>::NodeIterator::operator ==(
         const NodeIterator& otherIterator) const
 {
     return (this->graph == otherIterator.graph &&
-            this->node == otherIterator.node &&
-            this->it == otherIterator.it);
+            this->id == otherIterator.id &&
+            it == otherIterator.it);
 }
 
 template <class T>
@@ -55,7 +55,7 @@ bool Graph<T>::NodeIterator::operator !=(const NodeIterator& otherIterator) cons
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::NodeIterator::operator ++()
 {
-    this->next();
+    next();
     return *this;
 }
 
@@ -63,7 +63,7 @@ template <class T>
 typename Graph<T>::NodeIterator Graph<T>::NodeIterator::operator ++(int)
 {
     NodeIterator oldIt = *this;
-    this->next();
+    next();
     return oldIt;
 }
 
@@ -72,7 +72,7 @@ typename Graph<T>::NodeIterator Graph<T>::NodeIterator::operator ++(int)
 template <class T>
 const T& Graph<T>::NodeIterator::operator *() const
 {
-    return this->node->value;
+    return it->value;
 }
 
 
@@ -81,13 +81,13 @@ const T& Graph<T>::NodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::NodeIterator::next() {
-    ++this->it;
-    this->it = this->graph->getFirstValidIteratorNode(this->it);
+    ++it;
+    it = this->graph->getFirstValidIteratorNode(it);
 
     if (it != this->graph->nodes.end())
-        this->node = *it;
+        this->id = it->id;
     else
-        this->node = nullptr;
+        this->id = -1;
 }
 
 

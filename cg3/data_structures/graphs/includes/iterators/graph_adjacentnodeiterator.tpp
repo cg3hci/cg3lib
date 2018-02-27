@@ -29,9 +29,10 @@ Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
     targetNodeIt(targetNodeIt),
     it(it)
 {
-    if (targetNodeIt != this->graph->nodeIteratorEnd() && it != targetNodeIt.node->adjacentNodes.end())
+    if (targetNodeIt != this->graph->nodeIteratorEnd() &&
+            it != this->graph->nodes.at((size_t) targetNodeIt.id).adjacentNodes.end())
     {
-        this->node = this->graph->nodes.at(it->first);
+        this->id = it->first;
     }
 }
 
@@ -45,9 +46,9 @@ bool Graph<T>::AdjacentNodeIterator::operator ==(
         const AdjacentNodeIterator& otherIterator) const
 {
     return (this->graph == otherIterator.graph &&
-            this->node == otherIterator.node &&
-            this->targetNodeIt == otherIterator.targetNodeIt &&
-            this->it == otherIterator.it);
+            this->id == otherIterator.id &&
+            targetNodeIt == otherIterator.targetNodeIt &&
+            it == otherIterator.it);
 }
 
 template <class T>
@@ -61,7 +62,7 @@ bool Graph<T>::AdjacentNodeIterator::operator !=(const AdjacentNodeIterator& oth
 template <class T>
 typename Graph<T>::AdjacentNodeIterator Graph<T>::AdjacentNodeIterator::operator ++()
 {
-    this->next();
+    next();
     return *this;
 }
 
@@ -69,7 +70,7 @@ template <class T>
 typename Graph<T>::AdjacentNodeIterator Graph<T>::AdjacentNodeIterator::operator ++(int)
 {
     AdjacentNodeIterator oldIt = *this;
-    this->next();
+    next();
     return oldIt;
 }
 
@@ -77,7 +78,7 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::AdjacentNodeIterator::operator
 template <class T>
 const T& Graph<T>::AdjacentNodeIterator::operator *() const
 {
-    return this->node->value;
+    return this->graph->nodes.at((size_t) this->id).value;
 }
 
 
@@ -86,13 +87,15 @@ const T& Graph<T>::AdjacentNodeIterator::operator *() const
 
 template <class T>
 void Graph<T>::AdjacentNodeIterator::next() {
-    ++this->it;
-    this->it = this->graph->getFirstValidIteratorAdjacent(this->targetNodeIt, this->it);
+    ++it;
+    it = this->graph->getFirstValidIteratorAdjacent(targetNodeIt, it);
 
-    if (this->it != targetNodeIt.node->adjacentNodes.end())
-        this->node = this->graph->nodes.at(it->first);
-    else
-        this->node = nullptr;
+    if (it != this->graph->nodes.at((size_t) targetNodeIt.id).adjacentNodes.end()) {
+        this->id = it->first;
+    }
+    else {
+        this->id = -1;
+    }
 }
 
 

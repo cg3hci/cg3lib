@@ -27,7 +27,7 @@ private:
 
     inline NodeIterator(
             Graph<T>* graph,
-            typename std::vector<Node*>::iterator it);
+            typename std::vector<Node>::iterator it);
 
 public:
 
@@ -50,7 +50,7 @@ private:
 
     /* Fields */
 
-    typename std::vector<Node*>::iterator it;
+    typename std::vector<Node>::iterator it;
 
 
 };

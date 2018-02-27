@@ -23,13 +23,13 @@ protected:
 
     inline GenericNodeIterator(
             Graph<T>* graph,
-            typename Graph<T>::Node* node);
+            typename Graph<T>::Node* id);
 
 
     /* Fields */
 
     Graph<T>* graph;
-    typename Graph<T>::Node* node;
+    long long int id;
 
 };
 
