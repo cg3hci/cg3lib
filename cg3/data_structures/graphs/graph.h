@@ -21,7 +21,7 @@ namespace cg3 {
 enum GraphType { DIRECTED, UNDIRECTED };
 
 /**
- * @brief Class representing a weighted graph
+ * @brief Class representing a weighted graph (directed or undirected)
  *
  * It can be specified if it is directed or undirected: directed is
  * the default one.
@@ -41,7 +41,7 @@ enum GraphType { DIRECTED, UNDIRECTED };
  *
  * Use recompact() method to clear the nullptr references.
  * Recompact operation is automatically done after a defined number of deleted nodes
- * (to optimize memory usage). This number is set to 10000.
+ * (to avoid memory exhaustion and optimize its usage). This number is set to 10000.
  *
  */
 template <class T>
@@ -104,6 +104,7 @@ public:
     void setWeight(const T& o1, const T& o2, const double weight);
 
 
+
     /* Public methods with iterators */
 
     bool deleteNode(GenericNodeIterator it);
@@ -114,6 +115,7 @@ public:
 
     double getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2);
     void setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const double weight);
+
 
 
     /* Utility methods */
@@ -152,19 +154,22 @@ private:
 
     /* Private functions for iterators */
 
-    inline AdjacentNodeIterator adjacentNodeIteratorBegin(Node* node);
-    inline AdjacentNodeIterator adjacentNodeIteratorEnd(Node* node);
-
     inline typename std::vector<Node*>::iterator getFirstValidIteratorNode(
             typename std::vector<Node*>::iterator it);
 
     inline std::unordered_map<size_t, double>::iterator getFirstValidIteratorAdjacent(
-            Node* targetNode,
+            NodeIterator nodeIt,
             std::unordered_map<size_t, double>::iterator it);
 
+    void getFirstValidIteratorEdge(
+            NodeIterator nodeIt,
+            AdjacentNodeIterator adjIt,
+            NodeIterator& newNodeIt,
+            AdjacentNodeIterator& newAdjIt);
 
 
-    /* Private functions */
+
+    /* Helpers */
 
     inline Node* findNodeHelper(const T& o) const;
     inline void addEdgeHelper(Node* n1, const Node* n2, const double weight);

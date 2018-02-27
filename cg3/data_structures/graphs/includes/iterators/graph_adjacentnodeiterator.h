@@ -25,7 +25,7 @@ private:
 
     inline AdjacentNodeIterator(
             Graph<T>* graph,
-            Node* targetNode,
+            const NodeIterator& targetNodeIt,
             std::unordered_map<size_t, double>::iterator it);
 public:
 
@@ -48,7 +48,7 @@ private:
 
     /* Fields */
 
-    Node* targetNode;
+    NodeIterator targetNodeIt;
     std::unordered_map<size_t, double>::iterator it;
 
 };
@@ -64,8 +64,8 @@ public:
 
     inline RangeBasedAdjacentNodeIterator(
             Graph<T>* graph,
-            typename Graph<T>::Node* node) :
-        graph(graph), node(node) {}
+            const NodeIterator& targetNodeIt) :
+        graph(graph), targetNodeIt(targetNodeIt) {}
 
     inline AdjacentNodeIterator begin();
     inline AdjacentNodeIterator end();
@@ -73,7 +73,7 @@ public:
 private:
 
     Graph<T>* graph;
-    typename Graph<T>::Node* node;
+    NodeIterator targetNodeIt;
 
 };
 

@@ -13,7 +13,9 @@ namespace cg3 {
 template <class T>
 Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
         Graph<T>* graph) :
-    Graph<T>::GenericNodeIterator(graph)
+    Graph<T>::GenericNodeIterator(graph),
+    targetNodeIt(this->graph->nodeIteratorEnd()),
+    it(std::unordered_map<size_t, double>::iterator())
 {
 
 }
@@ -21,15 +23,18 @@ Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
 template <class T>
 Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
         Graph<T>* graph,
-        Node* targetNode,
+        const NodeIterator& targetNodeIt,
         std::unordered_map<size_t, double>::iterator it) :
     Graph<T>::GenericNodeIterator(graph),
-    targetNode(targetNode),
+    targetNodeIt(targetNodeIt),
     it(it)
 {
-    if (targetNode != nullptr && it != targetNode->adjacentNodes.end())
+    if (targetNodeIt != this->graph->nodeIteratorEnd() && it != targetNodeIt.node->adjacentNodes.end())
+    {
         this->node = this->graph->nodes.at(it->first);
+    }
 }
+
 
 
 /* ----- OPERATOR OVERLOAD ----- */
@@ -41,7 +46,7 @@ bool Graph<T>::AdjacentNodeIterator::operator ==(
 {
     return (this->graph == otherIterator.graph &&
             this->node == otherIterator.node &&
-            this->targetNode == otherIterator.targetNode &&
+            this->targetNodeIt == otherIterator.targetNodeIt &&
             this->it == otherIterator.it);
 }
 
@@ -82,9 +87,9 @@ const T& Graph<T>::AdjacentNodeIterator::operator *() const
 template <class T>
 void Graph<T>::AdjacentNodeIterator::next() {
     ++this->it;
-    this->it = this->graph->getFirstValidIteratorAdjacent(this->targetNode, this->it);
+    this->it = this->graph->getFirstValidIteratorAdjacent(this->targetNodeIt, this->it);
 
-    if (this->it != targetNode->adjacentNodes.end())
+    if (this->it != targetNodeIt.node->adjacentNodes.end())
         this->node = this->graph->nodes.at(it->first);
     else
         this->node = nullptr;
@@ -98,12 +103,12 @@ void Graph<T>::AdjacentNodeIterator::next() {
 
 template <class T>
 typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::begin() {
-    return this->graph->adjacentNodeIteratorBegin(node);
+    return this->graph->adjacentNodeIteratorBegin(targetNodeIt);
 }
 
 template <class T>
 typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::end() {
-    return this->graph->adjacentNodeIteratorEnd(node);
+    return this->graph->adjacentNodeIteratorEnd(targetNodeIt);
 }
 
 

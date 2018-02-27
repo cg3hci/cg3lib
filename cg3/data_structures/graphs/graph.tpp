@@ -6,6 +6,8 @@
  */
 #include "graph.h"
 
+#include "assert.h"
+
 namespace cg3 {
 
 /* ----- CONST ----- */
@@ -431,7 +433,7 @@ void Graph<T>::recompact() {
             n->id = newIndex;
             newMap[n->value] = newIndex;
 
-            indexMap[i] = newIndex;
+            indexMap[i] = (int) newIndex;
             newIndex++;
         }
     }
@@ -458,7 +460,8 @@ void Graph<T>::recompact() {
             }
 
             //Move adjacency map in the node
-            Node* currentNode = newNodes[indexMap[i]];
+            assert(indexMap[i] >= 0);
+            Node* currentNode = newNodes[(size_t) indexMap[i]];
             currentNode->adjacentNodes = std::move(newAdjacentNodes);
         }
     }
@@ -515,6 +518,7 @@ typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator() {
  */
 template <class T>
 typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorBegin() {
+    //Starting iterator
     NodeIterator nodeIt = this->nodeIteratorBegin();
 
     if (nodeIt == this->nodeIteratorEnd())
@@ -522,17 +526,12 @@ typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorBegin() {
 
     AdjacentNodeIterator adjIt = this->adjacentNodeIteratorBegin(nodeIt);
 
-    while (adjIt == this->adjacentNodeIteratorEnd(nodeIt)) {
-        nodeIt++;
+    //Get first valid edge iterator
+    AdjacentNodeIterator newAdjIt(this);
+    NodeIterator newNodeIt(this);
+    this->getFirstValidIteratorEdge(nodeIt, adjIt, newNodeIt, newAdjIt);
 
-        if (nodeIt == this->nodeIteratorEnd()) {
-            return this->edgeIteratorEnd();
-        }
-
-        adjIt = this->adjacentNodeIteratorBegin(nodeIt);
-    }
-
-    return EdgeIterator(this, nodeIt, adjIt);
+    return EdgeIterator(this, newNodeIt, newAdjIt);
 }
 
 /**
@@ -543,11 +542,8 @@ template <class T>
 typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorEnd() {
     return EdgeIterator(
                 this,
-                this->nodeIteratorEnd(),
-                AdjacentNodeIterator(
-                    this,
-                    nullptr,
-                    std::unordered_map<size_t, double>::iterator()));
+                NodeIterator(this),
+                AdjacentNodeIterator(this));
 }
 
 /**
@@ -570,9 +566,18 @@ typename Graph<T>::RangeBasedEdgeIterator Graph<T>::edgeIterator() {
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(NodeIterator nodeIterator) {
-    Node* node = nodeIterator.node;
-    return this->adjacentNodeIteratorBegin(node);
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(
+        NodeIterator nodeIterator)
+{
+    std::unordered_map<size_t, double>::iterator it =
+            getFirstValidIteratorAdjacent(
+                nodeIterator,
+                nodeIterator.node->adjacentNodes.begin());
+
+    return AdjacentNodeIterator(
+                this,
+                nodeIterator,
+                it);
 }
 
 /**
@@ -591,9 +596,13 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(cons
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(NodeIterator nodeIterator) {
-    Node* node = nodeIterator.node;
-    return this->adjacentNodeIteratorEnd(node);
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(
+        NodeIterator nodeIterator)
+{
+    return AdjacentNodeIterator(
+                this,
+                nodeIterator,
+                nodeIterator.node->adjacentNodes.end());
 }
 
 /**
@@ -612,8 +621,10 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(const 
  * @return Range based node iterator
  */
 template <class T>
-typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator(NodeIterator nodeIterator) {
-    return RangeBasedAdjacentNodeIterator(this, nodeIterator.node);
+typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator(
+        NodeIterator nodeIterator)
+{
+    return RangeBasedAdjacentNodeIterator(this, nodeIterator);
 }
 
 /**
@@ -690,18 +701,20 @@ typename std::vector<typename Graph<T>::Node*>::iterator Graph<T>::getFirstValid
 
     return it;
 }
+
 /**
  * @brief Get the first valid (pointing to a not deleted node)
  * adjacent node iterator starting from the input one
+ * @param[in] targetNode Node
  * @param[in] it Input adjacent node iterator
  * @return Valid adjacent node iterator
  */
 template<class T>
 std::unordered_map<size_t, double>::iterator Graph<T>::getFirstValidIteratorAdjacent(
-        Node* targetNode,
+        NodeIterator nodeIt,
         std::unordered_map<size_t, double>::iterator it)
 {
-    while (it != targetNode->adjacentNodes.end() &&
+    while (it != nodeIt.node->adjacentNodes.end() &&
            this->nodes.at(it->first) == nullptr)
     {
         it++;
@@ -710,32 +723,42 @@ std::unordered_map<size_t, double>::iterator Graph<T>::getFirstValidIteratorAdja
     return it;
 }
 
-
-
 /**
- * @brief Begin adjacent node iterator
- * @param[in] node Iterator of the node
- * @return Iterator
+ * @brief Get the first valid (pointing to a not deleted node)
+ * edge iterator starting from the input one
+ * @param[in] nodeIt Input node iterator
+ * @param[in] adjIt Input adjacent node iterator
+ * @param[out] nodeIt Output node iterator
+ * @param[out] adjIt Output adjacent node iterator
  */
-template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(Node* node) {
-    return AdjacentNodeIterator(this, node, getFirstValidIteratorAdjacent(node, node->adjacentNodes.begin()));
+template<class T>
+void Graph<T>::getFirstValidIteratorEdge(
+        NodeIterator nodeIt,
+        AdjacentNodeIterator adjIt,
+        NodeIterator& newNodeIt,
+        AdjacentNodeIterator& newAdjIt)
+{
+    while (adjIt == this->adjacentNodeIteratorEnd(nodeIt)) {
+        nodeIt++;
+
+        if (nodeIt == this->nodeIteratorEnd()) {
+            newNodeIt = NodeIterator(this);
+            newAdjIt = AdjacentNodeIterator(this);
+
+            return;
+        }
+
+        adjIt = this->adjacentNodeIteratorBegin(nodeIt);
+    }
+    newNodeIt = nodeIt;
+    newAdjIt = adjIt;
 }
 
-/**
- * @brief End adjacent node iterator
- * @param[in] node Iterator of the node
- * @return Iterator
- */
-template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(Node* node) {
-    return AdjacentNodeIterator(this, node, node->adjacentNodes.end());
-}
 
 
 
 
-/* ----- PRIVATE FUNCTIONS ----- */
+/* ----- HELPERS ----- */
 
 /**
  * @brief Find a node in the graph

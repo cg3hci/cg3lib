@@ -27,9 +27,12 @@ private:
     /* Constructors */
 
     inline EdgeIterator(
+            Graph<T>* graph);
+
+    inline EdgeIterator(
             Graph<T>* graph,
-            typename Graph<T>::NodeIterator nodeIt,
-            typename Graph<T>::AdjacentNodeIterator adjIt);
+            const typename Graph<T>::NodeIterator& nodeIt,
+            const typename Graph<T>::AdjacentNodeIterator& adjIt);
 
 public:
 

@@ -13,9 +13,19 @@ namespace cg3 {
 
 template <class T>
 Graph<T>::EdgeIterator::EdgeIterator(
+        Graph<T>* graph) :
+    graph(graph),
+    nodeIt(graph->nodeIteratorEnd()),
+    adjIt(graph->adjacentNodeIteratorEnd(graph->nodeIteratorEnd()))
+{
+
+}
+
+template <class T>
+Graph<T>::EdgeIterator::EdgeIterator(
         Graph<T>* graph,
-        typename Graph<T>::NodeIterator nodeIt,
-        typename Graph<T>::AdjacentNodeIterator adjIt) :
+        const typename Graph<T>::NodeIterator& nodeIt,
+        const typename Graph<T>::AdjacentNodeIterator& adjIt) :
     graph(graph),
     nodeIt(nodeIt),
     adjIt(adjIt)
@@ -74,21 +84,7 @@ std::pair<const T, const T> Graph<T>::EdgeIterator::operator *() const
 template <class T>
 void Graph<T>::EdgeIterator::next() {
     adjIt++;
-
-    while (adjIt == this->graph->adjacentNodeIteratorEnd(nodeIt)) {
-        nodeIt++;
-
-        if (nodeIt == this->graph->nodeIteratorEnd()) {
-            adjIt = AdjacentNodeIterator(
-                        this->graph,
-                        nullptr,
-                        std::unordered_map<size_t, double>::iterator());
-            return;
-        }
-
-        adjIt = this->graph->adjacentNodeIteratorBegin(nodeIt);
-    }
-
+    this->graph->getFirstValidIteratorEdge(nodeIt, adjIt, nodeIt, adjIt);
 }
 
 

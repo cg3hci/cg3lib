@@ -14,9 +14,10 @@ namespace cg3 {
 template <class T>
 Graph<T>::NodeIterator::NodeIterator(
         Graph<T>* graph) :
-    Graph<T>::GenericNodeIterator(graph)
+    Graph<T>::GenericNodeIterator(graph),
+    it(typename std::vector<Node*>::iterator())
 {
-
+    this->node = nullptr;
 }
 
 template <class T>
