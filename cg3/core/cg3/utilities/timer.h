@@ -31,7 +31,6 @@ class Timer {
 
     private:
         std::string caption;
-        std::chrono::high_resolution_clock clock;
         std::chrono::high_resolution_clock::time_point begin, end;
         bool isStopped;
 };

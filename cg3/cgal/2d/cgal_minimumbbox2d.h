@@ -6,7 +6,7 @@
  */
 
 #ifndef CG3_CGAL_MINIMUMBBOX2D_H
-#define Cg3_CGAL_MINIMUMBBOX2D_H
+#define CG3_CGAL_MINIMUMBBOX2D_H
 
 #include <vector>
 
@@ -28,4 +28,4 @@ std::vector<Point2Dd> getMinRectangle2D(const std::vector<Point2Dd>& pointVec, b
 }
 }
 
-#endif // Cg3_CGAL_MINIMUMBBOX2D_H
+#endif // CG3_CGAL_MINIMUMBBOX2D_H

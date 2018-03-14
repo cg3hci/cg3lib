@@ -24,7 +24,7 @@ RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool
     mresZ = bb.getLengthZ() / unit;
     if (outsideBB || std::fmod(bb.getLengthZ(), unit) == 0)
         mresZ++;
-    bb.max() = Pointd(bb.minX() + unit * (mresX-1), bb.minY() + unit * (mresY-1), bb.minZ() + unit * (mresZ-1));
+    this->bb.max() = Pointd(bb.minX() + unit * (mresX-1), bb.minY() + unit * (mresY-1), bb.minZ() + unit * (mresZ-1));
     vertexProperties.resize(mresX*mresY*mresZ);
 }
 
