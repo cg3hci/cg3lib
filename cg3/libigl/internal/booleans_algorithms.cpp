@@ -1,0 +1,62 @@
+#include "booleans_algorithms.h"
+
+#ifdef CG3_CGAL_DEFINED
+
+
+namespace cg3 {
+
+namespace libigl {
+
+namespace internal {
+
+namespace BooleansAlgorithms {
+
+/**
+ * @brief Intersection of two CSG Trees
+ * @param[in] c1 First CSGTree
+ * @param[in] c2 Second CSGTree
+ * @return Intersection CSG Tree
+ */
+igl::copyleft::cgal::CSGTree intersection(
+        const igl::copyleft::cgal::CSGTree& c1,
+        const igl::copyleft::cgal::CSGTree& c2)
+{
+    return igl::copyleft::cgal::CSGTree(c1,c2,"i");
+}
+
+/**
+ * @brief Difference of two CSG Trees
+ * @param[in] c1 First CSGTree
+ * @param[in] c2 Second CSGTree
+ * @return Difference CSG Tree
+ */
+igl::copyleft::cgal::CSGTree difference(
+        const igl::copyleft::cgal::CSGTree& c1,
+        const igl::copyleft::cgal::CSGTree& c2)
+{
+    return igl::copyleft::cgal::CSGTree(c1,c2,"m");
+}
+
+/**
+ * @brief Union of two CSG Trees
+ * @param[in] c1 First CSGTree
+ * @param[in] c2 Second CSGTree
+ * @return Union CSG Tree
+ */
+igl::copyleft::cgal::CSGTree union_(
+        const igl::copyleft::cgal::CSGTree& c1,
+        const igl::copyleft::cgal::CSGTree& c2)
+{
+    return igl::copyleft::cgal::CSGTree(c1,c2,"u");
+}
+
+
+}
+
+}
+
+}
+
+}
+
+#endif //CGAL_DEFINED

@@ -59,8 +59,9 @@ exists($$(LIBIGL_HOME)){
         $$PWD/libigl/is_vertex_manifold.h \
         $$PWD/libigl/remove_duplicate_vertices.h \
         $$PWD/libigl/remove_unreferenced_vertices.h \
+        $$PWD/libigl/mesh_distance.h \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms.h \
-        $$PWD/libigl/mesh_distance.h
+        $$PWD/libigl/internal/booleans_algorithms.h
 
     SOURCES += \
         $$PWD/libigl/booleans.tpp\
@@ -73,6 +74,13 @@ exists($$(LIBIGL_HOME)){
         $$PWD/libigl/is_vertex_manifold.tpp \
         $$PWD/libigl/remove_duplicate_vertices.tpp \
         $$PWD/libigl/remove_unreferenced_vertices.tpp \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.cpp \
-        $$PWD/libigl/mesh_distance.tpp
+        $$PWD/libigl/mesh_distance.tpp \
+        $$PWD/libigl/internal/booleans_algorithms.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_decimation.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_verticesremoval.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_manifoldutilities.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_adjacencies.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_booleans.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_distances.cpp
 }
+
