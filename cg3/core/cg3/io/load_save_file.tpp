@@ -585,7 +585,7 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Plain
             int vc = 0;
             for (typename std::list<Color>::iterator it = dummycv.begin(); it != dummycv.end(); ++it){
                 Color c = *it;
-                if (typeid(W) == typeid(float) || typeid(W) == typeid(double)){
+                if (typeid(typename Eigen::PlainObjectBase<W>::Scalar) == typeid(float) || typeid(typename Eigen::PlainObjectBase<W>::Scalar) == typeid(double)){
                     verticesColors(vc, 0) = c.redF();
                     verticesColors(vc, 1) = c.greenF();
                     verticesColors(vc, 2) = c.blueF();
@@ -605,7 +605,7 @@ bool loadSave::loadTriangleMeshFromObj(const std::string &filename, Eigen::Plain
             int vc = 0;
             for (typename std::list<Color>::iterator it = dummyct.begin(); it != dummyct.end(); ++it){
                 Color c = *it;
-                if (typeid(X) == typeid(float) || typeid(X) == typeid(double)){
+                if (typeid(typename Eigen::PlainObjectBase<X>::Scalar) == typeid(float) || typeid(typename Eigen::PlainObjectBase<X>::Scalar) == typeid(double)){
                     triangleColors(vc, 0) = c.redF();
                     triangleColors(vc, 1) = c.greenF();
                     triangleColors(vc, 2) = c.blueF();
@@ -974,7 +974,7 @@ bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::Plain
             int vc = 0;
             for (typename std::list<Color>::iterator it = dummycv.begin(); it != dummycv.end(); ++it){
                 Color c = *it;
-                if (typeid(W) == typeid(float) || typeid(W) == typeid(double)){
+                if (typeid(typename Eigen::PlainObjectBase<W>::Scalar) == typeid(float) || typeid(typename Eigen::PlainObjectBase<W>::Scalar) == typeid(double)){
                     verticesColors(vc, 0) = c.redF();
                     verticesColors(vc, 1) = c.greenF();
                     verticesColors(vc, 2) = c.blueF();
@@ -994,7 +994,7 @@ bool loadSave::loadTriangleMeshFromPly(const std::string &filename, Eigen::Plain
             int vc = 0;
             for (typename std::list<Color>::iterator it = dummyct.begin(); it != dummyct.end(); ++it){
                 Color c = *it;
-                if (typeid(X) == typeid(float) || typeid(X) == typeid(double)){
+                if (typeid(typename Eigen::PlainObjectBase<X>::Scalar) == typeid(float) || typeid(typename Eigen::PlainObjectBase<X>::Scalar) == typeid(double)){
                     triangleColors(vc, 0) = c.redF();
                     triangleColors(vc, 1) = c.greenF();
                     triangleColors(vc, 2) = c.blueF();
