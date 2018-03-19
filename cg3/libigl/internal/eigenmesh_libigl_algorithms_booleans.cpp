@@ -82,7 +82,7 @@ EigenMesh EigenMeshLibIglAlgorithms::intersection(const EigenMesh& m1, const Eig
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
 
-    EigenMesh eigenMesh = CSGTreeToEigenMesh(csgResult);
+    EigenMesh eigenMesh(CSGTreeToEigenMesh(csgResult));
 
     reassociateDataAfterOperation(eigenMesh, m1, m2, csgResult.J());
 
@@ -121,9 +121,9 @@ EigenMesh EigenMeshLibIglAlgorithms::difference(const EigenMesh& m1, const Eigen
                 eigenMeshToCSGTree(m2));
 
 
-    EigenMesh eigenMesh = CSGTreeToEigenMesh(csgResult);
+    EigenMesh eigenMesh(CSGTreeToEigenMesh(csgResult));
 
-    reassociateDataAfterOperation(eigenMesh, m1, m2, csgResult.J());
+    reassociateDataAfterOperation(eigenMesh, m1, m2, csgResult.J());    
 
     return eigenMesh;
 }
@@ -161,7 +161,7 @@ EigenMesh EigenMeshLibIglAlgorithms::union_(const EigenMesh& m1, const EigenMesh
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
 
-    EigenMesh eigenMesh = CSGTreeToEigenMesh(csgResult);
+    EigenMesh eigenMesh(CSGTreeToEigenMesh(csgResult));
 
     reassociateDataAfterOperation(eigenMesh, m1, m2, csgResult.J());
 
