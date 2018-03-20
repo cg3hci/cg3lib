@@ -4,10 +4,14 @@
 #ifdef  CG3_CGAL_DEFINED
 
 #ifdef __GNUC__
+#ifndef __clang__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wnon-template-friend"
 #include <igl/copyleft/cgal/CSGTree.h>
 #pragma GCC diagnostic pop
+#else //__clang__
+#include <igl/copyleft/cgal/CSGTree.h>
+#endif //__clang__
 #else //__GNUC__
 #include <igl/copyleft/cgal/CSGTree.h>
 #endif //__GNUC__

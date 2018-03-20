@@ -297,7 +297,7 @@ Vec3 Dcel::Face::updateNormal() {
         double dot = normal.dot(zAxis);
         double angle = acos(dot);
 
-        double r[3][3] = {0};
+        double r[3][3] = {{0}};
         if (normal != zAxis){
             if (normal == -zAxis){
                 v = Vec3(1,0,0);
