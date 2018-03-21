@@ -12,7 +12,7 @@
 #include "point.h"
 namespace cg3 {
 
-class Line : SerializableObject{
+class Line : public SerializableObject{
     public:
         Line();
         Line(const Pointd& p0, const Vec3& dir);

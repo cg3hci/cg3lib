@@ -16,7 +16,6 @@ MODULES += CG3_ALGORITHMS
 
 HEADERS += \
     $$PWD/algorithms/convexhull.h \
-    $$PWD/algorithms/marching_cubes.h \
     $$PWD/algorithms/2d/convexhull2d.h \
     $$PWD/algorithms/2d/convexhull2d_incremental.h \
     $$PWD/algorithms/graph_algorithms.h \
@@ -25,7 +24,6 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/algorithms/convexhull.tpp \
-    $$PWD/algorithms/marching_cubes.cpp \
     $$PWD/algorithms/2d/convexhull2d.tpp  \
     $$PWD/algorithms/2d/convexhull2d_incremental.tpp \
     $$PWD/algorithms/graph_algorithms.tpp \

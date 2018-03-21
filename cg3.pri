@@ -50,9 +50,14 @@ qt {
     }
 }
 
+CG3_DEVELOPMENT {
+    include (cg3/development.pri)
+}
+
 
 DISTFILES += \
     $$PWD/LICENSE \
-    $$PWD/README.md
+    $$PWD/README.md \
+    $$PWD/TODO.md
 
 INCLUDEPATH += $$PWD

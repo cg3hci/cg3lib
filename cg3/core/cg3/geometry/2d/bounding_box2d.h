@@ -23,7 +23,7 @@ namespace cg3 {
  * It is composed of two points, min and max, which represent the minimum and
  * maximum coordinates of the box.
  */
-class BoundingBox2D : SerializableObject{
+class BoundingBox2D : public SerializableObject{
     public:
         BoundingBox2D();
         BoundingBox2D(const Point2Dd& minCoord, const Point2Dd& maxCoord);

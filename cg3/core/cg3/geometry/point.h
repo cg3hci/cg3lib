@@ -46,7 +46,7 @@ namespace cg3 {
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-template <class T> class Point : SerializableObject {
+template <class T> class Point : public SerializableObject {
 
     public:
 

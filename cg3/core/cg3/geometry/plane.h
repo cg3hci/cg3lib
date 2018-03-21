@@ -19,7 +19,7 @@ namespace cg3 {
  * @brief The Plane class
  * Stores a plane on the form \f$ax + by + cz + d = 0\f$.
  */
-class Plane : SerializableObject {
+class Plane : public SerializableObject {
     public:
         Plane(const Vec3& normal, double d);
         Plane(double a, double b, double c, double d);

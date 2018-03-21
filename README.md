@@ -12,4 +12,4 @@ It is composed of different modules:
 All these modules are optional (except of the core module) and the project can be compiled on Windows, MacOS and Linux.
 To install all the necessary libraries on ubuntu based linux distributions just exectute "install.sh".
 
-
+[ToDo list](TODO.md)
