@@ -86,6 +86,7 @@ HEADERS += \
     $$PWD/core/cg3/utilities/eigen.h \
     $$PWD/core/cg3/utilities/hash.h \
     $$PWD/core/cg3/utilities/map.h \
+    $$PWD/core/cg3/utilities/nested_initializer_lists.h \
     $$PWD/core/cg3/utilities/pair.h \
     $$PWD/core/cg3/utilities/set.h \
     $$PWD/core/cg3/utilities/string.h \
