@@ -28,7 +28,7 @@ bool operator <(const QColor &c1, const QColor &c2);
 
 namespace cg3 {
 
-class Color : SerializableObject {
+class Color : public SerializableObject {
     public:
         Color();
         Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);

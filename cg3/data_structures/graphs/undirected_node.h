@@ -15,7 +15,7 @@
 namespace cg3 {
 
 template <class T>
-class UndirectedNode : SerializableObject {
+class UndirectedNode : public SerializableObject {
     public:
         UndirectedNode();
         UndirectedNode(const T& info);

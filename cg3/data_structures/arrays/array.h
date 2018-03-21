@@ -50,7 +50,7 @@ namespace cg3 {
  *
  */
 template <class T, size_t N>
-class Array : SerializableObject {
+class Array : public SerializableObject {
         static_assert(N > 0, "Array dimension must be > 0.");
 
     public:

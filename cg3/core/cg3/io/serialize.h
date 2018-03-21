@@ -22,6 +22,7 @@
 
 namespace cg3 {
 
+    //utilities functions for the serialization of an entire object by its attributes
     template <typename... Args>
     void serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args);
 
@@ -36,15 +37,17 @@ namespace cg3 {
  * The Serializer namespace contains some functions for serialization/deserialization of standard
  * classes (vectors, sets, maps, etc).
  *
- * Please, if you can, add serialize/deserialize methods for all types you need that don't work
- * with the standard "serialize"/"deserialize" methods!
+ * You are invited to extend this namespace with serialize/deserialize functions for all classes that
+ * you can't modify by adding the implementation of the  "SerializableObject" abstract class.
  */
 namespace serializer {
 
+    // Manage File functions
     std::streampos getPosition(std::ifstream& binaryFile);
 
     void restorePosition(std::ifstream& binaryFile, const std::streampos& position);
 
+    // serialize/deserialize functions
     template <typename T>
     void serialize(const T& obj, std::ofstream& binaryFile, typename std::enable_if<std::is_pointer<T>::value >::type* = 0);
 

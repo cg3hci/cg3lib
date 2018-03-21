@@ -1,5 +1,5 @@
 # Major
-- [ ] Complete this ToDo :D
+- [ ] Complete this ToDo :sweat_smile:
 - [ ] Improve MainWindow GUI
 - [ ] Manage multiple pickable objects drawn in the Canvas
 - [ ] Unify Meshes data structures
@@ -8,8 +8,17 @@
 # Minor
 - Algorithms:
   - [ ] Implement Marching Cubes
+- Data Structure:
+  - [ ] Unify Bipartite Graph Undirected Node with GraphNode
+- Meshes:
+  - [ ] Reorganize EigenMeshAlgorithms
 
-# Missing Documentation:
+# Missing Abstract Classes Inheritance
+- Data Structures:
+  - [ ] graphs/graph
+  - [ ] all the trees
+
+# Missing Documentation
 - Core:
   - [ ] geometry/2d/line2d
   - [ ] geometry/line

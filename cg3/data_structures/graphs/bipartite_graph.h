@@ -17,7 +17,7 @@
 namespace cg3 {
 
 template <class T1, class T2>
-class BipartiteGraph : SerializableObject{
+class BipartiteGraph : public SerializableObject{
     public:
         BipartiteGraph();
         bool addLeftNode(const T1& info);

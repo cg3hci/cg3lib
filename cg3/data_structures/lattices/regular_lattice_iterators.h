@@ -31,8 +31,6 @@ class RegularLattice<VT>::VertexIterator{
         const RegularLattice* l;
         unsigned int pos;
         VertexIterator(unsigned int pos, const RegularLattice &g);
-
-
 };
 
 }
