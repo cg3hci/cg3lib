@@ -1,5 +1,5 @@
 # Major
-- [ ] Complete this ToDo :sweat_smile:
+- [ ] Complete this ToDo list :sweat_smile:
 - [ ] Improve MainWindow GUI
 - [ ] Manage multiple pickable objects drawn in the Canvas
 - [ ] Unify Meshes data structures
