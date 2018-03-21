@@ -15,22 +15,24 @@
 namespace cg3 {
 
 /**
- * \~English
  * @interface DrawableObject
  * @brief The DrawableObject Interface models a renderable model for a GLCanvas.
  *
- * It contains methods that must be implemented by the classes that inherit from a DrawableObject
- * to be rendered by a GLCanvas.
+ * It contains methods that must be implemented in order to be rendered by the GLCanvas.
  *
- * @author Marco Livesu (marco.livesu@gmail.com)
- * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ * \code{*.cpp}
+ * class MyDrawableObject : public cg3::DrawableObject {
+ *    //all the staff of MyDrawableObject
+ * }
  *
- * \~Italian
- * @interface DrawableObject
- * @brief L'interfaccia DrawableObject modella un oggetto renderizzabile da una GLCanvas.
+ * //usage
+ * MyDrawableObject mdo; //some initialization here...
+ * cg3::viewer::MainWindow mw;
+ * mw.pushObj(&mdo, "My Drawable Object");
+ * \endcode
  *
- * Contiene dei metodi che devono essere implementati dalle classi che ereditano da DrawableObject
- * per essere renderizzate da una GLCanvas.
+ * Be careful: a DrawableObject must live as long as its pointer is stored in the MainWindow.
+ * Remember to call cg3::viewer::MainWindow::deleteObj() before the object goes out of scope or it is deleted.
  *
  * @author Marco Livesu (marco.livesu@gmail.com)
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
@@ -39,17 +41,20 @@ class DrawableObject
 {
     public :
 
-        DrawableObject() {}                      /**< \~Italian @brief Costruttore, vuoto
-                                                      \~English @brief Empty constructor */
+        DrawableObject() {}                      /**< @brief Empty constructor */
 
         virtual ~DrawableObject() {}
 
-        virtual void  draw()          const = 0; /**< \~Italian @brief Disegna l'oggetto mediante chiamate OpenGL
-                                                      \~English @brief Draws the object through OpenGL */
-        virtual Pointd sceneCenter()  const = 0; /**< \~Italian @brief Restituisce la posizione del centro dell'oggetto
-                                                      \~English @brief Returns the position of the center of the objetc */
-        virtual double sceneRadius()  const = 0; /**< \~Italian @brief Restituisce il raggio della bounding sphere (o del bounding box) dell'oggetto
-                                                      \~English @brief Returns the ray of the bounding sphere (or the bounding box)* of the object */
+        virtual void  draw()          const = 0; /**< @brief This member function must draw the object through OpenGL calls.
+                                                             It will be called at every frame by the canvas. */
+
+        virtual Pointd sceneCenter()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
+                                                             It must return the position of the center of the object. */
+
+        virtual double sceneRadius()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
+                                                             It should return the ray of the bounding sphere of the object, but also half diagonal of the
+                                                             bounding box of the object is a good approximation. Return -1 if the object shouldn't influence
+                                                             the position of the camera. */
 };
 
 }
