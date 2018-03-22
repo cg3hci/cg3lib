@@ -7,16 +7,23 @@
 
 #include "array.h"
 
+/**
+ * @brief cg3::Array<T, N>::Array
+ *
+ * Creates an N-Dimensional Array with size 0 for every dimension.
+ */
 template<class T, size_t N>
 inline cg3::Array<T, N>::Array() : v(0){
     sizes.fill(0);
 }
 
-template<class T, size_t N>
-constexpr unsigned long int cg3::Array<T, N>::dimensions() const {
-    return N;
-}
-
+/**
+ * @brief cg3::Array<T, N>::Array
+ *
+ * Creates an N-Dimensional Array with the given sizes. All its elements are initialized to 0.
+ *
+ * @param[in] s: #N sizes, one for every dimension of the array.
+ */
 template<class T, size_t N>
 template<typename... Sizes>
 cg3::Array<T, N>::Array(Sizes... s) {
@@ -28,6 +35,16 @@ cg3::Array<T, N>::Array(Sizes... s) {
         totalSize*=args[i];
     }
     v.resize(totalSize);
+}
+
+template<class T, size_t N>
+inline cg3::Array<T, N>::Array(cg3::NestedInitializerLists<T, N> values) {
+    initializeNestedLists(values);
+}
+
+template<class T, size_t N>
+constexpr unsigned long int cg3::Array<T, N>::dimensions() const {
+    return N;
 }
 
 template<class T, size_t N>
@@ -187,4 +204,20 @@ unsigned long cg3::Array<T, N>::getIndex(const unsigned long indices[], const un
         ind+=indices[i];
     }
     return ind;
+}
+
+template<typename T, size_t N>
+void cg3::Array<T, N>::initializeNestedLists(cg3::NestedInitializerLists<T, N> values) {
+
+    std::list<std::size_t> szs = NestedInitializerListsProcessor<T, N>::maxDimensionsLevels(values);
+    unsigned int i = 0;
+    size_t totalSize = 1;
+    for (std::size_t s : szs){
+        totalSize *= s;
+        sizes[i++] = s;
+    }
+    v.resize(totalSize);
+
+    typename std::vector<T>::iterator iterator = v.begin();
+    NestedInitializerListsProcessor<T, N>::processElements(values, [&iterator](T value) { *(iterator++) = value; }, szs);
 }

@@ -27,7 +27,7 @@ namespace cg3 {
  * Iff your class is a simple class without manually managed resources, and all of its
  * attributes are SerializableObjects (or it exists a specialized function in the Serializer
  * namespace) you can easily use the helpers Serializer::serializeObjectAttributes() and
- * Serializer::deserializeObjectsAttributes();
+ * serializer::deserializeObjectsAttributes();
  */
 class SerializableObject {
     public:
@@ -55,7 +55,7 @@ class SerializableObject {
          *
          * The serialize function should serialize all the data of your class.
          * Iff your class is a simple class without manually managed resources, and all of its
-         * attributes are SerializableObjects (or it exists a specialized function in the Serializer
+         * attributes are SerializableObjects (or it exists a specialized function in the cg3::serializer
          * namespace) you can easily use the helpers cg3::serializeObjectAttributes():
          *
          * \code{.cpp}
@@ -100,7 +100,7 @@ class SerializableObject {
          * and throw an std::ios_base::failure exception.
          *
          * Iff your class is a simple class without manually managed resources, and all of its
-         * attributes are SerializableObjects (or it exists a specialized function in the Serializer
+         * attributes are SerializableObjects (or it exists a specialized function in the cg3::serializer
          * namespace) you can easily use the helpers cg3::deserializeObjectAttributes():
          *
          * \code{.cpp}

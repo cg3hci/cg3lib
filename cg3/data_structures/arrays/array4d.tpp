@@ -14,12 +14,21 @@ Array4D<T>::Array4D() : Array<T, 4>() {
 }
 
 template <class T>
+inline Array4D<T>::Array4D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, unsigned long int sizeW) : Array<T,4>(sizeX, sizeY, sizeZ, sizeW) {
+}
+
+template <class T>
 inline Array4D<T>::Array4D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, unsigned long int sizeW, const T& value) {
     Array<T, 4>::v.resize(sizeX*sizeY*sizeZ*sizeW, value);
     Array<T, 4>::sizes[0] = sizeX;
     Array<T, 4>::sizes[1] = sizeY;
     Array<T, 4>::sizes[2] = sizeZ;
     Array<T, 4>::sizes[3] = sizeW;
+}
+
+template <class T>
+inline Array4D<T>::Array4D(cg3::NestedInitializerLists<T, 4> values) {
+    Array<T, 4>::initializeNestedLists(values);
 }
 
 template <class T>

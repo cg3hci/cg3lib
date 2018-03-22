@@ -7,13 +7,13 @@
 
 #include "marching_cubes.h"
 
-#include <vector>
+#include <cg3/data_structures/arrays/arrays.h>>
 
 namespace cg3 {
 
 namespace internal {
 
-static std::vector< std::vector<int> > triTable = {
+static const Array2D<int> triTable = {
     {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},   //0
     {0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},      //1
     {0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},      //2

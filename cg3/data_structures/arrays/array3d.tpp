@@ -26,6 +26,11 @@ inline Array3D<T>::Array3D(unsigned long int sizeX, unsigned long int sizeY, uns
 }
 
 template <class T>
+inline Array3D<T>::Array3D(cg3::NestedInitializerLists<T, 3> values) {
+    Array<T, 3>::initializeNestedLists(values);
+}
+
+template <class T>
 inline unsigned long int Array3D<T>::getSizeX() const {
     return Array<T, 3>::sizes[0];
 }

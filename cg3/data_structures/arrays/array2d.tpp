@@ -33,6 +33,11 @@ inline Array2D<T>::Array2D(unsigned long int sizeX, unsigned long int sizeY, con
     Array<T, 2>::sizes[1] = sizeY;
 }
 
+template <class T>
+inline Array2D<T>::Array2D(cg3::NestedInitializerLists<T, 2> values) {
+    Array<T, 2>::initializeNestedLists(values);
+}
+
 /**
  * @brief Array2D<T>::getSizeX
  * Returns the number of rows of the array

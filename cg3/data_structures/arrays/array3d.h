@@ -25,6 +25,7 @@ public:
     Array3D();
     Array3D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ);
     Array3D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, const T& value);
+    Array3D(cg3::NestedInitializerLists<T, 3> values);
     unsigned long int getSizeX() const;
     unsigned long int getSizeY() const;
     unsigned long int getSizeZ() const;

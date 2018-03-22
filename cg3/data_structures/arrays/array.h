@@ -23,7 +23,7 @@ namespace cg3 {
 
 /**
  * @brief The Array class
- * This is a dynamically allocated N-dimensional array, stored in RowWise mode.
+ * is a dynamically allocated N-dimensional array, stored in RowWise mode.
  * All its elements are stored contiguously. For array 1D please use std::vector or std::array.
  *
  * For D-dimensional array you can declare your array in this way:
@@ -32,7 +32,7 @@ namespace cg3 {
  * \endcode
  *
  * Where Type is a generic primitive or user-defined type and D is an unsigned integer that
- * represents the dimensions of the aray.
+ * represents the dimensions of the array.
  *
  * You can also specify the sizes of the array on initialization:
  * \code{.cpp}
@@ -49,6 +49,27 @@ namespace cg3 {
  *              array(i,j,k) = someFunction();
  * \endcode
  *
+ * You can also declare and initialize a generic N-Dimensional Array with nested initializer lists
+ * (cg3::NestedInitializerLists).
+ *
+ * \code{.cpp}
+ * cg3::Array<int, 3> array =
+ * {
+ *     {
+ *         {1, 2, 3},
+ *         {1, 2   }
+ *     },
+ *     {
+ *         {1},
+ *         {1, 4, 7},
+ *         {2, 4},
+ *         {5}
+ *     }
+ * }
+ * \endcode
+ *
+ * In this example, array is a 3-dimensional array with sizes 2*4*3.
+ * All the missing numbers are filled with zeros (in every dimension).
  */
 template <class T, size_t N>
 class Array : public SerializableObject {
@@ -59,10 +80,7 @@ class Array : public SerializableObject {
         template<typename... Sizes>
         Array(Sizes... sizes);
 
-        // Single curly braces syntax.
-        Array(cg3::NestedInitializerLists<T, N> values) {
-            initialize(values);
-        }
+        Array(cg3::NestedInitializerLists<T, N> values);
 
         constexpr unsigned long int dimensions() const;
         template<typename... I>
@@ -97,12 +115,7 @@ class Array : public SerializableObject {
         std::array<unsigned long int, N> reverseIndex(unsigned int index);
         static unsigned long int getIndex(const unsigned long int indices[], const unsigned long int sizes[]);
 
-        template<typename T_NestedInitializerLists>
-        void initialize(T_NestedInitializerLists values) {
-            std::list<size_t> szs(sizes.begin(), sizes.end());
-            typename std::vector<T>::iterator iterator = v.begin();
-            NestedInitializerListsProcessor<T, N>::process(values, [&iterator](T value) { *(iterator++) = value; }, szs);
-        }
+        void initializeNestedLists(cg3::NestedInitializerLists<T, N> values);
 
         std::array<unsigned long int, N> sizes;
         std::vector<T> v;

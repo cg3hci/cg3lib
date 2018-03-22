@@ -31,10 +31,10 @@ namespace cg3 {
 
 /**
  * \~English
- * @namespace Serializer
+ * @namespace serializer
  *
  * @brief
- * The Serializer namespace contains some functions for serialization/deserialization of standard
+ * The serializer namespace contains some functions for serialization/deserialization of standard
  * classes (vectors, sets, maps, etc).
  *
  * You are invited to extend this namespace with serialize/deserialize functions for all classes that

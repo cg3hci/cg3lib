@@ -25,6 +25,7 @@ public:
     Array2D();
     Array2D(unsigned long int sizeX, unsigned long int sizeY);
     Array2D(unsigned long int sizeX, unsigned long int sizeY, const T& value);
+    Array2D(cg3::NestedInitializerLists<T, 2> values);
 
     unsigned long int getSizeX() const;
     unsigned long int getSizeY() const;

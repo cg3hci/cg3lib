@@ -42,3 +42,5 @@
   - [ ] geometry/plane
   - [ ] geometry/segment
   - [ ] geometry/triangle
+- Data Structures:
+  - [ ] arrays/array
