@@ -163,6 +163,20 @@ void cg3::Array<T, N>::clear() {
 }
 
 template<class T, size_t N>
+cg3::Array<T, N-1> cg3::Array<T, N>::subArray(unsigned int r) const {
+    static_assert(N > 1, "Impossible to create subArray with an Array having dimension < 2.");
+    assert(r < sizes[0]);
+    cg3::Array<T, N-1> sub;
+    size_t size = 1;
+    for (unsigned int i = 0; i < sizes.size()-1; i++){
+        sub.sizes[i] = sizes[i+1];
+        size *= sub.sizes[i];
+    }
+    sub.v = std::vector<T>(v.begin() + r*size, v.begin() + (r+1)*size);
+    return sub;
+}
+
+template<class T, size_t N>
 void cg3::Array<T, N>::serialize(std::ofstream &binaryFile) const {
     cg3::serializeObjectAttributes("cg3Array" + std::to_string(N) + "D", binaryFile, sizes, v);
 }

@@ -74,7 +74,7 @@ namespace cg3 {
 template <class T, size_t N>
 class Array : public SerializableObject {
         static_assert(N > 0, "Array dimension must be > 0.");
-
+        friend class Array<T, N+1>;
     public:
         Array();
         template<typename... Sizes>
@@ -105,6 +105,8 @@ class Array : public SerializableObject {
         void conservativeResize (Sizes... s);
 
         void clear();
+
+        Array<T, N-1> subArray(unsigned int r) const;
 
         // SerializableObject interface
         void serialize(std::ofstream& binaryFile) const;

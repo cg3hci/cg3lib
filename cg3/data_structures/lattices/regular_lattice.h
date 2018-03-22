@@ -9,6 +9,7 @@
 #define CG3_REGULAR_LATTICE_H
 
 #include <cg3/geometry/bounding_box.h>
+#include <cg3/data_structures/arrays/array3d.h>
 
 namespace cg3 {
 
@@ -39,17 +40,18 @@ public:
 protected:
 
     cg3::Pointd getPoint(unsigned int i, unsigned int j, unsigned int k) const;
-    unsigned int getIndex(unsigned int i, unsigned int j, unsigned int k) const;
     int getIndexOfCoordinateX(double x) const;
     int getIndexOfCoordinateY(double y) const;
     int getIndexOfCoordinateZ(double z) const;
 
     cg3::BoundingBox bb;
     double unit;
+    cg3::Array3D<VT> vertexProperties;
     unsigned int mresX, mresY, mresZ;
-    std::vector<VT> vertexProperties;
 };
 
 }
+
+#include "regular_lattice.tpp"
 
 #endif // CG3_REGULAR_LATTICE_H

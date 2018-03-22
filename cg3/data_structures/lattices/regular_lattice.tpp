@@ -25,7 +25,7 @@ RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool
     if (outsideBB || std::fmod(bb.getLengthZ(), unit) == 0)
         mresZ++;
     this->bb.max() = Pointd(bb.minX() + unit * (mresX-1), bb.minY() + unit * (mresY-1), bb.minZ() + unit * (mresZ-1));
-    vertexProperties.resize(mresX*mresY*mresZ);
+    vertexProperties.resize(mresX,mresY,mresZ);
 }
 
 template<class VT>
@@ -58,7 +58,7 @@ const VT &RegularLattice<VT>::vertexProperty(const Pointd &p) const {
     assert(getIndexOfCoordinateX(p.x()) < mresX);
     assert(getIndexOfCoordinateY(p.y()) < mresY);
     assert(getIndexOfCoordinateZ(p.z()) < mresZ);
-    return vertexProperties[getIndex(getIndexOfCoordinateX(p.x()), getIndexOfCoordinateY(p.y()), getIndexOfCoordinateZ(p.z()))];
+    return vertexProperties[getIndexOfCoordinateX(p.x()), getIndexOfCoordinateY(p.y()), getIndexOfCoordinateZ(p.z())];
 }
 
 template<class VT>
@@ -66,7 +66,7 @@ void RegularLattice<VT>::setVertexProperty(const Pointd &p, const VT &property) 
     assert(getIndexOfCoordinateX(p.x()) < mresX);
     assert(getIndexOfCoordinateY(p.y()) < mresY);
     assert(getIndexOfCoordinateZ(p.z()) < mresZ);
-    vertexProperties[getIndex(getIndexOfCoordinateX(p.x()), getIndexOfCoordinateY(p.y()), getIndexOfCoordinateZ(p.z()))] = property;
+    vertexProperties[getIndexOfCoordinateX(p.x()), getIndexOfCoordinateY(p.y()), getIndexOfCoordinateZ(p.z())] = property;
 }
 
 template<class VT>
@@ -82,14 +82,6 @@ void RegularLattice<VT>::deserialize(std::ifstream &binaryFile) {
 template<class VT>
 Pointd RegularLattice<VT>::getPoint(unsigned int i, unsigned int j, unsigned int k) const {
     return cg3::Pointd(bb.getMinX() + i*unit, bb.getMinY() + j*unit, bb.getMinZ() + k*unit);
-}
-
-template<class VT>
-unsigned int RegularLattice<VT>::getIndex(unsigned int i, unsigned int j, unsigned int k) const {
-    assert (i < mresX);
-    assert (j < mresY);
-    assert (k < mresZ);
-    return k+mresZ*(j + mresY*i);
 }
 
 template<class VT>
