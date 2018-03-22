@@ -30,8 +30,8 @@
 
 # Missing Abstract Classes Inheritance
 - Data Structures:
-  - [ ] graphs/graph
-  - [ ] all the trees
+  - [ ] graphs/graph from SerializableObject
+  - [ ] all the trees from SerializableObject
 
 # Missing Documentation
 - All:

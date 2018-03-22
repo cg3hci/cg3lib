@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <iomanip>
 #include <cg3/io/serialize.h>
+#include <cg3/utilities/nested_initializer_lists.h>
 
 #ifdef _WIN32
 #undef min
@@ -57,6 +58,12 @@ class Array : public SerializableObject {
         Array();
         template<typename... Sizes>
         Array(Sizes... sizes);
+
+        // Single curly braces syntax.
+        Array(cg3::NestedInitializerLists<T, N> values) {
+            initialize(values);
+        }
+
         constexpr unsigned long int dimensions() const;
         template<typename... I>
         T& operator () (I... indices);
@@ -89,6 +96,13 @@ class Array : public SerializableObject {
         unsigned long int getIndex(const unsigned long int indices[]) const;
         std::array<unsigned long int, N> reverseIndex(unsigned int index);
         static unsigned long int getIndex(const unsigned long int indices[], const unsigned long int sizes[]);
+
+        template<typename T_NestedInitializerLists>
+        void initialize(T_NestedInitializerLists values) {
+            std::list<size_t> szs(sizes.begin(), sizes.end());
+            typename std::vector<T>::iterator iterator = v.begin();
+            NestedInitializerListsProcessor<T, N>::process(values, [&iterator](T value) { *(iterator++) = value; }, szs);
+        }
 
         std::array<unsigned long int, N> sizes;
         std::vector<T> v;
