@@ -16,12 +16,11 @@
 namespace cg3 {
 
 /**
- * @class DrawableDcel
- *
- * @brief Class which allows to draw a Dcel in the Viewer.
+ * @brief The DrawableDcel class allows to draw a Dcel in the Viewer.
  * In order to make visible any change made in the Dcel, you must execute the method DrawableDcel::update().
  *
  * @warning if you need performance, do not call update() inside a draw method; call it only when you made some modifications in the dcel.
+ * @ingroup cg3viewer
  */
 class DrawableDcel : public Dcel, public DrawableMesh {
     public:

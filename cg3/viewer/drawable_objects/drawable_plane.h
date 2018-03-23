@@ -12,6 +12,10 @@
 
 namespace cg3 {
 
+/**
+ * @brief The DrawablePlane class
+ * @ingroup cg3viewer
+ */
 class DrawablePlane : public cg3::Plane, public DrawableObject {
 public:
     DrawablePlane(const Vec3& normal, double d);

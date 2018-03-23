@@ -41,6 +41,7 @@ void _check_gl_error(const char *file, int line);
  * @brief The DrawableMesh class
  * This is a non-instantiable class.
  * You can only inherit this class (protected constructors).
+ * @ingroup cg3viewer
  */
 class DrawableMesh : public DrawableObject{
     public:

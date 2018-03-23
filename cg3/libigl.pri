@@ -12,7 +12,6 @@ exists($$(LIBIGL_HOME)){
     }
 
     DEFINES += CG3_LIBIGL_DEFINED
-    CONFIG += CG3_LIBIGL
     MODULES += CG3_LIBIGL
 
     exists($$(LIBIGL_STATIC_HOME)){
@@ -29,7 +28,7 @@ exists($$(LIBIGL_HOME)){
         #newest versions of eigen are not supported by libigl
         USE_LIBIGL_EIGEN {
             INCLUDEPATH -= /usr/include/eigen3
-            INCLUDEPATH += $$(LIBIGL_HOME)/external/nanogui/ext/eigen/
+            INCLUDEPATH += $$(LIBIGL_HOME)/external/eigen/
         }
 
         LIBIGL_STATIC {

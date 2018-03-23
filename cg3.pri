@@ -54,6 +54,10 @@ CG3_DEVELOPMENT {
     include (cg3/development.pri)
 }
 
+CG3_EXAMPLES {
+    include (cg3/examples.pri)
+}
+
 
 DISTFILES += \
     $$PWD/LICENSE \

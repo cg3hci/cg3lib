@@ -13,6 +13,10 @@
 
 namespace cg3 {
 
+/**
+ * @brief The DrawableObjects class
+ * @ingroup cg3viewer
+ */
 class DrawableObjects : public DrawableObject{
     public:
         DrawableObjects();

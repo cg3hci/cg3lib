@@ -15,8 +15,8 @@
 namespace cg3 {
 
 /**
- * \~Italian
- * @class PickableEigenmesh
+ * @brief The PickableEigenmesh class
+ * @ingroup cg3viewer
  */
 class PickableEigenMesh : public DrawableEigenMesh, public PickableObject
 {

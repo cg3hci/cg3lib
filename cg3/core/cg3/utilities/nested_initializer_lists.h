@@ -39,7 +39,9 @@ struct NestedInitializerListsTraits<T, 0> {
 //Alias
 /**
  * @class NestedInitializerLists
- * @brief It manages nested std::initializer_list<T> types
+ * @brief It manages nested std::initializer_list<T> types of #L levels
+ * L must be known at compile time, and compilation will fail if the NestedInitializerLists used
+ * does not correspond to the number of used levels.
  */
 template<typename T, std::size_t L>
 using NestedInitializerLists = typename internal::NestedInitializerListsTraits<T, L>::type;
@@ -47,87 +49,42 @@ using NestedInitializerLists = typename internal::NestedInitializerListsTraits<T
 //Processors that allow to automatically iterate through nested initializer lists
 
 // Recursive part.
+/**
+ * @brief The NestedInitializerListsProcessor class
+ *
+ * Proposes some helper static functions that allows to process cg3::NestedInitializerLists of L levels.
+ */
 template<typename T, std::size_t L>
-struct NestedInitializerListsProcessor {
-    using NestedInitializerLists = cg3::NestedInitializerLists<T, L>;
-
-    static std::list<size_t> maxDimensionsLevels (NestedInitializerLists values){
-        std::list<size_t> final;
-        bool first = true;
-        for (auto nested : values) {
-
-            std::list<size_t> l = NestedInitializerListsProcessor<T, L-1>::maxDimensionsLevels(nested);
-
-            if (first){
-                first = false;
-                for (size_t s : l)
-                    final.push_back(s);
-            }
-            else {
-                assert(l.size() == final.size());
-                std::list<size_t>::iterator it = l.begin();
-                for (size_t& s : final){
-                    if (s < *it)
-                        s = *it;
-                    ++it;
-                }
-            }
-
-        }
-        final.push_front(values.size());
-        return final;
-
-    }
+class NestedInitializerListsProcessor {
+public:
+    static std::list<size_t> maxDimensionsLevels (NestedInitializerLists<T, L> values);
 
     template<typename T_Function>
-    static void processElements(NestedInitializerLists values, T_Function function, std::list<size_t> sizes) {
-        size_t curr_size = sizes.front();
-        sizes.pop_front();
-        for (auto nested : values) {
-            NestedInitializerListsProcessor<T, L-1>::processElements(nested, function, sizes);
-        }
+    static void processElements(NestedInitializerLists<T, L> values, T_Function function);
 
-        //0 in left values
-        if (values.size() < curr_size) {
-            std::size_t count = 1;
-            for (size_t s : sizes)
-                count *= s;
+    template<typename T_Function>
+    static void processElements(NestedInitializerLists<T, L> values, T_Function function, std::list<size_t> sizes);
 
-            while (count-- > 0)
-                function(static_cast<T>(0));
-        }
-    }
 };
 
 // Last level.
 template<typename T>
-struct NestedInitializerListsProcessor<T, 1> {
+class NestedInitializerListsProcessor<T, 1> {
+public:
     using InitializerList = cg3::NestedInitializerLists<T, 1>;
 
-    static std::list<size_t> maxDimensionsLevels (InitializerList values){
-        std::list<size_t> dim;
-        dim.push_back(values.size());
-        return dim;
-    }
+    static std::list<size_t> maxDimensionsLevels (InitializerList values);
 
     template<typename T_Function>
-    static void processElements(InitializerList values, T_Function function, std::list<size_t> sizes) {
-        size_t row_size = 1;
-        for (size_t s : sizes)
-            row_size *= s;
-        std::for_each(values.begin(), values.end(), function);
+    static void processElements(InitializerList values, T_Function function, std::list<size_t> sizes);
 
-        //0 in left values
-        if (values.size() < row_size) {
-            std::size_t count = row_size - values.size();
-            while (count-- > 0) {
-                function(static_cast<T>(0));
-            }
-        }
-    }
+    template<typename T_Function>
+    static void processElements(InitializerList values, T_Function function);
 };
 
 
 }
+
+#include "nested_initializer_lists.tpp"
 
 #endif // CG3_NESTED_INITIALIZER_LISTS_H

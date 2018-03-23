@@ -15,8 +15,8 @@
 namespace cg3 {
 
 /**
- * \~Italian
- * @class PickableDcel
+ * @brief The PickableDcel class
+ * @ingroup cg3viewer
  */
 class PickableDcel : public DrawableDcel, public PickableObject
 {

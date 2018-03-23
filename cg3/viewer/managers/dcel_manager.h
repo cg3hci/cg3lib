@@ -23,7 +23,8 @@ namespace Ui {
 }
 
 /**
- * @brief QFrame che gestisce una DrawableDcel visualizzata nella mainWindow
+ * @brief QFrame that manages a DrawableDcel which will be drawn in the cg3::viewer::MainWindow
+ * @ingroup cg3viewer
  */
 class DcelManager : public QFrame {
         Q_OBJECT

@@ -7,7 +7,6 @@
 #
 
 DEFINES += CG3_DEVELOPMENT_DEFINED
-CONFIG += CG3_DEVELOPMENT
 MODULES += CG3_DEVELOPMENT
 
 HEADERS += \
@@ -15,3 +14,12 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/development/algorithms/marching_cubes.cpp
+
+# ----- Lattices -----
+
+HEADERS += \
+    $$PWD/development/data_structures/lattices/regular_lattice.h \
+    $$PWD/development/data_structures/lattices/regular_lattice_iterators.h
+
+SOURCES += \
+    $$PWD/development/data_structures/lattices/regular_lattice.tpp

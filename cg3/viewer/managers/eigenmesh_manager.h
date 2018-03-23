@@ -21,6 +21,10 @@ namespace Ui {
     class EigenMeshManager;
 }
 
+/**
+ * @brief The EigenMeshManager class
+ * @ingroup cg3viewer
+ */
 class EigenMeshManager : public QFrame
 {
         Q_OBJECT

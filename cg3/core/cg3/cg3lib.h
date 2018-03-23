@@ -15,6 +15,8 @@
 /**
   * @mainpage cg3lib
   *
+  * # Introduction
+  *
   * Cg3Lib is a C++ geometry processing library developed by the CG3HCI Group of the University of Cagliari. It is composed of different modules:
   *
   * - Core: it provides some basic data structures (Point, BoundingBox...), parsers for saving and loading multiple mesh formats and utilities;

@@ -34,8 +34,7 @@ namespace cg3 {
  * Be careful: a DrawableObject must live as long as its pointer is stored in the MainWindow.
  * Remember to call cg3::viewer::MainWindow::deleteObj() before the object goes out of scope or it is deleted.
  *
- * @author Marco Livesu (marco.livesu@gmail.com)
- * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ * @ingroup cg3viewer
  */
 class DrawableObject
 {

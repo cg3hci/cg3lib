@@ -15,6 +15,7 @@
  * @param p: coordinates of the point
  * @param c: color of the point
  * @param size: size of the point (default: 8)
+ * @ingroup cg3viewer
  */
 static inline void cg3::viewer::drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8) {
     glEnable(GL_POINT_SMOOTH);
@@ -38,6 +39,7 @@ static inline void cg3::viewer::drawPoint2D(const Point2Dd& p, const QColor& c, 
  * @param b: second point of the line
  * @param c: color of the line
  * @param width: width of the line (default: 3)
+ * @ingroup cg3viewer
  */
 template <typename T1, typename T2>
 static inline void cg3::viewer::drawLine2D(const Point2D<T1>& a, const Point2D<T2>& b, const QColor& c, int width) {
@@ -54,11 +56,28 @@ static inline void cg3::viewer::drawLine2D(const Point2D<T1>& a, const Point2D<T
     glEnd();
 }
 
+/**
+ * @brief cg3::viewer::drawTriangle2D
+ * @param arr
+ * @param c
+ * @param width
+ * @param fill
+ * @ingroup cg3viewer
+ */
 static inline void cg3::viewer::drawTriangle2D(const std::array<Point2Dd, 3>& arr, const QColor& c, int width, bool fill) {
     drawTriangle2D(arr[0], arr[1], arr[2], c, width, fill);
 }
 
-
+/**
+ * @brief cg3::viewer::drawTriangle2D
+ * @param p1
+ * @param p2
+ * @param p3
+ * @param c
+ * @param width
+ * @param fill
+ * @ingroup cg3viewer
+ */
 static inline void cg3::viewer::drawTriangle2D(const Point2Dd &p1, const Point2Dd &p2, const Point2Dd &p3, const QColor &c, int width, bool fill) {
     if (width != 0){
         cg3::viewer::drawLine2D(p1, p2, c, width);
@@ -74,6 +93,14 @@ static inline void cg3::viewer::drawTriangle2D(const Point2Dd &p1, const Point2D
     }
 }
 
+/**
+ * @brief cg3::viewer::drawQuad2D
+ * @param points
+ * @param c
+ * @param width
+ * @param fill
+ * @ingroup cg3viewer
+ */
 static inline void cg3::viewer::drawQuad2D(const std::array<Point2Dd, 4>& points, const QColor &c, int width, bool fill) {
     for (unsigned int i = 0; i < 4; i++){
         cg3::viewer::drawLine2D(points[i], points[(i+1)%4], c, width);
@@ -92,6 +119,17 @@ static inline void cg3::viewer::drawQuad2D(const std::array<Point2Dd, 4>& points
     }
 }
 
+/**
+ * @brief cg3::viewer::drawQuad2D
+ * @param p1
+ * @param p2
+ * @param p3
+ * @param p4
+ * @param c
+ * @param width
+ * @param fill
+ * @ingroup cg3viewer
+ */
 static inline void cg3::viewer::drawQuad2D(const Point2Dd &p1, const Point2Dd &p2, const Point2Dd &p3, const Point2Dd &p4, const QColor &c, int width, bool fill) {
     std::array<Point2Dd, 4> arr = {p1, p2, p3, p4};
     cg3::viewer::drawQuad2D(arr, c, width, fill);

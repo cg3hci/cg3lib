@@ -12,7 +12,6 @@
 
 unix:!macx{
     DEFINES += CG3_CGAL_DEFINED
-    CONFIG += CG3_CGAL
     MODULES += CG3_CGAL
 
     LIBS += -lmpfr -lgmp -lCGAL -frounding-math

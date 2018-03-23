@@ -13,6 +13,10 @@
 
 namespace cg3 {
 
+/**
+ * @brief The DrawableEigenMesh class
+ * @ingroup cg3viewer
+ */
 class DrawableEigenMesh : public EigenMesh, public DrawableMesh {
     public:
         DrawableEigenMesh();

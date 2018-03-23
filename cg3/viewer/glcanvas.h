@@ -35,6 +35,10 @@ namespace cg3 {
 
 namespace viewer {
 
+/**
+ * @brief The GLCanvas class
+ * @ingroup cg3viewer
+ */
 class GLCanvas : public QGLViewer {
 
         Q_OBJECT

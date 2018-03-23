@@ -42,3 +42,6 @@ else {
         }
     }
 }
+
+SOURCES += \
+    $$PWD/cg3/utilities/nested_initializer_lists.tpp

@@ -20,14 +20,7 @@ namespace cg3 {
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  *
- * \~Italian
- * @interface PickableObject
- * @brief L'interfaccia PickableObject modella un oggetto "catturabile" mediante click da una GLCanvas.
- *
- * Contiene dei metodi che devono essere implementati dalle classi che ereditano da PickableObject
- * per essere catturate da un click in una GLCanvas.
- *
- * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ * @ingroup cg3viewer
  */
 class PickableObject
 {

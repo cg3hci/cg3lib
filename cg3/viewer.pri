@@ -14,7 +14,6 @@ QT += core gui opengl xml widgets
 
 unix:!macx{
     DEFINES += CG3_VIEWER_DEFINED
-    CONFIG += CG3_VIEWER
     MODULES += CG3_VIEWER
 
     QMAKE_CXXFLAGS += -std=c++11

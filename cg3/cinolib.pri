@@ -8,7 +8,6 @@
 
 exists($$(CINOLIB_HOME)){
     DEFINES += CG3_CINOLIB_DEFINED
-    CONFIG += CG3_CINOLIB
     MODULES += CG3_CINOLIB
 
     macx{

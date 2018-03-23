@@ -7,7 +7,7 @@
 
 #include "marching_cubes.h"
 
-#include <cg3/data_structures/arrays/arrays.h>>
+#include <cg3/data_structures/arrays/arrays.h>
 
 namespace cg3 {
 

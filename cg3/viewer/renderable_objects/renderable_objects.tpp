@@ -17,6 +17,7 @@ namespace cg3 {
  * @param p: coordinates of the point
  * @param c: color of the point
  * @param size: size of the point (default: 8)
+ * @ingroup cg3viewer
  */
 static inline void viewer::drawPoint(const Pointd& p, const QColor& c, int size) {
     glEnable(GL_POINT_SMOOTH);
@@ -39,6 +40,7 @@ static inline void viewer::drawPoint(const Pointd& p, const QColor& c, int size)
  * @param radius: radius of the sphere
  * @param color: color of the sphere
  * @param precision: precision of the rendered sphere (default: 4)
+ * @ingroup cg3viewer
  */
 static inline void viewer::drawSphere(const Pointd  & center,
                    float         radius,
@@ -68,6 +70,7 @@ static inline void viewer::drawSphere(const Pointd  & center,
  * @param top_radius: radius at the "a" point
  * @param bottom_radius: radius at the "b" point
  * @param color: color of the cylinder
+ * @ingroup cg3viewer
  */
 static inline void viewer::drawCylinder(const Pointd  & a,
                      const Pointd  & b,
@@ -103,6 +106,7 @@ static inline void viewer::drawCylinder(const Pointd  & a,
  * @param b: second point of the line
  * @param c: color of the line
  * @param width: width of the line (default: 3)
+ * @ingroup cg3viewer
  */
 static inline void viewer::drawLine(const Pointd &a, const Pointd &b, const QColor& c, int width) {
     glBegin(GL_LINES);
@@ -122,6 +126,7 @@ static inline void viewer::drawLine(const Pointd &a, const Pointd &b, const QCol
  * @param b: second point of the dashed line
  * @param c: color of the dashed line
  * @param width: width of the dashed line (default: 3)
+ * @ingroup cg3viewer
  */
 static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, const QColor& c, int width) {
     glPushAttrib(GL_ENABLE_BIT);
@@ -138,6 +143,16 @@ static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, cons
     glPopAttrib();
 }
 
+/**
+ * @brief viewer::drawTriangle
+ * @param p1
+ * @param p2
+ * @param p3
+ * @param c
+ * @param width
+ * @param fill
+ * @ingroup cg3viewer
+ */
 static inline void viewer::drawTriangle(const Pointd &p1, const Pointd &p2, const Pointd &p3, const QColor &c, int width, bool fill) {
     if (width != 0){
         cg3::viewer::drawLine(p1, p2, c, width);
@@ -153,6 +168,15 @@ static inline void viewer::drawTriangle(const Pointd &p1, const Pointd &p2, cons
     }
 }
 
+/**
+ * @brief viewer::drawQuad
+ * @param a
+ * @param b
+ * @param c
+ * @param d
+ * @param width
+ * @ingroup cg3viewer
+ */
 static inline void viewer::drawQuad(const Pointd &a, const Pointd &b, const Pointd &c, const Pointd &d, int width) {
     glBegin(GL_QUADS);
     glLineWidth(width);
@@ -172,6 +196,7 @@ static inline void viewer::drawQuad(const Pointd &a, const Pointd &b, const Poin
  * @param max
  * @param c
  * @param width
+ * @ingroup cg3viewer
  */
 static inline void viewer::drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width) {
     drawLine(min, Pointd(max.x(), min.y(), min.z()), c, width);
@@ -198,6 +223,7 @@ static inline void viewer::drawBox(const Pointd &min, const Pointd& max, const Q
  * @param p
  * @param c
  * @param width
+ * @ingroup cg3viewer
  */
 static inline void viewer::drawBox(const std::vector<Pointd> &p, const QColor& c, int width) {
     drawLine(p[0], p[1], c, width);
@@ -216,6 +242,20 @@ static inline void viewer::drawBox(const std::vector<Pointd> &p, const QColor& c
     drawLine(p[3], p[7], c, width);
 }
 
+/**
+ * @brief viewer::drawBox
+ * @param p0
+ * @param p1
+ * @param p2
+ * @param p3
+ * @param p4
+ * @param p5
+ * @param p6
+ * @param p7
+ * @param c
+ * @param width
+ * @ingroup cg3viewer
+ */
 static inline void viewer::drawBox(const Pointd &p0, const Pointd &p1, const Pointd &p2, const Pointd &p3, const Pointd &p4, const Pointd &p5, const Pointd &p6, const Pointd &p7, const QColor& c, int width) {
     drawLine(p0, p1, c, width);
     drawLine(p1, p2, c, width);

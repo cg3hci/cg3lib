@@ -86,7 +86,9 @@ class Array : public SerializableObject {
         template<typename... I>
         T& operator () (I... indices);
         template<typename... I>
-        T operator () (I... indices) const;
+        const T& operator () (I... indices) const;
+        template<typename... I>
+        T* cArray(I... indices);
         template<typename... I>
         const T* cArray(I... indices) const;
 

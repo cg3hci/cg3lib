@@ -36,6 +36,9 @@
 
 namespace cg3 {
 
+/**
+ * @ingroup cg3viewer
+ */
 namespace viewer {
 
 namespace Ui {
@@ -43,7 +46,12 @@ namespace Ui {
 }
 
 /**
+ * @defgroup cg3viewer Viewer
+ */
+
+/**
  * @brief MainWindow is a class that manages a QGLViewer canvas and all the managers which are added to it.
+ * @ingroup cg3viewer
  */
 class MainWindow : public QMainWindow {
     Q_OBJECT

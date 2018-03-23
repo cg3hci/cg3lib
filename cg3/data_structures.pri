@@ -11,7 +11,6 @@
 }
 
 DEFINES += CG3_DATA_STRUCTURES_DEFINED
-CONFIG += CG3_DATA_STRUCTURES
 MODULES += CG3_DATA_SRUCTURES
 
 
@@ -28,8 +27,7 @@ SOURCES += \
     $$PWD/data_structures/arrays/array2d.tpp \
     $$PWD/data_structures/arrays/array3d.tpp \
     $$PWD/data_structures/arrays/array4d.tpp \
-    $$PWD/data_structures/arrays/array.tpp \
-    $$PWD/data_structures/lattices/regular_lattice.tpp
+    $$PWD/data_structures/arrays/array.tpp
 
 # ----- Graphs -----
 
@@ -59,14 +57,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/data_structures/graphs/bipartite_graph.tpp \
     $$PWD/data_structures/graphs/bipartite_graph_iterators.tpp
-
-# ----- Lattices -----
-
-HEADERS += \
-    $$PWD/data_structures/lattices/regular_lattice.h \
-    $$PWD/data_structures/lattices/regular_lattice_iterators.h
-
-SOURCES +=
 
 # ----- Trees -----
 

@@ -21,6 +21,10 @@ namespace Ui {
     class BooleansManager;
 }
 
+/**
+ * @brief The BooleansManager class
+ * @ingroup cg3viewer
+ */
 class BooleansManager : public QFrame {
         Q_OBJECT
 

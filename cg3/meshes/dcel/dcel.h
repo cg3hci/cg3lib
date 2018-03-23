@@ -14,8 +14,7 @@
 #include "dcel_iterators.h"
 
 /**
- * @page DcelPage
- * @title cg3::Dcel
+ * @page DcelPage The cg3::Dcel Data Structure
  *
  * # 1 Introduction
  * The cg3::Dcel data structure has been designed to allow the a practical and easy developement of algorithms with a double connected

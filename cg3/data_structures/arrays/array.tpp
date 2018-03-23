@@ -37,16 +37,52 @@ cg3::Array<T, N>::Array(Sizes... s) {
     v.resize(totalSize);
 }
 
+/**
+ * @brief cg3::Array<T, N>::Array
+ *
+ * Creates and initializes an N-Dimensional Array. Sizes are given by the maximum size of the
+ * initializer lists for every dimension, and missing values are automatically setted to zero.
+ *
+ * Example code:
+ * \code{.cpp}
+ * cg3::Array<int, 2> array = { {1,2,3,4}, {5}, {9, 10} };
+ * \endcode
+ *
+ * This code initializes a 3x4 2D array with the following values:
+ * \code{.cpp}
+ *  1  2  3  4
+ *  5  0  0  0
+ *  9 10  0  0
+ * \endcode
+ *
+ * @warning The number of levels of the nested initializer lists must correspond to the number of
+ * dimensions of the array. The following example generates a compilation error:
+ * \code{.cpp}
+ * cg3::Array<int, 2> array = {1, 2, 3}; //Error: it is a 2 dimensional array but the initializer list has one level.
+ * \endcode
+ * @param[in] values: the nested initializer lists of values.
+ */
 template<class T, size_t N>
 inline cg3::Array<T, N>::Array(cg3::NestedInitializerLists<T, N> values) {
     initializeNestedLists(values);
 }
 
+/**
+ * @brief cg3::Array<T, N>::dimensions
+ * @return the number of dimensions of the array.
+ */
 template<class T, size_t N>
 constexpr unsigned long int cg3::Array<T, N>::dimensions() const {
     return N;
 }
 
+/**
+ * @brief cg3::Array<T, N>::operator ()
+ * Operator that allows to access one element of the array. It can be used as left or right value.
+ * @param[in] indices: #N indices that allows to access to an element of the array.
+ * A number of indices not equal to N will generate a compilation error.
+ * @return a reference to the element of the array.
+ */
 template<class T, size_t N>
 template<typename... I>
 T& cg3::Array<T, N>::operator ()(I... indices) {
@@ -55,19 +91,80 @@ T& cg3::Array<T, N>::operator ()(I... indices) {
     return v[getIndex(args)];
 }
 
+/**
+ * @brief cg3::Array<T, N>::operator ()
+ * Operator that allows to access one element of the array. It can be used only as right value.
+ * @param[in] indices: #N indices that allows to access to an element of the array.
+ * A number of indices not equal to N will generate a compilation error.
+ * @return a reference to the element of the array.
+ */
 template<class T, size_t N>
 template<typename... I>
-T cg3::Array<T, N>::operator ()(I... indices) const{
+const T& cg3::Array<T, N>::operator ()(I... indices) const {
     static_assert(sizeof...(indices) == N, "Wrong number of arguments for operator().");
     unsigned long int args[N] = { static_cast<unsigned long int>(indices)... };
     return v[getIndex(args)];
 }
 
+/**
+ * @brief cg3::Array<T, N>::cArray
+ *
+ * Allows to get a C array of the cg3::Array, that can be also modified.
+ * Example:
+ * \code{.cpp}
+ * cg3::Array<int, 3> array(10, 13, 4);
+ * //...
+ * int* carray = array.cArray(3); //carray will point to the element in position (3,0,0).
+ * for (unsigned int i = 0; i < 13*4; i++)
+ *    std::cout << carry[i]; // will print all the elements of the sub 2D array starting from (3,0,0).
+ *
+ * carray = array.cArray(4, 2); // carray will point to the element in position (4, 2, 0).
+ * for (unsigned int i = 0; i < 4; i++)
+ *    std::cout << carry[i]; // will print all the elements of the sub 1D array starting from (4,2,0).
+ *
+ * carray = array.cArray(); // carray will point to the element in position (0, 0, 0).
+ *
+ * \endcode
+ *
+ * @param[in] indices: a number of indices that is less than the number of dimensions of the array.
+ * @return a C array starting from the indicized element.
+ */
+template<class T, size_t N>
+template<typename... I>
+T* cg3::Array<T, N>::cArray(I... indices) {
+    static_assert(sizeof...(indices) < N, "Wrong number of arguments for operator cArray().");
+    const unsigned long int n = sizeof...(indices);
+    if (n == 0){
+        return v.data();
+    }
+    unsigned long int args[] = { static_cast<unsigned long int>(indices)... };
+    unsigned long int ind = args[0];
+    assert(args[0] < sizes[0]);
+    unsigned int i;
+    for (i = 1; i < n; i++){
+        assert(args[i] < sizes[i]);
+        ind*=sizes[i];
+        ind+=args[i];
+    }
+    for (; i < N; i++){
+        ind*=sizes[i];
+    }
+    return &v[ind];
+}
+
+/**
+ * @brief cg3::Array<T, N>::cArray
+ * @param indices
+ * @return a const C array of the indicized element.
+ */
 template<class T, size_t N>
 template<typename... I>
 const T* cg3::Array<T, N>::cArray(I... indices) const {
     static_assert(sizeof...(indices) < N, "Wrong number of arguments for operator cArray().");
     const unsigned long int n = sizeof...(indices);
+    if (n == 0){
+        return v.data();
+    }
     unsigned long int args[] = { static_cast<unsigned long int>(indices)... };
     unsigned long int ind = args[0];
     assert(args[0] < sizes[0]);
@@ -233,5 +330,5 @@ void cg3::Array<T, N>::initializeNestedLists(cg3::NestedInitializerLists<T, N> v
     v.resize(totalSize);
 
     typename std::vector<T>::iterator iterator = v.begin();
-    NestedInitializerListsProcessor<T, N>::processElements(values, [&iterator](T value) { *(iterator++) = value; }, szs);
+    NestedInitializerListsProcessor<T, N>::processElements(values, [&iterator](T value) { *(iterator++) = value; });
 }
