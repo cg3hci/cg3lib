@@ -805,6 +805,9 @@ void AABBTree<D,K,T,C>::updateAABBHelper(
             }
             //Set maximum AABB of the subtree
             else {
+                assert(node->left != nullptr);
+                assert(node->right != nullptr);
+
                 typename Node::AABB& leftChildAABB = node->left->aabb;
                 typename Node::AABB& rightChildAABB = node->right->aabb;
 

@@ -9,6 +9,8 @@
 
 #include "../tree_common.h"
 
+#include <array>
+
 namespace cg3 {
 
 namespace internal {
@@ -26,8 +28,13 @@ public:
      * @brief D-dimensional axis-aligned bounding box
      */
     struct AABB {
-        double min[D];
-        double max[D];
+        std::array<double, D> min;
+        std::array<double, D> max;
+
+        AABB() {
+            min.fill(0.0f);
+            max.fill(0.0f);
+        }
     };
 
     /* Constructors/Destructor */
