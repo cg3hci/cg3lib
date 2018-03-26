@@ -55,11 +55,14 @@ inline void sortTriangle2DPoints(cg3::Triangle<Point2D<T>>& triangle) {
     Point2D<T>& p2 = triangle.v2();
     Point2D<T>& p3 = triangle.v3();
 
-    if (p3 < p2) {
-        std::swap(p2, p3);
-    }
     if (p2 < p1) {
         std::swap(p1, p2);
+    }
+    if (p1 < p3) {
+        std::swap(p1, p3);
+    }
+    if (p2 < p3) {
+        std::swap(p2, p3);
     }
 }
 

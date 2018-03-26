@@ -12,6 +12,8 @@
 
 #include <numeric>
 
+#include <Eigen/Dense>
+
 namespace cg3 {
 
 /* ----- INTERNAL FUNCTION DECLARATION ----- */
