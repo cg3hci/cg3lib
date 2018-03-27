@@ -18,7 +18,9 @@ namespace cg3 {
  *
  * @link http://stackoverflow.com/questions/9600801/evenly-distributing-n-points-on-a-sphere
  */
-inline std::vector<Pointd> sphereCoverage(unsigned int nSamples, bool deterministic) {
+inline std::vector<Pointd> sphereCoverage(unsigned int nSamples,
+                                          bool deterministic)
+{
     std::vector<Pointd> points;
     points.reserve(nSamples);
 

@@ -11,6 +11,8 @@
 #include <cg3/utilities/utils.h>
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/2d/point2d.h>
+#include <cg3/geometry/plane.h>
+#include "cgal_surfacemesh.h"
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 
@@ -35,6 +37,10 @@ namespace cgal {
 
         std::vector<std::vector<Pointd> > getPolylines(const std::string& inputOffFile, const Vec3& norm, double d);
         std::vector<std::vector<Pointd> > getPolylines(const Mesh& mesh, const Vec3& norm, double d);
+        #ifdef CG3_DCEL_DEFINED
+        std::vector<std::vector<Pointd> > getPolylines(const Dcel& mesh, const cg3::Plane& p);
+        std::vector<std::vector<Pointd> > getPolylines(const Dcel& mesh, const Vec3& norm, double d);
+        #endif
     }
 }
 

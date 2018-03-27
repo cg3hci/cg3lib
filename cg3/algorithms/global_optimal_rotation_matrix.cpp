@@ -14,7 +14,10 @@
 
 namespace cg3 {
 
-void defineRotation(const cg3::Vec3& zAxis, cg3::Vec3& rotationAxis, double& angle) {
+void defineRotation(const cg3::Vec3& zAxis,
+                    cg3::Vec3& rotationAxis,
+                    double& angle)
+{
     const cg3::Vec3 Z(0,0,1);
     rotationAxis = zAxis.cross(Z);
     rotationAxis.normalize();
@@ -24,7 +27,10 @@ void defineRotation(const cg3::Vec3& zAxis, cg3::Vec3& rotationAxis, double& ang
 
 #ifdef CG3_WITH_EIGEN
 #ifdef CG3_DCEL_DEFINED
-Eigen::Matrix3d globalOptimalRotationMatrix(const cg3::Dcel& inputMesh, unsigned int nDirs, bool deterministic) {
+Eigen::Matrix3d globalOptimalRotationMatrix(const cg3::Dcel& inputMesh,
+                                            unsigned int nDirs,
+                                            bool deterministic)
+{
 
     std::vector<Vec3> dirPool = cg3::sphereCoverage(nDirs, deterministic);
 
@@ -58,7 +64,10 @@ Eigen::Matrix3d globalOptimalRotationMatrix(const cg3::Dcel& inputMesh, unsigned
 #endif
 
 #ifdef CG3_EIGENMESH_DEFINED
-Eigen::Matrix3d globalOptimalRotationMatrix(const SimpleEigenMesh& inputMesh, unsigned int nDirs, bool deterministic) {
+Eigen::Matrix3d globalOptimalRotationMatrix(const SimpleEigenMesh& inputMesh,
+                                            unsigned int nDirs,
+                                            bool deterministic)
+{
     std::vector<Vec3> dirPool = cg3::sphereCoverage(nDirs, deterministic);
 
     std::set<std::pair<double,Vec3>> priorizitedOrientations;

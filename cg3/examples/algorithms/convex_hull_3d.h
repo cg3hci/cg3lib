@@ -4,6 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
+#ifndef CG3_EXAMPLES_CONVEX_HULL_3D_H
+#define CG3_EXAMPLES_CONVEX_HULL_3D_H
 
 /**
  * @ingroup tutorials
@@ -22,3 +24,5 @@
  * @snippet example_manager.cpp
  * @snippet example_manager.ui
  */
+
+#endif // CG3_EXAMPLES_CONVEX_HULL_3D_H

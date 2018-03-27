@@ -14,7 +14,8 @@ namespace cg3 {
 cgal::polyhedron::Polyhedron_3 cgal::polyhedron::getPolyhedronFromDcel(
         const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap,
-        std::map<const Dcel::Face*, int>& faceMap) {
+        std::map<const Dcel::Face*, int>& faceMap)
+{
 
     class PolyhedronBuilder : public CGAL::Modifier_base<HalfedgeDS> {
     public:

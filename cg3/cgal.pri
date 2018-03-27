@@ -150,3 +150,9 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
 else {
     message(CGAL not installed properly!)
 }
+
+HEADERS += \
+    $$PWD/cgal/cgal_surfacemesh.h
+
+SOURCES += \
+    $$PWD/cgal/cgal_surfacemesh.cpp

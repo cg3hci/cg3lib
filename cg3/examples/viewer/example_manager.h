@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#ifndef EXAMPLE_MANAGER_H
-#define EXAMPLE_MANAGER_H
+#ifndef CG3_EXAMPLE_MANAGER_H
+#define CG3_EXAMPLE_MANAGER_H
 
 #include <QFrame>
 #include <cg3/viewer/mainwindow.h>
@@ -28,4 +28,4 @@ private:
     cg3::viewer::MainWindow& mw;
 };
 
-#endif // EXAMPLE_MANAGER_H
+#endif // CG3_EXAMPLE_MANAGER_H

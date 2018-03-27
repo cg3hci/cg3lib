@@ -11,8 +11,9 @@ MODULES += CG3_EXAMPLES
 
 HEADERS += \
     $$PWD/examples/tutorials.h \
-    $$PWD/examples/viewer/adding_example_manager.h \
-    $$PWD/examples/viewer/example_manager.h
+    $$PWD/examples/algorithms/convex_hull_3d.h \
+    $$PWD/examples/viewer/example_manager.h \
+    $$PWD/examples/viewer/adding_manager.h
 
 
 SOURCES += \
@@ -21,7 +22,8 @@ SOURCES += \
 FORMS += \
     $$PWD/examples/viewer/example_manager.ui
 
-DISTFILES +=
-    $$PWD/examples/viewer/adding_example_manager.cpp
+DISTFILES += \
+    $$PWD/examples/algorithms/convex_hull_3d.cpp \
+    $$PWD/examples/viewer/adding_manager.cpp
 
 
