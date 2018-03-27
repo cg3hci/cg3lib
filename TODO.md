@@ -7,15 +7,20 @@
 - [ ] Unify Meshes data structures under single abstract class
 - [ ] Add a brief explanation of the content of headers containing functions (no classes)
 - [ ] Support LibIGL module with MSVC
+- [ ] Geometric objects with type traits
 
 # Minor
-- All
+- Geometry
+  - [ ] Point dimension templated (merge 2D, 3D, ..., nD point in a general class)
   - [ ] Replace Triangle area formulas with Heron's formula
 - Style
   - [ ] Naming of files which are interface to an external library: keep the name of the library (i.e. cgal) or remove it (i.e. libigl)
   - [ ] Follow the linux kernel coding style everywhere (https://www.kernel.org/doc/html/v4.10/process/coding-style.html)
 - Data Structure:
-  - [ ] BipartiteGraph inherits from Graph (can it?)
+  - [ ] BipartiteGraph inherits from Graph (is it possible?)
+  - [ ] AABBTree should manage AABB extractions in a better way (interface for AABB extraction?) and manage different types in the same AABBTree. Find a better way to use AABB struct in an efficient way in the nodes (initialization needed).
+  - [ ] RangeTree dimension as template (is it possible?), find a way to not copy all the comparators for each lower level range tree.
+  - [ ] Template of type int in RangeTree, AABBTree, Point, ... should be unsigned long long int (or size_t). Or use static_assert to check that the dimension is greater than zero.
 - Meshes:
   - [ ] Reorganize EigenMeshAlgorithms
   - [ ] Put Dcel and EigenMesh under a module called Meshes
@@ -34,7 +39,7 @@
   - [ ] all the trees from SerializableObject
 
 # Missing Documentation
-- All:
+- Examples:
   - [ ] Examples of usages of the classes
 - Core:
   - [ ] geometry/2d/line2d

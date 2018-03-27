@@ -130,7 +130,8 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/cgal_intersections2d.h \
         $$PWD/cgal/2d/cgal_minimumbbox2d.h \
         $$PWD/cgal/2d/cgal_voronoi2d.h \
-        $$PWD/cgal/2d/cgal_triangulation2d.h
+        $$PWD/cgal/2d/cgal_triangulation2d.h \
+        $$PWD/cgal/cgal_surfacemesh.h
 
     SOURCES += \
         $$PWD/cgal/cgal_aabbtree.cpp \
@@ -145,14 +146,9 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/cgal_intersections2d.cpp \
         $$PWD/cgal/2d/cgal_minimumbbox2d.cpp \
         $$PWD/cgal/2d/cgal_voronoi2d.cpp \
-        $$PWD/cgal/2d/cgal_triangulation2d.cpp
+        $$PWD/cgal/2d/cgal_triangulation2d.cpp \
+        $$PWD/cgal/cgal_surfacemesh.cpp
 }
 else {
     message(CGAL not installed properly!)
 }
-
-HEADERS += \
-    $$PWD/cgal/cgal_surfacemesh.h
-
-SOURCES += \
-    $$PWD/cgal/cgal_surfacemesh.cpp
