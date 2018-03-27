@@ -5,13 +5,22 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#include "cgal_triangulation.h"
+#include "triangulation.h"
 
 #include <cg3/geometry/transformations.h>
 
 namespace cg3 {
 
-std::vector<std::array<Pointd, 3> > cgal::triangulation::triangulate(
+/**
+ * @ingroup cg3cgal
+ * @brief cgal::triangulation::triangulate
+ * @param normal
+ * @param polygon
+ * @param holes
+ * @param nonRegularPolygon
+ * @return
+ */
+std::vector<std::array<Pointd, 3> > cgal::triangulate(
         const Vec3 &normal,
         const std::vector<Pointd>& polygon,
         const std::vector<std::vector<Pointd> >& holes,
@@ -64,7 +73,7 @@ std::vector<std::array<Pointd, 3> > cgal::triangulation::triangulate(
         }
     }
     std::vector<std::array<Point2Dd, 3> > triangles2D;
-    triangles2D = cgal::triangulation2d::triangulate(polygon2D, innerPolygons2D);
+    triangles2D = cgal::triangulate(polygon2D, innerPolygons2D);
     triangles.clear();
     triangles.reserve(triangles2D.size());
 

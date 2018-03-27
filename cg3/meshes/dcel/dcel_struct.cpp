@@ -14,7 +14,7 @@
 #include <cg3/io/load_save_file.h>
 
 #ifdef  CG3_CGAL_DEFINED
-#include <cg3/cgal/cgal.h>
+#include <cg3/cgal/triangulation.h>
 #endif //CGAL_DEFINED
 
 #ifdef  CG3_EIGENMESH_DEFINED
@@ -824,7 +824,7 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f) {
 
         ///TRIANGULATION
 
-        std::vector<std::array<Pointd, 3> > triangulation = cgal::triangulation::triangulate(f->getNormal(), borderCoordinates, innerBorderCoordinates);
+        std::vector<std::array<Pointd, 3> > triangulation = cgal::triangulate(f->getNormal(), borderCoordinates, innerBorderCoordinates);
         ///
 
 

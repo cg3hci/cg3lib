@@ -35,6 +35,8 @@ namespace cg3 {
 
 namespace viewer {
 
+class MainWindow;
+
 /**
  * @brief The GLCanvas class
  * @ingroup cg3viewer

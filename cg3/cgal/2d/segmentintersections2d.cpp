@@ -5,7 +5,7 @@
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
 
-#include "cgal_intersections2d.h"
+#include "segmentintersections2d.h"
 
 #include "cg3/utilities/utils.h"
 

@@ -7,10 +7,20 @@
 
 /**
  * @defgroup tutorials Tutorial
- * @page tutorial Tutorials
  *
+ * @brief
  * In this page are listed all the aviable tutorials for an easy usage of cg3lib.
  *
+ * # Algorithms
+ * - @subpage convexHull3D_tut Convex Hull 3D of a set of Points
+ *
  * # Viewer
- * - @subpage addManagerMainWindow Add a Manager to the MainWindow
+ * - @subpage addManagerMainWindow_tut Add a Manager to the MainWindow
+ *
+ *
+ * @defgroup algorithms_tut Algorithms
+ * @ingroup tutorials
+ *
+ * @defgroup viewer_tut Viewer
+ * @ingroup tutorials
  */

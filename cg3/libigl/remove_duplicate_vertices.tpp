@@ -13,18 +13,44 @@ namespace cg3 {
 
 namespace libigl {
 
+/**
+ * @ingroup cg3libigl
+ * @brief removeDuplicateVertices
+ * @param input
+ * @param epsilon
+ */
 inline void removeDuplicateVertices(SimpleEigenMesh &input, double epsilon) {
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, epsilon);
 }
 
+/**
+ * @ingroup cg3libigl
+ * @brief removeDuplicateVertices
+ * @param input
+ * @param I
+ * @param epsilon
+ */
 inline void removeDuplicateVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon) {
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, I, epsilon);
 }
 
+/**
+ * @ingroup cg3libigl
+ * @brief removeDuplicateVertices
+ * @param input
+ * @param epsilon
+ */
 inline void removeDuplicateVertices(EigenMesh &input, double epsilon) {
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, epsilon);
 }
 
+/**
+ * @ingroup cg3libigl
+ * @brief removeDuplicateVertices
+ * @param input
+ * @param I
+ * @param epsilon
+ */
 inline void removeDuplicateVertices(EigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon) {
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, I, epsilon);
 }

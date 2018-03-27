@@ -4,21 +4,28 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#include "cgal_surfacemesh.h"
+#include "surfacemesh.h"
 
 namespace cg3 {
 namespace cgal {
+
+namespace internal {
+typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
+typedef SurfaceMesh::Vertex_index VertexDescriptor;
+}
+
+
 #ifdef CG3_DCEL_DEFINED
-surfaceMesh::SurfaceMesh surfaceMesh::getSurfaceMeshFromDcel(const Dcel &d)
+SurfaceMesh getSurfaceMeshFromDcel(const Dcel &d)
 {
     SurfaceMesh mesh;
-    std::map<const Dcel::Vertex*, VertexDescriptor> mapV;
+    std::map<const Dcel::Vertex*, internal::VertexDescriptor> mapV;
     for(const Dcel::Vertex* v : d.vertexIterator()){
-        VertexDescriptor vd = mesh.add_vertex((K::Point_3(v->getCoordinate().x(),v->getCoordinate().y(),v->getCoordinate().z())));
+        internal::VertexDescriptor vd = mesh.add_vertex((internal::K::Point_3(v->getCoordinate().x(),v->getCoordinate().y(),v->getCoordinate().z())));
         mapV[v] = vd;
     }
     for (const Dcel::Face* f : d.faceIterator()){
-        std::list<VertexDescriptor> lv;
+        std::list<internal::VertexDescriptor> lv;
         for (const Dcel::Vertex* v : f->incidentVertexIterator()){
             lv.push_back(mapV.at(v));
         }

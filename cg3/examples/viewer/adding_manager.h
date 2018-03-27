@@ -8,21 +8,18 @@
 #define CG3_EXAMPLES_ADDING_MANAGER_H
 
 /**
- * @ingroup tutorials
- * @page addManagerMainWindow Add a Manager to the MainWindow
+ * @ingroup viewer_tut
+ * @page addManagerMainWindow_tut Add a Manager to the MainWindow
  *
  * This Tutorial explains how to create a Manager using QtCreator and link
  * it to the MainWindow in order to be able to create easyly GUIs and link
  * them to the GLCanvas.
  *
+ *
  * The first step is to create a new QFrame Designer Form Class (File ->
  * New File or Project -> Qt -> Qt Designed Form Class -> QFrame).
  *
- *
- * @snippet adding_example_manager.cpp blabla
- * @snippet example_manager.h
- * @snippet example_manager.cpp
- * @snippet example_manager.ui
+ * @include adding_manager.cpp
  */
 
 #endif //CG3_EXAMPLES_ADDING_MANAGER_H

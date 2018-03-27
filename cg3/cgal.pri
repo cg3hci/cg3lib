@@ -118,41 +118,39 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
 
     HEADERS += \
         $$PWD/cgal/cgal.h \
-        $$PWD/cgal/cgal_aabbtree.h \
-        $$PWD/cgal/cgal_holefilling.h \
-        $$PWD/cgal/cgal_polyhedron.h \
-        $$PWD/cgal/cgal_sdf.h \
-        $$PWD/cgal/cgal_signeddistances.h \
-        $$PWD/cgal/cgal_slicer.h \
-        $$PWD/cgal/cgal_triangulation.h \
-        $$PWD/cgal/2d/cgal_booleans2d.h \
-        $$PWD/cgal/2d/cgal_convexhull2d.h \
-        $$PWD/cgal/2d/cgal_intersections2d.h \
-        $$PWD/cgal/2d/cgal_minimumbbox2d.h \
-        $$PWD/cgal/2d/cgal_voronoi2d.h \
-        $$PWD/cgal/2d/cgal_triangulation2d.h
+        $$PWD/cgal/2d/booleans2d.h \
+        $$PWD/cgal/2d/convexhull2d.h \
+        $$PWD/cgal/2d/minimumbbox2d.h \
+        $$PWD/cgal/2d/segmentintersections2d.h \
+        $$PWD/cgal/2d/triangulation2d.h \
+        $$PWD/cgal/2d/voronoi2d.h \
+        $$PWD/cgal/aabbtree.h \
+        $$PWD/cgal/holefilling.h \
+        $$PWD/cgal/polyhedron.h \
+        $$PWD/cgal/sdf.h \
+        $$PWD/cgal/signeddistances.h \
+        $$PWD/cgal/slicer.h \
+        $$PWD/cgal/surfacemesh.h \
+        $$PWD/cgal/triangulation.h
 
     SOURCES += \
-        $$PWD/cgal/cgal_aabbtree.cpp \
-        $$PWD/cgal/cgal_holefilling.cpp \
-        $$PWD/cgal/cgal_polyhedron.cpp \
-        $$PWD/cgal/cgal_sdf.cpp \
-        $$PWD/cgal/cgal_signeddistances.cpp \
-        $$PWD/cgal/cgal_slicer.cpp \
-        $$PWD/cgal/cgal_triangulation.cpp \
-        $$PWD/cgal/2d/cgal_booleans2d.cpp \
-        $$PWD/cgal/2d/cgal_convexhull2d.tpp \
-        $$PWD/cgal/2d/cgal_intersections2d.cpp \
-        $$PWD/cgal/2d/cgal_minimumbbox2d.cpp \
-        $$PWD/cgal/2d/cgal_voronoi2d.cpp \
-        $$PWD/cgal/2d/cgal_triangulation2d.cpp
+        $$PWD/cgal/2d/booleans2d.cpp \
+        $$PWD/cgal/2d/convexhull2d.tpp \
+        $$PWD/cgal/2d/minimumbbox2d.cpp \
+        $$PWD/cgal/2d/segmentintersections2d.cpp \
+        $$PWD/cgal/2d/triangulation2d.cpp \
+        $$PWD/cgal/2d/voronoi2d.cpp \
+        $$PWD/cgal/aabbtree.cpp \
+        $$PWD/cgal/holefilling.cpp \
+        $$PWD/cgal/polyhedron.cpp \
+        $$PWD/cgal/sdf.cpp \
+        $$PWD/cgal/signeddistances.cpp \
+        $$PWD/cgal/slicer.cpp \
+        $$PWD/cgal/surfacemesh.cpp \
+        $$PWD/cgal/triangulation.cpp
+
 }
 else {
     message(CGAL not installed properly!)
 }
 
-HEADERS += \
-    $$PWD/cgal/cgal_surfacemesh.h
-
-SOURCES += \
-    $$PWD/cgal/cgal_surfacemesh.cpp

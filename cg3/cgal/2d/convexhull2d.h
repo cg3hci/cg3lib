@@ -35,6 +35,6 @@ void getCGALConvexHull2D(
 }
 
 
-#include "cgal_convexhull2d.tpp"
+#include "convexhull2d.tpp"
 
 #endif // CG3_CGAL_CONVEXHULL2D_H

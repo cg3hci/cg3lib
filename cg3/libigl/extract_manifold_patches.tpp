@@ -13,10 +13,23 @@ namespace cg3 {
 
 namespace libigl {
 
+/**
+ * @ingroup cg3libigl
+ * @brief extractManifoldPatches
+ * @param m
+ * @param I
+ * @return
+ */
 inline int extractManifoldPatches(const SimpleEigenMesh &m, Eigen::Matrix<int, Eigen::Dynamic, 1> &I) {
     return internal::EigenMeshLibIglAlgorithms::extractManifoldPatches(m, I);
 }
 
+/**
+ * @ingroup cg3libigl
+ * @brief extractManifoldPatches
+ * @param m
+ * @return
+ */
 inline int extractManifoldPatches(const SimpleEigenMesh &m){
     Eigen::VectorXi I;
     return internal::EigenMeshLibIglAlgorithms::extractManifoldPatches(m, I);

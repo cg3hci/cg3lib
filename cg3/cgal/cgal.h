@@ -9,18 +9,11 @@
 #ifndef CG3_CGAL_CGALINTERFACE_H
 #define CG3_CGAL_CGALINTERFACE_H
 
-//This file should be deleted: use your single include in your project!
-
 /**
- * @page cgalPage CGAL Interface
+ * @defgroup cg3cgal CGAL Interface
  *
- * This module of cg3lib is a little interface that allows to use some CGAL
+ * @brief This module of cg3lib is a little interface that allows to use some CGAL
  * algorithms and data structures.
  */
-
-#include "cgal_triangulation.h"
-#include "cgal_holefilling.h"
-#include "cgal_slicer.h"
-#include "cgal_signeddistances.h"
 
 #endif // CG3_CGAL_CGALINTERFACE_H

@@ -13,9 +13,22 @@ namespace cg3 {
 
 namespace libigl {
 
+/**
+ * @ingroup cg3libigl
+ * @brief getVertexAdjacencies
+ * @param m
+ * @return
+ */
 inline std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh& m) {
     return internal::EigenMeshLibIglAlgorithms::getVertexAdjacencies(m);
 }
+
+/**
+ * @ingroup cg3libigl
+ * @brief getVertexFaceAdjacencies
+ * @param m
+ * @return
+ */
 inline std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh& m) {
     return internal::EigenMeshLibIglAlgorithms::getVertexFaceAdjacencies(m);
 }
