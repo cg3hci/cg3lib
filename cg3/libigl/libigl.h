@@ -5,18 +5,14 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#ifndef CG3_LIBIGL_H
-#define CG3_LIBIGL_H
+#ifndef CG3_LIBIGL_INTERFACE_H
+#define CG3_LIBIGL_INTERFACE_H
 
-#include "booleans.h"
-#include "connected_components.h"
-#include "decimate.h"
-#include "extract_manifold_patches.h"
-#include "is_edge_manifold.h"
-#include "is_vertex_manifold.h"
-#include "face_adjacences.h"
-#include "remove_duplicate_vertices.h"
-#include "remove_unreferenced_vertices.h"
-#include "mesh_distance.h"
+/**
+ * @defgroup cg3libigl LibIGL Interface
+ *
+ * @brief The cg3lib LibIGL module is a little interface that allows to use some LibIGL
+ * algorithms and data structures.
+ */
 
-#endif // CG3_LIBIGL_H
+#endif // CG3_LIBIGL_INTERFACE_H

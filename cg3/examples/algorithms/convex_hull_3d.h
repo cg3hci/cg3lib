@@ -8,21 +8,14 @@
 #define CG3_EXAMPLES_CONVEX_HULL_3D_H
 
 /**
- * @ingroup tutorials
- * @page addManagerMainWindow Add a Manager to the MainWindow
+ * @ingroup algorithms_tut
+ * @page convexHull3D_tut Convex Hull 3D of a set of Points
  *
- * This Tutorial explains how to create a Manager using QtCreator and link
- * it to the MainWindow in order to be able to create easyly GUIs and link
- * them to the GLCanvas.
+ * Cg3lib allows to calculate a convex hull 3d mesh starting from a set of points or also from another mesh.
+ * In the following example, a cg3::viewer::MainWindow is created and a convex hull calculated from a set of
+ * randomly generated set of points is pushed in the mainWindow.
  *
- * The first step is to create a new QFrame Designer Form Class (File ->
- * New File or Project -> Qt -> Qt Designed Form Class -> QFrame).
- *
- *
- * @snippet adding_example_manager.cpp blabla
- * @snippet example_manager.h
- * @snippet example_manager.cpp
- * @snippet example_manager.ui
+ * @include convex_hull_3d.cpp
  */
 
 #endif // CG3_EXAMPLES_CONVEX_HULL_3D_H

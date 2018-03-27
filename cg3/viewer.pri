@@ -146,7 +146,8 @@ else {
 }
 
 HEADERS += \
-    $$PWD/viewer/drawable_objects/drawable_plane.h
+    $$PWD/viewer/drawable_objects/drawable_plane.h \
+    $$PWD/viewer/viewer.h
 
 SOURCES += \
     $$PWD/viewer/drawable_objects/drawable_plane.cpp

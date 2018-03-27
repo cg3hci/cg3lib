@@ -9,6 +9,12 @@
 
 #include "internal/eigenmesh_libigl_algorithms.h"
 
+/**
+ * @ingroup cg3libigl
+ * @brief cg3::libigl::getConnectedComponents
+ * @param m
+ * @return
+ */
 inline std::vector<cg3::SimpleEigenMesh> cg3::libigl::getConnectedComponents(const cg3::SimpleEigenMesh &m) {
     return internal::EigenMeshLibIglAlgorithms::getConnectedComponents(m);
 }

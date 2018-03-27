@@ -5,7 +5,7 @@
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
 
-#include "cgal_convexhull2d.h"
+#include "convexhull2d.h"
 
 #include <CGAL/ch_graham_andrew.h>
 

@@ -13,10 +13,23 @@ namespace cg3 {
 
 namespace libigl {
 
+/**
+ * @ingroup cg3libigl
+ * @brief isVertexManifold
+ * @param input
+ * @param B
+ * @return
+ */
 inline bool isVertexManifold(const SimpleEigenMesh &input, Eigen::Matrix<bool, Eigen::Dynamic, 1> &B) {
     return internal::EigenMeshLibIglAlgorithms::isVertexManifold(input, B);
 }
 
+/**
+ * @ingroup cg3libigl
+ * @brief isVertexManifold
+ * @param input
+ * @return
+ */
 inline bool isVertexManifold(const SimpleEigenMesh &input) {
     Eigen::Matrix<bool, Eigen::Dynamic, 1> B;
     return internal::EigenMeshLibIglAlgorithms::isVertexManifold(input, B);

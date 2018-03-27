@@ -6,7 +6,7 @@
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
 
-#include "cgal_aabbtree.h"
+#include "aabbtree.h"
 #include <random>
 
 namespace cg3 {

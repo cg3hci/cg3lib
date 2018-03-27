@@ -13,6 +13,12 @@ namespace cg3 {
 
 namespace libigl {
 
+/**
+ * @ingroup cg3libigl
+ * @brief getFaceAdjacences
+ * @param m
+ * @return
+ */
 inline Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m) {
     return internal::EigenMeshLibIglAlgorithms::getFaceAdjacences(m);
 }

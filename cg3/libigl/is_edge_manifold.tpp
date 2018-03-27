@@ -13,6 +13,12 @@ namespace cg3 {
 
 namespace libigl {
 
+/**
+ * @ingroup cg3libigl
+ * @brief isEdgeManifold
+ * @param input
+ * @return
+ */
 inline bool isEdgeManifold(const SimpleEigenMesh &input) {
     return internal::EigenMeshLibIglAlgorithms::isEdgeManifold(input);
 }

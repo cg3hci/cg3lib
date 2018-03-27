@@ -18,26 +18,25 @@ int main(int argc, char *argv[]) {
     const unsigned int nPoints = 1000;
     const cg3::BoundingBox extremes(cg3::Pointd(-10, -10, -10), cg3::Pointd(10,10,10));
 
-    std::vector<cg3::Pointd> points;
+    std::vector<cg3::Pointd> points; //vector of input points
     points.reserve(nPoints);
 
 
-    std::random_device r;
+    std::random_device r; //setting the random device for the generation of random numbers
     static std::mt19937 mt(r());
     std::uniform_real_distribution<> distX(extremes.minX(), extremes.maxX());
     std::uniform_real_distribution<> distY(extremes.minY(), extremes.maxY());
     std::uniform_real_distribution<> distZ(extremes.minZ(), extremes.maxZ());
 
     for (unsigned int i = 0; i < nPoints; i++){
-        points.push_back(cg3::Pointd(distX(mt), distY(mt), distZ(mt)));
+        points.push_back(cg3::Pointd(distX(mt), distY(mt), distZ(mt))); //generation of a random point
     }
 
-    cg3::DrawableDcel ch = cg3::convexHull(points.begin(), points.end());
-    ch.setWireframe(true);
-    //ch.setFlatShading();
-    ch.update();
+    cg3::DrawableDcel ch = cg3::convexHull(points.begin(), points.end()); //call of the convex hull algorithm
+    ch.setWireframe(true); // visualization of the mesh with wireframe
+    ch.update(); // call in order to update the renderable mesh of the convex hull
 
-    mw.pushObj(&ch, "Convex Hull");
+    mw.pushObj(&ch, "Convex Hull"); // push the convex hull in the mainWindow
 
     mw.show();
     return app.exec();

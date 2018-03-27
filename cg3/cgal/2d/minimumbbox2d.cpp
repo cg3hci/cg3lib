@@ -5,7 +5,7 @@
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
 
-#include "cgal_minimumbbox2d.h"
+#include "minimumbbox2d.h"
 
 #include <CGAL/Polygon_2.h>
 #include <CGAL/min_quadrilateral_2.h>

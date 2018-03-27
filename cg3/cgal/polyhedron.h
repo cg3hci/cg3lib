@@ -30,26 +30,23 @@
 namespace cg3 {
 
 namespace cgal {
-    namespace polyhedron {
 
-        typedef CGAL::Exact_predicates_inexact_constructions_kernel     Kernel;
-        typedef CGAL::Polyhedron_3<Kernel>         Polyhedron_3;
-        typedef Polyhedron_3::HalfedgeDS           HalfedgeDS;
+typedef CGAL::Polyhedron_3<CGAL::Exact_predicates_inexact_constructions_kernel> Polyhedron;
+
 
         #ifdef  CG3_DCEL_DEFINED
         static std::map<const Dcel::Vertex*, int> dummyVertexMap;
         static std::map<const Dcel::Face*, int> dummyFaceMap;
-        Polyhedron_3 getPolyhedronFromDcel(const Dcel& dcel,
+        Polyhedron getPolyhedronFromDcel(const Dcel& dcel,
                 std::map<const Dcel::Vertex*, int>& vertexMap = dummyVertexMap,
                 std::map<const Dcel::Face*, int>& faceMap = dummyFaceMap);
 
-        Dcel getDcelFromPolyhedron(const Polyhedron_3& poly);
+        Dcel getDcelFromPolyhedron(const Polyhedron& poly);
         #endif
 
         #ifdef  CG3_EIGENMESH_DEFINED
-        Polyhedron_3 getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
+        Polyhedron getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
         #endif
-    }
 }
 
 }

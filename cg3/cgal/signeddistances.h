@@ -12,16 +12,14 @@
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/2d/point2d.h>
 
-#include "cgal_aabbtree.h"
+#include "aabbtree.h"
 
 #include <vector>
 
 namespace cg3 {
 
 namespace cgal {
-    namespace signedDistances {
-        std::vector<double> getUnsignedDistances(const std::vector<Pointd> &points, const AABBTree &tree);
-    }
+    std::vector<double> getUnsignedDistances(const std::vector<Pointd> &points, const AABBTree &tree);
 }
 
 }

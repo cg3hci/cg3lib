@@ -18,6 +18,7 @@ namespace libigl {
 /* ----- CONVERSIONS ----- */
 
 /**
+ * @ingroup cg3libigl
  * @brief Get CSGTree from an EigenMesh
  * @param m Input mesh
  * @return CSG tree of the mesh
@@ -27,6 +28,7 @@ inline CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Get CSGTree from an EigenMesh
  * @param m Input mesh
  * @return CSG tree of the mesh
@@ -39,6 +41,7 @@ inline SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree) {
 /* ----- CONVERSIONS ----- */
 
 /**
+ * @ingroup cg3libigl
  * @brief Intersection of two CSGTrees
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
@@ -49,6 +52,7 @@ inline CSGTree intersection(const CSGTree& c1, const CSGTree& c2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Intersection of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
@@ -59,6 +63,7 @@ inline SimpleEigenMesh intersection(const SimpleEigenMesh& m1, const SimpleEigen
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Intersection of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
@@ -69,6 +74,7 @@ inline EigenMesh intersection(const EigenMesh& m1, const EigenMesh& m2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Intersection of two CSGTrees
  * @param[out] Resulting CSGTree
  * @param[in] c1 First CSGTree
@@ -79,6 +85,7 @@ inline void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2) 
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Intersection of two meshes
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
@@ -89,6 +96,7 @@ inline void intersection(SimpleEigenMesh& result, const SimpleEigenMesh& m1, con
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Intersection of two meshes
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
@@ -102,6 +110,7 @@ inline void intersection(EigenMesh& result, const EigenMesh& m1, const EigenMesh
 /* ----- DIFFERENCE ----- */
 
 /**
+ * @ingroup cg3libigl
  * @brief Difference of two CSGTrees
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
@@ -112,6 +121,7 @@ inline CSGTree difference(const CSGTree& c1, const CSGTree& c2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Difference of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
@@ -122,6 +132,7 @@ inline SimpleEigenMesh difference(const SimpleEigenMesh& m1, const SimpleEigenMe
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Difference of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
@@ -132,6 +143,7 @@ inline EigenMesh difference(const EigenMesh& m1, const EigenMesh& m2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Difference of two CSGTrees
  * @param[out] Resulting CSGTree
  * @param[in] c1 First CSGTree
@@ -142,6 +154,7 @@ inline void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Difference of two meshes
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
@@ -152,6 +165,7 @@ inline void difference(SimpleEigenMesh& result, const SimpleEigenMesh& m1, const
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Difference of two meshes
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
@@ -165,6 +179,7 @@ inline void difference(EigenMesh& result, const EigenMesh& m1, const EigenMesh& 
 /* ----- UNION ----- */
 
 /**
+ * @ingroup cg3libigl
  * @brief Union of two CSGTrees
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
@@ -175,6 +190,7 @@ inline CSGTree union_(const CSGTree& c1, const CSGTree& c2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Union of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
@@ -185,6 +201,7 @@ inline SimpleEigenMesh union_(const SimpleEigenMesh& m1, const SimpleEigenMesh& 
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Union of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
@@ -195,6 +212,7 @@ inline EigenMesh union_(const EigenMesh& m1, const EigenMesh& m2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Union of two CSGTrees
  * @param[out] Resulting CSGTree
  * @param[in] c1 First CSGTree
@@ -205,6 +223,7 @@ inline void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2) {
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Union of two meshes
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
@@ -215,6 +234,7 @@ inline void union_(SimpleEigenMesh& result, const SimpleEigenMesh& m1, const Sim
 }
 
 /**
+ * @ingroup cg3libigl
  * @brief Union of two meshes
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh

@@ -7,6 +7,7 @@
 #
 
 CONFIG += c++11
+#CONFIG += object_parallel_to_source #allows the compilation of files with same name inside the project
 
 CG3_ALL {
     CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_DCEL CG3_EIGENMESH CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VIEWER
@@ -37,7 +38,7 @@ CG3_CGAL {
 }
 
 CG3_CINOLIB {
-    include (cg3/cinolib.pri)
+     include (cg3/cinolib.pri)
 }
 
 CG3_LIBIGL {

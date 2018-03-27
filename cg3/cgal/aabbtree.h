@@ -32,6 +32,7 @@ namespace cg3 {
 namespace cgal {
 
     /**
+     * @ingroup cg3cgal
      * @brief The AABBTree class
      * AABBTree is a Data Structure which allows to make fast intersection and distance queries.
      * This is a simply interface of CGAL's AABBTree, which is easier to use.

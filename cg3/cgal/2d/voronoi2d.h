@@ -25,26 +25,9 @@ namespace cg3 {
 
 namespace cgal {
 
-namespace voronoi2d {
-
-typedef CGAL::Exact_predicates_inexact_constructions_kernel                  K;
-typedef CGAL::Delaunay_triangulation_2<K>                                    DT;
-typedef CGAL::Delaunay_triangulation_adaptation_traits_2<DT>                 AT;
-typedef CGAL::Delaunay_triangulation_caching_degeneracy_removal_policy_2<DT> AP;
-typedef CGAL::Voronoi_diagram_2<DT,AT,AP>                                    VD;
-// typedef for the result type of the point location
-typedef AT::Site_2                    Site_2;
-typedef AT::Point_2                   Point_2;
-typedef VD::Locate_result             Locate_result;
-typedef VD::Vertex_handle             Vertex_handle;
-typedef VD::Face_handle               Face_handle;
-typedef VD::Halfedge_handle           Halfedge_handle;
-typedef VD::Ccb_halfedge_circulator   Ccb_halfedge_circulator;
-
 std::vector<std::vector<cg3::Point2Dd>> computeVoronoiDiagram(const std::vector<cg3::Point2Dd>& sites);
 void computeVoronoiDiagram(const std::vector<Point2Dd> &sites, std::vector<cg3::Point2Dd>& vl, std::vector<std::vector<unsigned int> >&fl);
 
-}
 
 }
 

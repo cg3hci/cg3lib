@@ -14,7 +14,7 @@
   - [ ] Point dimension templated (merge 2D, 3D, ..., nD point in a general class)
   - [ ] Replace Triangle area formulas with Heron's formula
 - Style
-  - [ ] Naming of files which are interface to an external library: keep the name of the library (i.e. cgal) or remove it (i.e. libigl)
+  - [ ] Naming of files which are interface to an external library: remove the name of the library (cgal)
   - [ ] Follow the linux kernel coding style everywhere (https://www.kernel.org/doc/html/v4.10/process/coding-style.html)
 - Data Structure:
   - [ ] BipartiteGraph inherits from Graph (is it possible?)
@@ -26,12 +26,22 @@
   - [ ] Put Dcel and EigenMesh under a module called Meshes
   - [ ] viewer/interfaces becames viewer/abstract_classes
   - [ ] viewer/renderable_objects becames viewer/opengl_functions
+- Viewer:
+  - [ ] GLCanvas becames a private class of the MainWindow
+- CGAL:
+  - [ ] Booleans 2D: transform vector of point in container of point for polygons
+  - [ ] Voronoi 2D: insert on the diagram the inf edges (intersections with a built bounding box)
 
 # To Implement
 - Algorithms:
   - [ ] Marching Cubes
   - [ ] Taubin Smoothing
   - [ ] Extract SubGraph from Graphs
+  - [ ] Johnson's Algorithm for Circuit enumeraiton
+- Cgal:
+  - [ ] Polyhedron to Dcel conversion
+  - [ ] SurfaceMesh to Dcel conversion
+  - [ ] SurfaceMesh from/to EigenMesh conversion
 
 # Missing Abstract Classes Inheritance
 - Data Structures:
@@ -41,6 +51,16 @@
 # Missing Documentation
 - Examples:
   - [ ] Examples of usages of the classes
+  - [ ] Organize Module pages
+    - [ ] Core Module
+    - [ ] Algorithms Module
+    - [ ] CGAL Module
+    - [ ] CinoLib Module
+    - [ ] Data Structures Module
+    - [ ] Meshes Module
+    - [ ] LibIGL Module
+    - [ ] Viewer Module
+  - [ ] Write example of creation of a Manager for the mainWindow
 - Core:
   - [ ] geometry/2d/line2d
   - [ ] geometry/line
@@ -49,3 +69,14 @@
   - [ ] geometry/triangle
 - Data Structures:
   - [ ] arrays/array
+- LibIGL:
+  - [ ] connected components
+  - [ ] decimate
+  - [ ] extract manifold patches
+  - [ ] face adjacences
+  - [ ] is edge manifold
+  - [ ] is vertex manifold
+  - [ ] mesh distance
+  - [ ] remove duplicate vertices
+  - [ ] remove unreferenced vertices
+  - [ ] vertex adjacences
