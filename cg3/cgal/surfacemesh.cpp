@@ -8,14 +8,20 @@
 
 namespace cg3 {
 namespace cgal {
-
 namespace internal {
+
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef SurfaceMesh::Vertex_index VertexDescriptor;
-}
 
+} //namespace cg3::cgal::internal
 
 #ifdef CG3_DCEL_DEFINED
+/**
+ * @ingroup cg3cgal
+ * @brief getSurfaceMeshFromDcel
+ * @param d
+ * @return
+ */
 SurfaceMesh getSurfaceMeshFromDcel(const Dcel &d)
 {
     SurfaceMesh mesh;
@@ -33,9 +39,8 @@ SurfaceMesh getSurfaceMeshFromDcel(const Dcel &d)
     }
     return mesh;
 }
-
 #endif
 
-}
-}
+} //namespace cg3::cgal
+} //namespace cg3
 

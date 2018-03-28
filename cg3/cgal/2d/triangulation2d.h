@@ -13,19 +13,18 @@
 #include <cg3/geometry/2d/point2d.h>
 
 namespace cg3 {
-
 namespace cgal {
-
 namespace internal {
-    static std::vector< std::vector<Point2Dd > > dummy_holes2D;
-}
 
-    std::vector<std::array<Point2Dd , 3> > triangulate(
-            const std::vector<Point2Dd >& polygon,
-            const std::vector<std::vector<Point2Dd > >& holes = internal::dummy_holes2D);
+static std::vector< std::vector<Point2Dd > > dummy_holes2D;
 
-}
+} //namespace cg3::cgal::internal
 
-}
+std::vector<std::array<Point2Dd , 3> > triangulate(
+        const std::vector<Point2Dd >& polygon,
+        const std::vector<std::vector<Point2Dd > >& holes = internal::dummy_holes2D);
+
+} //namespace cg3::cgal
+} //namespace cg3
 
 #endif // CG3_CGAL_TRIANGULATION_H

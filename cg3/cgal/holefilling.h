@@ -10,26 +10,20 @@
 
 #include "polyhedron.h"
 
-#ifdef DCEL_DEFINED
-#include <dcel/dcel.h>
-#endif
-
 #ifdef CGAL_EIGEN3_ENABLED
-
 namespace cg3 {
-
 namespace cgal {
 
-    void holeFillingFileOff(const std::string& input, const std::string& output);
-    void holeFilling(Polyhedron& poly);
+void holeFillingFileOff(const std::string& input, const std::string& output);
 
-    #ifdef CG3_DCEL_DEFINED
-    void holeFilling(Dcel & d);
-    #endif
+void holeFilling(Polyhedron& poly);
 
-}
+#ifdef CG3_DCEL_DEFINED
+void holeFilling(Dcel & d);
+#endif
 
-}
+} //namespace cg3::cgal
+} //namespace cg3
 #endif
 
 #endif // CG3_CGAL_HOLEFILLING_H

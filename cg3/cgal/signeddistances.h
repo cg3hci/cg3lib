@@ -17,11 +17,11 @@
 #include <vector>
 
 namespace cg3 {
-
 namespace cgal {
-    std::vector<double> getUnsignedDistances(const std::vector<Pointd> &points, const AABBTree &tree);
-}
 
-}
+std::vector<double> getUnsignedDistances(const std::vector<Pointd> &points, const AABBTree &tree);
+
+} //namespace cg3::cgal
+} //namespace cg3
 
 #endif // CG3_CGAL_SIGNEDDISTANCES_H

@@ -23,13 +23,8 @@ typedef CGAL::Polygon_2<Kernel>                           Polygon_2;
 typedef CGAL::Polygon_with_holes_2<Kernel>                Polygon_with_holes_2;
 typedef std::list<Polygon_with_holes_2>                   Pwh_list_2;
 
-void getCoordinates(const internal::Point_2& p, double& x, double& y);
-}
-
-}
-
-void cgal::internal::getCoordinates(
-        const internal::Point_2& p, double& x, double& y) {
+void getCoordinates(const internal::Point_2& p, double& x, double& y)
+{
 
     std::stringstream ss1;
     ss1 << std::setprecision(std::numeric_limits<double>::digits10+1);
@@ -41,8 +36,20 @@ void cgal::internal::getCoordinates(
     ss2 >> y;
 }
 
-std::vector<std::vector<Point2Dd> > cgal::difference(
-        const std::vector<Point2Dd>& polygon1, const std::vector<Point2Dd>& polygon2) {
+} //namespace cg3::cgal::internal
+
+/**
+ * @ingroup cg3cgal
+ * @brief Computes the difference of two 2D polygons.
+ * @param[in] polygon1: first polygon
+ * @param[in] polygon2: second polygon
+ * @return a list of polygons which represent the boolean difference between
+ * polygon1 and polygon2.
+ */
+std::vector<std::vector<Point2Dd> > difference(
+        const std::vector<Point2Dd>& polygon1,
+        const std::vector<Point2Dd>& polygon2)
+{
 
     std::vector<std::vector<Point2Dd> > result;
 
@@ -69,7 +76,7 @@ std::vector<std::vector<Point2Dd> > cgal::difference(
 
         CGAL::Polygon_2<internal::Kernel> P = D.outer_boundary();
         polygon.reserve(P.size());
-        for ( CGAL::Polygon_2<internal::Kernel>::Vertex_const_iterator it = P.vertices_begin(); it != P.vertices_end(); ++it){
+        for (CGAL::Polygon_2<internal::Kernel>::Vertex_const_iterator it = P.vertices_begin(); it != P.vertices_end(); ++it){
             internal::Point_2 p = *it;
             double x, y;
             internal::getCoordinates(p,x,y);
@@ -82,8 +89,18 @@ std::vector<std::vector<Point2Dd> > cgal::difference(
 
 }
 
-std::vector<std::vector<Point2Dd> > cgal::intersection(
-        const std::vector<Point2Dd>& polygon1, const std::vector<Point2Dd>& polygon2) {
+/**
+ * @ingroup cg3cgal
+ * @brief Computes the intersection of two 2D polygons.
+ * @param[in] polygon1: first polygon
+ * @param[in] polygon2: second polygon
+ * @return a list of polygons which represent the boolean intersection between
+ * polygon1 and polygon2.
+ */
+std::vector<std::vector<Point2Dd> > intersection(
+        const std::vector<Point2Dd>& polygon1,
+        const std::vector<Point2Dd>& polygon2)
+{
 
     std::vector<std::vector<Point2Dd> > result;
 
@@ -110,7 +127,7 @@ std::vector<std::vector<Point2Dd> > cgal::intersection(
 
         CGAL::Polygon_2<internal::Kernel> P = D.outer_boundary();
         polygon.reserve(P.size());
-        for ( CGAL::Polygon_2<internal::Kernel>::Vertex_const_iterator it = P.vertices_begin(); it != P.vertices_end(); ++it){
+        for (CGAL::Polygon_2<internal::Kernel>::Vertex_const_iterator it = P.vertices_begin(); it != P.vertices_end(); ++it){
             internal::Point_2 p = *it;
             double x, y;
             internal::getCoordinates(p,x,y);
@@ -122,8 +139,17 @@ std::vector<std::vector<Point2Dd> > cgal::intersection(
     return result;
 }
 
-
-bool cgal::doIntersect(const std::vector<Point2Dd> &polygon1, const std::vector<Point2Dd> &polygon2) {
+/**
+ * @ingroup cg3cgal
+ * @brief Checks if two polygons intersect each other.
+ * @param[in] polygon1: first polygon
+ * @param[in] polygon2: second polygon
+ * @return true if the two polygons intersect, false otherwise.
+ */
+bool doIntersect(
+        const std::vector<Point2Dd> &polygon1,
+        const std::vector<Point2Dd> &polygon2)
+{
     internal::Polygon_2 P1;
     for (unsigned int i = 0; i < polygon1.size(); ++i){
         P1.push_back(internal::Point_2(polygon1[i].x(), polygon1[i].y()));
@@ -136,4 +162,5 @@ bool cgal::doIntersect(const std::vector<Point2Dd> &polygon1, const std::vector<
     return CGAL::do_intersect(P1, P2);
 }
 
-}
+} //namespace cg3::cgal
+} //namespace cg3

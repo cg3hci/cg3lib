@@ -31,6 +31,7 @@
 - CGAL:
   - [ ] Booleans 2D: transform vector of point in container of point for polygons
   - [ ] Voronoi 2D: insert on the diagram the inf edges (intersections with a built bounding box)
+  - [ ] Hole Filling: better output informations
 
 # To Implement
 - Algorithms:
@@ -39,6 +40,7 @@
   - [ ] Extract SubGraph from Graphs
   - [ ] Johnson's Algorithm for Circuit enumeraiton
 - Cgal:
+  - [ ] Boolean union 2D between polygons
   - [ ] Polyhedron to Dcel conversion
   - [ ] SurfaceMesh to Dcel conversion
   - [ ] SurfaceMesh from/to EigenMesh conversion

@@ -8,14 +8,8 @@
 #ifndef CG3_CGAL_CONVEXHULL2D_H
 #define CG3_CGAL_CONVEXHULL2D_H
 
-
 #include <vector>
-
-#include "cg3/geometry/2d/point2d.h"
-
-#include "cg3/meshes/dcel/dcel.h"
-
-
+#include <cg3/geometry/2d/point2d.h>
 
 namespace cg3 {
 namespace cgal {
@@ -31,9 +25,8 @@ void getCGALConvexHull2D(
         InputIterator end,
         OutputIterator outIt);
 
-}
-}
-
+} //namespace cg3::cgal
+} //namespace cg3
 
 #include "convexhull2d.tpp"
 

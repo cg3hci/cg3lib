@@ -6,10 +6,19 @@
   */
 #include "voronoi2d.h"
 
+// standard includes
+#include <iostream>
+#include <fstream>
+#include <cassert>
+// includes for defining the Voronoi diagram adaptor
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+#include <CGAL/Delaunay_triangulation_2.h>
+#include <CGAL/Voronoi_diagram_2.h>
+#include <CGAL/Delaunay_triangulation_adaptation_traits_2.h>
+#include <CGAL/Delaunay_triangulation_adaptation_policies_2.h>
+
 namespace cg3 {
-
 namespace cgal {
-
 namespace internal {
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel                  K;
@@ -26,23 +35,17 @@ typedef VD::Face_handle               Face_handle;
 typedef VD::Halfedge_handle           Halfedge_handle;
 typedef VD::Ccb_halfedge_circulator   Ccb_halfedge_circulator;
 
-void printEndpoint(Halfedge_handle e, bool is_src) {
-    std::cout << "\t";
-    if ( is_src ) {
-        if ( e->has_source() )  std::cout << e->source()->point() << std::endl;
-        else  std::cout << "point at infinity" << std::endl;
-    } else {
-        if ( e->has_target() )  std::cout << e->target()->point() << std::endl;
-        else  std::cout << "point at infinity" << std::endl;
-    }
-}
+} //namespace cg3::cgal::internal
 
-}
-
-
-
-std::vector<std::vector<cg3::Point2Dd> > computeVoronoiDiagram(const std::vector<cg3::Point2Dd>& sites) {
-
+/**
+ * @ingroup cg3cgal
+ * @brief computeVoronoiDiagram
+ * @param sites
+ * @return
+ */
+std::vector<std::vector<cg3::Point2Dd> > computeVoronoiDiagram2d(
+        const std::vector<cg3::Point2Dd>& sites)
+{
     std::vector<std::vector<cg3::Point2Dd> > voronoi;
 
     internal::VD vd;
@@ -74,8 +77,19 @@ std::vector<std::vector<cg3::Point2Dd> > computeVoronoiDiagram(const std::vector
     return voronoi;
 }
 
-void computeVoronoiDiagram(const std::vector<Point2Dd>& sites, std::vector<Point2Dd>& vl, std::vector<std::vector<unsigned int> >& fl) {
-    std::vector<std::vector<cg3::Point2Dd> > vd = computeVoronoiDiagram(sites);
+/**
+ * @ingroup cg3cgal
+ * @brief computeVoronoiDiagram
+ * @param sites
+ * @param vl
+ * @param fl
+ */
+void computeVoronoiDiagram2d(
+        const std::vector<Point2Dd>& sites,
+        std::vector<Point2Dd>& vl,
+        std::vector<std::vector<unsigned int> >& fl)
+{
+    std::vector<std::vector<cg3::Point2Dd> > vd = computeVoronoiDiagram2d(sites);
     vl.clear();
     fl.clear();
     std::map<cg3::Point2Dd, unsigned int> vertMap;
@@ -100,6 +114,5 @@ void computeVoronoiDiagram(const std::vector<Point2Dd>& sites, std::vector<Point
     }
 }
 
-}
-
-}
+} //namespace cg3::cgal
+} //namespace cg3

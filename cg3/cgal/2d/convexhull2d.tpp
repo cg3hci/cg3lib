@@ -15,6 +15,7 @@ namespace cg3 {
 namespace cgal {
 
 /**
+ * @ingroup cg3cgal
  * @brief Get the 2D convex hull using Graham scan algorithm
  * @param[in] container Container of the points of the shape
  * @param[out] convexHull Output container for the convex hull
@@ -28,6 +29,7 @@ void getCGALConvexHull2D(
 }
 
 /**
+ * @ingroup cg3cgal
  * @brief Get the 2D convex hull using Graham scan algorithm on iterators of containers
  * @param[in] first First iterator of the input container
  * @param[in] end End iterator of the input container
@@ -60,5 +62,5 @@ void getCGALConvexHull2D(
     }
 }
 
-}
-}
+} //namespace cg3::cgal
+} //namespace cg3

@@ -14,9 +14,7 @@
 
 #ifdef CGAL_EIGEN3_ENABLED
 namespace cg3 {
-
 namespace cgal{
-
 namespace internal {
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;
@@ -24,9 +22,7 @@ typedef Polyhedron::Halfedge_handle    Halfedge_handle;
 typedef Polyhedron::Facet_handle       Facet_handle;
 typedef Polyhedron::Vertex_handle      Vertex_handle;
 
-}
-
-}
+} //namespace cg3::cgal::internal
 
 /**
  * @ingroup cg3cgal
@@ -34,7 +30,8 @@ typedef Polyhedron::Vertex_handle      Vertex_handle;
  * @param input
  * @param output
  */
-void cgal::holeFillingFileOff(const std::string& input, const std::string& output) {
+void holeFillingFileOff(const std::string& input, const std::string& output)
+{
     std::ifstream sinput(input);
     Polyhedron poly;
     if ( !sinput || !(sinput >> poly) || poly.empty() ) {
@@ -54,7 +51,8 @@ void cgal::holeFillingFileOff(const std::string& input, const std::string& outpu
  * @brief cgal::holeFilling::holeFilling
  * @param poly
  */
-void cgal::holeFilling(cgal::Polyhedron& poly) {
+void holeFilling(cgal::Polyhedron& poly)
+{
     // Incrementally fill the holes
     unsigned int nb_holes = 0;
     for(internal::Halfedge_handle h : halfedges(poly)) {
@@ -80,13 +78,20 @@ void cgal::holeFilling(cgal::Polyhedron& poly) {
 }
 
 #ifdef CG3_DCEL_DEFINED
-void cgal::holeFilling(Dcel& d) {
+/**
+ * @ingroup cg3cgal
+ * @brief holeFilling
+ * @param d
+ */
+void holeFilling(Dcel& d)
+{
     Polyhedron p = cgal::getPolyhedronFromDcel(d);
     holeFilling(p);
     d = cgal::getDcelFromPolyhedron(p);
 }
 #endif
 
+}
 }
 
 #endif

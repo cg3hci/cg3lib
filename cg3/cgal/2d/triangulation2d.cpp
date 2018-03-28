@@ -24,44 +24,35 @@
 #include <CGAL/Polygon_2.h>
 
 namespace cg3 {
-
 namespace cgal {
-
 namespace internal {
 
-    struct FaceInfo2 {
-            FaceInfo2(){}
-            int nesting_level;
-            bool in_domain(){
-                return nesting_level%2 == 1;
-            }
-    };
+struct FaceInfo2 {
+        FaceInfo2(){}
+        int nesting_level;
+        bool in_domain(){
+            return nesting_level%2 == 1;
+        }
+};
 
-    typedef CGAL::Exact_predicates_inexact_constructions_kernel             K;
-    typedef CGAL::Triangulation_vertex_base_2<K>                            Vb;
-    typedef CGAL::Triangulation_face_base_with_info_2<FaceInfo2,K>          Fbb;
-    typedef CGAL::Constrained_triangulation_face_base_2<K,Fbb>              Fb;
-    typedef CGAL::Triangulation_data_structure_2<Vb,Fb>                     TDS;
-    typedef CGAL::Exact_predicates_tag                                      Itag;
-    typedef CGAL::Constrained_Delaunay_triangulation_2<K, TDS, Itag>        CDT;
-    typedef CDT::Point                                                      CGALPoint;
-    typedef CGAL::Polygon_2<K>                                              Polygon_2;
+typedef CGAL::Exact_predicates_inexact_constructions_kernel             K;
+typedef CGAL::Triangulation_vertex_base_2<K>                            Vb;
+typedef CGAL::Triangulation_face_base_with_info_2<FaceInfo2,K>          Fbb;
+typedef CGAL::Constrained_triangulation_face_base_2<K,Fbb>              Fb;
+typedef CGAL::Triangulation_data_structure_2<Vb,Fb>                     TDS;
+typedef CGAL::Exact_predicates_tag                                      Itag;
+typedef CGAL::Constrained_Delaunay_triangulation_2<K, TDS, Itag>        CDT;
+typedef CDT::Point                                                      CGALPoint;
+typedef CGAL::Polygon_2<K>                                              Polygon_2;
 
-    typedef CGAL::Epick                                                     E;
-    typedef CGAL::Triangulation_ds_face_base_2<TDS>                         TDFB2;
-    typedef CGAL::Triangulation_face_base_2<E, TDFB2>                       TFB2;
-    typedef CGAL::Triangulation_face_base_with_info_2<FaceInfo2, E, TFB2>   TFBI;
-    typedef CGAL::Constrained_triangulation_face_base_2<E, TFBI >           Triangle;
+typedef CGAL::Epick                                                     E;
+typedef CGAL::Triangulation_ds_face_base_2<TDS>                         TDFB2;
+typedef CGAL::Triangulation_face_base_2<E, TDFB2>                       TFB2;
+typedef CGAL::Triangulation_face_base_with_info_2<FaceInfo2, E, TFB2>   TFBI;
+typedef CGAL::Constrained_triangulation_face_base_2<E, TFBI >           Triangle;
 
-    void markDomains(CDT& ct, CDT::Face_handle start, int index, std::list<CDT::Edge>& border);
-    void markDomains(CDT& cdt);
-
-}
-
-}
-
-void cgal::internal::markDomains(
-        CDT& ct, CDT::Face_handle start, int index, std::list<CDT::Edge>& border) {
+void markDomains(CDT& ct, CDT::Face_handle start, int index, std::list<CDT::Edge>& border)
+{
     if(start->info().nesting_level != -1){
         return;
     }
@@ -84,7 +75,8 @@ void cgal::internal::markDomains(
     }
 }
 
-void cgal::internal::markDomains(CDT& cdt) {
+void markDomains(CDT& cdt)
+{
     for(CDT::All_faces_iterator it = cdt.all_faces_begin(); it != cdt.all_faces_end(); ++it){
         it->info().nesting_level = -1;
     }
@@ -100,9 +92,19 @@ void cgal::internal::markDomains(CDT& cdt) {
     }
 }
 
-std::vector<std::array<Point2Dd, 3> > cgal::triangulate(
+} //namespace cg3::cgal::internal
+
+/**
+ * @ingroup cg3cgal
+ * @brief triangulate
+ * @param polygon
+ * @param holes
+ * @return
+ */
+std::vector<std::array<Point2Dd, 3> > triangulate(
         const std::vector<Point2Dd >& polygon,
-        const std::vector<std::vector<Point2Dd > >& holes) {
+        const std::vector<std::vector<Point2Dd > >& holes)
+{
 
     std::vector<std::array<Point2Dd, 3> > triangles;
     internal::Polygon_2 polygon1;
@@ -150,5 +152,5 @@ std::vector<std::array<Point2Dd, 3> > cgal::triangulate(
     return triangles;
 }
 
-
-}
+} //namespace cg3::cgal
+} //namespace cg3

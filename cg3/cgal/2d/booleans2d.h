@@ -13,23 +13,21 @@
 #include <cg3/geometry/2d/point2d.h>
 
 namespace cg3 {
-
 namespace cgal {
 
-        std::vector< std::vector<Point2Dd > > difference(
-                const std::vector<Point2Dd > &polygon1,
-                const std::vector<Point2Dd > &polygon2);
+std::vector< std::vector<Point2Dd > > difference(
+        const std::vector<Point2Dd > &polygon1,
+        const std::vector<Point2Dd > &polygon2);
 
-        std::vector<std::vector<Point2Dd > > intersection(
-                const std::vector<Point2Dd >& polygon1,
-                const std::vector<Point2Dd >& polygon2);
+std::vector<std::vector<Point2Dd > > intersection(
+        const std::vector<Point2Dd >& polygon1,
+        const std::vector<Point2Dd >& polygon2);
 
-        bool doIntersect(
-                const std::vector<Point2Dd >& polygon1,
-                const std::vector<Point2Dd >& polygon2);
+bool doIntersect(
+        const std::vector<Point2Dd >& polygon1,
+        const std::vector<Point2Dd >& polygon2);
 
-}
-
-}
+} //namespace cg3::cgal
+} //namespace cg3
 
 #endif // CG3_CGAL_BOOLEANS2D_H

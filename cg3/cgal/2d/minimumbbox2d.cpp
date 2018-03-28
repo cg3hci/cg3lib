@@ -15,13 +15,23 @@
 
 namespace cg3 {
 namespace cgal {
+namespace internal {
 
 typedef CGAL::Simple_cartesian<double>                          CK;
 typedef CK::Point_2                                             CK_Point_2;
 typedef CGAL::Polygon_2<CK>                                     CK_Polygon_2;
 
+} //namespace cg3::cgal::internal
+
 #ifdef  CG3_DCEL_DEFINED
-std::vector<Point2Dd> getMinRectangle2D(const Dcel* dcel) {
+/**
+ * @ingroup cg3cgal
+ * @brief getMinRectangle2D
+ * @param dcel
+ * @return
+ */
+std::vector<Point2Dd> getMinRectangle2D(const Dcel* dcel)
+{
     std::vector<Point2Dd> points;
 
     for (const Dcel::Vertex* v : dcel->vertexIterator())
@@ -31,22 +41,30 @@ std::vector<Point2Dd> getMinRectangle2D(const Dcel* dcel) {
 }
 #endif
 
+/**
+ * @ingroup cg3cgal
+ * @brief getMinRectangle2D
+ * @param points
+ * @param isConvexHull
+ * @return
+ */
 std::vector<Point2Dd> getMinRectangle2D(
-        const std::vector<Point2Dd>& points, bool isConvexHull)
+        const std::vector<Point2Dd>& points,
+        bool isConvexHull)
 {
-    std::vector<CK_Point_2> cgalCHPoints;
+    std::vector<internal::CK_Point_2> cgalCHPoints;
 
     if (isConvexHull) {
         for (const Point2Dd p : points) {
-            CK_Point_2 point(p.x(), p.y());
+            internal::CK_Point_2 point(p.x(), p.y());
             cgalCHPoints.push_back(point);
         }
     }
     else {
-        std::vector<CK_Point_2> cgalPoints;
+        std::vector<internal::CK_Point_2> cgalPoints;
 
         for (const Point2Dd p : points) {
-            CK_Point_2 point(p.x(), p.y());
+            internal::CK_Point_2 point(p.x(), p.y());
             cgalPoints.push_back(point);
         }
 
@@ -55,20 +73,19 @@ std::vector<Point2Dd> getMinRectangle2D(
     }
 
     //Compute the minimal enclosing rectangle p_m
-    CK_Polygon_2 p_m;
+    internal::CK_Polygon_2 p_m;
     CGAL::min_rectangle_2(
         cgalCHPoints.begin(), cgalCHPoints.end(), std::back_inserter(p_m));
 
     std::vector<Point2Dd> rectanglePoints;
-    for (CK_Polygon_2::Vertex_const_iterator it = p_m.vertices_begin(); it != p_m.vertices_end(); it++) {
-        const CK_Point_2 p = *it;
+    for (internal::CK_Polygon_2::Vertex_const_iterator it = p_m.vertices_begin(); it != p_m.vertices_end(); it++) {
+        const internal::CK_Point_2 p = *it;
         rectanglePoints.push_back(Point2Dd(p.x(), p.y()));
     }
-
 
     return rectanglePoints;
 }
 
 
-}
-}
+} //namespace cg3::cgal
+} //namespace cg3

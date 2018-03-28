@@ -7,11 +7,16 @@
 
 #include "slicer.h"
 
+#include <CGAL/boost/graph/graph_traits_Surface_mesh.h>
+#include <CGAL/AABB_halfedge_graph_segment_primitive.h>
+#include <CGAL/AABB_tree.h>
+#include <CGAL/AABB_traits.h>
+#include <CGAL/Polygon_mesh_slicer.h>
+
 namespace cg3 {
-
 namespace cgal {
-
 namespace internal {
+
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Surface_mesh<K::Point_3> Mesh;
 typedef std::vector<K::Point_3> Polyline_type;
@@ -19,10 +24,18 @@ typedef std::list< Polyline_type > Polylines;
 typedef CGAL::AABB_halfedge_graph_segment_primitive<Mesh> HGSP;
 typedef CGAL::AABB_traits<K, HGSP>    AABB_traits;
 typedef CGAL::AABB_tree<AABB_traits>  AABB_tree;
-}
-}
 
-std::vector<std::vector<Pointd>> cgal::getPolylines(
+} //namespace cg3::cgal::internal
+
+/**
+ * @ingroup cg3cgal
+ * @brief getPolylines
+ * @param inputOffFile
+ * @param norm
+ * @param d
+ * @return
+ */
+std::vector<std::vector<Pointd>> getPolylines(
         const std::string& inputOffFile,
         const Vec3& norm,
         double d)
@@ -36,12 +49,19 @@ std::vector<std::vector<Pointd>> cgal::getPolylines(
     return getPolylines(mesh, norm, d);
 }
 
-
-std::vector<std::vector<Pointd>> cgal::getPolylines(const SurfaceMesh &mesh,
+/**
+ * @ingroup cg3cgal
+ * @brief getPolylines
+ * @param mesh
+ * @param norm
+ * @param d
+ * @return
+ */
+std::vector<std::vector<Pointd>> getPolylines(
+        const SurfaceMesh &mesh,
         const Vec3& norm,
         double d)
 {
-
     // Slicer constructor from the mesh
     internal::Polylines polylines;
     internal::AABB_tree tree(edges(mesh).first, edges(mesh).second, mesh);
@@ -60,14 +80,29 @@ std::vector<std::vector<Pointd>> cgal::getPolylines(const SurfaceMesh &mesh,
 }
 
 #ifdef CG3_DCEL_DEFINED
-std::vector<std::vector<Pointd> > cgal::getPolylines(
+/**
+ * @ingroup cg3cgal
+ * @brief getPolylines
+ * @param mesh
+ * @param p
+ * @return
+ */
+std::vector<std::vector<Pointd> > getPolylines(
         const Dcel &mesh,
         const Plane &p)
 {
     return getPolylines(mesh, p.getNormal(), p.getD());
 }
 
-std::vector<std::vector<Pointd> > cgal::getPolylines(
+/**
+ * @ingroup cg3cgal
+ * @brief getPolylines
+ * @param mesh
+ * @param norm
+ * @param d
+ * @return
+ */
+std::vector<std::vector<Pointd> > getPolylines(
         const Dcel &mesh,
         const Vec3 &norm,
         double d)
@@ -77,4 +112,5 @@ std::vector<std::vector<Pointd> > cgal::getPolylines(
 }
 #endif
 
-}
+} //namespace cg3::cgal
+} //namespace cg3

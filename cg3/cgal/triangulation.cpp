@@ -10,6 +10,7 @@
 #include <cg3/geometry/transformations.h>
 
 namespace cg3 {
+namespace cgal {
 
 /**
  * @ingroup cg3cgal
@@ -20,12 +21,12 @@ namespace cg3 {
  * @param nonRegularPolygon
  * @return
  */
-std::vector<std::array<Pointd, 3> > cgal::triangulate(
+std::vector<std::array<Pointd, 3> > triangulate(
         const Vec3 &normal,
         const std::vector<Pointd>& polygon,
         const std::vector<std::vector<Pointd> >& holes,
-        bool& nonRegularPolygon) {
-
+        bool& nonRegularPolygon)
+{
     std::vector<std::array<Pointd, 3> > triangles;
     std::map<Point2Dd, Pointd> pointsVerticesMap;
 
@@ -100,5 +101,6 @@ std::vector<std::array<Pointd, 3> > cgal::triangulate(
     return triangles;
 }
 
-}
+} //namespace cg3::cgal
+} //namespace cg3
 

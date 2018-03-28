@@ -19,6 +19,7 @@
 #include <fstream>
 
 namespace cg3 {
+namespace cgal {
 
 /**
  * @ingroup cg3cgal
@@ -26,7 +27,8 @@ namespace cg3 {
  * @param mesh
  * @return
  */
-std::vector<double> cgal::getSDFMap(const Polyhedron &mesh) {
+std::vector<double> getSDFMap(const Polyhedron &mesh)
+{
     typedef std::map<Polyhedron::Facet_const_handle, double> Facet_double_map;
     Facet_double_map internal_map;
     boost::associative_property_map<Facet_double_map> sdf_property_map(internal_map);
@@ -58,7 +60,6 @@ std::vector<double> cgal::getSDFMap(const Polyhedron &mesh) {
 
         // save on the result sdf map
         sdfMap.push_back(sdfValue);
-
     }
 
     return sdfMap;
@@ -77,7 +78,8 @@ std::vector<double> cgal::getSDFMap(const Polyhedron &mesh) {
  * @param dcel
  * @return
  */
-std::map<const Dcel::Face*, double> cgal::getSDFMap(const Dcel& dcel) {
+std::map<const Dcel::Face*, double> getSDFMap(const Dcel& dcel)
+{
     std::map<const Dcel::Face*, int> faceMap;
     std::map<const Dcel::Vertex*, int> vertexMap;
     Polyhedron mesh = getPolyhedronFromDcel(dcel, vertexMap, faceMap);
@@ -109,7 +111,6 @@ std::map<const Dcel::Face*, double> cgal::getSDFMap(const Dcel& dcel) {
 
     return sdfMap;
 }
-
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
@@ -119,10 +120,12 @@ std::map<const Dcel::Face*, double> cgal::getSDFMap(const Dcel& dcel) {
  * @param m
  * @return
  */
-std::vector<double> cgal::getSDFMap(const SimpleEigenMesh &m) {
+std::vector<double> getSDFMap(const SimpleEigenMesh &m)
+{
     Polyhedron mesh = getPolyhedronFromEigenMesh(m);
     return getSDFMap(mesh);
 }
 #endif
 
-}
+} //namespace cg3::cgal
+} //namespace cg3

@@ -9,12 +9,8 @@
 #define CG3_CGAL_MINIMUMBBOX2D_H
 
 #include <vector>
-
 #include "cg3/geometry/2d/point2d.h"
-
 #include "cg3/meshes/dcel/dcel.h"
-
-
 
 namespace cg3 {
 namespace cgal {
@@ -23,9 +19,11 @@ namespace cgal {
 std::vector<Point2Dd> getMinRectangle2D(const Dcel* dcel);
 #endif
 
-std::vector<Point2Dd> getMinRectangle2D(const std::vector<Point2Dd>& pointVec, bool isConvexHull = false);
+std::vector<Point2Dd> getMinRectangle2D(
+        const std::vector<Point2Dd>& pointVec,
+        bool isConvexHull = false);
 
-}
-}
+} //namespace cg3::cgal
+} //namespace cg3
 
 #endif // CG3_CGAL_MINIMUMBBOX2D_H

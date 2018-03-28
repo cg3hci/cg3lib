@@ -8,6 +8,7 @@
 #include "signeddistances.h"
 
 namespace cg3 {
+namespace cgal {
 
 /**
  * @ingroup cg3cgal
@@ -16,9 +17,10 @@ namespace cg3 {
  * @param tree
  * @return
  */
-std::vector<double> cgal::getUnsignedDistances(
-        const std::vector<Pointd>& points, const AABBTree& tree) {
-
+std::vector<double> getUnsignedDistances(
+        const std::vector<Pointd>& points,
+        const AABBTree& tree)
+{
     std::vector<double> distances(points.size(), 0);
     size_t size = distances.size();
 
@@ -30,4 +32,5 @@ std::vector<double> cgal::getUnsignedDistances(
     return distances;
 }
 
-}
+} //namespace cg3::cgal
+} //namespace cg3

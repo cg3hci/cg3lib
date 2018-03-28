@@ -9,11 +9,6 @@
 #ifndef CG3_CGAL_POLYHEDRON_H
 #define CG3_CGAL_POLYHEDRON_H
 
-#include <fstream>
-#include <vector>
-#include <string>
-#include <algorithm>
-
 #include <CGAL/Simple_cartesian.h>
 #include <CGAL/Polyhedron_incremental_builder_3.h>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
@@ -28,27 +23,30 @@
 #endif
 
 namespace cg3 {
-
 namespace cgal {
 
 typedef CGAL::Polyhedron_3<CGAL::Exact_predicates_inexact_constructions_kernel> Polyhedron;
 
+#ifdef  CG3_DCEL_DEFINED
+namespace internal {
 
-        #ifdef  CG3_DCEL_DEFINED
-        static std::map<const Dcel::Vertex*, int> dummyVertexMap;
-        static std::map<const Dcel::Face*, int> dummyFaceMap;
-        Polyhedron getPolyhedronFromDcel(const Dcel& dcel,
-                std::map<const Dcel::Vertex*, int>& vertexMap = dummyVertexMap,
-                std::map<const Dcel::Face*, int>& faceMap = dummyFaceMap);
+static std::map<const Dcel::Vertex*, int> dummyVertexMap;
+static std::map<const Dcel::Face*, int> dummyFaceMap;
 
-        Dcel getDcelFromPolyhedron(const Polyhedron& poly);
-        #endif
+} //namespace cg3::cgal::internal
 
-        #ifdef  CG3_EIGENMESH_DEFINED
-        Polyhedron getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
-        #endif
-}
+Polyhedron getPolyhedronFromDcel(const Dcel& dcel,
+        std::map<const Dcel::Vertex*, int>& vertexMap = internal::dummyVertexMap,
+        std::map<const Dcel::Face*, int>& faceMap = internal::dummyFaceMap);
 
-}
+Dcel getDcelFromPolyhedron(const Polyhedron& poly);
+#endif
+
+#ifdef  CG3_EIGENMESH_DEFINED
+Polyhedron getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
+#endif
+
+} //namespace cg3::cgal
+} //namespace cg3
 
 #endif // CG3_CGAL_POLYHEDRON_H

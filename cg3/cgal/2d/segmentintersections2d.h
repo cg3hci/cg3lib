@@ -15,11 +15,12 @@ namespace cgal {
 bool checkSegmentIntersection2D(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
         const bool& ignoreEndPoints);
+
 std::vector<Segment2Dd> getSegmentIntersection2D(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
         const bool& ignoreEndPoints);
 
-}
-}
+} //namespace cg3::cgal
+} //namespace cg3
 
 #endif // CG3_CGAL_INTERSECTIONS_H

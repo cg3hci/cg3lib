@@ -15,27 +15,32 @@
 
 #include "surfacemesh.h"
 
-#include <CGAL/boost/graph/graph_traits_Surface_mesh.h>
-#include <CGAL/AABB_halfedge_graph_segment_primitive.h>
-#include <CGAL/AABB_tree.h>
-#include <CGAL/AABB_traits.h>
-#include <CGAL/Polygon_mesh_slicer.h>
-
-
-
 namespace cg3 {
-
 namespace cgal {
 
-        std::vector<std::vector<Pointd> > getPolylines(const std::string& inputOffFile, const Vec3& norm, double d);
-        std::vector<std::vector<Pointd> > getPolylines(const SurfaceMesh& mesh, const Vec3& norm, double d);
-        #ifdef CG3_DCEL_DEFINED
-        std::vector<std::vector<Pointd> > getPolylines(const Dcel& mesh, const cg3::Plane& p);
-        std::vector<std::vector<Pointd> > getPolylines(const Dcel& mesh, const Vec3& norm, double d);
-        #endif
-}
+std::vector<std::vector<Pointd> > getPolylines(
+        const std::string& inputOffFile,
+        const Vec3& norm,
+        double d);
 
-}
+std::vector<std::vector<Pointd> > getPolylines(
+        const SurfaceMesh& mesh,
+        const Vec3& norm,
+        double d);
+
+#ifdef CG3_DCEL_DEFINED
+std::vector<std::vector<Pointd> > getPolylines(
+        const Dcel& mesh,
+        const cg3::Plane& p);
+
+std::vector<std::vector<Pointd> > getPolylines(
+        const Dcel& mesh,
+        const Vec3& norm,
+        double d);
+    #endif
+
+} //namespace cg3::cgal
+} //namespace cg3
 
 
 #endif // CG3_CGAL_SLICER_H
