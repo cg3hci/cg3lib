@@ -10,27 +10,29 @@
 #define CG3_LINE_H
 
 #include "point.h"
+
 namespace cg3 {
 
-class Line : public SerializableObject{
-    public:
-        Line();
-        Line(const Pointd& p0, const Vec3& dir);
-        const Vec3& getDir() const;
-        const Pointd& getStartingPoint() const;
+class Line : public SerializableObject
+{
+public:
+    Line();
+    Line(const Pointd& p0, const Vec3& dir);
+    const Vec3& getDir() const;
+    const Pointd& getStartingPoint() const;
 
-        bool pointLiesOnLine(const Pointd &p) const;
+    bool pointLiesOnLine(const Pointd &p) const;
 
-        // SerializableObject interface
-        void serialize(std::ofstream& binaryFile) const;
-        void deserialize(std::ifstream& binaryFile);
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
-    protected:
-        Pointd p0;
-        Vec3 dir;
+protected:
+    Pointd p0;
+    Vec3 dir;
 };
 
-}
+} //namespace cg3
 
 //hash specialization
 namespace std {
@@ -40,7 +42,7 @@ struct hash<cg3::Line> {
     size_t operator()(const cg3::Line& k) const;
 };
 
-}
+} //namespace std
 
 
 #endif // LINE_H

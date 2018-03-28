@@ -25,13 +25,15 @@ namespace viewer {
  * @brief Crea una nuova mainWindow composta da canvas, toolBox avente 0 frame e scrollArea.
  * @param parent
  */
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
-                                          ui(new Ui::MainWindow),
-                                          consoleStream(nullptr),
-                                          mode2D(false),
-                                          nMeshes(0),
-                                          first(true),
-                                          debugObjectsEnabled(false){
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow),
+    consoleStream(nullptr),
+    mode2D(false),
+    nMeshes(0),
+    first(true),
+    debugObjectsEnabled(false)
+{
     ui->setupUi(this);
     ui->toolBox->removeItem(0);
 
@@ -143,6 +145,13 @@ void MainWindow::saveSnapshot(const std::string &filename) {
 void MainWindow::drawAxis(bool b) {
     ui->glCanvas->setAxisIsDrawn(b);
     ui->glCanvas->update();
+}
+
+/**
+ * @brief
+ */
+void MainWindow::resetPointOfView() {
+    ui->glCanvas->resetPointOfView();
 }
 
 void MainWindow::savePointOfView() {
@@ -489,6 +498,11 @@ void MainWindow::on_action2D_Mode_triggered() {
 
 void MainWindow::on_action3D_Mode_triggered() {
     set2DMode(false);
+}
+
+void MainWindow::on_actionReset_Point_of_View_triggered()
+{
+    ui->glCanvas->resetPointOfView();
 }
 
 }

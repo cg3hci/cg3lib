@@ -12,21 +12,25 @@
 #include <cg3/geometry/plane.h>
 
 namespace cg3 {
-    template <class Vector>
-    inline double getAngle(const Vector& v1, const Vector& v2);
-    inline double getInternalAngle(const Vec3& v1, const Vec3& v2, const Vec3& direction);
 
+template <class Vector>
+inline double getAngle(const Vector& v1, const Vector& v2);
 
-    inline Pointd orthogonalProjectionOnAPlane(
-            const Plane& plane,
-            const Pointd& point);
+inline double getInternalAngle(
+        const Vec3& v1,
+        const Vec3& v2,
+        const Vec3& direction);
 
-    inline Pointd orthogonalProjectionOnAPlane(
-            const Vec3& planeNormal,
-            const Pointd& planePoint,
-            const Pointd& point);
+inline Pointd orthogonalProjectionOnAPlane(
+        const Plane& plane,
+        const Pointd& point);
 
-}
+inline Pointd orthogonalProjectionOnAPlane(
+        const Vec3& planeNormal,
+        const Pointd& planePoint,
+        const Pointd& point);
+
+} //namespace cg3
 
 #include "utils3d.tpp"
 

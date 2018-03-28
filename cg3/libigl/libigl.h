@@ -5,14 +5,14 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#ifndef CG3_LIBIGL_INTERFACE_H
-#define CG3_LIBIGL_INTERFACE_H
+#ifndef CG3_LIBIGL_H
+#define CG3_LIBIGL_H
 
 /**
- * @defgroup cg3libigl LibIGL Interface
+ * @defgroup cg3libigl LibIGL Module
  *
  * @brief The cg3lib LibIGL module is a little interface that allows to use some LibIGL
  * algorithms and data structures.
  */
 
-#endif // CG3_LIBIGL_INTERFACE_H
+#endif // CG3_LIBIGL_H

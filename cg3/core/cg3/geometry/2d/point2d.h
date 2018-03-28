@@ -8,7 +8,6 @@
 #ifndef CG3_POINT2D_H
 #define CG3_POINT2D_H
 
-#include <sstream>
 #include <assert.h>
 #include <string>
 #include <ostream>
@@ -34,12 +33,13 @@ namespace cg3 {
  * @author Alessandro Muntoni
  */
 template <class T>
-class Point2D : public SerializableObject {
+class Point2D : public SerializableObject
+{
 public:
     Point2D(T x = 0.0, T y = 0.0);
-#ifdef CG3_WITH_EIGEN
+    #ifdef CG3_WITH_EIGEN
     Point2D(const Eigen::VectorXd &v);
-#endif
+    #endif
 
     const T& x() const;
     const T& y() const;
@@ -91,8 +91,6 @@ public:
 private:
     T xCoord, yCoord;
     void rot(T matrix[][2]);
-
-
 };
 
 template <class T>
@@ -114,7 +112,7 @@ typedef Point2D<float> Point2Df;
 typedef Point2D<int> Point2Di;
 typedef Point2D<double> Vec2;
 
-}
+} //namespace cg3
 
 //hash specialization
 namespace std {
@@ -124,7 +122,7 @@ struct hash<cg3::Point2D<T>> {
     size_t operator()(const cg3::Point2D<T>& k) const;
 };
 
-}
+} //namespace std
 
 #include "point2d.tpp"
 

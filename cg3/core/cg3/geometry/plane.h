@@ -19,35 +19,36 @@ namespace cg3 {
  * @brief The Plane class
  * Stores a plane on the form \f$ax + by + cz + d = 0\f$.
  */
-class Plane : public SerializableObject {
-    public:
-        Plane(const Vec3& normal, double d);
-        Plane(double a, double b, double c, double d);
-        Plane(const Pointd &p1, const Pointd &p2, const Pointd &p3);
+class Plane : public SerializableObject
+{
+public:
+    Plane(const Vec3& normal, double d);
+    Plane(double a, double b, double c, double d);
+    Plane(const Pointd &p1, const Pointd &p2, const Pointd &p3);
 
-        double getA() const;
-        double getB() const;
-        double getC() const;
-        double getD() const;
-        Vec3 getNormal() const;
+    double getA() const;
+    double getB() const;
+    double getC() const;
+    double getD() const;
+    Vec3 getNormal() const;
 
-        void normalize();
+    void normalize();
 
-        bool pointLiesOnPlane(const Pointd& p, double epsilon = CG3_EPSILON) const;
-        #ifdef CG3_WITH_EIGEN
-        bool getIntersection(Pointd&intersection, const Line &l) const;
-        #endif
-        double pointDistance(const Pointd& p) const;
+    bool pointLiesOnPlane(const Pointd& p, double epsilon = CG3_EPSILON) const;
+    #ifdef CG3_WITH_EIGEN
+    bool getIntersection(Pointd&intersection, const Line &l) const;
+    #endif
+    double pointDistance(const Pointd& p) const;
 
-        // SerializableObject interface
-        void serialize(std::ofstream& binaryFile) const;
-        void deserialize(std::ifstream& binaryFile);
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
-    protected:
-        Vec3 normal;
-        double d;
+protected:
+    Vec3 normal;
+    double d;
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_PLANE_H

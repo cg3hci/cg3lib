@@ -19,10 +19,9 @@ namespace cg3 {
  * by two end-points
  */
 template <class T>
-class Segment : public SerializableObject {
-
+class Segment : public SerializableObject
+{
 public:
-
     /* Constructors/destructor */
     Segment();
     Segment(const T& getP1, const T& getP2);
@@ -52,7 +51,6 @@ public:
     std::string toString() const;
 
 protected:
-
     /* Fields */
     T p1;
     T p2;
@@ -78,7 +76,7 @@ typedef Segment3D<float> Segment3Df;
 typedef Segment1D<int> Segment1Di;
 typedef Segment3D<int> Segment3Di;
 
-}
+} //namespace cg3
 
 //hash specialization
 namespace std {
@@ -88,7 +86,7 @@ struct hash<cg3::Segment<T>> {
     size_t operator()(const cg3::Segment<T>& k) const;
 };
 
-}
+} //namespace std
 
 #include "segment.tpp"
 

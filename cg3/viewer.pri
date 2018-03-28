@@ -70,8 +70,10 @@ win32 {
 contains(DEFINES, CG3_VIEWER_DEFINED){
 
     HEADERS += \
+        $$PWD/viewer/viewer.h \
         $$PWD/viewer/glcanvas.h \
         $$PWD/viewer/mainwindow.h \
+        $$PWD/viewer/drawable_objects/drawable_plane.h \
         $$PWD/viewer/drawable_objects/drawable_objects.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
@@ -86,6 +88,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
         $$PWD/viewer/mainwindow.cpp \
+        $$PWD/viewer/drawable_objects/drawable_plane.cpp \
         $$PWD/viewer/drawable_objects/drawable_objects.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
@@ -98,7 +101,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
     FORMS += \
         $$PWD/viewer/mainwindow.ui
 
-    CG3_DCEL {
+    contains(DEFINES, CG3_DCEL_DEFINED) {
         HEADERS += \
             $$PWD/viewer/drawable_objects/drawable_dcel.h \
             $$PWD/viewer/pickable_objects/pickable_dcel.h \
@@ -113,7 +116,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
             $$PWD/viewer/managers/dcel_manager.ui
     }
 
-    CG3_EIGENMESH {
+    contains(DEFINES, CG3_EIGENMESH_DEFINED) {
         HEADERS += \
             $$PWD/viewer/drawable_objects/drawable_eigenmesh.h \
             $$PWD/viewer/pickable_objects/pickable_eigenmesh.h \
@@ -145,9 +148,3 @@ else {
     message(libQGLViewer not installed properly!)
 }
 
-HEADERS += \
-    $$PWD/viewer/drawable_objects/drawable_plane.h \
-    $$PWD/viewer/viewer.h
-
-SOURCES += \
-    $$PWD/viewer/drawable_objects/drawable_plane.cpp

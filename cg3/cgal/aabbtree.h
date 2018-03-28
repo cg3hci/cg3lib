@@ -42,7 +42,6 @@ namespace cgal {
 class AABBTree
 {
 public:
-
     AABBTree();
     AABBTree(const AABBTree& other);
     AABBTree(AABBTree&& other);

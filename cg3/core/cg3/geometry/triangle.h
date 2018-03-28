@@ -14,40 +14,41 @@
 namespace cg3 {
 
 template <class T>
-class Triangle : public SerializableObject {
-    public:
-        Triangle();
-        Triangle(const T& v1, const T& v2, const T& v3);
+class Triangle : public SerializableObject
+{
+public:
+    Triangle();
+    Triangle(const T& v1, const T& v2, const T& v3);
 
-        const T& v1() const;
-        const T& v2() const;
-        const T& v3() const;
-        std::vector<T> getVertices() const;
+    const T& v1() const;
+    const T& v2() const;
+    const T& v3() const;
+    std::vector<T> getVertices() const;
 
-        T& v1();
-        T& v2();
-        T& v3();
-        void setV1(const T& v1);
-        void setV2(const T& v2);
-        void setV3(const T& v3);
-        void set(const T& v1, const T& v2, const T& v3);
+    T& v1();
+    T& v2();
+    T& v3();
+    void setV1(const T& v1);
+    void setV2(const T& v2);
+    void setV3(const T& v3);
+    void set(const T& v1, const T& v2, const T& v3);
 
-        cg3::Segment<T> side1() const;
-        cg3::Segment<T> side2() const;
-        cg3::Segment<T> side3() const;
-        std::vector<cg3::Segment<T>> getSides() const;
+    cg3::Segment<T> side1() const;
+    cg3::Segment<T> side2() const;
+    cg3::Segment<T> side3() const;
+    std::vector<cg3::Segment<T>> getSides() const;
 
-        T normal() const;
-        double area() const;
-        T barycenter() const;
+    T normal() const;
+    double area() const;
+    T barycenter() const;
 
 
-        // SerializableObject interface
-        void serialize(std::ofstream& binaryFile) const;
-        void deserialize(std::ifstream& binaryFile);
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
-    protected:
-        T _v1, _v2, _v3;
+protected:
+    T _v1, _v2, _v3;
 };
 
 /* ----- Common typedefs (1D, 2D, 3D double) ----- */

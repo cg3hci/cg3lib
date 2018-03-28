@@ -14,37 +14,35 @@
 
 namespace cg3 {
 
-    /* Point/Segment position */
+/* Point/Segment position */
+template<typename T>
+inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
+template<typename T>
+inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
 
-    template<typename T>
-    inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
-    template<typename T>
-    inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
+template<typename T>
+inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
+template<typename T>
+inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
 
-    template<typename T>
-    inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
-    template<typename T>
-    inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
+template<typename T>
+inline bool areCollinear(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
+template<typename T>
+inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
 
-    template<typename T>
-    inline bool areCollinear(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
-    template<typename T>
-    inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
+/* Others */
+template<class T>
+inline bool isPointLyingInCircle(
+        const Point2D<T>& a,
+        const Point2D<T>& b,
+        const Point2D<T>& c,
+        const Point2D<T>& p,
+        const bool includeBorders);
 
+template <typename Container>
+inline bool isPolygonCounterClockwise(const Container& polygon);
 
-    /* Others */
-
-    template<class T>
-    inline bool isPointLyingInCircle(
-            const Point2D<T>& a,
-            const Point2D<T>& b,
-            const Point2D<T>& c,
-            const Point2D<T>& p,
-            const bool includeBorders);
-
-    template <typename Container>
-    inline bool isPolygonCounterClockwise(const Container& polygon);
-}
+} //namespace cg3
 
 #include "utils2d.tpp"
 

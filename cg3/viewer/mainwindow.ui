@@ -55,7 +55,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>36</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -64,6 +64,7 @@
     </property>
     <addaction name="actionChange_Background_Color"/>
     <addaction name="actionFit_Scene"/>
+    <addaction name="actionReset_Point_of_View"/>
     <addaction name="actionShow_Axis"/>
     <addaction name="actionUpdate_Canvas"/>
     <addaction name="separator"/>
@@ -160,7 +161,7 @@
           <x>0</x>
           <y>0</y>
           <width>158</width>
-          <height>497</height>
+          <height>539</height>
          </rect>
         </property>
        </widget>
@@ -197,8 +198,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>398</width>
-          <height>447</height>
+          <width>417</width>
+          <height>508</height>
          </rect>
         </property>
         <attribute name="label">
@@ -336,6 +337,11 @@
    </property>
    <property name="shortcut">
     <string>3</string>
+   </property>
+  </action>
+  <action name="actionReset_Point_of_View">
+   <property name="text">
+    <string>Reset Point of View</string>
    </property>
   </action>
  </widget>

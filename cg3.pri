@@ -10,7 +10,7 @@ CONFIG += c++11
 #CONFIG += object_parallel_to_source #allows the compilation of files with same name inside the project
 
 CG3_ALL {
-    CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_DCEL CG3_EIGENMESH CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VIEWER
+    CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_MESHES CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VIEWER
 }
 
 CG3_CORE {
@@ -21,13 +21,17 @@ CG3_DATA_STRUCTURES {
     include (cg3/data_structures.pri)
 }
 
-CG3_DCEL {
-    include (cg3/meshes/dcel.pri)
+#CG3_DCEL {
+#    include (cg3/meshes/dcel.pri)
+#}
+
+CG3_MESHES {
+    include (cg3/meshes.pri)
 }
 
-CG3_EIGENMESH {
-    include (cg3/meshes/eigenmesh.pri)
-}
+#CG3_EIGENMESH {
+#    include (cg3/meshes/eigenmesh.pri)
+#}
 
 CG3_ALGORITHMS {
     include (cg3/algorithms.pri)

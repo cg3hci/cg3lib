@@ -8,28 +8,28 @@
 #ifndef CG3_INTERSECTIONS2D_H
 #define CG3_INTERSECTIONS2D_H
 
-#include "cg3/utilities/utils.h"
-
-#include "cg3/geometry/2d/segment2d.h"
+#include <cg3/utilities/utils.h>
+#include "segment2d.h"
 
 namespace cg3 {
-
 namespace internal {
 
 static Point2Dd point2DDummy;
 
-}
+} //namespace cg3::internal
 
 bool checkSegmentIntersection2D(
-        const Segment2Dd& seg1, const Segment2Dd& seg2,
+        const Segment2Dd& seg1,
+        const Segment2Dd& seg2,
         const bool ignoreEndPoints);
 
 void checkSegmentIntersection2D(
-        const Segment2Dd& seg1, const Segment2Dd& seg2,
+        const Segment2Dd& seg1,
+        const Segment2Dd& seg2,
         char& code,
         const double eps = cg3::CG3_EPSILON,
         Point2Dd& intersectionPoint = internal::point2DDummy);
 
-}
+} //namespace cg3
 
 #endif // CG3_INTERSECTIONS2D_H

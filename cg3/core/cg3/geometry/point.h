@@ -43,94 +43,80 @@ namespace cg3 {
  * using the specified types Pointi, Pointf and Pointd.
  * There is also the type Vec3, that is a Pointd, which is a simple sinctactic sugar in order to
  * distinguish between points on a 3D space and vectors.
- *
- * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-template <class T> class Point : public SerializableObject {
+template <class T>
+class Point : public SerializableObject
+{
+public:
 
-    public:
+    Point(T xCoord = 0.0, T yCoord = 0.0, T zCoord = 0.0);
+    #ifdef CG3_WITH_EIGEN
+    Point(const Eigen::VectorXd &v);
+    #endif
+    #ifdef CG3_CINOLIB_DEFINED
+    Point(const cinolib::vec3<T> &v);
+    #endif
 
-        /****************
-         * Constructors *
-         ****************/
+    const T& x()                                        const;
+    const T& y()                                        const;
+    const T& z()                                        const;
+    double dist(const Point<T>& otherPoint)             const;
+    double dot(const Point<T>& otherVector)             const;
+    Point<T> cross(const Point<T>& otherVector)         const;
+    double getLength()                                  const;
+    double getLengthSquared()                           const;
+    Point<T> min(const Point<T>& otherPoint)            const;
+    Point<T> max(const Point<T>& otherPoint)            const;
 
-        Point(T xCoord = 0.0, T yCoord = 0.0, T zCoord = 0.0);
-        #ifdef CG3_WITH_EIGEN
-        Point(const Eigen::VectorXd &v);
-        #endif
-        #ifdef CG3_CINOLIB_DEFINED
-        Point(const cinolib::vec3<T> &v);
-        #endif
-
-        /*************************
-        * Public Inline Methods *
-        *************************/
-
-        const T& x()                                        const;
-        const T& y()                                        const;
-        const T& z()                                        const;
-        double dist(const Point<T>& otherPoint)             const;
-        double dot(const Point<T>& otherVector)             const;
-        Point<T> cross(const Point<T>& otherVector)         const;
-        double getLength()                                  const;
-        double getLengthSquared()                           const;
-        Point<T> min(const Point<T>& otherPoint)            const;
-        Point<T> max(const Point<T>& otherPoint)            const;        
-
-        // Operators
-        const T& operator[](unsigned int i)                 const;
-        const T& operator()(unsigned int i)                 const;
-        bool operator == (const Point<T>& otherPoint)       const;
-        bool operator != (const Point<T>& otherPoint)       const;
-        bool operator < (const Point<T>& otherPoint)        const;
-        Point<T> operator - ()                              const;
-        Point<T> operator + (const T& scalar)               const;
-        Point<T> operator + (const Point<T>& otherPoint)    const;
-        Point<T> operator - (const T& scalar)               const;
-        Point<T> operator - (const Point<T>& otherPoint)    const;
-        Point<T> operator * (const T& scalar)               const;
-        Point<T> operator * (const Point<T>& otherPoint)    const;
-        Point<T> operator / (const T& scalar )              const;
-        Point<T> operator / (const Point<T>& otherPoint)    const;
+    // Operators
+    const T& operator[](unsigned int i)                 const;
+    const T& operator()(unsigned int i)                 const;
+    bool operator == (const Point<T>& otherPoint)       const;
+    bool operator != (const Point<T>& otherPoint)       const;
+    bool operator < (const Point<T>& otherPoint)        const;
+    Point<T> operator - ()                              const;
+    Point<T> operator + (const T& scalar)               const;
+    Point<T> operator + (const Point<T>& otherPoint)    const;
+    Point<T> operator - (const T& scalar)               const;
+    Point<T> operator - (const Point<T>& otherPoint)    const;
+    Point<T> operator * (const T& scalar)               const;
+    Point<T> operator * (const Point<T>& otherPoint)    const;
+    Point<T> operator / (const T& scalar )              const;
+    Point<T> operator / (const Point<T>& otherPoint)    const;
 
 
-        T& x();
-        T& y();
-        T& z();
-        void setX(const T& x);
-        void setY(const T& y);
-        void setZ(const T& z);
-        void set(const T& x, const T& y, const T& z);
-        double normalize();
-        #ifdef CG3_WITH_EIGEN
-        void rotate(const Eigen::Matrix3d &matrix, const Point<T>& centroid = Point<T>());
-        #endif //CG3_WITH_EIGEN
-        void rotate(double matrix[3][3], const Point<T>& centroid = Point<T>());
+    T& x();
+    T& y();
+    T& z();
+    void setX(const T& x);
+    void setY(const T& y);
+    void setZ(const T& z);
+    void set(const T& x, const T& y, const T& z);
+    double normalize();
+    #ifdef CG3_WITH_EIGEN
+    void rotate(const Eigen::Matrix3d &matrix, const Point<T>& centroid = Point<T>());
+    #endif //CG3_WITH_EIGEN
+    void rotate(double matrix[3][3], const Point<T>& centroid = Point<T>());
 
-        // SerializableObject interface
-        void serialize(std::ofstream& binaryFile) const;
-        void deserialize(std::ifstream& binaryFile);
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
-        // Operators
-        T& operator[](unsigned int i);
-        T& operator()(unsigned int i);
-        Point<T> operator += (const Point<T>& otherPoint);
-        Point<T> operator -= (const Point<T>& otherPoint);
-        Point<T> operator *= (const T& scalar);
-        Point<T> operator *= (const Point<T>& otherPoint);
-        Point<T> operator /= (const T& scalar );
-        Point<T> operator /= (const Point<T>& otherPoint);
+    // Operators
+    T& operator[](unsigned int i);
+    T& operator()(unsigned int i);
+    Point<T> operator += (const Point<T>& otherPoint);
+    Point<T> operator -= (const Point<T>& otherPoint);
+    Point<T> operator *= (const T& scalar);
+    Point<T> operator *= (const Point<T>& otherPoint);
+    Point<T> operator /= (const T& scalar );
+    Point<T> operator /= (const Point<T>& otherPoint);
 
-    protected:
-
-        /**************
-        * Attributes *
-        **************/
-
-        T xCoord; /**< \~English @brief The \c x component of the point/vector */
-        T yCoord; /**< \~English @brief The \c y component of the point/vector */
-        T zCoord; /**< \~English @brief The \c z component of the point/vector */
-    };
+protected:
+    T xCoord;
+    T yCoord;
+    T zCoord;
+};
 
 /****************
 * Other Methods *
@@ -164,7 +150,7 @@ typedef Point<double>   Vec3; /**< \~English @brief Point composed of double com
 template<typename T>
 using Point3D = Point<T>; /**< \~English @brief alias of Point */
 
-}
+} //namespace cg3
 
 //hash specialization
 namespace std {
@@ -174,7 +160,7 @@ struct hash<cg3::Point<T>> {
     size_t operator()(const cg3::Point<T>& k) const;
 };
 
-}
+} //namespace std
 
 #include "point.tpp"
 

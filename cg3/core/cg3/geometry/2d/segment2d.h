@@ -21,5 +21,5 @@ typedef Segment2D<float> Segment2Df;
 typedef Segment2D<int> Segment2Di;
 
 
-}
+} //namespace cg3
 #endif // CG3_SEGMENT2D_H

@@ -20,5 +20,5 @@ typedef Triangle2D<float> Triangle2Df;
 typedef Triangle2D<int> Triangle2Di;
 
 
-}
+} //namespace cg3
 #endif // CG3_TRIANGLE2D_H

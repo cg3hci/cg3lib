@@ -6,14 +6,14 @@
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
 
-#ifndef CG3_CGAL_CGALINTERFACE_H
-#define CG3_CGAL_CGALINTERFACE_H
+#ifndef CG3_CGAL_H
+#define CG3_CGAL_H
 
 /**
- * @defgroup cg3cgal CGAL Interface
+ * @defgroup cg3cgal CGAL Module
  *
- * @brief This module of cg3lib is a little interface that allows to use some CGAL
+ * @brief The cg3lib CGAL module is a little interface that allows to use some CGAL
  * algorithms and data structures.
  */
 
-#endif // CG3_CGAL_CGALINTERFACE_H
+#endif // CG3_CGAL_H

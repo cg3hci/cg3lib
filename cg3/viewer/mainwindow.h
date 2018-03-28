@@ -70,6 +70,7 @@ class MainWindow : public QMainWindow {
         void saveSnapshot();
         void saveSnapshot(const std::string& filename);
         void drawAxis(bool);
+        void resetPointOfView();
         void savePointOfView();
         void loadPointOfView();
         void savePointOfView(std::string filename);
@@ -143,10 +144,9 @@ class MainWindow : public QMainWindow {
         void on_actionShow_Hide_Console_Stream_triggered();
         void on_actionEnable_Debug_Objects_triggered();
         void on_actionDisable_Debug_Objects_triggered();
-
         void on_action2D_Mode_triggered();
-
         void on_action3D_Mode_triggered();
+        void on_actionReset_Point_of_View_triggered();
 
 private:
 
