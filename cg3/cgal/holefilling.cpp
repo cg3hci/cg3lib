@@ -10,11 +10,10 @@
 #include <CGAL/IO/Polyhedron_iostream.h>
 #include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
 #include <CGAL/Polygon_mesh_processing/triangulate_hole.h>
-#include <fstream>
 
 #ifdef CGAL_EIGEN3_ENABLED
 namespace cg3 {
-namespace cgal{
+namespace cgal {
 namespace internal {
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;

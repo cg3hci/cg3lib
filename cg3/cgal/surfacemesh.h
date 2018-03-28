@@ -21,6 +21,10 @@
 namespace cg3 {
 namespace cgal {
 
+/**
+ * @ingroup cg3cgal
+ * @brief The SurfaceMesh class
+ */
 typedef CGAL::Surface_mesh<CGAL::Exact_predicates_inexact_constructions_kernel::Point_3> SurfaceMesh;
 
 #ifdef  CG3_DCEL_DEFINED

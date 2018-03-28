@@ -25,6 +25,10 @@
 namespace cg3 {
 namespace cgal {
 
+/**
+ * @ingroup cg3cgal
+ * @brief The Polyhedron class
+ */
 typedef CGAL::Polyhedron_3<CGAL::Exact_predicates_inexact_constructions_kernel> Polyhedron;
 
 #ifdef  CG3_DCEL_DEFINED

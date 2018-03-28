@@ -7,6 +7,7 @@
  */
 
 #include "aabbtree.h"
+
 #include <random>
 
 namespace cg3 {

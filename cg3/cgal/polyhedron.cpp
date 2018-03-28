@@ -8,7 +8,6 @@
 
 #include "polyhedron.h"
 
-#include <fstream>
 #include <vector>
 #include <string>
 #include <algorithm>

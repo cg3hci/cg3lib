@@ -4,6 +4,7 @@
   *
   * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
   */
+
 #include "voronoi2d.h"
 
 // standard includes

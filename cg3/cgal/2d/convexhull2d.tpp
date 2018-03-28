@@ -8,7 +8,6 @@
 #include "convexhull2d.h"
 
 #include <CGAL/ch_graham_andrew.h>
-
 #include <CGAL/Simple_cartesian.h>
 
 namespace cg3 {

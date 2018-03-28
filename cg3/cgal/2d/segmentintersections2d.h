@@ -7,7 +7,7 @@
 #ifndef CG3_CGAL_INTERSECTIONS2D_H
 #define CG3_CGAL_INTERSECTIONS2D_H
 
-#include "cg3/geometry/2d/segment2d.h"
+#include <cg3/geometry/2d/segment2d.h>
 
 namespace cg3 {
 namespace cgal {

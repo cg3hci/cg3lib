@@ -10,7 +10,6 @@
 #include <CGAL/Polygon_2.h>
 #include <CGAL/min_quadrilateral_2.h>
 #include <CGAL/ch_graham_andrew.h>
-
 #include <CGAL/Simple_cartesian.h>
 
 namespace cg3 {

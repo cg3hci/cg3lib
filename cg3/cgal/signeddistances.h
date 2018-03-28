@@ -14,8 +14,6 @@
 
 #include "aabbtree.h"
 
-#include <vector>
-
 namespace cg3 {
 namespace cgal {
 

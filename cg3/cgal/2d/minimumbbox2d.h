@@ -9,8 +9,8 @@
 #define CG3_CGAL_MINIMUMBBOX2D_H
 
 #include <vector>
-#include "cg3/geometry/2d/point2d.h"
-#include "cg3/meshes/dcel/dcel.h"
+#include <cg3/geometry/2d/point2d.h>
+#include <cg3/meshes/dcel/dcel.h>
 
 namespace cg3 {
 namespace cgal {
