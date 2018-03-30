@@ -78,11 +78,11 @@ void SimpleEigenMesh::removeDegenerateTriangles(double epsilon) {
 }
 
 bool SimpleEigenMesh::readFromObj(const std::string& filename) {
-    return loadSave::loadTriangleMeshFromObj(filename, V, F);
+    return loadTriangleMeshFromObj(filename, V, F);
 }
 
 bool SimpleEigenMesh::readFromPly(const std::string& filename) {
-    return loadSave::loadTriangleMeshFromPly(filename, V, F);
+    return loadTriangleMeshFromPly(filename, V, F);
 }
 
 bool SimpleEigenMesh::readFromFile(const std::string& filename) {
@@ -98,11 +98,11 @@ bool SimpleEigenMesh::readFromFile(const std::string& filename) {
 }
 
 bool SimpleEigenMesh::saveOnPly(const std::string& filename) const {
-    return loadSave::saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data());
+    return saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
 bool SimpleEigenMesh::saveOnObj(const std::string& filename) const {
-    return loadSave::saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data());
+    return saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
 void SimpleEigenMesh::translate(const Pointd& p) {

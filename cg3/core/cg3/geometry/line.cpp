@@ -10,22 +10,29 @@
 
 namespace cg3 {
 
-Line::Line(){
+Line::Line()
+{
 }
 
-Line::Line(const Pointd &p0, const Vec3 &dir) : p0(p0), dir(dir){
+Line::Line(const Pointd &p0, const Vec3 &dir) :
+    p0(p0),
+    dir(dir)
+{
     this->dir.normalize();
 }
 
-const Vec3&Line::getDir() const {
+const Vec3&Line::getDir() const
+{
     return dir;
 }
 
-const Pointd&Line::getStartingPoint() const{
+const Pointd&Line::getStartingPoint() const
+{
     return p0;
 }
 
-bool Line::pointLiesOnLine(const Pointd& p) const{
+bool Line::pointLiesOnLine(const Pointd& p) const
+{
     if (p.x() != 0 && p.y() != 0 && p.z() != 0){
         Vec3 t = (dir - p0) / p;
         return (t.x() == t.y() && t.x() == t.z());
@@ -35,18 +42,21 @@ bool Line::pointLiesOnLine(const Pointd& p) const{
     }
 }
 
-void Line::serialize(std::ofstream& binaryFile) const {
+void Line::serialize(std::ofstream& binaryFile) const
+{
     serializeObjectAttributes("cg3Line", binaryFile, p0, dir);
 }
 
-void Line::deserialize(std::ifstream& binaryFile) {
+void Line::deserialize(std::ifstream& binaryFile)
+{
     deserializeObjectAttributes("cg3Line", binaryFile, p0, dir);
 }
 
-}
+} //namespace cg3
 
 //hash specialization
-inline std::size_t std::hash<cg3::Line>::operator()(const cg3::Line &k) const{
+inline std::size_t std::hash<cg3::Line>::operator()(const cg3::Line &k) const
+{
     std::size_t h = 0;
     cg3::hashCombine(h, k.getStartingPoint(), k.getDir());
     return h;

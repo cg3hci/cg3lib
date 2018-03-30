@@ -8,7 +8,6 @@
 #ifndef CG3_POINT2D_H
 #define CG3_POINT2D_H
 
-#include <assert.h>
 #include <string>
 #include <ostream>
 

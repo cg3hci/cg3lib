@@ -8,11 +8,10 @@
 
 #include "triangle2d_utils.h"
 
-#include "cg3/utilities/utils.h"
+#include <cg3/utilities/utils.h>
+#include <cg3/geometry/2d/intersections2d.h>
 
 #include <numeric>
-
-#include "cg3/geometry/2d/intersections2d.h"
 
 
 namespace cg3 {
@@ -27,7 +26,8 @@ namespace cg3 {
  * @param[out] triangle Triangle to be reordered counter-clockwise. It must be a 2D triangle.
  */
 template<class T>
-inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<Point2D<T>>& triangle) {
+inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<Point2D<T>>& triangle)
+{
     const Point2D<T>& p1 = triangle.v1();
     Point2D<T>& p2 = triangle.v2();
     Point2D<T>& p3 = triangle.v3();
@@ -50,7 +50,8 @@ inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<Point2D<T>>& triangl
  * @param[out] triangle Triangle with points to be sorted.
  */
 template<class T>
-inline void sortTriangle2DPoints(cg3::Triangle<Point2D<T>>& triangle) {
+inline void sortTriangle2DPoints(cg3::Triangle<Point2D<T>>& triangle)
+{
     Point2D<T>& p1 = triangle.v1();
     Point2D<T>& p2 = triangle.v2();
     Point2D<T>& p3 = triangle.v3();
@@ -73,7 +74,9 @@ inline void sortTriangle2DPoints(cg3::Triangle<Point2D<T>>& triangle) {
  * @param[out] triangle Triangle with points to be sorted and reordered counter-clockwise.
  */
 template<class T>
-inline void sortTriangle2DPointsAndReorderCounterClockwise(cg3::Triangle<Point2D<T>>& triangle) {
+inline void sortTriangle2DPointsAndReorderCounterClockwise(
+        cg3::Triangle<Point2D<T>>& triangle)
+{
     sortTriangle2DPoints(triangle);
     reorderCounterClockwiseTriangle2D(triangle);
 }
@@ -226,6 +229,4 @@ inline bool isDeulaunayTriangulation(
     return true;
 }
 
-
-
-}
+} //namespace cg3

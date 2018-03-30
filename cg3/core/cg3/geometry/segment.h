@@ -10,7 +10,6 @@
 #define CG3_SEGMENT_H
 
 #include "point.h"
-#include <ostream>
 
 namespace cg3 {
 

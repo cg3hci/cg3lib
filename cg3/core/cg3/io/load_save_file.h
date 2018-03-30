@@ -22,8 +22,8 @@
 
 namespace cg3 {
 
-namespace loadSave {
-namespace dummies {
+namespace internal {
+
 static int dummyInt;
 
 static std::vector<double> dummyVectorDouble;
@@ -43,8 +43,10 @@ static Eigen::MatrixXf dummyEigenFloat;
 static Eigen::MatrixXd dummyEigenDouble;
 static Eigen::MatrixXi dummyEigenInt;
 #endif
-}
 
+} //namespace cg3::internal
+
+namespace io {
 
 typedef enum {
     TRIANGLE_MESH,
@@ -61,58 +63,146 @@ typedef enum {
     RGBA
 } ColorMode;
 
+} //namespace cg3::io
 
 
-namespace ObjManager {
-void manageColor(std::ofstream &fp, std::ofstream &fmtu, const Color &c, ColorMode colorMod, Color &actualColor, std::map<Color, std::string> &colors);
-void manageFileNames(const std::string &objfilename, std::string& mtufilename, std::string& mtufilenopath);
-bool loadMtlFile(const std::string &mtuFile, std::map<std::string, Color> &mapColors);
-}
+namespace internal {
+
+void manageObjFileColor(
+        std::ofstream &fp,
+        std::ofstream &fmtu,
+        const Color &c,
+        io::ColorMode colorMod,
+        Color &actualColor,
+        std::map<Color,
+        std::string> &colors);
+
+void manageObjFileNames(
+        const std::string &objfilename,
+        std::string& mtufilename,
+        std::string& mtufilenopath);
+
+bool loadMtlFile(
+        const std::string &mtuFile,
+        std::map<std::string, Color> &mapColors);
 
 template <typename T>
-Color getColor(size_t baseIndex, const T arrayColors[], ColorMode colorMod);
+Color getColorFromArray(
+        size_t baseIndex,
+        const T arrayColors[],
+        io::ColorMode colorMod);
 
-/**
-     * Save
-     */
+} //namespace cg3::internal
+
+/*
+ * Save
+ */
+template <typename A, typename B, typename C = double, typename T = float, typename V = float, typename W = unsigned int>
+bool saveMeshOnObj(
+        const std::string &filename,
+        size_t nVertices,
+        size_t nTriangles,
+        const A vertices[],
+        const B faces[],
+        io::MeshType meshType = io::TRIANGLE_MESH,
+        int modality = 0,
+        const C verticesNormals[] = internal::dummyVectorDouble.data(),
+        io::ColorMode colorMod = io::RGB,
+        const T verticesColors[] = internal::dummyVectorFloat.data(),
+        const V triangleColors[] = internal::dummyVectorFloat.data(),
+        const W polygonSizes[] = internal::dummyVectorUnsignedInt.data());
 
 template <typename A, typename B, typename C = double, typename T = float, typename V = float, typename W = unsigned int>
-bool saveMeshOnObj(const std::string &filename, size_t nVertices, size_t nTriangles, const A vertices[], const B faces[], MeshType meshType = TRIANGLE_MESH, int modality= 0, const C verticesNormals[] = dummies::dummyVectorDouble.data(), ColorMode colorMod = RGB, const T verticesColors[] = dummies::dummyVectorFloat.data(), const V triangleColors[] = dummies::dummyVectorFloat.data(), const W polygonSizes[] = dummies::dummyVectorUnsignedInt.data());
+bool saveMeshOnPly(
+        const std::string &filename,
+        size_t nVertices,
+        size_t nTriangles,
+        const A vertices[],
+        const B faces[],
+        io::MeshType meshType = io::TRIANGLE_MESH,
+        int modality = 0,
+        const C verticesNormals[] = internal::dummyVectorDouble.data(),
+        io::ColorMode colorMod = io::RGB,
+        const T verticesColors[] = internal::dummyVectorFloat.data(),
+        const V triangleColors[] = internal::dummyVectorFloat.data(),
+        const W polygonSizes[] = internal::dummyVectorUnsignedInt.data());
 
-template <typename A, typename B, typename C = double, typename T = float, typename V = float, typename W = unsigned int>
-bool saveMeshOnPly(const std::string &filename, size_t nVertices, size_t nTriangles, const A vertices[], const B faces[], MeshType meshType = TRIANGLE_MESH, int modality= 0, const C verticesNormals[] = dummies::dummyVectorDouble.data(), ColorMode colorMod = RGB, const T verticesColors[] = dummies::dummyVectorFloat.data(), const V triangleColors[] = dummies::dummyVectorFloat.data(), const W polygonSizes[] = dummies::dummyVectorUnsignedInt.data());
-
-/**
-     * Load
-     */
+/*
+ * Load
+ */
 ///Obj
 template <typename T, typename V, typename C = double, typename W = unsigned int>
-bool loadMeshFromObj(const std::string &filename, std::list<T>& coords, std::list<V>& faces, MeshType &meshType, int &modality = dummies::dummyInt, std::list<C> &verticesNormals = dummies::dummyListDouble, std::list<Color> &verticesColors = dummies::dummyListColor, std::list<Color> &faceColors = dummies::dummyListColor, std::list<W> &faceSizes = dummies::dummyListUnsignedInt);
+bool loadMeshFromObj(
+        const std::string &filename,
+        std::list<T>& coords,
+        std::list<V>& faces,
+        io::MeshType& meshType,
+        int& modality = internal::dummyInt,
+        std::list<C>& verticesNormals = internal::dummyListDouble,
+        std::list<Color>& verticesColors = internal::dummyListColor,
+        std::list<Color>& faceColors = internal::dummyListColor,
+        std::list<W>& faceSizes = internal::dummyListUnsignedInt);
 
 template <typename T, typename V, typename C = double>
-bool loadTriangleMeshFromObj(const std::string &filename, std::vector<T>& coords, std::vector<V>&triangles, int &modality = dummies::dummyInt, std::vector<C> &verticesNormals = dummies::dummyVectorDouble, std::vector<Color> &verticesColors = dummies::dummyVectorColor, std::vector<Color> &triangleColors = dummies::dummyVectorColor);
+bool loadTriangleMeshFromObj(
+        const std::string& filename,
+        std::vector<T>& coords,
+        std::vector<V>& triangles,
+        int& modality = internal::dummyInt,
+        std::vector<C>& verticesNormals = internal::dummyVectorDouble,
+        std::vector<Color>& verticesColors = internal::dummyVectorColor,
+        std::vector<Color>& triangleColors = internal::dummyVectorColor);
 
 #ifdef CG3_WITH_EIGEN
 template <typename T, typename V>
-bool loadTriangleMeshFromObj(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles);
+bool loadTriangleMeshFromObj(
+        const std::string& filename,
+        Eigen::PlainObjectBase<T>& coords,
+        Eigen::PlainObjectBase<V>& triangles);
+
 template <typename T, typename V, typename C = double, typename W = float, typename X = float>
-bool loadTriangleMeshFromObj(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles, int &modality, Eigen::PlainObjectBase<C> &verticesNormals, Eigen::PlainObjectBase<W> &verticesColors, Eigen::PlainObjectBase<X> &triangleColors);
+bool loadTriangleMeshFromObj(
+        const std::string& filename,
+        Eigen::PlainObjectBase<T>& coords,
+        Eigen::PlainObjectBase<V>& triangles,
+        int& modality,
+        Eigen::PlainObjectBase<C>& verticesNormals,
+        Eigen::PlainObjectBase<W>& verticesColors,
+        Eigen::PlainObjectBase<X>& triangleColors);
 #endif
 
 ///Ply
 template <typename T, typename V, typename C = double, typename W = unsigned int>
-bool loadMeshFromPly(const std::string &filename, std::list<T>& coords, std::list<V>& faces, MeshType &meshType, int &modality = dummies::dummyInt, std::list<C> &verticesNormals = dummies::dummyListDouble, std::list<Color> &verticesColors = dummies::dummyListColor, std::list<Color> &faceColors = dummies::dummyListColor, std::list<W> &faceSizes = dummies::dummyListUnsignedInt);
+bool loadMeshFromPly(
+        const std::string& filename,
+        std::list<T>& coords,
+        std::list<V>& faces,
+        io::MeshType& meshType,
+        int& modality = internal::dummyInt,
+        std::list<C>& verticesNormals = internal::dummyListDouble,
+        std::list<Color>& verticesColors = internal::dummyListColor,
+        std::list<Color>& faceColors = internal::dummyListColor,
+        std::list<W>& faceSizes = internal::dummyListUnsignedInt);
 
 #ifdef CG3_WITH_EIGEN
 template <typename T, typename V>
-bool loadTriangleMeshFromPly(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles);
+bool loadTriangleMeshFromPly(
+        const std::string& filename,
+        Eigen::PlainObjectBase<T>& coords,
+        Eigen::PlainObjectBase<V>& triangles);
+
 template <typename T, typename V, typename C = double, typename W = float, typename X = float>
-bool loadTriangleMeshFromPly(const std::string &filename, Eigen::PlainObjectBase<T>& coords, Eigen::PlainObjectBase<V>&triangles, int &modality, Eigen::PlainObjectBase<C> &verticesNormals, Eigen::PlainObjectBase<W> &verticesColors, Eigen::PlainObjectBase<X> &triangleColors);
+bool loadTriangleMeshFromPly(
+        const std::string& filename,
+        Eigen::PlainObjectBase<T>& coords,
+        Eigen::PlainObjectBase<V>& triangles,
+        int& modality,
+        Eigen::PlainObjectBase<C>& verticesNormals,
+        Eigen::PlainObjectBase<W>& verticesColors,
+        Eigen::PlainObjectBase<X>& triangleColors);
 #endif
 
-}
-
-}
+} //namespace cg3
 
 #include "load_save_file.tpp"
 

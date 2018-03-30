@@ -268,9 +268,9 @@ void Dcel::saveOnObjFile(std::string fileNameObj) const {
 
     toStdVectors(vertices, verticesNormals, faces, faceSizes, faceColors);
 
-    loadSave::MeshType meshType = loadSave::POLYGON_MESH;
-    int mode = loadSave::NORMAL_VERTICES | loadSave::COLOR_FACES;
-    loadSave::saveMeshOnObj(fileNameObj, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), loadSave::RGB, loadSave::dummies::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    io::MeshType meshType = io::POLYGON_MESH;
+    int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
+    saveMeshOnObj(fileNameObj, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
 /**
@@ -297,9 +297,9 @@ void Dcel::saveOnPlyFile(std::string fileNamePly) const {
 
     toStdVectors(vertices, verticesNormals, faces, faceSizes, faceColors);
 
-    loadSave::MeshType meshType = loadSave::POLYGON_MESH;
-    int mode = loadSave::NORMAL_VERTICES | loadSave::COLOR_FACES;
-    loadSave::saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), loadSave::RGB, loadSave::dummies::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    io::MeshType meshType = io::POLYGON_MESH;
+    int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
+    saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
 void Dcel::saveOnDcelFile(std::string fileNameDcel) const {
@@ -993,11 +993,11 @@ bool Dcel::loadFromFile(const std::string& filename) {
 bool Dcel::loadFromObjFile(const std::string& filename) {
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
-    loadSave::MeshType meshType;
+    io::MeshType meshType;
     int mode;
     std::list<Color> vcolor, fcolor;
 
-    if (loadSave::loadMeshFromObj(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
+    if (loadMeshFromObj(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
         clear();
         afterLoadFile(coords, faces, mode, vnorm,vcolor, fcolor, fsizes);
         return true;
@@ -1024,11 +1024,11 @@ bool Dcel::loadFromObjFile(const std::string& filename) {
 bool Dcel::loadFromPlyFile(const std::string& filename) {
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
-    loadSave::MeshType meshType;
+    io::MeshType meshType;
     int mode;
     std::list<Color> vcolor, fcolor;
 
-    if (loadSave::loadMeshFromPly(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
+    if (loadMeshFromPly(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
         clear();
         afterLoadFile(coords, faces, mode, vnorm,vcolor, fcolor, fsizes);
         return true;
@@ -1087,30 +1087,30 @@ void Dcel::swap(Dcel& d) {
 }
 
 void Dcel::serialize(std::ofstream& binaryFile) const {
-    serializer::serialize("cg3Dcel", binaryFile);
+    cg3::serialize("cg3Dcel", binaryFile);
     //BB
     boundingBox.serialize(binaryFile);
     //N
-    serializer::serialize(nVertices, binaryFile);
-    serializer::serialize(nHalfEdges, binaryFile);
-    serializer::serialize(nFaces, binaryFile);
+    cg3::serialize(nVertices, binaryFile);
+    cg3::serialize(nHalfEdges, binaryFile);
+    cg3::serialize(nFaces, binaryFile);
     //Sets
-    serializer::serialize(unusedVids, binaryFile);
-    serializer::serialize(unusedHeids, binaryFile);
-    serializer::serialize(unusedFids, binaryFile);
+    cg3::serialize(unusedVids, binaryFile);
+    cg3::serialize(unusedHeids, binaryFile);
+    cg3::serialize(unusedFids, binaryFile);
     //Vertices
     for (ConstVertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
         int heid = -1;
         if (v->getIncidentHalfEdge() != nullptr) heid = v->getIncidentHalfEdge()->getId();
 
-        serializer::serialize(v->getId(), binaryFile);
+        cg3::serialize(v->getId(), binaryFile);
         v->getCoordinate().serialize(binaryFile);
         v->getNormal().serialize(binaryFile);
-        serializer::serialize(v->getColor(), binaryFile);
-        serializer::serialize(heid, binaryFile);
-        serializer::serialize(v->getCardinality(), binaryFile);
-        serializer::serialize(v->getFlag(), binaryFile);
+        cg3::serialize(v->getColor(), binaryFile);
+        cg3::serialize(heid, binaryFile);
+        cg3::serialize(v->getCardinality(), binaryFile);
+        cg3::serialize(v->getFlag(), binaryFile);
     }
     //HalfEdges
     for (ConstHalfEdgeIterator heit = halfEdgeBegin(); heit != halfEdgeEnd(); ++heit){
@@ -1122,31 +1122,31 @@ void Dcel::serialize(std::ofstream& binaryFile) const {
         int next = -1; if (he->getNext() != nullptr) next = he->getNext()->getId();
         int face = -1; if (he->getFace() != nullptr) face = he->getFace()->getId();
 
-        serializer::serialize(he->getId(), binaryFile);
-        serializer::serialize(fv, binaryFile);
-        serializer::serialize(tv, binaryFile);
-        serializer::serialize(tw, binaryFile);
-        serializer::serialize(prev, binaryFile);
-        serializer::serialize(next, binaryFile);
-        serializer::serialize(face, binaryFile);
-        serializer::serialize(he->getFlag(), binaryFile);
+        cg3::serialize(he->getId(), binaryFile);
+        cg3::serialize(fv, binaryFile);
+        cg3::serialize(tv, binaryFile);
+        cg3::serialize(tw, binaryFile);
+        cg3::serialize(prev, binaryFile);
+        cg3::serialize(next, binaryFile);
+        cg3::serialize(face, binaryFile);
+        cg3::serialize(he->getFlag(), binaryFile);
     }
     //Faces
     for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit){
         const Dcel::Face* f = *fit;
         int ohe = -1; if (f->getOuterHalfEdge() != nullptr) ohe = f->getOuterHalfEdge()->getId();
-        serializer::serialize(f->getId(), binaryFile);
-        serializer::serialize(ohe, binaryFile);
+        cg3::serialize(f->getId(), binaryFile);
+        cg3::serialize(ohe, binaryFile);
         f->getNormal().serialize(binaryFile);
-        serializer::serialize(f->getColor(), binaryFile);
-        serializer::serialize(f->getArea(), binaryFile);
-        serializer::serialize(f->getFlag(), binaryFile);
-        serializer::serialize(f->getNumberInnerHalfEdges(), binaryFile);
+        cg3::serialize(f->getColor(), binaryFile);
+        cg3::serialize(f->getArea(), binaryFile);
+        cg3::serialize(f->getFlag(), binaryFile);
+        cg3::serialize(f->getNumberInnerHalfEdges(), binaryFile);
 
         for (Dcel::Face::ConstInnerHalfEdgeIterator heit = f->innerHalfEdgeBegin(); heit != f->innerHalfEdgeEnd(); ++heit){
             const Dcel::HalfEdge* he = *heit;
             int idhe = -1; if (he != nullptr) idhe = he->getId();
-            serializer::serialize(idhe, binaryFile);
+            cg3::serialize(idhe, binaryFile);
         }
 
     }
@@ -1157,19 +1157,19 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
     Dcel tmp;
     try {
         std::string s;
-        serializer::deserialize(s, binaryFile);
+        cg3::deserialize(s, binaryFile);
 
         if (s != "cg3Dcel")
             throw std::ios_base::failure("Mismatching String: " + s + " != cg3Dcel");
         //BB
 
         tmp.boundingBox.deserialize(binaryFile);
-        serializer::deserialize(tmp.nVertices, binaryFile);
-        serializer::deserialize(tmp.nHalfEdges, binaryFile);
-        serializer::deserialize(tmp.nFaces, binaryFile);
-        serializer::deserialize(tmp.unusedVids, binaryFile);
-        serializer::deserialize(tmp.unusedHeids, binaryFile);
-        serializer::deserialize(tmp.unusedFids, binaryFile);
+        cg3::deserialize(tmp.nVertices, binaryFile);
+        cg3::deserialize(tmp.nHalfEdges, binaryFile);
+        cg3::deserialize(tmp.nFaces, binaryFile);
+        cg3::deserialize(tmp.unusedVids, binaryFile);
+        cg3::deserialize(tmp.unusedHeids, binaryFile);
+        cg3::deserialize(tmp.unusedFids, binaryFile);
 
         //Vertices
         tmp.vertices.resize(tmp.nVertices+tmp.unusedVids.size(), nullptr);
@@ -1184,13 +1184,13 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
             int id, heid;
             Pointd coord; Vec3 norm; Color color;
             int c, f;
-            serializer::deserialize(id, binaryFile);
+            cg3::deserialize(id, binaryFile);
             coord.deserialize(binaryFile);
             norm.deserialize(binaryFile);
-            serializer::deserialize(color, binaryFile);
-            serializer::deserialize(heid, binaryFile);
-            serializer::deserialize(c, binaryFile);
-            serializer::deserialize(f, binaryFile);
+            cg3::deserialize(color, binaryFile);
+            cg3::deserialize(heid, binaryFile);
+            cg3::deserialize(c, binaryFile);
+            cg3::deserialize(f, binaryFile);
 
             Dcel::Vertex* v = tmp.addVertex(id);
             v->setCardinality(c);
@@ -1205,14 +1205,14 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
 
         for (unsigned int i = 0; i < tmp.nHalfEdges; i++){
             int id, fv, tv, tw, prev, next, face, flag;
-            serializer::deserialize(id, binaryFile);
-            serializer::deserialize(fv, binaryFile);
-            serializer::deserialize(tv, binaryFile);
-            serializer::deserialize(tw, binaryFile);
-            serializer::deserialize(prev, binaryFile);
-            serializer::deserialize(next, binaryFile);
-            serializer::deserialize(face, binaryFile);
-            serializer::deserialize(flag, binaryFile);
+            cg3::deserialize(id, binaryFile);
+            cg3::deserialize(fv, binaryFile);
+            cg3::deserialize(tv, binaryFile);
+            cg3::deserialize(tw, binaryFile);
+            cg3::deserialize(prev, binaryFile);
+            cg3::deserialize(next, binaryFile);
+            cg3::deserialize(face, binaryFile);
+            cg3::deserialize(flag, binaryFile);
             Dcel::HalfEdge* he = tmp.addHalfEdge(id);
             he->setFlag(flag);
             edges[id] = {fv, tv, tw, prev, next, face};
@@ -1229,13 +1229,13 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
             double /*nx, ny, nz,*/ area;
             Color color;
             Vec3 norm;
-            serializer::deserialize(id, binaryFile);
-            serializer::deserialize(ohe, binaryFile);
+            cg3::deserialize(id, binaryFile);
+            cg3::deserialize(ohe, binaryFile);
             norm.deserialize(binaryFile);
-            serializer::deserialize(color, binaryFile);
-            serializer::deserialize(area, binaryFile);
-            serializer::deserialize(flag, binaryFile);
-            serializer::deserialize(nihe, binaryFile);
+            cg3::deserialize(color, binaryFile);
+            cg3::deserialize(area, binaryFile);
+            cg3::deserialize(flag, binaryFile);
+            cg3::deserialize(nihe, binaryFile);
 
 
             Dcel::Face* f = tmp.addFace(id);
@@ -1246,7 +1246,7 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
             f->setOuterHalfEdge(tmp.getHalfEdge(ohe));
             for (int j = 0; j < nihe; j++){
                 int idhe;
-                serializer::deserialize(idhe, binaryFile);
+                cg3::deserialize(idhe, binaryFile);
                 f->addInnerHalfEdge(tmp.getHalfEdge(idhe));
             }
         }
@@ -1269,11 +1269,11 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
         *this = std::move(tmp);
     }
     catch(std::ios_base::failure& e){
-        serializer::restorePosition(binaryFile, begin);
+        cg3::restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom cg3::Dcel"));
     }
     catch(...){
-        serializer::restorePosition(binaryFile, begin);
+        cg3::restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of cg3::Dcel");
     }
 }
@@ -1513,11 +1513,11 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
 
         vertices.push_back(vid);
 
-        if (mode & loadSave::NORMAL_VERTICES){
+        if (mode & io::NORMAL_VERTICES){
             Vec3 norm(*(vnit++),*(vnit++),*(vnit++));
             vid->setNormal(norm);
         }
-        if (mode & loadSave::COLOR_VERTICES){
+        if (mode & io::COLOR_VERTICES){
             /**
               @todo manage vertices color
               */
@@ -1578,7 +1578,7 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
         eid->setNext(first);
         first->setPrev(eid);
 
-        if (mode & loadSave::COLOR_FACES){
+        if (mode & io::COLOR_FACES){
             Color c = *(fcit++);
             fid->setColor(c);
         }
@@ -1589,7 +1589,7 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
         fid->updateArea();
     }
 
-    if (! (mode & loadSave::NORMAL_VERTICES))
+    if (! (mode & io::NORMAL_VERTICES))
         updateVertexNormals();
 }
 

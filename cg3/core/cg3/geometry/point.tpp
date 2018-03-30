@@ -7,6 +7,9 @@
 
 #include "point.h"
 
+#include <assert.h>
+#include <iostream>
+
 /****************
  * Constructors *
  ****************/
@@ -14,25 +17,36 @@
 namespace cg3 {
 
 /**
- * \~English
  * @brief Constructor, initializes the point with the input values
  * @param[in] x: value of \c x component, default 0
  * @param[in] y: value of \c y component, default 0
  * @param[in] z: value of \c z component, default 0
  */
 template <class T>
-inline Point<T>::Point(T x, T y, T z) : xCoord(x), yCoord(y), zCoord(z) {
+inline Point<T>::Point(T x, T y, T z) :
+    xCoord(x),
+    yCoord(y),
+    zCoord(z)
+{
 }
 
 #ifdef  CG3_WITH_EIGEN
 template <class T>
-Point<T>::Point(const Eigen::VectorXd& v) : xCoord(v(0)), yCoord(v(1)), zCoord(v(2)) {
+Point<T>::Point(const Eigen::VectorXd& v) :
+    xCoord(v(0)),
+    yCoord(v(1)),
+    zCoord(v(2))
+{
 }
 #endif
 
 #ifdef CG3_CINOLIB_DEFINED
 template <class T>
-Point<T>::Point(const cinolib::vec3<T>& v) : xCoord(v.x()), yCoord(v.y()), zCoord(v.z()) {
+Point<T>::Point(const cinolib::vec3<T>& v) :
+    xCoord(v.x()),
+    yCoord(v.y()),
+    zCoord(v.z())
+{
 }
 #endif
 
@@ -42,81 +56,81 @@ Point<T>::Point(const cinolib::vec3<T>& v) : xCoord(v.x()), yCoord(v.y()), zCoor
 *************************/
 
 /**
- * \~English
  * @brief Returns the \c x component of the point/vector
  * @return \c x component
  */
 template <class T>
-inline const T& Point<T>::x() const {
+inline const T& Point<T>::x() const
+{
     return this->xCoord;
 }
 
 /**
- * \~English
  * @brief Returns the \c y component of the point/vector
  * @return \c y component
  */
 template <class T>
-inline const T& Point<T>::y() const {
+inline const T& Point<T>::y() const
+{
     return this->yCoord;
 }
 
 /**
- * \~English
  * @brief Returns the \c z component of the point/vector
  * @return \c z component
  */
 template <class T>
-inline const T& Point<T>::z() const {
+inline const T& Point<T>::z() const
+{
     return this->zCoord;
 }
 
 /**
- * \~English
  * @brief Function that calculates the euclidean distance between two points
  * @param[in] otherPoint: point on which is calculated the distance
  * @return The distance between the point and \c otherPoint
  */
 template <class T>
-inline double Point<T>::dist(const Point<T>& otherPoint) const {
+inline double Point<T>::dist(const Point<T>& otherPoint) const
+{
     return sqrt ( std::pow((xCoord - otherPoint.xCoord), 2) +
                   std::pow((yCoord - otherPoint.yCoord), 2) +
                   std::pow((zCoord - otherPoint.zCoord), 2) );
 }
 
 /**
- * \~English
  * @brief Function that calculates the dot product between two vectors
  * @param[in] otherVector: vector on which is calculated the dot product
  * @return The dot product between this and \c otherVector
  */
 template <class T>
-inline double Point<T>::dot(const Point<T>& otherVector) const {
+inline double Point<T>::dot(const Point<T>& otherVector) const
+{
     return xCoord * otherVector.xCoord +
            yCoord * otherVector.yCoord +
            zCoord * otherVector.zCoord;
 }
 
 /**
- * \~English
  * @brief Function which calculates the cross product between two vectors
  * @param[in] otherVector: vector on which is calculated the cross product
  * @return The cross product between this and \c otherVector
  */
 template <class T>
-inline Point<T> Point<T>::cross(const Point<T>& otherVector) const {
+inline Point<T> Point<T>::cross(const Point<T>& otherVector) const
+{
     return Point<T>(yCoord * otherVector.zCoord - zCoord * otherVector.yCoord,
                  zCoord * otherVector.xCoord - xCoord * otherVector.zCoord,
                  xCoord * otherVector.yCoord - yCoord * otherVector.xCoord);
 }
 
 /**
- * \~English
  * @brief Function which calculated the length of the vector
  * @return The length of the vector
  */
 template <class T>
-inline double Point<T>::getLength() const {
+inline double Point<T>::getLength() const
+{
     return sqrt( xCoord*xCoord + yCoord*yCoord + zCoord*zCoord );
 }
 
@@ -126,7 +140,8 @@ inline double Point<T>::getLength() const {
  * @return La lunghezza al quadrato del vettore this
  */
 template <class T>
-inline double Point<T>::getLengthSquared() const {
+inline double Point<T>::getLengthSquared() const
+{
     return xCoord * xCoord + yCoord * yCoord + zCoord * zCoord;
 }
 
@@ -142,7 +157,8 @@ inline double Point<T>::getLengthSquared() const {
  * @return Il punto/vettore dei minimi
  */
 template <class T>
-inline Point<T> Point<T>::min(const Point<T>& otherPoint) const {
+inline Point<T> Point<T>::min(const Point<T>& otherPoint) const
+{
     return Point<T>(std::min(x(), otherPoint.x()),
                     std::min(y(), otherPoint.y()),
                     std::min(z(), otherPoint.z()));
@@ -160,14 +176,16 @@ inline Point<T> Point<T>::min(const Point<T>& otherPoint) const {
  * @return Il punto/vettore dei massimi
  */
 template <class T>
-inline Point<T> Point<T>::max(const Point<T>& otherPoint) const {
+inline Point<T> Point<T>::max(const Point<T>& otherPoint) const
+{
     return Point<T>(std::max(x(), otherPoint.x()),
                     std::max(y(), otherPoint.y()),
                     std::max(z(), otherPoint.z()));
 }
 
 template <class T>
-inline const T& Point<T>::operator[](unsigned int i) const {
+inline const T& Point<T>::operator[](unsigned int i) const
+{
     assert(i < 3);
     switch (i){
         case 0: return xCoord;
@@ -178,7 +196,8 @@ inline const T& Point<T>::operator[](unsigned int i) const {
 }
 
 template <class T>
-inline const T& Point<T>::operator()(unsigned int i) const {
+inline const T& Point<T>::operator()(unsigned int i) const
+{
     assert(i < 3);
     switch (i){
         case 0: return xCoord;
@@ -198,7 +217,8 @@ inline const T& Point<T>::operator()(unsigned int i) const {
  * @return True se il punto e otherPoint sono uguali, false altrimenti
  */
 template <class T>
-inline bool Point<T>::operator == (const Point<T>& otherPoint) const {
+inline bool Point<T>::operator == (const Point<T>& otherPoint) const
+{
     if ( otherPoint.xCoord != xCoord )	return false;
     if ( otherPoint.yCoord != yCoord )	return false;
     if ( otherPoint.zCoord != zCoord )	return false;
@@ -215,7 +235,8 @@ inline bool Point<T>::operator == (const Point<T>& otherPoint) const {
  * @return True se il punto e otherPoint sono diversi, false altrimenti
  */
 template <class T>
-inline bool Point<T>::operator != (const Point<T>& otherPoint) const {
+inline bool Point<T>::operator != (const Point<T>& otherPoint) const
+{
     if ( otherPoint.xCoord != xCoord )	return true;
     if ( otherPoint.yCoord != yCoord )	return true;
     if ( otherPoint.zCoord != zCoord )	return true;
@@ -234,7 +255,8 @@ inline bool Point<T>::operator != (const Point<T>& otherPoint) const {
  * @return True se il punto/vettore this è minore di otherPoint, false altrimenti
  */
 template <class T>
-inline bool Point<T>::operator < (const Point<T>& otherPoint) const {
+inline bool Point<T>::operator < (const Point<T>& otherPoint) const
+{
     if (this->xCoord < otherPoint.xCoord) return true;
     if (this->xCoord > otherPoint.xCoord) return false;
     if (this->yCoord < otherPoint.yCoord) return true;
@@ -249,12 +271,14 @@ inline bool Point<T>::operator < (const Point<T>& otherPoint) const {
  * @return Il punto/vettore negato
  */
 template <class T>
-inline Point<T> Point<T>::operator - () const {
+inline Point<T> Point<T>::operator - () const
+{
     return Point<T>(-xCoord, -yCoord, -zCoord);
 }
 
 template <class T>
-inline Point<T> Point<T>::operator +(const T& scalar) const {
+inline Point<T> Point<T>::operator +(const T& scalar) const
+{
     return Point<T>(xCoord + scalar,
                     yCoord + scalar,
                     zCoord + scalar);
@@ -267,14 +291,16 @@ inline Point<T> Point<T>::operator +(const T& scalar) const {
  * @return Il punto/vettore risultato della somma, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator + (const Point<T>& otherPoint) const {
+inline Point<T> Point<T>::operator + (const Point<T>& otherPoint) const
+{
     return Point<T>(xCoord + otherPoint.xCoord,
                     yCoord + otherPoint.yCoord,
                     zCoord + otherPoint.zCoord);
 }
 
 template <class T>
-inline Point<T> Point<T>::operator -(const T& scalar) const {
+inline Point<T> Point<T>::operator -(const T& scalar) const
+{
     return Point<T>(xCoord - scalar,
                     yCoord - scalar,
                     zCoord - scalar);
@@ -287,7 +313,8 @@ inline Point<T> Point<T>::operator -(const T& scalar) const {
  * @return Il punto/vettore risultato della differenza, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator - (const Point<T>& otherPoint) const {
+inline Point<T> Point<T>::operator - (const Point<T>& otherPoint) const
+{
     return Point<T>(xCoord - otherPoint.xCoord,
                     yCoord - otherPoint.yCoord,
                     zCoord - otherPoint.zCoord);
@@ -300,7 +327,8 @@ inline Point<T> Point<T>::operator - (const Point<T>& otherPoint) const {
  * @return Il punto/vettore risultato del prodotto scalare tra tra il punto/vettore this e scalar
  */
 template <class T>
-inline Point<T> Point<T>::operator * (const T& scalar) const {
+inline Point<T> Point<T>::operator * (const T& scalar) const
+{
     return Point<T>(xCoord * scalar, yCoord * scalar, zCoord * scalar);
 }
 
@@ -311,7 +339,8 @@ inline Point<T> Point<T>::operator * (const T& scalar) const {
  * @return Il punto/vettore risultato del prodotto, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator * (const Point<T>& otherPoint) const {
+inline Point<T> Point<T>::operator * (const Point<T>& otherPoint) const
+{
     return Point<T>(xCoord * otherPoint.xCoord, yCoord * otherPoint.yCoord, zCoord * otherPoint.zCoord);
 }
 
@@ -322,7 +351,8 @@ inline Point<T> Point<T>::operator * (const Point<T>& otherPoint) const {
  * @return Il punto/vettore risultato del quoziente scalare tra il punto/vettore this e scalar
  */
 template <class T>
-inline Point<T> Point<T>::operator / (const T& scalar) const {
+inline Point<T> Point<T>::operator / (const T& scalar) const
+{
     return Point<T>(xCoord / scalar, yCoord / scalar, zCoord / scalar);
 }
 
@@ -333,49 +363,38 @@ inline Point<T> Point<T>::operator / (const T& scalar) const {
  * @return Il punto/vettore risultato del quoziente, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator / (const Point<T>& otherPoint) const {
+inline Point<T> Point<T>::operator / (const Point<T>& otherPoint) const
+{
     return Point<T>(xCoord / otherPoint.xCoord, yCoord / otherPoint.yCoord, zCoord / otherPoint.zCoord);
 }
 
 /**
- * \~English
  * @brief Returns the \c x component of the point/vector
  * @return \c x component
- *
- * \~Italian
- * @brief Restituisce la componente \c x del punto/vettore
- * @return La componente \c x
  */
 template <class T>
-inline T& Point<T>::x() {
+inline T& Point<T>::x()
+{
     return this->xCoord;
 }
 
 /**
- * \~English
  * @brief Returns the \c y component of the point/vector
  * @return \c y component
- *
- * \~Italian
- * @brief Restituisce la componente \c y del punto/vettore
- * @return La componente \c y
  */
 template <class T>
-inline T& Point<T>::y() {
+inline T& Point<T>::y()
+{
     return this->yCoord;
 }
 
 /**
- * \~English
  * @brief Returns the \c z component of the point/vector
  * @return \c z component
- *
- * \~Italian
- * @brief Restituisce la componente \c z del punto/vettore
- * @return La componente \c z
  */
 template <class T>
-inline T& Point<T>::z() {
+inline T& Point<T>::z()
+{
     return this->zCoord;
 }
 
@@ -385,7 +404,8 @@ inline T& Point<T>::z() {
  * @param[in] x: valore settato come componente x
  */
 template <class T>
-inline void Point<T>::setX(const T& x) {
+inline void Point<T>::setX(const T& x)
+{
     xCoord = x;
 }
 
@@ -395,7 +415,8 @@ inline void Point<T>::setX(const T& x) {
  * @param[in] y: valore settato come componente y
  */
 template <class T>
-inline void Point<T>::setY(const T& y) {
+inline void Point<T>::setY(const T& y)
+{
     yCoord = y;
 }
 
@@ -405,7 +426,8 @@ inline void Point<T>::setY(const T& y) {
  * @param[in] z: valore settato come componente z
  */
 template <class T>
-inline void Point<T>::setZ(const T& z) {
+inline void Point<T>::setZ(const T& z)
+{
     zCoord = z;
 }
 
@@ -417,7 +439,8 @@ inline void Point<T>::setZ(const T& z) {
  * @param[in] z: valore settato come componente z
  */
 template <class T>
-inline void Point<T>::set(const T& x, const T& y, const T& z) {
+inline void Point<T>::set(const T& x, const T& y, const T& z)
+{
     xCoord = x;
     yCoord = y;
     zCoord = z;
@@ -429,7 +452,8 @@ inline void Point<T>::set(const T& x, const T& y, const T& z) {
  * @return La lunghezza precedente del vettore prima di essere normalizzato
  */
 template <class T>
-inline double Point<T>::normalize() {
+inline double Point<T>::normalize()
+{
     double len = getLength();
     xCoord /= len;
     yCoord /= len;
@@ -439,7 +463,8 @@ inline double Point<T>::normalize() {
 
 #ifdef CG3_WITH_EIGEN
 template <class T>
-void Point<T>::rotate(const Eigen::Matrix3d& matrix, const Point<T>& centroid) {
+void Point<T>::rotate(const Eigen::Matrix3d& matrix, const Point<T>& centroid)
+{
     *this -= centroid;
     *this = mul(matrix, *this);
     *this += centroid;
@@ -453,24 +478,28 @@ void Point<T>::rotate(const Eigen::Matrix3d& matrix, const Point<T>& centroid) {
  * @param[in] centroid: punto centroide della rotazione, di default (0,0,0)
  */
 template <class T>
-inline void Point<T>::rotate(double matrix[3][3], const Point<T>& centroid) {
+inline void Point<T>::rotate(double matrix[3][3], const Point<T>& centroid)
+{
     *this -= centroid;
     *this = mul(matrix, *this);
     *this += centroid;
 }
 
 template<class T>
-void Point<T>::serialize(std::ofstream& binaryFile) const {
+void Point<T>::serialize(std::ofstream& binaryFile) const
+{
     serializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
 }
 
 template<class T>
-void Point<T>::deserialize(std::ifstream& binaryFile) {
+void Point<T>::deserialize(std::ifstream& binaryFile)
+{
     deserializeObjectAttributes("cg3Point3D", binaryFile, xCoord, yCoord, zCoord);
 }
 
 template <class T>
-inline T& Point<T>::operator[](unsigned int i) {
+inline T& Point<T>::operator[](unsigned int i)
+{
     assert(i < 3);
     switch (i){
         case 0: return xCoord;
@@ -481,7 +510,8 @@ inline T& Point<T>::operator[](unsigned int i) {
 }
 
 template <class T>
-inline T& Point<T>::operator()(unsigned int i) {
+inline T& Point<T>::operator()(unsigned int i)
+{
     assert(i < 3);
     switch (i){
         case 0: return xCoord;
@@ -501,7 +531,8 @@ inline T& Point<T>::operator()(unsigned int i) {
  * @return Il punto/vettore risultato della somma, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator += (const Point<T>& otherPoint) {
+inline Point<T> Point<T>::operator += (const Point<T>& otherPoint)
+{
     xCoord += otherPoint.xCoord;
     yCoord += otherPoint.yCoord;
     zCoord += otherPoint.zCoord;
@@ -518,7 +549,8 @@ inline Point<T> Point<T>::operator += (const Point<T>& otherPoint) {
  * @return Il punto/vettore risultato della differenza, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator -= (const Point<T>& otherPoint) {
+inline Point<T> Point<T>::operator -= (const Point<T>& otherPoint)
+{
     xCoord -= otherPoint.xCoord;
     yCoord -= otherPoint.yCoord;
     zCoord -= otherPoint.zCoord;
@@ -535,7 +567,8 @@ inline Point<T> Point<T>::operator -= (const Point<T>& otherPoint) {
  * @return Il punto/vettore risultato del prodotto scalare tra tra il punto/vettore this e scalar
  */
 template <class T>
-inline Point<T> Point<T>::operator *= (const T& scalar) {
+inline Point<T> Point<T>::operator *= (const T& scalar)
+{
     xCoord *= scalar;
     yCoord *= scalar;
     zCoord *= scalar;
@@ -552,7 +585,8 @@ inline Point<T> Point<T>::operator *= (const T& scalar) {
  * @return Il punto/vettore risultato del prodotto, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator *= (const Point<T>& otherPoint) {
+inline Point<T> Point<T>::operator *= (const Point<T>& otherPoint)
+{
     xCoord *= otherPoint.xCoord;
     yCoord *= otherPoint.yCoord;
     zCoord *= otherPoint.zCoord;
@@ -569,7 +603,8 @@ inline Point<T> Point<T>::operator *= (const Point<T>& otherPoint) {
  * @return Il punto/vettore risultato del quoziente scalare tra il punto/vettore this e scalar
  */
 template <class T>
-inline Point<T> Point<T>::operator /= (const T& scalar) {
+inline Point<T> Point<T>::operator /= (const T& scalar)
+{
     xCoord /= scalar;
     yCoord /= scalar;
     zCoord /= scalar;
@@ -586,7 +621,8 @@ inline Point<T> Point<T>::operator /= (const T& scalar) {
  * @return Il punto/vettore risultato del quoziente, componente per componente, tra i punti/vettori this e otherPoint
  */
 template <class T>
-inline Point<T> Point<T>::operator /= (const Point<T>& otherPoint) {
+inline Point<T> Point<T>::operator /= (const Point<T>& otherPoint)
+{
     xCoord /= otherPoint.xCoord;
     yCoord /= otherPoint.yCoord;
     zCoord /= otherPoint.zCoord;
@@ -604,14 +640,16 @@ inline Point<T> Point<T>::operator /= (const Point<T>& otherPoint) {
  * @return Il punto/vettore risultato del prodotto scalare tra tra point e scalar
  */
 template <class T>
-inline Point<T> operator * (const T& scalar, const Point<T>& point) {
+inline Point<T> operator * (const T& scalar, const Point<T>& point)
+{
     return Point<T>(point.x() * scalar,
                     point.y() * scalar,
                     point.z() * scalar);
 }
 
 template <class T>
-inline Point<T> mul(const T m[][3], const Point<T>& point) {
+inline Point<T> mul(const T m[][3], const Point<T>& point)
+{
     Point<T> tmp = point;
     tmp.setX(m[0][0]*point.x() + m[0][1]*point.y() + m[0][2]*point.z());
     tmp.setY(m[1][0]*point.x() + m[1][1]*point.y() + m[1][2]*point.z());
@@ -621,7 +659,8 @@ inline Point<T> mul(const T m[][3], const Point<T>& point) {
 
 #ifdef CG3_WITH_EIGEN
 template <class T>
-inline Point<T> mul(const Eigen::Matrix3d &m, const Point<T>& point) {
+inline Point<T> mul(const Eigen::Matrix3d &m, const Point<T>& point)
+{
     Point<T> tmp = point;
     tmp.setX(m(0,0)*point.x() + m(0,1)*point.y() + m(0,2)*point.z());
     tmp.setY(m(1,0)*point.x() + m(1,1)*point.y() + m(1,2)*point.z());
@@ -637,21 +676,24 @@ inline Point<T> mul(const Eigen::Matrix3d &m, const Point<T>& point) {
  * @return Lo stream di input a cui è stato accodato lo stream del punto/vettore
  */
 template <class T>
-inline std::ostream& operator<<(std::ostream& inputStream, const Point<T>& p) {
+inline std::ostream& operator<<(std::ostream& inputStream, const Point<T>& p)
+{
     inputStream << "[" << p.x() << ", " << p.y() << ", " << p.z() << "]";
     return inputStream;
 }
 
 template<class T>
-inline std::string to_string(const Point<T> &p) {
+inline std::string to_string(const Point<T> &p)
+{
     return std::string("[" + std::to_string(p.x()) + ", " + std::to_string(p.y()) + ", " + std::to_string(p.z()) + "]");
 }
 
-}
+} //namespace cg3
 
 //hash specialization
 template<typename T>
-inline std::size_t std::hash<cg3::Point<T> >::operator()(const cg3::Point<T>& k) const {
+inline std::size_t std::hash<cg3::Point<T> >::operator()(const cg3::Point<T>& k) const
+{
     std::size_t h=0;
     cg3::hashCombine(h, k.x(), k.y(), k.z());
     return h;

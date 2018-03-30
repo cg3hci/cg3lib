@@ -17,7 +17,8 @@ namespace cg3 {
  * @param[in] angle
  * @param[out] m
  */
-void getRotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m) {
+void getRotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m)
+{
     axis.normalize();
     double cosa = cos(angle);
     double sina = sin(angle);
@@ -39,7 +40,8 @@ void getRotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m) {
  * @param[out] angle
  * @return the rotation matrix
  */
-Eigen::Matrix3d getRotationMatrix(Vec3 axis, double angle) {
+Eigen::Matrix3d getRotationMatrix(Vec3 axis, double angle)
+{
     Eigen::Matrix3d m;
     axis.normalize();
     double cosa = cos(angle);
@@ -64,7 +66,8 @@ Eigen::Matrix3d getRotationMatrix(Vec3 axis, double angle) {
  * @param[in] angle
  * @param[out] m
  */
-void getRotationMatrix(Vec3 axis, double angle, double m[][3]) {
+void getRotationMatrix(Vec3 axis, double angle, double m[][3])
+{
     axis.normalize();
     double cosa = cos(angle);
     double sina = sin(angle);
@@ -79,4 +82,4 @@ void getRotationMatrix(Vec3 axis, double angle, double m[][3]) {
     m[2][2] = cosa + (axis.z() * axis.z())*(1-cosa);
 }
 
-}
+} //namespace cg3

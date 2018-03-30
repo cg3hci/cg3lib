@@ -8,9 +8,7 @@
 #ifndef CG3_POINT_H
 #define CG3_POINT_H
 
-#include <assert.h>
 #include <string>
-#include <iostream>
 
 #include "../io/serialize.h"
 #include "../utilities/hash.h"

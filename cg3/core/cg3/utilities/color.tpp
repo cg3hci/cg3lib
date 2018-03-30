@@ -385,11 +385,11 @@ inline bool Color::operator <(const Color& otherColor) const {
 }
 
 inline void Color::serialize(std::ofstream& binaryFile) const {
-    Serializer::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
+    cg3::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
 }
 
 inline void Color::deserialize(std::ifstream& binaryFile) {
-    Serializer::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
+    cg3::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
 }
 
 }

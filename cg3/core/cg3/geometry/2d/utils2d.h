@@ -9,26 +9,44 @@
 #ifndef CG3_UTILS2D_H
 #define CG3_UTILS2D_H
 
-#include "cg3/geometry/2d/point2d.h"
-#include "cg3/geometry/2d/segment2d.h"
+#include <cg3/geometry/2d/point2d.h>
+#include <cg3/geometry/2d/segment2d.h>
 
 namespace cg3 {
 
 /* Point/Segment position */
 template<typename T>
-inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
-template<typename T>
-inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
+inline bool isPointAtLeft(
+        const Segment<Point2D<T>>& segment,
+        const Point2D<T>& point);
 
 template<typename T>
-inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
-template<typename T>
-inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
+inline bool isPointAtLeft(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& point);
 
 template<typename T>
-inline bool areCollinear(const Segment<Point2D<T>>& segment, const Point2D<T>& point);
+inline bool isPointAtRight(
+        const Segment<Point2D<T>>& segment,
+        const Point2D<T>& point);
+
 template<typename T>
-inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& point);
+inline bool isPointAtRight(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& point);
+
+template<typename T>
+inline bool areCollinear(
+        const Segment<Point2D<T>>& segment,
+        const Point2D<T>& point);
+
+template<typename T>
+inline bool areCollinear(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& point);
 
 /* Others */
 template<class T>

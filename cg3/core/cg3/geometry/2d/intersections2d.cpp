@@ -7,8 +7,9 @@
 
 #include "intersections2d.h"
 
-namespace cg3 {
+#include <cg3/utilities/utils.h>
 
+namespace cg3 {
 
 /* ----- INTERNAL FUNCTION DECLARATION ----- */
 
@@ -25,7 +26,7 @@ bool isBetween(
         const Point2Dd& b,
         const Point2Dd& c,
         const double eps);
-}
+} //namespace cg3::internal
 
 
 /* ----- IMPLEMENTATION OF INTERSECTION CHECK ----- */
@@ -225,10 +226,9 @@ bool isBetween(
              ((a.y() >= c.y()) && (c.y() >= b.y()));
 }
 
-}
+} //namespace cg3::internal
 
-
-}
+} //namespace cg3
 
 
 

@@ -10,31 +10,42 @@
 namespace cg3 {
 
 template <class T>
-inline Triangle<T>::Triangle() : _v1(), _v2(), _v3() {
+inline Triangle<T>::Triangle() :
+    _v1(),
+    _v2(),
+    _v3()
+{
 }
 
 template<class T>
-inline Triangle<T>::Triangle(const T& v1, const T& v2, const T& v3): _v1(v1), _v2(v2), _v3(v3) {
+inline Triangle<T>::Triangle(const T& v1, const T& v2, const T& v3):
+    _v1(v1),
+    _v2(v2),
+    _v3(v3)
+{
 }
 
-
 template<class T>
-inline const T& Triangle<T>::v1() const {
+inline const T& Triangle<T>::v1() const
+{
     return _v1;
 }
 
 template<class T>
-inline const T& Triangle<T>::v2() const {
+inline const T& Triangle<T>::v2() const
+{
     return _v2;
 }
 
 template<class T>
-inline const T& Triangle<T>::v3() const {
+inline const T& Triangle<T>::v3() const
+{
     return _v3;
 }
 
 template<class T>
-inline std::vector<T> Triangle<T>::getVertices() const {
+inline std::vector<T> Triangle<T>::getVertices() const
+{
     std::vector<T> vertices(3);
     vertices[0] = v1();
     vertices[1] = v2();
@@ -44,58 +55,69 @@ inline std::vector<T> Triangle<T>::getVertices() const {
 
 
 template<class T>
-inline T& Triangle<T>::v1() {
+inline T& Triangle<T>::v1()
+{
     return _v1;
 }
 
 template<class T>
-inline T& Triangle<T>::v2() {
+inline T& Triangle<T>::v2()
+{
     return _v2;
 }
 
 template<class T>
-inline T& Triangle<T>::v3() {
+inline T& Triangle<T>::v3()
+{
     return _v3;
 }
 
 
 template<class T>
-inline void Triangle<T>::setV1(const T& v1) {
+inline void Triangle<T>::setV1(const T& v1)
+{
     this->_v1 = v1;
 }
 
 template<class T>
-inline void Triangle<T>::setV2(const T& v2) {
+inline void Triangle<T>::setV2(const T& v2)
+{
     this->_v2 = v2;
 }
 
 template<class T>
-inline void Triangle<T>::setV3(const T& v3) {
+inline void Triangle<T>::setV3(const T& v3)
+{
     this->_v3 = v3;
 }
 
 template<class T>
-inline void Triangle<T>::set(const T& v1, const T& v2, const T& v3) {
+inline void Triangle<T>::set(const T& v1, const T& v2, const T& v3)
+{
     this->_v1 = v1;
     this->_v2 = v2;
     this->_v3 = v3;
 }
 
 template<class T>
-inline cg3::Segment<T> Triangle<T>::side1() const {
+inline cg3::Segment<T> Triangle<T>::side1() const
+{
     return cg3::Segment<T>(_v1, _v2);
 }
 template<class T>
-inline cg3::Segment<T> Triangle<T>::side2() const {
+inline cg3::Segment<T> Triangle<T>::side2() const
+{
     return cg3::Segment<T>(_v2, _v3);
 }
 template<class T>
-inline cg3::Segment<T> Triangle<T>::side3() const {
+inline cg3::Segment<T> Triangle<T>::side3() const
+{
     return cg3::Segment<T>(_v3, _v1);
 }
 
 template<class T>
-inline std::vector<cg3::Segment<T>> Triangle<T>::getSides() const {
+inline std::vector<cg3::Segment<T>> Triangle<T>::getSides() const
+{
     std::vector<cg3::Segment<T>> sides(3);    
     sides[0] = side1();
     sides[1] = side2();
@@ -105,32 +127,35 @@ inline std::vector<cg3::Segment<T>> Triangle<T>::getSides() const {
 
 
 template<class T>
-inline T Triangle<T>::normal() const {
+inline T Triangle<T>::normal() const
+{
     T n = (_v2 - _v1).cross(_v3 - _v1);
     n.normalize();
     return n;
 }
 
 template<class T>
-inline double Triangle<T>::area() const {
+inline double Triangle<T>::area() const
+{
     return (((_v3 - _v1).cross(_v2 - _v1)).getLength() / 2);
 }
 
 template<class T>
-inline T Triangle<T>::barycenter() const {
+inline T Triangle<T>::barycenter() const
+{
     return (_v1 + _v2 +_v3) / 3;
 }
 
-
-
 template<class T>
-inline void Triangle<T>::serialize(std::ofstream& binaryFile) const {
+inline void Triangle<T>::serialize(std::ofstream& binaryFile) const
+{
     cg3::serializeObjectAttributes("cg3Triangle", binaryFile, _v1, _v2, _v3);
 }
 
 template<class T>
-inline void Triangle<T>::deserialize(std::ifstream& binaryFile) {
+inline void Triangle<T>::deserialize(std::ifstream& binaryFile)
+{
     cg3::deserializeObjectAttributes("cg3Triangle", binaryFile, _v1, _v2, _v3);
 }
 
-} // namespace cg3
+} //namespace cg3

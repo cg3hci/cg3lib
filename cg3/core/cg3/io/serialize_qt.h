@@ -15,7 +15,6 @@
 #endif //QT_CORE_LIB
 
 namespace cg3 {
-namespace serializer {
 
 #ifdef QT_CORE_LIB
 void serialize(const QColor& obj, std::ofstream& binaryFile);
@@ -23,7 +22,6 @@ void serialize(const QColor& obj, std::ofstream& binaryFile);
 void deserialize(QColor& obj, std::ifstream& binaryFile);
 #endif
 
-}
 }
 
 #include "serialize_qt.tpp"

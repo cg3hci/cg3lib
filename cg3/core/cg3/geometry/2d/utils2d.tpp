@@ -8,10 +8,9 @@
 
 #include "utils2d.h"
 
-#include "cg3/utilities/utils.h"
+#include <cg3/utilities/utils.h>
 
 #include <numeric>
-
 #include <Eigen/Dense>
 
 namespace cg3 {
@@ -21,10 +20,12 @@ namespace cg3 {
 namespace internal {
 
 template<typename T>
-inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p);
+inline double positionOfPointWithRespectToSegment(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& p);
 
-}
-
+} //namespace cg3::internal
 
 
 /* ----- POINT/SEGMENT POSITION ----- */
@@ -40,7 +41,11 @@ inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Po
  *
  */
 template<typename T>
-inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+inline bool isPointAtLeft(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& p)
+{
     double det = internal::positionOfPointWithRespectToSegment(s1, s2, p);
     return det > std::numeric_limits<double>::epsilon();
 }
@@ -55,7 +60,10 @@ inline bool isPointAtLeft(const Point2D<T>& s1, const Point2D<T>& s2, const Poin
  *
  */
 template<typename T>
-inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
+inline bool isPointAtLeft(
+        const Segment<Point2D<T>>& segment,
+        const Point2D<T>& point)
+{
     return isPointAtLeft<T>(segment.getP1(), segment.getP2(), point);
 }
 
@@ -70,7 +78,11 @@ inline bool isPointAtLeft(const Segment<Point2D<T>>& segment, const Point2D<T>& 
  *
  */
 template<typename T>
-inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+inline bool isPointAtRight(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& p)
+{
     double det = internal::positionOfPointWithRespectToSegment(s1, s2, p);
     return det < -std::numeric_limits<double>::epsilon();
 }
@@ -85,7 +97,10 @@ inline bool isPointAtRight(const Point2D<T>& s1, const Point2D<T>& s2, const Poi
  *
  */
 template<typename T>
-inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
+inline bool isPointAtRight(
+        const Segment<Point2D<T>>& segment,
+        const Point2D<T>& point)
+{
     return isPointAtRight<T>(segment.getP1(), segment.getP2(), point);
 }
 
@@ -102,7 +117,11 @@ inline bool isPointAtRight(const Segment<Point2D<T>>& segment, const Point2D<T>&
  *
  */
 template<typename T>
-inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+inline bool areCollinear(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& p)
+{
     double det = internal::positionOfPointWithRespectToSegment(s1, s2, p);
     return cg3::epsilonEqual(det, 0.0);
 }
@@ -117,13 +136,12 @@ inline bool areCollinear(const Point2D<T>& s1, const Point2D<T>& s2, const Point
  *
  */
 template<typename T>
-inline bool areCollinear(const Segment<Point2D<T>>& segment, const Point2D<T>& point) {
+inline bool areCollinear(
+        const Segment<Point2D<T>>& segment,
+        const Point2D<T>& point)
+{
     return areCollinear<T>(segment.getP1(), segment.getP2(), point);
 }
-
-
-
-
 
 
 /* ----- OTHERS ----- */
@@ -167,7 +185,8 @@ inline bool isPointLyingInCircle(
  * @return true if the points of the polygon are stored in counterclockwise order
  */
 template <typename Container>
-inline bool isPolygonCounterClockwise(const Container& polygon) {
+inline bool isPolygonCounterClockwise(const Container& polygon)
+{
     double sum = 0;
     for (typename Container::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
         typename Container::const_iterator next = it;
@@ -185,8 +204,6 @@ inline bool isPolygonCounterClockwise(const Container& polygon) {
 }
 
 
-
-
 /* ----- INTERNAL FUNCTION DEFINITION ----- */
 
 namespace internal {
@@ -202,10 +219,13 @@ namespace internal {
  *
  */
 template<typename T>
-inline double positionOfPointWithRespectToSegment(const Point2D<T>& s1, const Point2D<T>& s2, const Point2D<T>& p) {
+inline double positionOfPointWithRespectToSegment(
+        const Point2D<T>& s1,
+        const Point2D<T>& s2,
+        const Point2D<T>& p)
+{
     return ((s2.x() - s1.x())*(p.y() - s1.y()) - (s2.y() - s1.y())*(p.x() - s1.x()));
 }
 
-}
-
-}
+} //namespace cg3::internal
+} //namespace cg3

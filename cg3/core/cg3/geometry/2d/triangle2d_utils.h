@@ -22,7 +22,8 @@ template<class T>
 inline void sortTriangle2DPoints(cg3::Triangle<Point2D<T>>& triangle);
 
 template<class T>
-inline void sortTrianglePointsAndReorderCounterClockwise(cg3::Triangle<Point2D<T>>& triangle);
+inline void sortTrianglePointsAndReorderCounterClockwise(
+        cg3::Triangle<Point2D<T>>& triangle);
 
 template<class T>
 inline bool isPointLyingInTriangle(

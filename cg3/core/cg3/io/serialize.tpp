@@ -27,9 +27,13 @@ namespace cg3 {
  * @param[in] args: a variable number of arguments of different types
  */
 template<typename... Args>
-inline void serializeObjectAttributes(const std::string& s, std::ofstream& binaryFile, const Args&... args) {
-    serializer::serialize(s, binaryFile);
-    serializer::internal::serializeAttribute(binaryFile, args...);
+inline void serializeObjectAttributes(
+        const std::string& s,
+        std::ofstream& binaryFile,
+        const Args&... args)
+{
+    serialize(s, binaryFile);
+    internal::serializeAttribute(binaryFile, args...);
 }
 
 /**
@@ -49,50 +53,58 @@ inline void serializeObjectAttributes(const std::string& s, std::ofstream& binar
  * deserialized from the binary file.
  */
 template<typename... Args>
-inline void deserializeObjectAttributes(const std::string& s, std::ifstream& binaryFile, Args&... args) {
+inline void deserializeObjectAttributes(
+        const std::string& s,
+        std::ifstream& binaryFile,
+        Args&... args)
+{
     std::string tmp;
     std::streampos begin = binaryFile.tellg();
     try {
 
-        serializer::deserialize(tmp, binaryFile);
+        deserialize(tmp, binaryFile);
         if (tmp != s)
             throw std::ios_base::failure("Mismatching String: " + tmp + " != " + s);
-        serializer::internal::deserializeAttribute(binaryFile, args...);
+        internal::deserializeAttribute(binaryFile, args...);
 
     }
     catch(std::ios_base::failure& e){
-        serializer::restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom ") + s);
     }
     catch(...){
-        serializer::restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of " + s);
     }
 }
 
 /**
- * @brief Serializer::getPosition
+ * @brief getPosition
  * @param[in] binaryFile
  * @return the position of the stream
  */
-inline std::streampos serializer::getPosition(std::ifstream& binaryFile) {
+inline std::streampos getFilePosition(std::ifstream& binaryFile)
+{
     return binaryFile.tellg();
 }
 
 /**
- * @brief Serializer::restorePosition
+ * @brief restorePosition
  * restores the current position of the stream
  * @param[out] binaryFile: the file with the new position
  * @param[in] position: the desired position on the file
  */
-inline void serializer::restorePosition(std::ifstream& binaryFile, const std::streampos& position) {
+inline void restoreFilePosition(
+        std::ifstream& binaryFile,
+        const std::streampos& position)
+{
     binaryFile.clear();
     binaryFile.seekg(position);
 }
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  *
  * This function allows to serialize on a std::ofstream opened in binary mode:
  *
@@ -107,9 +119,14 @@ inline void serializer::restorePosition(std::ifstream& binaryFile, const std::st
  * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
  */
 template <typename T>
-inline void serializer::serialize(const T& obj, std::ofstream& binaryFile, typename std::enable_if<!std::is_pointer<T>::value >::type*){
+inline void serialize(
+        const T& obj,
+        std::ofstream& binaryFile,
+        typename std::enable_if<!std::is_pointer<T>::value >::type*)
+{
     #ifndef CG3_IGNORE_TYPESAFE_SERIALIZATION_CHECK
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::serialize specialization for this type!");
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value,
+                  "Please provide cg3::serialize specialization for this type!");
     #endif
     if (std::is_base_of<SerializableObject, T>::value){
         SerializableObject* o =(SerializableObject*) &obj;
@@ -122,7 +139,7 @@ inline void serializer::serialize(const T& obj, std::ofstream& binaryFile, typen
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  *
  * This function allows to serialize on a std::ofstream opened in binary mode:
  *
@@ -140,7 +157,11 @@ inline void serializer::serialize(const T& obj, std::ofstream& binaryFile, typen
  * @param[in] binaryFile: std::ofstream opened in binary mode on the file where we want to serialize
  */
 template <typename T>
-inline void serializer::serialize(const T& obj, std::ofstream& binaryFile, typename std::enable_if<std::is_pointer<T>::value >::type*){
+inline void serialize(
+        const T& obj,
+        std::ofstream& binaryFile,
+        typename std::enable_if<std::is_pointer<T>::value >::type*)
+{
     if (obj == nullptr)
         serialize("cg3nullptr", binaryFile);
     else {
@@ -151,7 +172,7 @@ inline void serializer::serialize(const T& obj, std::ofstream& binaryFile, typen
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  *
  * This function allows to deserialize on a std::ifstream opened in binary mode:
  *
@@ -169,9 +190,14 @@ inline void serializer::serialize(const T& obj, std::ofstream& binaryFile, typen
  * @param[in] binaryFile: std::ifstream opened in binary mode on the file we want to deserialize
  */
 template <typename T>
-inline void serializer::deserialize(T& obj, std::ifstream& binaryFile, typename std::enable_if<!std::is_pointer<T>::value >::type*){
+inline void deserialize(
+        T& obj,
+        std::ifstream& binaryFile,
+        typename std::enable_if<!std::is_pointer<T>::value >::type*)
+{
     #ifndef CG3_IGNORE_TYPESAFE_SERIALIZATION_CHECK
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value, "Please provide cg3::Serializer::deserialize specialization for this type!");
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value,
+                  "Please provide cg3::deserialize specialization for this type!");
     #endif
     std::streampos begin = binaryFile.tellg();
     if (std::is_base_of<SerializableObject, T>::value){
@@ -180,17 +206,17 @@ inline void serializer::deserialize(T& obj, std::ifstream& binaryFile, typename 
             o->deserialize(binaryFile);
         }
         catch (std::ios_base::failure& e){
-            restorePosition(binaryFile, begin);
+            restoreFilePosition(binaryFile, begin);
             throw std::ios_base::failure(e.what() + std::string("\nFrom ") + internal::typeName<decltype(obj)>(false, false, false));
         }
         catch(...){
-            restorePosition(binaryFile, begin);
+            restoreFilePosition(binaryFile, begin);
             throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
         }
     }
     else{ //primitive type deserialization
         if (! binaryFile.read(reinterpret_cast<char*>(&obj), sizeof(T))){
-            restorePosition(binaryFile, begin);
+            restoreFilePosition(binaryFile, begin);
             throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
         }
     }
@@ -198,7 +224,7 @@ inline void serializer::deserialize(T& obj, std::ifstream& binaryFile, typename 
 
 /**
  * \~English
- * @brief Serializer::deserialize - specialization for pointers
+ * @brief deserialize - specialization for pointers
  *
  * This function allows to deserialize on a std::ifstream opened in binary mode:
  *
@@ -221,7 +247,11 @@ inline void serializer::deserialize(T& obj, std::ifstream& binaryFile, typename 
  * @param[in] binaryFile: std::ifstream opened in binary mode on the file we want to deserialize
  */
 template <typename T>
-inline void serializer::deserialize(T& obj, std::ifstream& binaryFile, typename std::enable_if<std::is_pointer<T>::value >::type*){
+inline void deserialize(
+        T& obj,
+        std::ifstream& binaryFile,
+        typename std::enable_if<std::is_pointer<T>::value >::type*)
+{
     std::streampos begin = binaryFile.tellg();
     T tmp = nullptr;
     try {
@@ -240,46 +270,48 @@ inline void serializer::deserialize(T& obj, std::ifstream& binaryFile, typename 
     }
     catch(std::ios_base::failure& e){
         if (tmp != nullptr) delete tmp;
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom " + internal::typeName<decltype(obj)>(false, false, false)));
     }
     catch(...){
         if (tmp != nullptr) delete tmp;
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of " + internal::typeName<decltype(obj)>(false, false, false));
     }
 }
 
 /**
- * @brief Serializer::serialize
+ * @brief serialize
  *
  * Specialization for literal strings. A serialized literal string can be deserialized in a std::string.
  *
  * @param str
  * @param binaryFile
  */
-inline void serializer::serialize(const char * str, std::ofstream& binaryFile){
+inline void serialize(const char * str, std::ofstream& binaryFile)
+{
     unsigned long long int size = std::strlen(str);
-    serializer::serialize(size, binaryFile);
+    serialize(size, binaryFile);
     binaryFile.write(str, size);
 }
 
 /**
- * @brief Serializer::serialize
+ * @brief serialize
  *
  * Specialization for std::string
  *
  * @param str
  * @param binaryFile
  */
-inline void serializer::serialize(const std::string& str, std::ofstream& binaryFile){
+inline void serialize(const std::string& str, std::ofstream& binaryFile)
+{
     unsigned long long int size = str.size();
-    serializer::serialize(size, binaryFile);
+    serialize(size, binaryFile);
     binaryFile.write(&str[0],size);
 }
 
 /**
- * @brief Serializer::deserialize
+ * @brief deserialize
  *
  * Specialization for std::string.
  * If there were an error on reading the object, it will restore the position of the stream
@@ -289,12 +321,13 @@ inline void serializer::serialize(const std::string& str, std::ofstream& binaryF
  * @param str
  * @param binaryFile
  */
-inline void serializer::deserialize(std::string& str, std::ifstream& binaryFile){
+inline void deserialize(std::string& str, std::ifstream& binaryFile)
+{
     unsigned long long int size;
     std::string tmp;
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
         tmp.resize(size);
         if (binaryFile.read(&tmp[0], size)){
             str = std::move(tmp);
@@ -304,37 +337,39 @@ inline void serializer::deserialize(std::string& str, std::ifstream& binaryFile)
         }
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::string"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::string");
     }
 
 }
 
 template<typename T1, typename T2>
-inline void serializer::serialize(const std::pair<T1, T2>& p, std::ofstream& binaryFile) {
-    serializer::serialize(p.first, binaryFile);
-    serializer::serialize(p.second, binaryFile);
+inline void serialize(const std::pair<T1, T2>& p, std::ofstream& binaryFile)
+{
+    serialize(p.first, binaryFile);
+    serialize(p.second, binaryFile);
 }
 
 template<typename T1, typename T2>
-inline void serializer::deserialize(std::pair<T1, T2>& p, std::ifstream& binaryFile) {
+inline void deserialize(std::pair<T1, T2>& p, std::ifstream& binaryFile)
+{
     std::streampos begin = binaryFile.tellg();
     std::pair<T1, T2> tmp;
     try {
-        serializer::deserialize(tmp.first, binaryFile);
-        serializer::deserialize(tmp.second, binaryFile);
+        deserialize(tmp.first, binaryFile);
+        deserialize(tmp.second, binaryFile);
         p = std::move(tmp);
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::pair"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::pair");
     }
 
@@ -342,363 +377,381 @@ inline void serializer::deserialize(std::pair<T1, T2>& p, std::ifstream& binaryF
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  * @param[in] s: std::set
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::serialize(const std::set<T, A...> &s, std::ofstream& binaryFile){
+inline void serialize(const std::set<T, A...> &s, std::ofstream& binaryFile)
+{
     unsigned long long int size = s.size();
-    serializer::serialize("stdset", binaryFile);
-    serializer::serialize(size, binaryFile);
+    serialize("stdset", binaryFile);
+    serialize(size, binaryFile);
     for (typename std::set<T, A...>::const_iterator it = s.begin(); it != s.end(); ++it)
-        serializer::serialize((*it), binaryFile);
+        serialize((*it), binaryFile);
 }
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  * @param[out] s: std::set
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::deserialize(std::set<T, A...> &s, std::ifstream& binaryFile){
+inline void deserialize(std::set<T, A...> &s, std::ifstream& binaryFile)
+{
     std::string str;
     std::set<T, A...> tmp;
     unsigned long long int size;
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(str, binaryFile);
+        deserialize(str, binaryFile);
         if (str != "stdset")
             throw std::ios_base::failure("Mismatching String: " + str + " != stdset");
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
         for (unsigned int it = 0; it < size; ++it){
             T obj;
-            serializer::deserialize(obj, binaryFile);
+            deserialize(obj, binaryFile);
             tmp.insert(obj);
         }
         s = std::move(tmp);
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::set"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::set");
     }
 }
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  * @param[in] s: std::unordered_set
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::serialize(const std::unordered_set<T, A...> &s, std::ofstream& binaryFile){
+inline void serialize(const std::unordered_set<T, A...> &s, std::ofstream& binaryFile)
+{
     unsigned long long int size = s.size();
-    serializer::serialize("stdunorderedset", binaryFile);
-    serializer::serialize(size, binaryFile);
+    serialize("stdunorderedset", binaryFile);
+    serialize(size, binaryFile);
     for (typename std::unordered_set<T, A...>::const_iterator it = s.begin(); it != s.end(); ++it)
-        serializer::serialize((*it), binaryFile);
+        serialize((*it), binaryFile);
 }
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  * @param[out] s: std::unordered_set
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::deserialize(std::unordered_set<T, A...> &s, std::ifstream& binaryFile){
+inline void deserialize(std::unordered_set<T, A...> &s, std::ifstream& binaryFile)
+{
     std::string str;
     std::unordered_set<T, A...> tmp;
     unsigned long long int size;
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(str, binaryFile);
+        deserialize(str, binaryFile);
         if (str != "stdunorderedset")
             throw std::ios_base::failure("Mismatching String: " + str + " != stdset");
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
         for (unsigned int it = 0; it < size; ++it){
             T obj;
-            serializer::deserialize(obj, binaryFile);
+            deserialize(obj, binaryFile);
             tmp.insert(obj);
         }
         s = std::move(tmp);
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::set"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::set");
     }
 }
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  * @param[in] v: std::vector of booleans
  * @param binaryFile
  */
 template <typename ...A>
-inline void serializer::serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile){
+inline void serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile)
+{
     bool tmp;
     unsigned long long int size = v.size();
-    serializer::serialize("stdvectorBool", binaryFile);
-    serializer::serialize(size, binaryFile);
+    serialize("stdvectorBool", binaryFile);
+    serialize(size, binaryFile);
     for (typename std::vector<bool, A...>::const_iterator it = v.begin(); it != v.end(); ++it){
         if (*it) tmp = 1;
         else tmp = 0;
-        serializer::serialize(tmp, binaryFile);
+        serialize(tmp, binaryFile);
     }
 }
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  * @param[in] v: std::vector
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::serialize(const std::vector<T, A...> &v, std::ofstream& binaryFile){
+inline void serialize(const std::vector<T, A...> &v, std::ofstream& binaryFile)
+{
     unsigned long long int size = v.size();
-    serializer::serialize(std::string("stdvector"), binaryFile);
-    serializer::serialize(size, binaryFile);
+    serialize(std::string("stdvector"), binaryFile);
+    serialize(size, binaryFile);
     for (typename std::vector<T, A...>::const_iterator it = v.begin(); it != v.end(); ++it)
-        serializer::serialize((*it), binaryFile);
+        serialize((*it), binaryFile);
 }
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  * @param[out] v: std::vector
  * @param binaryFile
  */
 template <typename ...A>
-inline void serializer::deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile){
+inline void deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile)
+{
     unsigned long long int size;
     std::string s;
     std::vector<bool, A...> tmpv;
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(s, binaryFile);
+        deserialize(s, binaryFile);
         if (s != "stdvectorBool")
             throw std::ios_base::failure("Mismatching String: " + s + " != stdvectorBool");
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
         tmpv.resize(size);
         bool tmp;
         for (unsigned int it = 0; it < size; ++it){
-            serializer::deserialize(tmp, binaryFile);
+            deserialize(tmp, binaryFile);
             tmpv[it] = tmp;
         }
         v = std::move(tmpv);
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::vector<bool>"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::set");
     }
 }
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  * @param[out] v: std::vector
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::deserialize(std::vector<T, A...> &v, std::ifstream& binaryFile){
+inline void deserialize(std::vector<T, A...> &v, std::ifstream& binaryFile)
+{
     unsigned long long int size;
     std::string s;
     std::vector<T, A...> tmpv;
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(s, binaryFile);
+        deserialize(s, binaryFile);
         if (s != "stdvector")
             throw std::ios_base::failure("Mismatching String: " + s + " != stdvector");
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
         tmpv.resize(size);
         for (unsigned int it = 0; it < size; ++it){
-            serializer::deserialize(tmpv[it], binaryFile);
+            deserialize(tmpv[it], binaryFile);
         }
         v = std::move(tmpv);
 
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::vector"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::vector");
     }
 }
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  * @param[in] l: std::list
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::serialize(const std::list<T, A...> &l, std::ofstream& binaryFile){
+inline void serialize(const std::list<T, A...> &l, std::ofstream& binaryFile)
+{
     unsigned long long int size = l.size();
-    serializer::serialize("stdlist", binaryFile);
-    serializer::serialize(size, binaryFile);
+    serialize("stdlist", binaryFile);
+    serialize(size, binaryFile);
     for (typename std::list<T, A...>::const_iterator it = l.begin(); it != l.end(); ++it)
-        serializer::serialize((*it), binaryFile);
+        serialize((*it), binaryFile);
 }
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  * @param[out] l: std::list
  * @param binaryFile
  */
 template <typename T, typename ...A>
-inline void serializer::deserialize(std::list<T, A...> &l, std::ifstream& binaryFile){
+inline void deserialize(std::list<T, A...> &l, std::ifstream& binaryFile)
+{
     unsigned long long int size;
     std::string s;
     std::list<T, A...> tmp;
 
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(s, binaryFile);
+        deserialize(s, binaryFile);
         if (s != "stdlist")
             throw std::ios_base::failure("Mismatching String: " + s + " != stdlist");
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
         for (unsigned int it = 0; it < size; ++it){
             T obj;
-            serializer::deserialize(obj, binaryFile);
+            deserialize(obj, binaryFile);
             tmp.push_back(obj);
         }
         l = std::move(tmp);
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::list"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::list");
     }
 }
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  * @param[out] m: std::map
  * @param binaryFile
  */
 template <typename T1, typename T2, typename ...A>
-inline void serializer::serialize(const std::map<T1, T2, A...> &m, std::ofstream& binaryFile){
+inline void serialize(const std::map<T1, T2, A...> &m, std::ofstream& binaryFile)
+{
     unsigned long long int size = m.size();
-    serializer::serialize("stdmap", binaryFile);
-    serializer::serialize(size, binaryFile);
+    serialize("stdmap", binaryFile);
+    serialize(size, binaryFile);
     for (typename std::map<T1, T2, A...>::const_iterator it = m.begin(); it != m.end(); ++it){
-        serializer::serialize((it->first), binaryFile);
-        serializer::serialize((it->second), binaryFile);
+        serialize((it->first), binaryFile);
+        serialize((it->second), binaryFile);
     }
 }
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  * @param[in] m: std::map
  * @param binaryFile
  */
 template <typename T1, typename T2, typename ...A>
-inline void serializer::deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile){
+inline void deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile)
+{
     unsigned long long int size;
     std::string s;
     std::map<T1, T2, A...> tmp;
 
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(s, binaryFile);
+        deserialize(s, binaryFile);
         if (s != "stdmap")
             throw std::ios_base::failure("Mismatching String: " + s + " != stdmap");
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
 
         for (unsigned int it = 0; it < size; ++it){
             T1 o1;
             T2 o2;
 
-            serializer::deserialize(o1, binaryFile);
-            serializer::deserialize(o2, binaryFile);
+            deserialize(o1, binaryFile);
+            deserialize(o2, binaryFile);
             tmp[std::move(o1)] = std::move(o2);
         }
         m = std::move(tmp);
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::map"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::map");
     }
 }
 
 /**
  * \~English
- * @brief Serializer::serialize
+ * @brief serialize
  * @param[in] m: std::array
  * @param binaryFile
  */
 template <typename T, unsigned long int ...A>
-inline void serializer::serialize(const std::array<T, A...> &a, std::ofstream& binaryFile){
+inline void serialize(const std::array<T, A...> &a, std::ofstream& binaryFile)
+{
     unsigned long long int size = a.size();
-    serializer::serialize("stdarray", binaryFile);
-    serializer::serialize(size, binaryFile);
+    serialize("stdarray", binaryFile);
+    serialize(size, binaryFile);
     for (typename std::array<T, A...>::const_iterator it = a.begin(); it != a.end(); ++it)
-        serializer::serialize((*it), binaryFile);
+        serialize((*it), binaryFile);
 }
 
 /**
  * \~English
- * @brief Serializer::deserialize
+ * @brief deserialize
  * @warning please make sure that the input set is an empty set.
  * @param[out] m: std::array
  * @param binaryFile
  */
 template <typename T, unsigned long int ...A>
-inline void serializer::deserialize(std::array<T, A...> &a, std::ifstream& binaryFile){
+inline void deserialize(std::array<T, A...> &a, std::ifstream& binaryFile)
+{
     unsigned long long int size;
     std::string s;
     std::streampos begin = binaryFile.tellg();
     try {
-        serializer::deserialize(s, binaryFile);
+        deserialize(s, binaryFile);
         if (s != "stdarray")
             throw std::ios_base::failure("Mismatching String: " + s + " != stdarray");
-        serializer::deserialize(size, binaryFile);
+        deserialize(size, binaryFile);
         if (size != a.size())
             throw std::ios_base::failure(std::string("Mismatching std::array size: ") + std::to_string(size) + " != " + std::to_string(a.size()));
         std::vector<T> tmp(size);
         for (unsigned int it = 0; it < size; ++it){
-            serializer::deserialize(tmp[it], binaryFile);
+            deserialize(tmp[it], binaryFile);
         }
         std::copy_n(tmp.begin(), size, a.begin());
     }
     catch(std::ios_base::failure& e){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure(e.what() + std::string("\nFrom std::array"));
     }
     catch(...){
-        restorePosition(binaryFile, begin);
+        restoreFilePosition(binaryFile, begin);
         throw std::ios_base::failure("Deserialization failed of std::array");
     }
 }
 
 template<typename T>
-inline std::string serializer::internal::typeName(bool specifyIfConst, bool specifyIfVolatile, bool specifyIfReference) {
+inline std::string internal::typeName(
+        bool specifyIfConst,
+        bool specifyIfVolatile,
+        bool specifyIfReference)
+{
     typedef typename std::remove_reference<T>::type TR;
     std::unique_ptr<char, void(*)(void*)> own(
     #ifndef _MSC_VER
@@ -721,26 +774,36 @@ inline std::string serializer::internal::typeName(bool specifyIfConst, bool spec
     return r;
 }
 
-inline void serializer::internal::serializeAttribute(std::ofstream& binaryFile){
+inline void internal::serializeAttribute(std::ofstream& binaryFile)
+{
     CG3_SUPPRESS_WARNING(binaryFile);
 }
 
 template<typename T, typename ...Args>
-inline void serializer::internal::serializeAttribute(std::ofstream& binaryFile, const T& t, const Args&... args) {
-    serializer::serialize(t, binaryFile);
+inline void internal::serializeAttribute(
+        std::ofstream& binaryFile,
+        const T& t,
+        const Args&... args)
+{
+    serialize(t, binaryFile);
     serializeAttribute(binaryFile, args...);
 }
 
-inline void serializer::internal::deserializeAttribute(std::ifstream& binaryFile){
+inline void internal::deserializeAttribute(std::ifstream& binaryFile)
+{
     CG3_SUPPRESS_WARNING(binaryFile);
 }
 
 template<typename T, typename ...Args>
-inline void serializer::internal::deserializeAttribute(std::ifstream& binaryFile, T& t, Args&... args) {
+inline void internal::deserializeAttribute(
+        std::ifstream& binaryFile,
+        T& t,
+        Args&... args)
+{
     T tmp;
-    serializer::deserialize(tmp, binaryFile);
+    deserialize(tmp, binaryFile);
     deserializeAttribute(binaryFile, args...);
     t = std::move(tmp);
 }
 
-}
+} //namespace cg3

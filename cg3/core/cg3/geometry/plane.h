@@ -34,7 +34,7 @@ public:
 
     void normalize();
 
-    bool pointLiesOnPlane(const Pointd& p, double epsilon = CG3_EPSILON) const;
+    bool pointLiesOnPlane(const Pointd& p, double epsilon = cg3::CG3_EPSILON) const;
     #ifdef CG3_WITH_EIGEN
     bool getIntersection(Pointd&intersection, const Line &l) const;
     #endif

@@ -8,13 +8,23 @@
 
 namespace cg3 {
 
-Line2D::Line2D() : _m(0), _q(0) {
+/**
+ * @brief Empty constructor, initializes the m and q components of the line to zero.
+ */
+Line2D::Line2D() :
+    _m(0),
+    _q(0)
+{
 }
 
-Line2D::Line2D(double m, double q) : _m(m), _q(q) {
+Line2D::Line2D(double m, double q) :
+    _m(m),
+    _q(q)
+{
 }
 
-Line2D::Line2D(const Point2Dd& p1, const Point2Dd& p2) {
+Line2D::Line2D(const Point2Dd& p1, const Point2Dd& p2)
+{
     double det = p2.x() - p1.x();
     if (det != 0) {
         _m = (p2.y() - p1.y()) / det;
@@ -24,47 +34,53 @@ Line2D::Line2D(const Point2Dd& p1, const Point2Dd& p2) {
         _m = std::numeric_limits<double>::infinity();
         _q = p1.x();
     }
-    //
 }
 
-Line2D::Line2D(double m, const Point2Dd& p) : _m(m) {
+Line2D::Line2D(double m, const Point2Dd& p) : _m(m)
+{
     _q = p.y() - m*p.x();
 }
 
 /**
- * @brief Line2D::m
+ * @brief Returns the m coefficient of the line.
  * @return the m coefficient of the line. Returns std::numeric_limits<double>::infinity() if the line is a vertical line.
  */
-double Line2D::m() const {
+double Line2D::m() const
+{
     return _m;
 }
 
 /**
- * @brief Line2D::q
+ * @brief Returns the m coefficient of the line.
  * @return te q coefficient of the line. Returns the x coordinate if the line is a vertical line.
  */
-double Line2D::q() const {
+double Line2D::q() const
+{
     return _q;
 }
 
-double Line2D::yValue(double x) const {
+double Line2D::yValue(double x) const
+{
     if (_m == std::numeric_limits<double>::infinity())
         return _m;
     return _m*x + _q;
 }
 
-double Line2D::xValue(double y) const {
+double Line2D::xValue(double y) const
+{
     if (_m == std::numeric_limits<double>::infinity())
         return _q;
     return (y-_q)/_m;
 }
 
-void Line2D::serialize(std::ofstream& binaryFile) const {
+void Line2D::serialize(std::ofstream& binaryFile) const
+{
     cg3::serializeObjectAttributes("cg3Line2D", binaryFile, _m, _q);
 }
 
-void Line2D::deserialize(std::ifstream& binaryFile) {
+void Line2D::deserialize(std::ifstream& binaryFile)
+{
     cg3::deserializeObjectAttributes("cg3Line2D", binaryFile, _m, _q);
 }
 
-}
+} //namespace cg3

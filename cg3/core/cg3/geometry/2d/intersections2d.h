@@ -8,7 +8,7 @@
 #ifndef CG3_INTERSECTIONS2D_H
 #define CG3_INTERSECTIONS2D_H
 
-#include <cg3/utilities/utils.h>
+#include <cg3/utilities/const.h>
 #include "segment2d.h"
 
 namespace cg3 {
