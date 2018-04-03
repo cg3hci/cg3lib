@@ -142,6 +142,8 @@ inline typename BipartiteGraph<T1, T2>::LeftNodeIterator BipartiteGraph<T1, T2>:
 
 template <class T1, class T2>
 inline BipartiteGraph<T1, T2>::LeftNodeIterator::LeftNodeIterator(typename std::vector<cg3::UndirectedNode<T1> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
+    while (pos != g->nodesL.end() && (g->unusedLNodes.find(pos - g->nodesL.begin())) != g->unusedLNodes.end())
+        ++pos;
 }
 
 //RightNodeIterator
@@ -201,6 +203,8 @@ inline typename BipartiteGraph<T1, T2>::RightNodeIterator BipartiteGraph<T1, T2>
 
 template <class T1, class T2>
 inline BipartiteGraph<T1, T2>::RightNodeIterator::RightNodeIterator(typename std::vector<cg3::UndirectedNode<T2> >::const_iterator it, const BipartiteGraph& g): g(&g), pos(it){
+    while (pos != g->nodesR.end() && (g->unusedRNodes.find(pos - g->nodesR.begin())) != g->unusedRNodes.end())
+        ++pos;
 }
 
 //ConstAdjacentLeftNodeRangeBasedIterator
