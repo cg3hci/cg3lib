@@ -17,10 +17,9 @@ namespace cg3 {
 
 typedef QColor Color;
 
-}
+} //namespace cg3
 
 bool operator <(const QColor &c1, const QColor &c2);
-
 
 #else
 
@@ -28,63 +27,63 @@ bool operator <(const QColor &c1, const QColor &c2);
 
 namespace cg3 {
 
-class Color : public SerializableObject {
-    public:
-        Color();
-        Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
-        int red() const;
-        int green() const;
-        int blue() const;
-        int alpha() const;
-        float redF() const;
-        float greenF() const;
-        float blueF() const;
-        float alphaF() const;
-        //toimplement
-        int hsvHue() const;
-        int hsvSaturation() const;
-        float hsvHueF() const;
-        float hsvSaturationF() const;
-        void setAlpha(unsigned char alpha);
-        void setRed(unsigned char red);
-        void setGreen(unsigned char green);
-        void setBlue(unsigned char blue);
-        void setRgb(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
-        void setHsv(unsigned char h, unsigned char s, unsigned char v, unsigned char alpha = 255);
-        void setAlphaF(float alpha);
-        void setRedF(float red);
-        void setGreenF(float green);
-        void setBlueF(float blue);
-        void setRgbF(float red, float green, float blue, float alpha = 1.0);
-        void setHsvF(float hf, float sf, float vf, float alpha = 1.0);
+class Color : public SerializableObject
+{
+public:
+    Color();
+    Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
+    int red() const;
+    int green() const;
+    int blue() const;
+    int alpha() const;
+    float redF() const;
+    float greenF() const;
+    float blueF() const;
+    float alphaF() const;
+    //toimplement
+    int hsvHue() const;
+    int hsvSaturation() const;
+    float hsvHueF() const;
+    float hsvSaturationF() const;
+    void setAlpha(unsigned char alpha);
+    void setRed(unsigned char red);
+    void setGreen(unsigned char green);
+    void setBlue(unsigned char blue);
+    void setRgb(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
+    void setHsv(unsigned char h, unsigned char s, unsigned char v, unsigned char alpha = 255);
+    void setAlphaF(float alpha);
+    void setRedF(float red);
+    void setGreenF(float green);
+    void setBlueF(float blue);
+    void setRgbF(float red, float green, float blue, float alpha = 1.0);
+    void setHsvF(float hf, float sf, float vf, float alpha = 1.0);
 
-        bool operator == (const Color& otherColor)       const;
-        bool operator != (const Color& otherColor)       const;
-        bool operator < (const Color& otherColor)       const;
+    bool operator == (const Color& otherColor)       const;
+    bool operator != (const Color& otherColor)       const;
+    bool operator < (const Color& otherColor)       const;
 
-        // SerializableObject interface
-        void serialize(std::ofstream& binaryFile) const;
-        void deserialize(std::ifstream& binaryFile);
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
-    protected:
-        int r, g, b;
-        int a;
-
-
+protected:
+    int r, g, b;
+    int a;
 };
 
-}
+} //namespace cg3
 
 #endif
 
 namespace std {
 
 template <>
-struct hash<cg3::Color> {
+struct hash<cg3::Color>
+{
     size_t operator()(const cg3::Color& k) const;
 };
 
-}
+} //namespace std
 
 #include "color.tpp"
 

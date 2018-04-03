@@ -17,7 +17,8 @@ namespace cg3 {
  * @link https://stackoverflow.com/questions/26094379/typecasting-eigenvectorxd-to-stdvector
  */
 template<typename T, int ...A>
-inline std::vector<T> eigenVectorToStdVector(const Eigen::Matrix<T, A...>& ev) {
+inline std::vector<T> eigenVectorToStdVector(const Eigen::Matrix<T, A...>& ev)
+{
     std::vector<T> stdv;
     stdv.resize(ev.size());
     Eigen::Matrix<T, A...>::Map(&stdv[0], ev.size()) = ev;
@@ -31,7 +32,8 @@ inline std::vector<T> eigenVectorToStdVector(const Eigen::Matrix<T, A...>& ev) {
  * @link https://stackoverflow.com/questions/13290395/how-to-remove-a-certain-row-or-column-while-using-eigen-library-c
  */
 template<typename T, int ...A>
-inline void removeRowFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int row) {
+inline void removeRowFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int row)
+{
     unsigned int numRows = m.rows()-1;
     unsigned int numCols = m.cols();
 
@@ -48,7 +50,8 @@ inline void removeRowFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int row
  * @link https://stackoverflow.com/questions/13290395/how-to-remove-a-certain-row-or-column-while-using-eigen-library-c
  */
 template<typename T, int ...A>
-inline void removeColumnFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int column) {
+inline void removeColumnFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int column)
+{
     unsigned int numRows = m.rows();
     unsigned int numCols = m.cols()-1;
 
@@ -59,4 +62,4 @@ inline void removeColumnFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int 
 }
 #endif
 
-}
+} //namespace cg3

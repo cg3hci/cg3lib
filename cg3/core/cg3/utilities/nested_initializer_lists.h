@@ -18,23 +18,24 @@
 #include <initializer_list>
 #include <list>
 
-
 namespace cg3 {
 
 //Traits
 namespace internal {
 
 template<typename T, std::size_t L> //recursive case: a nested list is a list of L-1 levels
-struct NestedInitializerListsTraits {
+struct NestedInitializerListsTraits
+{
     using type = std::initializer_list<typename NestedInitializerListsTraits<T, L - 1>::type>;
 };
 
 template<typename T> //base case: no list, only the type T
-struct NestedInitializerListsTraits<T, 0> {
+struct NestedInitializerListsTraits<T, 0>
+{
     using type = T;
 };
 
-}
+} //namespace cg3::internal
 
 //Alias
 /**
@@ -55,35 +56,48 @@ using NestedInitializerLists = typename internal::NestedInitializerListsTraits<T
  * Proposes some helper static functions that allows to process cg3::NestedInitializerLists of L levels.
  */
 template<typename T, std::size_t L>
-class NestedInitializerListsProcessor {
+class NestedInitializerListsProcessor
+{
 public:
-    static std::list<size_t> maxDimensionsLevels (NestedInitializerLists<T, L> values);
+    static std::list<size_t> maxDimensionsLevels (
+            NestedInitializerLists<T, L> values);
 
     template<typename T_Function>
-    static void processElements(NestedInitializerLists<T, L> values, T_Function function);
+    static void processElements(
+            NestedInitializerLists<T, L> values,
+            T_Function function);
 
     template<typename T_Function>
-    static void processElements(NestedInitializerLists<T, L> values, T_Function function, std::list<size_t> sizes);
+    static void processElements(
+            NestedInitializerLists<T, L> values,
+            T_Function function,
+            std::list<size_t> sizes);
 
 };
 
 // Last level.
 template<typename T>
-class NestedInitializerListsProcessor<T, 1> {
+class NestedInitializerListsProcessor<T, 1>
+{
 public:
     using InitializerList = cg3::NestedInitializerLists<T, 1>;
 
-    static std::list<size_t> maxDimensionsLevels (InitializerList values);
+    static std::list<size_t> maxDimensionsLevels (
+            InitializerList values);
 
     template<typename T_Function>
-    static void processElements(InitializerList values, T_Function function, std::list<size_t> sizes);
+    static void processElements(
+            InitializerList values,
+            T_Function function,
+            std::list<size_t> sizes);
 
     template<typename T_Function>
-    static void processElements(InitializerList values, T_Function function);
+    static void processElements(
+            InitializerList values,
+            T_Function function);
 };
 
-
-}
+} //namespace cg3
 
 #include "nested_initializer_lists.tpp"
 

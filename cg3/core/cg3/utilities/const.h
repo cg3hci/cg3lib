@@ -15,7 +15,8 @@ namespace cg3 {
 
 static const double CG3_EPSILON = 1e-6;
 
-static const std::array<Vec3, 6> AXIS {
+static const std::array<Vec3, 6> AXIS
+{
     Vec3( 1, 0, 0),
     Vec3( 0, 1, 0),
     Vec3( 0, 0 ,1),
@@ -24,7 +25,8 @@ static const std::array<Vec3, 6> AXIS {
     Vec3( 0, 0,-1),
 };
 
-static const std::vector<Color> PASTEL_COLORS = {
+static const std::vector<Color> PASTEL_COLORS =
+{
     Color(182, 215, 168), //
     Color(159, 197, 232), //
     Color(234, 153, 153), //
@@ -37,7 +39,6 @@ static const std::vector<Color> PASTEL_COLORS = {
     Color(180, 167, 214) //
 };
 
-
-}
+} //namespace cg3
 
 #endif // CONST_H

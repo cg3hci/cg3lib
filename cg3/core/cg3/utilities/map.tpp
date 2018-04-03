@@ -16,7 +16,8 @@ namespace cg3 {
  * @return the flipped multimap
  */
 template<typename A, typename B, template<class,class,class...> class M, class... Args>
-inline std::multimap<B,A> flipMap(const M<A,B,Args...> &src) {
+inline std::multimap<B,A> flipMap(const M<A,B,Args...> &src)
+{
     std::multimap<B,A> dst;
     std::transform(src.begin(), src.end(),
                    std::inserter(dst, dst.begin()),

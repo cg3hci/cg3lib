@@ -330,5 +330,5 @@ void cg3::Array<T, N>::initializeNestedLists(cg3::NestedInitializerLists<T, N> v
     v.resize(totalSize);
 
     typename std::vector<T>::iterator iterator = v.begin();
-    NestedInitializerListsProcessor<T, N>::processElements(values, [&iterator](T value) { *(iterator++) = value; });
+    NestedInitializerListsProcessor<T, N>::processElements(values, [&iterator](T value) { *(iterator++) = value; }, szs);
 }

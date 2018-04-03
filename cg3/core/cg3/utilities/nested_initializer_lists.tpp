@@ -9,9 +9,7 @@
 namespace cg3 {
 
 /**
- * @brief NestedInitializerListsProcessor<T, L>::maxDimensionsLevels
- *
- * Returns a list containing the maximum size of elements for every dimension.
+ * @brief Returns a list containing the maximum size of elements for every dimension.
  *
  * \code{.cpp}
  * std::list<size_t> list = cg3::NestedInitializerListsProcessor<int, 2>::maxDimensionsLevels({{2, 3, 5, 4}, {2}, {2, 4, 6}});
@@ -24,11 +22,12 @@ namespace cg3 {
  * @return a list of #L numbers, where every number is the maximum size of elements for every dimension.
  */
 template<typename T, std::size_t L>
-std::list<size_t> NestedInitializerListsProcessor<T, L>::maxDimensionsLevels(NestedInitializerLists<T, L> values){
+std::list<size_t> NestedInitializerListsProcessor<T, L>::maxDimensionsLevels(
+        NestedInitializerLists<T, L> values)
+{
     std::list<size_t> final;
     bool first = true;
     for (auto nested : values) {
-
         std::list<size_t> l = NestedInitializerListsProcessor<T, L-1>::maxDimensionsLevels(nested);
 
         if (first){
@@ -45,29 +44,66 @@ std::list<size_t> NestedInitializerListsProcessor<T, L>::maxDimensionsLevels(Nes
                 ++it;
             }
         }
-
     }
     final.push_front(values.size());
     return final;
-
 }
 
 /**
- * @brief NestedInitializerListsProcessor<T, L>::processElements
+ * @brief Applies the lambda function passed as parameter to all the elements of the NestedInitializerLists
+ *
+ * Example: save all the elements in a vector:
+ *
+ * \code{.cpp}
+ * std::vector<T> v;
+ * //resize vector proprerly, see NestedInitializerListsProcessor<T, N>::maxDimensionsLevel
+ * typename std::vector<T>::iterator iterator = v.begin();
+ * NestedInitializerListsProcessor<T, N>::processElements(values, [&iterator](T value) { *(iterator++) = value; });
+ * \endcode
+ *
+ * @note This function does not take into account the sizes of every list. If some values are missing from the lists
+ * they will be skipped and function is not applied.
  * @param values
- * @param function
+ * @param function: a lambda function that takes an argument of type T as input.
  */
 template<typename T, std::size_t L>
 template<typename T_Function>
-void NestedInitializerListsProcessor<T, L>::processElements(NestedInitializerLists<T, L> values, T_Function function) {
+void NestedInitializerListsProcessor<T, L>::processElements(
+        NestedInitializerLists<T, L> values,
+        T_Function function)
+{
     for (auto nested : values) {
         NestedInitializerListsProcessor<T, L-1>::processElements(nested, function);
     }
 }
 
+/**
+ * @brief Applies the lambda function passed as parameter to all the elements of the NestedInitializerLists
+ *
+ * Example: save all the elements in a vector:
+ *
+ * \code{.cpp}
+ * std::vector<T> v;
+ * //resize vector proprerly, see NestedInitializerListsProcessor<T, N>::maxDimensionsLevel
+ * std::list<std::size_t> sizes;
+ * //push values properly in sizes (example: sizes = NestedInitializerListsProcessor<T, N>::maxDimensionsLevel)
+ * typename std::vector<T>::iterator iterator = v.begin();
+ * NestedInitializerListsProcessor<T, N>::processElements(values, [&iterator](T value) { *(iterator++) = value; });
+ * \endcode
+ *
+ * @note This function takes into account the sizes of every list fits every list in the given sizes.
+ * If some values are missing in a list, a zero vale casted to the type T is assed to the function.
+ * @param values
+ * @param function: a lambda function that takes an argument of type T as input.
+ * @param sizes
+ */
 template<typename T, std::size_t L>
 template<typename T_Function>
-void NestedInitializerListsProcessor<T, L>::processElements(NestedInitializerLists<T, L> values, T_Function function, std::list<size_t> sizes) {
+void NestedInitializerListsProcessor<T, L>::processElements(
+        NestedInitializerLists<T, L> values,
+        T_Function function,
+        std::list<size_t> sizes)
+{
     size_t curr_size = sizes.front();
     sizes.pop_front();
     for (auto nested : values) {
@@ -86,7 +122,9 @@ void NestedInitializerListsProcessor<T, L>::processElements(NestedInitializerLis
 }
 
 template<typename T>
-std::list<size_t> NestedInitializerListsProcessor<T, 1>::maxDimensionsLevels(NestedInitializerListsProcessor<T, 1>::InitializerList values){
+std::list<size_t> NestedInitializerListsProcessor<T, 1>::maxDimensionsLevels(
+        NestedInitializerListsProcessor<T, 1>::InitializerList values)
+{
     std::list<size_t> dim;
     dim.push_back(values.size());
     return dim;
@@ -94,13 +132,20 @@ std::list<size_t> NestedInitializerListsProcessor<T, 1>::maxDimensionsLevels(Nes
 
 template<typename T>
 template<typename T_Function>
-void NestedInitializerListsProcessor<T, 1>::processElements(NestedInitializerListsProcessor<T, 1>::InitializerList values, T_Function function) {
+void NestedInitializerListsProcessor<T, 1>::processElements(
+        NestedInitializerListsProcessor<T, 1>::InitializerList values,
+        T_Function function)
+{
     std::for_each(values.begin(), values.end(), function);
 }
 
 template<typename T>
 template<typename T_Function>
-void NestedInitializerListsProcessor<T, 1>::processElements(NestedInitializerListsProcessor<T, 1>::InitializerList values, T_Function function, std::list<size_t> sizes) {
+void NestedInitializerListsProcessor<T, 1>::processElements(
+        NestedInitializerListsProcessor<T, 1>::InitializerList values,
+        T_Function function,
+        std::list<size_t> sizes)
+{
     size_t row_size = 1;
     for (size_t s : sizes)
         row_size *= s;
@@ -115,4 +160,4 @@ void NestedInitializerListsProcessor<T, 1>::processElements(NestedInitializerLis
     }
 }
 
-}
+} //namespace cg3

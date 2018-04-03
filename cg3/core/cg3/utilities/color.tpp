@@ -9,7 +9,8 @@
 
 #ifdef QT_GUI_LIB
 
-inline bool operator <(const QColor &c1, const QColor &c2){
+inline bool operator <(const QColor &c1, const QColor &c2)
+{
     if (c1.red() < c2.red()) return true;
     if (c1.red() > c2.red()) return false;
     if (c1.green() < c2.green()) return true;
@@ -29,7 +30,12 @@ namespace cg3 {
  * Default constructor.
  * Initializes a black color.
  */
-inline Color::Color() : r(0), g(0), b(0), a(0){
+inline Color::Color() :
+    r(0),
+    g(0),
+    b(0),
+    a(0)
+{
 }
 
 /**
@@ -40,7 +46,12 @@ inline Color::Color() : r(0), g(0), b(0), a(0){
  * @param[in] blue: blue component
  * @param[in] alpha: alpha component (default 255)
  */
-inline Color::Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) : r(red), g(green), b(blue), a(alpha){
+inline Color::Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) :
+    r(red),
+    g(green),
+    b(blue),
+    a(alpha)
+{
 }
 
 /**
@@ -48,7 +59,8 @@ inline Color::Color(unsigned char red, unsigned char green, unsigned char blue, 
  * Returns the red component of this color [0-255]
  * @return red component of this color
  */
-inline int Color::red() const {
+inline int Color::red() const
+{
     return r;
 }
 
@@ -57,7 +69,8 @@ inline int Color::red() const {
  * Returns the green component of this color [0-255]
  * @return green component of this color
  */
-inline int Color::green() const {
+inline int Color::green() const
+{
     return g;
 }
 
@@ -66,7 +79,8 @@ inline int Color::green() const {
  * Returns the blue component of this color [0-255]
  * @return blue component of this color
  */
-inline int Color::blue() const {
+inline int Color::blue() const
+{
     return b;
 }
 
@@ -75,7 +89,8 @@ inline int Color::blue() const {
  * Returns the alpha component of this color [0-255]
  * @return alpha component of this color
  */
-inline int Color::alpha() const {
+inline int Color::alpha() const
+{
     return a;
 }
 
@@ -84,7 +99,8 @@ inline int Color::alpha() const {
  * Returns the float red component of this color [0-1]
  * @return float red component of this color
  */
-inline float Color::redF() const {
+inline float Color::redF() const
+{
     return (float)r/255;
 }
 
@@ -93,7 +109,8 @@ inline float Color::redF() const {
  * Returns the float green component of this color [0-1]
  * @return float green component of this color
  */
-inline float Color::greenF() const {
+inline float Color::greenF() const
+{
     return (float)g/255;
 }
 
@@ -102,7 +119,8 @@ inline float Color::greenF() const {
  * Returns the float blue component of this color [0-1]
  * @return float blue component of this color
  */
-inline float Color::blueF() const {
+inline float Color::blueF() const
+{
     return (float)b/255;
 }
 
@@ -111,7 +129,8 @@ inline float Color::blueF() const {
  * Returns the float alpha component of this color [0-1]
  * @return float alpha component of this color
  */
-inline float Color::alphaF() const {
+inline float Color::alphaF() const
+{
     return (float)a/255;
 }
 
@@ -120,7 +139,8 @@ inline float Color::alphaF() const {
  * Returns the hue color component of this color [0-255]
  * @return hue color component of this color
  */
-inline int Color::hsvHue() const {
+inline int Color::hsvHue() const
+{
     unsigned char rgbMin, rgbMax;
     unsigned char h;
 
@@ -150,7 +170,8 @@ inline int Color::hsvHue() const {
  * Returns the saturation color component of this color [0-255]
  * @return saturation color component of this color
  */
-inline int Color::hsvSaturation() const {
+inline int Color::hsvSaturation() const
+{
     unsigned char rgbMin, rgbMax;
 
     rgbMin = r < g ? (r < b ? r : b) : (g < b ? g : b);
@@ -168,7 +189,8 @@ inline int Color::hsvSaturation() const {
  * Returns the float saturation color component of this color [0-1]
  * @return float saturation color component of this color
  */
-inline float Color::hsvHueF() const {
+inline float Color::hsvHueF() const
+{
     return (float)hsvHue() / 255;
 }
 
@@ -177,7 +199,8 @@ inline float Color::hsvHueF() const {
  * Returns the float saturation color component of this color [0-1]
  * @return float saturation color component of this color
  */
-inline float Color::hsvSaturationF() const {
+inline float Color::hsvSaturationF() const
+{
     return (float)hsvSaturation() / 255;
 }
 
@@ -186,7 +209,8 @@ inline float Color::hsvSaturationF() const {
  * Sets the alpha of this color [0-255]
  * @param[in] alpha
  */
-inline void Color::setAlpha(unsigned char alpha) {
+inline void Color::setAlpha(unsigned char alpha)
+{
     a = alpha;
 }
 
@@ -195,7 +219,8 @@ inline void Color::setAlpha(unsigned char alpha) {
  * Sets the red of this color [0-255]
  * @param[in] red
  */
-inline void Color::setRed(unsigned char red) {
+inline void Color::setRed(unsigned char red)
+{
     r = red;
 }
 
@@ -204,7 +229,8 @@ inline void Color::setRed(unsigned char red) {
  * Sets the green of this color [0-255]
  * @param[in] green
  */
-inline void Color::setGreen(unsigned char green) {
+inline void Color::setGreen(unsigned char green)
+{
     g = green;
 }
 
@@ -213,7 +239,8 @@ inline void Color::setGreen(unsigned char green) {
  * Sets the blue of this color [0-255]
  * @param[in] blue
  */
-inline void Color::setBlue(unsigned char blue) {
+inline void Color::setBlue(unsigned char blue)
+{
     b = blue;
 }
 
@@ -226,7 +253,12 @@ inline void Color::setBlue(unsigned char blue) {
  * @param[in] blue
  * @param[in] alpha: default 255
  */
-inline void Color::setRgb(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) {
+inline void Color::setRgb(
+        unsigned char red,
+        unsigned char green,
+        unsigned char blue,
+        unsigned char alpha)
+{
     r = red;
     g = green;
     b = blue;
@@ -242,7 +274,12 @@ inline void Color::setRgb(unsigned char red, unsigned char green, unsigned char 
  * @param[in] v
  * @param[in] alpha: default 255
  */
-inline void Color::setHsv(unsigned char h, unsigned char s, unsigned char v, unsigned char alpha) {
+inline void Color::setHsv(
+        unsigned char h,
+        unsigned char s,
+        unsigned char v,
+        unsigned char alpha)
+{
     a= alpha;
     if (s == 0) {
         r = v;
@@ -287,7 +324,8 @@ inline void Color::setHsv(unsigned char h, unsigned char s, unsigned char v, uns
  * Sets the alpha of this color [0-1]
  * @param[in] alpha
  */
-inline void Color::setAlphaF(float alpha) {
+inline void Color::setAlphaF(float alpha)
+{
     a = (unsigned char)(alpha*255);
 }
 
@@ -296,7 +334,8 @@ inline void Color::setAlphaF(float alpha) {
  * Sets the red of this color [0-1]
  * @param[in] red
  */
-inline void Color::setRedF(float red) {
+inline void Color::setRedF(float red)
+{
     r = (unsigned char)(red*255);
 }
 
@@ -305,7 +344,8 @@ inline void Color::setRedF(float red) {
  * Sets the green of this color [0-1]
  * @param[in] green
  */
-inline void Color::setGreenF(float green) {
+inline void Color::setGreenF(float green)
+{
     g = (unsigned char)(green*255);
 }
 
@@ -314,7 +354,8 @@ inline void Color::setGreenF(float green) {
  * Sets the blue of this color [0-1]
  * @param[in] blue
  */
-inline void Color::setBlueF(float blue) {
+inline void Color::setBlueF(float blue)
+{
     b = (unsigned char)(blue*255);
 }
 
@@ -327,7 +368,8 @@ inline void Color::setBlueF(float blue) {
  * @param[in] blue
  * @param[in] alpha: default 1
  */
-inline void Color::setRgbF(float red, float green, float blue, float alpha) {
+inline void Color::setRgbF(float red, float green, float blue, float alpha)
+{
     a = (unsigned char)(alpha*255);
     r = (unsigned char)(red*255);
     g = (unsigned char)(green*255);
@@ -343,23 +385,30 @@ inline void Color::setRgbF(float red, float green, float blue, float alpha) {
  * @param[in] vf
  * @param[in] alpha
  */
-inline void Color::setHsvF(float hf, float sf, float vf, float alpha) {
+inline void Color::setHsvF(float hf, float sf, float vf, float alpha)
+{
     setHsv((int)hf*255, (int)sf*255, (int)vf*255, (int)alpha*255);
 }
 
 /**
  * @brief Color::operator ==
- * Returns true if this color has the same RGB and alpha values as otherColor; otherwise returns false.
+ * Returns true if this color has the same RGB and alpha values
+ * as otherColor; otherwise returns false.
  * @param otherColor
  * @return
  */
-inline bool Color::operator ==(const Color& otherColor) const {
-    return (r == otherColor.r && g == otherColor.g && b == otherColor.b && a == otherColor.a);
+inline bool Color::operator ==(const Color& otherColor) const
+{
+    return (r == otherColor.r &&
+            g == otherColor.g &&
+            b == otherColor.b &&
+            a == otherColor.a);
 }
 
 /**
  * @brief Color::operator !=
- * Returns false if this color has the same RGB and alpha values as otherColor; otherwise returns true.
+ * Returns false if this color has the same RGB and alpha values
+ * as otherColor; otherwise returns true.
  * @param otherColor
  * @return
  */
@@ -369,11 +418,13 @@ inline bool Color::operator !=(const Color& otherColor) const {
 
 /**
  * @brief Color::operator <
- * Returns true if this color is less than otherColor follwing the RGBA order; otherwise returns false.
+ * Returns true if this color is less than otherColor follwing
+ * the RGBA order; otherwise returns false.
  * @param otherColor
  * @return
  */
-inline bool Color::operator <(const Color& otherColor) const {
+inline bool Color::operator <(const Color& otherColor) const
+{
     if (r < otherColor.r) return true;
     if (r > otherColor.r) return false;
     if (g < otherColor.g) return true;
@@ -384,18 +435,21 @@ inline bool Color::operator <(const Color& otherColor) const {
     return false;
 }
 
-inline void Color::serialize(std::ofstream& binaryFile) const {
+inline void Color::serialize(std::ofstream& binaryFile) const
+{
     cg3::serializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
 }
 
-inline void Color::deserialize(std::ifstream& binaryFile) {
+inline void Color::deserialize(std::ifstream& binaryFile)
+{
     cg3::deserializeObjectAttributes("cg3Color", binaryFile, r, g, b, a);
 }
 
 }
 #endif
 
-inline std::size_t std::hash<cg3::Color>::operator()(const cg3::Color &k) const {
+inline std::size_t std::hash<cg3::Color>::operator()(const cg3::Color &k) const
+{
     std::size_t seed = 0;
     cg3::hashCombine(seed, k.red(), k.green(), k.blue(), k.alpha());
     return seed;

@@ -9,7 +9,8 @@
 
 namespace cg3 {
 
-inline void hashCombine(std::size_t& seed) {
+inline void hashCombine(std::size_t& seed)
+{
     CG3_SUPPRESS_WARNING(seed);
 }
 
@@ -24,13 +25,14 @@ inline void hashCombine(std::size_t& seed) {
  * @param seed
  */
 template <typename T, typename... Rest>
-inline void hashCombine(std::size_t& seed, const T& v, Rest... rest) {
+inline void hashCombine(std::size_t& seed, const T& v, Rest... rest)
+{
     std::hash<T> hasher;
     seed ^= hasher(v) + 0x9e3779b9 + (seed<<6) + (seed>>2);
     hashCombine(seed, rest...);
 }
 
-}
+} //namespace cg3
 
 namespace std {
 
@@ -42,7 +44,8 @@ namespace std {
  * @return the hash of a std::pair
  */
 template<typename T1, typename T2>
-size_t hash<std::pair<T1, T2> >::operator()(const std::pair<T1, T2> &k) const {
+size_t hash<std::pair<T1, T2> >::operator()(const std::pair<T1, T2> &k) const
+{
     std::size_t seed = 0;
     cg3::hashCombine(seed, k.first, k.second);
     return seed;
@@ -56,7 +59,8 @@ size_t hash<std::pair<T1, T2> >::operator()(const std::pair<T1, T2> &k) const {
  * @return the hash of a vector
  */
 template<typename T, typename ...A>
-size_t hash<std::vector<T, A...> >::operator()(const std::vector<T, A...> &k) const {
+size_t hash<std::vector<T, A...> >::operator()(const std::vector<T, A...> &k) const
+{
     std::size_t seed = 0;
     for (const T& e : k){
         cg3::hashCombine(seed, e);
@@ -72,7 +76,8 @@ size_t hash<std::vector<T, A...> >::operator()(const std::vector<T, A...> &k) co
  * @return the hash of a set
  */
 template<typename T, typename ...A>
-size_t hash<std::set<T, A...> >::operator()(const std::set<T, A...> &k) const {
+size_t hash<std::set<T, A...> >::operator()(const std::set<T, A...> &k) const
+{
     std::size_t seed = 0;
     for (const T& e : k){
         cg3::hashCombine(seed, e);
@@ -88,7 +93,8 @@ size_t hash<std::set<T, A...> >::operator()(const std::set<T, A...> &k) const {
  * @return the hash of a list
  */
 template<typename T, typename ...A>
-size_t hash<std::list<T, A...> >::operator()(const std::list<T, A...> &k) const {
+size_t hash<std::list<T, A...> >::operator()(const std::list<T, A...> &k) const
+{
     std::size_t seed = 0;
     for (const T& e : k){
         cg3::hashCombine(seed, e);
@@ -104,7 +110,8 @@ size_t hash<std::list<T, A...> >::operator()(const std::list<T, A...> &k) const 
  * @return the hash of an array
  */
 template<typename T, unsigned long int ...A>
-size_t hash<std::array<T, A...> >::operator()(const std::array<T, A...> &k) const {
+size_t hash<std::array<T, A...> >::operator()(const std::array<T, A...> &k) const
+{
     std::size_t seed = 0;
     for (const T& e : k){
         cg3::hashCombine(seed, e);
@@ -112,4 +119,4 @@ size_t hash<std::array<T, A...> >::operator()(const std::array<T, A...> &k) cons
     return seed;
 }
 
-}
+} //namespace std
