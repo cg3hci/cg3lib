@@ -36,7 +36,8 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*>& horizonEdge
 
 /* ----- IMPLEMENTATION OF CONVEX HULL 3D ----- */
 
-inline Dcel convexHull(const Dcel& inputDcel) {
+inline Dcel convexHull(const Dcel& inputDcel)
+{
     std::vector<Pointd> points;
     points.reserve(inputDcel.getNumberVertices());
     for (const Dcel::Vertex* v : inputDcel.vertexIterator()){
@@ -46,13 +47,15 @@ inline Dcel convexHull(const Dcel& inputDcel) {
 }
 
 template <class InputContainer>
-Dcel convexHull(const InputContainer& container) {
+Dcel convexHull(const InputContainer& container)
+{
     return convexHull(container.begin(), container.end());
 }
 
 
 template <class InputIterator>
-Dcel convexHull(InputIterator first, InputIterator end) {
+Dcel convexHull(InputIterator first, InputIterator end)
+{
     Dcel convexHull;
     BipartiteGraph<Pointd, unsigned int> cg;
 
@@ -166,7 +169,8 @@ Dcel convexHull(InputIterator first, InputIterator end) {
 
 namespace internal {
 
-inline double areCoplanar(const Pointd& p0, const Pointd& p1, const Pointd& p2, const Pointd& p3) {
+inline double areCoplanar(const Pointd& p0, const Pointd& p1, const Pointd& p2, const Pointd& p3)
+{
     Eigen::Matrix4d m;
     m << p0.x(), p0.y(), p0.z(), 1,
          p1.x(), p1.y(), p1.z(), 1,
@@ -176,7 +180,8 @@ inline double areCoplanar(const Pointd& p0, const Pointd& p1, const Pointd& p2, 
     return m.determinant();
 }
 
-inline bool isFaceVisible(const Dcel::Face* f, const Pointd& p) {
+inline bool isFaceVisible(const Dcel::Face* f, const Pointd& p)
+{
     Dcel::Face::ConstIncidentVertexIterator vit = f->incidentVertexBegin();
     Pointd p1 = (*vit)->getCoordinate();
     vit++;
@@ -190,7 +195,8 @@ inline bool isFaceVisible(const Dcel::Face* f, const Pointd& p) {
 
 }
 
-inline void insertTet(Dcel& dcel, const Pointd& p0, const Pointd& p1, const Pointd& p2, const Pointd& p3) {
+inline void insertTet(Dcel& dcel, const Pointd& p0, const Pointd& p1, const Pointd& p2, const Pointd& p3)
+{
     Dcel::Vertex* v0 = dcel.addVertex(p0);
     Dcel::Vertex* v1 = dcel.addVertex(p1);
     Dcel::Vertex* v2 = dcel.addVertex(p2);
@@ -332,7 +338,8 @@ inline void insertTet(Dcel& dcel, const Pointd& p0, const Pointd& p1, const Poin
     dcel.updateVertexNormals();
 }
 
-inline void horizonEdgeList(std::vector<Dcel::HalfEdge*>& horizon, const std::set<Dcel::Face*>& visibleFaces, std::set<Dcel::Vertex*>& horizonVertex, const Pointd& next_point) {
+inline void horizonEdgeList(std::vector<Dcel::HalfEdge*>& horizon, const std::set<Dcel::Face*>& visibleFaces, std::set<Dcel::Vertex*>& horizonVertex, const Pointd& next_point)
+{
     Dcel::HalfEdge* e0 = nullptr ,*e1;
     Dcel::HalfEdge* first_boundary_edge;
     Dcel::Face* adiacent_face;
@@ -385,7 +392,8 @@ inline void horizonEdgeList(std::vector<Dcel::HalfEdge*>& horizon, const std::se
     // finché non ho ritrovaro il primo bordo
 }
 
-inline void calculateP(std::vector< std::set<Pointd> > &P, const BipartiteGraph<Pointd, unsigned int> &cg, std::vector<Dcel::HalfEdge*> &horizonEdges) {
+inline void calculateP(std::vector< std::set<Pointd> > &P, const BipartiteGraph<Pointd, unsigned int> &cg, std::vector<Dcel::HalfEdge*> &horizonEdges)
+{
     Dcel::HalfEdge* he0, *he1;
     Dcel::Face* f0, *f1;
 
@@ -404,7 +412,8 @@ inline void calculateP(std::vector< std::set<Pointd> > &P, const BipartiteGraph<
     }
 }
 
-inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertices, const std::set<Dcel::Face*> &visibleFaces, BipartiteGraph<Pointd, unsigned int>& cg) {
+inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertices, const std::set<Dcel::Face*> &visibleFaces, BipartiteGraph<Pointd, unsigned int>& cg)
+{
     std::set<Dcel::Vertex*> garbage_vertex;      // array di vertici da eliminare a fine computazione
 
     /**
@@ -457,7 +466,8 @@ inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertic
     }
 }
 
-inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdges, const Pointd & p, BipartiteGraph<Pointd, unsigned int>& cg, std::vector<std::set<Pointd> >& P) {
+inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdges, const Pointd & p, BipartiteGraph<Pointd, unsigned int>& cg, std::vector<std::set<Pointd> >& P)
+{
     Dcel::Vertex* v3, *v1, *v2;                   // id di vertici della faccia inserita: v3 è SEMPRE l'id del nuovo punto inserito nel ch.
     Dcel::HalfEdge* e1, *e2, *e3;                     // id degli half edge della faccia inserita: e1 è il twin dell'edge sull'orizzonte
                                             //                                           e2 è il next di e1

@@ -22,7 +22,8 @@ namespace internal {
  * @return Pointer to the node if the node has been inserted, nullptr otherwise
  */
 template <class Node, class K, class C>
-Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, C& comparator) {
+Node* insertNodeHelperInner(Node*& newNode, Node*& rootNode, C& comparator)
+{
     //Find the position in the BST in which
     //the new node must be inserted
     Node* lastVisitedNode = nullptr;
@@ -160,8 +161,8 @@ template <class Node, class K, class C>
 Node* findNodeHelperInner(
         const K& key,
         Node*& rootNode,
-        C& comparator
-) {
+        C& comparator)
+{
     Node* node = rootNode;
 
     //Follow a path until the node is found
@@ -193,8 +194,8 @@ template <class Node, class K, class C>
 Node* findLowerHelperInner(
         const K& key,
         Node*& rootNode,
-        C& comparator
-) {
+        C& comparator)
+{
     Node* node = rootNode;
 
     if (node == nullptr)
@@ -246,8 +247,8 @@ template <class Node, class K, class C>
 Node* findUpperHelperInner(
         const K& key,
         Node*& rootNode,
-        C& comparator
-) {
+        C& comparator)
+{
     Node* node = rootNode;
 
     if (node == nullptr)
@@ -497,7 +498,8 @@ void reportSubTreeHelperInner(
  * @return Successor of the node, nullptr if there is no successor
  */
 template <class Node>
-Node* getSuccessorHelperInner(Node* node) {
+Node* getSuccessorHelperInner(Node* node)
+{
     Node* x = node;
 
     //If it has a right child, get the minimum node of subtree
@@ -523,7 +525,8 @@ Node* getSuccessorHelperInner(Node* node) {
  * @return Predecessor of the node, nullptr if there is no predecessor
  */
 template <class Node>
-Node* getPredecessorHelperInner(Node* node) {
+Node* getPredecessorHelperInner(Node* node)
+{
     Node* x = node;
 
     // If it has a left child, get the maximum node of subtree
@@ -550,7 +553,8 @@ Node* getPredecessorHelperInner(Node* node) {
  * @return Minimum key node pointer
  */
 template <class Node>
-Node* getMinimumHelperInner(Node* rootNode) {
+Node* getMinimumHelperInner(Node* rootNode)
+{
     Node* x = rootNode;
 
     while (x != nullptr && x->left != nullptr)
@@ -567,7 +571,8 @@ Node* getMinimumHelperInner(Node* rootNode) {
  * @return Maximum key node pointer
  */
 template <class Node>
-Node* getMaximumHelperInner(Node* rootNode) {
+Node* getMaximumHelperInner(Node* rootNode)
+{
     Node* x = rootNode;
 
     while (x != nullptr && x->right != nullptr)

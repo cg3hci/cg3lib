@@ -31,7 +31,8 @@ void processConvexHull(
  * @brief Constructor for empty datastructure
  */
 template <class T>
-IncrementalConvexHull<T>::IncrementalConvexHull() {
+IncrementalConvexHull<T>::IncrementalConvexHull()
+{
 
 }
 
@@ -69,7 +70,8 @@ IncrementalConvexHull<T>::IncrementalConvexHull(const InputContainer& container)
  * @param[in] end End iterator of the input container
  */
 template <class T> template <class InputIterator>
-void IncrementalConvexHull<T>::addPoints(const InputIterator first, const InputIterator end) {
+void IncrementalConvexHull<T>::addPoints(const InputIterator first, const InputIterator end)
+{
     for (InputIterator it = first; it != end; it++) {
         this->addPoint(*it);
     }
@@ -94,7 +96,8 @@ void IncrementalConvexHull<T>::addPoints(const InputContainer& container)
  * @param[in] point Input point
  */
 template <class T>
-void IncrementalConvexHull<T>::addPoint(const Point2D<T>& point) {
+void IncrementalConvexHull<T>::addPoint(const Point2D<T>& point)
+{
     internal::processConvexHull<T>(point, this->upper, this->lower);
 }
 
@@ -103,7 +106,8 @@ void IncrementalConvexHull<T>::addPoint(const Point2D<T>& point) {
  * @param[out] out Output iterator
  */
 template <class T> template <class OutputIterator>
-void IncrementalConvexHull<T>::getConvexHull(OutputIterator out) {
+void IncrementalConvexHull<T>::getConvexHull(OutputIterator out)
+{
 
     if (this->upper.size() > 1) {
 
@@ -151,7 +155,8 @@ void IncrementalConvexHull<T>::getConvexHull(OutputIterator out) {
  * @brief Clear convex hull
  */
 template <class T>
-void IncrementalConvexHull<T>::clear() {
+void IncrementalConvexHull<T>::clear()
+{
     upper.clear();
     lower.clear();
 }

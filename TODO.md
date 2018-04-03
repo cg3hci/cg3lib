@@ -24,15 +24,17 @@
 - Meshes:
   - [ ] Reorganize EigenMeshAlgorithms
   - [ ] Put Dcel and EigenMesh under a module called Meshes
-  - [ ] viewer/interfaces becames viewer/abstract_classes
-  - [ ] viewer/renderable_objects becames viewer/opengl_functions
+  - [ ] viewer/interfaces becomes viewer/abstract_classes
+  - [ ] viewer/renderable_objects becomes viewer/opengl_functions
 - Viewer:
-  - [ ] GLCanvas becames a private nested class of the MainWindow
+  - [ ] GLCanvas becomes a private nested class of the MainWindow
   - [ ] Disable "Space" event for 3D viewer
 - CGAL:
   - [ ] Booleans 2D: transform vector of point in container of point for polygons
   - [ ] Voronoi 2D: insert on the diagram the inf edges (intersections with a built bounding box)
   - [ ] Hole Filling: better output informations
+- LibIGL:
+  - [ ] Too many files, it would be better to group them: for example "is_edge_manifold" and "is_vertex_manifold" functions can be grouped in a single file. Also "face_adjacencies", "vertex_adjacencies".
 
 # To Implement
 - Algorithms:

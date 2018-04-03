@@ -125,7 +125,8 @@ DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source)
  * The data can be retrieved in constant time.
  */
 template <class T>
-GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination) {
+GraphPath<T> dijkstra(Graph<T>& graph, const T& source, const T& destination)
+{
     typedef typename Graph<T>::NodeIterator NIterator;
 
 

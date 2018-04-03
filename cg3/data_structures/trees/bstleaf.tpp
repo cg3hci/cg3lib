@@ -94,7 +94,8 @@ BSTLeaf<K,T,C>::BSTLeaf(BSTLeaf<K,T,C>&& bst) :
  * @brief Destructor
  */
 template <class K, class T, class C>
-BSTLeaf<K,T,C>::~BSTLeaf() {
+BSTLeaf<K,T,C>::~BSTLeaf()
+{
     this->clear();
 }
 
@@ -114,7 +115,8 @@ BSTLeaf<K,T,C>::~BSTLeaf() {
  * @param[in] vec Vector of values
  */
 template <class K, class T, class C>
-void BSTLeaf<K,T,C>::construction(const std::vector<K>& vec) {
+void BSTLeaf<K,T,C>::construction(const std::vector<K>& vec)
+{
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -133,7 +135,8 @@ void BSTLeaf<K,T,C>::construction(const std::vector<K>& vec) {
  * @param[in] vec Vector of pairs of keys/values
  */
 template <class K, class T, class C>
-void BSTLeaf<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
+void BSTLeaf<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec)
+{
     this->clear();
 
     if (vec.size() == 0)
@@ -170,7 +173,8 @@ void BSTLeaf<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
  * successfully inserted, end iterator otherwise
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::insert(const K& key) {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::insert(const K& key)
+{
     return insert(key, key);
 }
 
@@ -220,7 +224,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::insert(
  * @return True if item has been found and then erased, false otherwise
  */
 template <class K, class T, class C>
-bool BSTLeaf<K,T,C>::erase(const K& key) {
+bool BSTLeaf<K,T,C>::erase(const K& key)
+{
     //Query the BST to find the node
     Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
@@ -244,7 +249,8 @@ bool BSTLeaf<K,T,C>::erase(const K& key) {
  * @param[in] it A generic iterator pointing to the node to be erased
  */
 template <class K, class T, class C>
-void BSTLeaf<K,T,C>::erase(generic_iterator it) {
+void BSTLeaf<K,T,C>::erase(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -272,7 +278,8 @@ void BSTLeaf<K,T,C>::erase(generic_iterator it) {
  * is contained in the BST, end iterator otherwise
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::find(const K& key) {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::find(const K& key)
+{
     //Query the BST to find the node
     Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
@@ -291,7 +298,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::find(const K& key) {
  * exists in the BST, end iterator otherwise
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findLower(const K& key) {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findLower(const K& key)
+{
     //Query the BST to find the node
     Node* node = internal::findLowerHelperLeaf(key, this->root, comparator);
 
@@ -306,7 +314,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findLower(const K& key) {
  * exists in the BST, end iterator otherwise
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findUpper(const K& key) {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findUpper(const K& key)
+{
     //Query the BST to find the node
     Node* node = internal::findUpperHelperLeaf(key, this->root, comparator);
 
@@ -322,7 +331,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::findUpper(const K& key) {
  *
  */
 template <class K, class T, class C>
-void BSTLeaf<K,T,C>::clear() {
+void BSTLeaf<K,T,C>::clear()
+{
     //Clear entire tree
     internal::clearHelper(this->root);
 
@@ -339,7 +349,8 @@ void BSTLeaf<K,T,C>::clear() {
  * @return Number of entries in the BST
  */
 template <class K, class T, class C>
-TreeSize BSTLeaf<K,T,C>::size() {
+TreeSize BSTLeaf<K,T,C>::size()
+{
     return this->entries;
 }
 
@@ -349,7 +360,8 @@ TreeSize BSTLeaf<K,T,C>::size() {
  * @return True if the BST is empty, false otherwise
  */
 template <class K, class T, class C>
-bool BSTLeaf<K,T,C>::empty() {
+bool BSTLeaf<K,T,C>::empty()
+{
     return (this->size() == 0);
 }
 
@@ -405,7 +417,8 @@ void BSTLeaf<K,T,C>::rangeQuery(
  * @return The iterator pointing to the minimum node
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMin() {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMin()
+{
     return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
@@ -415,7 +428,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMin() {
  * @return The iterator pointing to the maximum node
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMax() {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMax()
+{
     return iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
@@ -429,7 +443,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::getMax() {
  * iterator if it has no successor)
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getNext(generic_iterator it) {
+typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getNext(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -445,7 +460,8 @@ typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getNext(generic_iterat
  * iterator if it has no predecessor)
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getPrev(generic_iterator it) {
+typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getPrev(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -461,7 +477,8 @@ typename BSTLeaf<K,T,C>::generic_iterator BSTLeaf<K,T,C>::getPrev(generic_iterat
  * @brief Begin iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::begin() {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::begin()
+{
     return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
@@ -469,7 +486,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::begin() {
  * @brief End iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::end() {
+typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::end()
+{
     return iterator(this, nullptr);
 }
 
@@ -478,7 +496,8 @@ typename BSTLeaf<K,T,C>::iterator BSTLeaf<K,T,C>::end() {
  * @brief Begin const iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cbegin() {
+typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cbegin()
+{
     return const_iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
@@ -486,7 +505,8 @@ typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cbegin() {
  * @brief End const iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cend() {
+typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cend()
+{
     return const_iterator(this, nullptr);
 }
 
@@ -495,7 +515,8 @@ typename BSTLeaf<K,T,C>::const_iterator BSTLeaf<K,T,C>::cend() {
  * @brief Begin reverse iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rbegin() {
+typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rbegin()
+{
     return reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
@@ -503,7 +524,8 @@ typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rbegin() {
  * @brief End reverse iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rend() {
+typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rend()
+{
     return reverse_iterator(this, nullptr);
 }
 
@@ -512,7 +534,8 @@ typename BSTLeaf<K,T,C>::reverse_iterator BSTLeaf<K,T,C>::rend() {
  * @brief Begin const reverse iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crbegin() {
+typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crbegin()
+{
     return const_reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
@@ -520,7 +543,8 @@ typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crbegin() {
  * @brief End const reverse iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crend() {
+typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crend()
+{
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -530,7 +554,8 @@ typename BSTLeaf<K,T,C>::const_reverse_iterator BSTLeaf<K,T,C>::crend() {
  * @brief Insert output iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::insert_iterator BSTLeaf<K,T,C>::inserter() {
+typename BSTLeaf<K,T,C>::insert_iterator BSTLeaf<K,T,C>::inserter()
+{
     return insert_iterator(this);
 }
 
@@ -542,7 +567,8 @@ typename BSTLeaf<K,T,C>::insert_iterator BSTLeaf<K,T,C>::inserter() {
  * @return Range based iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::RangeBasedIterator BSTLeaf<K,T,C>::getIterator() {
+typename BSTLeaf<K,T,C>::RangeBasedIterator BSTLeaf<K,T,C>::getIterator()
+{
     return RangeBasedIterator(this);
 }
 
@@ -552,7 +578,8 @@ typename BSTLeaf<K,T,C>::RangeBasedIterator BSTLeaf<K,T,C>::getIterator() {
  * @return Range based const iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::RangeBasedConstIterator BSTLeaf<K,T,C>::getConstIterator() {
+typename BSTLeaf<K,T,C>::RangeBasedConstIterator BSTLeaf<K,T,C>::getConstIterator()
+{
     return RangeBasedConstIterator(this);
 }
 
@@ -562,7 +589,8 @@ typename BSTLeaf<K,T,C>::RangeBasedConstIterator BSTLeaf<K,T,C>::getConstIterato
  * @return Range based reverse iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::RangeBasedReverseIterator BSTLeaf<K,T,C>::getReverseIterator() {
+typename BSTLeaf<K,T,C>::RangeBasedReverseIterator BSTLeaf<K,T,C>::getReverseIterator()
+{
     return RangeBasedReverseIterator(this);
 }
 
@@ -572,7 +600,8 @@ typename BSTLeaf<K,T,C>::RangeBasedReverseIterator BSTLeaf<K,T,C>::getReverseIte
  * @return Range based const reverse iterator
  */
 template <class K, class T, class C>
-typename BSTLeaf<K,T,C>::RangeBasedConstReverseIterator BSTLeaf<K,T,C>::getConstReverseIterator() {
+typename BSTLeaf<K,T,C>::RangeBasedConstReverseIterator BSTLeaf<K,T,C>::getConstReverseIterator()
+{
     return RangeBasedConstReverseIterator(this);
 }
 
@@ -585,7 +614,8 @@ typename BSTLeaf<K,T,C>::RangeBasedConstReverseIterator BSTLeaf<K,T,C>::getConst
  * @return This object
  */
 template <class K, class T, class C>
-BSTLeaf<K,T,C>& BSTLeaf<K,T,C>::operator= (BSTLeaf<K,T,C> bst) {
+BSTLeaf<K,T,C>& BSTLeaf<K,T,C>::operator= (BSTLeaf<K,T,C> bst)
+{
     swap(bst);
     return *this;
 }
@@ -596,7 +626,8 @@ BSTLeaf<K,T,C>& BSTLeaf<K,T,C>::operator= (BSTLeaf<K,T,C> bst) {
  * @param[out] bst BST to be swapped with this object
  */
 template <class K, class T, class C>
-void BSTLeaf<K,T,C>::swap(BSTLeaf<K,T,C>& bst) {
+void BSTLeaf<K,T,C>::swap(BSTLeaf<K,T,C>& bst)
+{
     using std::swap;
     swap(this->root, bst.root);
     swap(this->entries, bst.entries);
@@ -610,7 +641,8 @@ void BSTLeaf<K,T,C>::swap(BSTLeaf<K,T,C>& bst) {
  * @param b2 Second BST
  */
 template <class K, class T, class C>
-void swap(BSTLeaf<K,T,C>& b1, BSTLeaf<K,T,C>& b2) {
+void swap(BSTLeaf<K,T,C>& b1, BSTLeaf<K,T,C>& b2)
+{
     b1.swap(b2);
 }
 

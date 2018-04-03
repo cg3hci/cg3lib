@@ -58,7 +58,8 @@ AVLNode<K,T>::~AVLNode()
  * @return True if the node is a leaf
  */
 template<class K, class T>
-bool AVLNode<K,T>::isLeaf() const {
+bool AVLNode<K,T>::isLeaf() const
+{
     return (left == nullptr) && (right == nullptr);
 }
 
@@ -73,7 +74,8 @@ bool AVLNode<K,T>::isLeaf() const {
  * param[in] value Value of the node
  */
 template<class K, class T>
-void AVLNode<K,T>::init(const K& key, T* value) {
+void AVLNode<K,T>::init(const K& key, T* value)
+{
     this->key = key;
     this->value = value;
 

@@ -21,7 +21,8 @@ namespace internal {
  * @param[in] rootNode Root of the subtree
  */
 template <class Node>
-void clearHelper(Node*& rootNode) {
+void clearHelper(Node*& rootNode)
+{
     //If it is already empty
     if (rootNode == nullptr)
         return;
@@ -92,7 +93,8 @@ unsigned long long int getHeightRecursiveHelper(const Node* node)
  * @param[in] node Root node of the BST
  */
 template <class Node>
-void replaceSubtreeHelper(const Node* u, Node* v, Node*& rootNode) {
+void replaceSubtreeHelper(const Node* u, Node* v, Node*& rootNode)
+{
     //If u is the root (no parent)
     if (u->parent == nullptr) {
         rootNode = v;

@@ -35,7 +35,8 @@ TreeSize getHeightHelper(const Node* node)
  * @param[in] node Starting node
  */
 template <class Node>
-void updateHeightHelper(Node* node) {
+void updateHeightHelper(Node* node)
+{
     if (node != nullptr) {
         bool done;
         do {
@@ -60,7 +61,8 @@ void updateHeightHelper(Node* node) {
  * @param[in] node Root node of the BST
  */
 template <class Node>
-void rebalanceHelper(Node* node, Node*& rootNode) {
+void rebalanceHelper(Node* node, Node*& rootNode)
+{
     //Null handler
     if (node == nullptr)
         return;
@@ -133,7 +135,8 @@ void rebalanceHelper(Node* node, Node*& rootNode) {
  * @param[in] node Root node of the BST
  */
 template <class Node>
-void updateHeightAndRebalanceHelper(Node* node, Node*& rootNode) {
+void updateHeightAndRebalanceHelper(Node* node, Node*& rootNode)
+{
     updateHeightHelper(node);
     rebalanceHelper(node, rootNode);
 }
@@ -150,7 +153,8 @@ void updateHeightAndRebalanceHelper(Node* node, Node*& rootNode) {
  * @return New node in the position of the original node after the rotation
  */
 template <class Node>
-Node* leftRotateHelper(Node* a) {
+Node* leftRotateHelper(Node* a)
+{
     Node *b = a->right;
     b->parent = a->parent;
     a->right = b->left;
@@ -183,7 +187,8 @@ Node* leftRotateHelper(Node* a) {
  * @return New node in the position of the original node after the rotation
  */
 template <class Node>
-Node* rightRotateHelper(Node* a) {
+Node* rightRotateHelper(Node* a)
+{
     Node* b = a->left;
     b->parent = a->parent;
     a->left = b->right;

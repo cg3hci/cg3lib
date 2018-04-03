@@ -80,7 +80,8 @@ const T& Graph<T>::NodeIterator::operator *() const
 /* ----- PROTECTED METHODS FOR NAVIGATION ----- */
 
 template <class T>
-void Graph<T>::NodeIterator::next() {
+void Graph<T>::NodeIterator::next()
+{
     ++it;
     it = this->graph->getFirstValidIteratorNode(it);
 
@@ -95,12 +96,14 @@ void Graph<T>::NodeIterator::next() {
 /* --------- RANGE BASED ITERATOR --------- */
 
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::RangeBasedNodeIterator::begin() {
+typename Graph<T>::NodeIterator Graph<T>::RangeBasedNodeIterator::begin()
+{
     return this->graph->nodeIteratorBegin();
 }
 
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::RangeBasedNodeIterator::end() {
+typename Graph<T>::NodeIterator Graph<T>::RangeBasedNodeIterator::end()
+{
     return this->graph->nodeIteratorEnd();
 }
 

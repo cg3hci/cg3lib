@@ -112,7 +112,8 @@ AABBTree<D,K,T,C>::AABBTree(AABBTree<D,K,T,C>&& bst) :
  * @brief Destructor
  */
 template <int D, class K, class T, class C>
-AABBTree<D,K,T,C>::~AABBTree() {
+AABBTree<D,K,T,C>::~AABBTree()
+{
     this->clear();
 }
 
@@ -132,7 +133,8 @@ AABBTree<D,K,T,C>::~AABBTree() {
  * @param[in] vec Vector of values
  */
 template <int D, class K, class T, class C>
-void AABBTree<D,K,T,C>::construction(const std::vector<K>& vec) {
+void AABBTree<D,K,T,C>::construction(const std::vector<K>& vec)
+{
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -151,7 +153,8 @@ void AABBTree<D,K,T,C>::construction(const std::vector<K>& vec) {
  * @param[in] vec Vector of pairs of keys/values
  */
 template <int D, class K, class T, class C>
-void AABBTree<D,K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
+void AABBTree<D,K,T,C>::construction(const std::vector<std::pair<K,T>>& vec)
+{
     this->clear();
 
     if (vec.size() == 0)
@@ -199,7 +202,8 @@ void AABBTree<D,K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
  * successfully inserted, end iterator otherwise
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::insert(const K& key) {
+typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::insert(const K& key)
+{
     return insert(key, key);
 }
 
@@ -255,7 +259,8 @@ typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::insert(
  * @return True if item has been found and then erased, false otherwise
  */
 template <int D, class K, class T, class C>
-bool AABBTree<D,K,T,C>::erase(const K& key) {
+bool AABBTree<D,K,T,C>::erase(const K& key)
+{
     //Query the BST to find the node
     Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
@@ -285,7 +290,8 @@ bool AABBTree<D,K,T,C>::erase(const K& key) {
  * @param[in] it A generic iterator pointing to the node to be erased
  */
 template <int D, class K, class T, class C>
-void AABBTree<D,K,T,C>::erase(generic_iterator it) {
+void AABBTree<D,K,T,C>::erase(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -320,7 +326,8 @@ void AABBTree<D,K,T,C>::erase(generic_iterator it) {
  * is contained in the BST, end iterator otherwise
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::find(const K& key) {
+typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::find(const K& key)
+{
     //Query the BST to find the node
     Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
@@ -336,7 +343,8 @@ typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::find(const K& key) {
  *
  */
 template <int D, class K, class T, class C>
-void AABBTree<D,K,T,C>::clear() {
+void AABBTree<D,K,T,C>::clear()
+{
     //Clear entire tree
     internal::clearHelper(this->root);
 
@@ -353,7 +361,8 @@ void AABBTree<D,K,T,C>::clear() {
  * @return Number of entries in the BST
  */
 template <int D, class K, class T, class C>
-TreeSize AABBTree<D,K,T,C>::size() {
+TreeSize AABBTree<D,K,T,C>::size()
+{
     return this->entries;
 }
 
@@ -363,7 +372,8 @@ TreeSize AABBTree<D,K,T,C>::size() {
  * @return True if the BST is empty, false otherwise
  */
 template <int D, class K, class T, class C>
-bool AABBTree<D,K,T,C>::empty() {
+bool AABBTree<D,K,T,C>::empty()
+{
     return (this->size() == 0);
 }
 
@@ -468,7 +478,8 @@ bool AABBTree<D,K,T,C>::aabbOverlapCheck(
  * @return The iterator pointing to the minimum node
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::getMin() {
+typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::getMin()
+{
     return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
@@ -478,7 +489,8 @@ typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::getMin() {
  * @return The iterator pointing to the maximum node
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::getMax() {
+typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::getMax()
+{
     return iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
@@ -492,7 +504,8 @@ typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::getMax() {
  * iterator if it has no successor)
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::generic_iterator AABBTree<D,K,T,C>::getNext(generic_iterator it) {
+typename AABBTree<D,K,T,C>::generic_iterator AABBTree<D,K,T,C>::getNext(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -508,7 +521,8 @@ typename AABBTree<D,K,T,C>::generic_iterator AABBTree<D,K,T,C>::getNext(generic_
  * iterator if it has no predecessor)
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::generic_iterator AABBTree<D,K,T,C>::getPrev(generic_iterator it) {
+typename AABBTree<D,K,T,C>::generic_iterator AABBTree<D,K,T,C>::getPrev(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -524,7 +538,8 @@ typename AABBTree<D,K,T,C>::generic_iterator AABBTree<D,K,T,C>::getPrev(generic_
  * @brief Begin iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::begin() {
+typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::begin()
+{
     return iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
@@ -532,7 +547,8 @@ typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::begin() {
  * @brief End iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::end() {
+typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::end()
+{
     return iterator(this, nullptr);
 }
 
@@ -541,7 +557,8 @@ typename AABBTree<D,K,T,C>::iterator AABBTree<D,K,T,C>::end() {
  * @brief Begin const iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::const_iterator AABBTree<D,K,T,C>::cbegin() {
+typename AABBTree<D,K,T,C>::const_iterator AABBTree<D,K,T,C>::cbegin()
+{
     return const_iterator(this, internal::getMinimumHelperLeaf(this->root));
 }
 
@@ -549,7 +566,8 @@ typename AABBTree<D,K,T,C>::const_iterator AABBTree<D,K,T,C>::cbegin() {
  * @brief End const iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::const_iterator AABBTree<D,K,T,C>::cend() {
+typename AABBTree<D,K,T,C>::const_iterator AABBTree<D,K,T,C>::cend()
+{
     return const_iterator(this, nullptr);
 }
 
@@ -558,7 +576,8 @@ typename AABBTree<D,K,T,C>::const_iterator AABBTree<D,K,T,C>::cend() {
  * @brief Begin reverse iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::reverse_iterator AABBTree<D,K,T,C>::rbegin() {
+typename AABBTree<D,K,T,C>::reverse_iterator AABBTree<D,K,T,C>::rbegin()
+{
     return reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
@@ -566,7 +585,8 @@ typename AABBTree<D,K,T,C>::reverse_iterator AABBTree<D,K,T,C>::rbegin() {
  * @brief End reverse iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::reverse_iterator AABBTree<D,K,T,C>::rend() {
+typename AABBTree<D,K,T,C>::reverse_iterator AABBTree<D,K,T,C>::rend()
+{
     return reverse_iterator(this, nullptr);
 }
 
@@ -575,7 +595,8 @@ typename AABBTree<D,K,T,C>::reverse_iterator AABBTree<D,K,T,C>::rend() {
  * @brief Begin const reverse iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::const_reverse_iterator AABBTree<D,K,T,C>::crbegin() {
+typename AABBTree<D,K,T,C>::const_reverse_iterator AABBTree<D,K,T,C>::crbegin()
+{
     return const_reverse_iterator(this, internal::getMaximumHelperLeaf(this->root));
 }
 
@@ -583,7 +604,8 @@ typename AABBTree<D,K,T,C>::const_reverse_iterator AABBTree<D,K,T,C>::crbegin() 
  * @brief End const reverse iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::const_reverse_iterator AABBTree<D,K,T,C>::crend() {
+typename AABBTree<D,K,T,C>::const_reverse_iterator AABBTree<D,K,T,C>::crend()
+{
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -593,7 +615,8 @@ typename AABBTree<D,K,T,C>::const_reverse_iterator AABBTree<D,K,T,C>::crend() {
  * @brief Insert output iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::insert_iterator AABBTree<D,K,T,C>::inserter() {
+typename AABBTree<D,K,T,C>::insert_iterator AABBTree<D,K,T,C>::inserter()
+{
     return insert_iterator(this);
 }
 
@@ -605,7 +628,8 @@ typename AABBTree<D,K,T,C>::insert_iterator AABBTree<D,K,T,C>::inserter() {
  * @return Range based iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::RangeBasedIterator AABBTree<D,K,T,C>::getIterator() {
+typename AABBTree<D,K,T,C>::RangeBasedIterator AABBTree<D,K,T,C>::getIterator()
+{
     return RangeBasedIterator(this);
 }
 
@@ -615,7 +639,8 @@ typename AABBTree<D,K,T,C>::RangeBasedIterator AABBTree<D,K,T,C>::getIterator() 
  * @return Range based const iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::RangeBasedConstIterator AABBTree<D,K,T,C>::getConstIterator() {
+typename AABBTree<D,K,T,C>::RangeBasedConstIterator AABBTree<D,K,T,C>::getConstIterator()
+{
     return RangeBasedConstIterator(this);
 }
 
@@ -625,7 +650,8 @@ typename AABBTree<D,K,T,C>::RangeBasedConstIterator AABBTree<D,K,T,C>::getConstI
  * @return Range based reverse iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::RangeBasedReverseIterator AABBTree<D,K,T,C>::getReverseIterator() {
+typename AABBTree<D,K,T,C>::RangeBasedReverseIterator AABBTree<D,K,T,C>::getReverseIterator()
+{
     return RangeBasedReverseIterator(this);
 }
 
@@ -635,7 +661,8 @@ typename AABBTree<D,K,T,C>::RangeBasedReverseIterator AABBTree<D,K,T,C>::getReve
  * @return Range based const reverse iterator
  */
 template <int D, class K, class T, class C>
-typename AABBTree<D,K,T,C>::RangeBasedConstReverseIterator AABBTree<D,K,T,C>::getConstReverseIterator() {
+typename AABBTree<D,K,T,C>::RangeBasedConstReverseIterator AABBTree<D,K,T,C>::getConstReverseIterator()
+{
     return RangeBasedConstReverseIterator(this);
 }
 
@@ -648,7 +675,8 @@ typename AABBTree<D,K,T,C>::RangeBasedConstReverseIterator AABBTree<D,K,T,C>::ge
  * @return This object
  */
 template <int D, class K, class T, class C>
-AABBTree<D,K,T,C>& AABBTree<D,K,T,C>::operator= (AABBTree<D,K,T,C> bst) {
+AABBTree<D,K,T,C>& AABBTree<D,K,T,C>::operator= (AABBTree<D,K,T,C> bst)
+{
     swap(bst);
     return *this;
 }
@@ -659,7 +687,8 @@ AABBTree<D,K,T,C>& AABBTree<D,K,T,C>::operator= (AABBTree<D,K,T,C> bst) {
  * @param[out] bst BST to be swapped with this object
  */
 template <int D, class K, class T, class C>
-void AABBTree<D,K,T,C>::swap(AABBTree<D,K,T,C>& bst) {
+void AABBTree<D,K,T,C>::swap(AABBTree<D,K,T,C>& bst)
+{
     using std::swap;
     swap(this->root, bst.root);
     swap(this->entries, bst.entries);
@@ -674,7 +703,8 @@ void AABBTree<D,K,T,C>::swap(AABBTree<D,K,T,C>& bst) {
  * @param b2 Second BST
  */
 template <int D, class K, class T, class C>
-void swap(AABBTree<D,K,T,C>& b1, AABBTree<D,K,T,C>& b2) {
+void swap(AABBTree<D,K,T,C>& b1, AABBTree<D,K,T,C>& b2)
+{
     b1.swap(b2);
 }
 

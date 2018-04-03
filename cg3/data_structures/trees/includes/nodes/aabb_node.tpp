@@ -58,7 +58,8 @@ AABBNode<D,K,T>::~AABBNode()
  * @return True if the node is a leaf
  */
 template <int D, class K, class T>
-bool AABBNode<D,K,T>::isLeaf() const {
+bool AABBNode<D,K,T>::isLeaf() const
+{
     return (left == nullptr) && (right == nullptr);
 }
 
@@ -73,7 +74,8 @@ bool AABBNode<D,K,T>::isLeaf() const {
  * param[in] value Value of the node
  */
 template <int D, class K, class T>
-void AABBNode<D,K,T>::init(const K& key, T* value) {
+void AABBNode<D,K,T>::init(const K& key, T* value)
+{
     this->key = key;
     this->value = value;
 

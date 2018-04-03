@@ -40,7 +40,8 @@ Graph<T>::Graph(const GraphType& type) :
  * end iterator otherwise
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o) {
+typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o)
+{
     //If node does exists, return end of node iterator
     typename std::map<T, size_t>::iterator mapIt = map.find(o);
     if (mapIt != map.end())
@@ -66,7 +67,8 @@ typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o) {
  * @return True if the element has been deleted, false otherwise
  */
 template <class T>
-bool Graph<T>::deleteNode(const T& o) {
+bool Graph<T>::deleteNode(const T& o)
+{
     //If node does not exists, return false
     typename std::map<T, size_t>::iterator mapIt = map.find(o);
     if (mapIt == map.end())
@@ -95,7 +97,8 @@ bool Graph<T>::deleteNode(const T& o) {
  * @return Iterator to the node if it exists, end iterator otherwise
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) {
+typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o)
+{
     long long int id = findNodeHelper(o);
     if (id < 0)
         return this->nodeIteratorEnd();
@@ -114,7 +117,8 @@ typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) {
  * to insert the edge because the corresponding objects have not been found.
  */
 template <class T>
-bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight) {
+bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight)
+{
     //If one of the nodes does not exists, return false
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -139,7 +143,8 @@ bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight) {
  * to insert the edge because the corresponding objects have not been found.
  */
 template <class T>
-bool Graph<T>::deleteEdge(const T& o1, const T& o2) {
+bool Graph<T>::deleteEdge(const T& o1, const T& o2)
+{
     //If one of the nodes does not exists, return false
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -187,7 +192,8 @@ bool Graph<T>::isAdjacent(const T& o1, const T& o2) const {
  * or the nodes cannot be found
  */
 template <class T>
-double Graph<T>::getWeight(const T& o1, const T& o2) {
+double Graph<T>::getWeight(const T& o1, const T& o2)
+{
     //If one of the nodes does not exists, return max weight
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -207,7 +213,8 @@ double Graph<T>::getWeight(const T& o1, const T& o2) {
  * @param[in] o2 Object of the node 2
  */
 template <class T>
-void Graph<T>::setWeight(const T& o1, const T& o2, const double weight) {
+void Graph<T>::setWeight(const T& o1, const T& o2, const double weight)
+{
     //If one of the nodes does not exists, return
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -237,7 +244,8 @@ void Graph<T>::setWeight(const T& o1, const T& o2, const double weight) {
  * object has not been found.
  */
 template <class T>
-bool Graph<T>::deleteNode(GenericNodeIterator it) {   
+bool Graph<T>::deleteNode(GenericNodeIterator it)
+{
     return deleteNode(nodes.at(it.id).value);
 }
 
@@ -250,7 +258,8 @@ bool Graph<T>::deleteNode(GenericNodeIterator it) {
  * @param[in] it2 Iterator to node 2
  */
 template <class T>
-void Graph<T>::addEdge(GenericNodeIterator it1, GenericNodeIterator it2, const double weight) {
+void Graph<T>::addEdge(GenericNodeIterator it1, GenericNodeIterator it2, const double weight)
+{
     if (isDeleted[it1.id] || isDeleted[it2.id])
         return;
 
@@ -268,7 +277,8 @@ void Graph<T>::addEdge(GenericNodeIterator it1, GenericNodeIterator it2, const d
  * @param[in] it2 Iterator to node 2
  */
 template <class T>
-void Graph<T>::deleteEdge(GenericNodeIterator it1, const GenericNodeIterator it2) {
+void Graph<T>::deleteEdge(GenericNodeIterator it1, const GenericNodeIterator it2)
+{
     if (isDeleted[it1.id] || isDeleted[it2.id])
         return;
 
@@ -306,7 +316,8 @@ bool Graph<T>::isAdjacent(const GenericNodeIterator it1, const GenericNodeIterat
  * @return Weight of the edge, MAX_WEIGHT if nodes are not adjacent
  */
 template <class T>
-double Graph<T>::getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2) {
+double Graph<T>::getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2)
+{
     if (isDeleted[it1.id] || isDeleted[it2.id])
         return MAX_WEIGHT;
 
@@ -324,7 +335,8 @@ double Graph<T>::getWeight(const GenericNodeIterator it1, const GenericNodeItera
  * @param[in] weight New weight of the edge
  */
 template <class T>
-void Graph<T>::setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const double weight) {
+void Graph<T>::setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const double weight)
+{
     if (isDeleted[it1.id] || isDeleted[it2.id])
         return;
 
@@ -343,7 +355,8 @@ void Graph<T>::setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const
  * @return Number of nodes
  */
 template <class T>
-size_t Graph<T>::numNodes() {
+size_t Graph<T>::numNodes()
+{
     size_t numNodes = std::distance(this->nodeIteratorBegin(), this->nodeIteratorEnd());
     return numNodes;
 }
@@ -353,7 +366,8 @@ size_t Graph<T>::numNodes() {
  * @return Number of edges
  */
 template <class T>
-size_t Graph<T>::numEdges() {
+size_t Graph<T>::numEdges()
+{
     size_t numEdges = std::distance(this->edgeIteratorBegin(), this->edgeIteratorEnd());
     return numEdges;
 }
@@ -363,7 +377,8 @@ size_t Graph<T>::numEdges() {
  * It deletes all the nodes and clear the element map
  */
 template <class T>
-void Graph<T>::clear() {
+void Graph<T>::clear()
+{
     //Clear nodes and map
     nodes.clear();
     map.clear();
@@ -379,7 +394,8 @@ void Graph<T>::clear() {
  * have been deleted.
  */
 template <class T>
-void Graph<T>::recompact() {
+void Graph<T>::recompact()
+{
     //Vector to keep track in which index the nodes have been placed.
     std::vector<long long int> indexMap(this->nodes.size(), -1);
 
@@ -456,7 +472,8 @@ void Graph<T>::recompact() {
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin() {
+typename Graph<T>::NodeIterator Graph<T>::nodeIteratorBegin()
+{
     typename std::vector<Node>::iterator it = nodes.begin();
     //Get first valid node iterator
     return NodeIterator(this, getFirstValidIteratorNode(it));
@@ -476,7 +493,8 @@ typename Graph<T>::NodeIterator Graph<T>::nodeIteratorEnd() {
  * @return Range based node iterator
  */
 template <class T>
-typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator() {
+typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator()
+{
     return RangeBasedNodeIterator(this);
 }
 
@@ -490,7 +508,8 @@ typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator() {
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorBegin() {
+typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorBegin()
+{
     //Get first candidate iterator
     NodeIterator nodeIt = this->nodeIteratorBegin();
 
@@ -512,7 +531,8 @@ typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorBegin() {
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorEnd() {
+typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorEnd()
+{
     return EdgeIterator(
                 this,
                 NodeIterator(this), //This will point to end iterator of nodes
@@ -524,7 +544,8 @@ typename Graph<T>::EdgeIterator Graph<T>::edgeIteratorEnd() {
  * @return Range based edge iterator
  */
 template <class T>
-typename Graph<T>::RangeBasedEdgeIterator Graph<T>::edgeIterator() {
+typename Graph<T>::RangeBasedEdgeIterator Graph<T>::edgeIterator()
+{
     return RangeBasedEdgeIterator(this);
 }
 
@@ -594,7 +615,8 @@ typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(const T& o) {
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(const T& o)
+{
     return this->adjacentNodeIteratorBegin(this->findNode(o));
 }
 
@@ -604,7 +626,8 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorBegin(cons
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(const T& o) {
+typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(const T& o)
+{
     return this->adjacentNodeIteratorEnd(this->findNode(o));
 }
 
@@ -614,7 +637,8 @@ typename Graph<T>::AdjacentNodeIterator Graph<T>::adjacentNodeIteratorEnd(const 
  * @return Range based node iterator
  */
 template <class T>
-typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator(const T& o) {
+typename Graph<T>::RangeBasedAdjacentNodeIterator Graph<T>::adjacentNodeIterator(const T& o)
+{
     return this->adjacentNodeIterator(this->findNode(o));
 }
 
@@ -728,7 +752,8 @@ long long int Graph<T>::findNodeHelper(const T& o) const {
  * @param[in] id2 Index of the second node
  */
 template <class T>
-void Graph<T>::addEdgeHelper(const size_t& id1, const size_t& id2, const double weight) {
+void Graph<T>::addEdgeHelper(const size_t& id1, const size_t& id2, const double weight)
+{
     if (!isDeleted[id2]) {
         Node& n1 = this->nodes.at(id1);
 
@@ -749,7 +774,8 @@ void Graph<T>::addEdgeHelper(const size_t& id1, const size_t& id2, const double 
  * @param[in] id2 Index of the second node
  */
 template <class T>
-void Graph<T>::deleteEdgeHelper(const size_t& id1, const size_t& id2) {
+void Graph<T>::deleteEdgeHelper(const size_t& id1, const size_t& id2)
+{
     if (!isDeleted[id2]) {
         Node& n1 = this->nodes.at(id1);
         n1.adjacentNodes.erase(id2);
@@ -803,7 +829,8 @@ double Graph<T>::getWeightHelper(const size_t& id1, const size_t& id2) const {
  * @param[in] weight Weight of the edge
  */
 template <class T>
-void Graph<T>::setWeightHelper(const size_t& id1, const size_t& id2, const double weight) {
+void Graph<T>::setWeightHelper(const size_t& id1, const size_t& id2, const double weight)
+{
     Node& n1 = this->nodes.at(id1);
 
     std::unordered_map<size_t, double>::iterator it = n1.adjacentNodes.find(id2);

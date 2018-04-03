@@ -86,7 +86,8 @@ const T& Graph<T>::AdjacentNodeIterator::operator *() const
 /* ----- PROTECTED METHODS FOR NAVIGATION ----- */
 
 template <class T>
-void Graph<T>::AdjacentNodeIterator::next() {
+void Graph<T>::AdjacentNodeIterator::next()
+{
     ++it;
     it = this->graph->getFirstValidIteratorAdjacent(targetNodeIt, it);
 
@@ -105,12 +106,14 @@ void Graph<T>::AdjacentNodeIterator::next() {
 /* --------- RANGE BASED ITERATOR --------- */
 
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::begin() {
+typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::begin()
+{
     return this->graph->adjacentNodeIteratorBegin(targetNodeIt);
 }
 
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::end() {
+typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::end()
+{
     return this->graph->adjacentNodeIteratorEnd(targetNodeIt);
 }
 

@@ -112,7 +112,8 @@ RangeTree<K,T,C>::RangeTree(RangeTree<K,T,C>&& bst) :
  * @brief Destructor
  */
 template <class K, class T, class C>
-RangeTree<K,T,C>::~RangeTree() {
+RangeTree<K,T,C>::~RangeTree()
+{
     this->clear();
 }
 
@@ -129,7 +130,8 @@ RangeTree<K,T,C>::~RangeTree() {
  * @param[in] vec Vector of values
  */
 template <class K, class T, class C>
-void RangeTree<K,T,C>::construction(const std::vector<K>& vec) {
+void RangeTree<K,T,C>::construction(const std::vector<K>& vec)
+{
     std::vector<std::pair<K,T>> pairVec;
 
     for (const K& entry : vec) {
@@ -148,7 +150,8 @@ void RangeTree<K,T,C>::construction(const std::vector<K>& vec) {
  * @param[in] vec Vector of pairs of keys/values
  */
 template <class K, class T, class C>
-void RangeTree<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
+void RangeTree<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec)
+{
     this->clear();
 
     if (vec.size() == 0)
@@ -202,7 +205,8 @@ void RangeTree<K,T,C>::construction(const std::vector<std::pair<K,T>>& vec) {
  * successfully inserted, end iterator otherwise
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::insert(const K& key) {
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::insert(const K& key)
+{
     return insert(key, key);
 }
 
@@ -280,7 +284,8 @@ typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::insert(
  * @return True if item has been found and then erased, false otherwise
  */
 template <class K, class T, class C>
-bool RangeTree<K,T,C>::erase(const K& key) {
+bool RangeTree<K,T,C>::erase(const K& key)
+{
     //Query the BST to find the node
     Node* node = internal::findNodeHelperLeaf(key, this->root, comparator);
 
@@ -315,7 +320,8 @@ bool RangeTree<K,T,C>::erase(const K& key) {
  * is contained in the BST, end iterator otherwise
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::find(const K& key) {
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::find(const K& key)
+{
     //If the range tree is not for the first dimension, go to next dimension
     if (dim > 1)
         return this->root->assRangeTree->find(key);
@@ -335,7 +341,8 @@ typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::find(const K& key) {
  *
  */
 template <class K, class T, class C>
-void RangeTree<K,T,C>::clear() {
+void RangeTree<K,T,C>::clear()
+{
     //Clear entire tree
     internal::clearHelper(this->root);
 
@@ -352,7 +359,8 @@ void RangeTree<K,T,C>::clear() {
  * @return Number of entries
  */
 template <class K, class T, class C>
-size_t RangeTree<K,T,C>::size() {
+size_t RangeTree<K,T,C>::size()
+{
     return this->entries;
 }
 
@@ -420,7 +428,8 @@ void RangeTree<K,T,C>::rangeQuery(
  * @return The iterator pointing to the minimum node
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMin() {
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMin()
+{
     if (dim > 1) {
         return this->root->assRangeTree->getMin();
     }
@@ -433,7 +442,8 @@ typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMin() {
  * @return The iterator pointing to the maximum node
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMax() {
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMax()
+{
     if (dim > 1) {
         return this->root->assRangeTree->getMax();
     }
@@ -450,7 +460,8 @@ typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::getMax() {
  * iterator if it has no successor)
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getNext(generic_iterator it) {
+typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getNext(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -466,7 +477,8 @@ typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getNext(generic_it
  * iterator if it has no predecessor)
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getPrev(generic_iterator it) {
+typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getPrev(generic_iterator it)
+{
     //Throw exception if the iterator does not belong to this BST
     if (it.bst != this) {
         throw new std::runtime_error("A tree can only use its own nodes.");
@@ -482,7 +494,8 @@ typename RangeTree<K,T,C>::generic_iterator RangeTree<K,T,C>::getPrev(generic_it
  * @brief Begin iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::begin() {
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::begin()
+{
     if (dim > 1) {
         return this->root->assRangeTree->begin();
     }
@@ -493,7 +506,8 @@ typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::begin() {
  * @brief End iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::end() {
+typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::end()
+{
     return iterator(this, nullptr);
 }
 
@@ -502,7 +516,8 @@ typename RangeTree<K,T,C>::iterator RangeTree<K,T,C>::end() {
  * @brief Begin const iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cbegin() {
+typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cbegin()
+{
     if (dim > 1) {
         return this->root->assRangeTree->cbegin();
     }
@@ -513,7 +528,8 @@ typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cbegin() {
  * @brief End const iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cend() {
+typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cend()
+{
     return const_iterator(this, nullptr);
 }
 
@@ -522,7 +538,8 @@ typename RangeTree<K,T,C>::const_iterator RangeTree<K,T,C>::cend() {
  * @brief Begin reverse iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rbegin() {
+typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rbegin()
+{
     if (dim > 1) {
         return this->root->assRangeTree->rbegin();
     }
@@ -533,7 +550,8 @@ typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rbegin() {
  * @brief End reverse iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rend() {
+typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rend()
+{
     return reverse_iterator(this, nullptr);
 }
 
@@ -542,7 +560,8 @@ typename RangeTree<K,T,C>::reverse_iterator RangeTree<K,T,C>::rend() {
  * @brief Begin const reverse iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crbegin() {
+typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crbegin()
+{
     if (dim > 1) {
         return this->root->assRangeTree->crbegin();
     }
@@ -553,7 +572,8 @@ typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crbegin() {
  * @brief End const reverse iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crend() {
+typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crend()
+{
     return const_reverse_iterator(this, nullptr);
 }
 
@@ -563,7 +583,8 @@ typename RangeTree<K,T,C>::const_reverse_iterator RangeTree<K,T,C>::crend() {
  * @brief Insert output iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::insert_iterator RangeTree<K,T,C>::inserter() {
+typename RangeTree<K,T,C>::insert_iterator RangeTree<K,T,C>::inserter()
+{
     return insert_iterator(this);
 }
 
@@ -575,7 +596,8 @@ typename RangeTree<K,T,C>::insert_iterator RangeTree<K,T,C>::inserter() {
  * @return Range based iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::RangeBasedIterator RangeTree<K,T,C>::getIterator() {
+typename RangeTree<K,T,C>::RangeBasedIterator RangeTree<K,T,C>::getIterator()
+{
     return RangeBasedIterator(this);
 }
 
@@ -585,7 +607,8 @@ typename RangeTree<K,T,C>::RangeBasedIterator RangeTree<K,T,C>::getIterator() {
  * @return Range based const iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::RangeBasedConstIterator RangeTree<K,T,C>::getConstIterator() {
+typename RangeTree<K,T,C>::RangeBasedConstIterator RangeTree<K,T,C>::getConstIterator()
+{
     return RangeBasedConstIterator(this);
 }
 
@@ -595,7 +618,8 @@ typename RangeTree<K,T,C>::RangeBasedConstIterator RangeTree<K,T,C>::getConstIte
  * @return Range based reverse iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::RangeBasedReverseIterator RangeTree<K,T,C>::getReverseIterator() {
+typename RangeTree<K,T,C>::RangeBasedReverseIterator RangeTree<K,T,C>::getReverseIterator()
+{
     return RangeBasedReverseIterator(this);
 }
 
@@ -605,7 +629,8 @@ typename RangeTree<K,T,C>::RangeBasedReverseIterator RangeTree<K,T,C>::getRevers
  * @return Range based const reverse iterator
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::RangeBasedConstReverseIterator RangeTree<K,T,C>::getConstReverseIterator() {
+typename RangeTree<K,T,C>::RangeBasedConstReverseIterator RangeTree<K,T,C>::getConstReverseIterator()
+{
     return RangeBasedConstReverseIterator(this);
 }
 
@@ -618,7 +643,8 @@ typename RangeTree<K,T,C>::RangeBasedConstReverseIterator RangeTree<K,T,C>::getC
  * @return This object
  */
 template <class K, class T, class C>
-RangeTree<K,T,C>& RangeTree<K,T,C>::operator= (RangeTree<K,T,C> bst) {
+RangeTree<K,T,C>& RangeTree<K,T,C>::operator= (RangeTree<K,T,C> bst)
+{
     swap(bst);
     return *this;
 }
@@ -629,7 +655,8 @@ RangeTree<K,T,C>& RangeTree<K,T,C>::operator= (RangeTree<K,T,C> bst) {
  * @param[out] bst BST to be swapped with this object
  */
 template <class K, class T, class C>
-void RangeTree<K,T,C>::swap(RangeTree<K,T,C>& bst) {
+void RangeTree<K,T,C>::swap(RangeTree<K,T,C>& bst)
+{
     using std::swap;
     swap(this->root, bst.root);
     swap(this->entries, bst.entries);
@@ -645,7 +672,8 @@ void RangeTree<K,T,C>::swap(RangeTree<K,T,C>& bst) {
  * @param b2 Second BST
  */
 template <class K, class T, class C>
-void swap(RangeTree<K,T,C>& b1, RangeTree<K,T,C>& b2) {
+void swap(RangeTree<K,T,C>& b1, RangeTree<K,T,C>& b2)
+{
     b1.swap(b2);
 }
 
@@ -1027,7 +1055,8 @@ void RangeTree<K,T,C>::updateHeightAndRebalanceRangeTreeHelper(
  * @return New node in the position of the original node after the rotation
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::leftRotateRangeTreeHelper(Node* a) {
+typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::leftRotateRangeTreeHelper(Node* a)
+{
     //Rotate left
     Node* b = internal::leftRotateHelper(a);
 
@@ -1062,7 +1091,8 @@ typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::leftRotateRangeTreeHelper(Nod
  * @return New node in the position of the original node after the rotation
  */
 template <class K, class T, class C>
-typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::rightRotateRangeTreeHelper(Node* a) {
+typename RangeTree<K,T,C>::Node* RangeTree<K,T,C>::rightRotateRangeTreeHelper(Node* a)
+{
     //Rotate right
     Node* b = rightRotateHelper(a);
 

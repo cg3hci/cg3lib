@@ -82,7 +82,8 @@ std::pair<const T, const T> Graph<T>::EdgeIterator::operator *() const
 /* ----- PROTECTED METHODS FOR NAVIGATION ----- */
 
 template <class T>
-void Graph<T>::EdgeIterator::next() {
+void Graph<T>::EdgeIterator::next()
+{
     adjIt++;
     this->graph->getFirstValidIteratorEdge(nodeIt, adjIt, nodeIt, adjIt);
 }
@@ -92,12 +93,14 @@ void Graph<T>::EdgeIterator::next() {
 /* --------- RANGE BASED ITERATOR --------- */
 
 template <class T>
-typename Graph<T>::EdgeIterator Graph<T>::RangeBasedEdgeIterator::begin() {
+typename Graph<T>::EdgeIterator Graph<T>::RangeBasedEdgeIterator::begin()
+{
     return this->graph->edgeIteratorBegin();
 }
 
 template <class T>
-typename Graph<T>::EdgeIterator Graph<T>::RangeBasedEdgeIterator::end() {
+typename Graph<T>::EdgeIterator Graph<T>::RangeBasedEdgeIterator::end()
+{
     return this->graph->edgeIteratorEnd();
 }
 

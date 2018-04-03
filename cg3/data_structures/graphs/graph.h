@@ -84,7 +84,6 @@ public:
     explicit Graph(const GraphType& type = GraphType::DIRECTED);
 
 
-
     /* Public methods with values */
 
     NodeIterator addNode(const T& o);
@@ -99,7 +98,6 @@ public:
     void setWeight(const T& o1, const T& o2, const double weight);
 
 
-
     /* Public methods with iterators */
 
     bool deleteNode(GenericNodeIterator it);
@@ -112,14 +110,12 @@ public:
     void setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const double weight);
 
 
-
     /* Utility methods */
 
     size_t numNodes();
     size_t numEdges();
     void clear();
     void recompact();
-
 
 
     /* Iterators */
@@ -140,6 +136,7 @@ public:
     AdjacentNodeIterator adjacentNodeIteratorEnd(const T& o);
     RangeBasedAdjacentNodeIterator adjacentNodeIterator(const T& o);
 
+
 private:
 
     /* Private functions for iterators */
@@ -156,7 +153,6 @@ private:
             AdjacentNodeIterator adjIt,
             NodeIterator& newNodeIt,
             AdjacentNodeIterator& newAdjIt);
-
 
 
     /* Helpers */
@@ -178,7 +174,7 @@ private:
     std::map<T, size_t> map; //Map to find a node with a value
 
     std::vector<bool> isDeleted; //Delete flag
-    int nDeletedNodes;
+    int nDeletedNodes; //Number of deleted nodes
 
 };
 

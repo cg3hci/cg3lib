@@ -59,7 +59,8 @@ RangeTreeNode<K,T,C>::~RangeTreeNode()
  * @brief Initialization of the node given key and value
  */
 template <class K, class T, class C>
-void RangeTreeNode<K,T,C>::init(const K& key, T* value) {
+void RangeTreeNode<K,T,C>::init(const K& key, T* value)
+{
     this->key = key;
     this->value = value;
 
@@ -79,7 +80,8 @@ void RangeTreeNode<K,T,C>::init(const K& key, T* value) {
  * @return True if the node is a leaf
  */
 template <class K, class T, class C>
-bool RangeTreeNode<K,T,C>::isLeaf() const {
+bool RangeTreeNode<K,T,C>::isLeaf() const
+{
     return (left == nullptr) && (right == nullptr);
 }
 

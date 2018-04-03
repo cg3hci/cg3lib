@@ -62,7 +62,8 @@ BSTNode<K,T>::~BSTNode()
  * @return True if the node is a leaf
  */
 template<class K, class T>
-bool BSTNode<K,T>::isLeaf() const {
+bool BSTNode<K,T>::isLeaf() const
+{
     return (left == nullptr) && (right == nullptr);
 }
 
@@ -77,7 +78,8 @@ bool BSTNode<K,T>::isLeaf() const {
  * param[in] value Value of the node
  */
 template<class K, class T>
-void BSTNode<K,T>::init(const K& key, T* value) {
+void BSTNode<K,T>::init(const K& key, T* value)
+{
     this->key = key;
     this->value = value;
 

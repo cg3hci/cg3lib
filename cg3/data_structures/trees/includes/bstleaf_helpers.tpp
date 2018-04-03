@@ -23,7 +23,8 @@ namespace internal {
  * @return Pointer to the node if the node has been inserted, nullptr otherwise
  */
 template <class Node, class K, class C>
-Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, C& comparator) {
+Node* insertNodeHelperLeaf(Node*& newNode, Node*& rootNode, C& comparator)
+{
     //If the tree is empty
     if (rootNode == nullptr) {
         //Insert the node as the root
@@ -196,8 +197,8 @@ template <class Node, class K, class C>
 Node* findLowerHelperLeaf(
         const K& key,
         Node*& rootNode,
-        C& comparator
-) {
+        C& comparator)
+{
     if (rootNode == nullptr)
         return nullptr;
 
@@ -240,8 +241,8 @@ template <class Node, class K, class C>
 Node* findUpperHelperLeaf(
         const K& key,
         Node*& rootNode,
-        C& comparator
-) {
+        C& comparator)
+{
     if (rootNode == nullptr)
         return nullptr;
 
@@ -568,7 +569,8 @@ void reportSubTreeHelperLeaf(
  * @return Successor of the node, nullptr if there is no successor
  */
 template <class Node>
-Node* getSuccessorHelperLeaf(Node* node) {
+Node* getSuccessorHelperLeaf(Node* node)
+{
     Node* x = node;
 
     //Climb on parents
@@ -594,7 +596,8 @@ Node* getSuccessorHelperLeaf(Node* node) {
  * @return Predecessor of the node, nullptr if there is no predecessor
  */
 template <class Node>
-Node* getPredecessorHelperLeaf(Node* node) {
+Node* getPredecessorHelperLeaf(Node* node)
+{
     Node* x = node;
 
     //Climb on parents
@@ -622,7 +625,8 @@ Node* getPredecessorHelperLeaf(Node* node) {
  * @return Minimum key node pointer
  */
 template <class Node>
-Node* getMinimumHelperLeaf(Node* rootNode) {
+Node* getMinimumHelperLeaf(Node* rootNode)
+{
     Node* x = rootNode;
 
     while (x != nullptr && !x->isLeaf())
@@ -639,7 +643,8 @@ Node* getMinimumHelperLeaf(Node* rootNode) {
  * @return Maximum key node pointer
  */
 template <class Node>
-Node* getMaximumHelperLeaf(Node* rootNode) {
+Node* getMaximumHelperLeaf(Node* rootNode)
+{
     Node* x = rootNode;
 
     while (x != nullptr && !x->isLeaf())
