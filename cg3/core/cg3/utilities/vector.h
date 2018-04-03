@@ -18,7 +18,7 @@ int binarySearch(const T &n, const std::vector<T> &v);
 template <typename T>
 std::vector<size_t> sortIndexes(const std::vector<T> &v);
 
-}
+} //namespace cg3
 
 #include "vector.tpp"
 

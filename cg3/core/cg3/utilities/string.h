@@ -13,13 +13,21 @@
 namespace cg3 {
 
 template <typename T>
-std::string toStringWithPrecision(const T& value, unsigned int precision = 2);
+std::string toStringWithPrecision(
+        const T& value,
+        unsigned int precision = 2);
 
-void separateExtensionFromFilename(const std::string& fullname, std::string& rawname, std::string& extension);
+void separateExtensionFromFilename(
+        const std::string& fullname,
+        std::string& rawname,
+        std::string& extension);
 
-void separateFilenameFromPath(const std::string& fullpath, std::string& path, std::string& filename);
+void separateFilenameFromPath(
+        const std::string& fullpath,
+        std::string& path,
+        std::string& filename);
 
-}
+} //namespace cg3
 
 #include "string.tpp"
 

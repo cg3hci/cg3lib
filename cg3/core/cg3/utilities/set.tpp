@@ -10,7 +10,10 @@
 namespace cg3 {
 
 template<typename T>
-inline std::set<T> setIntersection(const std::set<T> &a, const std::set<T> &b){
+inline std::set<T> intersection(
+        const std::set<T> &a,
+        const std::set<T> &b)
+{
     std::set<T> intersect;
     std::set_intersection(a.begin(),a.end(),b.begin(),b.end(),
                       std::inserter(intersect,intersect.begin()));
@@ -18,7 +21,10 @@ inline std::set<T> setIntersection(const std::set<T> &a, const std::set<T> &b){
 }
 
 template<typename T>
-inline std::set<T> setUnion(const std::set<T> &a, const std::set<T> &b){
+inline std::set<T> union_(
+        const std::set<T> &a,
+        const std::set<T> &b)
+{
     std::set<T> u;
     std::set_union(a.begin(),a.end(),b.begin(),b.end(),
                       std::inserter(u,u.begin()));
@@ -26,7 +32,10 @@ inline std::set<T> setUnion(const std::set<T> &a, const std::set<T> &b){
 }
 
 template<typename T>
-inline std::set<T> setDifference(const std::set<T> &a, const std::set<T> &b){
+inline std::set<T> difference(
+        const std::set<T> &a,
+        const std::set<T> &b)
+{
     std::set<T> diff;
     std::set_difference(a.begin(),a.end(),b.begin(),b.end(),
                       std::inserter(diff,diff.begin()));
@@ -34,8 +43,11 @@ inline std::set<T> setDifference(const std::set<T> &a, const std::set<T> &b){
 }
 
 template<typename T>
-inline bool isSubset(const std::set<T> &a, const std::set<T> &b){
+inline bool isSubset(
+        const std::set<T> &a,
+        const std::set<T> &b)
+{
     return std::includes(b.begin(), b.end(), a.begin(), a.end());
 }
 
-}
+} //namespace cg3

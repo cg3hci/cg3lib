@@ -15,7 +15,7 @@ namespace cg3 {
 template<typename A, typename B>
 inline std::pair<B,A> flipPair(const std::pair<A,B> &p);
 
-}
+} //namespace cg3
 
 #include "pair.tpp"
 

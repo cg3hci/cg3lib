@@ -9,26 +9,38 @@
 
 namespace cg3 {
 
-inline Tokenizer::Tokenizer() : string(""), separator('\0'){
+inline Tokenizer::Tokenizer() :
+    string(""),
+    separator('\0')
+{
 }
 
-inline Tokenizer::Tokenizer(const char* string, char separator) : string(string), separator(separator) {
+inline Tokenizer::Tokenizer(const char* string, char separator) :
+    string(string),
+    separator(separator)
+{
     split();
 }
 
-inline Tokenizer::Tokenizer(const std::string& string, char separator) : string(string.c_str()), separator(separator) {
+inline Tokenizer::Tokenizer(const std::string& string, char separator) :
+    string(string.c_str()),
+    separator(separator)
+{
     split();
 }
 
-inline Tokenizer::iterator Tokenizer::begin() {
+inline Tokenizer::iterator Tokenizer::begin()
+{
     return splitted.begin();
 }
 
-inline Tokenizer::iterator Tokenizer::end() {
+inline Tokenizer::iterator Tokenizer::end()
+{
     return splitted.end();
 }
 
-inline unsigned long Tokenizer::size() const {
+inline unsigned long Tokenizer::size() const
+{
     return (unsigned long) splitted.size();
 }
 
@@ -36,7 +48,8 @@ inline unsigned long Tokenizer::size() const {
  * @brief Tokenizer::split
  * @link https://stackoverflow.com/questions/53849/how-do-i-tokenize-a-string-in-c
  */
-inline void Tokenizer::split() {
+inline void Tokenizer::split()
+{
     const char* str = string;
     splitted.clear();
     if (*str != '\0'){
@@ -50,4 +63,4 @@ inline void Tokenizer::split() {
     }
 }
 
-}
+} //namespace cg3

@@ -18,7 +18,7 @@ std::string executeCommand(const std::string& cmd);
 
 std::string executeCommand(const char* cmd);
 
-}
+} //namespace cg3
 
 #include "system.tpp"
 

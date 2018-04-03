@@ -103,7 +103,7 @@ std::vector< std::set<const Dcel::Face*> > dcelAlgorithms::getConnectedComponent
         const Dcel::Face* f = *(containedFaces.begin());
         std::set<const Dcel::Face*> cc = flood(f, comp);
         connectedComponents.push_back(cc);
-        containedFaces = setDifference(containedFaces, cc);
+        containedFaces = difference(containedFaces, cc);
     }
     return connectedComponents;
 }

@@ -13,25 +13,28 @@
 
 namespace cg3 {
 
-class Tokenizer {
-    public:
-        Tokenizer();
-        Tokenizer(const char* string, char separator);
-        Tokenizer(const std::string& string, char separator);
+/**
+ * @brief The Tokenizer class
+ */
+class Tokenizer
+{
+public:
+    Tokenizer();
+    Tokenizer(const char* string, char separator);
+    Tokenizer(const std::string& string, char separator);
 
-        typedef std::vector<std::string>::iterator iterator;
+    typedef std::vector<std::string>::iterator iterator;
 
-        iterator begin();
-        iterator end();
+    iterator begin();
+    iterator end();
 
-        unsigned long int size()const ;
+    unsigned long int size()const ;
 
-    private:
-        void split();
-        const char* string;
-        char separator;
-        std::vector<std::string> splitted;
-
+private:
+    void split();
+    const char* string;
+    char separator;
+    std::vector<std::string> splitted;
 };
 
 }

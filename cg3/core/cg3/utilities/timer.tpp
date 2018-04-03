@@ -9,31 +9,60 @@
 
 namespace cg3 {
 
-inline Timer::Timer (const std::string& caption, bool _start) : caption(caption), isStopped(false) {
+/**
+ * @brief Timer::Timer
+ * @param caption
+ * @param _start
+ */
+inline Timer::Timer (const std::string& caption, bool _start) :
+    caption(caption),
+    isStopped(false)
+{
     if (_start)
         start();
 }
 
-inline void Timer::start() {
+/**
+ * @brief Timer::start
+ */
+inline void Timer::start()
+{
     begin = std::chrono::high_resolution_clock::now();
 }
 
-inline void Timer::stopAndPrint() {
+/**
+ * @brief Timer::stopAndPrint
+ */
+inline void Timer::stopAndPrint()
+{
     stop();
     print();
 }
 
-inline void Timer::stop() {
+/**
+ * @brief Timer::stop
+ */
+inline void Timer::stop()
+{
     end = std::chrono::high_resolution_clock::now();
     isStopped = true;
 }
 
-inline void Timer::print () {
+/**
+ * @brief Timer::print
+ */
+inline void Timer::print ()
+{
     double secs = delay();
     std::cout << "[" << secs << " secs]\t" << caption << std::endl;
 }
 
-inline double Timer::delay() {
+/**
+ * @brief Timer::delay
+ * @return
+ */
+inline double Timer::delay()
+{
     double secs;
     if (isStopped) {
         secs = (double) (std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count())/1000000;
@@ -45,4 +74,4 @@ inline double Timer::delay() {
     return secs;
 }
 
-}
+} //namespace cg3

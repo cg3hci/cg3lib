@@ -15,27 +15,31 @@
 
 namespace cg3 {
 
-class Timer {
-    public:
-        Timer (const std::string& caption, bool _start = true);
+/**
+ * @brief The Timer class
+ */
+class Timer
+{
+public:
+    Timer (const std::string& caption, bool _start = true);
 
-        void start();
+    void start();
 
-        void stopAndPrint();
+    void stopAndPrint();
 
-        void stop();
+    void stop();
 
-        void print();
+    void print();
 
-        double delay();
+    double delay();
 
-    private:
-        std::string caption;
-        std::chrono::high_resolution_clock::time_point begin, end;
-        bool isStopped;
+private:
+    std::string caption;
+    std::chrono::high_resolution_clock::time_point begin, end;
+    bool isStopped;
 };
 
-}
+} //namespace cg3
 
 #include "timer.tpp"
 

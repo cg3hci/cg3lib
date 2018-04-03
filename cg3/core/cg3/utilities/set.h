@@ -13,18 +13,26 @@
 namespace cg3 {
 
 template<typename T>
-std::set<T> setIntersection(const std::set<T> &a, const std::set<T> &b);
+std::set<T> intersection(
+        const std::set<T> &a,
+        const std::set<T> &b);
 
 template<typename T>
-std::set<T> setUnion(const std::set<T> &a, const std::set<T> &b);
+std::set<T> union_(
+        const std::set<T> &a,
+        const std::set<T> &b);
 
 template<typename T>
-std::set<T> setDifference(const std::set<T> &a, const std::set<T> &b);
+std::set<T> difference(
+        const std::set<T> &a,
+        const std::set<T> &b);
 
 template<typename T>
-bool isSubset(const std::set<T> &a, const std::set<T> &b);
+bool isSubset(
+        const std::set<T> &a,
+        const std::set<T> &b);
 
-}
+} //namespace cg3
 
 #include "set.tpp"
 
