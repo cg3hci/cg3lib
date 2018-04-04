@@ -11,15 +11,16 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
-
 namespace libigl {
 
-void removeUnreferencedVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I);
+void removeUnreferencedVertices(
+        SimpleEigenMesh &input,
+        Eigen::Matrix<int, Eigen::Dynamic, 1> &I);
+
 void removeUnreferencedVertices(SimpleEigenMesh &input);
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 
 #include "remove_unreferenced_vertices.tpp"
 

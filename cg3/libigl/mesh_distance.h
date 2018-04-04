@@ -11,14 +11,12 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
-
 namespace libigl {
 
 static double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 
 #include "mesh_distance.tpp"
 

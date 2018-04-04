@@ -11,14 +11,16 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
-
 namespace libigl {
-    bool isVertexManifold(const SimpleEigenMesh& input, Eigen::Matrix<bool, Eigen::Dynamic, 1>& B);
-    bool isVertexManifold(const SimpleEigenMesh& input);
 
-}
+bool isVertexManifold(
+        const SimpleEigenMesh& input,
+        Eigen::Matrix<bool, Eigen::Dynamic, 1>& B);
 
-}
+bool isVertexManifold(const SimpleEigenMesh& input);
+
+} //namespace cg3::libigl
+} //namespace cg3
 
 #include "is_vertex_manifold.tpp"
 

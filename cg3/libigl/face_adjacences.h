@@ -11,14 +11,12 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
-
 namespace libigl {
 
 Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m);
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 
 #include "face_adjacences.tpp"
 

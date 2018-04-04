@@ -10,15 +10,16 @@
 #include <igl/hausdorff.h>
 
 namespace cg3 {
-
 namespace libigl {
-
 namespace internal {
 
 
 /* ----- DISTANCES ----- */
 
-double EigenMeshLibIglAlgorithms::hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+double EigenMeshLibIglAlgorithms::hausdorffDistance(
+        const SimpleEigenMesh& m1,
+        const SimpleEigenMesh& m2)
+{
     Eigen::MatrixXd VA = m1.V, VB = m2.V;
     Eigen::MatrixXi FA = m1.F, FB = m2.F;
 
@@ -27,8 +28,6 @@ double EigenMeshLibIglAlgorithms::hausdorffDistance(const SimpleEigenMesh& m1, c
     return hDistance;
 }
 
-}
-
-}
-
-}
+} //namespace cg3::libigl::internal
+} //namespace cg3::libigl
+} //namespace cg3

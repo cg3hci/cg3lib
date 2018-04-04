@@ -13,9 +13,7 @@
 #include "booleans_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
-
 namespace internal {
 
 class EigenMeshLibIglAlgorithms {
@@ -70,16 +68,13 @@ public:
 
     #endif
 
-
 private:
 
     EigenMeshLibIglAlgorithms() {}
 };
 
-}
+} //namespace cg3::libigl::internal
+} //namespace cg3::libigl
+} //namespace cg3
 
-}
-
-
-}
 #endif // CG3_EIGENMESH_LIBIGL_ALGORITHMS_H

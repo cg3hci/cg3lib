@@ -19,7 +19,10 @@ namespace internal {
 
 /* ----- VERTICES REMOVAL ----- */
 
-void EigenMeshLibIglAlgorithms::removeUnreferencedVertices(SimpleEigenMesh& input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I) {
+void EigenMeshLibIglAlgorithms::removeUnreferencedVertices(
+        SimpleEigenMesh& input,
+        Eigen::Matrix<int, Eigen::Dynamic, 1> &I)
+{
     //Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> NV;
     //Eigen::Matrix<int, Eigen::Dynamic, 3, Eigen::RowMajor> NF;
     //igl::remove_unreferenced(V,F, NV, NF, I);
@@ -38,12 +41,19 @@ void EigenMeshLibIglAlgorithms::removeUnreferencedVertices(SimpleEigenMesh& inpu
     input.F = NF;
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(SimpleEigenMesh& input, double epsilon) {
+void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+        SimpleEigenMesh& input,
+        double epsilon)
+{
     Eigen::VectorXi I;
     removeDuplicateVertices(input, I, epsilon);
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(SimpleEigenMesh& input, Eigen::Matrix<int, Eigen::Dynamic, 1>& I, double epsilon) {
+void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+        SimpleEigenMesh& input,
+        Eigen::Matrix<int, Eigen::Dynamic, 1>& I,
+        double epsilon)
+{
     /**
       @todo Pull request
     */
@@ -58,12 +68,19 @@ void EigenMeshLibIglAlgorithms::removeDuplicateVertices(SimpleEigenMesh& input, 
     input.F = NF;
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(EigenMesh& input, double epsilon) {
+void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+        EigenMesh& input,
+        double epsilon)
+{
     Eigen::VectorXi I;
     removeDuplicateVertices(input, I, epsilon);
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(EigenMesh& input, Eigen::Matrix<int, Eigen::Dynamic, 1>& I, double epsilon) {
+void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+        EigenMesh& input,
+        Eigen::Matrix<int, Eigen::Dynamic, 1>& I,
+        double epsilon)
+{
     /**
       @todo Reimplement this WITHOUT LBIGL (see resizing color faces)
     */
@@ -91,10 +108,6 @@ void EigenMeshLibIglAlgorithms::removeDuplicateVertices(EigenMesh& input, Eigen:
     //input.updateColorSizes();
 }
 
-
-
-}
-
-}
-
-}
+} //namespace cg3::libigl::internal
+} //namespace cg3::libigl
+} //namespace cg3

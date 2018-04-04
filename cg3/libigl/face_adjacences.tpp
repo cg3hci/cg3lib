@@ -10,7 +10,6 @@
 #include "internal/eigenmesh_libigl_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /**
@@ -19,10 +18,10 @@ namespace libigl {
  * @param m
  * @return
  */
-inline Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m) {
+inline Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m)
+{
     return internal::EigenMeshLibIglAlgorithms::getFaceAdjacences(m);
 }
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3

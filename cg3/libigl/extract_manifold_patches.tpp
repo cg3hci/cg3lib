@@ -10,7 +10,6 @@
 #include "internal/eigenmesh_libigl_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /**
@@ -20,7 +19,10 @@ namespace libigl {
  * @param I
  * @return
  */
-inline int extractManifoldPatches(const SimpleEigenMesh &m, Eigen::Matrix<int, Eigen::Dynamic, 1> &I) {
+inline int extractManifoldPatches(
+        const SimpleEigenMesh &m,
+        Eigen::Matrix<int, Eigen::Dynamic, 1> &I)
+{
     return internal::EigenMeshLibIglAlgorithms::extractManifoldPatches(m, I);
 }
 
@@ -30,11 +32,11 @@ inline int extractManifoldPatches(const SimpleEigenMesh &m, Eigen::Matrix<int, E
  * @param m
  * @return
  */
-inline int extractManifoldPatches(const SimpleEigenMesh &m){
+inline int extractManifoldPatches(const SimpleEigenMesh &m)
+{
     Eigen::VectorXi I;
     return internal::EigenMeshLibIglAlgorithms::extractManifoldPatches(m, I);
 }
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3

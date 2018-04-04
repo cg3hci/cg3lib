@@ -10,7 +10,6 @@
 #include "internal/eigenmesh_libigl_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /**
@@ -19,7 +18,8 @@ namespace libigl {
  * @param m
  * @return
  */
-inline std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh& m) {
+inline std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh& m)
+{
     return internal::EigenMeshLibIglAlgorithms::getVertexAdjacencies(m);
 }
 
@@ -29,12 +29,12 @@ inline std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh&
  * @param m
  * @return
  */
-inline std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh& m) {
+inline std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh& m)
+{
     return internal::EigenMeshLibIglAlgorithms::getVertexFaceAdjacencies(m);
 }
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 
 

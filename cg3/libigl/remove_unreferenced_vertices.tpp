@@ -10,7 +10,6 @@
 #include "internal/eigenmesh_libigl_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /**
@@ -19,7 +18,10 @@ namespace libigl {
  * @param input
  * @param I
  */
-inline void removeUnreferencedVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I) {
+inline void removeUnreferencedVertices(
+        SimpleEigenMesh &input, Eigen::Matrix<int,
+        Eigen::Dynamic, 1> &I)
+{
     internal::EigenMeshLibIglAlgorithms::removeUnreferencedVertices(input, I);
 }
 
@@ -28,11 +30,11 @@ inline void removeUnreferencedVertices(SimpleEigenMesh &input, Eigen::Matrix<int
  * @brief removeUnreferencedVertices
  * @param input
  */
-inline void removeUnreferencedVertices(SimpleEigenMesh &input) {
+inline void removeUnreferencedVertices(SimpleEigenMesh &input)
+{
     Eigen::VectorXi I;
     internal::EigenMeshLibIglAlgorithms::removeUnreferencedVertices(input, I);
 }
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3

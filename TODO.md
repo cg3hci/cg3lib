@@ -14,7 +14,7 @@
   - [ ] Point dimension templated (merge 2D, 3D, ..., nD point in a general class)
   - [ ] Replace Triangle area formulas with Heron's formula
 - Style
-  - [ ] Naming of files which are interface to an external library: remove the name of the library (cgal)
+  - [x] Naming of files which are interface to an external library: remove the name of the library (cgal)
   - [ ] Follow the linux kernel coding style everywhere (https://www.kernel.org/doc/html/v4.10/process/coding-style.html)
 - Data Structure:
   - [ ] BipartiteGraph inherits from Graph (is it possible?)
@@ -23,7 +23,8 @@
   - [ ] Template of type int in RangeTree, AABBTree, Point, ... should be unsigned long long int (or size_t). Or use static_assert to check that the dimension is greater than zero.
 - Meshes:
   - [ ] Reorganize EigenMeshAlgorithms
-  - [ ] Put Dcel and EigenMesh under a module called Meshes
+  - [x] Put Dcel and EigenMesh under a module called Meshes
+  - [ ] Add EigenMesh member functions verticesEigenMatrix and facesEigenMatrix
   - [ ] viewer/interfaces becomes viewer/abstract_classes
   - [ ] viewer/renderable_objects becomes viewer/opengl_functions
 - Viewer:
@@ -34,6 +35,7 @@
   - [ ] Voronoi 2D: insert on the diagram the inf edges (intersections with a built bounding box)
   - [ ] Hole Filling: better output informations
 - LibIGL:
+  - [ ] Remove EigenMeshLibIGLAlgorithms class, or use only when necessary
   - [ ] Too many files, it would be better to group them: for example "is_edge_manifold" and "is_vertex_manifold" functions can be grouped in a single file. Also "face_adjacencies", "vertex_adjacencies".
 
 # To Implement

@@ -11,14 +11,12 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
-
 namespace libigl {
 
 inline bool isEdgeManifold(const SimpleEigenMesh& input);
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 
 #include "is_edge_manifold.tpp"
 

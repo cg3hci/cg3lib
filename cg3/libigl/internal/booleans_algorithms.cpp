@@ -4,12 +4,8 @@
 
 
 namespace cg3 {
-
 namespace libigl {
-
 namespace internal {
-
-namespace BooleansAlgorithms {
 
 /**
  * @brief Intersection of two CSG Trees
@@ -50,13 +46,8 @@ igl::copyleft::cgal::CSGTree union_(
     return igl::copyleft::cgal::CSGTree(c1,c2,"u");
 }
 
-
-}
-
-}
-
-}
-
-}
+} //namespace cg3::libigl::internal
+} //namespace cg3::libigl
+} //namespace cg3
 
 #endif //CGAL_DEFINED

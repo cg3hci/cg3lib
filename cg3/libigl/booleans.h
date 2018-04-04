@@ -15,7 +15,6 @@
 #include <igl/copyleft/cgal/CSGTree.h>
 
 namespace cg3 {
-
 namespace libigl {
 
 typedef igl::copyleft::cgal::CSGTree CSGTree;
@@ -48,9 +47,8 @@ CSGTree union_(const CSGTree& m1, const CSGTree& m2);
 SimpleEigenMesh union_(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
 EigenMesh union_(const EigenMesh& m1, const EigenMesh& m2);
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 
 #include "booleans.tpp"
 

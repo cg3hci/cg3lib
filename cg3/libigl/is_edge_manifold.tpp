@@ -10,7 +10,6 @@
 #include "internal/eigenmesh_libigl_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /**
@@ -19,10 +18,10 @@ namespace libigl {
  * @param input
  * @return
  */
-inline bool isEdgeManifold(const SimpleEigenMesh &input) {
+inline bool isEdgeManifold(const SimpleEigenMesh &input)
+{
     return internal::EigenMeshLibIglAlgorithms::isEdgeManifold(input);
 }
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3

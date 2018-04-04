@@ -10,7 +10,6 @@
 #include "internal/eigenmesh_libigl_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /**
@@ -19,7 +18,8 @@ namespace libigl {
  * @param input
  * @param epsilon
  */
-inline void removeDuplicateVertices(SimpleEigenMesh &input, double epsilon) {
+inline void removeDuplicateVertices(SimpleEigenMesh &input, double epsilon)
+{
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, epsilon);
 }
 
@@ -30,7 +30,10 @@ inline void removeDuplicateVertices(SimpleEigenMesh &input, double epsilon) {
  * @param I
  * @param epsilon
  */
-inline void removeDuplicateVertices(SimpleEigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon) {
+inline void removeDuplicateVertices(SimpleEigenMesh &input,
+                                    Eigen::Matrix<int, Eigen::Dynamic, 1> &I,
+                                    double epsilon)
+{
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, I, epsilon);
 }
 
@@ -40,7 +43,8 @@ inline void removeDuplicateVertices(SimpleEigenMesh &input, Eigen::Matrix<int, E
  * @param input
  * @param epsilon
  */
-inline void removeDuplicateVertices(EigenMesh &input, double epsilon) {
+inline void removeDuplicateVertices(EigenMesh &input, double epsilon)
+{
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, epsilon);
 }
 
@@ -51,10 +55,12 @@ inline void removeDuplicateVertices(EigenMesh &input, double epsilon) {
  * @param I
  * @param epsilon
  */
-inline void removeDuplicateVertices(EigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I, double epsilon) {
+inline void removeDuplicateVertices(
+        EigenMesh &input, Eigen::Matrix<int, Eigen::Dynamic, 1> &I,
+        double epsilon)
+{
     internal::EigenMeshLibIglAlgorithms::removeDuplicateVertices(input, I, epsilon);
 }
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3

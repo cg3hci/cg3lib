@@ -12,29 +12,32 @@
 #include <igl/extract_manifold_patches.h>
 
 namespace cg3 {
-
 namespace libigl {
-
 namespace internal {
 
 
 /* ----- MANIFOLD UTILITIES ----- */
 
-bool EigenMeshLibIglAlgorithms::isEdgeManifold(const SimpleEigenMesh& input) {
+bool EigenMeshLibIglAlgorithms::isEdgeManifold(const SimpleEigenMesh& input)
+{
     return igl::is_edge_manifold(input.F);
 }
 
-bool EigenMeshLibIglAlgorithms::isVertexManifold(const SimpleEigenMesh& input, Eigen::Matrix<bool, Eigen::Dynamic, 1>& B) {
+bool EigenMeshLibIglAlgorithms::isVertexManifold(
+        const SimpleEigenMesh& input,
+        Eigen::Matrix<bool, Eigen::Dynamic, 1>& B)
+{
     return igl::is_vertex_manifold(input.V, B);
 }
 
 
-unsigned int EigenMeshLibIglAlgorithms::extractManifoldPatches(const SimpleEigenMesh& m, Eigen::Matrix<int, Eigen::Dynamic, 1>& I) {
+unsigned int EigenMeshLibIglAlgorithms::extractManifoldPatches(
+        const SimpleEigenMesh& m,
+        Eigen::Matrix<int, Eigen::Dynamic, 1>& I)
+{
     return igl::extract_manifold_patches(m.F, I);
 }
 
-}
-
-}
-
-}
+} //namespace cg3::libigl::internal
+} //namespace cg3::libigl
+} //namespace cg3

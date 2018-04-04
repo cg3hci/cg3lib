@@ -10,7 +10,6 @@
 #include "internal/eigenmesh_libigl_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /**
@@ -20,12 +19,12 @@ namespace libigl {
  * @param m2
  * @return
  */
-inline double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+inline double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+{
     return internal::EigenMeshLibIglAlgorithms::hausdorffDistance(m1, m2);
 }
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3::l
 
 

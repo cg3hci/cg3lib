@@ -10,15 +10,16 @@
 #include <igl/decimate.h>
 
 namespace cg3 {
-
 namespace libigl {
-
 namespace internal {
-
 
 /* ----- DECIMATION ----- */
 
-SimpleEigenMesh EigenMeshLibIglAlgorithms::decimateMesh(const SimpleEigenMesh& m, int numberDesiredFaces, Eigen::VectorXi& mapping) {
+SimpleEigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
+        const SimpleEigenMesh& m,
+        int numberDesiredFaces,
+        Eigen::VectorXi& mapping)
+{
     SimpleEigenMesh output;
 
     /**
@@ -33,7 +34,11 @@ SimpleEigenMesh EigenMeshLibIglAlgorithms::decimateMesh(const SimpleEigenMesh& m
     return output;
 }
 
-EigenMesh EigenMeshLibIglAlgorithms::decimateMesh(const EigenMesh& m, int numberDesiredFaces, Eigen::VectorXi& mapping) {
+EigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
+        const EigenMesh& m,
+        int numberDesiredFaces,
+        Eigen::VectorXi& mapping)
+{
     EigenMesh output;
 
     /**
@@ -59,7 +64,11 @@ EigenMesh EigenMeshLibIglAlgorithms::decimateMesh(const EigenMesh& m, int number
     return output;
 }
 
-void EigenMeshLibIglAlgorithms::decimateMesh(SimpleEigenMesh& m, int numberDesiredFaces, Eigen::VectorXi& mapping) {
+void EigenMeshLibIglAlgorithms::decimateMesh(
+        SimpleEigenMesh& m,
+        int numberDesiredFaces,
+        Eigen::VectorXi& mapping)
+{
     /**
      * @todo Pull request
      */
@@ -70,7 +79,11 @@ void EigenMeshLibIglAlgorithms::decimateMesh(SimpleEigenMesh& m, int numberDesir
     m.F = FF;
 }
 
-void EigenMeshLibIglAlgorithms::decimateMesh(EigenMesh& m, int numberDesiredFaces, Eigen::VectorXi& mapping) {
+void EigenMeshLibIglAlgorithms::decimateMesh(
+        EigenMesh& m,
+        int numberDesiredFaces,
+        Eigen::VectorXi& mapping)
+{
     Eigen::MatrixXd VV;
     Eigen::MatrixXi FF;
     igl::decimate(m.V, m.F, numberDesiredFaces, VV, FF, mapping);
@@ -89,8 +102,6 @@ void EigenMeshLibIglAlgorithms::decimateMesh(EigenMesh& m, int numberDesiredFace
     m.updateBoundingBox();
 }
 
-}
-
-}
-
-}
+} //namespace cg3::libigl::internal
+} //namespace cg3::libigl
+} //namespace cg3

@@ -12,7 +12,6 @@
 #include "internal/booleans_algorithms.h"
 
 namespace cg3 {
-
 namespace libigl {
 
 /* ----- CONVERSIONS ----- */
@@ -23,7 +22,8 @@ namespace libigl {
  * @param m Input mesh
  * @return CSG tree of the mesh
  */
-inline CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m) {
+inline CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m)
+{
     return internal::EigenMeshLibIglAlgorithms::eigenMeshToCSGTree(m);
 }
 
@@ -33,7 +33,8 @@ inline CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m) {
  * @param m Input mesh
  * @return CSG tree of the mesh
  */
-inline SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree) {
+inline SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree)
+{
     return internal::EigenMeshLibIglAlgorithms::CSGTreeToEigenMesh(tree);
 }
 
@@ -47,8 +48,9 @@ inline SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree) {
  * @param[in] c2 Second CSGTree
  * @return Resulting CSGTree
  */
-inline CSGTree intersection(const CSGTree& c1, const CSGTree& c2) {
-    return internal::BooleansAlgorithms::intersection(c1, c2);
+inline CSGTree intersection(const CSGTree& c1, const CSGTree& c2)
+{
+    return internal::intersection(c1, c2);
 }
 
 /**
@@ -58,7 +60,8 @@ inline CSGTree intersection(const CSGTree& c1, const CSGTree& c2) {
  * @param[in] m2 Second mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh intersection(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+inline SimpleEigenMesh intersection(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+{
     return internal::EigenMeshLibIglAlgorithms::intersection(m1, m2);
 }
 
@@ -69,7 +72,8 @@ inline SimpleEigenMesh intersection(const SimpleEigenMesh& m1, const SimpleEigen
  * @param[in] m2 Second mesh
  * @return Resulting mesh
  */
-inline EigenMesh intersection(const EigenMesh& m1, const EigenMesh& m2) {
+inline EigenMesh intersection(const EigenMesh& m1, const EigenMesh& m2)
+{
     return internal::EigenMeshLibIglAlgorithms::intersection(m1, m2);
 }
 
@@ -80,7 +84,8 @@ inline EigenMesh intersection(const EigenMesh& m1, const EigenMesh& m2) {
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
  */
-inline void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2) {
+inline void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
+{
     result = intersection(c1, c2);
 }
 
@@ -91,7 +96,11 @@ inline void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2) 
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
  */
-inline void intersection(SimpleEigenMesh& result, const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+inline void intersection(
+        SimpleEigenMesh& result,
+        const SimpleEigenMesh& m1,
+        const SimpleEigenMesh& m2)
+{
     result = intersection(m1, m2);
 }
 
@@ -116,8 +125,9 @@ inline void intersection(EigenMesh& result, const EigenMesh& m1, const EigenMesh
  * @param[in] c2 Second CSGTree
  * @return Resulting CSGTree
  */
-inline CSGTree difference(const CSGTree& c1, const CSGTree& c2) {
-    return internal::BooleansAlgorithms::difference(c1, c2);
+inline CSGTree difference(const CSGTree& c1, const CSGTree& c2)
+{
+    return internal::difference(c1, c2);
 }
 
 /**
@@ -127,7 +137,10 @@ inline CSGTree difference(const CSGTree& c1, const CSGTree& c2) {
  * @param[in] m2 Second mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh difference(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+inline SimpleEigenMesh difference(
+        const SimpleEigenMesh& m1,
+        const SimpleEigenMesh& m2)
+{
     return internal::EigenMeshLibIglAlgorithms::difference(m1, m2);
 }
 
@@ -138,7 +151,8 @@ inline SimpleEigenMesh difference(const SimpleEigenMesh& m1, const SimpleEigenMe
  * @param[in] m2 Second mesh
  * @return Resulting mesh
  */
-inline EigenMesh difference(const EigenMesh& m1, const EigenMesh& m2) {
+inline EigenMesh difference(const EigenMesh& m1, const EigenMesh& m2)
+{
     return internal::EigenMeshLibIglAlgorithms::difference(m1, m2);
 }
 
@@ -149,7 +163,8 @@ inline EigenMesh difference(const EigenMesh& m1, const EigenMesh& m2) {
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
  */
-inline void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2) {
+inline void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
+{
     result = difference(c1, c2);
 }
 
@@ -160,7 +175,11 @@ inline void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2) {
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
  */
-inline void difference(SimpleEigenMesh& result, const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+inline void difference(
+        SimpleEigenMesh& result,
+        const SimpleEigenMesh& m1,
+        const SimpleEigenMesh& m2)
+{
     result = difference(m1, m2);
 }
 
@@ -171,7 +190,8 @@ inline void difference(SimpleEigenMesh& result, const SimpleEigenMesh& m1, const
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
  */
-inline void difference(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2) {
+inline void difference(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2)
+{
     result = difference(m1, m2);
 }
 
@@ -185,8 +205,9 @@ inline void difference(EigenMesh& result, const EigenMesh& m1, const EigenMesh& 
  * @param[in] c2 Second CSGTree
  * @return Resulting CSGTree
  */
-inline CSGTree union_(const CSGTree& c1, const CSGTree& c2) {
-    return internal::BooleansAlgorithms::union_(c1, c2);
+inline CSGTree union_(const CSGTree& c1, const CSGTree& c2)
+{
+    return internal::union_(c1, c2);
 }
 
 /**
@@ -196,7 +217,8 @@ inline CSGTree union_(const CSGTree& c1, const CSGTree& c2) {
  * @param[in] m2 Second mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh union_(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+inline SimpleEigenMesh union_(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+{
     return internal::EigenMeshLibIglAlgorithms::union_(m1, m2);
 }
 
@@ -207,7 +229,8 @@ inline SimpleEigenMesh union_(const SimpleEigenMesh& m1, const SimpleEigenMesh& 
  * @param[in] m2 Second mesh
  * @return Resulting mesh
  */
-inline EigenMesh union_(const EigenMesh& m1, const EigenMesh& m2) {
+inline EigenMesh union_(const EigenMesh& m1, const EigenMesh& m2)
+{
     return internal::EigenMeshLibIglAlgorithms::union_(m1, m2);
 }
 
@@ -218,7 +241,8 @@ inline EigenMesh union_(const EigenMesh& m1, const EigenMesh& m2) {
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
  */
-inline void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2) {
+inline void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
+{
     result = union_(c1, c2);
 }
 
@@ -229,7 +253,11 @@ inline void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2) {
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
  */
-inline void union_(SimpleEigenMesh& result, const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+inline void union_(
+        SimpleEigenMesh& result,
+        const SimpleEigenMesh& m1,
+        const SimpleEigenMesh& m2)
+{
     result = union_(m1, m2);
 }
 
@@ -240,12 +268,12 @@ inline void union_(SimpleEigenMesh& result, const SimpleEigenMesh& m1, const Sim
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
  */
-inline void union_(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2) {
+inline void union_(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2)
+{
     result = union_(m1, m2);
 }
 
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 #endif

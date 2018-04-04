@@ -11,15 +11,16 @@
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
-
 namespace libigl {
 
-int extractManifoldPatches(const SimpleEigenMesh& m, Eigen::Matrix<int, Eigen::Dynamic, 1>& I);
+int extractManifoldPatches(
+        const SimpleEigenMesh& m,
+        Eigen::Matrix<int, Eigen::Dynamic, 1>& I);
+
 int extractManifoldPatches(const SimpleEigenMesh& m);
 
-}
-
-}
+} //namespace cg3::libigl
+} //namespace cg3
 
 #include "extract_manifold_patches.tpp"
 
