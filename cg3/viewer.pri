@@ -80,8 +80,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/interfaces/drawable_mesh.h \
         $$PWD/viewer/utilities/loadersaver.h \
         $$PWD/viewer/utilities/consolestream.h \
-        $$PWD/viewer/renderable_objects/renderable_objects.h \
-        $$PWD/viewer/renderable_objects/2d/renderable_objects2d.h \
+        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
+        $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.h \
         $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h
 
@@ -94,9 +94,9 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/loadersaver.cpp \
         $$PWD/viewer/utilities/consolestream.tpp \
         $$PWD/viewer/drawable_objects/2d/drawable_segment2d.tpp \
-        $$PWD/viewer/renderable_objects/renderable_objects.tpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp \
-        $$PWD/viewer/renderable_objects/2d/renderable_objects2d.tpp
+        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp \
+        $$PWD/viewer/opengl_objects/opengl_objects.tpp \
+        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp
 
     FORMS += \
         $$PWD/viewer/mainwindow.ui
@@ -147,4 +147,5 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
+
 

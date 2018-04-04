@@ -9,7 +9,8 @@
 
 namespace cg3 {
 
-void DrawableMesh::init() {
+void DrawableMesh::init()
+{
     drawMode          = DRAW_MESH | DRAW_SMOOTH | DRAW_FACECOLOR;
     wireframeWidth    = 1;
     wireframeColor[0] = (float)0.1;
@@ -17,68 +18,81 @@ void DrawableMesh::init() {
     wireframeColor[2] = (float)0.1;
 }
 
-bool DrawableMesh::isVisible() const {
+bool DrawableMesh::isVisible() const
+{
     return (drawMode & DRAW_MESH);
 }
 
-void DrawableMesh::setWireframe(bool b) {
+void DrawableMesh::setWireframe(bool b)
+{
     if (b) drawMode |=  DRAW_WIREFRAME;
     else   drawMode &= ~DRAW_WIREFRAME;
 }
 
-void DrawableMesh::setFlatShading() {
+void DrawableMesh::setFlatShading()
+{
     drawMode |=  DRAW_FLAT;
     drawMode &= ~DRAW_SMOOTH;
     drawMode &= ~DRAW_POINTS;
 }
 
-void DrawableMesh::setSmoothShading() {
+void DrawableMesh::setSmoothShading()
+{
     drawMode |=  DRAW_SMOOTH;
     drawMode &= ~DRAW_FLAT;
     drawMode &= ~DRAW_POINTS;
 }
 
-void DrawableMesh::setPointsShading() {
+void DrawableMesh::setPointsShading()
+{
     drawMode |=  DRAW_POINTS;
     drawMode &= ~DRAW_FLAT;
     drawMode &= ~DRAW_SMOOTH;
 }
 
-void DrawableMesh::setWireframeColor(float r, float g, float b) {
+void DrawableMesh::setWireframeColor(float r, float g, float b)
+{
     wireframeColor[0] = r;
     wireframeColor[1] = g;
     wireframeColor[2] = b;
 }
 
-void DrawableMesh::setWireframeWidth(float width) {
+void DrawableMesh::setWireframeWidth(float width)
+{
     wireframeWidth = width;
 }
 
-void DrawableMesh::setEnableVertexColor() {
+void DrawableMesh::setEnableVertexColor()
+{
     drawMode |=  DRAW_VERTEXCOLOR;
     drawMode &= ~DRAW_FACECOLOR;
 }
 
-void DrawableMesh::setEnableTriangleColor() {
+void DrawableMesh::setEnableTriangleColor()
+{
     drawMode |=  DRAW_FACECOLOR;
     drawMode &= ~DRAW_VERTEXCOLOR;
 }
 
-void DrawableMesh::setVisibleBoundingBox(bool b) {
+void DrawableMesh::setVisibleBoundingBox(bool b)
+{
     if (b) drawMode |=  DRAW_BOUNDINGBOX;
     else   drawMode &= ~DRAW_BOUNDINGBOX;
 }
 
-void DrawableMesh::setVisible(bool b) {
+void DrawableMesh::setVisible(bool b)
+{
     if (b) drawMode |=  DRAW_MESH;
     else   drawMode &= ~DRAW_MESH;
 }
 
-DrawableMesh::DrawableMesh() {
+DrawableMesh::DrawableMesh()
+{
     init();
 }
 
-void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const {
+void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const
+{
     if (drawMode & DRAW_MESH) {
         if (drawMode & DRAW_WIREFRAME) {
             if (drawMode & DRAW_POINTS) {
@@ -135,12 +149,13 @@ void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords,
             }
         }
         if (drawMode & DRAW_BOUNDINGBOX) {
-            viewer::drawBox(min, max, QColor(0,0,0));
+            opengl::drawBox(min, max, QColor(0,0,0));
         }
     }
 }
 
-void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const {
+void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const
+{
     if (drawMode & DRAW_POINTS) {
         glEnableClientState(GL_VERTEX_ARRAY);
         glVertexPointer(3, GL_DOUBLE, 0, coords);
@@ -224,26 +239,24 @@ void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* co
 
 void _check_gl_error(const char *file, int line)
 {
-  GLenum err (glGetError());
+    GLenum err (glGetError());
 
-  while(err!=GL_NO_ERROR)
-  {
-    std::string error;
+    while(err!=GL_NO_ERROR) {
+        std::string error;
 
-    switch(err)
-    {
-      case GL_INVALID_OPERATION:      error="INVALID_OPERATION";      break;
-      case GL_INVALID_ENUM:           error="INVALID_ENUM";           break;
-      case GL_INVALID_VALUE:          error="INVALID_VALUE";          break;
-      case GL_OUT_OF_MEMORY:          error="OUT_OF_MEMORY";          break;
-      #ifdef unix
-      case GL_INVALID_FRAMEBUFFER_OPERATION:  error="INVALID_FRAMEBUFFER_OPERATION";  break;
-      #endif
+        switch(err) {
+            case GL_INVALID_OPERATION:      error="INVALID_OPERATION";      break;
+            case GL_INVALID_ENUM:           error="INVALID_ENUM";           break;
+            case GL_INVALID_VALUE:          error="INVALID_VALUE";          break;
+            case GL_OUT_OF_MEMORY:          error="OUT_OF_MEMORY";          break;
+            #ifdef unix
+            case GL_INVALID_FRAMEBUFFER_OPERATION:  error="INVALID_FRAMEBUFFER_OPERATION";  break;
+            #endif
+        }
+
+        std::cerr << "GL_" << error.c_str() << " - " << file << ":" << line << std::endl;
+        err = glGetError();
     }
-
-    std::cerr << "GL_" << error.c_str() << " - " << file << ":" << line << std::endl;
-    err = glGetError();
-  }
 }
 
-}
+} //namespace cg3

@@ -15,57 +15,59 @@
 #include <cg3/viewer/utilities/loadersaver.h>
 
 namespace cg3 {
-
 namespace viewer {
-
 namespace Ui {
     class DcelManager;
-}
+} //namespace cg3::viewer::Ui
 
 /**
- * @brief QFrame that manages a DrawableDcel which will be drawn in the cg3::viewer::MainWindow
  * @ingroup cg3viewer
+ * @brief QFrame that manages a DrawableDcel which will be drawn in the cg3::viewer::MainWindow
  */
-class DcelManager : public QFrame {
-        Q_OBJECT
+class DcelManager : public QFrame
+{
+    Q_OBJECT
 
-    public:
-        explicit DcelManager(QWidget* parent = 0);
-        ~DcelManager();
+public:
+    explicit DcelManager(QWidget* parent = 0);
+    ~DcelManager();
 
-        cg3::DrawableDcel* getDcel();
-        void setDcel(const cg3::Dcel& dcel, const std::string& name = "Dcel", bool b = false);
-        void cleanDcel();
-        void updateDcel();
-        void resetDefaults();
-        void setButtonsDcelLoaded();
-        void setButtonsDcelNotLoaded();
+    cg3::DrawableDcel& getDcel();
+    void setDcel(const cg3::Dcel& dcel, const std::string& name = "Dcel");
+    void cleanDcel();
+    void updateDcel();
 
-    private slots:
-        void on_loadDcelButton_clicked();
-        void on_cleanDcelButton_clicked();
-        void on_saveDcelButton_clicked();
-        void on_wireframeDcelCheckBox_stateChanged(int state);
-        void on_wireframeWidthDcelSlider_valueChanged(int value);
-        void on_wireframeColorDcelButton_clicked();
-        void on_drawDcelCheckBox_stateChanged(int state);
-        void on_pointsDcelRadioButton_toggled(bool checked);
-        void on_flatDcelRadioButton_toggled(bool checked);
-        void on_smoothDcelRadioButton_toggled(bool checked);
-        void on_vertexColorDcelRadioButton_toggled(bool checked);
-        void on_triangleColorDcelRadioButton_toggled(bool checked);
-        void on_boundingBoxCheckBox_stateChanged(int state);
-        void on_facesWireframeDcelCheckBox_stateChanged(int state);
 
-    private:
-        Ui::DcelManager* ui; //puntatore al QFrame (da cui è possibile richiamare gli oggetti della ui)
-        cg3::viewer::MainWindow& mainWindow; //puntatore alla mainWindow
-        cg3::DrawableDcel* drawableDcel; //puntatore alla DrawableDcel gestita dal DcelManager
-        cg3::viewer::LoaderSaver dcells;
+private slots:
+    void on_loadDcelButton_clicked();
+    void on_cleanDcelButton_clicked();
+    void on_saveDcelButton_clicked();
+    void on_wireframeDcelCheckBox_stateChanged(int state);
+    void on_wireframeWidthDcelSlider_valueChanged(int value);
+    void on_wireframeColorDcelButton_clicked();
+    void on_drawDcelCheckBox_stateChanged(int state);
+    void on_pointsDcelRadioButton_toggled(bool checked);
+    void on_flatDcelRadioButton_toggled(bool checked);
+    void on_smoothDcelRadioButton_toggled(bool checked);
+    void on_vertexColorDcelRadioButton_toggled(bool checked);
+    void on_triangleColorDcelRadioButton_toggled(bool checked);
+    void on_boundingBoxCheckBox_stateChanged(int state);
+    void on_facesWireframeDcelCheckBox_stateChanged(int state);
+
+private:
+    void resetDefaults();
+    void setButtonsDcelLoaded();
+    void setButtonsDcelNotLoaded();
+
+    Ui::DcelManager* ui; //puntatore al QFrame (da cui è possibile richiamare gli oggetti della ui)
+    cg3::viewer::MainWindow& mainWindow; //puntatore alla mainWindow
+    cg3::DrawableDcel drawableDcel; //puntatore alla DrawableDcel gestita dal DcelManager
+    cg3::viewer::LoaderSaver dcells;
+    bool loaded;
+
 };
 
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3
 
 #endif // CG3_DCELMANAGER_H

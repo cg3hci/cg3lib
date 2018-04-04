@@ -6,56 +6,64 @@
  */
 
 #include "drawable_objects.h"
-#include "../renderable_objects/renderable_objects.h"
-#include "../renderable_objects/2d/renderable_objects2d.h"
+#include "../opengl_objects/opengl_objects.h"
+#include "../opengl_objects/2d/opengl_objects2d.h"
 
 
 namespace cg3 {
 
-DrawableObjects::DrawableObjects() : visible(true) {
+DrawableObjects::DrawableObjects() :
+    visible(true)
+{
 }
 
-void DrawableObjects::draw() const {
+void DrawableObjects::draw() const
+{
     if (visible){
         for (const Sphere& s : spheres){
-            viewer::drawSphere(s.center, s.radius, s.color, s.precision);
+            opengl::drawSphere(s.center, s.radius, s.color, s.precision);
         }
         for (const Point& p : points){
-            viewer::drawPoint(p.p, p.color, p.size);
+            opengl::drawPoint(p.p, p.color, p.size);
         }
         for (const Cylinder& c : cylinders){
-            viewer::drawCylinder(c.a, c.b, c.radius, c.radius, c.color);
+            opengl::drawCylinder(c.a, c.b, c.radius, c.radius, c.color);
         }
         for (const Line& l : lines){
-            viewer::drawLine(l.a, l.b, l.color, l.width);
+            opengl::drawLine(l.a, l.b, l.color, l.width);
         }
         for (const Triangle& t : triangles){
-            viewer::drawTriangle(t.a, t.b, t.c, t.color, t.width, t.fill);
+            opengl::drawTriangle(t.a, t.b, t.c, t.color, t.width, t.fill);
         }
     }
 }
 
-Pointd DrawableObjects::sceneCenter() const {
+Pointd DrawableObjects::sceneCenter() const
+{
     if (bb.diag() > 0)
         return bb.center();
     return Pointd();
 }
 
-double DrawableObjects::sceneRadius() const {
+double DrawableObjects::sceneRadius() const
+{
     //if (bb.diag() > 0)
     //    return bb.diag()/2;
     return -1;
 }
 
-bool DrawableObjects::isVisible() const {
+bool DrawableObjects::isVisible() const
+{
     return visible;
 }
 
-void DrawableObjects::setVisible(bool b) {
+void DrawableObjects::setVisible(bool b)
+{
     visible = b;
 }
 
-void DrawableObjects::updateBoundingBox() {
+void DrawableObjects::updateBoundingBox()
+{
     if (numberObjects() == 0) {
         bb = BoundingBox();
     }
@@ -86,23 +94,27 @@ void DrawableObjects::updateBoundingBox() {
     }
 }
 
-unsigned int DrawableObjects::numberObjects() const {
+unsigned int DrawableObjects::numberObjects() const
+{
     return (unsigned int) (spheres.size() + cylinders.size() + lines.size());
 }
 
-void DrawableObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision) {
+void DrawableObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision)
+{
     Sphere s = {center, radius, color, precision};
     spheres.push_back(s);
     bb.min() = bb.min().min(center);
     bb.max() = bb.max().max(center);
 }
 
-void DrawableObjects::clearSpheres() {
+void DrawableObjects::clearSpheres()
+{
     spheres.clear();
     updateBoundingBox();
 }
 
-void DrawableObjects::addPoint(const Pointd& p, const QColor& color, int size) {
+void DrawableObjects::addPoint(const Pointd& p, const QColor& color, int size)
+{
     Point pp = {p, color, size};
     points.push_back(pp);
     bb.min() = bb.min().min(p);
@@ -114,7 +126,8 @@ void DrawableObjects::clearPoints() {
     updateBoundingBox();
 }
 
-void DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color) {
+void DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color)
+{
     Cylinder c = {a, b, radius, color};
     cylinders.push_back(c);
 
@@ -124,12 +137,14 @@ void DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radiu
     bb.max() = bb.max().max(b);
 }
 
-void DrawableObjects::clearCylinders() {
+void DrawableObjects::clearCylinders()
+{
     cylinders.clear();
     updateBoundingBox();
 }
 
-void DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor color, int width) {
+void DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor color, int width)
+{
     Line l = {a, b, width, color};
     lines.push_back(l);
     bb.min() = bb.min().min(a);
@@ -138,12 +153,14 @@ void DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor col
     bb.max() = bb.max().max(b);
 }
 
-void DrawableObjects::clearLines() {
+void DrawableObjects::clearLines()
+{
     lines.clear();
     updateBoundingBox();
 }
 
-void DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width, bool fill) {
+void DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width, bool fill)
+{
     Triangle t {a, b, c, width, color, fill};
     triangles.push_back(t);
     bb.min() = bb.min().min(a);
@@ -154,9 +171,10 @@ void DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd
     bb.max() = bb.max().max(c);
 }
 
-void DrawableObjects::clearTriangles() {
+void DrawableObjects::clearTriangles()
+{
     triangles.clear();
     updateBoundingBox();
 }
 
-}
+} //namespace cg3

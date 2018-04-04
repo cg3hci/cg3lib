@@ -5,9 +5,10 @@
   * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
   */
 
-#include "renderable_objects.h"
+#include "opengl_objects.h"
 
 namespace cg3 {
+namespace opengl {
 
 /**
  * @brief Viewer::drawPoint
@@ -19,7 +20,11 @@ namespace cg3 {
  * @param size: size of the point (default: 8)
  * @ingroup cg3viewer
  */
-static inline void viewer::drawPoint(const Pointd& p, const QColor& c, int size) {
+inline void drawPoint(
+        const Pointd& p,
+        const QColor& c,
+        int size)
+{
     glEnable(GL_POINT_SMOOTH);
     glPointSize(size);
     glBegin(GL_POINTS);
@@ -42,10 +47,12 @@ static inline void viewer::drawPoint(const Pointd& p, const QColor& c, int size)
  * @param precision: precision of the rendered sphere (default: 4)
  * @ingroup cg3viewer
  */
-static inline void viewer::drawSphere(const Pointd  & center,
-                   float         radius,
-                   const QColor& color,
-                   int precision) {
+inline void drawSphere(
+        const Pointd  & center,
+        float         radius,
+        const QColor& color,
+        int precision)
+{
     glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
     glColor3f(color.redF(), color.greenF(), color.blueF());
@@ -72,11 +79,13 @@ static inline void viewer::drawSphere(const Pointd  & center,
  * @param color: color of the cylinder
  * @ingroup cg3viewer
  */
-static inline void viewer::drawCylinder(const Pointd  & a,
-                     const Pointd  & b,
-                     float         top_radius,
-                     float         bottom_radius,
-                     const QColor& color) {
+inline void drawCylinder(
+        const Pointd  & a,
+        const Pointd  & b,
+        float         top_radius,
+        float         bottom_radius,
+        const QColor& color)
+{
     Pointd dir     = b - a; dir.normalize();
     Pointd z       = Pointd(0,0,1);
     Vec3 normal  = dir.cross(z);
@@ -108,7 +117,12 @@ static inline void viewer::drawCylinder(const Pointd  & a,
  * @param width: width of the line (default: 3)
  * @ingroup cg3viewer
  */
-static inline void viewer::drawLine(const Pointd &a, const Pointd &b, const QColor& c, int width) {
+inline void drawLine(
+        const Pointd &a,
+        const Pointd &b,
+        const QColor& c,
+        int width)
+{
     glBegin(GL_LINES);
     glColor3f(c.redF(), c.greenF(), c.blueF());
     glLineWidth(width);
@@ -128,7 +142,12 @@ static inline void viewer::drawLine(const Pointd &a, const Pointd &b, const QCol
  * @param width: width of the dashed line (default: 3)
  * @ingroup cg3viewer
  */
-static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, const QColor& c, int width) {
+inline void drawDashedLine(
+        const Pointd &a,
+        const Pointd &b,
+        const QColor& c,
+        int width)
+{
     glPushAttrib(GL_ENABLE_BIT);
 
     glColor3f(c.redF(), c.greenF(), c.blueF());
@@ -153,11 +172,18 @@ static inline void viewer::drawDashedLine(const Pointd &a, const Pointd &b, cons
  * @param fill
  * @ingroup cg3viewer
  */
-static inline void viewer::drawTriangle(const Pointd &p1, const Pointd &p2, const Pointd &p3, const QColor &c, int width, bool fill) {
+inline void drawTriangle(
+        const Pointd &p1,
+        const Pointd &p2,
+        const Pointd &p3,
+        const QColor &c,
+        int width,
+        bool fill)
+{
     if (width != 0){
-        cg3::viewer::drawLine(p1, p2, c, width);
-        cg3::viewer::drawLine(p2, p3, c, width);
-        cg3::viewer::drawLine(p3, p1, c, width);
+        cg3::opengl::drawLine(p1, p2, c, width);
+        cg3::opengl::drawLine(p2, p3, c, width);
+        cg3::opengl::drawLine(p3, p1, c, width);
     }
     if (fill) {
         glBegin(GL_TRIANGLES); //Begin triangle coordinates
@@ -177,7 +203,13 @@ static inline void viewer::drawTriangle(const Pointd &p1, const Pointd &p2, cons
  * @param width
  * @ingroup cg3viewer
  */
-static inline void viewer::drawQuad(const Pointd &a, const Pointd &b, const Pointd &c, const Pointd &d, int width) {
+inline void drawQuad(
+        const Pointd &a,
+        const Pointd &b,
+        const Pointd &c,
+        const Pointd &d,
+        int width)
+{
     glBegin(GL_QUADS);
     glLineWidth(width);
     glVertex3f(a.x(), a.y(), a.z());
@@ -198,7 +230,12 @@ static inline void viewer::drawQuad(const Pointd &a, const Pointd &b, const Poin
  * @param width
  * @ingroup cg3viewer
  */
-static inline void viewer::drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width) {
+inline void drawBox(
+        const Pointd &min,
+        const Pointd& max,
+        const QColor& c,
+        int width)
+{
     drawLine(min, Pointd(max.x(), min.y(), min.z()), c, width);
     drawLine(Pointd(max.x(), min.y(), min.z()), Pointd(max.x(), min.y(), max.z()), c, width);
     drawLine(Pointd(max.x(), min.y(), max.z()), Pointd(min.x(), min.y(), max.z()), c, width);
@@ -225,7 +262,8 @@ static inline void viewer::drawBox(const Pointd &min, const Pointd& max, const Q
  * @param width
  * @ingroup cg3viewer
  */
-static inline void viewer::drawBox(const std::vector<Pointd> &p, const QColor& c, int width) {
+inline void drawBox(const std::vector<Pointd> &p, const QColor& c, int width)
+{
     drawLine(p[0], p[1], c, width);
     drawLine(p[1], p[2], c, width);
     drawLine(p[2], p[3], c, width);
@@ -256,7 +294,18 @@ static inline void viewer::drawBox(const std::vector<Pointd> &p, const QColor& c
  * @param width
  * @ingroup cg3viewer
  */
-static inline void viewer::drawBox(const Pointd &p0, const Pointd &p1, const Pointd &p2, const Pointd &p3, const Pointd &p4, const Pointd &p5, const Pointd &p6, const Pointd &p7, const QColor& c, int width) {
+inline void drawBox(
+        const Pointd &p0,
+        const Pointd &p1,
+        const Pointd &p2,
+        const Pointd &p3,
+        const Pointd &p4,
+        const Pointd &p5,
+        const Pointd &p6,
+        const Pointd &p7,
+        const QColor& c,
+        int width)
+{
     drawLine(p0, p1, c, width);
     drawLine(p1, p2, c, width);
     drawLine(p2, p3, c, width);
@@ -273,4 +322,5 @@ static inline void viewer::drawBox(const Pointd &p0, const Pointd &p1, const Poi
     drawLine(p3, p7, c, width);
 }
 
-}
+} //namespace cg3::opengl
+} //namespace cg3

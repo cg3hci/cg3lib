@@ -70,8 +70,8 @@ void PickableEigenMesh::drawWithNames() const
  * @brief PickableEigenmesh::drawFace Metodo che si occupa di effettuare il rendering di una faccia
  * @param f La faccia da renderizzare
  */
-void PickableEigenMesh::drawFace(int f) const{
-
+void PickableEigenMesh::drawFace(int f) const
+{
     std::vector<unsigned int> face_vertex;
     face_vertex.push_back(F(f,0));
     face_vertex.push_back(F(f,1));
@@ -81,12 +81,14 @@ void PickableEigenMesh::drawFace(int f) const{
 
 }
 
-void PickableEigenMesh::setSelectedFaces(std::vector<int> selected_faces){
+void PickableEigenMesh::setSelectedFaces(std::vector<int> selected_faces)
+{
     this->selected_faces = selected_faces;
 }
 
-void PickableEigenMesh::setSelectionColor(Color color){
+void PickableEigenMesh::setSelectionColor(Color color)
+{
     selection_color = color;
 }
 
-}
+} //namespace cg3

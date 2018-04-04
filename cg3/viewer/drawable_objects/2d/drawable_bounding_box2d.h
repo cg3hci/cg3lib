@@ -15,38 +15,40 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3viewer
  * @brief The DrawableBoundingBox2D class
  *
  * DrawableObject which draws a 2D Bounding Box.
  */
-class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject {
-    public:
-        DrawableBoundingBox2D();
-        DrawableBoundingBox2D(const BoundingBox2D& b);
-        DrawableBoundingBox2D(const Point2Dd& min, const Point2Dd& max);
+class DrawableBoundingBox2D : public BoundingBox2D, public DrawableObject
+{
+public:
+    DrawableBoundingBox2D();
+    DrawableBoundingBox2D(const BoundingBox2D& b);
+    DrawableBoundingBox2D(const Point2Dd& min, const Point2Dd& max);
 
 
-        // DrawableObject interface
-        void draw() const;
-        Pointd sceneCenter() const;
-        double sceneRadius() const;
+    // DrawableObject interface
+    void draw() const;
+    Pointd sceneCenter() const;
+    double sceneRadius() const;
 
-        void setEdgeColor(const QColor& c);
-        void setPointColor(const QColor& c);
-        void setEdgeWidth(int w);
-        void setPointSize(int s);
+    void setEdgeColor(const QColor& c);
+    void setPointColor(const QColor& c);
+    void setEdgeWidth(int w);
+    void setPointSize(int s);
 
-    private:
+private:
 
-        void drawEdges() const;
-        void drawPoints() const;
+    void drawEdges() const;
+    void drawPoints() const;
 
-        int pointSize;
-        Color pointColor;
-        int edgeWidth;
-        Color edgeColor;
+    int pointSize;
+    Color pointColor;
+    int edgeWidth;
+    Color edgeColor;
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_DRAWABLE_BOUNDINGBOX2D_H

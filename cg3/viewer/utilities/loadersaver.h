@@ -13,7 +13,6 @@
 #include <memory>
 
 namespace cg3 {
-
 namespace viewer {
 
 /**
@@ -56,8 +55,8 @@ void LoaderSaver::addSupportedExtension(const std::string &ext1, Args... args) {
     addSupportedExtension(ext1);
     addSupportedExtension(args...);
 }
-}
 
-}
+} //namespace cg3::viewer
+} //namespace cg3
 
 #endif // CG3_LOADERSAVER_H

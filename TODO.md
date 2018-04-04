@@ -26,7 +26,7 @@
   - [x] Put Dcel and EigenMesh under a module called Meshes
   - [ ] Add EigenMesh member functions verticesEigenMatrix and facesEigenMatrix
   - [ ] viewer/interfaces becomes viewer/abstract_classes
-  - [ ] viewer/renderable_objects becomes viewer/opengl_functions
+  - [x] viewer/renderable_objects becomes viewer/opengl_objects
   - [ ] Complete restyle Dcel
 - Viewer:
   - [ ] GLCanvas becomes a private nested class of the MainWindow

@@ -22,7 +22,7 @@
 #include <Eigen/Core>
 #endif
 
-#include "../renderable_objects/renderable_objects.h"
+#include "../opengl_objects/opengl_objects.h"
 #include "drawable_object.h"
 
 namespace cg3 {
@@ -38,56 +38,57 @@ void _check_gl_error(const char *file, int line);
 #define check_gl_error() _check_gl_error(__FILE__,__LINE__)
 
 /**
+ * @ingroup cg3viewer
  * @brief The DrawableMesh class
  * This is a non-instantiable class.
  * You can only inherit this class (protected constructors).
- * @ingroup cg3viewer
  */
-class DrawableMesh : public DrawableObject{
-    public:
+class DrawableMesh : public DrawableObject
+{
+public:
 
-        void init();
+    void init();
 
-        // Implementation of the
-        // DrawableObject interface
-        virtual void draw() const = 0;
-        virtual Pointd sceneCenter() const = 0;
-        virtual double sceneRadius() const = 0;
-        virtual bool isVisible() const;
+    // Implementation of the
+    // DrawableObject interface
+    virtual void draw() const = 0;
+    virtual Pointd sceneCenter() const = 0;
+    virtual double sceneRadius() const = 0;
+    virtual bool isVisible() const;
 
-        // rendering options
-        //
-        void setWireframe(bool b);
-        void setFlatShading();
-        void setSmoothShading();
-        void setPointsShading();
-        void setWireframeColor(float r, float g, float b);
-        void setWireframeWidth(float width);
-        void setEnableVertexColor();
-        void setEnableTriangleColor();
-        void setVisibleBoundingBox(bool b);
-        void setVisible(bool b);
+    // rendering options
+    //
+    void setWireframe(bool b);
+    void setFlatShading();
+    void setSmoothShading();
+    void setPointsShading();
+    void setWireframeColor(float r, float g, float b);
+    void setWireframeWidth(float width);
+    void setEnableVertexColor();
+    void setEnableTriangleColor();
+    void setVisibleBoundingBox(bool b);
+    void setVisible(bool b);
 
-    protected:
-        DrawableMesh();
-        virtual void draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const;
-        virtual void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
+protected:
+    DrawableMesh();
+    virtual void draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const;
+    virtual void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
 
-        enum {
-            DRAW_MESH        = 0b00000001,
-            DRAW_POINTS      = 0b00000010,
-            DRAW_FLAT        = 0b00000100,
-            DRAW_SMOOTH      = 0b00001000,
-            DRAW_WIREFRAME   = 0b00010000,
-            DRAW_FACECOLOR   = 0b00100000,
-            DRAW_VERTEXCOLOR = 0b01000000,
-            DRAW_BOUNDINGBOX = 0b10000000
-        };
+    enum {
+        DRAW_MESH        = 0b00000001,
+        DRAW_POINTS      = 0b00000010,
+        DRAW_FLAT        = 0b00000100,
+        DRAW_SMOOTH      = 0b00001000,
+        DRAW_WIREFRAME   = 0b00010000,
+        DRAW_FACECOLOR   = 0b00100000,
+        DRAW_VERTEXCOLOR = 0b01000000,
+        DRAW_BOUNDINGBOX = 0b10000000
+    };
 
-        int   drawMode;
-        int   wireframeWidth;
-        float wireframeColor[3];
+    int   drawMode;
+    int   wireframeWidth;
+    float wireframeColor[3];
 };
 
-}
+} //namespace cg3
 #endif // CG3_DRAWABLE_MESH_H

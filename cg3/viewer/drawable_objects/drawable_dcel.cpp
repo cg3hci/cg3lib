@@ -16,7 +16,8 @@
 
 namespace cg3 {
 
-DrawableDcel::DrawableDcel() : Dcel(){
+DrawableDcel::DrawableDcel() : Dcel()
+{
     init();
 }
 
@@ -25,7 +26,8 @@ DrawableDcel::DrawableDcel() : Dcel(){
  * @brief Crea una DrawableDcel a partire dalla Dcel passata come parametro (di cui ne verrà fatta una copia)
  * @param[in] d: Dcel che verrà copiata e resa visualizzabile
  */
-DrawableDcel::DrawableDcel(const Dcel &d) : Dcel(d) {
+DrawableDcel::DrawableDcel(const Dcel &d) : Dcel(d)
+{
     init();
 }
 
@@ -33,7 +35,8 @@ DrawableDcel::DrawableDcel(const Dcel &d) : Dcel(d) {
  * \~Italian
  * @brief Setta impostazioni di visualizzazione di default.
  */
-void DrawableDcel::init() {
+void DrawableDcel::init()
+{
     DrawableMesh::init();
     update();
 
@@ -47,7 +50,8 @@ void DrawableDcel::init() {
  * \~Italian
  * @brief esegue una clear della Dcel e della DrawableDcel
  */
-void DrawableDcel::clear() {
+void DrawableDcel::clear()
+{
     Dcel::clear();
     init();
     vertexCoordinates.clear();
@@ -58,7 +62,8 @@ void DrawableDcel::clear() {
     triangleColors.clear();
 }
 
-void DrawableDcel::draw() const {
+void DrawableDcel::draw() const
+{
     DrawableMesh::draw((unsigned int)vertexCoordinates.size()/3, (unsigned int)triangles.size()/3, vertexCoordinates.data(), triangles.data(), vertexNormals.data(), vertexColors.data(), triangleNormals.data(), triangleColors.data(), boundingBox.min(), boundingBox.max());
 }
 
@@ -67,7 +72,8 @@ void DrawableDcel::draw() const {
  * @brief Calcola e restituisce il centro della Dcel.
  * @return il punto rappresentante il centro della mesh.
  */
-Pointd DrawableDcel::sceneCenter() const {
+Pointd DrawableDcel::sceneCenter() const
+{
     if (boundingBox.isValid())
         return boundingBox.center();
     else
@@ -79,7 +85,8 @@ Pointd DrawableDcel::sceneCenter() const {
  * @brief Calcola il raggio della Dcel.
  * @return Restituisce un valore rappresentante il raggio della mesh
  */
-double DrawableDcel::sceneRadius() const {
+double DrawableDcel::sceneRadius() const
+{
     if (boundingBox.isValid())
         return boundingBox.diag() / 2;
     else
@@ -94,7 +101,8 @@ double DrawableDcel::sceneRadius() const {
  * Dcel. Deve essere chiamata ogni volta che è stata fatta una modifica nella Dcel e si vuole visualizzare tale
  * modifica.
  */
-void DrawableDcel::update() {
+void DrawableDcel::update()
+{
     vertexCoordinates.clear();
     vertexNormals.clear();
     triangles.clear();
@@ -200,7 +208,8 @@ void DrawableDcel::update() {
  * \~Italian
  * @brief Rendering della mesh
  */
-void DrawableDcel::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const {
+void DrawableDcel::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const
+{
     DrawableMesh::renderPass(nv, nt, coords, triangles, vertexNormals, vertexColors, triangleNormals, triangleColors);
     if(drawMode & DRAW_FACES_WIREFRAME){
         for(unsigned int i=0; i<facesWireframe.size(); i++){
@@ -218,7 +227,8 @@ void DrawableDcel::renderPass(unsigned int nv, unsigned int nt, const double* co
  * \~Italian
  * @brief Setta la visibilità del wireframe del contorno delle facce della mesh
  */
-void DrawableDcel::setFacesWireframe(bool b) {
+void DrawableDcel::setFacesWireframe(bool b)
+{
     if (b) drawMode |=  DRAW_FACES_WIREFRAME;
     else   drawMode &= ~DRAW_FACES_WIREFRAME;
 }
@@ -227,7 +237,8 @@ void DrawableDcel::setFacesWireframe(bool b) {
  * \~Italian
  * @brief Setta la larghezza del wireframe del contorno delle facce della mesh
  */
-void DrawableDcel::setFacesWireframeWidth(const int w) {
+void DrawableDcel::setFacesWireframeWidth(const int w)
+{
     facesWireframeWidth = w;
 }
 
@@ -235,15 +246,17 @@ void DrawableDcel::setFacesWireframeWidth(const int w) {
  * \~Italian
  * @brief Setta il colore del wireframe del contorno delle facce della mesh
  */
-void DrawableDcel::setFacesWireframeColor(float r, float g, float b) {
+void DrawableDcel::setFacesWireframeColor(float r, float g, float b)
+{
     wireframeColor[0] = r;
     wireframeColor[1] = g;
     wireframeColor[2] = b;
 }
 
-void DrawableDcel::deserialize(std::ifstream& binaryFile) {
+void DrawableDcel::deserialize(std::ifstream& binaryFile)
+{
     Dcel::deserialize(binaryFile);
     update();
 }
 
-}
+} //namespace cg3

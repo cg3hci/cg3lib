@@ -16,61 +16,60 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3viewer
  * @brief The DrawableDcel class allows to draw a Dcel in the Viewer.
  * In order to make visible any change made in the Dcel, you must execute the method DrawableDcel::update().
  *
  * @warning if you need performance, do not call update() inside a draw method; call it only when you made some modifications in the dcel.
- * @ingroup cg3viewer
  */
-class DrawableDcel : public Dcel, public DrawableMesh {
-    public:
+class DrawableDcel : public Dcel, public DrawableMesh
+{
+public:
 
-        DrawableDcel();
-        DrawableDcel(const Dcel &d);
+    DrawableDcel();
+    DrawableDcel(const Dcel &d);
 
-        void init();
-        void clear();
+    void init();
+    void clear();
 
-        // Implementation of the
-        // DrawableObject interface
-        //
-        void draw() const;
-        Pointd sceneCenter() const;
-        double sceneRadius() const;
+    // Implementation of the
+    // DrawableObject interface
+    //
+    void draw() const;
+    Pointd sceneCenter() const;
+    double sceneRadius() const;
 
-        void update();
+    void update();
 
-        void setFacesWireframe(bool b);
-        void setFacesWireframeWidth(int w);
-        void setFacesWireframeColor(float r, float g, float b);
+    void setFacesWireframe(bool b);
+    void setFacesWireframeWidth(int w);
+    void setFacesWireframeColor(float r, float g, float b);
 
-        // SerializableObject interface
-        void deserialize(std::ifstream& binaryFile);
+    // SerializableObject interface
+    void deserialize(std::ifstream& binaryFile);
 
-    protected:
+protected:
 
-        void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
+    void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
 
-        enum {
-            DRAW_FACES_WIREFRAME = 0b100000000
-        };
+    enum {
+        DRAW_FACES_WIREFRAME = 0b100000000
+    };
 
-        std::vector<double> vertexCoordinates; /** \~Italian @brief vettore di coordinate usate per la visualizzazione: per aggiornare utilizzare metodo update() */
-        std::vector<int> triangles; /** \~Italian @brief vettore di triangoli (da considerare a triple di indici) usati per la visualizzazione: per aggiornare utilizzare il metodo update() */
-        std::vector<double> vertexNormals; /** \~Italian @brief vettore di normali ai vertici usate per la visualizzazione: per aggiornare utilizzare il metodo update() */
-        std::vector<float> vertexColors; /** \~Italian @brief vettore di colori associati ai vertici (da considerare come triple rgb float) usati per la visualizzazione: per aggiornare utilizzare il metodo update() */
-        std::vector<double> triangleNormals; /** \~Italian @brief vettore di normali ai triangoli usate per la visualizzazione: per aggiornare utilizzare il metodo update() */
-        std::vector<float> triangleColors; /** \~Italian @brief vettore di colori associati ai triangoli (da considerare come triple rgb float) usati per la visualizzazione: per aggiornare utilizzare il metodo update() */
+    std::vector<double> vertexCoordinates; /** \~Italian @brief vettore di coordinate usate per la visualizzazione: per aggiornare utilizzare metodo update() */
+    std::vector<int> triangles; /** \~Italian @brief vettore di triangoli (da considerare a triple di indici) usati per la visualizzazione: per aggiornare utilizzare il metodo update() */
+    std::vector<double> vertexNormals; /** \~Italian @brief vettore di normali ai vertici usate per la visualizzazione: per aggiornare utilizzare il metodo update() */
+    std::vector<float> vertexColors; /** \~Italian @brief vettore di colori associati ai vertici (da considerare come triple rgb float) usati per la visualizzazione: per aggiornare utilizzare il metodo update() */
+    std::vector<double> triangleNormals; /** \~Italian @brief vettore di normali ai triangoli usate per la visualizzazione: per aggiornare utilizzare il metodo update() */
+    std::vector<float> triangleColors; /** \~Italian @brief vettore di colori associati ai triangoli (da considerare come triple rgb float) usati per la visualizzazione: per aggiornare utilizzare il metodo update() */
 
-        std::vector<unsigned int> triangles_face; /** \~Italian @brief vettore di mappatura triangoli->facce (ogni entrata ha posizione corrispondente a un terzo della posizione della tripla in tris e presenta l'identificativo di una faccia */
-        std::vector<std::pair<unsigned int, unsigned int> > facesWireframe; /** \~Italian @brief vettore di coppie usate per renderizzare degli edge: per aggiornare utilizzare metodo update() */
+    std::vector<unsigned int> triangles_face; /** \~Italian @brief vettore di mappatura triangoli->facce (ogni entrata ha posizione corrispondente a un terzo della posizione della tripla in tris e presenta l'identificativo di una faccia */
+    std::vector<std::pair<unsigned int, unsigned int> > facesWireframe; /** \~Italian @brief vettore di coppie usate per renderizzare degli edge: per aggiornare utilizzare metodo update() */
 
-        int facesWireframeWidth = 1;
-        float facesWireframeColor[3];
-
-
+    int facesWireframeWidth = 1;
+    float facesWireframeColor[3];
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_DRAWABLE_DCEL_H

@@ -15,8 +15,8 @@
 namespace cg3 {
 
 /**
- * @brief The PickableEigenmesh class
  * @ingroup cg3viewer
+ * @brief The PickableEigenmesh class
  */
 class PickableEigenMesh : public DrawableEigenMesh, public PickableObject
 {
@@ -34,6 +34,6 @@ protected:
     int selection_width;
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_PICKABLE_EIGENMESH_H

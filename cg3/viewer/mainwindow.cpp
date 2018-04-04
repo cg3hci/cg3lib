@@ -18,7 +18,6 @@
 #endif
 
 namespace cg3 {
-
 namespace viewer {
 
 /**
@@ -26,13 +25,13 @@ namespace viewer {
  * @param parent
  */
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    consoleStream(nullptr),
-    mode2D(false),
-    nMeshes(0),
-    first(true),
-    debugObjectsEnabled(false)
+        QMainWindow(parent),
+        ui(new Ui::MainWindow),
+        consoleStream(nullptr),
+        mode2D(false),
+        nMeshes(0),
+        first(true),
+        debugObjectsEnabled(false)
 {
     ui->setupUi(this);
     ui->toolBox->removeItem(0);
@@ -64,60 +63,70 @@ MainWindow::MainWindow(QWidget *parent) :
     #endif
 }
 
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
     if (consoleStream != nullptr)
         delete consoleStream;
     delete ui;
 }
 
-void MainWindow::fitScene() {
+void MainWindow::fitScene()
+{
     ui->glCanvas->fitScene();
 }
 
-void MainWindow::fitScene(const Point2Dd& center, double radius) {
+void MainWindow::fitScene(const Point2Dd& center, double radius)
+{
     ui->glCanvas->fitScene(Pointd(center.x(), center.y(), 0), radius);
 }
 
-void MainWindow::fitScene(const Pointd& center, double radius) {
+void MainWindow::fitScene(const Pointd& center, double radius)
+{
     ui->glCanvas->fitScene(center, radius);
 }
 
-Point2Di MainWindow::getCanvasSize() const {
+Point2Di MainWindow::getCanvasSize() const
+{
     return Point2Di(ui->glCanvas->width(), ui->glCanvas->height());
 }
 
-/**
- * @brief Centra la scena tenendo conto di tutti gli oggetti visibili all'interno di essa
- */
-void MainWindow::updateGlCanvas() {
+void MainWindow::updateGlCanvas()
+{
     ui->glCanvas->update();
 }
 
-void MainWindow::disableRotation() {
+void MainWindow::disableRotation()
+{
     ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->NO_CLICK_ACTION);
 }
 
-void MainWindow::enableRotation() {
+void MainWindow::enableRotation()
+{
     ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->CAMERA, ui->glCanvas->ROTATE);
 }
 
-void MainWindow::disableTranslation() {
+void MainWindow::disableTranslation()
+{
     ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->NO_CLICK_ACTION);
 }
 
-void MainWindow::enableTranslation() {
+void MainWindow::enableTranslation()
+{
     ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->CAMERA, ui->glCanvas->TRANSLATE);
 }
 
-void MainWindow::disableZoom() {
+void MainWindow::disableZoom()
+{
     ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->NO_MOUSE_ACTION);
 }
 
-void MainWindow::enableZoom() {
+void MainWindow::enableZoom()
+{
     ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->ZOOM);
 }
 
-void MainWindow::setSelectLeftButton() {
+void MainWindow::setSelectLeftButton()
+{
     ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->SELECT);
 }
 
@@ -126,12 +135,14 @@ void MainWindow::setSelectLeftButton() {
  *
  * Aggiorna in automatico la scena visualizzata.
  */
-void MainWindow::saveSnapshot() {
+void MainWindow::saveSnapshot()
+{
     ui->glCanvas->update();
     ui->glCanvas->saveSnapshot();
 }
 
-void MainWindow::saveSnapshot(const std::string &filename) {
+void MainWindow::saveSnapshot(const std::string &filename)
+{
     ui->glCanvas->update();
     ui->glCanvas->saveSnapshot(QString::fromStdString(filename), true);
 }
@@ -142,7 +153,8 @@ void MainWindow::saveSnapshot(const std::string &filename) {
  * Aggiorna in autmoatico la scena visualizzata.
  * @param[in] b: se true visualizza gli assi, se false non li visualizza.
  */
-void MainWindow::drawAxis(bool b) {
+void MainWindow::drawAxis(bool b)
+{
     ui->glCanvas->setAxisIsDrawn(b);
     ui->glCanvas->update();
 }
@@ -150,32 +162,39 @@ void MainWindow::drawAxis(bool b) {
 /**
  * @brief
  */
-void MainWindow::resetPointOfView() {
+void MainWindow::resetPointOfView()
+{
     ui->glCanvas->resetPointOfView();
 }
 
-void MainWindow::savePointOfView() {
+void MainWindow::savePointOfView()
+{
     savePointOfView(configFolderDirectory + "pov.cg3pov");
 }
 
-void MainWindow::loadPointOfView() {
+void MainWindow::loadPointOfView()
+{
     loadPointOfView(configFolderDirectory + "pov.cg3pov");
 }
 
-void MainWindow::savePointOfView(std::string filename) {
+void MainWindow::savePointOfView(std::string filename)
+{
     ui->glCanvas->savePointOfView(filename);
 }
 
-void MainWindow::loadPointOfView(std::string filename) {
+void MainWindow::loadPointOfView(std::string filename)
+{
     ui->glCanvas->loadPointOfView(filename);
     ui->glCanvas->update();
 }
 
-void MainWindow::setBackgroundColor(const QColor & color) {
+void MainWindow::setBackgroundColor(const QColor & color)
+{
     ui->glCanvas->setClearColor(color);
 }
 
-void MainWindow::set2DMode(bool b) {
+void MainWindow::set2DMode(bool b)
+{
     if (b != mode2D){
         ui->action2D_Mode->setEnabled(mode2D);
         ui->action3D_Mode->setEnabled(!mode2D);
@@ -191,7 +210,8 @@ void MainWindow::set2DMode(bool b) {
     }
 }
 
-void MainWindow::setCameraDirection(const cg3::Vec3& vec) {
+void MainWindow::setCameraDirection(const cg3::Vec3& vec)
+{
     qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
     qglVec.normalize();
 
@@ -206,7 +226,8 @@ void MainWindow::setCameraDirection(const cg3::Vec3& vec) {
  * @param obj: nuovo oggetto da visualizzare nella canvas
  * @param checkBoxName: nome assegnato alla checkbox relativa al nuovo oggetto
  */
-void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bool b) {
+void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bool b)
+{
     ui->glCanvas->pushObj(obj);
     if (b) ui->glCanvas->fitScene();
     ui->glCanvas->update();
@@ -232,7 +253,8 @@ void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bo
  *
  * @param obj: oggetto che verrà rimosso dalla canvas
  */
-bool MainWindow::deleteObj(const DrawableObject* obj, bool b) {
+bool MainWindow::deleteObj(const DrawableObject* obj, bool b)
+{
     boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
     if (it != mapObjects.right.end()){
         int i = it->second;
@@ -256,7 +278,8 @@ bool MainWindow::deleteObj(const DrawableObject* obj, bool b) {
         return false;
 }
 
-void MainWindow::setObjVisibility(const DrawableObject *obj, bool visible) {
+void MainWindow::setObjVisibility(const DrawableObject *obj, bool visible)
+{
     boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
     if (it != mapObjects.right.end()){
         int i = it->second;
@@ -267,7 +290,8 @@ void MainWindow::setObjVisibility(const DrawableObject *obj, bool visible) {
 
 }
 
-bool MainWindow::contains(const DrawableObject* obj) {
+bool MainWindow::contains(const DrawableObject* obj)
+{
     boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter = mapObjects.right.find(obj);
     return (right_iter != mapObjects.right.end());
 }
@@ -276,7 +300,8 @@ bool MainWindow::contains(const DrawableObject* obj) {
  * @brief Restituisce il BoundingBox di tutti gli oggetti \i presenti presenti nella canvas
  * @return il bounding box contenente gli oggetti visibili
  */
-BoundingBox MainWindow::getFullBoundingBox() {
+BoundingBox MainWindow::getFullBoundingBox()
+{
     return ui->glCanvas->getFullBoundingBox();
 }
 
@@ -284,12 +309,14 @@ BoundingBox MainWindow::getFullBoundingBox() {
  * @brief Restituisce il numero di oggetti visibili presenti nella canvas.
  * @return intero rappresentante il numero di oggetti visibili
  */
-int MainWindow::getNumberVisibleObjects() {
+int MainWindow::getNumberVisibleObjects()
+{
     return ui->glCanvas->getNumberVisibleObjects();
 }
 
 
-void MainWindow::enableDebugObjects() {
+void MainWindow::enableDebugObjects()
+{
     if (debugObjectsEnabled == false){
         pushObj(&debugObjects, "Debug Objects");
         ui->actionEnable_Debug_Objects->setEnabled(false);
@@ -298,7 +325,8 @@ void MainWindow::enableDebugObjects() {
     }
 }
 
-void MainWindow::disableDebugObjects() {
+void MainWindow::disableDebugObjects()
+{
     if (debugObjectsEnabled == true){
         if (deleteObj(&debugObjects)) {
             ui->actionEnable_Debug_Objects->setEnabled(true);
@@ -309,13 +337,15 @@ void MainWindow::disableDebugObjects() {
     ui->glCanvas->update();
 }
 
-void MainWindow::setFullScreen(bool b) {
+void MainWindow::setFullScreen(bool b)
+{
     ui->glCanvas->setFullScreen(b);
     if (!b)
         showMaximized();
 }
 
-void MainWindow::toggleConsoleStream() {
+void MainWindow::toggleConsoleStream()
+{
     if (consoleStream == nullptr){
         ui->console->show();
         consoleStream =  new ConsoleStream(std::cout, std::cerr, this->ui->console);
@@ -328,7 +358,8 @@ void MainWindow::toggleConsoleStream() {
     }
 }
 
-void MainWindow::keyPressEvent(QKeyEvent * event){
+void MainWindow::keyPressEvent(QKeyEvent * event)
+{
     if (event->key() == Qt::Key_F)
         fitScene();
     if (event->key() == Qt::Key_U)
@@ -362,7 +393,8 @@ void MainWindow::keyPressEvent(QKeyEvent * event){
  * @param[in] parent: di default è la toolbox alla quale aggiungiamo il manager
  * @return un intero rappresentante l'indice del manager inserito
  */
-int MainWindow::addManager(QFrame * f, std::string name, QToolBox * parent) {
+int MainWindow::addManager(QFrame * f, std::string name, QToolBox * parent)
+{
     if (parent == nullptr) parent = ui->toolBox;
     ui->toolBox->insertItem((int)managers.size(), f, QString(name.c_str()));
     ui->toolBox->adjustSize();
@@ -378,7 +410,8 @@ int MainWindow::addManager(QFrame * f, std::string name, QToolBox * parent) {
  * @param[in] i: indice del manager da restituire
  * @return il puntatore al manager se esiste, nullptr altrimenti
  */
-QFrame *MainWindow::getManager(unsigned int i) {
+QFrame *MainWindow::getManager(unsigned int i)
+{
     if (i < managers.size()) return managers[i];
     else return nullptr;
 }
@@ -388,7 +421,8 @@ QFrame *MainWindow::getManager(unsigned int i) {
  * @param[in] i: indice del manager da rinominare
  * @param[in] s: il nuovo nome del manager
  */
-void MainWindow::renameManager(unsigned int i, std::string s) {
+void MainWindow::renameManager(unsigned int i, std::string s)
+{
     if (i < managers.size())
         ui->toolBox->setItemText(i, QString(s.c_str()));
 }
@@ -397,7 +431,8 @@ void MainWindow::renameManager(unsigned int i, std::string s) {
  * @brief Modifica il manager visualizzato all'i-esimo.
  * @param[in] i: indice del manager da visualizzare
  */
-void MainWindow::setCurrentIndexToolBox(unsigned int i){
+void MainWindow::setCurrentIndexToolBox(unsigned int i)
+{
     if (i < managers.size())
         ui->toolBox->setCurrentIndex(i);
 }
@@ -406,7 +441,8 @@ void MainWindow::setCurrentIndexToolBox(unsigned int i){
  * @brief Evento i-esima checkBox cliccata, modifica la visibilità dell'oggetto ad essa collegato
  * @param[in] i: indice della checkBox cliccata
  */
-void MainWindow::checkBoxClicked(int i) {
+void MainWindow::checkBoxClicked(int i)
+{
     QCheckBox * cb = checkBoxes[i];
     const DrawableObject * obj = mapObjects.left.at(i);
     //if (cb->isChecked()) obj->setVisible(true);
@@ -416,87 +452,105 @@ void MainWindow::checkBoxClicked(int i) {
     ui->glCanvas->update();
 }
 
-void MainWindow::slotObjectPicked(unsigned int i) {
+void MainWindow::slotObjectPicked(unsigned int i)
+{
     emit objectPicked(i);
 }
 
-void MainWindow::slotPoint2DClicked(Point2Dd p) {
+void MainWindow::slotPoint2DClicked(Point2Dd p)
+{
     emit point2DClicked(p);
 }
 
-void MainWindow::on_actionSave_Snapshot_triggered() {
+void MainWindow::on_actionSave_Snapshot_triggered()
+{
     QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_S, Qt::NoModifier);
     QCoreApplication::postEvent (ui->glCanvas, event);
 }
 
-void MainWindow::on_actionShow_Axis_triggered() {
+void MainWindow::on_actionShow_Axis_triggered()
+{
     QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_A, Qt::NoModifier);
     QCoreApplication::postEvent (ui->glCanvas, event);
 }
 
-void MainWindow::on_actionFull_Screen_toggled(bool arg1) {
+void MainWindow::on_actionFull_Screen_toggled(bool arg1)
+{
     setFullScreen(arg1);
 }
 
-void MainWindow::on_actionUpdate_Canvas_triggered() {
+void MainWindow::on_actionUpdate_Canvas_triggered()
+{
     updateGlCanvas();
 }
 
-void MainWindow::on_actionFit_Scene_triggered() {
+void MainWindow::on_actionFit_Scene_triggered()
+{
     fitScene();
 }
 
-void MainWindow::on_actionChange_Background_Color_triggered() {
+void MainWindow::on_actionChange_Background_Color_triggered()
+{
     QColor color = QColorDialog::getColor(Qt::white, this);
 
     setBackgroundColor(color);
     updateGlCanvas();
 }
 
-void MainWindow::on_actionSave_Point_Of_View_triggered() {
+void MainWindow::on_actionSave_Point_Of_View_triggered()
+{
     savePointOfView();
 }
 
-void MainWindow::on_actionLoad_Point_of_View_triggered() {
+void MainWindow::on_actionLoad_Point_of_View_triggered()
+{
     loadPointOfView();
 }
 
-void MainWindow::on_actionShow_Hide_Dock_Widget_triggered() {
+void MainWindow::on_actionShow_Hide_Dock_Widget_triggered()
+{
     QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_H, Qt::NoModifier);
     QCoreApplication::postEvent (ui->glCanvas, event);
 }
 
-void MainWindow::on_actionLoad_Point_Of_View_from_triggered() {
+void MainWindow::on_actionLoad_Point_Of_View_from_triggered()
+{
     std::string s = povLS.loadDialog("Open Point Of View");
     if (s != ""){
         loadPointOfView(s);
     }
 }
 
-void MainWindow::on_actionSave_Point_Of_View_as_triggered() {
+void MainWindow::on_actionSave_Point_Of_View_as_triggered()
+{
     std::string s = povLS.saveDialog("Save Point Of View");
     if (s != ""){
         savePointOfView(s);
     }
 }
 
-void MainWindow::on_actionShow_Hide_Console_Stream_triggered() {
+void MainWindow::on_actionShow_Hide_Console_Stream_triggered()
+{
     toggleConsoleStream();
 }
 
-void MainWindow::on_actionEnable_Debug_Objects_triggered() {
+void MainWindow::on_actionEnable_Debug_Objects_triggered()
+{
     enableDebugObjects();
 }
 
-void MainWindow::on_actionDisable_Debug_Objects_triggered() {
+void MainWindow::on_actionDisable_Debug_Objects_triggered()
+{
     disableDebugObjects();
 }
 
-void MainWindow::on_action2D_Mode_triggered() {
+void MainWindow::on_action2D_Mode_triggered()
+{
     set2DMode(true);
 }
 
-void MainWindow::on_action3D_Mode_triggered() {
+void MainWindow::on_action3D_Mode_triggered()
+{
     set2DMode(false);
 }
 
@@ -505,6 +559,5 @@ void MainWindow::on_actionReset_Point_of_View_triggered()
     ui->glCanvas->resetPointOfView();
 }
 
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3

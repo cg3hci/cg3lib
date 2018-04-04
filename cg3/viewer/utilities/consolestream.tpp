@@ -11,10 +11,16 @@
 #include <cg3/utilities/const.h>
 
 namespace cg3 {
-
 namespace viewer {
 
-inline ConsoleStream::ConsoleStream(std::ostream &stream, std::ostream &stream2, QTextEdit* text_edit) : std::basic_streambuf<char>(), stream(stream), stream2(stream2) {
+inline ConsoleStream::ConsoleStream(
+        std::ostream &stream,
+        std::ostream &stream2,
+        QTextEdit* text_edit) :
+    std::basic_streambuf<char>(),
+    stream(stream),
+    stream2(stream2)
+{
     textEdit = text_edit;
     oldBuffer = stream.rdbuf();
     oldBuffer2 = stream2.rdbuf();
@@ -24,16 +30,20 @@ inline ConsoleStream::ConsoleStream(std::ostream &stream, std::ostream &stream2,
 
 }
 
-inline ConsoleStream::~ConsoleStream() {
+inline ConsoleStream::~ConsoleStream()
+{
     stream.rdbuf(this->oldBuffer);
     stream2.rdbuf(this->oldBuffer2);
 }
 
-inline void ConsoleStream::registerConsoleMessageHandler() {
+inline void ConsoleStream::registerConsoleMessageHandler()
+{
     qInstallMessageHandler(consoleMessageHandler);
 }
 
-inline std::basic_streambuf<char>::int_type ConsoleStream::overflow(std::basic_streambuf<char>::int_type v) {
+inline std::basic_streambuf<char>::int_type ConsoleStream::overflow(
+        std::basic_streambuf<char>::int_type v)
+{
     if (v == '\n') {
         textEdit->append("");
     }
@@ -41,18 +51,23 @@ inline std::basic_streambuf<char>::int_type ConsoleStream::overflow(std::basic_s
 }
 
 
-inline void ConsoleStream::consoleMessageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg) {
+inline void ConsoleStream::consoleMessageHandler(
+        QtMsgType type,
+        const QMessageLogContext &,
+        const QString &msg)
+{
     CG3_SUPPRESS_WARNING(type);
     std::cout << msg.toStdString().c_str();
 }
 
-inline std::streamsize ConsoleStream::xsputn(const char *p, std::streamsize n) {
+inline std::streamsize ConsoleStream::xsputn(
+        const char *p, std::streamsize n)
+{
     CG3_SUPPRESS_WARNING(n);
     textEdit->append(p);
     textEdit->update();
     return textEdit->toPlainText().size();
 }
 
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3

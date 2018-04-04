@@ -11,19 +11,158 @@
 #include <QFileDialog>
 
 namespace cg3 {
-
 namespace viewer {
 
 EigenMeshManager::EigenMeshManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::EigenMeshManager),
     mainWindow((cg3::viewer::MainWindow&)*parent),
-    mesh (nullptr) {
+    loaded (false)
+{
     ui->setupUi(this);
     objls.addSupportedExtension("obj", "ply");
 }
 
-void EigenMeshManager::setButtonsMeshLoaded(bool b) {
+void EigenMeshManager::setEigenMesh(const EigenMesh& m)
+{
+    if (loaded){
+        mainWindow.deleteObj(&mesh);
+    }
+    mesh = m;
+    mainWindow.pushObj(&mesh, "EigenMesh");
+    setButtonsMeshLoaded(true);
+    loaded = true;
+    mainWindow.updateGlCanvas();
+
+}
+
+EigenMeshManager::~EigenMeshManager()
+{
+    if (loaded){
+        mainWindow.deleteObj(&mesh);
+    }
+    delete ui;
+}
+
+void EigenMeshManager::on_loadMeshButton_clicked()
+{
+    std::string filename = objls.loadDialog("Open Eigen Mesh");
+    if (filename != "") {
+        if (loaded){
+            mainWindow.deleteObj(&mesh);
+        }
+        loaded = mesh.readFromFile(filename);
+
+        if (loaded) {
+            mesh.setEnableTriangleColor();
+            mainWindow.pushObj(&mesh, filename.substr(filename.find_last_of("/") + 1));
+            setButtonsMeshLoaded(true);
+            mainWindow.updateGlCanvas();
+        }
+        else {
+            std::cerr << "Error while loading file " << filename << ".\n";
+        }
+    }
+}
+
+void EigenMeshManager::on_clearMeshButton_clicked()
+{
+    if (loaded) {
+        setButtonsMeshLoaded(false);
+        mainWindow.deleteObj(&mesh);
+        mainWindow.updateGlCanvas();
+    }
+}
+
+void EigenMeshManager::on_saveMeshButton_clicked()
+{
+    if (loaded){
+        QString selectedFilter;
+        QString filename = QFileDialog::getSaveFileName(nullptr,
+                           "Save Eigen Mesh",
+                           ".",
+                           "PLY(*.ply);;OBJ(*.obj)", &selectedFilter);
+        if (!filename.isEmpty()) {
+            std::cout << "save: " << filename.toStdString() << std::endl;
+
+            if (selectedFilter == "PLY(*.ply)") {
+                mesh.saveOnPly(filename.toStdString());
+            }
+            else  if (selectedFilter == "OBJ(*.obj)") {
+                mesh.saveOnObj(filename.toStdString());
+            }
+        }
+    }
+}
+
+void EigenMeshManager::on_pointsMeshRadioButton_toggled(bool checked)
+{
+    if (loaded) {
+        if (checked){
+            mesh.setPointsShading();
+            mainWindow.updateGlCanvas();
+        }
+    }
+}
+
+void EigenMeshManager::on_flatMeshRadioButton_toggled(bool checked)
+{
+    if (loaded) {
+        if (checked){
+            mesh.setFlatShading();
+            mainWindow.updateGlCanvas();
+        }
+    }
+}
+
+void EigenMeshManager::on_smoothMeshRadioButton_toggled(bool checked)
+{
+    if (loaded) {
+        if (checked){
+            mesh.setSmoothShading();
+            mainWindow.updateGlCanvas();
+        }
+    }
+}
+
+void EigenMeshManager::on_wireframeMeshCheckBox_stateChanged(int arg1)
+{
+    if (loaded) {
+        mesh.setWireframe(arg1 == Qt::Checked);
+        mainWindow.updateGlCanvas();
+    }
+}
+
+void EigenMeshManager::on_verticesColorRadioButton_toggled(bool checked)
+{
+    if (loaded) {
+        if (checked){
+            mesh.setEnableVertexColor();
+            mainWindow.updateGlCanvas();
+        }
+    }
+}
+
+void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked)
+{
+    if (loaded) {
+        if (checked){
+            mesh.setEnableTriangleColor();
+            mainWindow.updateGlCanvas();
+        }
+    }
+}
+
+void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1)
+{
+    if (loaded) {
+        mesh.setVisibleBoundingBox(arg1 == Qt::Checked);
+        mainWindow.updateGlCanvas();
+    }
+}
+
+void EigenMeshManager::setButtonsMeshLoaded(bool b)
+{
     ui->loadMeshButton->setEnabled(!b);
     ui->clearMeshButton->setEnabled(b);
     ui->saveMeshButton->setEnabled(b);
@@ -41,116 +180,5 @@ void EigenMeshManager::setButtonsMeshLoaded(bool b) {
     ui->verticesColorRadioButton->setChecked(false);
 }
 
-void EigenMeshManager::setEigenMesh(const EigenMesh& m) {
-    if (mesh != nullptr){
-        mainWindow.deleteObj(mesh);
-        delete mesh;
-    }
-    mesh = new DrawableEigenMesh(m);
-    mainWindow.pushObj(mesh, "EigenMesh");
-    setButtonsMeshLoaded(true);
-    mainWindow.updateGlCanvas();
-
-}
-
-EigenMeshManager::~EigenMeshManager() {
-    delete ui;
-    if (mesh != nullptr){
-        mainWindow.deleteObj(mesh);
-        delete mesh;
-    }
-}
-
-void EigenMeshManager::on_loadMeshButton_clicked() {
-    std::string filename = objls.loadDialog("Open Eigen Mesh");
-        if (filename != "") {
-            mesh = new DrawableEigenMesh();
-            bool loaded = mesh->readFromFile(filename);
-
-            if (loaded) {
-                mesh->setEnableTriangleColor();
-                mainWindow.pushObj(mesh, filename.substr(filename.find_last_of("/") + 1));
-                setButtonsMeshLoaded(true);
-                mainWindow.updateGlCanvas();
-            }
-            else {
-                delete mesh;
-                mesh = nullptr;
-                std::cerr << "Error while loading file " << filename << ".\n";
-            }
-        }
-}
-
-void EigenMeshManager::on_clearMeshButton_clicked() {
-    setButtonsMeshLoaded(false);
-    mainWindow.deleteObj(mesh);
-    delete mesh;
-    mesh = nullptr;
-}
-
-void EigenMeshManager::on_saveMeshButton_clicked() {
-    QString selectedFilter;
-    QString filename = QFileDialog::getSaveFileName(nullptr,
-                       "Save Eigen Mesh",
-                       ".",
-                       "PLY(*.ply);;OBJ(*.obj)", &selectedFilter);
-    if (!filename.isEmpty()) {
-        std::cout << "save: " << filename.toStdString() << std::endl;
-
-        if (selectedFilter == "PLY(*.ply)") {
-            mesh->saveOnPly(filename.toStdString());
-        }
-        else  if (selectedFilter == "OBJ(*.obj)") {
-            mesh->saveOnObj(filename.toStdString());
-        }
-    }
-}
-
-void EigenMeshManager::on_pointsMeshRadioButton_toggled(bool checked){
-    if (checked){
-        mesh->setPointsShading();
-        mainWindow.updateGlCanvas();
-    }
-}
-
-void EigenMeshManager::on_flatMeshRadioButton_toggled(bool checked) {
-    if (checked){
-        mesh->setFlatShading();
-        mainWindow.updateGlCanvas();
-    }
-}
-
-void EigenMeshManager::on_smoothMeshRadioButton_toggled(bool checked) {
-    if (checked){
-        mesh->setSmoothShading();
-        mainWindow.updateGlCanvas();
-    }
-}
-
-void EigenMeshManager::on_wireframeMeshCheckBox_stateChanged(int arg1) {
-    mesh->setWireframe(arg1 == Qt::Checked);
-    mainWindow.updateGlCanvas();
-}
-
-void EigenMeshManager::on_verticesColorRadioButton_toggled(bool checked) {
-    if (checked){
-        mesh->setEnableVertexColor();
-        mainWindow.updateGlCanvas();
-    }
-}
-
-void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked) {
-    if (checked){
-        mesh->setEnableTriangleColor();
-        mainWindow.updateGlCanvas();
-    }
-}
-
-void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1) {
-    mesh->setVisibleBoundingBox(arg1 == Qt::Checked);
-    mainWindow.updateGlCanvas();
-}
-
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3

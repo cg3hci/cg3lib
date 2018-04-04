@@ -11,28 +11,23 @@
 namespace cg3 {
 
 /**
- * \~English
+ * @ingroup cg3viewer
  * @interface PickableObject
  * @brief The PickableObject Interface models a pickable model by click for a GLCanvas.
  *
  * It contains methods that must be implemented by the classes that inherit from a PickableObject
  * to be picked by click on a GLCanvas.
  *
- * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
- *
- * @ingroup cg3viewer
  */
 class PickableObject
 {
-    public:
-        PickableObject() {}   /**< \~English @brief Empty constructor
-                                   \~Italian @brief Costruttore, vuoto */
-        virtual ~PickableObject() {}
+public:
+    PickableObject() {}   /**< \~English @brief Empty constructor */
+    virtual ~PickableObject() {}
 
-        virtual void drawWithNames() const = 0; /**< \~English @brief Disegna tutti gli oggetti cliccabili dell'oggetto
-                                                     \~Italian @brief Draws all the pickable objects of the object */
+    virtual void drawWithNames() const = 0; /**< \~English @brief Draws all the pickable objects of the object */
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_PICKABLE_OBJECT_H

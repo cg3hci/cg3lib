@@ -15,6 +15,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3viewer
  * @interface DrawableObject
  * @brief The DrawableObject Interface models a renderable model for a GLCanvas.
  *
@@ -22,7 +23,7 @@ namespace cg3 {
  *
  * \code{*.cpp}
  * class MyDrawableObject : public cg3::DrawableObject {
- *    //all the staff of MyDrawableObject
+ *    //all the stuff of MyDrawableObject
  * }
  *
  * //usage
@@ -34,28 +35,27 @@ namespace cg3 {
  * Be careful: a DrawableObject must live as long as its pointer is stored in the MainWindow.
  * Remember to call cg3::viewer::MainWindow::deleteObj() before the object goes out of scope or it is deleted.
  *
- * @ingroup cg3viewer
  */
 class DrawableObject
 {
-    public :
+public :
 
-        DrawableObject() {}                      /**< @brief Empty constructor */
+    DrawableObject() {}                      /**< @brief Empty constructor */
 
-        virtual ~DrawableObject() {}
+    virtual ~DrawableObject() {}
 
-        virtual void  draw()          const = 0; /**< @brief This member function must draw the object through OpenGL calls.
-                                                             It will be called at every frame by the canvas. */
+    virtual void  draw()          const = 0; /**< @brief This member function must draw the object through OpenGL calls.
+                                                         It will be called at every frame by the canvas. */
 
-        virtual Pointd sceneCenter()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
-                                                             It must return the position of the center of the object. */
+    virtual Pointd sceneCenter()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
+                                                         It must return the position of the center of the object. */
 
-        virtual double sceneRadius()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
-                                                             It should return the ray of the bounding sphere of the object, but also half diagonal of the
-                                                             bounding box of the object is a good approximation. Return -1 if the object shouldn't influence
-                                                             the position of the camera. */
+    virtual double sceneRadius()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
+                                                         It should return the ray of the bounding sphere of the object, but also half diagonal of the
+                                                         bounding box of the object is a good approximation. Return -1 if the object shouldn't influence
+                                                         the position of the camera. */
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_DRAWABLE_OBJECT_H

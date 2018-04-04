@@ -14,22 +14,23 @@
 namespace cg3 {
 
 /**
- * @brief The DrawableEigenMesh class
  * @ingroup cg3viewer
+ * @brief The DrawableEigenMesh class
  */
-class DrawableEigenMesh : public EigenMesh, public DrawableMesh {
-    public:
-        DrawableEigenMesh();
-        DrawableEigenMesh(const SimpleEigenMesh &m);
-        DrawableEigenMesh(const EigenMesh &m);
-        DrawableEigenMesh(const std::string &filename);
+class DrawableEigenMesh : public EigenMesh, public DrawableMesh
+{
+public:
+    DrawableEigenMesh();
+    DrawableEigenMesh(const SimpleEigenMesh &m);
+    DrawableEigenMesh(const EigenMesh &m);
+    DrawableEigenMesh(const std::string &filename);
 
-        // DrawableObject interface
-        void draw() const;
-        Pointd sceneCenter() const;
-        double sceneRadius() const;
+    // DrawableObject interface
+    void draw() const;
+    Pointd sceneCenter() const;
+    double sceneRadius() const;
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_DRAWABLE_EIGENMESH_H

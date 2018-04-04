@@ -15,34 +15,41 @@
 
 namespace cg3 {
 
-DrawableEigenMesh::DrawableEigenMesh() {
+DrawableEigenMesh::DrawableEigenMesh()
+{
 }
 
 DrawableEigenMesh::DrawableEigenMesh(const SimpleEigenMesh& m) : EigenMesh(m) {
 }
 
-DrawableEigenMesh::DrawableEigenMesh(const EigenMesh& m) : EigenMesh(m){
+
+DrawableEigenMesh::DrawableEigenMesh(const EigenMesh& m) : EigenMesh(m)
+{
 }
 
-DrawableEigenMesh::DrawableEigenMesh(const std::string& filename)  : EigenMesh(filename) {
+DrawableEigenMesh::DrawableEigenMesh(const std::string& filename)  : EigenMesh(filename)
+{
 }
 
-void DrawableEigenMesh::draw() const {
+void DrawableEigenMesh::draw() const
+{
     DrawableMesh::draw(V.rows(), F.rows(), V.data(), F.data(), NV.data(), CV.data(), NF.data(), CF.data(), bb.min(), bb.max());
 }
 
-Pointd DrawableEigenMesh::sceneCenter() const {
+Pointd DrawableEigenMesh::sceneCenter() const
+{
     if (bb.isValid())
         return bb.center();
     else
         return Pointd();
 }
 
-double DrawableEigenMesh::sceneRadius() const {
+double DrawableEigenMesh::sceneRadius() const
+{
     if (bb.isValid())
         return bb.diag() / 2;
     else
         return -1;
 }
 
-}
+} //namespace cg3

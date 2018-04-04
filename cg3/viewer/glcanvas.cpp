@@ -13,19 +13,21 @@
 #include <cg3/geometry/2d/point2d.h>
 
 namespace cg3 {
-
 namespace viewer {
 
-GLCanvas::GLCanvas(QWidget * parent) : clearColor(Qt::white) {
+GLCanvas::GLCanvas(QWidget * parent) : clearColor(Qt::white)
+{
     setParent(parent);
 }
 
-void GLCanvas::init() {
+void GLCanvas::init()
+{
     setFPSIsDisplayed(true);
     camera()->frame()->setSpinningSensitivity(100.0);
 }
 
-void GLCanvas::draw() {
+void GLCanvas::draw()
+{
     setBackgroundColor(clearColor);
 
     for(unsigned int i=0; i<drawlist.size(); ++i) {
@@ -34,7 +36,8 @@ void GLCanvas::draw() {
     }
 }
 
-void GLCanvas::drawWithNames() {
+void GLCanvas::drawWithNames()
+{
     setBackgroundColor(clearColor);
 
     for(int i=0; i<(int)drawlist.size(); ++i){
@@ -46,7 +49,8 @@ void GLCanvas::drawWithNames() {
     }
 }
 
-void GLCanvas::postSelection(const QPoint& point) {
+void GLCanvas::postSelection(const QPoint& point)
+{
     // Find the selectedPoint coordinates, using camera()->pointUnderPixel().
     bool found;
     selectedPoint = camera()->pointUnderPixel(point, found);
@@ -78,12 +82,14 @@ void GLCanvas::postSelection(const QPoint& point) {
         }
 }
 
-void GLCanvas::clear() {
+void GLCanvas::clear()
+{
     drawlist.clear();
     objVisibility.clear();
 }
 
-unsigned int GLCanvas::pushObj(const DrawableObject* obj, bool visible) {
+unsigned int GLCanvas::pushObj(const DrawableObject* obj, bool visible)
+{
     drawlist.push_back(obj);
     objVisibility.push_back(visible);
     update();
@@ -91,7 +97,8 @@ unsigned int GLCanvas::pushObj(const DrawableObject* obj, bool visible) {
     return (unsigned int)drawlist.size();
 }
 
-void GLCanvas::deleteObj(const DrawableObject* obj) {
+void GLCanvas::deleteObj(const DrawableObject* obj)
+{
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = std::distance(drawlist.begin(), it);
@@ -100,7 +107,8 @@ void GLCanvas::deleteObj(const DrawableObject* obj) {
     }
 }
 
-void GLCanvas::setVisibility(const DrawableObject* obj, bool visible) {
+void GLCanvas::setVisibility(const DrawableObject* obj, bool visible)
+{
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = it - drawlist.begin();
@@ -108,7 +116,8 @@ void GLCanvas::setVisibility(const DrawableObject* obj, bool visible) {
     }
 }
 
-bool GLCanvas::isVisible(const DrawableObject* obj) {
+bool GLCanvas::isVisible(const DrawableObject* obj)
+{
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = it - drawlist.begin();
@@ -117,20 +126,23 @@ bool GLCanvas::isVisible(const DrawableObject* obj) {
     return false;
 }
 
-void GLCanvas::resetPointOfView() {
+void GLCanvas::resetPointOfView()
+{
     qglviewer::Vec v(0,0,2.61313);
     qglviewer::Quaternion q(0,0,0,1);
     camera()->setPosition(v);
     camera()->setOrientation(q);
 }
 
-void GLCanvas::serializePointOfView(std::ofstream &file) {
+void GLCanvas::serializePointOfView(std::ofstream &file)
+{
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
     serializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
 }
 
-bool GLCanvas::deserializePointOfView(std::ifstream &file) {
+bool GLCanvas::deserializePointOfView(std::ifstream &file)
+{
     qglviewer::Vec v;
     qglviewer::Quaternion q;
     try {
@@ -144,7 +156,8 @@ bool GLCanvas::deserializePointOfView(std::ifstream &file) {
     }
 }
 
-void GLCanvas::savePointOfView(const std::string &filename) {
+void GLCanvas::savePointOfView(const std::string &filename)
+{
     std::ofstream file;
     file.open(filename, std::ios::out | std::ios::binary);
 
@@ -153,7 +166,8 @@ void GLCanvas::savePointOfView(const std::string &filename) {
     file.close();
 }
 
-bool GLCanvas::loadPointOfView(const std::string &filename) {
+bool GLCanvas::loadPointOfView(const std::string &filename)
+{
 
     std::ifstream file;
     file.open(filename, std::ios::in | std::ios::binary);
@@ -165,7 +179,8 @@ bool GLCanvas::loadPointOfView(const std::string &filename) {
     return ok;
 }
 
-void GLCanvas::fitScene() {
+void GLCanvas::fitScene()
+{
     Pointd sceneCenter(0,0,0);
     double sceneRadius = 0.0;
     int   count  = 0;
@@ -208,18 +223,21 @@ void GLCanvas::fitScene() {
     showEntireScene();
 }
 
-void GLCanvas::fitScene(const Pointd& center, double radius) {
+void GLCanvas::fitScene(const Pointd& center, double radius)
+{
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), center.z()));
     setSceneRadius(radius);
     showEntireScene();
 }
 
-void GLCanvas::setClearColor(const QColor &color) {
+void GLCanvas::setClearColor(const QColor &color)
+{
     clearColor = color;
     update();
 }
 
-BoundingBox GLCanvas::getFullBoundingBox() const {
+BoundingBox GLCanvas::getFullBoundingBox() const
+{
     BoundingBox bb;
     for(int i=0; i<(int)drawlist.size(); ++i) {
         const DrawableObject * obj = drawlist[i];
@@ -232,7 +250,8 @@ BoundingBox GLCanvas::getFullBoundingBox() const {
     return bb;
 }
 
-int GLCanvas::getNumberVisibleObjects() const {
+int GLCanvas::getNumberVisibleObjects() const
+{
     int count = 0;
     for(int i=0; i<(int)drawlist.size(); ++i) {
         if (objVisibility[i]) count++;
@@ -240,6 +259,5 @@ int GLCanvas::getNumberVisibleObjects() const {
     return count;
 }
 
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3

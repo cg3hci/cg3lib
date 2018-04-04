@@ -6,40 +6,61 @@
  */
 #include "drawable_segment2d.h"
 
+namespace cg3 {
+
 template<typename T>
-inline cg3::DrawableSegment2D<T>::DrawableSegment2D() : Segment2D<T>(), color(), width(2) {
+inline DrawableSegment2D<T>::DrawableSegment2D() :
+    Segment2D<T>(),
+    color(),
+    width(2)
+{
 }
 
 template<typename T>
-cg3::DrawableSegment2D<T>::DrawableSegment2D(const Segment2D<T>& s) : Segment2D<T>(s), color(), width(2) {
+inline DrawableSegment2D<T>::DrawableSegment2D(const Segment2D<T>& s) :
+    Segment2D<T>(s),
+    color(),
+    width(2)
+{
 }
 
 template<typename T>
-inline cg3::DrawableSegment2D<T>::DrawableSegment2D(const Point2D<T>& p1, const Point2D<T>& p2) : Segment2D<T>(p1, p2), color(), width(2)  {
+inline DrawableSegment2D<T>::DrawableSegment2D(const Point2D<T>& p1, const Point2D<T>& p2) :
+    Segment2D<T>(p1, p2),
+    color(),
+    width(2)
+{
 }
 
 template<typename T>
-inline void cg3::DrawableSegment2D<T>::draw() const {
+inline void DrawableSegment2D<T>::draw() const
+{
     cg3::viewer::drawLine2D(Segment2D<T>::p1, Segment2D<T>::p2, color, width);
 }
 
 template<typename T>
-inline cg3::Pointd cg3::DrawableSegment2D<T>::sceneCenter() const {
+inline Pointd cg3::DrawableSegment2D<T>::sceneCenter() const
+{
     cg3::Point2D<T> p = (Segment2D<T>::p1 + Segment2D<T>::p2)/2;
     return cg3::Pointd(p.x(), p.y(), 0);
 }
 
 template<typename T>
-inline double cg3::DrawableSegment2D<T>::sceneRadius() const {
+inline double DrawableSegment2D<T>::sceneRadius() const
+{
     return Segment2D<T>::p1.dist(Segment2D<T>::p2) / 2;
 }
 
 template<typename T>
-inline void cg3::DrawableSegment2D<T>::setColor(const QColor& c) {
+inline void DrawableSegment2D<T>::setColor(const QColor& c)
+{
     color = c;
 }
 
 template<typename T>
-inline void cg3::DrawableSegment2D::setWidth(int w) {
+inline void DrawableSegment2D::setWidth(int w)
+{
     width = w;
 }
+
+} //namespace cg3

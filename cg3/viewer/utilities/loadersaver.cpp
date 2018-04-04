@@ -11,7 +11,6 @@
 #include <cg3/utilities/string.h>
 
 namespace cg3 {
-
 namespace viewer {
 
 /**
@@ -21,7 +20,10 @@ namespace viewer {
  *
  * @param initialPath: default: "."
  */
-LoaderSaver::LoaderSaver(const std::string &initialPath) : actualPath(initialPath) {}
+LoaderSaver::LoaderSaver(const std::string &initialPath) :
+    actualPath(initialPath)
+{
+}
 
 /**
  * @brief LoaderSaver::addSupportedExtension
@@ -35,7 +37,8 @@ LoaderSaver::LoaderSaver(const std::string &initialPath) : actualPath(initialPat
  * \endcode
  * @param extension: a string containing the extension, without dot.
  */
-void LoaderSaver::addSupportedExtension(const std::string &extension) {
+void LoaderSaver::addSupportedExtension(const std::string &extension)
+{
     supportedExtensions.push_back(extension);
 }
 
@@ -44,7 +47,8 @@ void LoaderSaver::addSupportedExtension(const std::string &extension) {
  *
  * Removes all previously added extensions.
  */
-void LoaderSaver::resetSupportedExtension() {
+void LoaderSaver::resetSupportedExtension()
+{
     supportedExtensions.clear();
 }
 
@@ -55,7 +59,8 @@ void LoaderSaver::resetSupportedExtension() {
  *
  * @param path
  */
-void LoaderSaver::setActualPath(const std::string& path) {
+void LoaderSaver::setActualPath(const std::string& path)
+{
     actualPath = path;
 }
 
@@ -63,7 +68,8 @@ void LoaderSaver::setActualPath(const std::string& path) {
  * @brief LoaderSaver::getActualPath
  * @return the actual path.
  */
-const std::string&LoaderSaver::getActualPath() const {
+const std::string&LoaderSaver::getActualPath() const
+{
     return actualPath;
 }
 
@@ -75,7 +81,8 @@ const std::string&LoaderSaver::getActualPath() const {
  * @param windowName
  * @return
  */
-std::string LoaderSaver::loadDialog(const std::string& windowName) {
+std::string LoaderSaver::loadDialog(const std::string& windowName)
+{
     QString selectedFilter;
     QString filename = QFileDialog::getOpenFileName(nullptr,
                        QString::fromStdString(windowName),
@@ -100,7 +107,10 @@ std::string LoaderSaver::loadDialog(const std::string& windowName) {
  * @param selectedExtension
  * @return
  */
-std::string LoaderSaver::saveDialog(const std::string& windowName, std::string& selectedExtension) {
+std::string LoaderSaver::saveDialog(
+        const std::string& windowName,
+        std::string& selectedExtension)
+{
     QString selectedFilter;
     selectedExtension = "";
     QString filename = QFileDialog::getSaveFileName(nullptr,
@@ -134,7 +144,8 @@ std::string LoaderSaver::saveDialog(const std::string& windowName, std::string& 
  * @param windowName
  * @return the path to the selected directory.
  */
-std::string LoaderSaver::directoryDialog(const std::string &windowName) {
+std::string LoaderSaver::directoryDialog(const std::string &windowName)
+{
     std::string folder = "";
     QString foldername = QFileDialog::getExistingDirectory(nullptr,
                                                            QString::fromStdString(windowName),
@@ -146,7 +157,8 @@ std::string LoaderSaver::directoryDialog(const std::string &windowName) {
     return folder;
 }
 
-std::string LoaderSaver::listToExtensions(bool allFormats) {
+std::string LoaderSaver::listToExtensions(bool allFormats)
+{
     std::string ext = "";
     for (const std::string& tmp : supportedExtensions){
         ext += tmp + "(*." + tmp + ");;";
@@ -165,6 +177,5 @@ std::string LoaderSaver::listToExtensions(bool allFormats) {
     return ext;
 }
 
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3

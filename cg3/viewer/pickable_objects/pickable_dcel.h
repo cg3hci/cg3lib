@@ -15,29 +15,29 @@
 namespace cg3 {
 
 /**
- * @brief The PickableDcel class
  * @ingroup cg3viewer
+ * @brief The PickableDcel class
  */
 class PickableDcel : public DrawableDcel, public PickableObject
 {
-    public:
-        PickableDcel();
-        PickableDcel(const Dcel &d);
-        void drawWithNames() const;
-        void draw() const;
-        void setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour);
-        void setSelectionColor(Color color);
-        void setSelectionWidth(int value);
+public:
+    PickableDcel();
+    PickableDcel(const Dcel &d);
+    void drawWithNames() const;
+    void draw() const;
+    void setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour);
+    void setSelectionColor(Color color);
+    void setSelectionWidth(int value);
 
-    protected:
-        void drawFace(const Face* f) const;
-        std::vector<int> obtainFaceTriangles(const Face* f) const;
+protected:
+    void drawFace(const Face* f) const;
+    std::vector<int> obtainFaceTriangles(const Face* f) const;
 
-        std::vector<Dcel::HalfEdge*> selected_faces_contour;
-        Color selection_color;
-        int selection_width;
+    std::vector<Dcel::HalfEdge*> selected_faces_contour;
+    Color selection_color;
+    int selection_width;
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_PICKABLE_DCEL_H

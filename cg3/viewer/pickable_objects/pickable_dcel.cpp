@@ -16,12 +16,14 @@
 
 namespace cg3 {
 
-PickableDcel::PickableDcel(){
+PickableDcel::PickableDcel()
+{
     selection_color = Color(244,196,48);
     selection_width = 3;
 }
 
-PickableDcel::PickableDcel(const Dcel& d) : DrawableDcel(d) {
+PickableDcel::PickableDcel(const Dcel& d) : DrawableDcel(d)
+{
     selection_color = Color(244,196,48);
     selection_width = 3;
 }
@@ -31,8 +33,8 @@ PickableDcel::PickableDcel(const Dcel& d) : DrawableDcel(d) {
  * @brief PickableDcel::drawWithNames Metodo che si occupa di disegnare le facce assegnando a esse un identificativo
  * riconoscibile nella postSelection (classe glCanvas) in modo da poterne effettuare il picking.
  */
-void PickableDcel::drawWithNames() const{
-
+void PickableDcel::drawWithNames() const
+{
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_DOUBLE, 0, vertexCoordinates.data());
 
@@ -54,7 +56,8 @@ void PickableDcel::drawWithNames() const{
  * \~Italian
  * @brief PickableDcel::draw Metodo che si occupa di disegnare il contorno delle facce selezionate durante il picking (selezione multipla).
  */
-void PickableDcel::draw() const{
+void PickableDcel::draw() const
+{
 
     DrawableDcel::draw();
     foreach(Dcel::HalfEdge* he, selected_faces_contour){
@@ -70,11 +73,13 @@ void PickableDcel::draw() const{
     }
 }
 
-void PickableDcel::setSelectionColor(Color color){
+void PickableDcel::setSelectionColor(Color color)
+{
     selection_color = color;
 }
 
-void PickableDcel::setSelectionWidth(int value){
+void PickableDcel::setSelectionWidth(int value)
+{
     selection_width = 2*value;
 }
 
@@ -83,7 +88,8 @@ void PickableDcel::setSelectionWidth(int value){
  * @brief DrawableDcel::drawFace Metodo che si occupa di effettuare il rendering di una faccia
  * @param f La faccia da renderizzare
  */
-void PickableDcel::drawFace(const Face* f) const{
+void PickableDcel::drawFace(const Face* f) const
+{
 
     std::vector<int> face_triangles = obtainFaceTriangles(f);
 
@@ -98,7 +104,8 @@ void PickableDcel::drawFace(const Face* f) const{
  * @param f la faccia a cui apparterranno i triangoli
  * @return una lista di triangoli (da interpretare nello stesso modo di tris)
  */
-std::vector<int> PickableDcel::obtainFaceTriangles(const Face* f) const{
+std::vector<int> PickableDcel::obtainFaceTriangles(const Face* f) const
+{
     std::vector<int> face_triangles;
 
     //Ricerca dei triangoli appartenenti alla faccia
@@ -112,8 +119,9 @@ std::vector<int> PickableDcel::obtainFaceTriangles(const Face* f) const{
     return face_triangles;
 }
 
-void PickableDcel::setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour){
+void PickableDcel::setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour)
+{
     this->selected_faces_contour = selected_faces_contour;
 }
 
-}
+} //namespace cg3

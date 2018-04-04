@@ -12,7 +12,6 @@
 #include <QTextEdit>
 
 namespace cg3 {
-
 namespace viewer {
 
 /**
@@ -43,9 +42,8 @@ private:
 
 };
 
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3
 
 #include "consolestream.tpp"
 

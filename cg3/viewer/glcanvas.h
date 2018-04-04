@@ -32,7 +32,6 @@
 #include <qmessagebox.h>
 
 namespace cg3 {
-
 namespace viewer {
 
 class MainWindow;
@@ -41,53 +40,52 @@ class MainWindow;
  * @brief The GLCanvas class
  * @ingroup cg3viewer
  */
-class GLCanvas : public QGLViewer {
+class GLCanvas : public QGLViewer
+{
+    Q_OBJECT
 
-        Q_OBJECT
+public:
 
-    public:
+    GLCanvas(QWidget * parent = nullptr);
 
-        GLCanvas(QWidget * parent = nullptr);
+    //QGLViewer Override:
+    void init();
+    void draw();
+    void drawWithNames();
+    void postSelection(const QPoint& point);
 
-        //QGLViewer Override:
-        void init();
-        void draw();
-        void drawWithNames();
-        void postSelection(const QPoint& point);
+    //GLCanvas methods:
+    void clear();
+    void fitScene();
+    void fitScene(const cg3::Pointd &center, double radius);
+    void setClearColor(const QColor & color);
+    cg3::BoundingBox getFullBoundingBox() const;
+    int getNumberVisibleObjects() const;
 
-        //GLCanvas methods:
-        void clear();
-        void fitScene();
-        void fitScene(const cg3::Pointd &center, double radius);
-        void setClearColor(const QColor & color);
-        cg3::BoundingBox getFullBoundingBox() const;
-        int getNumberVisibleObjects() const;
+    unsigned int pushObj(const cg3::DrawableObject * obj, bool visible = true);
+    void deleteObj(const cg3::DrawableObject* obj);
+    void setVisibility(const cg3::DrawableObject * obj, bool visible = true);
+    bool isVisible(const cg3::DrawableObject* obj);
 
-        unsigned int pushObj(const cg3::DrawableObject * obj, bool visible = true);
-        void deleteObj(const cg3::DrawableObject* obj);
-        void setVisibility(const cg3::DrawableObject * obj, bool visible = true);
-        bool isVisible(const cg3::DrawableObject* obj);
+    void resetPointOfView();
+    void serializePointOfView(std::ofstream& file);
+    bool deserializePointOfView(std::ifstream& file);
+    void savePointOfView(const std::string& filename);
+    bool loadPointOfView(const std::string& filename);
 
-        void resetPointOfView();
-        void serializePointOfView(std::ofstream& file);
-        bool deserializePointOfView(std::ifstream& file);
-        void savePointOfView(const std::string& filename);
-        bool loadPointOfView(const std::string& filename);
+signals:
+    void objectPicked(unsigned int);
+    void point2DClicked(cg3::Point2Dd);
+private:
 
-    signals:
-        void objectPicked(unsigned int);
-        void point2DClicked(cg3::Point2Dd);
-    private:
+    QColor clearColor;
+    std::vector<const cg3::DrawableObject *> drawlist;
+    std::vector<bool> objVisibility;
 
-        QColor clearColor;
-        std::vector<const cg3::DrawableObject *> drawlist;
-        std::vector<bool> objVisibility;
-
-        qglviewer::Vec orig, dir, selectedPoint;
+    qglviewer::Vec orig, dir, selectedPoint;
 };
 
-}
-
-}
+} //namespace cg3::viewer
+} //namespace cg3
 
 #endif // CG3_GL_CANVAS_H
