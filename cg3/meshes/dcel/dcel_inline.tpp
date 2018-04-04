@@ -10,11 +10,13 @@
 
 namespace cg3 {
 
-inline Dcel::Dcel(const char *filename) : nVertices(0), nHalfEdges(0), nFaces(0) {
+inline Dcel::Dcel(const char *filename) : nVertices(0), nHalfEdges(0), nFaces(0)
+{
     loadFromFile(std::string(filename));
 }
 
-inline Dcel::Dcel(const std::string& filename) : nVertices(0), nHalfEdges(0), nFaces(0){
+inline Dcel::Dcel(const std::string& filename) : nVertices(0), nHalfEdges(0), nFaces(0)
+{
     loadFromFile(filename);
 }
 
@@ -26,7 +28,8 @@ inline Dcel::Dcel(const std::string& filename) : nVertices(0), nHalfEdges(0), nF
  * @par Complessità:
  *      \e O(1)
  */
-inline const Dcel::Vertex* Dcel::getVertex(unsigned int idVertex) const {
+inline const Dcel::Vertex* Dcel::getVertex(unsigned int idVertex) const
+{
     if (idVertex>= vertices.size()) return nullptr;
     return vertices[idVertex];
 }
@@ -39,7 +42,8 @@ inline const Dcel::Vertex* Dcel::getVertex(unsigned int idVertex) const {
  * @par Complessità:
  *      \e O(1)
  */
-inline const Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge) const {
+inline const Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge) const
+{
     if (idHalfEdge>= halfEdges.size()) return nullptr;
     return halfEdges[idHalfEdge];
 }
@@ -52,7 +56,8 @@ inline const Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge) const {
  * @par Complessità:
  *      \e O(1)
  */
-inline const Dcel::Face* Dcel::getFace(unsigned int idFace) const {
+inline const Dcel::Face* Dcel::getFace(unsigned int idFace) const
+{
     if (idFace>= faces.size()) return nullptr;
     return faces[idFace];
 }
@@ -65,7 +70,8 @@ inline const Dcel::Face* Dcel::getFace(unsigned int idFace) const {
  * @par Complessità:
  *      \e O(1)
  */
-inline BoundingBox Dcel::getBoundingBox() const {
+inline BoundingBox Dcel::getBoundingBox() const
+{
     return boundingBox;
 }
 
@@ -74,7 +80,8 @@ inline BoundingBox Dcel::getBoundingBox() const {
  * @brief Restituisce il numero di vertici presenti nella Dcel.
  * @return Numero di vertici.
  */
-inline unsigned int Dcel::getNumberVertices () const {
+inline unsigned int Dcel::getNumberVertices () const
+{
     return nVertices;
 }
 
@@ -83,7 +90,8 @@ inline unsigned int Dcel::getNumberVertices () const {
  * @brief Restituisce il numero di half edge presenti nella Dcel.
  * @return Numero di half edge.
  */
-inline unsigned int Dcel::getNumberHalfEdges () const {
+inline unsigned int Dcel::getNumberHalfEdges () const
+{
     return nHalfEdges;
 }
 
@@ -92,7 +100,8 @@ inline unsigned int Dcel::getNumberHalfEdges () const {
  * @brief Restituisce il numero di facce presenti nella Dcel.
  * @return Numero di facce.
  */
-inline unsigned int Dcel::getNumberFaces () const {
+inline unsigned int Dcel::getNumberFaces () const
+{
     return nFaces;
 }
 
@@ -101,7 +110,8 @@ inline unsigned int Dcel::getNumberFaces () const {
  * @brief Funzione di inizializzazione di Dcel::ConstVertexIterator
  * @return Un iteratore che punta al primo vertice della Dcel
  */
-inline Dcel::ConstVertexIterator Dcel::vertexBegin() const {
+inline Dcel::ConstVertexIterator Dcel::vertexBegin() const
+{
     unsigned int i = 0;
     while (i < vertices.size() && vertices[i] == nullptr) ++i;
     return ConstVertexIterator(i, vertices);
@@ -112,7 +122,8 @@ inline Dcel::ConstVertexIterator Dcel::vertexBegin() const {
  * @brief Funzione di finalizzazione di Dcel::ConstVertexIterator
  * @return Un iteratore che punta all'ultimo vertice della Dcel
  */
-inline Dcel::ConstVertexIterator Dcel::vertexEnd() const {
+inline Dcel::ConstVertexIterator Dcel::vertexEnd() const
+{
     return ConstVertexIterator((unsigned int)vertices.size(), vertices);
 }
 
@@ -121,7 +132,8 @@ inline Dcel::ConstVertexIterator Dcel::vertexEnd() const {
  * @brief Funzione di inizializzazione di Dcel::ConstHalfEdgeIterator
  * @return Un iteratore che punta al primo half edge della Dcel
  */
-inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeBegin() const {
+inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeBegin() const
+{
     unsigned int i = 0;
     while (i < halfEdges.size() && halfEdges[i] == nullptr) ++i;
     return ConstHalfEdgeIterator(i, halfEdges);
@@ -132,7 +144,8 @@ inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeBegin() const {
  * @brief Funzione di finalizzazione di Dcel::ConstHalfEdgeIterator
  * @return Un iteratore che punta all'ultimo half edge della Dcel
  */
-inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeEnd() const {
+inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeEnd() const
+{
     return ConstHalfEdgeIterator((unsigned int)halfEdges.size(), halfEdges);
 }
 
@@ -141,7 +154,8 @@ inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeEnd() const {
  * @brief Funzione di inizializzazione di Dcel::ConstFaceIterator
  * @return Un iteratore che punta alla prima faccia della Dcel
  */
-inline Dcel::ConstFaceIterator Dcel::faceBegin() const {
+inline Dcel::ConstFaceIterator Dcel::faceBegin() const
+{
     unsigned int i = 0;
     while (i < faces.size() && faces[i] == nullptr) ++i;
     return ConstFaceIterator(i, faces);
@@ -151,7 +165,8 @@ inline Dcel::ConstFaceIterator Dcel::faceBegin() const {
  * @brief Funzione di finalizzazione di Dcel::ConstFaceIterator
  * @return Un iteratore che punta all'ultima faccia della Dcel
  */
-inline Dcel::ConstFaceIterator Dcel::faceEnd() const {
+inline Dcel::ConstFaceIterator Dcel::faceEnd() const
+{
     return ConstFaceIterator((unsigned int)faces.size(), faces);
 }
 
@@ -163,7 +178,8 @@ inline Dcel::ConstFaceIterator Dcel::faceEnd() const {
  * @par Complessità:
  *      \e O(1)
  */
-inline Dcel::Vertex* Dcel::getVertex(unsigned int idVertex) {
+inline Dcel::Vertex* Dcel::getVertex(unsigned int idVertex)
+{
     if (idVertex>= vertices.size()) return nullptr;
     return vertices[idVertex];
 }
@@ -176,7 +192,8 @@ inline Dcel::Vertex* Dcel::getVertex(unsigned int idVertex) {
  * @par Complessità:
  *      \e O(1)
  */
-inline Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge) {
+inline Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge)
+{
     if (idHalfEdge>= halfEdges.size()) return nullptr;
     return halfEdges[idHalfEdge];
 }
@@ -189,7 +206,8 @@ inline Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge) {
  * @par Complessità:
  *      \e O(1)
  */
-inline Dcel::Face* Dcel::getFace(unsigned int idFace) {
+inline Dcel::Face* Dcel::getFace(unsigned int idFace)
+{
     if (idFace>= faces.size()) return nullptr;
     return faces[idFace];
 }
@@ -210,7 +228,8 @@ inline Dcel::Face* Dcel::getFace(unsigned int idFace) {
  * @par Complessità:
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
-inline Dcel::VertexIterator Dcel::deleteVertex(const Dcel::VertexIterator& vit) {
+inline Dcel::VertexIterator Dcel::deleteVertex(const Dcel::VertexIterator& vit)
+{
     Dcel::VertexIterator nv = vit;
     Dcel::Vertex* v = *vit;
 
@@ -237,7 +256,8 @@ inline Dcel::VertexIterator Dcel::deleteVertex(const Dcel::VertexIterator& vit) 
  * @par Complessità:
  *      \e O(1)
  */
-inline Dcel::HalfEdgeIterator Dcel::deleteHalfEdge(const Dcel::HalfEdgeIterator& heit) {
+inline Dcel::HalfEdgeIterator Dcel::deleteHalfEdge(const Dcel::HalfEdgeIterator& heit)
+{
     Dcel::HalfEdgeIterator nhe = heit;
     HalfEdge* he = *heit;
 
@@ -261,7 +281,8 @@ inline Dcel::HalfEdgeIterator Dcel::deleteHalfEdge(const Dcel::HalfEdgeIterator&
  * @par Complessità:
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
-inline Dcel::FaceIterator Dcel::deleteFace(const Dcel::FaceIterator& fit) {
+inline Dcel::FaceIterator Dcel::deleteFace(const Dcel::FaceIterator& fit)
+{
     Dcel::FaceIterator nf = fit;
     Dcel::Face* f = *fit;
     deleteFace(f);
@@ -273,7 +294,8 @@ inline Dcel::FaceIterator Dcel::deleteFace(const Dcel::FaceIterator& fit) {
  * @brief Funzione di inizializzazione di Dcel::VertexIterator
  * @return Un iteratore che punta al primo vertice della Dcel
  */
-inline Dcel::VertexIterator Dcel::vertexBegin() {
+inline Dcel::VertexIterator Dcel::vertexBegin()
+{
     unsigned int i = 0;
     while (i < vertices.size() && vertices[i] == nullptr) ++i;
     return VertexIterator(i, vertices);
@@ -284,7 +306,8 @@ inline Dcel::VertexIterator Dcel::vertexBegin() {
  * @brief Funzione di finalizzazione di Dcel::VertexIterator
  * @return Un iteratore che punta all'ultimo vertice della Dcel
  */
-inline Dcel::VertexIterator Dcel::vertexEnd() {
+inline Dcel::VertexIterator Dcel::vertexEnd()
+{
     return VertexIterator((unsigned int)vertices.size(), vertices);
 }
 
@@ -293,7 +316,8 @@ inline Dcel::VertexIterator Dcel::vertexEnd() {
  * @brief Funzione di inizializzazione di Dcel::HalfEdgeIterator
  * @return Un iteratore che punta al primo half edge della Dcel
  */
-inline Dcel::HalfEdgeIterator Dcel::halfEdgeBegin() {
+inline Dcel::HalfEdgeIterator Dcel::halfEdgeBegin()
+{
     unsigned int i = 0;
     while (i < halfEdges.size() && halfEdges[i] == nullptr) ++i;
     return HalfEdgeIterator(i, halfEdges);
@@ -304,7 +328,8 @@ inline Dcel::HalfEdgeIterator Dcel::halfEdgeBegin() {
  * @brief Funzione di finalizzazione di Dcel::HalfEdgeIterator
  * @return Un iteratore che punta all'ultimo half edge della Dcel
  */
-inline Dcel::HalfEdgeIterator Dcel::halfEdgeEnd() {
+inline Dcel::HalfEdgeIterator Dcel::halfEdgeEnd()
+{
     return HalfEdgeIterator((unsigned int)halfEdges.size(), halfEdges);
 }
 
@@ -313,7 +338,8 @@ inline Dcel::HalfEdgeIterator Dcel::halfEdgeEnd() {
  * @brief Funzione di inizializzazione di Dcel::FaceIterator
  * @return Un iteratore che punta alla prima faccia della Dcel
  */
-inline Dcel::FaceIterator Dcel::faceBegin() {
+inline Dcel::FaceIterator Dcel::faceBegin()
+{
     unsigned int i = 0;
     while (i < faces.size() && faces[i] == nullptr) ++i;
     return FaceIterator(i, faces);
@@ -324,38 +350,46 @@ inline Dcel::FaceIterator Dcel::faceBegin() {
  * @brief Funzione di finalizzazione di Dcel::FaceIterator
  * @return Un iteratore che punta all'ultima faccia della Dcel
  */
-inline Dcel::FaceIterator Dcel::faceEnd() {
+inline Dcel::FaceIterator Dcel::faceEnd()
+{
     return FaceIterator((unsigned int)faces.size(), faces);
 }
 
-inline const Dcel::ConstVertexRangeBasedIterator Dcel::vertexIterator() const {
+inline const Dcel::ConstVertexRangeBasedIterator Dcel::vertexIterator() const
+{
     return ConstVertexRangeBasedIterator(this);
 }
 
-inline Dcel::VertexRangeBasedIterator Dcel::vertexIterator() {
+inline Dcel::VertexRangeBasedIterator Dcel::vertexIterator()
+{
     return VertexRangeBasedIterator(this);
 }
 
-inline const Dcel::ConstHalfEdgeRangeBasedIterator Dcel::halfEdgeIterator() const {
+inline const Dcel::ConstHalfEdgeRangeBasedIterator Dcel::halfEdgeIterator() const
+{
     return ConstHalfEdgeRangeBasedIterator(this);
 }
 
-inline Dcel::HalfEdgeRangeBasedIterator Dcel::halfEdgeIterator() {
+inline Dcel::HalfEdgeRangeBasedIterator Dcel::halfEdgeIterator()
+{
     return HalfEdgeRangeBasedIterator(this);
 }
 
-inline const Dcel::ConstFaceRangeBasedIterator Dcel::faceIterator() const {
+inline const Dcel::ConstFaceRangeBasedIterator Dcel::faceIterator() const
+{
     return ConstFaceRangeBasedIterator(this);
 }
 
-inline Dcel::FaceRangeBasedIterator Dcel::faceIterator() {
+inline Dcel::FaceRangeBasedIterator Dcel::faceIterator()
+{
     return FaceRangeBasedIterator(this);
 }
 
-inline void swap(Dcel& d1, Dcel& d2) {
+inline void swap(Dcel& d1, Dcel& d2)
+{
     d1.swap(d2);
 }
 
-}
+} //namespace cg3
 
 //#endif // DCEL_INLINES_H

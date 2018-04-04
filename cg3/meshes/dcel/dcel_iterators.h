@@ -34,30 +34,30 @@ class Dcel;
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::VertexIterator {
+class Dcel::VertexIterator
+{
+    friend class Dcel;
 
-        friend class Dcel;
+public:
+    //Constructors
+    VertexIterator();
 
-    public:
-        //Constructors
-        VertexIterator();
+    //Public Operators
+    Dcel::Vertex* operator * () const;
+    bool operator == (const VertexIterator& otherIterator) const;
+    bool operator != (const VertexIterator& otherIterator) const;
 
-        //Public Operators
-        Dcel::Vertex* operator * () const;
-        bool operator == (const VertexIterator& otherIterator) const;
-        bool operator != (const VertexIterator& otherIterator) const;
+    VertexIterator operator ++ ();
+    VertexIterator operator ++ (int);
+    VertexIterator operator -- ();
+    VertexIterator operator -- (int);
 
-        VertexIterator operator ++ ();
-        VertexIterator operator ++ (int);
-        VertexIterator operator -- ();
-        VertexIterator operator -- (int);
-
-    protected:
-        //Protected Attributes
-        unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore dei vertici della Dcel. */
-        const std::vector<Dcel::Vertex*> *vector;
-        //Protected Constructor
-        VertexIterator(unsigned int it, const std::vector<Dcel::Vertex*> &v);
+protected:
+    //Protected Attributes
+    unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore dei vertici della Dcel. */
+    const std::vector<Dcel::Vertex*> *vector;
+    //Protected Constructor
+    VertexIterator(unsigned int it, const std::vector<Dcel::Vertex*> &v);
 };
 
 /**
@@ -81,31 +81,31 @@ class Dcel::VertexIterator {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::ConstVertexIterator {
+class Dcel::ConstVertexIterator
+{
+    friend class Dcel;
 
-        friend class Dcel;
+public:
+    //Constructors
+    ConstVertexIterator();
+    ConstVertexIterator(const Dcel::VertexIterator& it);
 
-    public:
-        //Constructors
-        ConstVertexIterator();
-        ConstVertexIterator(const Dcel::VertexIterator& it);
+    //Public Operators
+    const Dcel::Vertex* operator * () const;
+    bool operator == (const ConstVertexIterator& otherIterator) const;
+    bool operator != (const ConstVertexIterator& otherIterator) const;
 
-        //Public Operators
-        const Dcel::Vertex* operator * () const;
-        bool operator == (const ConstVertexIterator& otherIterator) const;
-        bool operator != (const ConstVertexIterator& otherIterator) const;
+    ConstVertexIterator operator ++ ();
+    ConstVertexIterator operator ++ (int);
+    ConstVertexIterator operator -- ();
+    ConstVertexIterator operator -- (int);
 
-        ConstVertexIterator operator ++ ();
-        ConstVertexIterator operator ++ (int);
-        ConstVertexIterator operator -- ();
-        ConstVertexIterator operator -- (int);
-
-    protected:
-        //Protected Attributes
-        unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore dei vertici della Dcel. */
-        const std::vector<Dcel::Vertex*> *vector;
-        //Protected Constructor
-        ConstVertexIterator(unsigned int it, const std::vector<Dcel::Vertex*> &v);
+protected:
+    //Protected Attributes
+    unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore dei vertici della Dcel. */
+    const std::vector<Dcel::Vertex*> *vector;
+    //Protected Constructor
+    ConstVertexIterator(unsigned int it, const std::vector<Dcel::Vertex*> &v);
 };
 
 /**
@@ -128,30 +128,30 @@ class Dcel::ConstVertexIterator {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::HalfEdgeIterator {
+class Dcel::HalfEdgeIterator
+{
+    friend class Dcel;
 
-        friend class Dcel;
+public:
+    //Constructors
+    HalfEdgeIterator();
 
-    public:
-        //Constructors
-        HalfEdgeIterator();
+    //Public Operators
+    Dcel::HalfEdge* operator * () const;
+    bool operator == (const HalfEdgeIterator& otherIterator) const;
+    bool operator != (const HalfEdgeIterator& otherIterator) const;
 
-        //Public Operators
-        Dcel::HalfEdge* operator * () const;
-        bool operator == (const HalfEdgeIterator& otherIterator) const;
-        bool operator != (const HalfEdgeIterator& otherIterator) const;
+    HalfEdgeIterator operator ++ ();
+    HalfEdgeIterator operator ++ (int);
+    HalfEdgeIterator operator -- ();
+    HalfEdgeIterator operator -- (int);
 
-        HalfEdgeIterator operator ++ ();
-        HalfEdgeIterator operator ++ (int);
-        HalfEdgeIterator operator -- ();
-        HalfEdgeIterator operator -- (int);
-
-    protected:
-        //Protected Attributes
-        unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore di half edge della Dcel. */
-        const std::vector<Dcel::HalfEdge*> *vector;
-        //Protected Constructor
-        HalfEdgeIterator(unsigned int it, const std::vector<Dcel::HalfEdge*> &v);
+protected:
+    //Protected Attributes
+    unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore di half edge della Dcel. */
+    const std::vector<Dcel::HalfEdge*> *vector;
+    //Protected Constructor
+    HalfEdgeIterator(unsigned int it, const std::vector<Dcel::HalfEdge*> &v);
 };
 
 /**
@@ -175,31 +175,31 @@ class Dcel::HalfEdgeIterator {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::ConstHalfEdgeIterator {
+class Dcel::ConstHalfEdgeIterator
+{
+    friend class Dcel;
 
-        friend class Dcel;
+public:
+    //Constructors
+    ConstHalfEdgeIterator();
+    ConstHalfEdgeIterator(const Dcel::HalfEdgeIterator& it);
 
-    public:
-        //Constructors
-        ConstHalfEdgeIterator();
-        ConstHalfEdgeIterator(const Dcel::HalfEdgeIterator& it);
+    //Public Operators
+    const Dcel::HalfEdge* operator * () const;
+    bool operator == (const ConstHalfEdgeIterator& otherIterator) const;
+    bool operator != (const ConstHalfEdgeIterator& otherIterator) const;
 
-        //Public Operators
-        const Dcel::HalfEdge* operator * () const;
-        bool operator == (const ConstHalfEdgeIterator& otherIterator) const;
-        bool operator != (const ConstHalfEdgeIterator& otherIterator) const;
+    ConstHalfEdgeIterator operator ++ ();
+    ConstHalfEdgeIterator operator ++ (int);
+    ConstHalfEdgeIterator operator -- ();
+    ConstHalfEdgeIterator operator -- (int);
 
-        ConstHalfEdgeIterator operator ++ ();
-        ConstHalfEdgeIterator operator ++ (int);
-        ConstHalfEdgeIterator operator -- ();
-        ConstHalfEdgeIterator operator -- (int);
-
-    protected:
-        //Protected Attributes
-        unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore di half edge della Dcel. */
-        const std::vector<Dcel::HalfEdge*> *vector;
-        //Protected Constructor
-        ConstHalfEdgeIterator(unsigned int it, const std::vector<Dcel::HalfEdge*> &v);
+protected:
+    //Protected Attributes
+    unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore di half edge della Dcel. */
+    const std::vector<Dcel::HalfEdge*> *vector;
+    //Protected Constructor
+    ConstHalfEdgeIterator(unsigned int it, const std::vector<Dcel::HalfEdge*> &v);
 };
 
 /**
@@ -222,30 +222,30 @@ class Dcel::ConstHalfEdgeIterator {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::FaceIterator {
+class Dcel::FaceIterator
+{
+    friend class Dcel;
 
-        friend class Dcel;
+public:
+    //Constructors
+    FaceIterator();
 
-    public:
-        //Constructors
-        FaceIterator();
+    //Public Operators
+    Dcel::Face* operator * () const;
+    bool operator == (const FaceIterator& otherIterator) const;
+    bool operator != (const FaceIterator& otherIterator) const;
 
-        //Public Operators
-        Dcel::Face* operator * () const;
-        bool operator == (const FaceIterator& otherIterator) const;
-        bool operator != (const FaceIterator& otherIterator) const;
+    FaceIterator operator ++ ();
+    FaceIterator operator ++ (int);
+    FaceIterator operator -- ();
+    FaceIterator operator -- (int);
 
-        FaceIterator operator ++ ();
-        FaceIterator operator ++ (int);
-        FaceIterator operator -- ();
-        FaceIterator operator -- (int);
-
-    protected:
-        //Protected Attributes
-        unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore delle facce della Dcel. */
-        const std::vector<Dcel::Face*> *vector;
-        //Protected Constructor
-        FaceIterator(unsigned int it, const std::vector<Dcel::Face*> &v);
+protected:
+    //Protected Attributes
+    unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore delle facce della Dcel. */
+    const std::vector<Dcel::Face*> *vector;
+    //Protected Constructor
+    FaceIterator(unsigned int it, const std::vector<Dcel::Face*> &v);
 };
 
 /**
@@ -269,94 +269,100 @@ class Dcel::FaceIterator {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::ConstFaceIterator {
+class Dcel::ConstFaceIterator
+{
+    friend class Dcel;
 
-        friend class Dcel;
+public:
+    //Constructors
+    ConstFaceIterator();
+    ConstFaceIterator(const Dcel::FaceIterator& it);
 
-    public:
-        //Constructors
-        ConstFaceIterator();
-        ConstFaceIterator(const Dcel::FaceIterator& it);
+    //Public Operators
+    const Dcel::Face* operator * () const;
+    bool operator == (const ConstFaceIterator& otherIterator) const;
+    bool operator != (const ConstFaceIterator& otherIterator) const;
 
-        //Public Operators
-        const Dcel::Face* operator * () const;
-        bool operator == (const ConstFaceIterator& otherIterator) const;
-        bool operator != (const ConstFaceIterator& otherIterator) const;
+    ConstFaceIterator operator ++ ();
+    ConstFaceIterator operator ++ (int);
+    ConstFaceIterator operator -- ();
+    ConstFaceIterator operator -- (int);
 
-        ConstFaceIterator operator ++ ();
-        ConstFaceIterator operator ++ (int);
-        ConstFaceIterator operator -- ();
-        ConstFaceIterator operator -- (int);
-
-    protected:
-        //Protected Attributes
-        unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore delle facce della Dcel. */
-        const std::vector<Dcel::Face*> *vector;
-        //Protected Constructor
-        ConstFaceIterator(unsigned int it, const std::vector<Dcel::Face*> &v);
+protected:
+    //Protected Attributes
+    unsigned int iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore delle facce della Dcel. */
+    const std::vector<Dcel::Face*> *vector;
+    //Protected Constructor
+    ConstFaceIterator(unsigned int it, const std::vector<Dcel::Face*> &v);
 };
 
-class Dcel::ConstVertexRangeBasedIterator {
-        friend class Dcel;
-    public:
-        Dcel::ConstVertexIterator begin() const;
-        Dcel::ConstVertexIterator end() const;
-    private:
-        ConstVertexRangeBasedIterator(const Dcel *d) : d(d) {}
-        const Dcel *d;
+class Dcel::ConstVertexRangeBasedIterator
+{
+    friend class Dcel;
+public:
+    Dcel::ConstVertexIterator begin() const;
+    Dcel::ConstVertexIterator end() const;
+private:
+    ConstVertexRangeBasedIterator(const Dcel *d) : d(d) {}
+    const Dcel *d;
 };
 
-class Dcel::ConstHalfEdgeRangeBasedIterator {
-        friend class Dcel;
-    public:
-        Dcel::ConstHalfEdgeIterator begin() const;
-        Dcel::ConstHalfEdgeIterator end() const;
-    private:
-        ConstHalfEdgeRangeBasedIterator(const Dcel *d) : d(d) {}
-        const Dcel *d;
+class Dcel::ConstHalfEdgeRangeBasedIterator
+{
+    friend class Dcel;
+public:
+    Dcel::ConstHalfEdgeIterator begin() const;
+    Dcel::ConstHalfEdgeIterator end() const;
+private:
+    ConstHalfEdgeRangeBasedIterator(const Dcel *d) : d(d) {}
+    const Dcel *d;
 };
 
-class Dcel::ConstFaceRangeBasedIterator {
-        friend class Dcel;
-    public:
-        Dcel::ConstFaceIterator begin() const;
-        Dcel::ConstFaceIterator end() const;
-    private:
-        ConstFaceRangeBasedIterator(const Dcel *d) : d(d) {}
-        const Dcel *d;
+class Dcel::ConstFaceRangeBasedIterator
+{
+    friend class Dcel;
+public:
+    Dcel::ConstFaceIterator begin() const;
+    Dcel::ConstFaceIterator end() const;
+private:
+    ConstFaceRangeBasedIterator(const Dcel *d) : d(d) {}
+    const Dcel *d;
 };
 
-class Dcel::VertexRangeBasedIterator {
-        friend class Dcel;
-    public:
-        Dcel::VertexIterator begin();
-        Dcel::VertexIterator end();
-    private:
-        VertexRangeBasedIterator(Dcel *d) : d(d) {}
-        Dcel *d;
+class Dcel::VertexRangeBasedIterator
+{
+    friend class Dcel;
+public:
+    Dcel::VertexIterator begin();
+    Dcel::VertexIterator end();
+private:
+    VertexRangeBasedIterator(Dcel *d) : d(d) {}
+    Dcel *d;
 };
 
-class Dcel::HalfEdgeRangeBasedIterator {
-        friend class Dcel;
-    public:
-        Dcel::HalfEdgeIterator begin();
-        Dcel::HalfEdgeIterator end();
-    private:
-        HalfEdgeRangeBasedIterator(Dcel *d) : d(d) {}
-        Dcel *d;
+class Dcel::HalfEdgeRangeBasedIterator
+{
+    friend class Dcel;
+public:
+    Dcel::HalfEdgeIterator begin();
+    Dcel::HalfEdgeIterator end();
+private:
+    HalfEdgeRangeBasedIterator(Dcel *d) : d(d) {}
+    Dcel *d;
 };
 
-class Dcel::FaceRangeBasedIterator {
-        friend class Dcel;
-    public:
-        Dcel::FaceIterator begin();
-        Dcel::FaceIterator end();
-    private:
-        FaceRangeBasedIterator(Dcel *d) : d(d) {}
-        Dcel *d;
+class Dcel::FaceRangeBasedIterator
+{
+    friend class Dcel;
+public:
+    Dcel::FaceIterator begin();
+    Dcel::FaceIterator end();
+private:
+    FaceRangeBasedIterator(Dcel *d) : d(d) {}
+    Dcel *d;
 };
 
-}
+} //namespace cg3
 
 #include "dcel_iterators_inline.tpp"
 

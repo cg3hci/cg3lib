@@ -20,7 +20,8 @@ namespace cg3 {
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator() {
+inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator()
+{
 }
 
 /**
@@ -30,7 +31,9 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator() {
  * Inizializza un ConstInnerHalfEdgeIterator pari all'InnerHalfEdgeIterator passato in input.
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator(const Dcel::Face::InnerHalfEdgeIterator& it) : iterator(it) {
+inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator(const Dcel::Face::InnerHalfEdgeIterator& it) :
+    iterator(it)
+{
 }
 
 //Public Operators
@@ -40,7 +43,8 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator(const 
  * @brief Operatore di dereferenziazione del ConstInnerHalfEdgeIterator
  * @return L'half edge puntato dall'iteratore
  */
-inline const Dcel::HalfEdge* Dcel::Face::ConstInnerHalfEdgeIterator::operator * () const {
+inline const Dcel::HalfEdge* Dcel::Face::ConstInnerHalfEdgeIterator::operator * () const
+{
     return *iterator;
 }
 
@@ -53,7 +57,8 @@ inline const Dcel::HalfEdge* Dcel::Face::ConstInnerHalfEdgeIterator::operator * 
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::Face::ConstInnerHalfEdgeIterator::operator == (const Dcel::Face::ConstInnerHalfEdgeIterator& otherIterator) const {
+inline bool Dcel::Face::ConstInnerHalfEdgeIterator::operator == (const Dcel::Face::ConstInnerHalfEdgeIterator& otherIterator) const
+{
     return iterator == otherIterator.iterator;
 }
 
@@ -63,7 +68,8 @@ inline bool Dcel::Face::ConstInnerHalfEdgeIterator::operator == (const Dcel::Fac
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::Face::ConstInnerHalfEdgeIterator::operator != (const Dcel::Face::ConstInnerHalfEdgeIterator& otherIterator) const {
+inline bool Dcel::Face::ConstInnerHalfEdgeIterator::operator != (const Dcel::Face::ConstInnerHalfEdgeIterator& otherIterator) const
+{
     return iterator != otherIterator.iterator;
 }
 
@@ -75,7 +81,8 @@ inline bool Dcel::Face::ConstInnerHalfEdgeIterator::operator != (const Dcel::Fac
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator ++ () {
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator ++ ()
+{
     return ++iterator;
 }
 
@@ -87,7 +94,8 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIter
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator ++ (int) {
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator ++ (int)
+{
     Dcel::Face::ConstInnerHalfEdgeIterator old = iterator;
     ++iterator;
     return old;
@@ -101,7 +109,8 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIter
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator -- () {
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator -- ()
+{
     return --iterator;
 }
 
@@ -113,7 +122,8 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIter
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator -- (int) {
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIterator::operator -- (int)
+{
     Dcel::Face::ConstInnerHalfEdgeIterator old = iterator;
     --iterator;
     return old;
@@ -133,7 +143,9 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeIter
  *
  * @param[in] it: iteratore sul vettore di inner half edge della faccia
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator(const std::vector<Dcel::HalfEdge*>::const_iterator& it) : iterator(it) {
+inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator(const std::vector<Dcel::HalfEdge*>::const_iterator& it) :
+    iterator(it)
+{
 }
 
 /************************************
@@ -147,7 +159,8 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator::ConstInnerHalfEdgeIterator(const 
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::GenericIterator::GenericIterator() : f(nullptr), start(nullptr), pos(nullptr), end(nullptr) {
+inline Dcel::Face::GenericIterator::GenericIterator() : f(nullptr), start(nullptr), pos(nullptr), end(nullptr)
+{
 }
 
 //Public Operators
@@ -164,7 +177,8 @@ inline Dcel::Face::GenericIterator::GenericIterator() : f(nullptr), start(nullpt
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::Face::GenericIterator::operator == (const Dcel::Face::GenericIterator& otherIterator) const {
+inline bool Dcel::Face::GenericIterator::operator == (const Dcel::Face::GenericIterator& otherIterator) const
+{
     if (this->pos == otherIterator.pos && this->f == otherIterator.f) return true;
     return false;
 }
@@ -175,7 +189,8 @@ inline bool Dcel::Face::GenericIterator::operator == (const Dcel::Face::GenericI
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::Face::GenericIterator::operator != (const Dcel::Face::GenericIterator& otherIterator) const {
+inline bool Dcel::Face::GenericIterator::operator != (const Dcel::Face::GenericIterator& otherIterator) const
+{
     return !(*this == otherIterator);
 }
 
@@ -188,7 +203,8 @@ inline bool Dcel::Face::GenericIterator::operator != (const Dcel::Face::GenericI
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator ++ () {
+inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator ++ ()
+{
     pos = pos->getNext();
     if (pos == end) pos = nullptr;
     return *this;
@@ -203,7 +219,8 @@ inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator ++ () {
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator ++ (int) {
+inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator ++ (int)
+{
     GenericIterator old_value = *this;
     pos = pos->getNext();
     if (pos == end) pos = nullptr;
@@ -219,7 +236,8 @@ inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator ++ (int
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator -- () {
+inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator -- ()
+{
     pos = pos->getPrev();
     if (pos == end) pos = nullptr;
     return *this;
@@ -234,7 +252,8 @@ inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator -- () {
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator -- (int) {
+inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator -- (int)
+{
     GenericIterator old_value = *this;
     pos = pos->getPrev();
     if (pos == end) pos = nullptr;
@@ -258,7 +277,12 @@ inline Dcel::Face::GenericIterator Dcel::Face::GenericIterator::operator -- (int
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::GenericIterator::GenericIterator(HalfEdge* start, HalfEdge* end, Face* f) : f(f), start(start), pos(start), end(end) {
+inline Dcel::Face::GenericIterator::GenericIterator(HalfEdge* start, HalfEdge* end, Face* f) :
+    f(f),
+    start(start),
+    pos(start),
+    end(end)
+{
 }
 
 /*****************************************
@@ -272,7 +296,12 @@ inline Dcel::Face::GenericIterator::GenericIterator(HalfEdge* start, HalfEdge* e
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::ConstGenericIterator::ConstGenericIterator() : f(nullptr), start(nullptr), pos(nullptr), end(nullptr) {
+inline Dcel::Face::ConstGenericIterator::ConstGenericIterator() :
+    f(nullptr),
+    start(nullptr),
+    pos(nullptr),
+    end(nullptr)
+{
 }
 
 /**
@@ -282,7 +311,12 @@ inline Dcel::Face::ConstGenericIterator::ConstGenericIterator() : f(nullptr), st
  * Inizializza un ConstAdjacentFaceIterator pari all'AdjacentFaceIterator passato in input.
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::Face::ConstGenericIterator::ConstGenericIterator(const Dcel::Face::GenericIterator& it) : f(it.f), start (it.start), pos(it.pos), end(it.end) {
+inline Dcel::Face::ConstGenericIterator::ConstGenericIterator(const Dcel::Face::GenericIterator& it) :
+    f(it.f),
+    start(it.start),
+    pos(it.pos),
+    end(it.end)
+{
 }
 
 //Public Operators
@@ -299,7 +333,8 @@ inline Dcel::Face::ConstGenericIterator::ConstGenericIterator(const Dcel::Face::
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::Face::ConstGenericIterator::operator == (const Dcel::Face::ConstGenericIterator& otherIterator) const {
+inline bool Dcel::Face::ConstGenericIterator::operator == (const Dcel::Face::ConstGenericIterator& otherIterator) const
+{
     if (this->pos == otherIterator.pos && this->f == otherIterator.f) return true;
     return false;
 }
@@ -310,7 +345,8 @@ inline bool Dcel::Face::ConstGenericIterator::operator == (const Dcel::Face::Con
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::Face::ConstGenericIterator::operator != (const Dcel::Face::ConstGenericIterator& otherIterator) const {
+inline bool Dcel::Face::ConstGenericIterator::operator != (const Dcel::Face::ConstGenericIterator& otherIterator) const
+{
     return !(*this == otherIterator);
 }
 
@@ -323,7 +359,8 @@ inline bool Dcel::Face::ConstGenericIterator::operator != (const Dcel::Face::Con
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator ++ () {
+inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator ++ ()
+{
     pos = pos->getNext();
     if (pos == end) pos = nullptr;
     return *this;
@@ -338,7 +375,8 @@ inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operat
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator ++ (int) {
+inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator ++ (int)
+{
     ConstGenericIterator old_value = *this;
     pos = pos->getNext();
     if (pos == end) pos = nullptr;
@@ -354,7 +392,8 @@ inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operat
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator -- () {
+inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator -- ()
+{
     pos = pos->getPrev();
     if (pos == end) pos = nullptr;
     return *this;
@@ -369,7 +408,8 @@ inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operat
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator -- (int) {
+inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operator -- (int)
+{
     ConstGenericIterator old_value = *this;
     pos = pos->getPrev();
     if (pos == end) pos = nullptr;
@@ -393,7 +433,12 @@ inline Dcel::Face::ConstGenericIterator Dcel::Face::ConstGenericIterator::operat
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::ConstGenericIterator::ConstGenericIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) : f(f), start(start), pos(start), end(end) {
+inline Dcel::Face::ConstGenericIterator::ConstGenericIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) :
+    f(f),
+    start(start),
+    pos(start),
+    end(end)
+{
 }
 
 /************************************
@@ -407,7 +452,8 @@ inline Dcel::Face::ConstGenericIterator::ConstGenericIterator(const HalfEdge* st
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::AdjacentFaceIterator::AdjacentFaceIterator() : GenericIterator() {
+inline Dcel::Face::AdjacentFaceIterator::AdjacentFaceIterator() : GenericIterator()
+{
 }
 
 //Public Operators
@@ -417,7 +463,8 @@ inline Dcel::Face::AdjacentFaceIterator::AdjacentFaceIterator() : GenericIterato
  * @brief Operatore di dereferenziazione dell'AdjacentFaceIterator
  * @return L'half edge puntato dall'iteratore
  */
-inline Dcel::Face* Dcel::Face::AdjacentFaceIterator::operator * () const {
+inline Dcel::Face* Dcel::Face::AdjacentFaceIterator::operator * () const
+{
     return pos->getTwin()->getFace();
 }
 
@@ -438,7 +485,9 @@ inline Dcel::Face* Dcel::Face::AdjacentFaceIterator::operator * () const {
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::AdjacentFaceIterator::AdjacentFaceIterator(HalfEdge* start, HalfEdge* end, Face* f) : GenericIterator(start, end, f) {
+inline Dcel::Face::AdjacentFaceIterator::AdjacentFaceIterator(HalfEdge* start, HalfEdge* end, Face* f) :
+    GenericIterator(start, end, f)
+{
 }
 
 /*****************************************
@@ -452,7 +501,9 @@ inline Dcel::Face::AdjacentFaceIterator::AdjacentFaceIterator(HalfEdge* start, H
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator() : ConstGenericIterator() {
+inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator() :
+    ConstGenericIterator()
+{
 }
 
 /**
@@ -462,7 +513,9 @@ inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator() : Cons
  * Inizializza un ConstAdjacentFaceIterator pari all'AdjacentFaceIterator passato in input.
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator(const Dcel::Face::AdjacentFaceIterator& it) : ConstGenericIterator(it) {
+inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator(const Dcel::Face::AdjacentFaceIterator& it) :
+    ConstGenericIterator(it)
+{
 }
 
 //Public Operators
@@ -472,7 +525,8 @@ inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator(const Dc
  * @brief Operatore di dereferenziazione dell'AdjacentFaceIterator
  * @return L'half edge puntato dall'iteratore
  */
-inline const Dcel::Face* Dcel::Face::ConstAdjacentFaceIterator::operator * () const {
+inline const Dcel::Face* Dcel::Face::ConstAdjacentFaceIterator::operator * () const
+{
     return pos->getTwin()->getFace();
 }
 
@@ -493,7 +547,9 @@ inline const Dcel::Face* Dcel::Face::ConstAdjacentFaceIterator::operator * () co
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) : ConstGenericIterator(start, end, f) {
+inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) :
+    ConstGenericIterator(start, end, f)
+{
 }
 
 /****************************************
@@ -507,7 +563,8 @@ inline Dcel::Face::ConstAdjacentFaceIterator::ConstAdjacentFaceIterator(const Ha
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::IncidentHalfEdgeIterator::IncidentHalfEdgeIterator() : GenericIterator() {
+inline Dcel::Face::IncidentHalfEdgeIterator::IncidentHalfEdgeIterator() : GenericIterator()
+{
 }
 
 //Public Operators
@@ -517,7 +574,8 @@ inline Dcel::Face::IncidentHalfEdgeIterator::IncidentHalfEdgeIterator() : Generi
  * @brief Operatore di dereferenziazione dell'IncidentHalfEdgeIterator
  * @return L'half edge puntato dall'iteratore
  */
-inline Dcel::HalfEdge* Dcel::Face::IncidentHalfEdgeIterator::operator * () const {
+inline Dcel::HalfEdge* Dcel::Face::IncidentHalfEdgeIterator::operator * () const
+{
     return pos;
 }
 
@@ -538,7 +596,9 @@ inline Dcel::HalfEdge* Dcel::Face::IncidentHalfEdgeIterator::operator * () const
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::IncidentHalfEdgeIterator::IncidentHalfEdgeIterator(HalfEdge* start, HalfEdge* end, Face* f) : GenericIterator(start, end, f) {
+inline Dcel::Face::IncidentHalfEdgeIterator::IncidentHalfEdgeIterator(HalfEdge* start, HalfEdge* end, Face* f) :
+    GenericIterator(start, end, f)
+{
 }
 
 /*********************************************
@@ -552,7 +612,9 @@ inline Dcel::Face::IncidentHalfEdgeIterator::IncidentHalfEdgeIterator(HalfEdge* 
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator() : ConstGenericIterator() {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator() :
+    ConstGenericIterator()
+{
 }
 
 /**
@@ -562,7 +624,9 @@ inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator(
  * Inizializza un ConstIncidentHalfEdgeIterator pari all'IncidentHalfEdgeIterator passato in input.
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator(const Dcel::Face::IncidentHalfEdgeIterator& it) : ConstGenericIterator(it) {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator(const Dcel::Face::IncidentHalfEdgeIterator& it) :
+    ConstGenericIterator(it)
+{
 }
 
 //Public Operators
@@ -572,7 +636,8 @@ inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator(
  * @brief Operatore di dereferenziazione del ConstIncidentHalfEdgeIterator
  * @return L'half edge puntato dall'iteratore
  */
-inline const Dcel::HalfEdge *Dcel::Face::ConstIncidentHalfEdgeIterator::operator * () const {
+inline const Dcel::HalfEdge *Dcel::Face::ConstIncidentHalfEdgeIterator::operator * () const
+{
     return pos;
 }
 
@@ -593,7 +658,9 @@ inline const Dcel::HalfEdge *Dcel::Face::ConstIncidentHalfEdgeIterator::operator
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) : ConstGenericIterator(start, end, f) {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) :
+    ConstGenericIterator(start, end, f)
+{
 }
 
 /**************************************
@@ -607,7 +674,9 @@ inline Dcel::Face::ConstIncidentHalfEdgeIterator::ConstIncidentHalfEdgeIterator(
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::IncidentVertexIterator::IncidentVertexIterator() : GenericIterator() {
+inline Dcel::Face::IncidentVertexIterator::IncidentVertexIterator() :
+    GenericIterator()
+{
 }
 
 //Public Operators
@@ -617,7 +686,8 @@ inline Dcel::Face::IncidentVertexIterator::IncidentVertexIterator() : GenericIte
  * @brief Operatore di dereferenziazione dell'IncidentVertexIterator
  * @return Il to vertex dell'half edge puntato dall'iteratore
  */
-inline Dcel::Vertex* Dcel::Face::IncidentVertexIterator::operator * () const {
+inline Dcel::Vertex* Dcel::Face::IncidentVertexIterator::operator * () const
+{
     return this->pos->getToVertex();
 }
 
@@ -638,7 +708,9 @@ inline Dcel::Vertex* Dcel::Face::IncidentVertexIterator::operator * () const {
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::IncidentVertexIterator::IncidentVertexIterator(HalfEdge* start, HalfEdge* end, Face* f) : GenericIterator(start, end, f) {
+inline Dcel::Face::IncidentVertexIterator::IncidentVertexIterator(HalfEdge* start, HalfEdge* end, Face* f) :
+    GenericIterator(start, end, f)
+{
 }
 
 /*******************************************
@@ -652,7 +724,9 @@ inline Dcel::Face::IncidentVertexIterator::IncidentVertexIterator(HalfEdge* star
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator() : ConstGenericIterator() {
+inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator() :
+    ConstGenericIterator()
+{
 }
 
 /**
@@ -662,7 +736,9 @@ inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator() : 
  * Inizializza un ConstIncidentVertexIterator pari all'IncidentVertexIterator passato in input.
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator(const Dcel::Face::IncidentVertexIterator& it) : ConstGenericIterator(it) {
+inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator(const Dcel::Face::IncidentVertexIterator& it) :
+    ConstGenericIterator(it)
+{
 }
 
 //Public Operators
@@ -672,7 +748,8 @@ inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator(cons
  * @brief Operatore di dereferenziazione dell'ConstIncidentVertexIterator
  * @return Il to vertex dell'half edge puntato dall'iteratore
  */
-inline const Dcel::Vertex *Dcel::Face::ConstIncidentVertexIterator::operator * () const {
+inline const Dcel::Vertex *Dcel::Face::ConstIncidentVertexIterator::operator * () const
+{
     return this->pos->getToVertex();
 }
 
@@ -693,55 +770,69 @@ inline const Dcel::Vertex *Dcel::Face::ConstIncidentVertexIterator::operator * (
  * @param[in] end: half edge di end
  * @param[in] f: faccia su cui vengono iterati gli half edge incidenti
  */
-inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Face* f) : ConstGenericIterator(start, end, f) {
+inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Face* f) :
+    ConstGenericIterator(start, end, f)
+{
 }
 
 
-inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::ConstAdjacentFaceRangeBasedIterator::begin() const {
+inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::ConstAdjacentFaceRangeBasedIterator::begin() const
+{
     return f->adjacentFaceBegin();
 }
 
-inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::ConstAdjacentFaceRangeBasedIterator::end() const {
+inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::ConstAdjacentFaceRangeBasedIterator::end() const
+{
     return f->adjacentFaceEnd();
 }
 
-inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::ConstIncidentHalfEdgeRangeBasedIterator::begin() const {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::ConstIncidentHalfEdgeRangeBasedIterator::begin() const
+{
     return f->incidentHalfEdgeBegin();
 }
 
-inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::ConstIncidentHalfEdgeRangeBasedIterator::end() const {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::ConstIncidentHalfEdgeRangeBasedIterator::end() const
+{
     return f->incidentHalfEdgeEnd();
 }
 
-inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::ConstIncidentVertexRangeBasedIterator::begin() const {
+inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::ConstIncidentVertexRangeBasedIterator::begin() const
+{
     return f->incidentVertexBegin();
 }
 
-inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::ConstIncidentVertexRangeBasedIterator::end() const {
+inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::ConstIncidentVertexRangeBasedIterator::end() const
+{
     return f->incidentVertexEnd();
 }
 
-inline Dcel::Face::AdjacentFaceIterator Dcel::Face::AdjacentFaceRangeBasedIterator::begin() {
+inline Dcel::Face::AdjacentFaceIterator Dcel::Face::AdjacentFaceRangeBasedIterator::begin()
+{
     return f->adjacentFaceBegin();
 }
 
-inline Dcel::Face::AdjacentFaceIterator Dcel::Face::AdjacentFaceRangeBasedIterator::end() {
+inline Dcel::Face::AdjacentFaceIterator Dcel::Face::AdjacentFaceRangeBasedIterator::end()
+{
     return f->adjacentFaceEnd();
 }
 
-inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::IncidentHalfEdgeRangeBasedIterator::begin() {
+inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::IncidentHalfEdgeRangeBasedIterator::begin()
+{
     return f->incidentHalfEdgeBegin();
 }
 
-inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::IncidentHalfEdgeRangeBasedIterator::end() {
+inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::IncidentHalfEdgeRangeBasedIterator::end()
+{
     return f->incidentHalfEdgeEnd();
 }
 
-inline Dcel::Face::IncidentVertexIterator Dcel::Face::IncidentVertexRangeBasedIterator::begin() {
+inline Dcel::Face::IncidentVertexIterator Dcel::Face::IncidentVertexRangeBasedIterator::begin()
+{
     return f->incidentVertexBegin();
 }
 
-inline Dcel::Face::IncidentVertexIterator Dcel::Face::IncidentVertexRangeBasedIterator::end(){
+inline Dcel::Face::IncidentVertexIterator Dcel::Face::IncidentVertexRangeBasedIterator::end()
+{
     return f->incidentVertexEnd();
 }
 
@@ -749,11 +840,13 @@ inline Dcel::Face::IncidentVertexIterator Dcel::Face::IncidentVertexRangeBasedIt
  * Dcel::Face begin()/end() *
  ****************************/
 
-inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::adjacentFaceBegin() const {
+inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::adjacentFaceBegin() const
+{
     return ConstAdjacentFaceIterator(outerHalfEdge, outerHalfEdge, this);
 }
 
-inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::adjacentFaceEnd() const {
+inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::adjacentFaceEnd() const
+{
     return ConstAdjacentFaceIterator(nullptr, nullptr, this);
 }
 
@@ -762,7 +855,8 @@ inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::adjacentFaceEnd() const
  * @brief Funzione di inizializzazione di Dcel::Face::ConstInnerHalfEdgeIterator
  * @return Un iteratore che punta al primo inner half edge della faccia
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::innerHalfEdgeBegin() const {
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::innerHalfEdgeBegin() const
+{
     return innerHalfEdges.begin();
 }
 
@@ -771,7 +865,8 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::innerHalfEdgeBegin() c
  * @brief Funzione di finalizzazione di Dcel::Face::ConstInnerHalfEdgeIterator
  * @return Un iteratore che punta all'ultimo inner half edge della faccia
  */
-inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::innerHalfEdgeEnd() const {
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::innerHalfEdgeEnd() const
+{
     return innerHalfEdges.end();
 }
 
@@ -783,7 +878,8 @@ inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::innerHalfEdgeEnd() con
  *
  * @return Un iteratore che punta all'outer half edge della faccia
  */
-inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin() const {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin() const
+{
     return ConstIncidentHalfEdgeIterator(outerHalfEdge, outerHalfEdge, this);
 }
 
@@ -795,7 +891,8 @@ inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBeg
  *          il \b confronto \b con \b un \b altro \b iteratore \b valido
  * @return Un iteratore di finalizzazione
  */
-inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeEnd() const {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeEnd() const
+{
     return ConstIncidentHalfEdgeIterator(nullptr, nullptr, this);
 }
 
@@ -809,7 +906,8 @@ inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeEnd
  * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta all'half edge start
  */
-inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(const Dcel::HalfEdge* start) const {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(const Dcel::HalfEdge* start) const
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     return ConstIncidentHalfEdgeIterator(start, start, this);
 }
@@ -825,7 +923,8 @@ inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBeg
  * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta all'half edge start
  */
-inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end) const {
+inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end) const
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     assert(end->getFace() == this && "End half edge is not incident to iterated face.");
     return ConstIncidentHalfEdgeIterator(start, end, this);
@@ -839,7 +938,8 @@ inline Dcel::Face::ConstIncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBeg
  *
  * @return Un iteratore che punta al toVertex dell'outer half edge della faccia
  */
-inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin() const {
+inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin() const
+{
     return ConstIncidentVertexIterator(outerHalfEdge, outerHalfEdge, this);
 }
 
@@ -851,7 +951,8 @@ inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin()
  *          il \b confronto \b con \b un \b altro \b iteratore \b valido
  * @return Un iteratore di finalizzazione
  */
-inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexEnd() const {
+inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexEnd() const
+{
     return ConstIncidentVertexIterator(nullptr, nullptr, this);
 }
 
@@ -865,7 +966,8 @@ inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexEnd() c
  * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta al toVertex dell'half edge start
  */
-inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dcel::HalfEdge* start) const {
+inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dcel::HalfEdge* start) const
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     return ConstIncidentVertexIterator(start, start, this);
 }
@@ -881,29 +983,35 @@ inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(c
  * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta al toVertex dell'half edge start
  */
-inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end) const {
+inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end) const
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     assert(end->getFace() == this && "End half edge is not incident to iterated face.");
     return ConstIncidentVertexIterator(start, end, this);
 }
 
-inline Dcel::Face::ConstAdjacentFaceRangeBasedIterator Dcel::Face::adjacentFaceIterator() const {
+inline Dcel::Face::ConstAdjacentFaceRangeBasedIterator Dcel::Face::adjacentFaceIterator() const
+{
     return ConstAdjacentFaceRangeBasedIterator(this);
 }
 
-inline Dcel::Face::ConstIncidentHalfEdgeRangeBasedIterator Dcel::Face::incidentHalfEdgeIterator() const {
+inline Dcel::Face::ConstIncidentHalfEdgeRangeBasedIterator Dcel::Face::incidentHalfEdgeIterator() const
+{
     return ConstIncidentHalfEdgeRangeBasedIterator(this);
 }
 
-inline Dcel::Face::ConstIncidentVertexRangeBasedIterator Dcel::Face::incidentVertexIterator() const {
+inline Dcel::Face::ConstIncidentVertexRangeBasedIterator Dcel::Face::incidentVertexIterator() const
+{
     return ConstIncidentVertexRangeBasedIterator(this);
 }
 
-inline Dcel::Face::AdjacentFaceIterator Dcel::Face::adjacentFaceBegin() {
+inline Dcel::Face::AdjacentFaceIterator Dcel::Face::adjacentFaceBegin()
+{
     return AdjacentFaceIterator(outerHalfEdge, outerHalfEdge, this);
 }
 
-inline Dcel::Face::AdjacentFaceIterator Dcel::Face::adjacentFaceEnd() {
+inline Dcel::Face::AdjacentFaceIterator Dcel::Face::adjacentFaceEnd()
+{
     return AdjacentFaceIterator(nullptr, nullptr, this);
 }
 
@@ -912,7 +1020,8 @@ inline Dcel::Face::AdjacentFaceIterator Dcel::Face::adjacentFaceEnd() {
  * @brief Funzione di inizializzazione di Dcel::Face::InnerHalfEdgeIterator
  * @return Un iteratore che punta al primo inner half edge della faccia
  */
-inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::innerHalfEdgeBegin() {
+inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::innerHalfEdgeBegin()
+{
     return innerHalfEdges.begin();
 }
 
@@ -921,7 +1030,8 @@ inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::innerHalfEdgeBegin() {
  * @brief Funzione di finalizzazione di Dcel::Face::InnerHalfEdgeIterator
  * @return Un iteratore che punta all'ultimo inner half edge della faccia
  */
-inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::innerHalfEdgeEnd() {
+inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::innerHalfEdgeEnd()
+{
     return innerHalfEdges.end();
 }
 
@@ -933,7 +1043,8 @@ inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::innerHalfEdgeEnd() {
  *
  * @return Un iteratore che punta all'outer half edge della faccia
  */
-inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin() {
+inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin()
+{
     return IncidentHalfEdgeIterator(outerHalfEdge, outerHalfEdge, this);
 }
 
@@ -945,7 +1056,8 @@ inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin() 
  *          il \b confronto \b con \b un \b altro \b iteratore \b valido
  * @return Un iteratore di finalizzazione
  */
-inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeEnd() {
+inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeEnd()
+{
     return IncidentHalfEdgeIterator(nullptr, nullptr, this);
 }
 
@@ -959,7 +1071,8 @@ inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeEnd() {
  * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta all'half edge start
  */
-inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(Dcel::HalfEdge* start) {
+inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(Dcel::HalfEdge* start)
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     return IncidentHalfEdgeIterator(start, start, this);
 }
@@ -975,7 +1088,8 @@ inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(Dc
  * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta all'half edge start
  */
-inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end) {
+inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end)
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     assert(end->getFace() == this && "End half edge is not incident to iterated face.");
     return IncidentHalfEdgeIterator(start, end, this);
@@ -989,7 +1103,8 @@ inline Dcel::Face::IncidentHalfEdgeIterator Dcel::Face::incidentHalfEdgeBegin(Dc
  *
  * @return Un iteratore che punta al toVertex dell'outer half edge della faccia
  */
-inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin() {
+inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin()
+{
     return IncidentVertexIterator(outerHalfEdge, outerHalfEdge, this);
 }
 
@@ -1001,7 +1116,8 @@ inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin() {
  *          il \b confronto \b con \b un \b altro \b iteratore \b valido
  * @return Un iteratore di finalizzazione
  */
-inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexEnd() {
+inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexEnd()
+{
     return IncidentVertexIterator(nullptr, nullptr, this);
 }
 
@@ -1015,7 +1131,8 @@ inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexEnd() {
  * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta al toVertex dell'half edge start
  */
-inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::HalfEdge* start) {
+inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::HalfEdge* start)
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     return IncidentVertexIterator(start, start, this);
 }
@@ -1031,22 +1148,26 @@ inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::
  * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
  * @return Un iteratore che punta al toVertex dell'half edge start
  */
-inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end) {
+inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end)
+{
     assert(start->getFace() == this && "Start half edge is not incident to iterated face.");
     assert(end->getFace() == this && "End half edge is not incident to iterated face.");
     return IncidentVertexIterator(start, end, this);
 }
 
-inline Dcel::Face::AdjacentFaceRangeBasedIterator Dcel::Face::adjacentFaceIterator() {
+inline Dcel::Face::AdjacentFaceRangeBasedIterator Dcel::Face::adjacentFaceIterator()
+{
     return AdjacentFaceRangeBasedIterator(this);
 }
 
-inline Dcel::Face::IncidentHalfEdgeRangeBasedIterator Dcel::Face::incidentHalfEdgeIterator() {
+inline Dcel::Face::IncidentHalfEdgeRangeBasedIterator Dcel::Face::incidentHalfEdgeIterator()
+{
     return IncidentHalfEdgeRangeBasedIterator(this);
 }
 
-inline Dcel::Face::IncidentVertexRangeBasedIterator Dcel::Face::incidentVertexIterator() {
+inline Dcel::Face::IncidentVertexRangeBasedIterator Dcel::Face::incidentVertexIterator()
+{
     return IncidentVertexRangeBasedIterator(this);
 }
 
-}
+} //namespace cg3

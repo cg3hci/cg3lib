@@ -11,7 +11,8 @@
 
 namespace cg3 {
 
-SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minimumEdge) {
+SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minimumEdge)
+{
     SimpleEigenMesh box;
     if (minimumEdge <= 0) {
         std::vector<Pointd> extremes;
@@ -252,7 +253,11 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
  * @param nLatitude
  * @return
  */
-SimpleEigenMesh EigenMeshAlgorithms::makeSphere(const Pointd &center, float radius, unsigned nLatitude) {
+SimpleEigenMesh EigenMeshAlgorithms::makeSphere(
+        const Pointd &center,
+        float radius,
+        unsigned nLatitude)
+{
     SimpleEigenMesh sphere;
     const double DEGS_TO_RAD = M_PI/180.0f;
     int i, j;
@@ -305,7 +310,12 @@ SimpleEigenMesh EigenMeshAlgorithms::makeSphere(const Pointd &center, float radi
     return sphere;
 }
 
-SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(const Pointd &p1, const Pointd &p2, float radius, unsigned int subd) {
+SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(
+        const Pointd &p1,
+        const Pointd &p2,
+        float radius,
+        unsigned int subd)
+{
     Vec3 vector = p2 - p1;
     vector.normalize();
     std::cerr << "vector cyl: " << vector << "\n";
@@ -352,7 +362,8 @@ SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(const Pointd &p1, const Pointd
     return circle;
 }
 
-bool EigenMeshAlgorithms::isABox(const SimpleEigenMesh& mesh) {
+bool EigenMeshAlgorithms::isABox(const SimpleEigenMesh& mesh)
+{
     std::array<double, 6> coords;
     std::array<bool, 6> init = {false};
     bool isABox = true;
@@ -379,9 +390,4 @@ bool EigenMeshAlgorithms::isABox(const SimpleEigenMesh& mesh) {
     return isABox;
 }
 
-#ifdef  CG3_LIBIGL_DEFINED
-
-
-#endif // CG3_LIBIGL_DEFINED
-
-}
+} //namespace cg3

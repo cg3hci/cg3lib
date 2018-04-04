@@ -23,99 +23,100 @@ namespace internal {
 
 class EigenMeshLibIglAlgorithms;
 
-}
-}
+} //namespace cg3::libigl::internal
+} //namespace cg3::libigl
 #endif
 
-class EigenMesh : public SimpleEigenMesh {
-        friend class EigenMeshAlgorithms;
+class EigenMesh : public SimpleEigenMesh
+{
+    friend class EigenMeshAlgorithms;
 
-#ifdef CG3_LIBIGL_DEFINED
-        friend class libigl::internal::EigenMeshLibIglAlgorithms;
-#endif
+    #ifdef CG3_LIBIGL_DEFINED
+    friend class libigl::internal::EigenMeshLibIglAlgorithms;
+    #endif
 
-    public:
-        EigenMesh();
-        EigenMesh(const std::string& filename);
-        EigenMesh(const SimpleEigenMesh &m);
-        EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F);
-        EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F, const Eigen::MatrixXf& CV, const Eigen::MatrixXf& CF);
-        #ifdef  CG3_DCEL_DEFINED
-        EigenMesh(const Dcel& dcel);
-        #endif
-        #ifdef TRIMESH_DEFINED
-        template<typename T>
-        EigenMesh(const Trimesh<T>& trimesh);
-        #endif
+public:
+    EigenMesh();
+    EigenMesh(const std::string& filename);
+    EigenMesh(const SimpleEigenMesh &m);
+    EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F);
+    EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F, const Eigen::MatrixXf& CV, const Eigen::MatrixXf& CF);
+    #ifdef  CG3_DCEL_DEFINED
+    EigenMesh(const Dcel& dcel);
+    #endif
+    #ifdef TRIMESH_DEFINED
+    template<typename T>
+    EigenMesh(const Trimesh<T>& trimesh);
+    #endif
 
-        const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& getVerticesNormalsMatrix() const;
-        const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& getFacesNormalsMatrix() const;
-        const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor>& getVerticesColorsMatrix() const;
-        const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor>& getFacesColorsMatrix() const;
+    const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& getVerticesNormalsMatrix() const;
+    const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& getFacesNormalsMatrix() const;
+    const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor>& getVerticesColorsMatrix() const;
+    const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor>& getFacesColorsMatrix() const;
 
-        virtual void resizeVertices(unsigned int nv);
-        virtual void resizeFaces(unsigned int nf);
-        void updateBoundingBox();
-        virtual void clear();
-        virtual void addFace(const Eigen::VectorXi &f);
-        virtual void addFace(int t1, int t2, int t3);
-        virtual void addVertex(const Pointd &p);
-        virtual void removeFace(unsigned int f);
-        virtual bool readFromObj(const std::string &filename);
-        virtual bool readFromPly(const std::string &filename);
-        void setFaceColor(const Color &c, int f = -1);
-        void setFaceColor(int red, int green, int blue, int f = -1);
-        void setFaceColor(double red, double green, double blue, int f = -1);
-        Vec3 getFaceNormal(unsigned int f) const;
-        void setVertexColor(const Color& c, int v = -1);
-        void setVertexColor(int red, int green, int blue, int v = -1);
-        void setVertexColor(double red, double green, double blue, int v = -1);
-        Vec3 getVertexNormal(unsigned int v) const;
-        void setVertexNormal(const Vec3& n, unsigned int v);
-        Color getFaceColor(unsigned int f) const;
-        Color getVertexColor(unsigned int v) const;
-        virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
-        virtual BoundingBox getBoundingBox() const;
-        virtual void translate(const Pointd &p);
-        virtual void translate(const Eigen::Vector3d &p);
-        virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
-        virtual void scale(const BoundingBox& newBoundingBox);
-        virtual void scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox);
-        virtual void scale(const Vec3 &scaleFactor);
-        Eigen::MatrixXf getVerticesColorMatrix() const;
-        void updateFaceNormals();
-        void updateVerticesNormals();
-        void updateFacesAndVerticesNormals();
+    virtual void resizeVertices(unsigned int nv);
+    virtual void resizeFaces(unsigned int nf);
+    void updateBoundingBox();
+    virtual void clear();
+    virtual void addFace(const Eigen::VectorXi &f);
+    virtual void addFace(int t1, int t2, int t3);
+    virtual void addVertex(const Pointd &p);
+    virtual void removeFace(unsigned int f);
+    virtual bool readFromObj(const std::string &filename);
+    virtual bool readFromPly(const std::string &filename);
+    void setFaceColor(const Color &c, int f = -1);
+    void setFaceColor(int red, int green, int blue, int f = -1);
+    void setFaceColor(double red, double green, double blue, int f = -1);
+    Vec3 getFaceNormal(unsigned int f) const;
+    void setVertexColor(const Color& c, int v = -1);
+    void setVertexColor(int red, int green, int blue, int v = -1);
+    void setVertexColor(double red, double green, double blue, int v = -1);
+    Vec3 getVertexNormal(unsigned int v) const;
+    void setVertexNormal(const Vec3& n, unsigned int v);
+    Color getFaceColor(unsigned int f) const;
+    Color getVertexColor(unsigned int v) const;
+    virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
+    virtual BoundingBox getBoundingBox() const;
+    virtual void translate(const Pointd &p);
+    virtual void translate(const Eigen::Vector3d &p);
+    virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
+    virtual void scale(const BoundingBox& newBoundingBox);
+    virtual void scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox);
+    virtual void scale(const Vec3 &scaleFactor);
+    Eigen::MatrixXf getVerticesColorMatrix() const;
+    void updateFaceNormals();
+    void updateVerticesNormals();
+    void updateFacesAndVerticesNormals();
 
-        virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
+    virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
 
-        std::pair<int, int> getCommonVertices(unsigned int f1, unsigned int f2) const;
+    std::pair<int, int> getCommonVertices(unsigned int f1, unsigned int f2) const;
 
-        virtual bool saveOnPly(const std::string &filename) const;
-        virtual bool saveOnObj(const std::string &filename) const;
+    virtual bool saveOnPly(const std::string &filename) const;
+    virtual bool saveOnObj(const std::string &filename) const;
 
-        static void merge(EigenMesh &result, const EigenMesh &m1, const EigenMesh &m2);
-        static EigenMesh merge(const EigenMesh &m1, const EigenMesh &m2);
+    static void merge(EigenMesh &result, const EigenMesh &m1, const EigenMesh &m2);
+    static EigenMesh merge(const EigenMesh &m1, const EigenMesh &m2);
 
-        #ifdef  CG3_DCEL_DEFINED
-        EigenMesh& operator= (const Dcel& dcel);
-        #endif
+    #ifdef  CG3_DCEL_DEFINED
+    EigenMesh& operator= (const Dcel& dcel);
+    #endif
 
-        void serialize(std::ofstream& binaryFile) const;
-        void deserialize(std::ifstream& binaryFile);
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
-    protected:
+protected:
 
-        void updateFaceColorsSize();
-        void updateVertexColorsSize();
-        void updateColorSizes();
+    void updateFaceColorsSize();
+    void updateVertexColorsSize();
+    void updateColorSizes();
 
-        //Eigen::RowVector3d BBmin, BBmax;
-        BoundingBox bb;
-        Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> NV;
-        Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> NF;
-        Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor> CV;
-        Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor> CF;
+    //Eigen::RowVector3d BBmin, BBmax;
+    BoundingBox bb;
+    Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> NV;
+    Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> NF;
+    Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor> CV;
+    Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor> CF;
 };
 
 
@@ -126,7 +127,8 @@ class EigenMesh : public SimpleEigenMesh {
 
 #ifdef TRIMESH_DEFINED
 template <typename T>
-inline EigenMesh::EigenMesh(const Trimesh<T>& trimesh) : SimpleEigenMesh(trimesh)
+inline EigenMesh::EigenMesh(const Trimesh<T>& trimesh) :
+    SimpleEigenMesh(trimesh)
 {
     CF = Eigen::MatrixXd::Constant(F.rows(), 3, 0.5);
     NV.resize(V.rows(), 3);
@@ -137,38 +139,46 @@ inline EigenMesh::EigenMesh(const Trimesh<T>& trimesh) : SimpleEigenMesh(trimesh
 }
 #endif
 
-inline EigenMesh::EigenMesh(const std::string &filename) {
+inline EigenMesh::EigenMesh(const std::string &filename)
+{
     readFromFile(filename);
 }
 
-inline const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> &EigenMesh::getVerticesNormalsMatrix() const {
+inline const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& EigenMesh::getVerticesNormalsMatrix() const
+{
     return NV;
 }
 
-inline const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> &EigenMesh::getFacesNormalsMatrix() const {
+inline const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& EigenMesh::getFacesNormalsMatrix() const
+{
     return NF;
 }
 
-inline const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor> &EigenMesh::getVerticesColorsMatrix() const {
+inline const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor>& EigenMesh::getVerticesColorsMatrix() const
+{
     return CV;
 }
 
-inline const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor> &EigenMesh::getFacesColorsMatrix() const {
+inline const Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor>& EigenMesh::getFacesColorsMatrix() const
+{
     return CF;
 }
 
-inline void EigenMesh::resizeVertices(unsigned int nv){
+inline void EigenMesh::resizeVertices(unsigned int nv)
+{
     SimpleEigenMesh::resizeVertices(nv);
     NV.conservativeResize(nv, Eigen::NoChange);
 }
 
-inline void EigenMesh::resizeFaces(unsigned int nf) {
+inline void EigenMesh::resizeFaces(unsigned int nf)
+{
     SimpleEigenMesh::resizeFaces(nf);
     NF.conservativeResize(nf, Eigen::NoChange);
     CF.conservativeResize(nf, Eigen::NoChange);
 }
 
-inline void EigenMesh::updateBoundingBox() {
+inline void EigenMesh::updateBoundingBox()
+{
     if (V.rows() > 0){
         Eigen::RowVector3d min = V.colwise().minCoeff(), max = V.colwise().maxCoeff();
         bb.min().x() = min(0); bb.min().y() = min(1); bb.min().z() = min(2);
@@ -176,7 +186,8 @@ inline void EigenMesh::updateBoundingBox() {
     }
 }
 
-inline void EigenMesh::clear() {
+inline void EigenMesh::clear()
+{
     V.resize(0,Eigen::NoChange);
     F.resize(0,Eigen::NoChange);
     CF.resize(0,Eigen::NoChange);
@@ -184,7 +195,8 @@ inline void EigenMesh::clear() {
     NF.resize(0,Eigen::NoChange);
 }
 
-inline void EigenMesh::addFace(const Eigen::VectorXi& f) {
+inline void EigenMesh::addFace(const Eigen::VectorXi& f)
+{
     SimpleEigenMesh::addFace(f);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
     Vec3 n = SimpleEigenMesh::getFaceNormal(F.rows()-1);
@@ -195,7 +207,8 @@ inline void EigenMesh::addFace(const Eigen::VectorXi& f) {
         CF(F.rows()-1, i) = 0.5;
 }
 
-inline void EigenMesh::addFace(int t1, int t2, int t3) {
+inline void EigenMesh::addFace(int t1, int t2, int t3)
+{
     SimpleEigenMesh::addFace(t1, t2, t3);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
     Vec3 n = SimpleEigenMesh::getFaceNormal(F.rows()-1);
@@ -206,7 +219,8 @@ inline void EigenMesh::addFace(int t1, int t2, int t3) {
         CF(F.rows()-1, i) = 0.5;
 }
 
-inline void EigenMesh::addVertex(const Pointd &p) {
+inline void EigenMesh::addVertex(const Pointd &p)
+{
     SimpleEigenMesh::addVertex(p);
     NV.conservativeResize(V.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
@@ -216,23 +230,27 @@ inline void EigenMesh::addVertex(const Pointd &p) {
         CV(V.rows()-1, i) = 0.5;
 }
 
-inline void EigenMesh::removeFace(unsigned int f) {
+inline void EigenMesh::removeFace(unsigned int f)
+{
     SimpleEigenMesh::removeFace(f);
     cg3::removeRowFromEigenMatrix(NF, f);
     cg3::removeRowFromEigenMatrix(CF, f);
 }
 
-inline Vec3 EigenMesh::getFaceNormal(unsigned int f) const {
+inline Vec3 EigenMesh::getFaceNormal(unsigned int f) const
+{
     assert (f < (unsigned int)F.rows());
     return Vec3(NF(f,0), NF(f,1), NF(f,2));
 }
 
-inline Vec3 EigenMesh::getVertexNormal(unsigned int v) const {
+inline Vec3 EigenMesh::getVertexNormal(unsigned int v) const
+{
     assert (v < (unsigned int)V.rows());
     return Vec3(NV(v,0), NV(v,1), NV(v,2));
 }
 
-inline Color EigenMesh::getFaceColor(unsigned int f) const {
+inline Color EigenMesh::getFaceColor(unsigned int f) const
+{
     assert (f < (unsigned int)F.rows());
     Color c;
     c.setRedF((float)CF(f,0));
@@ -241,7 +259,8 @@ inline Color EigenMesh::getFaceColor(unsigned int f) const {
     return c;
 }
 
-inline Color EigenMesh::getVertexColor(unsigned int v) const {
+inline Color EigenMesh::getVertexColor(unsigned int v) const
+{
     assert (v < (unsigned int)V.rows());
     Color c;
     c.setRedF((float)CV(v,0));
@@ -250,24 +269,28 @@ inline Color EigenMesh::getVertexColor(unsigned int v) const {
     return c;
 }
 
-inline void EigenMesh::getBoundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVector3d& BBmax) const {
+inline void EigenMesh::getBoundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVector3d& BBmax) const
+{
     BBmin(0) = bb.minX(); BBmin(1) = bb.minY(); BBmin(2) = bb.minZ();
     BBmax(0) = bb.maxX(); BBmax(1) = bb.maxY(); BBmax(2) = bb.maxZ();
 }
 
-inline void EigenMesh::updateFacesAndVerticesNormals() {
+inline void EigenMesh::updateFacesAndVerticesNormals()
+{
     updateFaceNormals();
     updateVerticesNormals();
 }
 
-inline void EigenMesh::serialize(std::ofstream& binaryFile) const {
+inline void EigenMesh::serialize(std::ofstream& binaryFile) const
+{
     serializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
 }
 
-inline void EigenMesh::deserialize(std::ifstream& binaryFile) {
+inline void EigenMesh::deserialize(std::ifstream& binaryFile)
+{
     deserializeObjectAttributes("cg3EigenMesh", binaryFile, V, F, bb, NV, NF, CV, CF);
 }
 
-}
+} //namespace cg3
 
 #endif // CG3_EIGENMESH_H

@@ -21,28 +21,39 @@ namespace cg3 {
 EigenMesh::EigenMesh() {
 }
 
-EigenMesh::EigenMesh(const SimpleEigenMesh& m) : SimpleEigenMesh(m) {
+EigenMesh::EigenMesh(const SimpleEigenMesh& m) :
+    SimpleEigenMesh(m)
+{
     updateColorSizes();
     updateFaceNormals();
     updateVerticesNormals();
     updateBoundingBox();
 }
 
-EigenMesh::EigenMesh(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F) : SimpleEigenMesh(V,F) {
+EigenMesh::EigenMesh(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F) :
+    SimpleEigenMesh(V,F)
+{
     updateColorSizes();
     updateFaceNormals();
     updateVerticesNormals();
     updateBoundingBox();
 }
 
-EigenMesh::EigenMesh(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F, const Eigen::MatrixXf& CV, const Eigen::MatrixXf& CF) : SimpleEigenMesh(V,F), CV(CV), CF(CF) {
+EigenMesh::EigenMesh(
+        const Eigen::MatrixXd& V,
+        const Eigen::MatrixXi& F,
+        const Eigen::MatrixXf& CV,
+        const Eigen::MatrixXf& CF) :
+    SimpleEigenMesh(V,F), CV(CV), CF(CF)
+{
     updateFaceNormals();
     updateVerticesNormals();
     updateBoundingBox();
 }
 
 #ifdef  CG3_DCEL_DEFINED
-EigenMesh::EigenMesh(const Dcel& dcel) {
+EigenMesh::EigenMesh(const Dcel& dcel)
+{
     clear();
     V.resize(dcel.getNumberVertices(), 3);
     F.resize(dcel.getNumberFaces(), 3);
@@ -75,7 +86,8 @@ EigenMesh::EigenMesh(const Dcel& dcel) {
 }
 #endif
 
-bool EigenMesh::readFromObj(const std::string& filename) {
+bool EigenMesh::readFromObj(const std::string& filename)
+{
     clear();
     int mode = 0;
     bool b = loadTriangleMeshFromObj(filename, V, F, mode, NV, CV, CF);
@@ -96,7 +108,8 @@ bool EigenMesh::readFromObj(const std::string& filename) {
     return b;
 }
 
-bool EigenMesh::readFromPly(const std::string& filename) {
+bool EigenMesh::readFromPly(const std::string& filename)
+{
     clear();
     int mode = 0;
     bool b = loadTriangleMeshFromPly(filename, V, F, mode, NV, CV, CF);
@@ -117,15 +130,18 @@ bool EigenMesh::readFromPly(const std::string& filename) {
     return b;
 }
 
-void EigenMesh::setFaceColor(const Color& c, int f) {
+void EigenMesh::setFaceColor(const Color& c, int f)
+{
     setFaceColor(c.redF(), c.greenF(), c.blueF(), f);
 }
 
-void EigenMesh::setFaceColor(int red, int green, int blue, int f) {
+void EigenMesh::setFaceColor(int red, int green, int blue, int f)
+{
     setFaceColor(red/255.0, green/255.0, blue/255.0, f);
 }
 
-void EigenMesh::setFaceColor(double red, double green, double blue, int f) {
+void EigenMesh::setFaceColor(double red, double green, double blue, int f)
+{
     if (f < 0){
         if (CF.rows() != F.rows())
             CF.resize(F.rows(), 3);
@@ -138,15 +154,18 @@ void EigenMesh::setFaceColor(double red, double green, double blue, int f) {
     }
 }
 
-void EigenMesh::setVertexColor(const Color &c, int v) {
+void EigenMesh::setVertexColor(const Color &c, int v)
+{
     setVertexColor(c.redF(), c.greenF(), c.blueF(), v);
 }
 
-void EigenMesh::setVertexColor(int red, int green, int blue, int v) {
+void EigenMesh::setVertexColor(int red, int green, int blue, int v)
+{
     setVertexColor(red/255.0, green/255.0, blue/255.0, v);
 }
 
-void EigenMesh::setVertexColor(double red, double green, double blue, int v) {
+void EigenMesh::setVertexColor(double red, double green, double blue, int v)
+{
     if (v < 0){
         if (CV.rows() != V.rows())
             CV.resize(V.rows(), 3);
@@ -159,26 +178,31 @@ void EigenMesh::setVertexColor(double red, double green, double blue, int v) {
     }
 }
 
-void EigenMesh::setVertexNormal(const Vec3 &n, unsigned int v) {
+void EigenMesh::setVertexNormal(const Vec3 &n, unsigned int v)
+{
     assert(v < (unsigned int)V.rows());
     NV.row(v) << n.x(), n.y(), n.z();
 }
 
-BoundingBox EigenMesh::getBoundingBox() const {
+BoundingBox EigenMesh::getBoundingBox() const
+{
     return bb;
 }
 
-void EigenMesh::translate(const Pointd &p) {
+void EigenMesh::translate(const Pointd &p)
+{
     SimpleEigenMesh::translate(p);
     updateBoundingBox();
 }
 
-void EigenMesh::translate(const Eigen::Vector3d &p) {
+void EigenMesh::translate(const Eigen::Vector3d &p)
+{
     SimpleEigenMesh::translate(p);
     updateBoundingBox();
 }
 
-void EigenMesh::rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d &centroid) {
+void EigenMesh::rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d &centroid)
+{
     SimpleEigenMesh::rotate(m, centroid);
     updateBoundingBox();
     for (unsigned int i = 0; i < (unsigned int)NF.rows(); i++){
@@ -189,26 +213,31 @@ void EigenMesh::rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d &centroid
     }
 }
 
-void EigenMesh::scale(const BoundingBox& newBoundingBox) {
+void EigenMesh::scale(const BoundingBox& newBoundingBox)
+{
     SimpleEigenMesh::scale(newBoundingBox);
     bb = newBoundingBox;
 }
 
-void EigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox) {
+void EigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox)
+{
     SimpleEigenMesh::scale(oldBoundingBox, newBoundingBox);
     bb = newBoundingBox;
 }
 
-void EigenMesh::scale(const Vec3& scaleFactor) {
+void EigenMesh::scale(const Vec3& scaleFactor)
+{
     SimpleEigenMesh::scale(scaleFactor);
     updateBoundingBox();
 }
 
-Eigen::MatrixXf EigenMesh::getVerticesColorMatrix() const {
+Eigen::MatrixXf EigenMesh::getVerticesColorMatrix() const
+{
     return CV;
 }
 
-void EigenMesh::updateFaceNormals() {
+void EigenMesh::updateFaceNormals()
+{
     Eigen::Matrix<double,3,1> Z(0,0,0);
     NF.resize(F.rows(),3);
     int nf = F.rows();
@@ -230,7 +259,8 @@ void EigenMesh::updateFaceNormals() {
     }
 }
 
-void EigenMesh::updateVerticesNormals() {
+void EigenMesh::updateVerticesNormals()
+{
     NV = Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>::Zero(V.rows(), 3);
     // loop over faces
     for(int i = 0;i<F.rows();i++) {
@@ -251,7 +281,8 @@ void EigenMesh::removeDegenerateTriangles(double epsilon) {
     }
 }
 
-std::pair<int, int> EigenMesh::getCommonVertices(unsigned int f1, unsigned int f2) const {
+std::pair<int, int> EigenMesh::getCommonVertices(unsigned int f1, unsigned int f2) const
+{
     for (unsigned int i = 0; i < 3; i++){
         for (unsigned int j = 0; j < 3; j++){
             if (F(f1, i) == F(f2,(j+1)%3) && F(f1,(i+1)%3) == F(f2, j))
@@ -261,7 +292,8 @@ std::pair<int, int> EigenMesh::getCommonVertices(unsigned int f1, unsigned int f
     return std::pair<int, int>(-1, -1);
 }
 
-bool EigenMesh::saveOnPly(const std::string &filename) const {
+bool EigenMesh::saveOnPly(const std::string &filename) const
+{
     int mode = io::NORMAL_VERTICES | io::COLOR_VERTICES | io::COLOR_FACES;
     io::MeshType meshType;
     if (F.cols() == 3)
@@ -274,7 +306,8 @@ bool EigenMesh::saveOnPly(const std::string &filename) const {
     return saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data(), meshType, mode, NV.data(), colorMode, CV.data(), CF.data());
 }
 
-bool EigenMesh::saveOnObj(const std::string& filename) const {
+bool EigenMesh::saveOnObj(const std::string& filename) const
+{
     int mode = io::TRIANGLE_MESH | io::NORMAL_VERTICES | io::COLOR_VERTICES | io::COLOR_FACES;
     io::MeshType meshType;
        if (F.cols() == 3)
@@ -287,7 +320,8 @@ bool EigenMesh::saveOnObj(const std::string& filename) const {
     return saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data(), meshType, mode, NV.data(), colorMode, CV.data(), CF.data());
 }
 
-void EigenMesh::merge(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2) {
+void EigenMesh::merge(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2)
+{
     SimpleEigenMesh::merge(result, m1, m2);
     result.CF.resize(m1.CF.rows()+m2.CF.rows(), 3);
     result.CF << m1.CF,
@@ -304,7 +338,8 @@ void EigenMesh::merge(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m
     result.updateBoundingBox();
 }
 
-EigenMesh EigenMesh::merge(const EigenMesh& m1, const EigenMesh& m2) {
+EigenMesh EigenMesh::merge(const EigenMesh& m1, const EigenMesh& m2)
+{
     EigenMesh result;
     SimpleEigenMesh::merge(result, m1, m2);
     result.CF.resize(m1.CF.rows()+m2.CF.rows(), 3);
@@ -324,7 +359,8 @@ EigenMesh EigenMesh::merge(const EigenMesh& m1, const EigenMesh& m2) {
 }
 
 #ifdef  CG3_DCEL_DEFINED
-EigenMesh& EigenMesh::operator=(const Dcel& dcel) {
+EigenMesh& EigenMesh::operator=(const Dcel& dcel)
+{
     clear();
     V.resize(dcel.getNumberVertices(), 3);
     F.resize(dcel.getNumberFaces(), 3);
@@ -358,17 +394,20 @@ EigenMesh& EigenMesh::operator=(const Dcel& dcel) {
 }
 #endif
 
-void EigenMesh::updateFaceColorsSize() {
+void EigenMesh::updateFaceColorsSize()
+{
     CF.conservativeResizeLike(Eigen::MatrixXf::Constant(F.rows(), 3, 0.5));
 }
 
-void EigenMesh::updateVertexColorsSize() {
+void EigenMesh::updateVertexColorsSize()
+{
     CV.conservativeResizeLike(Eigen::MatrixXf::Constant(V.rows(), 3, 0.5));
 }
 
-void EigenMesh::updateColorSizes() {
+void EigenMesh::updateColorSizes()
+{
     updateFaceColorsSize();
     updateVertexColorsSize();
 }
 
-}
+} //namespace cg3

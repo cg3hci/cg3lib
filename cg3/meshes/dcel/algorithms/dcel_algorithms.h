@@ -14,27 +14,39 @@
 namespace cg3 {
 
 namespace dcelAlgorithms {
-    void getVectorFaces(std::vector<const Dcel::Face*> &vector, const Dcel& d);
-    void getVectorFaces(std::vector<Dcel::Face*> &vector, Dcel& d);
 
-    static std::vector<const Dcel::Vertex*> dummymv;
-    static std::vector<const Dcel::Face*> dummymf;
-    void getVectorMesh(std::vector< Pointd > &coords, std::vector< std::vector<int>> &faces, const Dcel &d, std::vector<const Dcel::Vertex*> &mappingVertices = dummymv, std::vector<const Dcel::Face*> &mappingFaces = dummymf);
+void getVectorFaces(std::vector<const Dcel::Face*> &vector, const Dcel& d);
+void getVectorFaces(std::vector<Dcel::Face*> &vector, Dcel& d);
 
-    void smartColoring(Dcel &d);
+static std::vector<const Dcel::Vertex*> dummymv;
+static std::vector<const Dcel::Face*> dummymf;
+void getVectorMesh(
+        std::vector< Pointd > &coords,
+        std::vector< std::vector<int>> &faces,
+        const Dcel &d,
+        std::vector<const Dcel::Vertex*> &mappingVertices = dummymv,
+        std::vector<const Dcel::Face*> &mappingFaces = dummymf);
 
-    template <typename InputIterator>
-    BoundingBox getBoundingBoxOfFaces(InputIterator first, InputIterator last);
+void smartColoring(Dcel &d);
 
-    template <typename Comp>
-    std::set<const Dcel::Face*> flood(const Dcel::Face* seed, Comp c);
+template <typename InputIterator>
+BoundingBox getBoundingBoxOfFaces(InputIterator first, InputIterator last);
 
-    template <typename InputIterator>
-    std::vector< std::set<const Dcel::Face*> > getConnectedComponents(InputIterator first, InputIterator last);
+template <typename Comp>
+std::set<const Dcel::Face*> flood(const Dcel::Face* seed, Comp c);
+
+template <typename InputIterator>
+std::vector< std::set<const Dcel::Face*> > getConnectedComponents(
+        InputIterator first,
+        InputIterator last);
+
 }
 
 template <typename InputIterator>
-BoundingBox dcelAlgorithms::getBoundingBoxOfFaces(InputIterator first, InputIterator last){
+BoundingBox dcelAlgorithms::getBoundingBoxOfFaces(
+        InputIterator first,
+        InputIterator last)
+{
     BoundingBox bb;
     const Dcel::Face* f = *first;
     bb.setMin(f->getOuterHalfEdge()->getFromVertex()->getCoordinate());
@@ -56,12 +68,15 @@ BoundingBox dcelAlgorithms::getBoundingBoxOfFaces(InputIterator first, InputIter
  * executes a flood starting from the seed face and inserts in the returnes sets
  * all the faces f such that c(f) returns true
  * @param seed: start face
- * @param c: a structure which contains a single parameter operator () that takes a face and returns a bool
+ * @param c: a structure which contains a single parameter operator () that takes a face
+ * and returns a bool
  */
 template <typename Comp>
-std::set<const Dcel::Face*> dcelAlgorithms::flood(const Dcel::Face* seed, Comp c){
+std::set<const Dcel::Face*> dcelAlgorithms::flood(const Dcel::Face* seed, Comp c)
+{
     std::set<const Dcel::Face*> faces;
-    std::vector<const Dcel::Face *> stack_faces; // only triangles with same label of the patch will stay on the stack
+    std::vector<const Dcel::Face *> stack_faces; // only triangles with same label of
+                                                 //the patch will stay on the stack
 
     faces.insert(seed);
 
@@ -86,7 +101,10 @@ std::set<const Dcel::Face*> dcelAlgorithms::flood(const Dcel::Face* seed, Comp c
 }
 
 template <typename InputIterator>
-std::vector< std::set<const Dcel::Face*> > dcelAlgorithms::getConnectedComponents(InputIterator first, InputIterator last){
+std::vector< std::set<const Dcel::Face*> > dcelAlgorithms::getConnectedComponents(
+        InputIterator first,
+        InputIterator last)
+{
     struct Comp{
         const std::set<const Dcel::Face*> &cf;
         Comp(const std::set<const Dcel::Face*> &cf) : cf(cf) {}
@@ -108,6 +126,6 @@ std::vector< std::set<const Dcel::Face*> > dcelAlgorithms::getConnectedComponent
     return connectedComponents;
 }
 
-}
+} //namespace cg3
 
 #endif // DCEL_ALGORITHMS_H

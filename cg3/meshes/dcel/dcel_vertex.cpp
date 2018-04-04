@@ -27,10 +27,21 @@ namespace cg3 {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-Dcel::Vertex::Vertex(Dcel& parent) : parent(&parent), incidentHalfEdge(nullptr), cardinality(0), id(0), flag(0){
+Dcel::Vertex::Vertex(Dcel& parent) :
+    parent(&parent),
+    incidentHalfEdge(nullptr),
+    cardinality(0),
+    id(0),
+    flag(0)
+{
 }
 #else
-Dcel::Vertex::Vertex() : incidentHalfEdge(nullptr), cardinality(0), id(0), flag(0){
+Dcel::Vertex::Vertex() :
+    incidentHalfEdge(nullptr),
+    cardinality(0),
+    id(0),
+    flag(0)
+{
 }
 #endif
 
@@ -40,7 +51,8 @@ Dcel::Vertex::Vertex() : incidentHalfEdge(nullptr), cardinality(0), id(0), flag(
  *
  * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe Dcel::Vertex).
  */
-Dcel::Vertex::~Vertex(void) {
+Dcel::Vertex::~Vertex(void)
+{
 }
 
 /******************
@@ -54,7 +66,8 @@ Dcel::Vertex::~Vertex(void) {
  * @par Complessità:
  *      \e O(Cardinality)
  */
-int Dcel::Vertex::getNumberIncidentHalfEdges() const {
+int Dcel::Vertex::getNumberIncidentHalfEdges() const
+{
     int n = 0;
     ConstIncidentHalfEdgeIterator it;
     for (it = incidentHalfEdgeBegin(); it != incidentHalfEdgeEnd(); ++it) n++;
@@ -70,7 +83,8 @@ int Dcel::Vertex::getNumberIncidentHalfEdges() const {
  * @par Complessità:
  *      \e O(Cardinality)
  */
-int Dcel::Vertex::getNumberIncidentFaces() const {
+int Dcel::Vertex::getNumberIncidentFaces() const
+{
     int n = 0;
     ConstIncidentFaceIterator it;
     for (it = incidentFaceBegin(); it != incidentFaceEnd(); ++it) n++;
@@ -85,7 +99,8 @@ int Dcel::Vertex::getNumberIncidentFaces() const {
  * @par Complessità:
  *      \e O(Cardinality)
  */
-int Dcel::Vertex::getNumberAdjacentVertices() const {
+int Dcel::Vertex::getNumberAdjacentVertices() const
+{
     int n = 0;
     ConstAdjacentVertexIterator it;
     for (it = adjacentVertexBegin(); it != adjacentVertexEnd(); ++it) n++;
@@ -106,7 +121,8 @@ int Dcel::Vertex::getNumberAdjacentVertices() const {
  * @par Complessità:
  *      \e O(Cardinality)
  */
-const Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Dcel::Vertex* vertex) const {
+const Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Dcel::Vertex* vertex) const
+{
     ConstOutgoingHalfEdgeIterator he;
     for (he = outgoingHalfEdgeBegin(); he != outgoingHalfEdgeEnd(); ++he){
         if ((*he)->getToVertex() == vertex) return *he;
@@ -120,7 +136,8 @@ const Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Dcel::Vertex* verte
  * @return Una stringa rappresentativa del vertice
  * @todo Da aggiornare
  */
-std::string Dcel::Vertex::toString() const {
+std::string Dcel::Vertex::toString() const
+{
     std::stringstream ss;
 
     #ifdef NDEBUG
@@ -145,7 +162,8 @@ std::string Dcel::Vertex::toString() const {
  * @par Complessità:
  *      \e O(Cardinality)
  */
-Vec3 Dcel::Vertex::updateNormal() {
+Vec3 Dcel::Vertex::updateNormal()
+{
     #ifdef NDEBUG
     parent->vertexNormals[id].set(0,0,0);
     #else
@@ -182,7 +200,8 @@ Vec3 Dcel::Vertex::updateNormal() {
  * @par Complessità:
  *      \e O(Cardinality)
  */
-unsigned int Dcel::Vertex::updateCardinality() {
+unsigned int Dcel::Vertex::updateCardinality()
+{
     unsigned int c = 0;
     ConstOutgoingHalfEdgeIterator heit;
     for (heit = outgoingHalfEdgeBegin(); heit != outgoingHalfEdgeEnd(); ++heit)
@@ -204,7 +223,8 @@ unsigned int Dcel::Vertex::updateCardinality() {
  * @par Complessità:
  *      \e O(Cardinality)
  */
-Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Vertex* vertex) {
+Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Vertex* vertex)
+{
     OutgoingHalfEdgeIterator he;
     for (he = this->outgoingHalfEdgeBegin(); he != this->outgoingHalfEdgeEnd(); ++he){
         if ((*he)->getToVertex() == vertex) return *he;

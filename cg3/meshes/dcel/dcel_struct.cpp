@@ -36,7 +36,11 @@ namespace cg3 {
  *
  * Creates an empty Dcel: 0 vertices, 0 half edges and 0 faces.
  */
-Dcel::Dcel() : nVertices(0), nHalfEdges(0), nFaces(0) {
+Dcel::Dcel() :
+    nVertices(0),
+    nHalfEdges(0),
+    nFaces(0)
+{
 }
 
 /**
@@ -48,7 +52,8 @@ Dcel::Dcel() : nVertices(0), nHalfEdges(0), nFaces(0) {
  * tutte le relazioni tra essi.
  * @param[in] dcel: dcel da cui verrà creata la Dcel this.
  */
-Dcel::Dcel(const Dcel& dcel) {
+Dcel::Dcel(const Dcel& dcel)
+{
     this->unusedVids = dcel.unusedVids;
     this->unusedHeids = dcel.unusedHeids;
     this->unusedFids = dcel.unusedFids;
@@ -123,7 +128,8 @@ Dcel::Dcel(const Dcel& dcel) {
     }
 }
 
-Dcel::Dcel(Dcel&& dcel) {
+Dcel::Dcel(Dcel&& dcel)
+{
     vertices = std::move(dcel.vertices);
     faces = std::move(dcel.faces);
     halfEdges = std::move(dcel.halfEdges);
@@ -154,18 +160,21 @@ Dcel::Dcel(Dcel&& dcel) {
 }
 
 #ifdef  CG3_EIGENMESH_DEFINED
-Dcel::Dcel(const cg3::SimpleEigenMesh& eigenMesh) {
+Dcel::Dcel(const cg3::SimpleEigenMesh& eigenMesh)
+{
     copyFrom(eigenMesh);
     updateVertexNormals();
 }
 
-Dcel::Dcel(const cg3::EigenMesh& eigenMesh) {
+Dcel::Dcel(const cg3::EigenMesh& eigenMesh)
+{
     copyFrom(eigenMesh);
 }
 #endif // CG3_EIGNEMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
-Dcel::Dcel(const cinolib::Trimesh<> &trimesh) {
+Dcel::Dcel(const cinolib::Trimesh<> &trimesh)
+{
     copyFrom(trimesh);
 }
 #endif //CG3_CINOLIB_DEFINED
@@ -178,7 +187,8 @@ Dcel::Dcel(const cinolib::Trimesh<> &trimesh) {
  *
  * Elimina tutti gli elementi contenuti nelle liste dei vertici, degli half edge e delle facce della Dcel.
  */
-Dcel::~Dcel() {
+Dcel::~Dcel()
+{
     for (unsigned int i=0; i<vertices.size(); i++)
         if (vertices[i]!= nullptr)
             delete vertices[i];
@@ -202,7 +212,8 @@ Dcel::~Dcel() {
  * @par Complessità:
  *      \e O(numFaces)
  */
-bool Dcel::isTriangleMesh() const {
+bool Dcel::isTriangleMesh() const
+{
     if (getNumberFaces() == 0) return false;
     ConstFaceIterator fit;
     for (fit = faceBegin(); fit != faceEnd(); ++fit)
@@ -217,7 +228,8 @@ bool Dcel::isTriangleMesh() const {
  * @par Complessità:
  *      \e O(numFaces)
  */
-double Dcel::getSurfaceArea() const {
+double Dcel::getSurfaceArea() const
+{
     double area = 0;
     for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit){
         area += (*fit)->getArea();
@@ -225,7 +237,8 @@ double Dcel::getSurfaceArea() const {
     return area;
 }
 
-Pointd Dcel::getBarycenter() const {
+Pointd Dcel::getBarycenter() const
+{
     Pointd bc;
     for (const Dcel::Vertex* v : vertexIterator()){
         bc += v->getCoordinate();
@@ -234,7 +247,8 @@ Pointd Dcel::getBarycenter() const {
     return bc;
 }
 
-double Dcel::getAverageHalfEdgesLength() const {
+double Dcel::getAverageHalfEdgesLength() const
+{
     double average = 0;
     for (const HalfEdge* he : halfEdgeIterator()){
         average += he->getLength();
@@ -259,7 +273,8 @@ double Dcel::getAverageHalfEdgesLength() const {
  * @par Complessità:
  *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
  */
-void Dcel::saveOnObjFile(std::string fileNameObj) const {
+void Dcel::saveOnObjFile(std::string fileNameObj) const
+{
     std::vector<double> vertices;
     std::vector<double> verticesNormals;
     std::vector<int> faces;
@@ -288,7 +303,8 @@ void Dcel::saveOnObjFile(std::string fileNameObj) const {
  * @par Complessità:
  *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
  */
-void Dcel::saveOnPlyFile(std::string fileNamePly) const {
+void Dcel::saveOnPlyFile(std::string fileNamePly) const
+{
     std::vector<double> vertices;
     std::vector<double> verticesNormals;
     std::vector<int> faces;
@@ -302,7 +318,8 @@ void Dcel::saveOnPlyFile(std::string fileNamePly) const {
     saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
-void Dcel::saveOnDcelFile(std::string fileNameDcel) const {
+void Dcel::saveOnDcelFile(std::string fileNameDcel) const
+{
     std::ofstream myfile;
     myfile.open (fileNameDcel, std::ios::out | std::ios::binary);
     if (myfile.is_open()) {
@@ -323,7 +340,8 @@ void Dcel::saveOnDcelFile(std::string fileNameDcel) const {
  * @par Complessità:
  *      \e O(1)
  */
-Dcel::Vertex *Dcel::addVertex(const Pointd& p, const Vec3& n, const Color& c) {
+Dcel::Vertex *Dcel::addVertex(const Pointd& p, const Vec3& n, const Color& c)
+{
     #ifdef NDEBUG
     Vertex* last= new Vertex(*this);
     #else
@@ -373,7 +391,8 @@ Dcel::Vertex *Dcel::addVertex(const Pointd& p, const Vec3& n, const Color& c) {
  * @par Complessità:
  *      \e O(1)
  */
-Dcel::HalfEdge* Dcel::addHalfEdge() {
+Dcel::HalfEdge* Dcel::addHalfEdge()
+{
     #ifdef NDEBUG
     HalfEdge* last = new HalfEdge(*this);
     #else
@@ -406,7 +425,8 @@ Dcel::HalfEdge* Dcel::addHalfEdge() {
  * @par Complessità:
  *      \e O(1)
  */
-Dcel::Face* Dcel::addFace(const Vec3& n, const Color& c) {
+Dcel::Face* Dcel::addFace(const Vec3& n, const Color& c)
+{
     #ifdef NDEBUG
     Face* last = new Face(*this);
     #else
@@ -457,7 +477,8 @@ Dcel::Face* Dcel::addFace(const Vec3& n, const Color& c) {
  * @par Complessità:
  *      \e O(nIncidentHalfEdges) ->  \e ~O(1)
  */
-bool Dcel::deleteVertex(Dcel::Vertex* v) {
+bool Dcel::deleteVertex(Dcel::Vertex* v)
+{
     if (v->incidentHalfEdge != nullptr){
         Dcel::HalfEdge* he = v->incidentHalfEdge;
         do {
@@ -501,7 +522,8 @@ bool Dcel::deleteVertex(Dcel::Vertex* v) {
  * @par Complessità:
  *      \e O(1)
  */
-bool Dcel::deleteHalfEdge(HalfEdge* he) {
+bool Dcel::deleteHalfEdge(HalfEdge* he)
+{
     if (he->twin != nullptr)
         if (he->twin->twin == he) he->twin->twin = nullptr;
     if (he->next != nullptr)
@@ -543,7 +565,8 @@ bool Dcel::deleteHalfEdge(HalfEdge* he) {
  * @par Complessità:
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
-bool Dcel::deleteFace(Face* f) {
+bool Dcel::deleteFace(Face* f)
+{
     if (f->outerHalfEdge != nullptr){
         Dcel::HalfEdge* he = f->outerHalfEdge;
         do {
@@ -577,7 +600,8 @@ bool Dcel::deleteFace(Face* f) {
  * @par Complessità:
  *      \e O(numFaces)
  */
-void Dcel::updateFaceNormals() {
+void Dcel::updateFaceNormals()
+{
     FaceIterator fit;
     for (fit = faceBegin(); fit != faceEnd(); ++fit){
         (*fit)->updateArea();
@@ -594,7 +618,8 @@ void Dcel::updateFaceNormals() {
  * @par Complessità:
  *      \e O(numVertices)
  */
-void Dcel::updateVertexNormals() {
+void Dcel::updateVertexNormals()
+{
     VertexIterator vit;
     for (vit = vertexBegin(); vit != vertexEnd(); ++vit)
         (*vit)->updateNormal();
@@ -607,7 +632,8 @@ void Dcel::updateVertexNormals() {
  * @par Complessità:
  *      \e O(numVertices)
  */
-BoundingBox Dcel::updateBoundingBox() {
+BoundingBox Dcel::updateBoundingBox()
+{
     boundingBox.reset();
     for (ConstVertexIterator vit = vertexBegin(); vit!=vertexEnd(); ++vit){
         Pointd coord = (*vit)->getCoordinate();
@@ -623,12 +649,14 @@ BoundingBox Dcel::updateBoundingBox() {
     return boundingBox;
 }
 
-void Dcel::setColor(const Color& c) {
+void Dcel::setColor(const Color& c)
+{
     for (Dcel::Face* f : faceIterator())
         f->setColor(c);
 }
 
-void Dcel::scale(const BoundingBox& newBoundingBox) {
+void Dcel::scale(const BoundingBox& newBoundingBox)
+{
     Pointd oldCenter = boundingBox.center();
     Pointd newCenter = newBoundingBox.center();
     Pointd deltaOld = boundingBox.getMax() - boundingBox.getMin();
@@ -643,12 +671,14 @@ void Dcel::scale(const BoundingBox& newBoundingBox) {
 }
 
 #ifdef CG3_WITH_EIGEN
-void Dcel::rotate(const Eigen::Matrix3d& matrix) {
+void Dcel::rotate(const Eigen::Matrix3d& matrix)
+{
     Pointd c;
     rotate(matrix, c);
 }
 
-void Dcel::rotate(const Eigen::Matrix3d &matrix, const Pointd& centroid) {
+void Dcel::rotate(const Eigen::Matrix3d &matrix, const Pointd& centroid)
+{
     for (Dcel::VertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit){
         Dcel::Vertex* v = *vit;
         Pointd r = v->getCoordinate();
@@ -661,7 +691,8 @@ void Dcel::rotate(const Eigen::Matrix3d &matrix, const Pointd& centroid) {
 }
 #endif
 
-void Dcel::rotate(double matrix[3][3], const Pointd& centroid) {
+void Dcel::rotate(double matrix[3][3], const Pointd& centroid)
+{
     for (Dcel::VertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit){
         Dcel::Vertex* v = *vit;
         Pointd r = v->getCoordinate();
@@ -673,7 +704,8 @@ void Dcel::rotate(double matrix[3][3], const Pointd& centroid) {
     updateBoundingBox();
 }
 
-void Dcel::translate(const Pointd& c) {
+void Dcel::translate(const Pointd& c)
+{
     for (Dcel::Vertex* v : vertexIterator()){
         v->setCoordinate(v->getCoordinate() + c);
     }
@@ -692,7 +724,8 @@ void Dcel::translate(const Pointd& c) {
  * @par Complessità:
  *      \e O(numVertices \e + \e NumHalfEdges \e + \e NumFaces)
  */
-void Dcel::recalculateIds() {
+void Dcel::recalculateIds()
+{
     nVertices = 0;
     for (unsigned int i = 0; i < vertices.size(); i++){
         vertices[nVertices] = vertices[i];
@@ -728,7 +761,8 @@ void Dcel::recalculateIds() {
  * @par Complessità:
  *      \e O(NumFaces)
  */
-void Dcel::resetFaceColors() {
+void Dcel::resetFaceColors()
+{
     for (FaceIterator fit = faceBegin(); fit != faceEnd(); ++fit) (*fit)->setColor(Color());
 }
 
@@ -743,7 +777,8 @@ void Dcel::resetFaceColors() {
  * @par Complessità:
  *      \e O(numVertices \e + \e NumHalfEdges \e + \e NumFaces)
  */
-void Dcel::clear()	{
+void Dcel::clear()
+{
     for (unsigned int i=0; i<vertices.size(); i++)
         if (vertices[i] != nullptr)
             delete vertices[i];
@@ -784,7 +819,8 @@ void Dcel::clear()	{
  * @param[in] f: la faccia che verrà triangolata
  * @return Il numero di triangoli che compone la faccia appena triangolata.
  */
-unsigned int Dcel::triangulateFace(Dcel::Face* f) {
+unsigned int Dcel::triangulateFace(Dcel::Face* f)
+{
     int count=0;
     if (f->isTriangle())
         return 1;
@@ -946,7 +982,8 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f) {
  * Utilizza CGAL.
  * Utilizzabile SOLAMENTE se è definita la costante letterale CGAL_DEFINED
  */
-void Dcel::triangulate() {
+void Dcel::triangulate()
+{
     int i = 0;
     for (FaceIterator fit = faceBegin(); fit != faceEnd(); ++fit){
         Dcel::Face* f = *fit;
@@ -957,7 +994,8 @@ void Dcel::triangulate() {
 }
 #endif
 
-bool Dcel::loadFromFile(const std::string& filename) {
+bool Dcel::loadFromFile(const std::string& filename)
+{
     std::string ext = filename.substr(filename.find_last_of(".") + 1);
     if(ext == "obj" || ext == "OBJ") { //obj file
         loadFromObjFile(filename);
@@ -990,7 +1028,8 @@ bool Dcel::loadFromFile(const std::string& filename) {
  * @warning Se regular, utilizza Dcel::Vertex::ConstIncidentFaceIterator
  * @return Una stringa indicante da quanti vertici, half edge e facce è composta la mesh caricata
  */
-bool Dcel::loadFromObjFile(const std::string& filename) {
+bool Dcel::loadFromObjFile(const std::string& filename)
+{
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
     io::MeshType meshType;
@@ -1021,7 +1060,8 @@ bool Dcel::loadFromObjFile(const std::string& filename) {
  * @todo Gestione colori vertici
  * @return Una stringa indicante da quanti vertici, half edge e facce è composta la mesh caricata
  */
-bool Dcel::loadFromPlyFile(const std::string& filename) {
+bool Dcel::loadFromPlyFile(const std::string& filename)
+{
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
     io::MeshType meshType;
@@ -1037,7 +1077,8 @@ bool Dcel::loadFromPlyFile(const std::string& filename) {
         return false;
 }
 
-bool Dcel::loadFromDcelFile(const std::string& filename) {
+bool Dcel::loadFromDcelFile(const std::string& filename)
+{
     std::ifstream myfile;
     myfile.open (filename, std::ios::in | std::ios::binary);
     if (myfile.is_open()) {
@@ -1053,7 +1094,8 @@ bool Dcel::loadFromDcelFile(const std::string& filename) {
     return true;
 }
 
-void Dcel::swap(Dcel& d) {
+void Dcel::swap(Dcel& d)
+{
     std::swap(vertices, d.vertices);
     std::swap(halfEdges, d.halfEdges);
     std::swap(faces, d.faces);
@@ -1086,7 +1128,8 @@ void Dcel::swap(Dcel& d) {
     #endif
 }
 
-void Dcel::serialize(std::ofstream& binaryFile) const {
+void Dcel::serialize(std::ofstream& binaryFile) const
+{
     cg3::serialize("cg3Dcel", binaryFile);
     //BB
     boundingBox.serialize(binaryFile);
@@ -1152,7 +1195,8 @@ void Dcel::serialize(std::ofstream& binaryFile) const {
     }
 }
 
-void Dcel::deserialize(std::ifstream& binaryFile) {
+void Dcel::deserialize(std::ifstream& binaryFile)
+{
     int begin = binaryFile.tellg();
     Dcel tmp;
     try {
@@ -1291,7 +1335,8 @@ void Dcel::deserialize(std::ifstream& binaryFile) {
  * @param[in] dcel: dcel da cui verrà creata la Dcel this
  * @return La Dcel appena assegnata
  */
-Dcel& Dcel::operator = (Dcel dcel) {
+Dcel& Dcel::operator = (Dcel dcel)
+{
     swap(dcel);
     return *this;
 }
@@ -1309,7 +1354,8 @@ Dcel& Dcel::operator = (Dcel dcel) {
  * @param[in] id: l'id del vertice che verrà creato.
  * @return Il puntatore al vertice appena inserito nella Dcel
  */
-Dcel::Vertex*Dcel::addVertex(int id) {
+Dcel::Vertex*Dcel::addVertex(int id)
+{
     #ifdef NDEBUG
     Vertex* last= new Vertex(*this);
     #else
@@ -1329,7 +1375,8 @@ Dcel::Vertex*Dcel::addVertex(int id) {
  * @param[in] id: l'id dell'half edge che verrà creato.
  * @return Il puntatore all'half edge appena inserito nella Dcel
  */
-Dcel::HalfEdge*Dcel::addHalfEdge(int id) {
+Dcel::HalfEdge*Dcel::addHalfEdge(int id)
+{
     #ifdef NDEBUG
     HalfEdge* last = new HalfEdge(*this);
     #else
@@ -1349,7 +1396,8 @@ Dcel::HalfEdge*Dcel::addHalfEdge(int id) {
  * @param[in] id: l'id della faccia che verrà creata.
  * @return Il puntatore alla faccia appena inserita nella Dcel
  */
-Dcel::Face*Dcel::addFace(int id) {
+Dcel::Face*Dcel::addFace(int id)
+{
     #ifdef NDEBUG
     Face* last = new Face(*this);
     #else
@@ -1366,7 +1414,8 @@ Dcel::Face*Dcel::addFace(int id) {
  * @param[in] f: faccia avente almeno un buco
  * @return Lista di vertice rappresentante una faccia senza buchi ma con dummy edge
  */
-std::vector<const Dcel::Vertex*> Dcel::makeSingleBorder(const Face* f) const {
+std::vector<const Dcel::Vertex*> Dcel::makeSingleBorder(const Face* f) const
+{
     std::vector< std::vector<const Vertex*> > visited;
     std::vector< std::vector<const Vertex*> > notVisited;
     std::map< std::pair<int, int>, std::pair<int, int> > links;
@@ -1446,7 +1495,8 @@ std::vector<const Dcel::Vertex*> Dcel::makeSingleBorder(const Face* f) const {
     return border;
 }
 
-void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& verticesNormals, std::vector<int>& faces, std::vector<unsigned int>& faceSizes, std::vector<float>& faceColors) const{
+void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& verticesNormals, std::vector<int>& faces, std::vector<unsigned int>& faceSizes, std::vector<float>& faceColors) const
+{
     std::map<int, int> mapVertices;
     vertices.reserve(getNumberVertices()*3);
     verticesNormals.reserve(getNumberVertices()*3);
@@ -1489,7 +1539,8 @@ void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& vert
     }
 }
 
-void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsigned int> &faces, int mode, const std::list<double> &vnorm, const std::list<Color> &vcolor, const std::list<Color> &fcolor, const std::list<unsigned int> &fsizes) {
+void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsigned int> &faces, int mode, const std::list<double> &vnorm, const std::list<Color> &vcolor, const std::list<Color> &fcolor, const std::list<unsigned int> &fsizes)
+{
     std::vector<Vertex*> vertices;
 
     std::map< std::pair<int,int>, HalfEdge* > edge;
@@ -1594,7 +1645,8 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
 }
 
 #ifdef  CG3_EIGENMESH_DEFINED
-void Dcel::copyFrom(const SimpleEigenMesh& eigenMesh) {
+void Dcel::copyFrom(const SimpleEigenMesh& eigenMesh)
+{
     clear();
 
     std::vector<Vertex*> vertices;
@@ -1683,7 +1735,8 @@ void Dcel::copyFrom(const SimpleEigenMesh& eigenMesh) {
     }
 }
 
-void Dcel::copyFrom(const EigenMesh& eigenMesh) {
+void Dcel::copyFrom(const EigenMesh& eigenMesh)
+{
     copyFrom((SimpleEigenMesh)eigenMesh);
     for (Dcel::Face* f : faceIterator()){
         f->setColor(eigenMesh.getFaceColor(f->getId()));
@@ -1697,7 +1750,8 @@ void Dcel::copyFrom(const EigenMesh& eigenMesh) {
 #endif // CG3_EIGENMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
-void Dcel::copyFrom(const cinolib::Trimesh<> &trimesh) {
+void Dcel::copyFrom(const cinolib::Trimesh<> &trimesh)
+{
     clear();
 
     std::vector<Vertex*> vertices;
@@ -1788,4 +1842,4 @@ void Dcel::copyFrom(const cinolib::Trimesh<> &trimesh) {
 
 #endif //CG3_CINOLIB_DEFINED
 
-}
+} //namespace cg3

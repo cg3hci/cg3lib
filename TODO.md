@@ -22,11 +22,12 @@
   - [ ] RangeTree dimension as template (is it possible?), find a way to not copy all the comparators for each lower level range tree.
   - [ ] Template of type int in RangeTree, AABBTree, Point, ... should be unsigned long long int (or size_t). Or use static_assert to check that the dimension is greater than zero.
 - Meshes:
-  - [ ] Reorganize EigenMeshAlgorithms
+  - [ ] Reorganize EigenMeshAlgorithms and Dcel Algorithms
   - [x] Put Dcel and EigenMesh under a module called Meshes
   - [ ] Add EigenMesh member functions verticesEigenMatrix and facesEigenMatrix
   - [ ] viewer/interfaces becomes viewer/abstract_classes
   - [ ] viewer/renderable_objects becomes viewer/opengl_functions
+  - [ ] Complete restyle Dcel
 - Viewer:
   - [ ] GLCanvas becomes a private nested class of the MainWindow
   - [ ] Disable "Space" event for 3D viewer

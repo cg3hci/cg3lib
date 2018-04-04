@@ -13,63 +13,63 @@
 
 namespace cg3 {
 
-class Dcel::Vertex::GenericIterator {
+class Dcel::Vertex::GenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructor
+    GenericIterator();
 
-    public:
-        //Constructor
-        GenericIterator();
+    //Public Operators
+    void* operator * () const {return nullptr;}
+    bool operator == (const GenericIterator& right)  const;
+    bool operator != (const GenericIterator& right)  const;
 
-        //Public Operators
-        void* operator * () const {return nullptr;}
-        bool operator == (const GenericIterator& right)  const;
-        bool operator != (const GenericIterator& right)  const;
+    GenericIterator operator ++ ();
+    GenericIterator operator ++ (int);
+    GenericIterator operator -- ();
+    GenericIterator operator -- (int);
 
-        GenericIterator operator ++ ();
-        GenericIterator operator ++ (int);
-        GenericIterator operator -- ();
-        GenericIterator operator -- (int);
+protected:
+    //Protected Attributes
+    Dcel::Vertex*   v;      /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
+    Dcel::HalfEdge* start;  /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
+    Dcel::HalfEdge* pos;    /**< \~Italian @brief Posizione attuale dell'iteratore */
+    Dcel::HalfEdge* end;    /**< \~Italian @brief Half edge sul quale termina l'iteratore */
 
-    protected:
-        //Protected Attributes
-        Dcel::Vertex*   v;      /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
-        Dcel::HalfEdge* start;  /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
-        Dcel::HalfEdge* pos;    /**< \~Italian @brief Posizione attuale dell'iteratore */
-        Dcel::HalfEdge* end;    /**< \~Italian @brief Half edge sul quale termina l'iteratore */
-
-        //Protected Constructor
-        GenericIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    //Protected Constructor
+    GenericIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
 };
 
-class Dcel::Vertex::ConstGenericIterator {
+class Dcel::Vertex::ConstGenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructors
+    ConstGenericIterator();
+    ConstGenericIterator(const Dcel::Vertex::GenericIterator& it);
 
-    public:
-        //Constructors
-        ConstGenericIterator();
-        ConstGenericIterator(const Dcel::Vertex::GenericIterator& it);
+    //Public Operators
+    const void* operator * () const {return nullptr;}
+    bool operator == (const ConstGenericIterator& right) const;
+    bool operator != (const ConstGenericIterator& right) const;
 
-        //Public Operators
-        const void* operator * () const {return nullptr;}
-        bool operator == (const ConstGenericIterator& right) const;
-        bool operator != (const ConstGenericIterator& right) const;
+    ConstGenericIterator operator ++ ();
+    ConstGenericIterator operator ++ (int);
+    ConstGenericIterator operator -- ();
+    ConstGenericIterator operator -- (int);
 
-        ConstGenericIterator operator ++ ();
-        ConstGenericIterator operator ++ (int);
-        ConstGenericIterator operator -- ();
-        ConstGenericIterator operator -- (int);
+protected:
+    //Protected Attributes
+    const Dcel::Vertex*   v;        /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
+    const Dcel::HalfEdge* start;    /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
+    const Dcel::HalfEdge* pos;      /**< \~Italian @brief Posizione attuale dell'iteratore */
+    const Dcel::HalfEdge* end;      /**< \~Italian @brief Half edge sul quale termina l'iteratore */
 
-    protected:
-        //Protected Attributes
-        const Dcel::Vertex*   v;        /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
-        const Dcel::HalfEdge* start;    /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
-        const Dcel::HalfEdge* pos;      /**< \~Italian @brief Posizione attuale dell'iteratore */
-        const Dcel::HalfEdge* end;      /**< \~Italian @brief Half edge sul quale termina l'iteratore */
-
-        //Protected Constructor
-        ConstGenericIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    //Protected Constructor
+    ConstGenericIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
 };
 
 /**
@@ -110,21 +110,21 @@ class Dcel::Vertex::ConstGenericIterator {
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
  * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstAdjacentVertexIterator.
  */
-class Dcel::Vertex::AdjacentVertexIterator : public Dcel::Vertex::GenericIterator {
+class Dcel::Vertex::AdjacentVertexIterator : public Dcel::Vertex::GenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructor
+    AdjacentVertexIterator();
 
-    public:
-        //Constructor
-        AdjacentVertexIterator();
+    //Public Operators
+    Dcel::Vertex* operator * ()                             const;
 
-        //Public Operators
-        Dcel::Vertex* operator * ()                             const;
+protected:
 
-    protected:
-
-        //Protected Constructor
-        AdjacentVertexIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    //Protected Constructor
+    AdjacentVertexIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
 };
 
 /**
@@ -165,22 +165,22 @@ class Dcel::Vertex::AdjacentVertexIterator : public Dcel::Vertex::GenericIterato
  * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
  * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::AdjacentVertexIterator.
  */
-class Dcel::Vertex::ConstAdjacentVertexIterator : public Dcel::Vertex::ConstGenericIterator {
+class Dcel::Vertex::ConstAdjacentVertexIterator : public Dcel::Vertex::ConstGenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructors
+    ConstAdjacentVertexIterator();
+    ConstAdjacentVertexIterator(const Dcel::Vertex::AdjacentVertexIterator& it);
 
-    public:
-        //Constructors
-        ConstAdjacentVertexIterator();
-        ConstAdjacentVertexIterator(const Dcel::Vertex::AdjacentVertexIterator& it);
+    //Public Operators
+    const Dcel::Vertex* operator * ()                           const;
 
-        //Public Operators
-        const Dcel::Vertex* operator * ()                           const;
+protected:
 
-    protected:
-
-        //Protected Constructor
-        ConstAdjacentVertexIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    //Protected Constructor
+    ConstAdjacentVertexIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
 };
 
 /**
@@ -221,21 +221,21 @@ class Dcel::Vertex::ConstAdjacentVertexIterator : public Dcel::Vertex::ConstGene
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
  * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstOutgoingHalfEdgeIterator.
  */
-class Dcel::Vertex::OutgoingHalfEdgeIterator : public Dcel::Vertex::GenericIterator {
+class Dcel::Vertex::OutgoingHalfEdgeIterator : public Dcel::Vertex::GenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructor
+    OutgoingHalfEdgeIterator();
 
-    public:
-        //Constructor
-        OutgoingHalfEdgeIterator();
+    //Public Operators
+    Dcel::HalfEdge* operator * ()                               const;
 
-        //Public Operators
-        Dcel::HalfEdge* operator * ()                               const;
+protected:
 
-    protected:
-
-        //Protected Constructor
-        OutgoingHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    //Protected Constructor
+    OutgoingHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
 };
 
 /**
@@ -276,22 +276,22 @@ class Dcel::Vertex::OutgoingHalfEdgeIterator : public Dcel::Vertex::GenericItera
  * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
  * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::OutgoingHalfEdgeIterator.
  */
-class Dcel::Vertex::ConstOutgoingHalfEdgeIterator : public Dcel::Vertex::ConstGenericIterator {
+class Dcel::Vertex::ConstOutgoingHalfEdgeIterator : public Dcel::Vertex::ConstGenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructors
+    ConstOutgoingHalfEdgeIterator();
+    ConstOutgoingHalfEdgeIterator(const Dcel::Vertex::OutgoingHalfEdgeIterator& it);
 
-    public:
-        //Constructors
-        ConstOutgoingHalfEdgeIterator();
-        ConstOutgoingHalfEdgeIterator(const Dcel::Vertex::OutgoingHalfEdgeIterator& it);
+    //Public Operators
+    const Dcel::HalfEdge* operator * ()                             const;
 
-        //Public Operators
-        const Dcel::HalfEdge* operator * ()                             const;
+protected:
 
-    protected:
-
-        //Protected Constructor
-        ConstOutgoingHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    //Protected Constructor
+    ConstOutgoingHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
 };
 
 /**
@@ -332,21 +332,21 @@ class Dcel::Vertex::ConstOutgoingHalfEdgeIterator : public Dcel::Vertex::ConstGe
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
  * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstIncomingHalfEdgeIterator.
  */
-class Dcel::Vertex::IncomingHalfEdgeIterator : public GenericIterator {
+class Dcel::Vertex::IncomingHalfEdgeIterator : public GenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructor
+    IncomingHalfEdgeIterator();
 
-    public:
-        //Constructor
-        IncomingHalfEdgeIterator();
+    //Public Operators
+    Dcel::HalfEdge* operator * ()                               const;
 
-        //Public Operators
-        Dcel::HalfEdge* operator * ()                               const;
+protected:
 
-    protected:
-
-        //Protected Constructor
-        IncomingHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    //Protected Constructor
+    IncomingHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
 };
 
 /**
@@ -387,22 +387,22 @@ class Dcel::Vertex::IncomingHalfEdgeIterator : public GenericIterator {
  * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
  * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::IncomingHalfEdgeIterator.
  */
-class Dcel::Vertex::ConstIncomingHalfEdgeIterator : public Dcel::Vertex::ConstGenericIterator {
+class Dcel::Vertex::ConstIncomingHalfEdgeIterator : public Dcel::Vertex::ConstGenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructors
+    ConstIncomingHalfEdgeIterator();
+    ConstIncomingHalfEdgeIterator(const Dcel::Vertex::IncomingHalfEdgeIterator& it);
 
-    public:
-        //Constructors
-        ConstIncomingHalfEdgeIterator();
-        ConstIncomingHalfEdgeIterator(const Dcel::Vertex::IncomingHalfEdgeIterator& it);
+    //Public Operators
+    const Dcel::HalfEdge* operator * ()                             const;
 
-        //Public Operators
-        const Dcel::HalfEdge* operator * ()                             const;
+protected:
 
-    protected:
-
-        //Protected Constructor
-        ConstIncomingHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    //Protected Constructor
+    ConstIncomingHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
 };
 
 /**
@@ -444,26 +444,26 @@ class Dcel::Vertex::ConstIncomingHalfEdgeIterator : public Dcel::Vertex::ConstGe
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
  * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstIncidentHalfEdgeIterator.
  */
-class Dcel::Vertex::IncidentHalfEdgeIterator : public Dcel::Vertex::GenericIterator {
+class Dcel::Vertex::IncidentHalfEdgeIterator : public Dcel::Vertex::GenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructor
+    IncidentHalfEdgeIterator();
 
-    public:
-        //Constructor
-        IncidentHalfEdgeIterator();
+    //Public Operators
+    Dcel::HalfEdge* operator * ()                               const;
 
-        //Public Operators
-        Dcel::HalfEdge* operator * ()                               const;
+    IncidentHalfEdgeIterator operator ++ ();
+    IncidentHalfEdgeIterator operator ++ (int);
+    IncidentHalfEdgeIterator operator -- ();
+    IncidentHalfEdgeIterator operator -- (int);
 
-        IncidentHalfEdgeIterator operator ++ ();
-        IncidentHalfEdgeIterator operator ++ (int);
-        IncidentHalfEdgeIterator operator -- ();
-        IncidentHalfEdgeIterator operator -- (int);
+protected:
 
-    protected:
-
-        //Protected Constructor
-        IncidentHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    //Protected Constructor
+    IncidentHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
 };
 
 /**
@@ -505,27 +505,27 @@ class Dcel::Vertex::IncidentHalfEdgeIterator : public Dcel::Vertex::GenericItera
  * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
  * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::IncidentHalfEdgeIterator.
  */
-class Dcel::Vertex::ConstIncidentHalfEdgeIterator : public ConstGenericIterator{
+class Dcel::Vertex::ConstIncidentHalfEdgeIterator : public ConstGenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructors
+    ConstIncidentHalfEdgeIterator();
+    ConstIncidentHalfEdgeIterator(const Dcel::Vertex::IncidentHalfEdgeIterator& it);
 
-    public:
-        //Constructors
-        ConstIncidentHalfEdgeIterator();
-        ConstIncidentHalfEdgeIterator(const Dcel::Vertex::IncidentHalfEdgeIterator& it);
+    //Public Operators
+    const Dcel::HalfEdge* operator * ()                             const;
 
-        //Public Operators
-        const Dcel::HalfEdge* operator * ()                             const;
+    ConstIncidentHalfEdgeIterator operator ++ ();
+    ConstIncidentHalfEdgeIterator operator ++ (int);
+    ConstIncidentHalfEdgeIterator operator -- ();
+    ConstIncidentHalfEdgeIterator operator -- (int);
 
-        ConstIncidentHalfEdgeIterator operator ++ ();
-        ConstIncidentHalfEdgeIterator operator ++ (int);
-        ConstIncidentHalfEdgeIterator operator -- ();
-        ConstIncidentHalfEdgeIterator operator -- (int);
+protected:
 
-    protected:
-
-        //Protected Constructor
-        ConstIncidentHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    //Protected Constructor
+    ConstIncidentHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
 };
 
 /**
@@ -569,21 +569,21 @@ class Dcel::Vertex::ConstIncidentHalfEdgeIterator : public ConstGenericIterator{
  *
  * @warning Nel caso di Dcel composte da poligoni generici, è possibile che un vertice abbia la stessa faccia incidente su due punti diversi.
  */
-class Dcel::Vertex::IncidentFaceIterator : public Dcel::Vertex::GenericIterator{
+class Dcel::Vertex::IncidentFaceIterator : public Dcel::Vertex::GenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructor
+    IncidentFaceIterator();
 
-    public:
-        //Constructor
-        IncidentFaceIterator();
+    //Public Operators
+    Dcel::Face* operator * ()                               const;
 
-        //Public Operators
-        Dcel::Face* operator * ()                               const;
+protected:
 
-    protected:
-
-        //Protected Constructor
-        IncidentFaceIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    //Protected Constructor
+    IncidentFaceIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
 };
 
 /**
@@ -627,125 +627,135 @@ class Dcel::Vertex::IncidentFaceIterator : public Dcel::Vertex::GenericIterator{
  *
  * @warning Nel caso di Dcel composte da poligoni generici, è possibile che un vertice abbia la stessa faccia incidente su due punti diversi.
  */
-class Dcel::Vertex::ConstIncidentFaceIterator : public Dcel::Vertex::ConstGenericIterator {
+class Dcel::Vertex::ConstIncidentFaceIterator : public Dcel::Vertex::ConstGenericIterator
+{
+    friend class Dcel::Vertex;
 
-        friend class Dcel::Vertex;
+public:
+    //Constructors
+    ConstIncidentFaceIterator();
+    ConstIncidentFaceIterator(const Dcel::Vertex::IncidentFaceIterator& it);
 
-    public:
-        //Constructors
-        ConstIncidentFaceIterator();
-        ConstIncidentFaceIterator(const Dcel::Vertex::IncidentFaceIterator& it);
+    //Public Operators
+    const Dcel::Face* operator * ()                             const;
 
-        //Public Operators
-        const Dcel::Face* operator * ()                             const;
+private:
 
-    private:
-
-        //Protected Constructor
-        ConstIncidentFaceIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    //Protected Constructor
+    ConstIncidentFaceIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
 };
 
-class Dcel::Vertex::ConstAdjacentVertexRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::ConstAdjacentVertexIterator begin() const;
-        Dcel::Vertex::ConstAdjacentVertexIterator end() const;
-    private:
-        ConstAdjacentVertexRangeBasedIterator(const Vertex *v) : v(v) {}
-        const Vertex *v;
+class Dcel::Vertex::ConstAdjacentVertexRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::ConstAdjacentVertexIterator begin() const;
+    Dcel::Vertex::ConstAdjacentVertexIterator end() const;
+private:
+    ConstAdjacentVertexRangeBasedIterator(const Vertex *v) : v(v) {}
+    const Vertex *v;
 };
 
-class Dcel::Vertex::ConstOutgoingHalfEdgeRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::ConstOutgoingHalfEdgeIterator begin() const;
-        Dcel::Vertex::ConstOutgoingHalfEdgeIterator end() const;
-    private:
-        ConstOutgoingHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
-        const Vertex *v;
+class Dcel::Vertex::ConstOutgoingHalfEdgeRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::ConstOutgoingHalfEdgeIterator begin() const;
+    Dcel::Vertex::ConstOutgoingHalfEdgeIterator end() const;
+private:
+    ConstOutgoingHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
+    const Vertex *v;
 };
 
-class Dcel::Vertex::ConstIncomingHalfEdgeRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::ConstIncomingHalfEdgeIterator begin() const;
-        Dcel::Vertex::ConstIncomingHalfEdgeIterator end() const;
-    private:
-        ConstIncomingHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
-        const Vertex *v;
+class Dcel::Vertex::ConstIncomingHalfEdgeRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::ConstIncomingHalfEdgeIterator begin() const;
+    Dcel::Vertex::ConstIncomingHalfEdgeIterator end() const;
+private:
+    ConstIncomingHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
+    const Vertex *v;
 };
 
-class Dcel::Vertex::ConstIncidentHalfEdgeRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::ConstIncidentHalfEdgeIterator begin() const;
-        Dcel::Vertex::ConstIncidentHalfEdgeIterator end() const;
-    private:
-        ConstIncidentHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
-        const Vertex *v;
+class Dcel::Vertex::ConstIncidentHalfEdgeRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::ConstIncidentHalfEdgeIterator begin() const;
+    Dcel::Vertex::ConstIncidentHalfEdgeIterator end() const;
+private:
+    ConstIncidentHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
+    const Vertex *v;
 };
 
-class Dcel::Vertex::ConstIncidentFaceRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::ConstIncidentFaceIterator begin() const;
-        Dcel::Vertex::ConstIncidentFaceIterator end() const;
-    private:
-        ConstIncidentFaceRangeBasedIterator(const Vertex *v) : v(v) {}
-        const Vertex *v;
+class Dcel::Vertex::ConstIncidentFaceRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::ConstIncidentFaceIterator begin() const;
+    Dcel::Vertex::ConstIncidentFaceIterator end() const;
+private:
+    ConstIncidentFaceRangeBasedIterator(const Vertex *v) : v(v) {}
+    const Vertex *v;
 };
 
-class Dcel::Vertex::AdjacentVertexRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::AdjacentVertexIterator begin();
-        Dcel::Vertex::AdjacentVertexIterator end();
-    private:
-        AdjacentVertexRangeBasedIterator(Vertex *v) : v(v) {}
-        Vertex *v;
+class Dcel::Vertex::AdjacentVertexRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::AdjacentVertexIterator begin();
+    Dcel::Vertex::AdjacentVertexIterator end();
+private:
+    AdjacentVertexRangeBasedIterator(Vertex *v) : v(v) {}
+    Vertex *v;
 };
 
-class Dcel::Vertex::OutgoingHalfEdgeRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::OutgoingHalfEdgeIterator begin();
-        Dcel::Vertex::OutgoingHalfEdgeIterator end();
-    private:
-        OutgoingHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
-        Vertex *v;
+class Dcel::Vertex::OutgoingHalfEdgeRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::OutgoingHalfEdgeIterator begin();
+    Dcel::Vertex::OutgoingHalfEdgeIterator end();
+private:
+    OutgoingHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
+    Vertex *v;
 };
 
-class Dcel::Vertex::IncomingHalfEdgeRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::IncomingHalfEdgeIterator begin();
-        Dcel::Vertex::IncomingHalfEdgeIterator end();
-    private:
-        IncomingHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
-        Vertex *v;
+class Dcel::Vertex::IncomingHalfEdgeRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::IncomingHalfEdgeIterator begin();
+    Dcel::Vertex::IncomingHalfEdgeIterator end();
+private:
+    IncomingHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
+    Vertex *v;
 };
 
-class Dcel::Vertex::IncidentHalfEdgeRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::IncidentHalfEdgeIterator begin();
-        Dcel::Vertex::IncidentHalfEdgeIterator end();
-    private:
-        IncidentHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
-        Vertex *v;
+class Dcel::Vertex::IncidentHalfEdgeRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::IncidentHalfEdgeIterator begin();
+    Dcel::Vertex::IncidentHalfEdgeIterator end();
+private:
+    IncidentHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
+    Vertex *v;
 };
 
-class Dcel::Vertex::IncidentFaceRangeBasedIterator {
-        friend class Vertex;
-    public:
-        Dcel::Vertex::IncidentFaceIterator begin();
-        Dcel::Vertex::IncidentFaceIterator end();
-    private:
-        IncidentFaceRangeBasedIterator(Vertex *v) : v(v) {}
-        Vertex *v;
+class Dcel::Vertex::IncidentFaceRangeBasedIterator
+{
+    friend class Vertex;
+public:
+    Dcel::Vertex::IncidentFaceIterator begin();
+    Dcel::Vertex::IncidentFaceIterator end();
+private:
+    IncidentFaceRangeBasedIterator(Vertex *v) : v(v) {}
+    Vertex *v;
 };
 
-}
+} //namespace cg3
 
 #include "dcel_vertex_iterators_inline.tpp"
 

@@ -49,98 +49,98 @@ namespace cg3 {
  */
 class Dcel::HalfEdge
 {
-        friend class Dcel;
+    friend class Dcel;
 
-    public:
+public:
 
-        /************************
-        * Public Inline Methods *
-        *************************/
+    /************************
+    * Public Inline Methods *
+    *************************/
 
-        unsigned int getId()                                const;
-        int getFlag()                                       const;
-        const Dcel::Vertex* getFromVertex()                 const;
-        const Dcel::Vertex* getToVertex()                   const;
-        const Dcel::HalfEdge* getTwin()                     const;
-        const Dcel::HalfEdge* getPrev()                     const;
-        const Dcel::HalfEdge* getNext()                     const;
-        const Dcel::Face* getFace()                         const;
-        bool operator == (const HalfEdge& otherHalfEdge)    const;
-        bool operator != (const HalfEdge& otherHalfEdge)    const;
-        #ifdef DEBUG
-        void checkFromVertex()                              const;
-        void checkToVertex()                                const;
-        void checkTwin()                                    const;
-        void checkPrev()                                    const;
-        void checkNext()                                    const;
-        void checkFace()                                    const;
-        #endif
-        bool isConvex()                                     const;
+    unsigned int getId()                                const;
+    int getFlag()                                       const;
+    const Dcel::Vertex* getFromVertex()                 const;
+    const Dcel::Vertex* getToVertex()                   const;
+    const Dcel::HalfEdge* getTwin()                     const;
+    const Dcel::HalfEdge* getPrev()                     const;
+    const Dcel::HalfEdge* getNext()                     const;
+    const Dcel::Face* getFace()                         const;
+    bool operator == (const HalfEdge& otherHalfEdge)    const;
+    bool operator != (const HalfEdge& otherHalfEdge)    const;
+    #ifdef DEBUG
+    void checkFromVertex()                              const;
+    void checkToVertex()                                const;
+    void checkTwin()                                    const;
+    void checkPrev()                                    const;
+    void checkNext()                                    const;
+    void checkFace()                                    const;
+    #endif
+    bool isConvex()                                     const;
 
-        void setFlag();
-        void setFlag(int new_flag);
-        void resetFlag();
-        Dcel::Vertex* getFromVertex();
-        Dcel::Vertex* getToVertex();
-        Dcel::HalfEdge* getTwin();
-        Dcel::HalfEdge* getPrev();
-        Dcel::HalfEdge* getNext();
-        Dcel::Face* getFace();
-        void setFromVertex(Dcel::Vertex* newFromVertex);
-        void setToVertex(Dcel::Vertex* newToVertex);
-        void setTwin(Dcel::HalfEdge* newTwin);
-        void setPrev(Dcel::HalfEdge* newPrev);
-        void setNext(Dcel::HalfEdge* newNext);
-        void setFace(Dcel::Face* newFace);
+    void setFlag();
+    void setFlag(int new_flag);
+    void resetFlag();
+    Dcel::Vertex* getFromVertex();
+    Dcel::Vertex* getToVertex();
+    Dcel::HalfEdge* getTwin();
+    Dcel::HalfEdge* getPrev();
+    Dcel::HalfEdge* getNext();
+    Dcel::Face* getFace();
+    void setFromVertex(Dcel::Vertex* newFromVertex);
+    void setToVertex(Dcel::Vertex* newToVertex);
+    void setTwin(Dcel::HalfEdge* newTwin);
+    void setPrev(Dcel::HalfEdge* newPrev);
+    void setNext(Dcel::HalfEdge* newNext);
+    void setFace(Dcel::Face* newFace);
 
-        /*****************
-        * Public Methods *
-        ******************/
+    /*****************
+    * Public Methods *
+    ******************/
 
-        bool isOuterComponent() const;
-        float getLength()       const;
-        std::string toString()  const;
+    bool isOuterComponent() const;
+    float getLength()       const;
+    std::string toString()  const;
 
 
-    protected:
+protected:
 
-        /***************
-        * Constructors *
-        ****************/
+    /***************
+    * Constructors *
+    ****************/
 
-        #ifdef NDEBUG
-        HalfEdge(Dcel &parent);
-        #else
-        HalfEdge();
-        #endif
-        //HalfEdge(Dcel::Vertex* from, Dcel::Vertex* to);
-        //HalfEdge(Dcel::Vertex* from, Dcel::Vertex* to, Dcel::HalfEdge* twin, Dcel::HalfEdge* prev, Dcel::HalfEdge* next, Dcel::Face* face);
-        ~HalfEdge();
+    #ifdef NDEBUG
+    HalfEdge(Dcel &parent);
+    #else
+    HalfEdge();
+    #endif
+    //HalfEdge(Dcel::Vertex* from, Dcel::Vertex* to);
+    //HalfEdge(Dcel::Vertex* from, Dcel::Vertex* to, Dcel::HalfEdge* twin, Dcel::HalfEdge* prev, Dcel::HalfEdge* next, Dcel::Face* face);
+    ~HalfEdge();
 
-        /**************
-        * Attributes *
-        **************/
+    /**************
+    * Attributes *
+    **************/
 
-        #ifdef NDEBUG
-        Dcel* parent;
-        #endif
-        Dcel::Vertex* 	fromVertex; /**< \~Italian @brief Vertice di origine dell'half edge */
-        Dcel::Vertex* 	toVertex;   /**< \~Italian @brief Vertice di destinazione dell'half edge */
-        Dcel::HalfEdge* twin;       /**< \~Italian @brief Half edge gemello dell'half edge */
-        Dcel::HalfEdge*	prev;       /**< \~Italian @brief Half edge precendente all'half edge */
-        Dcel::HalfEdge*	next;       /**< \~Italian @brief Half edge successivo all'half edge */
-        Dcel::Face* 	face;       /**< \~Italian @brief Faccia incidente all'half edge */
-        unsigned int    id;         /**< \~Italian @brief Id univoco, all'interno della Dcel, associato all'a faccia'half edge */
-        int             flag;       /**< \~Italian @brief Flag personalizzabile, associato all'half edge */
+    #ifdef NDEBUG
+    Dcel* parent;
+    #endif
+    Dcel::Vertex* 	fromVertex; /**< \~Italian @brief Vertice di origine dell'half edge */
+    Dcel::Vertex* 	toVertex;   /**< \~Italian @brief Vertice di destinazione dell'half edge */
+    Dcel::HalfEdge* twin;       /**< \~Italian @brief Half edge gemello dell'half edge */
+    Dcel::HalfEdge*	prev;       /**< \~Italian @brief Half edge precendente all'half edge */
+    Dcel::HalfEdge*	next;       /**< \~Italian @brief Half edge successivo all'half edge */
+    Dcel::Face* 	face;       /**< \~Italian @brief Faccia incidente all'half edge */
+    unsigned int    id;         /**< \~Italian @brief Id univoco, all'interno della Dcel, associato all'a faccia'half edge */
+    int             flag;       /**< \~Italian @brief Flag personalizzabile, associato all'half edge */
 
-        /***************************
-        * Protected Inline Methods *
-        ****************************/
+    /***************************
+    * Protected Inline Methods *
+    ****************************/
 
-        void setId(unsigned int id);
+    void setId(unsigned int id);
 };
 
-}
+} //namespace cg3
 
 #include "dcel_half_edge_inline.tpp"
 

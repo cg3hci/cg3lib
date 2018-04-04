@@ -20,7 +20,8 @@
 namespace cg3 {
 
 #ifdef  CG3_DCEL_DEFINED
-SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel) {
+SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel)
+{
     clear();
     V.resize(dcel.getNumberVertices(), 3);
     F.resize(dcel.getNumberFaces(), 3);
@@ -43,7 +44,8 @@ SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel) {
 #endif // CG3_DCEL_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
-SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh) {
+SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh)
+{
     resizeVertices(trimesh.num_verts());
     resizeFaces(trimesh.num_polys());
     for (unsigned int i = 0; i <trimesh.num_verts(); i++){
@@ -56,19 +58,22 @@ SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh) {
 }
 #endif
 
-Vec3 SimpleEigenMesh::getFaceNormal(unsigned int f) const {
+Vec3 SimpleEigenMesh::getFaceNormal(unsigned int f) const
+{
     Pointi vertices = getFace(f);
     Vec3 normal = (getVertex(vertices.y()) - getVertex(vertices.x())).cross(getVertex(vertices.z()) - getVertex(vertices.x()));
     normal.normalize();
     return normal;
 }
 
-bool SimpleEigenMesh::isDegenerateTriangle(unsigned int f, double epsilon) const {
+bool SimpleEigenMesh::isDegenerateTriangle(unsigned int f, double epsilon) const
+{
     assert(f < F.rows());
     return getFaceArea(f) <= epsilon;
 }
 
-void SimpleEigenMesh::removeDegenerateTriangles(double epsilon) {
+void SimpleEigenMesh::removeDegenerateTriangles(double epsilon)
+{
     for (unsigned int i = 0; i < F.rows(); i++){
         if (isDegenerateTriangle(i, epsilon)){
             this->removeFace(i);
@@ -77,15 +82,18 @@ void SimpleEigenMesh::removeDegenerateTriangles(double epsilon) {
     }
 }
 
-bool SimpleEigenMesh::readFromObj(const std::string& filename) {
+bool SimpleEigenMesh::readFromObj(const std::string& filename)
+{
     return loadTriangleMeshFromObj(filename, V, F);
 }
 
-bool SimpleEigenMesh::readFromPly(const std::string& filename) {
+bool SimpleEigenMesh::readFromPly(const std::string& filename)
+{
     return loadTriangleMeshFromPly(filename, V, F);
 }
 
-bool SimpleEigenMesh::readFromFile(const std::string& filename) {
+bool SimpleEigenMesh::readFromFile(const std::string& filename)
+{
     std::string ext = filename.substr(filename.find_last_of(".") + 1);
     if(ext == "obj" || ext == "OBJ") { //obj file
         return readFromObj(filename);
@@ -97,25 +105,30 @@ bool SimpleEigenMesh::readFromFile(const std::string& filename) {
         return false;
 }
 
-bool SimpleEigenMesh::saveOnPly(const std::string& filename) const {
+bool SimpleEigenMesh::saveOnPly(const std::string& filename) const
+{
     return saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
-bool SimpleEigenMesh::saveOnObj(const std::string& filename) const {
+bool SimpleEigenMesh::saveOnObj(const std::string& filename) const
+{
     return saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
-void SimpleEigenMesh::translate(const Pointd& p) {
+void SimpleEigenMesh::translate(const Pointd& p)
+{
     Eigen::RowVector3d v;
     v << p.x(), p.y(), p.z();
     V.rowwise() += v;
 }
 
-void SimpleEigenMesh::translate(const Eigen::Vector3d& p) {
+void SimpleEigenMesh::translate(const Eigen::Vector3d& p)
+{
     V.rowwise() += p.transpose();
 }
 
-void SimpleEigenMesh::rotate(const Eigen::Matrix3d& m, const Eigen::Vector3d& centroid) {
+void SimpleEigenMesh::rotate(const Eigen::Matrix3d& m, const Eigen::Vector3d& centroid)
+{
     V.rowwise() -= centroid.transpose();
     for (unsigned int i = 0; i < V.rows(); i++){
         V.row(i) =  m * V.row(i).transpose();
@@ -123,7 +136,8 @@ void SimpleEigenMesh::rotate(const Eigen::Matrix3d& m, const Eigen::Vector3d& ce
     V.rowwise() += centroid.transpose();
 }
 
-void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox) {
+void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox)
+{
     BoundingBox boundingBox = getBoundingBox();
     Pointd oldCenter = boundingBox.center();
     Pointd newCenter = newBoundingBox.center();
@@ -138,7 +152,8 @@ void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox) {
     }
 }
 
-void SimpleEigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox) {
+void SimpleEigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox)
+{
     Pointd oldCenter = oldBoundingBox.center();
     Pointd newCenter = newBoundingBox.center();
     Pointd deltaOld = oldBoundingBox.getMax() - oldBoundingBox.getMin();
@@ -152,7 +167,8 @@ void SimpleEigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox
     }
 }
 
-void SimpleEigenMesh::scale(const Vec3& scaleFactor) {
+void SimpleEigenMesh::scale(const Vec3& scaleFactor)
+{
     if (scaleFactor.x() > 0 && scaleFactor.y() > 0 && scaleFactor.z() > 0){
         BoundingBox bb = getBoundingBox();
         Pointd center = bb.center();
@@ -165,7 +181,8 @@ void SimpleEigenMesh::scale(const Vec3& scaleFactor) {
     }
 }
 
-void SimpleEigenMesh::merge(SimpleEigenMesh &result, const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+void SimpleEigenMesh::merge(SimpleEigenMesh &result, const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+{
     result.V.resize(m1.V.rows()+m2.V.rows(), 3);
     result.V << m1.V,
             m2.V;
@@ -177,7 +194,8 @@ void SimpleEigenMesh::merge(SimpleEigenMesh &result, const SimpleEigenMesh& m1, 
     }
 }
 
-SimpleEigenMesh SimpleEigenMesh::merge(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2) {
+SimpleEigenMesh SimpleEigenMesh::merge(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+{
     SimpleEigenMesh result;
     result.V.resize(m1.V.rows()+m2.V.rows(), 3);
     result.V << m1.V,
@@ -191,4 +209,4 @@ SimpleEigenMesh SimpleEigenMesh::merge(const SimpleEigenMesh& m1, const SimpleEi
     return result;
 }
 
-}
+} //namespace cg3

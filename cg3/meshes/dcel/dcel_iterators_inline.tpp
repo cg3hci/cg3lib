@@ -20,7 +20,8 @@ namespace cg3 {
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::VertexIterator::VertexIterator() {
+inline Dcel::VertexIterator::VertexIterator()
+{
 }
 
 //Public Operators
@@ -30,7 +31,8 @@ inline Dcel::VertexIterator::VertexIterator() {
  * @brief Operatore di dereferenziazione del constVertexIterator
  * @return Il vertice puntato dall'iteratore
  */
-inline Dcel::Vertex* Dcel::VertexIterator::operator * () const {
+inline Dcel::Vertex* Dcel::VertexIterator::operator * () const
+{
     return (*vector)[iterator];
 }
 
@@ -43,7 +45,8 @@ inline Dcel::Vertex* Dcel::VertexIterator::operator * () const {
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::VertexIterator::operator == (const VertexIterator& otherIterator) const {
+inline bool Dcel::VertexIterator::operator == (const VertexIterator& otherIterator) const
+{
     return iterator == otherIterator.iterator;
 }
 
@@ -53,7 +56,8 @@ inline bool Dcel::VertexIterator::operator == (const VertexIterator& otherIterat
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::VertexIterator::operator != (const VertexIterator& otherIterator) const {
+inline bool Dcel::VertexIterator::operator != (const VertexIterator& otherIterator) const
+{
     return iterator != otherIterator.iterator;
 }
 
@@ -65,7 +69,8 @@ inline bool Dcel::VertexIterator::operator != (const VertexIterator& otherIterat
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::VertexIterator Dcel::VertexIterator::operator ++ () {
+inline Dcel::VertexIterator Dcel::VertexIterator::operator ++ ()
+{
     do {
         ++iterator;
     } while (iterator != vector->size() && (*vector)[iterator] == nullptr);
@@ -80,7 +85,8 @@ inline Dcel::VertexIterator Dcel::VertexIterator::operator ++ () {
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::VertexIterator Dcel::VertexIterator::operator ++ (int) {
+inline Dcel::VertexIterator Dcel::VertexIterator::operator ++ (int)
+{
     Dcel::VertexIterator old = *this;
     do {
         ++iterator;
@@ -96,7 +102,8 @@ inline Dcel::VertexIterator Dcel::VertexIterator::operator ++ (int) {
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::VertexIterator Dcel::VertexIterator::operator -- () {
+inline Dcel::VertexIterator Dcel::VertexIterator::operator -- ()
+{
     do {
         --iterator;
     } while (iterator != 0 && (*vector)[iterator] == nullptr);
@@ -111,7 +118,8 @@ inline Dcel::VertexIterator Dcel::VertexIterator::operator -- () {
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::VertexIterator Dcel::VertexIterator::operator -- (int) {
+inline Dcel::VertexIterator Dcel::VertexIterator::operator -- (int)
+{
     Dcel::VertexIterator old = *this;
     do {
         --iterator;
@@ -133,7 +141,8 @@ inline Dcel::VertexIterator Dcel::VertexIterator::operator -- (int) {
  *
  * @param[in] it: iteratore sul vettore di vertici della Dcel
  */
-inline Dcel::VertexIterator::VertexIterator(unsigned int it, const std::vector<Vertex*>& v) : iterator(it), vector(&v) {
+inline Dcel::VertexIterator::VertexIterator(unsigned int it, const std::vector<Vertex*>& v) : iterator(it), vector(&v)
+{
 }
 
 /*****************************
@@ -147,7 +156,8 @@ inline Dcel::VertexIterator::VertexIterator(unsigned int it, const std::vector<V
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::ConstVertexIterator::ConstVertexIterator() {
+inline Dcel::ConstVertexIterator::ConstVertexIterator()
+{
 }
 
 /**
@@ -158,7 +168,8 @@ inline Dcel::ConstVertexIterator::ConstVertexIterator() {
  *
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::ConstVertexIterator::ConstVertexIterator(const Dcel::VertexIterator& it) : iterator(it.iterator), vector(it.vector) {
+inline Dcel::ConstVertexIterator::ConstVertexIterator(const Dcel::VertexIterator& it) : iterator(it.iterator), vector(it.vector)
+{
 }
 
 //Public Operators
@@ -168,7 +179,8 @@ inline Dcel::ConstVertexIterator::ConstVertexIterator(const Dcel::VertexIterator
  * @brief Operatore di dereferenziazione del constVertexIterator
  * @return Il vertice puntato dall'iteratore
  */
-inline const Dcel::Vertex* Dcel::ConstVertexIterator::operator * () const {
+inline const Dcel::Vertex* Dcel::ConstVertexIterator::operator * () const
+{
     return (*vector)[iterator];
 }
 
@@ -181,7 +193,8 @@ inline const Dcel::Vertex* Dcel::ConstVertexIterator::operator * () const {
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::ConstVertexIterator::operator == (const ConstVertexIterator& otherIterator) const {
+inline bool Dcel::ConstVertexIterator::operator == (const ConstVertexIterator& otherIterator) const
+{
     return iterator == otherIterator.iterator;
 }
 
@@ -191,7 +204,8 @@ inline bool Dcel::ConstVertexIterator::operator == (const ConstVertexIterator& o
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::ConstVertexIterator::operator != (const ConstVertexIterator& otherIterator) const {
+inline bool Dcel::ConstVertexIterator::operator != (const ConstVertexIterator& otherIterator) const
+{
     return iterator != otherIterator.iterator;
 }
 
@@ -203,7 +217,8 @@ inline bool Dcel::ConstVertexIterator::operator != (const ConstVertexIterator& o
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator ++ () {
+inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator ++ ()
+{
     do {
         ++iterator;
     } while (iterator != vector->size() && (*vector)[iterator] == nullptr);
@@ -218,7 +233,8 @@ inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator ++ () {
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator ++ (int) {
+inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator ++ (int)
+{
     Dcel::ConstVertexIterator old = *this;
     do {
         ++iterator;
@@ -234,7 +250,8 @@ inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator ++ (int) {
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator -- () {
+inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator -- ()
+{
     do {
         --iterator;
     } while (iterator != 0 && (*vector)[iterator] == nullptr);
@@ -249,7 +266,8 @@ inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator -- () {
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator -- (int) {
+inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator -- (int)
+{
     Dcel::ConstVertexIterator old = *this;
     do {
         --iterator;
@@ -271,7 +289,8 @@ inline Dcel::ConstVertexIterator Dcel::ConstVertexIterator::operator -- (int) {
  *
  * @param[in] it: iteratore sul vettore di vertici della Dcel
  */
-inline Dcel::ConstVertexIterator::ConstVertexIterator(unsigned int it, const std::vector<Vertex*>& v) : iterator(it), vector(&v) {
+inline Dcel::ConstVertexIterator::ConstVertexIterator(unsigned int it, const std::vector<Vertex*>& v) : iterator(it), vector(&v)
+{
 }
 
 /*******************************
@@ -285,7 +304,8 @@ inline Dcel::ConstVertexIterator::ConstVertexIterator(unsigned int it, const std
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::HalfEdgeIterator::HalfEdgeIterator() {
+inline Dcel::HalfEdgeIterator::HalfEdgeIterator()
+{
 }
 
 //Public Operators
@@ -295,7 +315,8 @@ inline Dcel::HalfEdgeIterator::HalfEdgeIterator() {
  * @brief Operatore di dereferenziazione del constHalfEdgeIterator
  * @return L'half edge puntato dall'iteratore
  */
-inline Dcel::HalfEdge* Dcel::HalfEdgeIterator::operator * () const {
+inline Dcel::HalfEdge* Dcel::HalfEdgeIterator::operator * () const
+{
     return (*vector)[iterator];
 }
 
@@ -308,7 +329,8 @@ inline Dcel::HalfEdge* Dcel::HalfEdgeIterator::operator * () const {
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::HalfEdgeIterator::operator == (const HalfEdgeIterator& otherIterator) const {
+inline bool Dcel::HalfEdgeIterator::operator == (const HalfEdgeIterator& otherIterator) const
+{
     return iterator == otherIterator.iterator;
 }
 
@@ -318,7 +340,8 @@ inline bool Dcel::HalfEdgeIterator::operator == (const HalfEdgeIterator& otherIt
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::HalfEdgeIterator::operator != (const HalfEdgeIterator& otherIterator) const {
+inline bool Dcel::HalfEdgeIterator::operator != (const HalfEdgeIterator& otherIterator) const
+{
     return iterator != otherIterator.iterator;
 }
 
@@ -330,7 +353,8 @@ inline bool Dcel::HalfEdgeIterator::operator != (const HalfEdgeIterator& otherIt
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator ++ () {
+inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator ++ ()
+{
     do {
         ++iterator;
     } while (iterator != vector->size() && (*vector)[iterator] == nullptr);
@@ -345,7 +369,8 @@ inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator ++ () {
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator ++ (int) {
+inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator ++ (int)
+{
     Dcel::HalfEdgeIterator old = *this;
     do {
         ++iterator;
@@ -361,7 +386,8 @@ inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator ++ (int) {
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator -- () {
+inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator -- ()
+{
     do {
         --iterator;
     } while (iterator != 0 && (*vector)[iterator] == nullptr);
@@ -376,7 +402,8 @@ inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator -- () {
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator -- (int) {
+inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator -- (int)
+{
     Dcel::HalfEdgeIterator old = *this;
     do {
         --iterator;
@@ -398,7 +425,8 @@ inline Dcel::HalfEdgeIterator Dcel::HalfEdgeIterator::operator -- (int) {
  *
  * @param[in] it: iteratore sul vettore di half edge della Dcel
  */
-inline Dcel::HalfEdgeIterator::HalfEdgeIterator(unsigned int it, const std::vector<HalfEdge*>& v) : iterator(it) , vector(&v){
+inline Dcel::HalfEdgeIterator::HalfEdgeIterator(unsigned int it, const std::vector<HalfEdge*>& v) : iterator(it) , vector(&v)
+{
 }
 
 /*******************************
@@ -412,7 +440,8 @@ inline Dcel::HalfEdgeIterator::HalfEdgeIterator(unsigned int it, const std::vect
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator() {
+inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator()
+{
 }
 
 /**
@@ -423,7 +452,8 @@ inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator() {
  *
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator(const Dcel::HalfEdgeIterator& it) : iterator(it.iterator), vector(it.vector) {
+inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator(const Dcel::HalfEdgeIterator& it) : iterator(it.iterator), vector(it.vector)
+{
 }
 
 //Public Operators
@@ -433,7 +463,8 @@ inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator(const Dcel::HalfEdgeIt
  * @brief Operatore di dereferenziazione del constHalfEdgeIterator
  * @return L'half edge puntato dall'iteratore
  */
-inline const Dcel::HalfEdge* Dcel::ConstHalfEdgeIterator::operator * () const {
+inline const Dcel::HalfEdge* Dcel::ConstHalfEdgeIterator::operator * () const
+{
     return (*vector)[iterator];
 }
 
@@ -446,7 +477,8 @@ inline const Dcel::HalfEdge* Dcel::ConstHalfEdgeIterator::operator * () const {
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::ConstHalfEdgeIterator::operator == (const ConstHalfEdgeIterator& otherIterator) const {
+inline bool Dcel::ConstHalfEdgeIterator::operator == (const ConstHalfEdgeIterator& otherIterator) const
+{
     return iterator == otherIterator.iterator;
 }
 
@@ -456,7 +488,8 @@ inline bool Dcel::ConstHalfEdgeIterator::operator == (const ConstHalfEdgeIterato
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::ConstHalfEdgeIterator::operator != (const ConstHalfEdgeIterator& otherIterator) const {
+inline bool Dcel::ConstHalfEdgeIterator::operator != (const ConstHalfEdgeIterator& otherIterator) const
+{
     return iterator != otherIterator.iterator;
 }
 
@@ -468,7 +501,8 @@ inline bool Dcel::ConstHalfEdgeIterator::operator != (const ConstHalfEdgeIterato
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator ++ () {
+inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator ++ ()
+{
     do {
         ++iterator;
     } while (iterator != vector->size() && (*vector)[iterator] == nullptr);
@@ -483,7 +517,8 @@ inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator ++ () {
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator ++ (int) {
+inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator ++ (int)
+{
     Dcel::ConstHalfEdgeIterator old = *this;
     do {
         ++iterator;
@@ -499,7 +534,8 @@ inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator ++ (int
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator -- () {
+inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator -- ()
+{
     do {
         --iterator;
     } while (iterator != 0 && (*vector)[iterator] == nullptr);
@@ -514,7 +550,8 @@ inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator -- () {
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator -- (int) {
+inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator -- (int)
+{
     Dcel::ConstHalfEdgeIterator old = *this;
     do {
         --iterator;
@@ -536,7 +573,8 @@ inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeIterator::operator -- (int
  *
  * @param[in] it: iteratore sul vettore di half edge della Dcel
  */
-inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator(unsigned int it, const std::vector<HalfEdge*>& v) : iterator(it), vector(&v) {
+inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator(unsigned int it, const std::vector<HalfEdge*>& v) : iterator(it), vector(&v)
+{
 }
 
 /***************************
@@ -550,7 +588,8 @@ inline Dcel::ConstHalfEdgeIterator::ConstHalfEdgeIterator(unsigned int it, const
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::FaceIterator::FaceIterator() {
+inline Dcel::FaceIterator::FaceIterator()
+{
 }
 
 //Public Operators
@@ -560,7 +599,8 @@ inline Dcel::FaceIterator::FaceIterator() {
  * @brief Operatore di dereferenziazione del constFaceIterator
  * @return Il vertice puntato dall'iteratore
  */
-inline Dcel::Face* Dcel::FaceIterator::operator * () const {
+inline Dcel::Face* Dcel::FaceIterator::operator * () const
+{
     return (*vector)[iterator];
 }
 
@@ -573,7 +613,8 @@ inline Dcel::Face* Dcel::FaceIterator::operator * () const {
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::FaceIterator::operator == (const FaceIterator& otherIterator) const {
+inline bool Dcel::FaceIterator::operator == (const FaceIterator& otherIterator) const
+{
     return iterator == otherIterator.iterator;
 }
 
@@ -583,7 +624,8 @@ inline bool Dcel::FaceIterator::operator == (const FaceIterator& otherIterator) 
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::FaceIterator::operator != (const FaceIterator& otherIterator) const {
+inline bool Dcel::FaceIterator::operator != (const FaceIterator& otherIterator) const
+{
     return iterator != otherIterator.iterator;
 }
 
@@ -595,7 +637,8 @@ inline bool Dcel::FaceIterator::operator != (const FaceIterator& otherIterator) 
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::FaceIterator Dcel::FaceIterator::operator ++ () {
+inline Dcel::FaceIterator Dcel::FaceIterator::operator ++ ()
+{
     do {
         ++iterator;
     } while (iterator != vector->size() && (*vector)[iterator] == nullptr);
@@ -610,7 +653,8 @@ inline Dcel::FaceIterator Dcel::FaceIterator::operator ++ () {
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::FaceIterator Dcel::FaceIterator::operator ++ (int) {
+inline Dcel::FaceIterator Dcel::FaceIterator::operator ++ (int)
+{
     Dcel::FaceIterator old = *this;
     do {
         ++iterator;
@@ -626,7 +670,8 @@ inline Dcel::FaceIterator Dcel::FaceIterator::operator ++ (int) {
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::FaceIterator Dcel::FaceIterator::operator -- () {
+inline Dcel::FaceIterator Dcel::FaceIterator::operator -- ()
+{
     do {
         --iterator;
     } while (iterator != 0 && (*vector)[iterator] == nullptr);
@@ -641,7 +686,8 @@ inline Dcel::FaceIterator Dcel::FaceIterator::operator -- () {
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::FaceIterator Dcel::FaceIterator::operator -- (int) {
+inline Dcel::FaceIterator Dcel::FaceIterator::operator -- (int)
+{
     Dcel::FaceIterator old = *this;
     do {
         --iterator;
@@ -663,7 +709,8 @@ inline Dcel::FaceIterator Dcel::FaceIterator::operator -- (int) {
  *
  * @param[in] it: iteratore sul vettore di facce della Dcel
  */
-inline Dcel::FaceIterator::FaceIterator(unsigned int it, const std::vector<Face*>& v) : iterator(it), vector(&v) {
+inline Dcel::FaceIterator::FaceIterator(unsigned int it, const std::vector<Face*>& v) : iterator(it), vector(&v)
+{
 }
 
 /***************************
@@ -677,7 +724,8 @@ inline Dcel::FaceIterator::FaceIterator(unsigned int it, const std::vector<Face*
  * @brief Costruttore vuoto.
  * Un iteratore inizializzato con questo costruttore non è utilizzabile.
  */
-inline Dcel::ConstFaceIterator::ConstFaceIterator() {
+inline Dcel::ConstFaceIterator::ConstFaceIterator()
+{
 }
 
 /**
@@ -688,7 +736,8 @@ inline Dcel::ConstFaceIterator::ConstFaceIterator() {
  *
  * @param[in] it: iteratore di cui ne verrà fatta una copia
  */
-inline Dcel::ConstFaceIterator::ConstFaceIterator(const Dcel::FaceIterator& it) : iterator(it.iterator), vector(it.vector) {
+inline Dcel::ConstFaceIterator::ConstFaceIterator(const Dcel::FaceIterator& it) : iterator(it.iterator), vector(it.vector)
+{
 }
 
 //Public Operators
@@ -698,7 +747,8 @@ inline Dcel::ConstFaceIterator::ConstFaceIterator(const Dcel::FaceIterator& it) 
  * @brief Operatore di dereferenziazione del constFaceIterator
  * @return Il vertice puntato dall'iteratore
  */
-inline const Dcel::Face* Dcel::ConstFaceIterator::operator * () const {
+inline const Dcel::Face* Dcel::ConstFaceIterator::operator * () const
+{
     return (*vector)[iterator];
 }
 
@@ -711,7 +761,8 @@ inline const Dcel::Face* Dcel::ConstFaceIterator::operator * () const {
  * @param[in] otherIterator: iteratore con cui è verificata l'uguaglianza con this
  * @return True se gli iteratori sono uguali, false altrimenti
  */
-inline bool Dcel::ConstFaceIterator::operator == (const ConstFaceIterator& otherIterator) const {
+inline bool Dcel::ConstFaceIterator::operator == (const ConstFaceIterator& otherIterator) const
+{
     return iterator == otherIterator.iterator;
 }
 
@@ -721,7 +772,8 @@ inline bool Dcel::ConstFaceIterator::operator == (const ConstFaceIterator& other
  * @param[in] otherIterator: iteratore con cui è verificata la disuguaglianza con this
  * @return True se gli iteratori sono diversi, false altrimenti
  */
-inline bool Dcel::ConstFaceIterator::operator != (const ConstFaceIterator& otherIterator) const {
+inline bool Dcel::ConstFaceIterator::operator != (const ConstFaceIterator& otherIterator) const
+{
     return iterator != otherIterator.iterator;
 }
 
@@ -733,7 +785,8 @@ inline bool Dcel::ConstFaceIterator::operator != (const ConstFaceIterator& other
  *
  * @return L'iteratore appena incrementato
  */
-inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator ++ () {
+inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator ++ ()
+{
     do {
         ++iterator;
     } while (iterator != vector->size() && (*vector)[iterator] == nullptr);
@@ -748,7 +801,8 @@ inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator ++ () {
  *
  * @return L'iteratore prima di essere incrementato
  */
-inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator ++ (int) {
+inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator ++ (int)
+{
     Dcel::ConstFaceIterator old = *this;
     do {
         ++iterator;
@@ -764,7 +818,8 @@ inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator ++ (int) {
  *
  * @return L'iteratore appena decrementato
  */
-inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator -- () {
+inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator -- ()
+{
     do {
         --iterator;
     } while (iterator != 0 && (*vector)[iterator] == nullptr);
@@ -779,7 +834,8 @@ inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator -- () {
  *
  * @return L'iteratore prima di essere decrementato
  */
-inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator -- (int) {
+inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator -- (int)
+{
     Dcel::ConstFaceIterator old = *this;
     do {
         --iterator;
@@ -801,18 +857,21 @@ inline Dcel::ConstFaceIterator Dcel::ConstFaceIterator::operator -- (int) {
  *
  * @param[in] it: iteratore sul vettore di facce della Dcel
  */
-inline Dcel::ConstFaceIterator::ConstFaceIterator(unsigned int it, const std::vector<Dcel::Face*> &v) : iterator(it), vector(&v) {
+inline Dcel::ConstFaceIterator::ConstFaceIterator(unsigned int it, const std::vector<Dcel::Face*> &v) : iterator(it), vector(&v)
+{
 }
 
 /*********************************
  * ConstVertexRangeBasedIterator *
  *********************************/
 
-inline Dcel::ConstVertexIterator Dcel::ConstVertexRangeBasedIterator::begin() const {
+inline Dcel::ConstVertexIterator Dcel::ConstVertexRangeBasedIterator::begin() const
+{
     return d->vertexBegin();
 }
 
-inline Dcel::ConstVertexIterator Dcel::ConstVertexRangeBasedIterator::end() const {
+inline Dcel::ConstVertexIterator Dcel::ConstVertexRangeBasedIterator::end() const
+{
     return d->vertexEnd();
 }
 
@@ -820,11 +879,13 @@ inline Dcel::ConstVertexIterator Dcel::ConstVertexRangeBasedIterator::end() cons
  * ConstHalfEdgeRangeBasedIterator *
  ***********************************/
 
-inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeRangeBasedIterator::begin() const {
+inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeRangeBasedIterator::begin() const
+{
     return d->halfEdgeBegin();
 }
 
-inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeRangeBasedIterator::end() const {
+inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeRangeBasedIterator::end() const
+{
     return d->halfEdgeEnd();
 }
 
@@ -832,11 +893,13 @@ inline Dcel::ConstHalfEdgeIterator Dcel::ConstHalfEdgeRangeBasedIterator::end() 
  * ConstFaceRangeBasedIterator *
  *******************************/
 
-inline Dcel::ConstFaceIterator Dcel::ConstFaceRangeBasedIterator::begin() const {
+inline Dcel::ConstFaceIterator Dcel::ConstFaceRangeBasedIterator::begin() const
+{
     return d->faceBegin();
 }
 
-inline Dcel::ConstFaceIterator Dcel::ConstFaceRangeBasedIterator::end() const {
+inline Dcel::ConstFaceIterator Dcel::ConstFaceRangeBasedIterator::end() const
+{
     return d->faceEnd();
 }
 
@@ -844,11 +907,13 @@ inline Dcel::ConstFaceIterator Dcel::ConstFaceRangeBasedIterator::end() const {
  * VertexRangeBasedIterator *
  ****************************/
 
-inline Dcel::VertexIterator Dcel::VertexRangeBasedIterator::begin() {
+inline Dcel::VertexIterator Dcel::VertexRangeBasedIterator::begin()
+{
     return d->vertexBegin();
 }
 
-inline Dcel::VertexIterator Dcel::VertexRangeBasedIterator::end() {
+inline Dcel::VertexIterator Dcel::VertexRangeBasedIterator::end()
+{
     return d->vertexEnd();
 }
 
@@ -856,11 +921,13 @@ inline Dcel::VertexIterator Dcel::VertexRangeBasedIterator::end() {
  * HalfEdgeRangeBasedIterator *
  ******************************/
 
-inline Dcel::HalfEdgeIterator Dcel::HalfEdgeRangeBasedIterator::begin() {
+inline Dcel::HalfEdgeIterator Dcel::HalfEdgeRangeBasedIterator::begin()
+{
     return d->halfEdgeBegin();
 }
 
-inline Dcel::HalfEdgeIterator Dcel::HalfEdgeRangeBasedIterator::end() {
+inline Dcel::HalfEdgeIterator Dcel::HalfEdgeRangeBasedIterator::end()
+{
     return d->halfEdgeEnd();
 }
 
@@ -868,11 +935,13 @@ inline Dcel::HalfEdgeIterator Dcel::HalfEdgeRangeBasedIterator::end() {
  * FaceRangeBasedIterator *
  **************************/
 
-inline Dcel::FaceIterator Dcel::FaceRangeBasedIterator::begin() {
+inline Dcel::FaceIterator Dcel::FaceRangeBasedIterator::begin()
+{
     return d->faceBegin();
 }
 
-inline Dcel::FaceIterator Dcel::FaceRangeBasedIterator::end() {
+inline Dcel::FaceIterator Dcel::FaceRangeBasedIterator::end()
+{
     return d->faceEnd();
 }
 
