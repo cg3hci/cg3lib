@@ -10,7 +10,7 @@
 namespace cg3 {
 
 /**
- * \~English
+ * @ingroup cg3core
  * @brief this function flips a std::map on a std::multimap. All the elements of the multimap will be sorted by the value of the map.
  * @param[in] src: input map
  * @return the flipped multimap

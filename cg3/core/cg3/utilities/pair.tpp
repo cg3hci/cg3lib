@@ -10,6 +10,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief this function flips a pair
  * @param[in] p: input pair
  * @return the flipped pair

@@ -14,6 +14,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief The Tokenizer class
  */
 class Tokenizer

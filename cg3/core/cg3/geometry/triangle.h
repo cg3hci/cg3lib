@@ -13,6 +13,10 @@
 
 namespace cg3 {
 
+/**
+ * @ingroup cg3core
+ * @brief The Triangle class
+ */
 template <class T>
 class Triangle : public SerializableObject
 {

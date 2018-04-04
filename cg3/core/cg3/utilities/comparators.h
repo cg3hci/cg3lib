@@ -13,7 +13,7 @@
 namespace cg3 {
 
 /**
- * \~English
+ * @ingroup cg3core
  * @struct cmpUnorderedStdPair
  * @brief la struttura cmpUnorderedStdPair implementa un comparatore per la classe std::pair<T,T>
  *
@@ -59,7 +59,7 @@ struct cmpUnorderedStdPair
 };
 
 /**
- * \~English
+ * @ingroup cg3core
  * @struct cmpPointY
  * @brief The cmpPointY structure implements a comparator for the Point class using Y coordinate first.
  *
@@ -84,7 +84,7 @@ struct cmpPointY
 };
 
 /**
- * \~English
+ * @ingroup cg3core
  * @struct cmpPointZ
  * @brief The cmpPointZ structure implements a comparator for the Point class using Z coordinate first.
  *

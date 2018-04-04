@@ -32,7 +32,7 @@
 namespace cg3 {
 
 /**
- * \~English
+ * @ingroup cg3core
  * @class Point
  * @brief The Point class models a point or a vector on a 3D space.
  *

@@ -14,7 +14,8 @@ namespace Ui {
 class ExampleManager;
 }
 
-class ExampleManager : public QFrame {
+class ExampleManager : public QFrame
+{
     Q_OBJECT
 
 public:

@@ -32,6 +32,7 @@ bool isBetween(
 /* ----- IMPLEMENTATION OF INTERSECTION CHECK ----- */
 
 /**
+ * @ingroup cg3core
  * @brief Check if two segments have an intersection
  * @param[in] seg1 Segment 1
  * @param[in] seg2 Segment 2
@@ -60,6 +61,7 @@ bool checkSegmentIntersection2D(
 
 
 /**
+ * @ingroup cg3core
  * @brief Check if two segments have an intersection
  * @param[in] seg1 Segment 1
  * @param[in] seg2 Segment 2

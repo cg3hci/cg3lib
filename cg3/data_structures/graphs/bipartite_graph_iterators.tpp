@@ -271,4 +271,4 @@ template<class T1, class T2>
 inline BipartiteGraph<T1, T2>::RightNodeRangeBasedIterator::RightNodeRangeBasedIterator(const BipartiteGraph* g) : g(g) {
 }
 
-}
+} //namespace cg3

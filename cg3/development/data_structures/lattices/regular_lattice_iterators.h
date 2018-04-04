@@ -13,7 +13,8 @@
 namespace cg3 {
 
 template <class VT>
-class RegularLattice<VT>::VertexIterator{
+class RegularLattice<VT>::VertexIterator
+{
         friend class RegularLattice;
     public:
         VertexIterator();
@@ -33,6 +34,6 @@ class RegularLattice<VT>::VertexIterator{
         VertexIterator(unsigned int pos, const RegularLattice &g);
 };
 
-}
+} //namespace cg3
 
 #endif // CG3_REGULAR_LATTICE_ITERATORS_H

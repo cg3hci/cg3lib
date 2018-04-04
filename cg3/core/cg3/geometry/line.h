@@ -13,6 +13,10 @@
 
 namespace cg3 {
 
+/**
+ * @ingroup cg3core
+ * @brief The Line class
+ */
 class Line : public SerializableObject
 {
 public:

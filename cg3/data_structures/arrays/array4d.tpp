@@ -10,15 +10,28 @@
 namespace cg3 {
 
 template<typename T>
-Array4D<T>::Array4D() : Array<T, 4>() {
+Array4D<T>::Array4D() : Array<T, 4>()
+{
 }
 
 template <class T>
-inline Array4D<T>::Array4D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, unsigned long int sizeW) : Array<T,4>(sizeX, sizeY, sizeZ, sizeW) {
+inline Array4D<T>::Array4D(
+        unsigned long int sizeX,
+        unsigned long int sizeY,
+        unsigned long int sizeZ,
+        unsigned long int sizeW) :
+    Array<T,4>(sizeX, sizeY, sizeZ, sizeW)
+{
 }
 
 template <class T>
-inline Array4D<T>::Array4D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, unsigned long int sizeW, const T& value) {
+inline Array4D<T>::Array4D(
+        unsigned long int sizeX,
+        unsigned long int sizeY,
+        unsigned long int sizeZ,
+        unsigned long int sizeW,
+        const T& value)
+{
     Array<T, 4>::v.resize(sizeX*sizeY*sizeZ*sizeW, value);
     Array<T, 4>::sizes[0] = sizeX;
     Array<T, 4>::sizes[1] = sizeY;
@@ -27,28 +40,33 @@ inline Array4D<T>::Array4D(unsigned long int sizeX, unsigned long int sizeY, uns
 }
 
 template <class T>
-inline Array4D<T>::Array4D(cg3::NestedInitializerLists<T, 4> values) {
+inline Array4D<T>::Array4D(cg3::NestedInitializerLists<T, 4> values)
+{
     Array<T, 4>::initializeNestedLists(values);
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeX() const {
+inline unsigned long int Array4D<T>::getSizeX() const
+{
     return Array<T, 4>::sizes[0];
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeY() const{
+inline unsigned long int Array4D<T>::getSizeY() const
+{
     return Array<T, 4>::sizes[1];
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeZ() const {
+inline unsigned long int Array4D<T>::getSizeZ() const
+{
     return Array<T, 4>::sizes[2];
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeW() const {
+inline unsigned long int Array4D<T>::getSizeW() const
+{
     return Array<T, 4>::sizes[3];
 }
 
-}
+} //namespace cg3

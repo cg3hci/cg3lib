@@ -10,6 +10,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief This function computes an equality between two parameters considering an epsilon offset
  * @param[in] x: first parameter
  * @param[in] v: second parameter
@@ -24,6 +25,7 @@ inline bool epsilonEqual(T x, T v, double epsilon)
 }
 
 /**
+ * @ingroup cg3core
  * @brief This function computes an equality between two Points considering an epsilon offset
  * @param[in] x: first Point parameter
  * @param[in] v: second Point parameter
@@ -41,6 +43,7 @@ inline bool epsilonEqual(const Point<T> &x, const Point<T> &v, double epsilon)
 }
 
 /**
+ * @ingroup cg3core
  * @brief This function computes an equality between two Point2D considering an epsilon offset
  * @param[in] x: first Point parameter
  * @param[in] v: second Point parameter
@@ -56,8 +59,13 @@ inline bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilo
     else return false;
 }
 
-
-
+/**
+ * @ingroup cg3core
+ * @brief truncate
+ * @param d
+ * @param numberOfDecimalDigitsToKeep
+ * @return
+ */
 inline double truncate(double d, unsigned int numberOfDecimalDigitsToKeep)
 {
     int tmp = (int)((10*numberOfDecimalDigitsToKeep)*d);
@@ -66,21 +74,43 @@ inline double truncate(double d, unsigned int numberOfDecimalDigitsToKeep)
     else return d;
 }
 
-
-
+/**
+ * @ingroup cg3core
+ * @brief isInBounds
+ * @param value
+ * @param low
+ * @param high
+ * @return
+ */
 template <typename T>
 inline bool isInBounds(const T& value, const T& low, const T& high)
 {
     return !(value < low) && !(high < value);
 }
 
+/**
+ * @ingroup cg3core
+ * @brief isInBounds
+ * @param value
+ * @param low
+ * @param high
+ * @param comp
+ * @return
+ */
 template <typename T, typename R, typename Comparator>
 inline bool isInBounds(const T& value, const R& low, const R& high, Comparator comp)
 {
     return !comp(value, low) && !comp(high, value);
 }
 
-
+/**
+ * @ingroup cg3core
+ * @brief smartColoring
+ * @param elements
+ * @param comp
+ * @param colors
+ * @return
+ */
 template <typename T, typename AdjComparator>
 inline std::map<T, Color> smartColoring(
         const std::vector<T> &elements,
@@ -118,6 +148,7 @@ inline std::map<T, Color> smartColoring(
 }
 
 /**
+ * @ingroup cg3core
  * @brief typeName
  * Returns the type of T as a std::string
  *

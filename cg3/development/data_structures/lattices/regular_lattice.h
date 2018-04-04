@@ -14,7 +14,8 @@
 namespace cg3 {
 
 template <class VT>
-class RegularLattice : public cg3::SerializableObject {
+class RegularLattice : public cg3::SerializableObject
+{
 
 public:
     RegularLattice();
@@ -36,7 +37,6 @@ public:
 
     class VertexIterator;
 
-
 protected:
 
     cg3::Pointd getPoint(unsigned int i, unsigned int j, unsigned int k) const;
@@ -50,7 +50,7 @@ protected:
     unsigned int mresX, mresY, mresZ;
 };
 
-}
+} //namespace cg3
 
 #include "regular_lattice.tpp"
 

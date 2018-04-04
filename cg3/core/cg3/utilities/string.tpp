@@ -13,6 +13,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief toStringWithPrecision
  * @param value
  * @param precision
@@ -30,6 +31,7 @@ std::string toStringWithPrecision(
 }
 
 /**
+ * @ingroup cg3core
  * @brief extracts the extension of a string that contains a filename.
  *
  * \code{.cpp}
@@ -58,6 +60,7 @@ inline void separateExtensionFromFilename(
 }
 
 /**
+ * @ingroup cg3core
  * @brief extracts the filename (extension included) of a string that contains a fullpath.
  *
  * \code{.cpp}

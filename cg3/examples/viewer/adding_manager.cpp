@@ -8,7 +8,8 @@
 #include <cg3/viewer/mainwindow.h>
 #include "example_manager.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     QApplication app(argc, argv);
     cg3::viewer::MainWindow mw;  //Main window, it contains QGLViewer canvas
 

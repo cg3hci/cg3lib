@@ -16,9 +16,8 @@
 namespace cg3 {
 
 /**
- * @brief serializeObjectAttributes
- *
- * Allows an easy serialization of a series of arguments in a binary file.
+ * @ingroup cg3core
+ * @brief Allows an easy serialization of a series of arguments in a binary file.
  * The arguments will be serialized in the order they are passed, after the first input string,
  * which is used as id.
  *
@@ -37,9 +36,8 @@ inline void serializeObjectAttributes(
 }
 
 /**
- * @brief deserializeObjectAttributes
- *
- * Allows an easy deserialization of a series of arguments from a binary file.
+ * @ingroup cg3core
+ * @brief Allows an easy deserialization of a series of arguments from a binary file.
  * The arguments will be deserialized in the order they are passed, after the first input string,
  * which is deserialized and checked as id.
  * If the data deserialized doesn't match with the arguments passed, an exception is thrown
@@ -79,6 +77,7 @@ inline void deserializeObjectAttributes(
 }
 
 /**
+ * @ingroup cg3core
  * @brief getPosition
  * @param[in] binaryFile
  * @return the position of the stream
@@ -89,8 +88,8 @@ inline std::streampos getFilePosition(std::ifstream& binaryFile)
 }
 
 /**
- * @brief restorePosition
- * restores the current position of the stream
+ * @ingroup cg3core
+ * @brief Restores the current position of the stream
  * @param[out] binaryFile: the file with the new position
  * @param[in] position: the desired position on the file
  */
@@ -103,10 +102,8 @@ inline void restoreFilePosition(
 }
 
 /**
- * \~English
- * @brief serialize
- *
- * This function allows to serialize on a std::ofstream opened in binary mode:
+ * @ingroup cg3core
+ * @brief This function allows to serialize on a std::ofstream opened in binary mode:
  *
  * - All primitive types;
  * - All classes that have correctly implemented the abstract class SerializableObject
@@ -138,10 +135,8 @@ inline void serialize(
 }
 
 /**
- * \~English
- * @brief serialize
- *
- * This function allows to serialize on a std::ofstream opened in binary mode:
+ * @ingroup cg3core
+ * @brief This function allows to serialize on a std::ofstream opened in binary mode:
  *
  * - All pointers to primitive types;
  * - All pointers classes that have correctly implemented the abstract class SerializableObject
@@ -171,10 +166,8 @@ inline void serialize(
 }
 
 /**
- * \~English
- * @brief deserialize
- *
- * This function allows to deserialize on a std::ifstream opened in binary mode:
+ * @ingroup cg3core
+ * @brief This function allows to deserialize on a std::ifstream opened in binary mode:
  *
  * - All primitive types
  * - All classes that have correctly implemented the abstract class SerializableObject
@@ -223,10 +216,8 @@ inline void deserialize(
 }
 
 /**
- * \~English
- * @brief deserialize - specialization for pointers
- *
- * This function allows to deserialize on a std::ifstream opened in binary mode:
+ * @ingroup cg3core
+ * @brief This function allows to deserialize on a std::ifstream opened in binary mode:
  *
  * - All pointers to primitive types
  * - All pointers to classes that have correctly implemented the abstract class SerializableObject

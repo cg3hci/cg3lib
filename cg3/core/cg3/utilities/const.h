@@ -13,8 +13,16 @@
 
 namespace cg3 {
 
+/**
+ * @ingroup cg3core
+ * @brief CG3_EPSILON
+ */
 static const double CG3_EPSILON = 1e-6;
 
+/**
+ * @ingroup cg3core
+ * @brief AXIS
+ */
 static const std::array<Vec3, 6> AXIS
 {
     Vec3( 1, 0, 0),
@@ -25,6 +33,10 @@ static const std::array<Vec3, 6> AXIS
     Vec3( 0, 0,-1),
 };
 
+/**
+ * @ingroup cg3core
+ * @brief PASTEL_COLORS
+ */
 static const std::vector<Color> PASTEL_COLORS =
 {
     Color(182, 215, 168), //

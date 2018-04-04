@@ -14,7 +14,7 @@
 namespace cg3 {
 
 /**
- * \~English
+ * @ingroup cg3core
  * @interface SerializableObject
  *
  * @brief The SerializableObject interface

@@ -12,6 +12,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief The Line2D class
  *
  * It models a 2D line coded in the form y = mx + q.

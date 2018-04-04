@@ -8,25 +8,24 @@
 #include "array.h"
 
 /**
- * @brief cg3::Array<T, N>::Array
- *
- * Creates an N-Dimensional Array with size 0 for every dimension.
+ * @brief Creates an N-Dimensional Array with size 0 for every dimension.
  */
 template<class T, size_t N>
-inline cg3::Array<T, N>::Array() : v(0){
+inline cg3::Array<T, N>::Array() :
+    v(0)
+{
     sizes.fill(0);
 }
 
 /**
- * @brief cg3::Array<T, N>::Array
- *
- * Creates an N-Dimensional Array with the given sizes. All its elements are initialized to 0.
+ * @brief Creates an N-Dimensional Array with the given sizes. All its elements are initialized to 0.
  *
  * @param[in] s: #N sizes, one for every dimension of the array.
  */
 template<class T, size_t N>
 template<typename... Sizes>
-cg3::Array<T, N>::Array(Sizes... s) {
+cg3::Array<T, N>::Array(Sizes... s)
+{
     static_assert(sizeof...(s) == N, "Wrong number of constructor arguments for Array.");
     unsigned long int args[N] = { static_cast<unsigned long int>(s)... };
     unsigned long int totalSize = 1;
@@ -38,9 +37,7 @@ cg3::Array<T, N>::Array(Sizes... s) {
 }
 
 /**
- * @brief cg3::Array<T, N>::Array
- *
- * Creates and initializes an N-Dimensional Array. Sizes are given by the maximum size of the
+ * @brief Creates and initializes an N-Dimensional Array. Sizes are given by the maximum size of the
  * initializer lists for every dimension, and missing values are automatically setted to zero.
  *
  * Example code:
@@ -63,53 +60,52 @@ cg3::Array<T, N>::Array(Sizes... s) {
  * @param[in] values: the nested initializer lists of values.
  */
 template<class T, size_t N>
-inline cg3::Array<T, N>::Array(cg3::NestedInitializerLists<T, N> values) {
+inline cg3::Array<T, N>::Array(cg3::NestedInitializerLists<T, N> values)
+{
     initializeNestedLists(values);
 }
 
 /**
- * @brief cg3::Array<T, N>::dimensions
- * @return the number of dimensions of the array.
+ * @brief Returns the number of dimensions of the array.
  */
 template<class T, size_t N>
-constexpr unsigned long int cg3::Array<T, N>::dimensions() const {
+constexpr unsigned long int cg3::Array<T, N>::dimensions() const
+{
     return N;
 }
 
 /**
- * @brief cg3::Array<T, N>::operator ()
- * Operator that allows to access one element of the array. It can be used as left or right value.
+ * @brief Operator () that allows to access one element of the array. It can be used as left or right value.
  * @param[in] indices: #N indices that allows to access to an element of the array.
  * A number of indices not equal to N will generate a compilation error.
  * @return a reference to the element of the array.
  */
 template<class T, size_t N>
 template<typename... I>
-T& cg3::Array<T, N>::operator ()(I... indices) {
+T& cg3::Array<T, N>::operator ()(I... indices)
+{
     static_assert(sizeof...(indices) == N, "Wrong number of arguments for operator().");
     unsigned long int args[N] = { static_cast<unsigned long int>(indices)... };
     return v[getIndex(args)];
 }
 
 /**
- * @brief cg3::Array<T, N>::operator ()
- * Operator that allows to access one element of the array. It can be used only as right value.
+ * @brief Operator () that allows to access one element of the array. It can be used only as right value.
  * @param[in] indices: #N indices that allows to access to an element of the array.
  * A number of indices not equal to N will generate a compilation error.
  * @return a reference to the element of the array.
  */
 template<class T, size_t N>
 template<typename... I>
-const T& cg3::Array<T, N>::operator ()(I... indices) const {
+const T& cg3::Array<T, N>::operator ()(I... indices) const
+{
     static_assert(sizeof...(indices) == N, "Wrong number of arguments for operator().");
     unsigned long int args[N] = { static_cast<unsigned long int>(indices)... };
     return v[getIndex(args)];
 }
 
 /**
- * @brief cg3::Array<T, N>::cArray
- *
- * Allows to get a C array of the cg3::Array, that can be also modified.
+ * @brief Allows to get a C array of the cg3::Array, that can be also modified.
  * Example:
  * \code{.cpp}
  * cg3::Array<int, 3> array(10, 13, 4);
@@ -131,7 +127,8 @@ const T& cg3::Array<T, N>::operator ()(I... indices) const {
  */
 template<class T, size_t N>
 template<typename... I>
-T* cg3::Array<T, N>::cArray(I... indices) {
+T* cg3::Array<T, N>::cArray(I... indices)
+{
     static_assert(sizeof...(indices) < N, "Wrong number of arguments for operator cArray().");
     const unsigned long int n = sizeof...(indices);
     if (n == 0){
@@ -153,13 +150,30 @@ T* cg3::Array<T, N>::cArray(I... indices) {
 }
 
 /**
- * @brief cg3::Array<T, N>::cArray
- * @param indices
- * @return a const C array of the indicized element.
+ * @brief Allows to get a C array of the cg3::Array, that cannot be modified.
+ * Example:
+ * \code{.cpp}
+ * cg3::Array<int, 3> array(10, 13, 4);
+ * //...
+ * const int* carray = array.cArray(3); //carray will point to the element in position (3,0,0).
+ * for (unsigned int i = 0; i < 13*4; i++)
+ *    std::cout << carry[i]; // will print all the elements of the sub 2D array starting from (3,0,0).
+ *
+ * carray = array.cArray(4, 2); // carray will point to the element in position (4, 2, 0).
+ * for (unsigned int i = 0; i < 4; i++)
+ *    std::cout << carry[i]; // will print all the elements of the sub 1D array starting from (4,2,0).
+ *
+ * carray = array.cArray(); // carray will point to the element in position (0, 0, 0).
+ *
+ * \endcode
+ *
+ * @param[in] indices: a number of indices that is less than the number of dimensions of the array.
+ * @return a C array starting from the indicized element.
  */
 template<class T, size_t N>
 template<typename... I>
-const T* cg3::Array<T, N>::cArray(I... indices) const {
+const T* cg3::Array<T, N>::cArray(I... indices) const
+{
     static_assert(sizeof...(indices) < N, "Wrong number of arguments for operator cArray().");
     const unsigned long int n = sizeof...(indices);
     if (n == 0){
@@ -180,40 +194,71 @@ const T* cg3::Array<T, N>::cArray(I... indices) const {
     return &v[ind];
 }
 
+/**
+ * @brief Fills the entire Array with the value t.
+ * @param[in] t
+ */
 template<class T, size_t N>
-void cg3::Array<T, N>::fill(const T& t) {
+void cg3::Array<T, N>::fill(const T& t)
+{
     std::fill(v.begin(), v.end(), t);
 }
 
+/**
+ * @brief Returns the size of the given dimension.
+ * @param[in] dim
+ */
 template<class T, size_t N>
-unsigned long int cg3::Array<T, N>::size(unsigned long dim) const {
+unsigned long int cg3::Array<T, N>::size(unsigned long dim) const
+{
     assert(dim < N);
     return sizes[dim];
 }
 
+/**
+ * @brief Returns a reference to the element which is the minimum contained in the array.
+ */
 template<class T, size_t N>
-T& cg3::Array<T, N>::min() {
+T& cg3::Array<T, N>::min()
+{
     return *(std::min_element(v.begin(), v.end()));
 }
 
+/**
+ * @brief Returns a const reference to the element which is the minimum contained in the array.
+ */
 template<class T, size_t N>
-const T& cg3::Array<T, N>::min() const {
+const T& cg3::Array<T, N>::min() const
+{
     return *(std::min_element(v.begin(), v.end()));
 }
 
+/**
+ * @brief Returns a reference to the element which is the maximum contained in the array.
+ */
 template<class T, size_t N>
-T& cg3::Array<T, N>::max() {
+T& cg3::Array<T, N>::max()
+{
     return *(std::max_element(v.begin(), v.end()));
 }
 
+/**
+ * @brief Returns a const reference to the element which is the maximum contained in the array.
+ */
 template<class T, size_t N>
-const T& cg3::Array<T, N>::max() const {
+const T& cg3::Array<T, N>::max() const
+{
     return *(std::max_element(v.begin(), v.end()));
 }
 
+/**
+ * @brief Allows to resize the Array, not conserving the values of the previous array.
+ * @param[in] s: #N elements representing the new sizes of the Array.
+ */
 template<class T, size_t N>
 template<typename... Sizes>
-void cg3::Array<T, N>::resize(Sizes... s) {
+void cg3::Array<T, N>::resize(Sizes... s)
+{
     static_assert(sizeof...(s) == N, "Wrong number of resize arguments for Array.");
     unsigned long int args[N] = { static_cast<unsigned long int>(s)... };
     unsigned long int totalSize = 1;
@@ -224,9 +269,14 @@ void cg3::Array<T, N>::resize(Sizes... s) {
     v.resize(totalSize);
 }
 
+/**
+ * @brief Allows to resize the Array, conserving the values of the previous array.
+ * @param[in] s: #N elements representing the new sizes of the Array.
+ */
 template<class T, size_t N>
 template<typename... Sizes>
-void cg3::Array<T, N>::conservativeResize(Sizes... s) {
+void cg3::Array<T, N>::conservativeResize(Sizes... s)
+{
     static_assert(sizeof...(s) == N, "Wrong number of resize arguments for Array.");
     unsigned long int newSizes[N] = { static_cast<unsigned long int>(s)... };
     unsigned long int newTotalSize = 1;
@@ -252,15 +302,32 @@ void cg3::Array<T, N>::conservativeResize(Sizes... s) {
     v = std::move(newVector);
 }
 
+/**
+ * @brief Clear the entire array, setting every dimension to size 0.
+ */
 template<class T, size_t N>
-void cg3::Array<T, N>::clear() {
+void cg3::Array<T, N>::clear()
+{
     v.clear();
     for (unsigned int i = 0; i < N; i++)
         sizes[i] = 0;
 }
 
+/**
+ * @brief Creates a new subArray of dimension N-1, starting from the given index at its first dimension.
+ *
+ * Example:
+ * \code{.cpp}
+ * cg3::Array<int, 3> a(4,2,6);
+ * cg3::Array<int, 2> sa = a.subArray(1);
+ * //sa is a 2x6 2D Array, containing the elements at the second "row" of Array a.
+ * \endcode
+ *
+ * @param r
+ */
 template<class T, size_t N>
-cg3::Array<T, N-1> cg3::Array<T, N>::subArray(unsigned int r) const {
+cg3::Array<T, N-1> cg3::Array<T, N>::subArray(unsigned int r) const
+{
     static_assert(N > 1, "Impossible to create subArray with an Array having dimension < 2.");
     assert(r < sizes[0]);
     cg3::Array<T, N-1> sub;
@@ -273,18 +340,30 @@ cg3::Array<T, N-1> cg3::Array<T, N>::subArray(unsigned int r) const {
     return sub;
 }
 
+/**
+ * @brief Serializes in a binary file the Array
+ *
+ * @param binaryFile
+ */
 template<class T, size_t N>
-void cg3::Array<T, N>::serialize(std::ofstream &binaryFile) const {
+void cg3::Array<T, N>::serialize(std::ofstream &binaryFile) const
+{
     cg3::serializeObjectAttributes("cg3Array" + std::to_string(N) + "D", binaryFile, sizes, v);
 }
 
+/**
+ * @brief Deserializes from a binary file an Array
+ * @param binaryFile
+ */
 template<class T, size_t N>
-void cg3::Array<T, N>::deserialize(std::ifstream &binaryFile) {
+void cg3::Array<T, N>::deserialize(std::ifstream &binaryFile)
+{
     cg3::deserializeObjectAttributes("cg3Array"  + std::to_string(N)+ "D", binaryFile, sizes, v);
 }
 
 template<class T, size_t N>
-unsigned long int cg3::Array<T, N>::getIndex(const unsigned long indices[]) const {
+unsigned long int cg3::Array<T, N>::getIndex(const unsigned long indices[]) const
+{
     unsigned long int ind = indices[0];
     assert(indices[0] < sizes[0]);
     for (unsigned int i = 1; i < N; i++){
@@ -296,7 +375,8 @@ unsigned long int cg3::Array<T, N>::getIndex(const unsigned long indices[]) cons
 }
 
 template<class T, size_t N>
-std::array<unsigned long int, N> cg3::Array<T, N>::reverseIndex(unsigned int index) {
+std::array<unsigned long int, N> cg3::Array<T, N>::reverseIndex(unsigned int index)
+{
     std::array<unsigned long int, N> indices;
     for (long int i = N-1; i >= 0; i--){
         indices[i] = index%sizes[i];
@@ -306,7 +386,8 @@ std::array<unsigned long int, N> cg3::Array<T, N>::reverseIndex(unsigned int ind
 }
 
 template<class T, size_t N>
-unsigned long cg3::Array<T, N>::getIndex(const unsigned long indices[], const unsigned long sizes[]) {
+unsigned long cg3::Array<T, N>::getIndex(const unsigned long indices[], const unsigned long sizes[])
+{
     unsigned long int ind = indices[0];
     assert(indices[0] < sizes[0]);
     for (unsigned int i = 1; i < N; i++){
@@ -318,8 +399,8 @@ unsigned long cg3::Array<T, N>::getIndex(const unsigned long indices[], const un
 }
 
 template<typename T, size_t N>
-void cg3::Array<T, N>::initializeNestedLists(cg3::NestedInitializerLists<T, N> values) {
-
+void cg3::Array<T, N>::initializeNestedLists(cg3::NestedInitializerLists<T, N> values)
+{
     std::list<std::size_t> szs = NestedInitializerListsProcessor<T, N>::maxDimensionsLevels(values);
     unsigned int i = 0;
     size_t totalSize = 1;

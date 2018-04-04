@@ -14,7 +14,8 @@
 namespace cg3 {
 
 /**
- * Class representing a directed segment. It is composed
+ * @ingroup cg3core
+ * @brief Class representing a directed segment. It is composed
  * by two end-points
  */
 template <class T>

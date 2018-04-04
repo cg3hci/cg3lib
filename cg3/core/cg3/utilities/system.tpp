@@ -10,6 +10,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief fileExists
  * @param filename
  * @link https://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exist-using-standard-c-c11-c
@@ -28,6 +29,7 @@ inline std::string executeCommand(const std::string& cmd)
 }
 
 /**
+ * @ingroup cg3core
  * @brief this function executes a command on the shell
  * @param[in] cmd: string containing the command
  * @return the output of the executed command

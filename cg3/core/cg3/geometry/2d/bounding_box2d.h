@@ -18,6 +18,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief The BoundingBox2D class
  * This class models an axis aligned 2D box.
  * It is composed of two points, min and max, which represent the minimum and

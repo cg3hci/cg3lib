@@ -12,6 +12,7 @@ namespace cg3 {
 /* ----- UTILS IMPLEMENTATION ----- */
 
 /**
+ * @ingroup cg3core
  * @brief Calculate angle between 2 vectors
  * @param v1 First vector
  * @param v2 Second vector
@@ -25,6 +26,7 @@ inline double getAngle(const Vector& v1, const Vector& v2)
 }
 
 /**
+ * @ingroup cg3core
  * @brief Get internal (clockwise) angle between two 3D vector
  * @param v1 First vector
  * @param v2 Second vector
@@ -52,6 +54,7 @@ inline double getInternalAngle(
 
 
 /**
+ * @ingroup cg3core
  * @brief Get orthogonal projection of a point in a plane
  * @param plane Projection plane
  * @param point Point to be projected
@@ -72,6 +75,7 @@ inline Pointd orthogonalProjectionOnAPlane(
 }
 
 /**
+ * @ingroup cg3core
  * @brief Get orthogonal projection of a point in a plane given a plane point
  * @param planeNormal Projection plane normal
  * @param planePoint Projection plane point

@@ -39,6 +39,7 @@ struct NestedInitializerListsTraits<T, 0>
 
 //Alias
 /**
+ * @ingroup cg3core
  * @class NestedInitializerLists
  * @brief It manages nested std::initializer_list<T> types of #L levels
  * L must be known at compile time, and compilation will fail if the NestedInitializerLists used
@@ -51,6 +52,7 @@ using NestedInitializerLists = typename internal::NestedInitializerListsTraits<T
 
 // Recursive part.
 /**
+ * @ingroup cg3core
  * @brief The NestedInitializerListsProcessor class
  *
  * Proposes some helper static functions that allows to process cg3::NestedInitializerLists of L levels.

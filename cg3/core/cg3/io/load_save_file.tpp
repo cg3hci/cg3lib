@@ -147,6 +147,23 @@ inline Color getColorFromArray(
 
 } //namespace cg3::internal
 
+/**
+ * @ingroup cg3core
+ * @brief saveMeshOnObj
+ * @param filename
+ * @param nVertices
+ * @param nFaces
+ * @param vertices
+ * @param faces
+ * @param meshType
+ * @param modality
+ * @param verticesNormals
+ * @param colorMod
+ * @param verticesColors
+ * @param faceColors
+ * @param polygonSizes
+ * @return
+ */
 template <typename A, typename B, typename C , typename T , typename V , typename W>
 bool saveMeshOnObj(
         const std::string& filename,
@@ -253,6 +270,23 @@ bool saveMeshOnObj(
     return true;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief saveMeshOnPly
+ * @param filename
+ * @param nVertices
+ * @param nFaces
+ * @param vertices
+ * @param faces
+ * @param meshType
+ * @param modality
+ * @param verticesNormals
+ * @param colorMod
+ * @param verticesColors
+ * @param faceColors
+ * @param polygonSizes
+ * @return
+ */
 template <typename A, typename B, typename C, typename T, typename V, typename W >
 inline bool saveMeshOnPly(
         const std::string& filename,
@@ -377,6 +411,20 @@ inline bool saveMeshOnPly(
     return true;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief loadMeshFromObj
+ * @param filename
+ * @param coords
+ * @param faces
+ * @param meshType
+ * @param modality
+ * @param verticesNormals
+ * @param verticesColors
+ * @param faceColors
+ * @param faceSizes
+ * @return
+ */
 template <typename T, typename V, typename C, typename W>
 bool loadMeshFromObj(
         const std::string& filename,
@@ -532,6 +580,18 @@ bool loadMeshFromObj(
     return true;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief loadTriangleMeshFromObj
+ * @param filename
+ * @param coords
+ * @param triangles
+ * @param modality
+ * @param verticesNormals
+ * @param verticesColors
+ * @param triangleColors
+ * @return
+ */
 template <typename T, typename V, typename C>
 bool loadTriangleMeshFromObj(
         const std::string& filename,
@@ -587,6 +647,14 @@ bool loadTriangleMeshFromObj(
 }
 
 #ifdef CG3_WITH_EIGEN
+/**
+ * @ingroup cg3core
+ * @brief loadTriangleMeshFromObj
+ * @param filename
+ * @param coords
+ * @param triangles
+ * @return
+ */
 template <typename T, typename V>
 bool loadTriangleMeshFromObj(
         const std::string &filename,
@@ -628,6 +696,18 @@ bool loadTriangleMeshFromObj(
     return r;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief loadTriangleMeshFromObj
+ * @param filename
+ * @param coords
+ * @param triangles
+ * @param modality
+ * @param verticesNormals
+ * @param verticesColors
+ * @param triangleColors
+ * @return
+ */
 template <typename T, typename V, typename C, typename W, typename X>
 bool loadTriangleMeshFromObj(
         const std::string &filename,
@@ -732,6 +812,20 @@ bool loadTriangleMeshFromObj(
 }
 #endif
 
+/**
+ * @ingroup cg3core
+ * @brief loadMeshFromPly
+ * @param filename
+ * @param coords
+ * @param faces
+ * @param meshType
+ * @param modality
+ * @param verticesNormals
+ * @param verticesColors
+ * @param faceColors
+ * @param faceSizes
+ * @return
+ */
 template <typename T, typename V, typename C, typename W>
 bool loadMeshFromPly(
         const std::string& filename,
@@ -1001,6 +1095,14 @@ bool loadMeshFromPly(
 }
 
 #ifdef CG3_WITH_EIGEN
+/**
+ * @ingroup cg3core
+ * @brief loadTriangleMeshFromPly
+ * @param filename
+ * @param coords
+ * @param triangles
+ * @return
+ */
 template <typename T, typename V>
 bool loadTriangleMeshFromPly(
         const std::string &filename,
@@ -1042,6 +1144,18 @@ bool loadTriangleMeshFromPly(
     return r;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief loadTriangleMeshFromPly
+ * @param filename
+ * @param coords
+ * @param triangles
+ * @param modality
+ * @param verticesNormals
+ * @param verticesColors
+ * @param triangleColors
+ * @return
+ */
 template <typename T, typename V, typename C, typename W, typename X>
 bool loadTriangleMeshFromPly(
         const std::string &filename,

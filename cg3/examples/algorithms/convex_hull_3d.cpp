@@ -10,7 +10,8 @@
 #include <cg3/viewer/drawable_objects/drawable_dcel.h>
 #include <random>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     QApplication app(argc, argv);
     cg3::viewer::MainWindow mw;  //Main window, it contains QGLViewer canvas
 

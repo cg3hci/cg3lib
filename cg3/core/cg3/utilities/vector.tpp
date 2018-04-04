@@ -10,7 +10,7 @@
 namespace cg3 {
 
 /**
- * \~English
+ * @ingroup cg3core
  * @brief This function computes a binary search of an element on a sorted std::vector
  * @param[in] n: the object that we are searching on the vector
  * @param[in] v: a sorted std::vector
@@ -29,7 +29,8 @@ inline int binarySearch(const T &n, const std::vector<T> &v) {
 }
 
 /**
- * @brief returns the indices corrispondence of the v vector sorted.
+ * @ingroup cg3core
+ * @brief Returns the indices corrispondence of the v vector sorted.
  *
  * @link https://stackoverflow.com/questions/1577475/c-sorting-and-keeping-track-of-indexes
  *

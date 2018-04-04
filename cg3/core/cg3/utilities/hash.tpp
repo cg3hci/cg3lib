@@ -15,6 +15,7 @@ inline void hashCombine(std::size_t& seed)
 }
 
 /**
+ * @ingroup cg3core
  * @brief hashCombine
  * @link https://stackoverflow.com/questions/2590677/how-do-i-combine-hash-values-in-c0x
  * Example:\n

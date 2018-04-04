@@ -16,6 +16,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief The Plane class
  * Stores a plane on the form \f$ax + by + cz + d = 0\f$.
  */

@@ -16,6 +16,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief The Timer class
  */
 class Timer

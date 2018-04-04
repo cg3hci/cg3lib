@@ -9,6 +9,13 @@
 
 namespace cg3 {
 
+/**
+ * @ingroup cg3core
+ * @brief intersection
+ * @param a
+ * @param b
+ * @return
+ */
 template<typename T>
 inline std::set<T> intersection(
         const std::set<T> &a,
@@ -20,6 +27,13 @@ inline std::set<T> intersection(
     return intersect;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief union_
+ * @param a
+ * @param b
+ * @return
+ */
 template<typename T>
 inline std::set<T> union_(
         const std::set<T> &a,
@@ -31,6 +45,13 @@ inline std::set<T> union_(
     return u;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief difference
+ * @param a
+ * @param b
+ * @return
+ */
 template<typename T>
 inline std::set<T> difference(
         const std::set<T> &a,
@@ -42,6 +63,13 @@ inline std::set<T> difference(
     return diff;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief isSubset
+ * @param a
+ * @param b
+ * @return
+ */
 template<typename T>
 inline bool isSubset(
         const std::set<T> &a,

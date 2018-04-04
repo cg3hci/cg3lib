@@ -20,7 +20,8 @@ namespace cg3 {
  * Specialization of cg3::Array class with 2 dimensions.
  */
 template <typename T>
-class Array2D : public Array<T, 2> {
+class Array2D : public Array<T, 2>
+{
 public:
     Array2D();
     Array2D(unsigned long int sizeX, unsigned long int sizeY);
@@ -36,7 +37,7 @@ public:
 template <class T>
 std::ostream& operator<< (std::ostream& inputStream, const Array2D<T>& a);
 
-}
+} //namespace cg3
 
 #include "array2d.tpp"
 

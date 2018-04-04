@@ -73,59 +73,59 @@ namespace cg3 {
  */
 template <class T, size_t N>
 class Array : public SerializableObject {
-        static_assert(N > 0, "Array dimension must be > 0.");
-        friend class Array<T, N+1>;
-    public:
-        Array();
-        template<typename... Sizes>
-        Array(Sizes... sizes);
+    static_assert(N > 0, "Array dimension must be > 0.");
+    friend class Array<T, N+1>;
+public:
+    Array();
+    template<typename... Sizes>
+    Array(Sizes... sizes);
 
-        Array(cg3::NestedInitializerLists<T, N> values);
+    Array(cg3::NestedInitializerLists<T, N> values);
 
-        constexpr unsigned long int dimensions() const;
-        template<typename... I>
-        T& operator () (I... indices);
-        template<typename... I>
-        const T& operator () (I... indices) const;
-        template<typename... I>
-        T* cArray(I... indices);
-        template<typename... I>
-        const T* cArray(I... indices) const;
+    constexpr unsigned long int dimensions() const;
+    template<typename... I>
+    T& operator () (I... indices);
+    template<typename... I>
+    const T& operator () (I... indices) const;
+    template<typename... I>
+    T* cArray(I... indices);
+    template<typename... I>
+    const T* cArray(I... indices) const;
 
-        void fill (const T& t);
-        unsigned long int size(unsigned long int dim) const;
+    void fill (const T& t);
+    unsigned long int size(unsigned long int dim) const;
 
-        T& min();
-        const T& min() const;
-        T& max();
-        const T& max() const;
+    T& min();
+    const T& min() const;
+    T& max();
+    const T& max() const;
 
-        template<typename... Sizes>
-        void resize (Sizes... s);
+    template<typename... Sizes>
+    void resize (Sizes... s);
 
-        template<typename... Sizes>
-        void conservativeResize (Sizes... s);
+    template<typename... Sizes>
+    void conservativeResize (Sizes... s);
 
-        void clear();
+    void clear();
 
-        Array<T, N-1> subArray(unsigned int r) const;
+    Array<T, N-1> subArray(unsigned int r) const;
 
-        // SerializableObject interface
-        void serialize(std::ofstream& binaryFile) const;
-        void deserialize(std::ifstream& binaryFile);
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
-    protected:
-        unsigned long int getIndex(const unsigned long int indices[]) const;
-        std::array<unsigned long int, N> reverseIndex(unsigned int index);
-        static unsigned long int getIndex(const unsigned long int indices[], const unsigned long int sizes[]);
+protected:
+    unsigned long int getIndex(const unsigned long int indices[]) const;
+    std::array<unsigned long int, N> reverseIndex(unsigned int index);
+    static unsigned long int getIndex(const unsigned long int indices[], const unsigned long int sizes[]);
 
-        void initializeNestedLists(cg3::NestedInitializerLists<T, N> values);
+    void initializeNestedLists(cg3::NestedInitializerLists<T, N> values);
 
-        std::array<unsigned long int, N> sizes;
-        std::vector<T> v;
+    std::array<unsigned long int, N> sizes;
+    std::vector<T> v;
 };
 
-}
+} //namespace cg3
 
 #include "array.tpp"
 

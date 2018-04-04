@@ -16,6 +16,7 @@
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @class BoundingBox
  * @brief The BoundingBox class models a Bounding Box which contains a 3D mesh.
  *

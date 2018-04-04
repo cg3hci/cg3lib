@@ -19,9 +19,10 @@ namespace cg3 {
 /* ----- TRIANGLES 2D UTILITIES ----- */
 
 /**
+ * @ingroup cg3core
  * @brief Reorder vertices of a 2D triangle in counter-clockwise order
- * Taken from
- * https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
+ *
+ * @link https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
  *
  * @param[out] triangle Triangle to be reordered counter-clockwise. It must be a 2D triangle.
  */
@@ -45,6 +46,7 @@ inline void reorderCounterClockwiseTriangle2D(cg3::Triangle<Point2D<T>>& triangl
 }
 
 /**
+ * @ingroup cg3core
  * @brief Sort the points of a triangle. Useful for comparators.
  *
  * @param[out] triangle Triangle with points to be sorted.
@@ -69,6 +71,7 @@ inline void sortTriangle2DPoints(cg3::Triangle<Point2D<T>>& triangle)
 
 
 /**
+ * @ingroup cg3core
  * @brief Sort the points of a triangle and reorder them.
  *
  * @param[out] triangle Triangle with points to be sorted and reordered counter-clockwise.
@@ -83,6 +86,7 @@ inline void sortTriangle2DPointsAndReorderCounterClockwise(
 
 
 /**
+ * @ingroup cg3core
  * @brief Check if two triangles have an overlap.
  * Intersections of segments with same endpoints are not included.
  *
@@ -128,10 +132,10 @@ bool triangleOverlap(
 
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point lies in a 2D triangle
  *
- * Taken from
- * https://stackoverflow.com/questions/13300904/determine-whether-point-lies-inside-triangle
+ * @link https://stackoverflow.com/questions/13300904/determine-whether-point-lies-inside-triangle
  *
  * @param[in] triangle Triangle
  * @param[in] p Input point
@@ -150,10 +154,10 @@ inline bool isPointLyingInTriangle(
 
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point lies in a 2D triangle (endpoints included)
  *
- * Taken from
- * https://stackoverflow.com/questions/13300904/determine-whether-point-lies-inside-triangle
+ * @link https://stackoverflow.com/questions/13300904/determine-whether-point-lies-inside-triangle
  *
  * Points must be in counter-clockwise order.
  *
@@ -203,6 +207,7 @@ inline bool isPointLyingInTriangle(
 }
 
 /**
+ * @ingroup cg3core
  * @brief Check if the triangulation is a Delaunay triangulation (brute force, O(n^2))
  * @param points Vector of points
  * @param triangles Vector of triangles (represented by a vector of three points)

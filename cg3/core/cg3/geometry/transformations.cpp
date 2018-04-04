@@ -11,7 +11,7 @@ namespace cg3 {
 
 #ifdef CG3_WITH_EIGEN
 /**
- * \~English
+ * @ingroup cg3core
  * @brief this function computes a rotation matrix given the axis of the rotation and the angle
  * @param[in] axis
  * @param[in] angle
@@ -34,7 +34,7 @@ void getRotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m)
 }
 
 /**
- * \~English
+ * @ingroup cg3core
  * @brief this function computes a rotation matrix given the axis of the rotation and the angle
  * @param[in] axis
  * @param[out] angle
@@ -60,7 +60,7 @@ Eigen::Matrix3d getRotationMatrix(Vec3 axis, double angle)
 #endif
 
 /**
- * \~English
+ * @ingroup cg3core
  * @brief this function computes a rotation matrix given the axis of the rotation and the angle
  * @param[in] axis
  * @param[in] angle

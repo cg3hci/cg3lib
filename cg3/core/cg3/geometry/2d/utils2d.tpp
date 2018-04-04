@@ -31,6 +31,7 @@ inline double positionOfPointWithRespectToSegment(
 /* ----- POINT/SEGMENT POSITION ----- */
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point is at the left of the line passing through the segment
  *
  * @param[in] s1 First point of the segment
@@ -51,6 +52,7 @@ inline bool isPointAtLeft(
 }
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point is at the left of the line passing through the segment
  *
  * @param[in] segment Input segment
@@ -68,6 +70,7 @@ inline bool isPointAtLeft(
 }
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point is at the right of the line passing through the segment
  *
  * @param[in] s1 First point of the segment
@@ -88,6 +91,7 @@ inline bool isPointAtRight(
 }
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point is at the right of the line passing through the segment
  *
  * @param[in] segment Input segment
@@ -106,6 +110,7 @@ inline bool isPointAtRight(
 
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point is collinear to the line passing through the segment
  * or if the points are collinear
  *
@@ -127,6 +132,7 @@ inline bool areCollinear(
 }
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point is collinear to the line passing through the segment
  *
  * @param[in] segment Input segment
@@ -147,6 +153,7 @@ inline bool areCollinear(
 /* ----- OTHERS ----- */
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point lies inside a circle passing for three points
  * @param[in] a First coordinate of the circle
  * @param[in] b Third coordinate of the circle
@@ -180,6 +187,7 @@ inline bool isPointLyingInCircle(
 }
 
 /**
+ * @ingroup cg3core
  * @brief isPolygonCounterClockwise
  * @param polygon: a container of Point2D representing a regular polygon
  * @return true if the points of the polygon are stored in counterclockwise order
@@ -209,6 +217,7 @@ inline bool isPolygonCounterClockwise(const Container& polygon)
 namespace internal {
 
 /**
+ * @ingroup cg3core
  * @brief Check if a point is at the left of the line passing through the segment
  *
  * @param[in] s1 First point of the segment

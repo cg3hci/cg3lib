@@ -11,6 +11,7 @@ namespace cg3 {
 
 #ifdef CG3_WITH_EIGEN
 /**
+ * @ingroup cg3core
  * @brief eigenVectorToStdVector
  * @param v
  * @return
@@ -26,6 +27,7 @@ inline std::vector<T> eigenVectorToStdVector(const Eigen::Matrix<T, A...>& ev)
 }
 
 /**
+ * @ingroup cg3core
  * @brief removeRowFromEigenMatrix
  * @param m
  * @param row
@@ -44,6 +46,7 @@ inline void removeRowFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int row
 }
 
 /**
+ * @ingroup cg3core
  * @brief removeColumnFromEigenMatrix
  * @param m
  * @param column

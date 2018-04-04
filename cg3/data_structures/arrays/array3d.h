@@ -20,18 +20,26 @@ namespace cg3 {
  * Specialization of cg3::Array class with 3 dimensions.
  */
 template <typename T>
-class Array3D : public Array<T, 3> {
+class Array3D : public Array<T, 3>
+{
 public:
     Array3D();
-    Array3D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ);
-    Array3D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, const T& value);
+    Array3D(
+            unsigned long int sizeX,
+            unsigned long int sizeY,
+            unsigned long int sizeZ);
+    Array3D(
+            unsigned long int sizeX,
+            unsigned long int sizeY,
+            unsigned long int sizeZ,
+            const T& value);
     Array3D(cg3::NestedInitializerLists<T, 3> values);
     unsigned long int getSizeX() const;
     unsigned long int getSizeY() const;
     unsigned long int getSizeZ() const;
 };
 
-}
+} //namespace cg3
 
 #include "array3d.tpp"
 

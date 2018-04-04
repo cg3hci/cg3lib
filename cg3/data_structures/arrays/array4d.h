@@ -20,11 +20,21 @@ namespace cg3 {
  * Specialization of cg3::Array class with 4 dimensions.
  */
 template <typename T>
-class Array4D : public Array<T, 4> {
+class Array4D : public Array<T, 4>
+{
 public:
     Array4D();
-    Array4D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, unsigned long int sizeW);
-    Array4D(unsigned long int sizeX, unsigned long int sizeY, unsigned long int sizeZ, unsigned long int sizeW, const T& value);
+    Array4D(
+            unsigned long int sizeX,
+            unsigned long int sizeY,
+            unsigned long int sizeZ,
+            unsigned long int sizeW);
+    Array4D(
+            unsigned long int sizeX,
+            unsigned long int sizeY,
+            unsigned long int sizeZ,
+            unsigned long int sizeW,
+            const T& value);
     Array4D(cg3::NestedInitializerLists<T, 4> values);
     unsigned long int getSizeX() const;
     unsigned long int getSizeY() const;
@@ -32,7 +42,7 @@ public:
     unsigned long int getSizeW() const;
 };
 
-}
+} //namespace cg3
 
 #include "array4d.tpp"
 

@@ -27,6 +27,10 @@ bool operator <(const QColor &c1, const QColor &c2);
 
 namespace cg3 {
 
+/**
+ * @ingroup cg3core
+ * @brief The Color class
+ */
 class Color : public SerializableObject
 {
 public:

@@ -10,11 +10,15 @@
 namespace cg3 {
 
 template <class VT>
-RegularLattice<VT>::RegularLattice() {
+RegularLattice<VT>::RegularLattice()
+{
 }
 
 template<class VT>
-RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool outsideBB) : bb(bb), unit(unit) {
+RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool outsideBB) :
+    bb(bb),
+    unit(unit)
+{
     mresX = bb.getLengthX() / unit;
     if (outsideBB || std::fmod(bb.getLengthX(), unit) == 0)
         mresX++;
@@ -29,75 +33,117 @@ RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool
 }
 
 template<class VT>
-unsigned int RegularLattice<VT>::resX() const {
+unsigned int RegularLattice<VT>::resX() const
+{
     return mresX;
 }
 
 template<class VT>
-unsigned int RegularLattice<VT>::resY() const {
+unsigned int RegularLattice<VT>::resY() const
+{
     return mresY;
 }
 
 template<class VT>
-unsigned int RegularLattice<VT>::resZ() const {
+unsigned int RegularLattice<VT>::resZ() const
+{
     return mresZ;
 }
 
 template<class VT>
-const BoundingBox &RegularLattice<VT>::boundingBox() const {
+const BoundingBox &RegularLattice<VT>::boundingBox() const
+{
     return bb;
 }
 
 template<class VT>
-Pointd RegularLattice<VT>::nearestVertex(const Pointd &p) const {
-    return cg3::Pointd(bb.getMinX() + getIndexOfCoordinateX(p.x())*unit, bb.getMinY() + getIndexOfCoordinateY(p.y())*unit, bb.getMinZ() + getIndexOfCoordinateZ(p.z())*unit);
+Pointd RegularLattice<VT>::nearestVertex(const Pointd &p) const
+{
+    return cg3::Pointd(bb.getMinX() + getIndexOfCoordinateX(p.x())*unit,
+                       bb.getMinY() + getIndexOfCoordinateY(p.y())*unit,
+                       bb.getMinZ() + getIndexOfCoordinateZ(p.z())*unit);
 }
 
 template<class VT>
-const VT &RegularLattice<VT>::vertexProperty(const Pointd &p) const {
+const VT &RegularLattice<VT>::vertexProperty(const Pointd &p) const
+{
     assert(getIndexOfCoordinateX(p.x()) < mresX);
     assert(getIndexOfCoordinateY(p.y()) < mresY);
     assert(getIndexOfCoordinateZ(p.z()) < mresZ);
-    return vertexProperties[getIndexOfCoordinateX(p.x()), getIndexOfCoordinateY(p.y()), getIndexOfCoordinateZ(p.z())];
+    return vertexProperties[
+            getIndexOfCoordinateX(p.x()),
+            getIndexOfCoordinateY(p.y()),
+            getIndexOfCoordinateZ(p.z())];
 }
 
 template<class VT>
-void RegularLattice<VT>::setVertexProperty(const Pointd &p, const VT &property) {
+void RegularLattice<VT>::setVertexProperty(const Pointd &p, const VT &property)
+{
     assert(getIndexOfCoordinateX(p.x()) < mresX);
     assert(getIndexOfCoordinateY(p.y()) < mresY);
     assert(getIndexOfCoordinateZ(p.z()) < mresZ);
-    vertexProperties[getIndexOfCoordinateX(p.x()), getIndexOfCoordinateY(p.y()), getIndexOfCoordinateZ(p.z())] = property;
+    vertexProperties[
+            getIndexOfCoordinateX(p.x()),
+            getIndexOfCoordinateY(p.y()),
+            getIndexOfCoordinateZ(p.z())] = property;
 }
 
 template<class VT>
-void RegularLattice<VT>::serialize(std::ofstream &binaryFile) const {
-    cg3::serializeObjectAttributes("cg3RegularLattice", binaryFile, bb, unit, mresX, mresY, mresZ, vertexProperties);
+void RegularLattice<VT>::serialize(std::ofstream &binaryFile) const
+{
+    cg3::serializeObjectAttributes(
+                "cg3RegularLattice",
+                binaryFile,
+                bb,
+                unit,
+                mresX,
+                mresY,
+                mresZ,
+                vertexProperties);
 }
 
 template<class VT>
-void RegularLattice<VT>::deserialize(std::ifstream &binaryFile) {
-    cg3::deserializeObjectAttributes("cg3RegularLattice", binaryFile, bb, unit, mresX, mresY, mresZ, vertexProperties);
+void RegularLattice<VT>::deserialize(std::ifstream &binaryFile)
+{
+    cg3::deserializeObjectAttributes(
+                "cg3RegularLattice",
+                binaryFile,
+                bb,
+                unit,
+                mresX,
+                mresY,
+                mresZ,
+                vertexProperties);
 }
 
 template<class VT>
-Pointd RegularLattice<VT>::getPoint(unsigned int i, unsigned int j, unsigned int k) const {
-    return cg3::Pointd(bb.getMinX() + i*unit, bb.getMinY() + j*unit, bb.getMinZ() + k*unit);
+Pointd RegularLattice<VT>::getPoint(
+        unsigned int i,
+        unsigned int j,
+        unsigned int k) const
+{
+    return cg3::Pointd(bb.getMinX() + i*unit,
+                       bb.getMinY() + j*unit,
+                       bb.getMinZ() + k*unit);
 }
 
 template<class VT>
-int RegularLattice<VT>::getIndexOfCoordinateX(double x) const {
+int RegularLattice<VT>::getIndexOfCoordinateX(double x) const
+{
     double deltax = x - bb.getMinX();
     return (deltax * (mresX-1)) / bb.getLengthX();
 }
 
 template<class VT>
-int RegularLattice<VT>::getIndexOfCoordinateY(double y) const {
+int RegularLattice<VT>::getIndexOfCoordinateY(double y) const
+{
     double deltay = y - bb.getMinY();
     return (deltay * (mresY-1)) / bb.getLengthY();
 }
 
 template<class VT>
-int RegularLattice<VT>::getIndexOfCoordinateZ(double z) const {
+int RegularLattice<VT>::getIndexOfCoordinateZ(double z) const
+{
     double deltaz = z - bb.getMinZ();
     return (deltaz * (mresZ-1)) / bb.getLengthZ();
 }
