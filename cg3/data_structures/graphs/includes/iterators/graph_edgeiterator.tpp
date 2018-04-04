@@ -25,7 +25,7 @@ template <class T>
 Graph<T>::EdgeIterator::EdgeIterator(
         Graph<T>* graph,
         const typename Graph<T>::NodeIterator& nodeIt,
-        const typename Graph<T>::AdjacentNodeIterator& adjIt) :
+        const typename Graph<T>::AdjacentIterator& adjIt) :
     graph(graph),
     nodeIt(nodeIt),
     adjIt(adjIt)
@@ -95,13 +95,13 @@ void Graph<T>::EdgeIterator::next()
 template <class T>
 typename Graph<T>::EdgeIterator Graph<T>::RangeBasedEdgeIterator::begin()
 {
-    return this->graph->edgeIteratorBegin();
+    return this->graph->edgeBegin();
 }
 
 template <class T>
 typename Graph<T>::EdgeIterator Graph<T>::RangeBasedEdgeIterator::end()
 {
-    return this->graph->edgeIteratorEnd();
+    return this->graph->edgeEnd();
 }
 
 

@@ -74,9 +74,12 @@ public:
     friend class EdgeIterator;
     class RangeBasedEdgeIterator;
 
-    class AdjacentNodeIterator;
-    friend class AdjacentNodeIterator;
-    class RangeBasedAdjacentNodeIterator;
+    class AdjacentIterator;
+    friend class AdjacentIterator;
+    class RangeBasedAdjacentIterator;
+
+    //The default iterator is the NodeIterator
+    typedef NodeIterator iterator;
 
 
     /* Constructors / destructor */
@@ -120,21 +123,28 @@ public:
 
     /* Iterators */
 
-    NodeIterator nodeIteratorBegin();
-    NodeIterator nodeIteratorEnd();
+    NodeIterator begin();
+    NodeIterator end();
+
+    NodeIterator nodeBegin();
+    NodeIterator nodeEnd();
     RangeBasedNodeIterator nodeIterator();
 
-    EdgeIterator edgeIteratorBegin();
-    EdgeIterator edgeIteratorEnd();
+    AdjacentIterator adjacentBegin(NodeIterator nodeIt);
+    AdjacentIterator adjacentEnd(NodeIterator nodeIt);
+    RangeBasedAdjacentIterator adjacentIterator(NodeIterator nodeIt);
+
+    AdjacentIterator adjacentBegin(AdjacentIterator nodeIt);
+    AdjacentIterator adjacentEnd(AdjacentIterator nodeIt);
+    RangeBasedAdjacentIterator adjacentIterator(AdjacentIterator nodeIt);
+
+    AdjacentIterator adjacentBegin(const T& o);
+    AdjacentIterator adjacentEnd(const T& o);
+    RangeBasedAdjacentIterator adjacentIterator(const T& o);
+
+    EdgeIterator edgeBegin();
+    EdgeIterator edgeEnd();
     RangeBasedEdgeIterator edgeIterator();
-
-    AdjacentNodeIterator adjacentNodeIteratorBegin(NodeIterator nodeIt);
-    AdjacentNodeIterator adjacentNodeIteratorEnd(NodeIterator nodeIt);
-    RangeBasedAdjacentNodeIterator adjacentNodeIterator(NodeIterator nodeIt);
-
-    AdjacentNodeIterator adjacentNodeIteratorBegin(const T& o);
-    AdjacentNodeIterator adjacentNodeIteratorEnd(const T& o);
-    RangeBasedAdjacentNodeIterator adjacentNodeIterator(const T& o);
 
 
 protected:
@@ -150,9 +160,9 @@ protected:
 
     void getFirstValidIteratorEdge(
             NodeIterator nodeIt,
-            AdjacentNodeIterator adjIt,
+            AdjacentIterator adjIt,
             NodeIterator& newNodeIt,
-            AdjacentNodeIterator& newAdjIt);
+            AdjacentIterator& newAdjIt);
 
 
     /* Helpers */
@@ -186,7 +196,7 @@ protected:
 #include "includes/iterators/graph_genericnodeiterator.h"
 #include "includes/iterators/graph_nodeiterator.h"
 #include "includes/iterators/graph_edgeiterator.h"
-#include "includes/iterators/graph_adjacentnodeiterator.h"
+#include "includes/iterators/graph_adjacentiterator.h"
 
 #include "graph.tpp"
 

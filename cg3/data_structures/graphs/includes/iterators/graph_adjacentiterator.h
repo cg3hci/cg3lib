@@ -1,5 +1,5 @@
-#ifndef CG3_GRAPH_ADJACENTNODEITERATOR_H
-#define CG3_GRAPH_ADJACENTNODEITERATOR_H
+#ifndef CG3_GRAPH_ADJACENTITERATOR_H
+#define CG3_GRAPH_ADJACENTITERATOR_H
 
 #include "graph_genericnodeiterator.h"
 
@@ -9,7 +9,7 @@ namespace cg3 {
  * @brief The iterator of a graph
  */
 template <class T>
-class Graph<T>::AdjacentNodeIterator :
+class Graph<T>::AdjacentIterator :
         public Graph<T>::GenericNodeIterator,
         public std::iterator<std::forward_iterator_tag, T>
 {
@@ -20,10 +20,10 @@ private:
 
     /* Constructors */
 
-    inline AdjacentNodeIterator(
+    inline AdjacentIterator(
             Graph<T>* graph);
 
-    inline AdjacentNodeIterator(
+    inline AdjacentIterator(
             Graph<T>* graph,
             const NodeIterator& targetNodeIt,
             std::unordered_map<size_t, double>::iterator it);
@@ -31,11 +31,11 @@ public:
 
     /* Iterator operators */
 
-    inline bool operator == (const AdjacentNodeIterator& otherIterator) const;
-    inline bool operator != (const AdjacentNodeIterator& otherIterator) const;
+    inline bool operator == (const AdjacentIterator& otherIterator) const;
+    inline bool operator != (const AdjacentIterator& otherIterator) const;
 
-    inline AdjacentNodeIterator operator ++ ();
-    inline AdjacentNodeIterator operator ++ (int);
+    inline AdjacentIterator operator ++ ();
+    inline AdjacentIterator operator ++ (int);
 
     inline const T& operator *() const;
 
@@ -58,17 +58,17 @@ private:
  * @brief The range based iterator class for the graph
  */
 template <class T>
-class Graph<T>::RangeBasedAdjacentNodeIterator {
+class Graph<T>::RangeBasedAdjacentIterator {
 
 public:
 
-    inline RangeBasedAdjacentNodeIterator(
+    inline RangeBasedAdjacentIterator(
             Graph<T>* graph,
             const NodeIterator& targetNodeIt) :
         graph(graph), targetNodeIt(targetNodeIt) {}
 
-    inline AdjacentNodeIterator begin();
-    inline AdjacentNodeIterator end();
+    inline AdjacentIterator begin();
+    inline AdjacentIterator end();
 
 private:
 
@@ -80,6 +80,6 @@ private:
 }
 
 
-#include "graph_adjacentnodeiterator.tpp"
+#include "graph_adjacentiterator.tpp"
 
-#endif // CG3_GRAPH_ADJACENTNODEITERATOR_H
+#endif // CG3_GRAPH_ADJACENTITERATOR_H

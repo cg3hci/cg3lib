@@ -98,13 +98,13 @@ void Graph<T>::NodeIterator::next()
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::RangeBasedNodeIterator::begin()
 {
-    return this->graph->nodeIteratorBegin();
+    return this->graph->nodeBegin();
 }
 
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::RangeBasedNodeIterator::end()
 {
-    return this->graph->nodeIteratorEnd();
+    return this->graph->nodeEnd();
 }
 
 

@@ -4,24 +4,24 @@
  *
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-#include "graph_adjacentnodeiterator.h"
+#include "graph_adjacentiterator.h"
 
 namespace cg3 {
 
 /* ----- CONSTRUCTORS ----- */
 
 template <class T>
-Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
+Graph<T>::AdjacentIterator::AdjacentIterator(
         Graph<T>* graph) :
     Graph<T>::GenericNodeIterator(graph),
-    targetNodeIt(this->graph->nodeIteratorEnd()),
+    targetNodeIt(this->graph->nodeEnd()),
     it(std::unordered_map<size_t, double>::iterator())
 {
 
 }
 
 template <class T>
-Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
+Graph<T>::AdjacentIterator::AdjacentIterator(
         Graph<T>* graph,
         const NodeIterator& targetNodeIt,
         std::unordered_map<size_t, double>::iterator it) :
@@ -29,7 +29,7 @@ Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
     targetNodeIt(targetNodeIt),
     it(it)
 {
-    if (targetNodeIt != this->graph->nodeIteratorEnd() &&
+    if (targetNodeIt != this->graph->nodeEnd() &&
             it != this->graph->nodes.at((size_t) targetNodeIt.id).adjacentNodes.end())
     {
         this->id = it->first;
@@ -42,8 +42,8 @@ Graph<T>::AdjacentNodeIterator::AdjacentNodeIterator(
 
 
 template <class T>
-bool Graph<T>::AdjacentNodeIterator::operator ==(
-        const AdjacentNodeIterator& otherIterator) const
+bool Graph<T>::AdjacentIterator::operator ==(
+        const AdjacentIterator& otherIterator) const
 {
     return (this->graph == otherIterator.graph &&
             this->id == otherIterator.id &&
@@ -52,7 +52,7 @@ bool Graph<T>::AdjacentNodeIterator::operator ==(
 }
 
 template <class T>
-bool Graph<T>::AdjacentNodeIterator::operator !=(const AdjacentNodeIterator& otherIterator) const
+bool Graph<T>::AdjacentIterator::operator !=(const AdjacentIterator& otherIterator) const
 {
     return !(*this == otherIterator);
 }
@@ -60,23 +60,23 @@ bool Graph<T>::AdjacentNodeIterator::operator !=(const AdjacentNodeIterator& oth
 
 
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::AdjacentNodeIterator::operator ++()
+typename Graph<T>::AdjacentIterator Graph<T>::AdjacentIterator::operator ++()
 {
     next();
     return *this;
 }
 
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::AdjacentNodeIterator::operator ++(int)
+typename Graph<T>::AdjacentIterator Graph<T>::AdjacentIterator::operator ++(int)
 {
-    AdjacentNodeIterator oldIt = *this;
+    AdjacentIterator oldIt = *this;
     next();
     return oldIt;
 }
 
 
 template <class T>
-const T& Graph<T>::AdjacentNodeIterator::operator *() const
+const T& Graph<T>::AdjacentIterator::operator *() const
 {
     return this->graph->nodes.at((size_t) this->id).value;
 }
@@ -86,7 +86,7 @@ const T& Graph<T>::AdjacentNodeIterator::operator *() const
 /* ----- PROTECTED METHODS FOR NAVIGATION ----- */
 
 template <class T>
-void Graph<T>::AdjacentNodeIterator::next()
+void Graph<T>::AdjacentIterator::next()
 {
     ++it;
     it = this->graph->getFirstValidIteratorAdjacent(targetNodeIt, it);
@@ -106,15 +106,15 @@ void Graph<T>::AdjacentNodeIterator::next()
 /* --------- RANGE BASED ITERATOR --------- */
 
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::begin()
+typename Graph<T>::AdjacentIterator Graph<T>::RangeBasedAdjacentIterator::begin()
 {
-    return this->graph->adjacentNodeIteratorBegin(targetNodeIt);
+    return this->graph->adjacentBegin(targetNodeIt);
 }
 
 template <class T>
-typename Graph<T>::AdjacentNodeIterator Graph<T>::RangeBasedAdjacentNodeIterator::end()
+typename Graph<T>::AdjacentIterator Graph<T>::RangeBasedAdjacentIterator::end()
 {
-    return this->graph->adjacentNodeIteratorEnd(targetNodeIt);
+    return this->graph->adjacentEnd(targetNodeIt);
 }
 
 

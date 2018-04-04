@@ -34,18 +34,18 @@ SOURCES += \
 HEADERS += \
     $$PWD/data_structures/graphs/graph.h \
     $$PWD/data_structures/graphs/includes/nodes/graph_node.h \
+    $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.h \
     $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.h \
-    $$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.h \
-    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentnodeiterator.h \
-    $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.h
+    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentiterator.h \
+    $$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.h
 
 SOURCES += \
     $$PWD/data_structures/graphs/graph.tpp \
     $$PWD/data_structures/graphs/includes/nodes/graph_node.tpp \
+    $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.tpp \
     $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.tpp \
-    $$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.tpp \
-    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentnodeiterator.tpp \
-    $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.tpp
+    $$PWD/data_structures/graphs/includes/iterators/graph_adjacentiterator.tpp \
+    $$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.tpp
 
 # ----- Bipartite graph -----
 

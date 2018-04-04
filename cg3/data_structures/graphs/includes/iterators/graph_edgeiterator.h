@@ -32,7 +32,7 @@ private:
     inline EdgeIterator(
             Graph<T>* graph,
             const typename Graph<T>::NodeIterator& nodeIt,
-            const typename Graph<T>::AdjacentNodeIterator& adjIt);
+            const typename Graph<T>::AdjacentIterator& adjIt);
 
 public:
 
@@ -58,7 +58,7 @@ private:
     Graph<T>* graph;
 
     typename Graph<T>::NodeIterator nodeIt;
-    typename Graph<T>::AdjacentNodeIterator adjIt;
+    typename Graph<T>::AdjacentIterator adjIt;
 
 };
 

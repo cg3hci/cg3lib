@@ -12,8 +12,6 @@
 #include <map>
 #include <list>
 
-#include "cg3/data_structures/graphs/graph.h"
-
 namespace cg3 {
 
 template <class T>
@@ -25,11 +23,11 @@ struct GraphPath {
 template <class T>
 using DijkstraResult = std::map<T, GraphPath<T>>;
 
-template <class T>
-DijkstraResult<T> dijkstra(Graph<T>& graph, const T& source);
+template <class G, class T>
+DijkstraResult<T> dijkstra(G& graph, const T& source);
 
-template <class T>
-GraphPath<T> dijkstra(Graph<T>& graph, const T& sourceId, const T& destinationId);
+template <class G, class T>
+GraphPath<T> dijkstra(G& graph, const T& sourceId, const T& destinationId);
 
 }
 
