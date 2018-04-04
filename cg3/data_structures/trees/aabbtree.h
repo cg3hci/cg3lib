@@ -160,6 +160,7 @@ public:
     inline AABBTree<D,K,T,C>& operator= (AABBTree<D,K,T,C> bst);
     inline void swap(AABBTree<D,K,T,C>& bst);
 
+
 protected:
 
     /* Protected fields */
@@ -173,12 +174,9 @@ protected:
     AABBValueExtractor aabbValueExtractor;
 
 
-private:
-
-    /* Private methods */
+    /* Protected methods */
 
     void initialize();
-
 
 
     /* AABB helpers */

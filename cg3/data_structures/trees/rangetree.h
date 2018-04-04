@@ -149,7 +149,6 @@ public:
 
 protected:
 
-
     /* Protected fields */
 
     Node* root;
@@ -162,9 +161,7 @@ protected:
     std::vector<C> customComparators;
 
 
-private:
-
-    /* Private methods */
+    /* Protected methods */
 
     void initialize();
 

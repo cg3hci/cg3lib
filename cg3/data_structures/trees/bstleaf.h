@@ -150,9 +150,7 @@ protected:
     C comparator;
 
 
-private:
-
-    /* Private methods */
+    /* Protected methods */
 
     void initialize();
 

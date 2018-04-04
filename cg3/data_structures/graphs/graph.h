@@ -48,7 +48,7 @@ template <class T>
 class Graph
 {
 
-private:
+protected:
 
     /* Node class */
 
@@ -137,9 +137,9 @@ public:
     RangeBasedAdjacentNodeIterator adjacentNodeIterator(const T& o);
 
 
-private:
+protected:
 
-    /* Private functions for iterators */
+    /* Protected functions for iterators */
 
     inline typename std::vector<Node>::iterator getFirstValidIteratorNode(
             typename std::vector<Node>::iterator it);
@@ -166,7 +166,7 @@ private:
     inline void setWeightHelper(const size_t& id1, const size_t& id2, const double weight);
 
 
-    /* Private fields */
+    /* Protected fields */
 
     GraphType type;
 
