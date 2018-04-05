@@ -49,6 +49,9 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
+    class GLCanvas;
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 

@@ -30,22 +30,22 @@
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
 #include <qmessagebox.h>
+#include "mainwindow.h"
 
 namespace cg3 {
 namespace viewer {
-
-class MainWindow;
 
 /**
  * @brief The GLCanvas class
  * @ingroup cg3viewer
  */
-class GLCanvas : public QGLViewer
+class MainWindow::GLCanvas : public QGLViewer
 {
     Q_OBJECT
 
 public:
 
+    friend class cg3::viewer::MainWindow;
     GLCanvas(QWidget * parent = nullptr);
 
     //QGLViewer Override:
