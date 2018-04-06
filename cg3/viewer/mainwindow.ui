@@ -28,7 +28,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="cg3::viewer::MainWindow::GLCanvas" name="glCanvas" native="true">
+     <widget class="cg3::viewer::GLCanvas" name="glCanvas" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -348,7 +348,7 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>cg3::viewer::MainWindow::GLCanvas</class>
+   <class>cg3::viewer::GLCanvas</class>
    <extends>QWidget</extends>
    <header>cg3/viewer/glcanvas.h</header>
    <container>1</container>

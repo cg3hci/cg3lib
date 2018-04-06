@@ -15,28 +15,28 @@
 namespace cg3 {
 namespace viewer {
 
-MainWindow::GLCanvas::GLCanvas(QWidget * parent) : clearColor(Qt::white)
+GLCanvas::GLCanvas(QWidget * parent) : clearColor(Qt::white), mode(_3D)
 {
     setParent(parent);
 }
 
-void MainWindow::GLCanvas::init()
+void GLCanvas::init()
 {
-    setFPSIsDisplayed(true);
+    setFPSIsDisplayed(false);
     camera()->frame()->setSpinningSensitivity(100.0);
 }
 
-void MainWindow::GLCanvas::draw()
+void GLCanvas::draw()
 {
     setBackgroundColor(clearColor);
 
     for(unsigned int i=0; i<drawlist.size(); ++i) {
-        if (objVisibility[i])
+        if (objVisibility[i] && drawlist[i] != nullptr)
             drawlist[i]->draw();
     }
 }
 
-void MainWindow::GLCanvas::drawWithNames()
+void GLCanvas::drawWithNames()
 {
     setBackgroundColor(clearColor);
 
@@ -49,12 +49,8 @@ void MainWindow::GLCanvas::drawWithNames()
     }
 }
 
-void MainWindow::GLCanvas::postSelection(const QPoint& point)
+void GLCanvas::postSelection(const QPoint& point)
 {
-    // Find the selectedPoint coordinates, using camera()->pointUnderPixel().
-    bool found;
-    selectedPoint = camera()->pointUnderPixel(point, found);
-    selectedPoint -= 0.01f*dir; // Small offset to make point clearly visible.
     unsigned int idObject = selectedName();
     // Note that "found" is different from (selectedObjectId()>=0) because of the size of the selected region.
 
@@ -82,43 +78,69 @@ void MainWindow::GLCanvas::postSelection(const QPoint& point)
         }
 }
 
-void MainWindow::GLCanvas::clear()
+void GLCanvas::clearDrawableObjectsList()
 {
     drawlist.clear();
     objVisibility.clear();
 }
 
-unsigned int MainWindow::GLCanvas::pushObj(const DrawableObject* obj, bool visible)
+unsigned int GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
 {
-    drawlist.push_back(obj);
-    objVisibility.push_back(visible);
-    update();
-
-    return (unsigned int)drawlist.size();
+    if (unusedIds.size() == 0) {
+        drawlist.push_back(obj);
+        objVisibility.push_back(visible);
+        update();
+        return (unsigned int)drawlist.size();
+    }
+    else {
+        unsigned int id = *unusedIds.begin();
+        drawlist[id] = obj;
+        objVisibility[id] = visible;
+        unusedIds.erase(id);
+        update();
+        return id;
+    }
 }
 
-void MainWindow::GLCanvas::deleteObj(const DrawableObject* obj)
+bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
 {
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = std::distance(drawlist.begin(), it);
-        objVisibility.erase(objVisibility.begin()+pos);
-        drawlist.erase(it);
+        objVisibility[pos] = false;
+        drawlist[pos] = nullptr;
+        unusedIds.insert(pos);
+        return true;
     }
+    return false;
 }
 
-void MainWindow::GLCanvas::setVisibility(const DrawableObject* obj, bool visible)
+bool GLCanvas::deleteDrawableObject(unsigned int idObject)
+{
+    if (idObject < drawlist.size() && drawlist[idObject] != nullptr){
+        objVisibility[idObject] = false;
+        drawlist[idObject] = nullptr;
+        unusedIds.insert(idObject);
+        return true;
+    }
+    else
+        return false;
+}
+
+bool GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = it - drawlist.begin();
         objVisibility[pos] = visible;
+        return true;
     }
+    return false;
 }
 
-bool MainWindow::GLCanvas::isVisible(const DrawableObject* obj)
+bool GLCanvas::isDrawableObjectVisible(const DrawableObject* obj) const
 {
-    std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
+    std::vector<const DrawableObject *>::const_iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = it - drawlist.begin();
         return objVisibility[pos];
@@ -126,7 +148,13 @@ bool MainWindow::GLCanvas::isVisible(const DrawableObject* obj)
     return false;
 }
 
-void MainWindow::GLCanvas::resetPointOfView()
+bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
+{
+    std::vector<const DrawableObject *>::const_iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
+    return it != drawlist.end();
+}
+
+void GLCanvas::resetPointOfView()
 {
     qglviewer::Vec v(0,0,2.61313);
     qglviewer::Quaternion q(0,0,0,1);
@@ -134,14 +162,14 @@ void MainWindow::GLCanvas::resetPointOfView()
     camera()->setOrientation(q);
 }
 
-void MainWindow::GLCanvas::serializePointOfView(std::ofstream &file)
+void GLCanvas::serializePointOfView(std::ofstream &file) const
 {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
     serializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
 }
 
-bool MainWindow::GLCanvas::deserializePointOfView(std::ifstream &file)
+bool GLCanvas::deserializePointOfView(std::ifstream &file)
 {
     qglviewer::Vec v;
     qglviewer::Quaternion q;
@@ -156,7 +184,7 @@ bool MainWindow::GLCanvas::deserializePointOfView(std::ifstream &file)
     }
 }
 
-void MainWindow::GLCanvas::savePointOfView(const std::string &filename)
+void GLCanvas::savePointOfView(const std::string &filename) const
 {
     std::ofstream file;
     file.open(filename, std::ios::out | std::ios::binary);
@@ -166,7 +194,7 @@ void MainWindow::GLCanvas::savePointOfView(const std::string &filename)
     file.close();
 }
 
-bool MainWindow::GLCanvas::loadPointOfView(const std::string &filename)
+bool GLCanvas::loadPointOfView(const std::string &filename)
 {
 
     std::ifstream file;
@@ -179,13 +207,20 @@ bool MainWindow::GLCanvas::loadPointOfView(const std::string &filename)
     return ok;
 }
 
-void MainWindow::GLCanvas::fitScene()
+void GLCanvas::setCameraDirection(const Vec3 &vec)
+{
+    qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
+    qglVec.normalize();
+    camera()->setViewDirection(qglVec);
+}
+
+void GLCanvas::fitScene()
 {
     Pointd sceneCenter(0,0,0);
     double sceneRadius = 0.0;
     int   count  = 0;
 
-    if (getNumberVisibleObjects() == 0) sceneRadius = 1.0;
+    if (sizeVisibleDrawableObjects() == 0) sceneRadius = 1.0;
     else {
         const double dmax = std::numeric_limits<double>::max();
         const double dmin = std::numeric_limits<double>::min();
@@ -223,40 +258,135 @@ void MainWindow::GLCanvas::fitScene()
     showEntireScene();
 }
 
-void MainWindow::GLCanvas::fitScene(const Pointd& center, double radius)
+void GLCanvas::fitScene(const Pointd& center, double radius)
 {
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), center.z()));
     setSceneRadius(radius);
     showEntireScene();
 }
 
-void MainWindow::GLCanvas::setClearColor(const QColor &color)
+void GLCanvas::fitScene2d(const Point2Dd &center, double radius)
+{
+    setSceneCenter(qglviewer::Vec(center.x(), center.y(), 0));
+    setSceneRadius(radius);
+    showEntireScene();
+}
+
+void GLCanvas::setBackgroundColor(const QColor &color)
 {
     clearColor = color;
     update();
 }
 
-BoundingBox MainWindow::GLCanvas::getFullBoundingBox() const
+void GLCanvas::set2DMode()
+{
+    if (mode != _2D){
+        mode = _2D;
+        resetPointOfView();
+        enableRotation(false);
+        update();
+    }
+}
+
+void GLCanvas::set3DMode()
+{
+    if (mode != _3D){
+        mode = _3D;
+        enableRotation();
+        update();
+    }
+}
+
+void GLCanvas::saveSnapshot()
+{
+    QGLViewer::saveSnapshot();
+}
+
+void GLCanvas::saveSnapshot(const QString &filename, bool overwrite)
+{
+    QGLViewer::saveSnapshot(filename, overwrite);
+}
+
+void GLCanvas::saveSnapshot(const std::string &filename, bool overwrite)
+{
+    QGLViewer::saveSnapshot(QString::fromStdString(filename), overwrite);
+}
+
+void GLCanvas::drawAxis(bool b)
+{
+    setAxisIsDrawn(b);
+    update();
+}
+
+BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const
 {
     BoundingBox bb;
     for(int i=0; i<(int)drawlist.size(); ++i) {
         const DrawableObject * obj = drawlist[i];
-        if (objVisibility[i] && obj->sceneRadius() > 0) {
-            Pointd center = obj->sceneCenter();
-            bb.setMin(bb.getMin().min(Pointd(center.x() - obj->sceneRadius(), center.y() - obj->sceneRadius(), center.z() - obj->sceneRadius())));
-            bb.setMax(bb.getMax().max(Pointd(center.x() + obj->sceneRadius(), center.y() + obj->sceneRadius(), center.z() + obj->sceneRadius())));
+        if (obj != nullptr) {
+            if (onlyVisible) {
+                if (objVisibility[i] && obj->sceneRadius() > 0) {
+                    Pointd center = obj->sceneCenter();
+                    bb.setMin(bb.getMin().min(Pointd(center.x() - obj->sceneRadius(), center.y() - obj->sceneRadius(), center.z() - obj->sceneRadius())));
+                    bb.setMax(bb.getMax().max(Pointd(center.x() + obj->sceneRadius(), center.y() + obj->sceneRadius(), center.z() + obj->sceneRadius())));
+                }
+            }
+            else {
+                if (obj->sceneRadius() > 0) {
+                    Pointd center = obj->sceneCenter();
+                    bb.setMin(bb.getMin().min(Pointd(center.x() - obj->sceneRadius(), center.y() - obj->sceneRadius(), center.z() - obj->sceneRadius())));
+                    bb.setMax(bb.getMax().max(Pointd(center.x() + obj->sceneRadius(), center.y() + obj->sceneRadius(), center.z() + obj->sceneRadius())));
+                }
+            }
         }
     }
     return bb;
 }
 
-int MainWindow::GLCanvas::getNumberVisibleObjects() const
+unsigned int GLCanvas::sizeVisibleDrawableObjects() const
 {
-    int count = 0;
-    for(int i=0; i<(int)drawlist.size(); ++i) {
+    unsigned int count = 0;
+    for(unsigned int i=0; i<drawlist.size(); ++i) {
         if (objVisibility[i]) count++;
     }
     return count;
+}
+
+unsigned int GLCanvas::sizeDrawableObjectsList() const
+{
+    return drawlist.size() - unusedIds.size();
+}
+
+void GLCanvas::enableRotation(bool b)
+{
+    if (b)
+        setMouseBinding(Qt::NoModifier, Qt::LeftButton, CAMERA, ROTATE);
+    else
+        setMouseBinding(Qt::NoModifier, Qt::LeftButton, NO_CLICK_ACTION);
+}
+
+void GLCanvas::enableTranslation(bool b)
+{
+    if (b)
+        setMouseBinding(Qt::NoModifier, Qt::RightButton, CAMERA, TRANSLATE);
+    else
+        setMouseBinding(Qt::NoModifier, Qt::RightButton, NO_CLICK_ACTION);
+}
+
+void GLCanvas::enableZoom(bool b)
+{
+    if (b)
+        setWheelBinding(Qt::NoModifier, CAMERA, ZOOM);
+    else
+        setWheelBinding(Qt::NoModifier, CAMERA, NO_MOUSE_ACTION);
+}
+
+void GLCanvas::setSelectionLeftButton(bool b)
+{
+    if (b)
+        setMouseBinding(Qt::NoModifier, Qt::LeftButton, SELECT);
+    else
+        enableRotation();
 }
 
 } //namespace cg3::viewer

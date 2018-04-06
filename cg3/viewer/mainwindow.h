@@ -34,14 +34,21 @@
 #include "utilities/consolestream.h"
 #include <cg3/geometry/2d/point2d.h>
 
+#include "glcanvas.h"
+
 namespace cg3 {
 namespace viewer {
 namespace Ui {
     class MainWindow;
 } //namespace cg3::viewer::Ui
 
+namespace internal {
+    class UiMainWindowRaiiWrapper;
+} //namespace cg3::viewer::internal
+
 /**
- * @brief MainWindow is a class that manages a QGLViewer canvas and all the managers which are added to it.
+ * @brief MainWindow is a class that manages a QGLViewer canvas and all the managers
+ * which are added to it.
  * @ingroup cg3viewer
  */
 class MainWindow : public QMainWindow
@@ -49,8 +56,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-
-    class GLCanvas;
 
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -153,8 +158,8 @@ private:
 
     // GUI
     //
-    Ui::MainWindow  * ui;
-    std::vector<QFrame *> managers;
+    internal::UiMainWindowRaiiWrapper* ui;
+    std::vector<QFrame*> managers;
     cg3::viewer::LoaderSaver povLS;
     ConsoleStream* consoleStream;
 
@@ -172,11 +177,14 @@ private:
     // Mesh Stack
     //
     QSignalMapper* checkBoxMapper;
-    std::map<int, QCheckBox * > checkBoxes;
+    std::map<int, QCheckBox*> checkBoxes;
     boost::bimap<int, const cg3::DrawableObject*> mapObjects;
     int nMeshes;
     bool first;
     bool debugObjectsEnabled;
+
+public:
+    GLCanvas& canvas;
 };
 
 } //namespace cg3::viewer

@@ -19,6 +19,16 @@
 
 namespace cg3 {
 namespace viewer {
+namespace internal {
+class UiMainWindowRaiiWrapper : public Ui::MainWindow
+{
+public:
+    UiMainWindowRaiiWrapper(QMainWindow *MainWindow)
+    {
+        setupUi(MainWindow);
+    }
+};
+} //namespace cg3::viewer::internal
 
 /**
  * @brief Crea una nuova mainWindow composta da canvas, toolBox avente 0 frame e scrollArea.
@@ -26,14 +36,14 @@ namespace viewer {
  */
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
-        ui(new Ui::MainWindow),
+        ui(new internal::UiMainWindowRaiiWrapper(this)),
         consoleStream(nullptr),
         mode2D(false),
         nMeshes(0),
         first(true),
-        debugObjectsEnabled(false)
+        debugObjectsEnabled(false),
+        canvas(*ui->glCanvas)
 {
-    ui->setupUi(this);
     ui->toolBox->removeItem(0);
 
     checkBoxMapper = new QSignalMapper(this);
@@ -190,7 +200,7 @@ void MainWindow::loadPointOfView(std::string filename)
 
 void MainWindow::setBackgroundColor(const QColor & color)
 {
-    ui->glCanvas->setClearColor(color);
+    ui->glCanvas->setBackgroundColor(color);
 }
 
 void MainWindow::set2DMode(bool b)
@@ -228,7 +238,7 @@ void MainWindow::setCameraDirection(const cg3::Vec3& vec)
  */
 void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bool b)
 {
-    ui->glCanvas->pushObj(obj);
+    ui->glCanvas->pushDrawableObject(obj);
     if (b) ui->glCanvas->fitScene();
     ui->glCanvas->update();
 
@@ -269,7 +279,7 @@ bool MainWindow::deleteObj(const DrawableObject* obj, bool b)
 
         delete cb;
 
-        ui->glCanvas->deleteObj(obj);
+        ui->glCanvas->deleteDrawableObject(obj);
         if (b) ui->glCanvas->fitScene();
         ui->glCanvas->update();
         return true;
@@ -302,7 +312,7 @@ bool MainWindow::contains(const DrawableObject* obj)
  */
 BoundingBox MainWindow::getFullBoundingBox()
 {
-    return ui->glCanvas->getFullBoundingBox();
+    return ui->glCanvas->getFullBoundingBoxDrawableObjects();
 }
 
 /**
@@ -311,7 +321,7 @@ BoundingBox MainWindow::getFullBoundingBox()
  */
 int MainWindow::getNumberVisibleObjects()
 {
-    return ui->glCanvas->getNumberVisibleObjects();
+    return ui->glCanvas->sizeVisibleDrawableObjects();
 }
 
 
@@ -447,8 +457,8 @@ void MainWindow::checkBoxClicked(int i)
     const DrawableObject * obj = mapObjects.left.at(i);
     //if (cb->isChecked()) obj->setVisible(true);
     //else obj->setVisible(false);
-    if (cb->isChecked()) ui->glCanvas->setVisibility(obj, true);
-    else ui->glCanvas->setVisibility(obj, false);
+    if (cb->isChecked()) ui->glCanvas->setDrawableObjectVisibility(obj, true);
+    else ui->glCanvas->setDrawableObjectVisibility(obj, false);
     ui->glCanvas->update();
 }
 
