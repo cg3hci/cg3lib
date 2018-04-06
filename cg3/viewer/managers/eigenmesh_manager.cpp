@@ -32,7 +32,7 @@ void EigenMeshManager::setEigenMesh(const EigenMesh& m)
     mainWindow.pushObj(&mesh, "EigenMesh");
     setButtonsMeshLoaded(true);
     loaded = true;
-    mainWindow.updateGlCanvas();
+    mainWindow.canvas.update();
 
 }
 
@@ -57,7 +57,7 @@ void EigenMeshManager::on_loadMeshButton_clicked()
             mesh.setEnableTriangleColor();
             mainWindow.pushObj(&mesh, filename.substr(filename.find_last_of("/") + 1));
             setButtonsMeshLoaded(true);
-            mainWindow.updateGlCanvas();
+            mainWindow.canvas.update();
         }
         else {
             std::cerr << "Error while loading file " << filename << ".\n";
@@ -70,7 +70,7 @@ void EigenMeshManager::on_clearMeshButton_clicked()
     if (loaded) {
         setButtonsMeshLoaded(false);
         mainWindow.deleteObj(&mesh);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -100,7 +100,7 @@ void EigenMeshManager::on_pointsMeshRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setPointsShading();
-            mainWindow.updateGlCanvas();
+            mainWindow.canvas.update();
         }
     }
 }
@@ -110,7 +110,7 @@ void EigenMeshManager::on_flatMeshRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setFlatShading();
-            mainWindow.updateGlCanvas();
+            mainWindow.canvas.update();
         }
     }
 }
@@ -120,7 +120,7 @@ void EigenMeshManager::on_smoothMeshRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setSmoothShading();
-            mainWindow.updateGlCanvas();
+            mainWindow.canvas.update();
         }
     }
 }
@@ -129,7 +129,7 @@ void EigenMeshManager::on_wireframeMeshCheckBox_stateChanged(int arg1)
 {
     if (loaded) {
         mesh.setWireframe(arg1 == Qt::Checked);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -138,7 +138,7 @@ void EigenMeshManager::on_verticesColorRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setEnableVertexColor();
-            mainWindow.updateGlCanvas();
+            mainWindow.canvas.update();
         }
     }
 }
@@ -148,7 +148,7 @@ void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setEnableTriangleColor();
-            mainWindow.updateGlCanvas();
+            mainWindow.canvas.update();
         }
     }
 }
@@ -157,7 +157,7 @@ void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1)
 {
     if (loaded) {
         mesh.setVisibleBoundingBox(arg1 == Qt::Checked);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 

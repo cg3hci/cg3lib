@@ -61,7 +61,7 @@ void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
     cleanDcel();
     drawableDcel = dcel;
     mainWindow.pushObj(&drawableDcel, name);
-    mainWindow.updateGlCanvas();
+    mainWindow.canvas.update();
     loaded = true;
 
     setButtonsDcelLoaded();
@@ -79,7 +79,7 @@ void DcelManager::cleanDcel()
 
         resetDefaults();
         mainWindow.deleteObj(&drawableDcel);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
         loaded = false;
     }
 }
@@ -122,7 +122,7 @@ void DcelManager::on_loadDcelButton_clicked()
             drawableDcel.setSmoothShading();
             drawableDcel.update();
             mainWindow.pushObj(&drawableDcel, filename.substr(filename.find_last_of("/") + 1));
-            mainWindow.updateGlCanvas();
+            mainWindow.canvas.update();
 
             setButtonsDcelLoaded();
             loaded = true;
@@ -171,7 +171,7 @@ void DcelManager::on_wireframeDcelCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setWireframe(state == Qt::Checked);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -179,7 +179,7 @@ void DcelManager::on_wireframeWidthDcelSlider_valueChanged(int value)
 {
     if (loaded) {
         drawableDcel.setWireframeWidth(value);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -189,7 +189,7 @@ void DcelManager::on_wireframeColorDcelButton_clicked()
         QColor color = QColorDialog::getColor(Qt::white, this);
 
         drawableDcel.setWireframeColor(color.redF(), color.greenF(), color.blueF());
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -197,7 +197,7 @@ void DcelManager::on_drawDcelCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setVisible(state == Qt::Checked);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -206,7 +206,7 @@ void DcelManager::on_pointsDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setPointsShading();
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -215,7 +215,7 @@ void DcelManager::on_flatDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setFlatShading();
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -224,7 +224,7 @@ void DcelManager::on_smoothDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setSmoothShading();
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -233,7 +233,7 @@ void DcelManager::on_vertexColorDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setEnableVertexColor();
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -242,7 +242,7 @@ void DcelManager::on_triangleColorDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setEnableTriangleColor();
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -250,7 +250,7 @@ void DcelManager::on_boundingBoxCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setVisibleBoundingBox(state == Qt::Checked);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 
@@ -258,7 +258,7 @@ void DcelManager::on_facesWireframeDcelCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setFacesWireframe(state == Qt::Checked);
-        mainWindow.updateGlCanvas();
+        mainWindow.canvas.update();
     }
 }
 

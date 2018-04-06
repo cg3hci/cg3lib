@@ -80,29 +80,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::fitScene()
-{
-    ui->glCanvas->fitScene();
-}
-
-void MainWindow::fitScene(const Point2Dd& center, double radius)
-{
-    ui->glCanvas->fitScene(Pointd(center.x(), center.y(), 0), radius);
-}
-
-void MainWindow::fitScene(const Pointd& center, double radius)
-{
-    ui->glCanvas->fitScene(center, radius);
-}
-
 Point2Di MainWindow::getCanvasSize() const
 {
     return Point2Di(ui->glCanvas->width(), ui->glCanvas->height());
-}
-
-void MainWindow::updateGlCanvas()
-{
-    ui->glCanvas->update();
 }
 
 void MainWindow::disableRotation()
@@ -212,7 +192,7 @@ void MainWindow::set2DMode(bool b)
         if (b){
             ui->glCanvas->resetPointOfView();
             disableRotation();
-            updateGlCanvas();
+            canvas.update();
         }
         else {
             enableRotation();
@@ -371,9 +351,9 @@ void MainWindow::toggleConsoleStream()
 void MainWindow::keyPressEvent(QKeyEvent * event)
 {
     if (event->key() == Qt::Key_F)
-        fitScene();
+        canvas.fitScene();
     if (event->key() == Qt::Key_U)
-        updateGlCanvas();
+        canvas.update();
     if(event->matches(QKeySequence::Undo))
         emit(undoEvent());
     if (event->matches(QKeySequence::Redo))
@@ -491,12 +471,12 @@ void MainWindow::on_actionFull_Screen_toggled(bool arg1)
 
 void MainWindow::on_actionUpdate_Canvas_triggered()
 {
-    updateGlCanvas();
+    canvas.update();
 }
 
 void MainWindow::on_actionFit_Scene_triggered()
 {
-    fitScene();
+    canvas.fitScene();
 }
 
 void MainWindow::on_actionChange_Background_Color_triggered()
@@ -504,7 +484,7 @@ void MainWindow::on_actionChange_Background_Color_triggered()
     QColor color = QColorDialog::getColor(Qt::white, this);
 
     setBackgroundColor(color);
-    updateGlCanvas();
+    canvas.update();
 }
 
 void MainWindow::on_actionSave_Point_Of_View_triggered()

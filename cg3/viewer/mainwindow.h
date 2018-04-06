@@ -61,11 +61,7 @@ public:
     ~MainWindow();
 
     //Canvas:
-    void fitScene();
-    void fitScene(const cg3::Pointd& center, double radius);
-    void fitScene(const cg3::Point2Dd& center, double radius);
     cg3::Point2Di getCanvasSize() const;
-    void updateGlCanvas();
     void disableRotation();
     void enableRotation();
     void disableTranslation();
