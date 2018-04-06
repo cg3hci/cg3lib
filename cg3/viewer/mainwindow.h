@@ -62,17 +62,7 @@ public:
 
     //Canvas:
     cg3::Point2Di getCanvasSize() const;
-    void disableRotation();
-    void enableRotation();
-    void disableTranslation();
-    void enableTranslation();
-    void disableZoom();
-    void enableZoom();
-    void setSelectLeftButton();
-    void saveSnapshot();
-    void saveSnapshot(const std::string& filename);
-    void drawAxis(bool);
-    void resetPointOfView();
+
     void savePointOfView();
     void loadPointOfView();
     void savePointOfView(std::string filename);
@@ -159,15 +149,7 @@ private:
     cg3::viewer::LoaderSaver povLS;
     ConsoleStream* consoleStream;
 
-    //Config
-    //
-    #ifdef WIN32
-    const std::string configFolderDirectory = std::string(std::getenv("USERPROFILE")) + "\\AppData\\Roaming\\cg3lib\\";
-    #elif __APPLE__
-    const std::string configFolderDirectory = std::string("/Users/") + std::getenv("USER") + "/Library/Preferences/cg3lib/";
-    #elif __linux__
-    const std::string configFolderDirectory = std::string(std::getenv("HOME")) + "/.config/cg3lib/";
-    #endif
+
     bool mode2D;
 
     // Mesh Stack
@@ -180,6 +162,7 @@ private:
     bool debugObjectsEnabled;
 
 public:
+
     GLCanvas& canvas;
 };
 

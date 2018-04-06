@@ -13,9 +13,7 @@
 #include <QColorDialog>
 #include <cg3/geometry/plane.h>
 #include "utilities/consolestream.h"
-#ifndef __APPLE__
-#include <experimental/filesystem>
-#endif
+#include <cg3/utilities/cg3config.h>
 
 namespace cg3 {
 namespace viewer {
@@ -65,12 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->glCanvas->setSnapshotQuality(100);
     ui->glCanvas->setSnapshotFormat("PNG");
 
-    #ifndef __APPLE__
-    if (! std::experimental::filesystem::exists(configFolderDirectory.c_str()))
-        std::experimental::filesystem::create_directory(configFolderDirectory.c_str());
-    #else
-    system((std::string("mkdir ") + configFolderDirectory).c_str());
-    #endif
+    cg3::internal::initConfigFolder();
 }
 
 MainWindow::~MainWindow()
@@ -85,86 +78,14 @@ Point2Di MainWindow::getCanvasSize() const
     return Point2Di(ui->glCanvas->width(), ui->glCanvas->height());
 }
 
-void MainWindow::disableRotation()
-{
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->NO_CLICK_ACTION);
-}
-
-void MainWindow::enableRotation()
-{
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->CAMERA, ui->glCanvas->ROTATE);
-}
-
-void MainWindow::disableTranslation()
-{
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->NO_CLICK_ACTION);
-}
-
-void MainWindow::enableTranslation()
-{
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::RightButton, ui->glCanvas->CAMERA, ui->glCanvas->TRANSLATE);
-}
-
-void MainWindow::disableZoom()
-{
-    ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->NO_MOUSE_ACTION);
-}
-
-void MainWindow::enableZoom()
-{
-    ui->glCanvas->setWheelBinding(Qt::NoModifier, ui->glCanvas->CAMERA, ui->glCanvas->ZOOM);
-}
-
-void MainWindow::setSelectLeftButton()
-{
-    ui->glCanvas->setMouseBinding(Qt::NoModifier, Qt::LeftButton, ui->glCanvas->SELECT);
-}
-
-/**
- * @brief salva uno snapshot della scena presente nella canvas.
- *
- * Aggiorna in automatico la scena visualizzata.
- */
-void MainWindow::saveSnapshot()
-{
-    ui->glCanvas->update();
-    ui->glCanvas->saveSnapshot();
-}
-
-void MainWindow::saveSnapshot(const std::string &filename)
-{
-    ui->glCanvas->update();
-    ui->glCanvas->saveSnapshot(QString::fromStdString(filename), true);
-}
-
-/**
- * @brief Visualizza gli assi xyz in base al booleano passato in input.
- *
- * Aggiorna in autmoatico la scena visualizzata.
- * @param[in] b: se true visualizza gli assi, se false non li visualizza.
- */
-void MainWindow::drawAxis(bool b)
-{
-    ui->glCanvas->setAxisIsDrawn(b);
-    ui->glCanvas->update();
-}
-
-/**
- * @brief
- */
-void MainWindow::resetPointOfView()
-{
-    ui->glCanvas->resetPointOfView();
-}
-
 void MainWindow::savePointOfView()
 {
-    savePointOfView(configFolderDirectory + "pov.cg3pov");
+    savePointOfView(cg3::internal::configFolderDirectory + "pov.cg3pov");
 }
 
 void MainWindow::loadPointOfView()
 {
-    loadPointOfView(configFolderDirectory + "pov.cg3pov");
+    loadPointOfView(cg3::internal::configFolderDirectory + "pov.cg3pov");
 }
 
 void MainWindow::savePointOfView(std::string filename)
@@ -191,11 +112,11 @@ void MainWindow::set2DMode(bool b)
         mode2D = b;
         if (b){
             ui->glCanvas->resetPointOfView();
-            disableRotation();
+            canvas.enableRotation(false);
             canvas.update();
         }
         else {
-            enableRotation();
+            canvas.enableRotation();
         }
     }
 }

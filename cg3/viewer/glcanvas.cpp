@@ -18,6 +18,8 @@ namespace viewer {
 GLCanvas::GLCanvas(QWidget * parent) : clearColor(Qt::white), mode(_3D)
 {
     setParent(parent);
+    setSnapshotQuality(100);
+    setSnapshotFormat("PNG");
 }
 
 void GLCanvas::init()

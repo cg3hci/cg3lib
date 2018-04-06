@@ -45,3 +45,6 @@ else {
 
 SOURCES += \
     $$PWD/cg3/utilities/nested_initializer_lists.tpp
+
+HEADERS += \
+    $$PWD/cg3/utilities/cg3config.h
