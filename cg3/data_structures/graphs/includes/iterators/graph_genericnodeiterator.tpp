@@ -13,7 +13,7 @@ namespace cg3 {
 
 template <class T>
 Graph<T>::GenericNodeIterator::GenericNodeIterator(
-        Graph<T>* graph) :
+        const Graph<T>* graph) :
     graph(graph)
 {
     this->id = -1;
@@ -22,7 +22,7 @@ Graph<T>::GenericNodeIterator::GenericNodeIterator(
 
 template <class T>
 Graph<T>::GenericNodeIterator::GenericNodeIterator(
-        Graph<T>* graph,
+        const Graph<T>* graph,
         typename Graph<T>::Node* id) :
     graph(graph),
     id(id)

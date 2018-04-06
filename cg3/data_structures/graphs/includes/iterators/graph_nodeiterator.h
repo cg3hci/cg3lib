@@ -23,11 +23,11 @@ private:
     /* Constructors */
 
     inline NodeIterator(
-            Graph<T>* graph);
+            const Graph<T>* graph);
 
     inline NodeIterator(
-            Graph<T>* graph,
-            typename std::vector<Node>::iterator it);
+            const Graph<T>* graph,
+            typename std::vector<Node>::const_iterator it);
 
 public:
 
@@ -50,7 +50,7 @@ private:
 
     /* Fields */
 
-    typename std::vector<Node>::iterator it;
+    typename std::vector<Node>::const_iterator it;
 
 
 };
@@ -64,7 +64,7 @@ class Graph<T>::RangeBasedNodeIterator {
 
 public:
 
-    inline RangeBasedNodeIterator(Graph<T>* graph) :
+    inline RangeBasedNodeIterator(const Graph<T>* graph) :
         graph(graph) {}
 
     inline NodeIterator begin();
@@ -72,7 +72,7 @@ public:
 
 private:
 
-    Graph<T>* graph;
+    const Graph<T>* graph;
 
 };
 

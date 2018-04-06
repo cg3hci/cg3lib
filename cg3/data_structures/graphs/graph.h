@@ -70,13 +70,13 @@ public:
     friend class NodeIterator;
     class RangeBasedNodeIterator;
 
-    class EdgeIterator;
-    friend class EdgeIterator;
-    class RangeBasedEdgeIterator;
-
     class AdjacentIterator;
     friend class AdjacentIterator;
     class RangeBasedAdjacentIterator;
+
+    class EdgeIterator;
+    friend class EdgeIterator;
+    class RangeBasedEdgeIterator;
 
     //The default iterator is the NodeIterator
     typedef NodeIterator iterator;
@@ -91,13 +91,14 @@ public:
 
     NodeIterator addNode(const T& o);
     bool deleteNode(const T& o);
-    NodeIterator findNode(const T& o);
+
+    NodeIterator findNode(const T& o) const;
 
     bool addEdge(const T& o1, const T& o2, const double weight = 0);
     bool deleteEdge(const T& o1, const T& o2);
     bool isAdjacent(const T& o1, const T& o2) const;
 
-    double getWeight(const T& o1, const T& o2);
+    double getWeight(const T& o1, const T& o2) const;
     void setWeight(const T& o1, const T& o2, const double weight);
 
 
@@ -109,60 +110,63 @@ public:
     void deleteEdge(GenericNodeIterator it1, const GenericNodeIterator it2);
     bool isAdjacent(const GenericNodeIterator it1, const GenericNodeIterator it2) const;
 
-    double getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2);
+    double getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2) const;
     void setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const double weight);
 
 
     /* Utility methods */
 
-    size_t numNodes();
-    size_t numEdges();
+    size_t getId(const GenericNodeIterator iterator) const;
+    NodeIterator getNode(const size_t id) const;
+
+    size_t numNodes() const;
+    size_t numEdges() const;
     void clear();
     void recompact();
 
 
     /* Iterators */
 
-    NodeIterator begin();
-    NodeIterator end();
+    NodeIterator begin() const;
+    NodeIterator end() const;
 
-    NodeIterator nodeBegin();
-    NodeIterator nodeEnd();
-    RangeBasedNodeIterator nodeIterator();
+    NodeIterator nodeBegin() const;
+    NodeIterator nodeEnd() const;
+    RangeBasedNodeIterator nodeIterator() const;
 
-    AdjacentIterator adjacentBegin(NodeIterator nodeIt);
-    AdjacentIterator adjacentEnd(NodeIterator nodeIt);
-    RangeBasedAdjacentIterator adjacentIterator(NodeIterator nodeIt);
+    AdjacentIterator adjacentBegin(NodeIterator nodeIt) const;
+    AdjacentIterator adjacentEnd(NodeIterator nodeIt) const;
+    RangeBasedAdjacentIterator adjacentIterator(NodeIterator nodeIt) const;
 
-    AdjacentIterator adjacentBegin(AdjacentIterator nodeIt);
-    AdjacentIterator adjacentEnd(AdjacentIterator nodeIt);
-    RangeBasedAdjacentIterator adjacentIterator(AdjacentIterator nodeIt);
+    AdjacentIterator adjacentBegin(AdjacentIterator nodeIt) const;
+    AdjacentIterator adjacentEnd(AdjacentIterator nodeIt) const;
+    RangeBasedAdjacentIterator adjacentIterator(AdjacentIterator nodeIt) const;
 
-    AdjacentIterator adjacentBegin(const T& o);
-    AdjacentIterator adjacentEnd(const T& o);
-    RangeBasedAdjacentIterator adjacentIterator(const T& o);
+    AdjacentIterator adjacentBegin(const T& o) const;
+    AdjacentIterator adjacentEnd(const T& o) const;
+    RangeBasedAdjacentIterator adjacentIterator(const T& o) const;
 
-    EdgeIterator edgeBegin();
-    EdgeIterator edgeEnd();
-    RangeBasedEdgeIterator edgeIterator();
+    EdgeIterator edgeBegin() const;
+    EdgeIterator edgeEnd() const;
+    RangeBasedEdgeIterator edgeIterator() const;
 
 
 protected:
 
     /* Protected functions for iterators */
 
-    inline typename std::vector<Node>::iterator getFirstValidIteratorNode(
-            typename std::vector<Node>::iterator it);
+    inline typename std::vector<Node>::const_iterator getFirstValidIteratorNode(
+            typename std::vector<Node>::const_iterator it) const;
 
-    inline std::unordered_map<size_t, double>::iterator getFirstValidIteratorAdjacent(
+    inline std::unordered_map<size_t, double>::const_iterator getFirstValidIteratorAdjacent(
             NodeIterator nodeIt,
-            std::unordered_map<size_t, double>::iterator it);
+            std::unordered_map<size_t, double>::const_iterator it) const;
 
     void getFirstValidIteratorEdge(
             NodeIterator nodeIt,
             AdjacentIterator adjIt,
             NodeIterator& newNodeIt,
-            AdjacentIterator& newAdjIt);
+            AdjacentIterator& newAdjIt) const;
 
 
     /* Helpers */
@@ -178,7 +182,7 @@ protected:
 
     /* Protected fields */
 
-    GraphType type;
+    GraphType type; //Type of the graph (directed or undirected)
 
     std::vector<Node> nodes; //Vector of nodes
     std::map<T, size_t> map; //Map to find a node with a value
@@ -195,8 +199,8 @@ protected:
 
 #include "includes/iterators/graph_genericnodeiterator.h"
 #include "includes/iterators/graph_nodeiterator.h"
-#include "includes/iterators/graph_edgeiterator.h"
 #include "includes/iterators/graph_adjacentiterator.h"
+#include "includes/iterators/graph_edgeiterator.h"
 
 #include "graph.tpp"
 

@@ -19,16 +19,16 @@ protected:
     /* Constructors */
 
     inline GenericNodeIterator(
-            Graph<T>* graph);
+            const Graph<T>* graph);
 
     inline GenericNodeIterator(
-            Graph<T>* graph,
+            const Graph<T>* graph,
             typename Graph<T>::Node* id);
 
 
     /* Fields */
 
-    Graph<T>* graph;
+    const Graph<T>* graph;
     long long int id;
 
 };

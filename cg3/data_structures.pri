@@ -29,6 +29,7 @@ SOURCES += \
     $$PWD/data_structures/arrays/array4d.tpp \
     $$PWD/data_structures/arrays/array.tpp
 
+
 # ----- Graphs -----
 
 HEADERS += \
@@ -46,6 +47,7 @@ SOURCES += \
     $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.tpp \
     $$PWD/data_structures/graphs/includes/iterators/graph_adjacentiterator.tpp \
     $$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.tpp
+
 
 # ----- Bipartite graph -----
 

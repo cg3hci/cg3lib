@@ -27,10 +27,10 @@ private:
     /* Constructors */
 
     inline EdgeIterator(
-            Graph<T>* graph);
+            const Graph<T>* graph);
 
     inline EdgeIterator(
-            Graph<T>* graph,
+            const Graph<T>* graph,
             const typename Graph<T>::NodeIterator& nodeIt,
             const typename Graph<T>::AdjacentIterator& adjIt);
 
@@ -55,7 +55,7 @@ private:
 
     /* Fields */
 
-    Graph<T>* graph;
+    const Graph<T>* graph;
 
     typename Graph<T>::NodeIterator nodeIt;
     typename Graph<T>::AdjacentIterator adjIt;
@@ -71,7 +71,7 @@ class Graph<T>::RangeBasedEdgeIterator {
 
 public:
 
-    inline RangeBasedEdgeIterator(Graph<T>* graph) :
+    inline RangeBasedEdgeIterator(const Graph<T>* graph) :
         graph(graph) {}
 
     inline EdgeIterator begin();
@@ -79,7 +79,7 @@ public:
 
 private:
 
-    Graph<T>* graph;
+    const Graph<T>* graph;
 
 };
 

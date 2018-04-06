@@ -21,12 +21,12 @@ private:
     /* Constructors */
 
     inline AdjacentIterator(
-            Graph<T>* graph);
+            const Graph<T>* graph);
 
     inline AdjacentIterator(
-            Graph<T>* graph,
+            const Graph<T>* graph,
             const NodeIterator& targetNodeIt,
-            std::unordered_map<size_t, double>::iterator it);
+            std::unordered_map<size_t, double>::const_iterator it);
 public:
 
     /* Iterator operators */
@@ -49,7 +49,7 @@ private:
     /* Fields */
 
     NodeIterator targetNodeIt;
-    std::unordered_map<size_t, double>::iterator it;
+    std::unordered_map<size_t, double>::const_iterator it;
 
 };
 
@@ -63,7 +63,7 @@ class Graph<T>::RangeBasedAdjacentIterator {
 public:
 
     inline RangeBasedAdjacentIterator(
-            Graph<T>* graph,
+            const Graph<T>* graph,
             const NodeIterator& targetNodeIt) :
         graph(graph), targetNodeIt(targetNodeIt) {}
 
@@ -72,7 +72,7 @@ public:
 
 private:
 
-    Graph<T>* graph;
+    const Graph<T>* graph;
     NodeIterator targetNodeIt;
 
 };

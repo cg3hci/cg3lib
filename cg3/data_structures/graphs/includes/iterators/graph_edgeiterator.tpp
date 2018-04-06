@@ -13,7 +13,7 @@ namespace cg3 {
 
 template <class T>
 Graph<T>::EdgeIterator::EdgeIterator(
-        Graph<T>* graph) :
+        const Graph<T>* graph) :
     graph(graph),
     nodeIt(graph->nodeIteratorEnd()),
     adjIt(graph->adjacentNodeIteratorEnd(graph->nodeIteratorEnd()))
@@ -23,7 +23,7 @@ Graph<T>::EdgeIterator::EdgeIterator(
 
 template <class T>
 Graph<T>::EdgeIterator::EdgeIterator(
-        Graph<T>* graph,
+        const Graph<T>* graph,
         const typename Graph<T>::NodeIterator& nodeIt,
         const typename Graph<T>::AdjacentIterator& adjIt) :
     graph(graph),

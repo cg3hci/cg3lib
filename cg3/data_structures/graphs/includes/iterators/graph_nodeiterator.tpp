@@ -13,17 +13,17 @@ namespace cg3 {
 
 template <class T>
 Graph<T>::NodeIterator::NodeIterator(
-        Graph<T>* graph) :
+        const Graph<T>* graph) :
     Graph<T>::GenericNodeIterator(graph),
-    it(typename std::vector<Node>::iterator())
+    it(typename std::vector<Node>::const_iterator())
 {
 
 }
 
 template <class T>
 Graph<T>::NodeIterator::NodeIterator(
-        Graph<T>* graph,
-        typename std::vector<Node>::iterator it) :
+        const Graph<T>* graph,
+        typename std::vector<Node>::const_iterator it) :
     Graph<T>::GenericNodeIterator(graph),
     it(it)
 {

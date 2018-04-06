@@ -97,13 +97,13 @@ bool Graph<T>::deleteNode(const T& o)
  * @return Iterator to the node if it exists, end iterator otherwise
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o)
+typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) const
 {
     long long int id = findNodeHelper(o);
     if (id < 0)
         return this->nodeEnd();
 
-    typename std::vector<Node>::iterator vecIt = this->nodes.begin();
+    typename std::vector<Node>::const_iterator vecIt = this->nodes.begin();
     std::advance(vecIt, id);
 
     return NodeIterator(this, vecIt);
@@ -168,7 +168,8 @@ bool Graph<T>::deleteEdge(const T& o1, const T& o2)
  * if one of the objects have not been found
  */
 template <class T>
-bool Graph<T>::isAdjacent(const T& o1, const T& o2) const {
+bool Graph<T>::isAdjacent(const T& o1, const T& o2) const
+{
     //If node does not exists, return false
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -192,7 +193,7 @@ bool Graph<T>::isAdjacent(const T& o1, const T& o2) const {
  * or the nodes cannot be found
  */
 template <class T>
-double Graph<T>::getWeight(const T& o1, const T& o2)
+double Graph<T>::getWeight(const T& o1, const T& o2) const
 {
     //If one of the nodes does not exists, return max weight
     long long int id1 = findNodeHelper(o1);
@@ -298,7 +299,8 @@ void Graph<T>::deleteEdge(GenericNodeIterator it1, const GenericNodeIterator it2
  * @return True if the nodes are adjacent, false otherwise
  */
 template <class T>
-bool Graph<T>::isAdjacent(const GenericNodeIterator it1, const GenericNodeIterator it2) const {
+bool Graph<T>::isAdjacent(const GenericNodeIterator it1, const GenericNodeIterator it2) const
+{
     if (isDeleted[it1.id] || isDeleted[it2.id])
         return false;
 
@@ -316,7 +318,7 @@ bool Graph<T>::isAdjacent(const GenericNodeIterator it1, const GenericNodeIterat
  * @return Weight of the edge, MAX_WEIGHT if nodes are not adjacent
  */
 template <class T>
-double Graph<T>::getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2)
+double Graph<T>::getWeight(const GenericNodeIterator it1, const GenericNodeIterator it2) const
 {
     if (isDeleted[it1.id] || isDeleted[it2.id])
         return MAX_WEIGHT;
@@ -350,12 +352,36 @@ void Graph<T>::setWeight(GenericNodeIterator it1, GenericNodeIterator it2, const
 
 /* ----- UTILITY METHODS ----- */
 
+
+/**
+ * @brief Get id of the node by iterator
+ * @param iterator Iterator
+ * @return Id of the node
+ */
+template <class T>
+size_t Graph<T>::getId(const GenericNodeIterator iterator) const {
+    return iterator.id;
+}
+
+/**
+ * @brief Get node iterator by id
+ * @param id Id of the node
+ * @return Iterator
+ */
+template <class T>
+typename Graph<T>::NodeIterator Graph<T>::getNode(const size_t id) const {
+    if (isDeleted[id])
+        return nodeEnd();
+    return NodeIterator(this, nodes.begin() + id);
+}
+
+
 /**
  * @brief Get the number of nodes of the graph
  * @return Number of nodes
  */
 template <class T>
-size_t Graph<T>::numNodes()
+size_t Graph<T>::numNodes() const
 {
     size_t numNodes = std::distance(this->nodeBegin(), this->nodeEnd());
     return numNodes;
@@ -366,7 +392,7 @@ size_t Graph<T>::numNodes()
  * @return Number of edges
  */
 template <class T>
-size_t Graph<T>::numEdges()
+size_t Graph<T>::numEdges() const
 {
     size_t numEdges = std::distance(this->edgeBegin(), this->edgeEnd());
     return numEdges;
@@ -473,7 +499,7 @@ void Graph<T>::recompact()
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::begin()
+typename Graph<T>::NodeIterator Graph<T>::begin() const
 {
     return nodeBegin();
 }
@@ -483,7 +509,7 @@ typename Graph<T>::NodeIterator Graph<T>::begin()
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::end()
+typename Graph<T>::NodeIterator Graph<T>::end() const
 {
     return nodeEnd();
 }
@@ -494,9 +520,9 @@ typename Graph<T>::NodeIterator Graph<T>::end()
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::nodeBegin()
+typename Graph<T>::NodeIterator Graph<T>::nodeBegin() const
 {
-    typename std::vector<Node>::iterator it = nodes.begin();
+    typename std::vector<Node>::const_iterator it = nodes.begin();
     //Get first valid node iterator
     return NodeIterator(this, getFirstValidIteratorNode(it));
 }
@@ -506,7 +532,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeBegin()
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::NodeIterator Graph<T>::nodeEnd()
+typename Graph<T>::NodeIterator Graph<T>::nodeEnd() const
 {
     return NodeIterator(this, this->nodes.end());
 }
@@ -516,7 +542,7 @@ typename Graph<T>::NodeIterator Graph<T>::nodeEnd()
  * @return Range based node iterator
  */
 template <class T>
-typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator()
+typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator() const
 {
     return RangeBasedNodeIterator(this);
 }
@@ -534,7 +560,7 @@ typename Graph<T>::RangeBasedNodeIterator Graph<T>::nodeIterator()
  */
 template <class T>
 typename Graph<T>::AdjacentIterator Graph<T>::adjacentBegin(
-        NodeIterator nodeIt)
+        NodeIterator nodeIt) const
 {
     //Get first valid adjacent iterator
     return AdjacentIterator(
@@ -554,7 +580,7 @@ typename Graph<T>::AdjacentIterator Graph<T>::adjacentBegin(
  */
 template <class T>
 typename Graph<T>::AdjacentIterator Graph<T>::adjacentEnd(
-        NodeIterator nodeIt)
+        NodeIterator nodeIt) const
 {
     return AdjacentIterator(
                 this,
@@ -572,7 +598,7 @@ typename Graph<T>::AdjacentIterator Graph<T>::adjacentEnd(
  */
 template <class T>
 typename Graph<T>::RangeBasedAdjacentIterator Graph<T>::adjacentIterator(
-        NodeIterator nodeIt)
+        NodeIterator nodeIt) const
 {
     return RangeBasedAdjacentIterator(this, nodeIt);
 }
@@ -588,7 +614,7 @@ typename Graph<T>::RangeBasedAdjacentIterator Graph<T>::adjacentIterator(
  */
 template <class T>
 typename Graph<T>::AdjacentIterator Graph<T>::adjacentBegin(
-        AdjacentIterator nodeIt)
+        AdjacentIterator nodeIt) const
 {
     return adjacentBegin(NodeIterator(this, nodes.begin() + nodeIt.id));
 }
@@ -602,7 +628,7 @@ typename Graph<T>::AdjacentIterator Graph<T>::adjacentBegin(
  */
 template <class T>
 typename Graph<T>::AdjacentIterator Graph<T>::adjacentEnd(
-        AdjacentIterator nodeIt)
+        AdjacentIterator nodeIt) const
 {
     return adjacentEnd(NodeIterator(this, nodes.begin() + nodeIt.id));
 }
@@ -617,7 +643,7 @@ typename Graph<T>::AdjacentIterator Graph<T>::adjacentEnd(
  */
 template <class T>
 typename Graph<T>::RangeBasedAdjacentIterator Graph<T>::adjacentIterator(
-        AdjacentIterator nodeIt)
+        AdjacentIterator nodeIt) const
 {
     return RangeBasedAdjacentIterator(this, nodes.begin() + nodeIt.id);
 }
@@ -630,7 +656,7 @@ typename Graph<T>::RangeBasedAdjacentIterator Graph<T>::adjacentIterator(
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::AdjacentIterator Graph<T>::adjacentBegin(const T& o)
+typename Graph<T>::AdjacentIterator Graph<T>::adjacentBegin(const T& o) const
 {
     return this->adjacentBegin(this->findNode(o));
 }
@@ -641,7 +667,7 @@ typename Graph<T>::AdjacentIterator Graph<T>::adjacentBegin(const T& o)
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::AdjacentIterator Graph<T>::adjacentEnd(const T& o)
+typename Graph<T>::AdjacentIterator Graph<T>::adjacentEnd(const T& o) const
 {
     return this->adjacentEnd(this->findNode(o));
 }
@@ -652,7 +678,7 @@ typename Graph<T>::AdjacentIterator Graph<T>::adjacentEnd(const T& o)
  * @return Range based node iterator
  */
 template <class T>
-typename Graph<T>::RangeBasedAdjacentIterator Graph<T>::adjacentIterator(const T& o)
+typename Graph<T>::RangeBasedAdjacentIterator Graph<T>::adjacentIterator(const T& o) const
 {
     return this->adjacentIterator(this->findNode(o));
 }
@@ -667,7 +693,7 @@ typename Graph<T>::RangeBasedAdjacentIterator Graph<T>::adjacentIterator(const T
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::EdgeIterator Graph<T>::edgeBegin()
+typename Graph<T>::EdgeIterator Graph<T>::edgeBegin() const
 {
     //Get first candidate iterator
     NodeIterator nodeIt = this->nodeBegin();
@@ -690,7 +716,7 @@ typename Graph<T>::EdgeIterator Graph<T>::edgeBegin()
  * @return Iterator
  */
 template <class T>
-typename Graph<T>::EdgeIterator Graph<T>::edgeEnd()
+typename Graph<T>::EdgeIterator Graph<T>::edgeEnd() const
 {
     return EdgeIterator(
                 this,
@@ -703,7 +729,7 @@ typename Graph<T>::EdgeIterator Graph<T>::edgeEnd()
  * @return Range based edge iterator
  */
 template <class T>
-typename Graph<T>::RangeBasedEdgeIterator Graph<T>::edgeIterator()
+typename Graph<T>::RangeBasedEdgeIterator Graph<T>::edgeIterator() const
 {
     return RangeBasedEdgeIterator(this);
 }
@@ -721,8 +747,8 @@ typename Graph<T>::RangeBasedEdgeIterator Graph<T>::edgeIterator()
  * @return Valid node iterator
  */
 template <class T>
-typename std::vector<typename Graph<T>::Node>::iterator Graph<T>::getFirstValidIteratorNode(
-        typename std::vector<Node>::iterator it)
+typename std::vector<typename Graph<T>::Node>::const_iterator Graph<T>::getFirstValidIteratorNode(
+        typename std::vector<Node>::const_iterator it) const
 {
     while (it != nodes.end() &&
            isDeleted[it->id])
@@ -741,9 +767,9 @@ typename std::vector<typename Graph<T>::Node>::iterator Graph<T>::getFirstValidI
  * @return Valid adjacent node iterator
  */
 template<class T>
-std::unordered_map<size_t, double>::iterator Graph<T>::getFirstValidIteratorAdjacent(
+std::unordered_map<size_t, double>::const_iterator Graph<T>::getFirstValidIteratorAdjacent(
         NodeIterator nodeIt,
-        std::unordered_map<size_t, double>::iterator it)
+        std::unordered_map<size_t, double>::const_iterator it) const
 {
     while (it != nodes.at((size_t) nodeIt.id).adjacentNodes.end() &&
            isDeleted[it->first])
@@ -767,7 +793,7 @@ void Graph<T>::getFirstValidIteratorEdge(
         NodeIterator nodeIt,
         AdjacentIterator adjIt,
         NodeIterator& newNodeIt,
-        AdjacentIterator& newAdjIt)
+        AdjacentIterator& newAdjIt) const
 {
     while (adjIt == this->adjacentEnd(nodeIt)) {
         nodeIt++;
@@ -854,7 +880,8 @@ void Graph<T>::deleteEdgeHelper(const size_t& id1, const size_t& id2)
  * @return True if the nodes are adjacent, false otherwise
  */
 template <class T>
-bool Graph<T>::isAdjacentHelper(const size_t& id1, const size_t& id2) const {
+bool Graph<T>::isAdjacentHelper(const size_t& id1, const size_t& id2) const
+{
     if (isDeleted[id1])
         return false;
 
@@ -876,7 +903,8 @@ bool Graph<T>::isAdjacentHelper(const size_t& id1, const size_t& id2) const {
  * @return Weight of the edge, MAX_WEIGHT if the nodes are not adjacent
  */
 template <class T>
-double Graph<T>::getWeightHelper(const size_t& id1, const size_t& id2) const {
+double Graph<T>::getWeightHelper(const size_t& id1, const size_t& id2) const
+{
     const Node& n1 = this->nodes.at(id1);
 
     std::unordered_map<size_t, double>::const_iterator it = n1.adjacentNodes.find(id2);
