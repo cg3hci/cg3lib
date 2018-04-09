@@ -38,6 +38,14 @@ class MainWindow;
 
 /**
  * @brief The GLCanvas class
+ *
+ * A QGLViewer Canvas that can be used in 2D or 3D mode
+ * and that manages a list of DrawableObjects/PickableObjects that can be
+ * automatically drawn.
+ *
+ * It provides utilities like saving high quality snapshots, save/restore of
+ * a point of view and a lot of other utilities.
+ *
  * @ingroup cg3viewer
  */
 class GLCanvas : public QGLViewer
@@ -73,16 +81,18 @@ public:
     void resetPointOfView();
     void serializePointOfView(std::ofstream& file) const;
     bool deserializePointOfView(std::ifstream& file);
+    void savePointOfView() const;
+    void loadPointOfView();
     void savePointOfView(const std::string& filename) const;
     bool loadPointOfView(const std::string& filename);
     void setCameraDirection(const cg3::Vec3& vec);
 
     //DrawableObjects List management:
     void clearDrawableObjectsList();
-    unsigned int pushDrawableObject(const cg3::DrawableObject * obj, bool visible = true);
+    unsigned int pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
     bool deleteDrawableObject(const cg3::DrawableObject* obj);
     bool deleteDrawableObject(unsigned int idObject);
-    bool setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible = true);
+    bool setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
     bool isDrawableObjectVisible(const cg3::DrawableObject* obj) const;
     bool containsDrawableObject(const cg3::DrawableObject* obj) const;
     unsigned int sizeVisibleDrawableObjects() const;
@@ -101,7 +111,7 @@ private:
     void enableZoom(bool b = true);
     void setSelectionLeftButton(bool b = true);
 
-    QColor clearColor;
+    QColor backgroundColor;
     std::vector<const cg3::DrawableObject *> drawlist;
     std::set<unsigned int> unusedIds;
     std::vector<bool> objVisibility;

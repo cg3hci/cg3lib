@@ -36,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new internal::UiMainWindowRaiiWrapper(this)),
         consoleStream(nullptr),
-        mode2D(false),
         nMeshes(0),
         first(true),
         debugObjectsEnabled(false),
@@ -46,10 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     checkBoxMapper = new QSignalMapper(this);
     connect(checkBoxMapper, SIGNAL(mapped(int)), this, SLOT(checkBoxClicked(int)));
-    connect(ui->glCanvas, SIGNAL(objectPicked(unsigned int)),
-            this, SLOT(slotObjectPicked(unsigned int)));
-    connect(ui->glCanvas, SIGNAL(point2DClicked(cg3::Point2Dd)),
-            this, SLOT(slotPoint2DClicked(cg3::Point2Dd)));
 
     QVBoxLayout * layout = new QVBoxLayout(ui->scrollArea);
     ui->scrollArea->setLayout(layout);
@@ -62,8 +57,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->glCanvas->setSnapshotQuality(100);
     ui->glCanvas->setSnapshotFormat("PNG");
-
-    cg3::internal::initConfigFolder();
 }
 
 MainWindow::~MainWindow()
@@ -76,57 +69,6 @@ MainWindow::~MainWindow()
 Point2Di MainWindow::getCanvasSize() const
 {
     return Point2Di(ui->glCanvas->width(), ui->glCanvas->height());
-}
-
-void MainWindow::savePointOfView()
-{
-    savePointOfView(cg3::internal::configFolderDirectory + "pov.cg3pov");
-}
-
-void MainWindow::loadPointOfView()
-{
-    loadPointOfView(cg3::internal::configFolderDirectory + "pov.cg3pov");
-}
-
-void MainWindow::savePointOfView(std::string filename)
-{
-    ui->glCanvas->savePointOfView(filename);
-}
-
-void MainWindow::loadPointOfView(std::string filename)
-{
-    ui->glCanvas->loadPointOfView(filename);
-    ui->glCanvas->update();
-}
-
-void MainWindow::setBackgroundColor(const QColor & color)
-{
-    ui->glCanvas->setBackgroundColor(color);
-}
-
-void MainWindow::set2DMode(bool b)
-{
-    if (b != mode2D){
-        ui->action2D_Mode->setEnabled(mode2D);
-        ui->action3D_Mode->setEnabled(!mode2D);
-        mode2D = b;
-        if (b){
-            ui->glCanvas->resetPointOfView();
-            canvas.enableRotation(false);
-            canvas.update();
-        }
-        else {
-            canvas.enableRotation();
-        }
-    }
-}
-
-void MainWindow::setCameraDirection(const cg3::Vec3& vec)
-{
-    qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
-    qglVec.normalize();
-
-    ui->glCanvas->camera()->setViewDirection(qglVec);
 }
 
 /**
@@ -290,10 +232,10 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
     }
 
     if (event->matches(QKeySequence::Print)){ //ctrl+p
-        savePointOfView();
+        canvas.savePointOfView();
     }
     if (QKeySequence(event->key() | event->modifiers()) == QKeySequence(Qt::CTRL + Qt::Key_L)){ //ctrl+l
-        loadPointOfView();
+        canvas.loadPointOfView();
     }
 }
 
@@ -363,16 +305,6 @@ void MainWindow::checkBoxClicked(int i)
     ui->glCanvas->update();
 }
 
-void MainWindow::slotObjectPicked(unsigned int i)
-{
-    emit objectPicked(i);
-}
-
-void MainWindow::slotPoint2DClicked(Point2Dd p)
-{
-    emit point2DClicked(p);
-}
-
 void MainWindow::on_actionSave_Snapshot_triggered()
 {
     QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_S, Qt::NoModifier);
@@ -404,18 +336,18 @@ void MainWindow::on_actionChange_Background_Color_triggered()
 {
     QColor color = QColorDialog::getColor(Qt::white, this);
 
-    setBackgroundColor(color);
+    canvas.setBackgroundColor(color);
     canvas.update();
 }
 
 void MainWindow::on_actionSave_Point_Of_View_triggered()
 {
-    savePointOfView();
+    canvas.savePointOfView();
 }
 
 void MainWindow::on_actionLoad_Point_of_View_triggered()
 {
-    loadPointOfView();
+    canvas.loadPointOfView();
 }
 
 void MainWindow::on_actionShow_Hide_Dock_Widget_triggered()
@@ -428,7 +360,7 @@ void MainWindow::on_actionLoad_Point_Of_View_from_triggered()
 {
     std::string s = povLS.loadDialog("Open Point Of View");
     if (s != ""){
-        loadPointOfView(s);
+        canvas.loadPointOfView(s);
     }
 }
 
@@ -436,7 +368,7 @@ void MainWindow::on_actionSave_Point_Of_View_as_triggered()
 {
     std::string s = povLS.saveDialog("Save Point Of View");
     if (s != ""){
-        savePointOfView(s);
+        canvas.savePointOfView(s);
     }
 }
 
@@ -457,12 +389,12 @@ void MainWindow::on_actionDisable_Debug_Objects_triggered()
 
 void MainWindow::on_action2D_Mode_triggered()
 {
-    set2DMode(true);
+    canvas.set2DMode();
 }
 
 void MainWindow::on_action3D_Mode_triggered()
 {
-    set2DMode(false);
+    canvas.set3DMode();
 }
 
 void MainWindow::on_actionReset_Point_of_View_triggered()

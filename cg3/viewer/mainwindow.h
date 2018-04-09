@@ -63,14 +63,6 @@ public:
     //Canvas:
     cg3::Point2Di getCanvasSize() const;
 
-    void savePointOfView();
-    void loadPointOfView();
-    void savePointOfView(std::string filename);
-    void loadPointOfView(std::string filename);
-    void setBackgroundColor(const QColor &);
-    void set2DMode(bool b = true);
-    void setCameraDirection(const cg3::Vec3& vec);
-
     //DrawableObjects for the Canvas
     void pushObj(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
     bool deleteObj(const cg3::DrawableObject * obj, bool b = true);
@@ -94,15 +86,7 @@ public:
     void renameManager(unsigned int i, std::string s);
     void setCurrentIndexToolBox(unsigned int i);
 
-    cg3::DrawableObjects debugObjects;
-
 signals:
-    /**
-     * @brief objectClicked
-     * Segnale da "catchare", ha come parametro l'oggetto cliccato nella GLCanvas
-     */
-    void objectPicked(unsigned int);
-    void point2DClicked(cg3::Point2Dd);
 
     /**
      * @brief undoEvent
@@ -118,8 +102,6 @@ signals:
 
 private slots:
     void checkBoxClicked(int i);
-    void slotObjectPicked(unsigned int i);
-    void slotPoint2DClicked(cg3::Point2Dd p);
 
     //Menu Actions
     void on_actionSave_Snapshot_triggered();
@@ -149,9 +131,6 @@ private:
     cg3::viewer::LoaderSaver povLS;
     ConsoleStream* consoleStream;
 
-
-    bool mode2D;
-
     // Mesh Stack
     //
     QSignalMapper* checkBoxMapper;
@@ -164,6 +143,7 @@ private:
 public:
 
     GLCanvas& canvas;
+    cg3::DrawableObjects debugObjects;
 };
 
 } //namespace cg3::viewer

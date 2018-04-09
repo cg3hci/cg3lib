@@ -24,7 +24,7 @@ const std::string configFolderDirectory = std::string("/Users/") + std::getenv("
 const std::string configFolderDirectory = std::string(std::getenv("HOME")) + "/.config/cg3lib/";
 #endif
 
-void initConfigFolder()
+inline void initConfigFolder()
 {
     #ifndef __APPLE__
     if (! std::experimental::filesystem::exists(configFolderDirectory.c_str()))
