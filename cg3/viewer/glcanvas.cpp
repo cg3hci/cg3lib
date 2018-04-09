@@ -32,7 +32,7 @@ void GLCanvas::init()
 
 void GLCanvas::draw()
 {
-    setBackgroundColor(backgroundColor);
+    QGLViewer::setBackgroundColor(backgroundColor);
 
     for(unsigned int i=0; i<drawlist.size(); ++i) {
         if (objVisibility[i] && drawlist[i] != nullptr)
