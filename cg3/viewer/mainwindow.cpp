@@ -96,7 +96,7 @@ void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bo
     checkBoxMapper->setMapping(cb, nMeshes);
     nMeshes++;
 
-    ((QVBoxLayout*)ui->scrollArea->layout())->addWidget(cb, 1, Qt::AlignTop);
+    ((QVBoxLayout*)ui->scrollArea->layout())->addWidget(cb, 0, Qt::AlignTop);
 }
 
 /**

@@ -112,7 +112,7 @@
    <property name="minimumSize">
     <size>
      <width>603</width>
-     <height>243</height>
+     <height>575</height>
     </size>
    </property>
    <property name="autoFillBackground">
@@ -141,7 +141,7 @@
      <item row="0" column="0">
       <widget class="QScrollArea" name="scrollArea">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+        <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -170,7 +170,7 @@
           <x>0</x>
           <y>0</y>
           <width>160</width>
-          <height>68</height>
+          <height>71</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -180,7 +180,7 @@
      <item row="1" column="0">
       <widget class="QFrame" name="frame">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
