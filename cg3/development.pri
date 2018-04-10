@@ -9,6 +9,8 @@
 DEFINES += CG3_DEVELOPMENT_DEFINED
 MODULES += CG3_DEVELOPMENT
 
+# ----- Algorithms -----
+
 HEADERS += \
     $$PWD/development/algorithms/marching_cubes.h
 
@@ -23,3 +25,13 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/development/data_structures/lattices/regular_lattice.tpp
+
+# ----- Viewer -----
+HEADERS += \
+    $$PWD/development/viewer/managers/debugobjects_manager.h
+
+SOURCES += \
+    $$PWD/development/viewer/managers/debugobjects_manager.cpp
+
+FORMS += \
+    $$PWD/development/viewer/managers/debugobjects_manager.ui

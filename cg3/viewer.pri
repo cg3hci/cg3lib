@@ -78,12 +78,13 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
         $$PWD/viewer/interfaces/drawable_mesh.h \
+        #$$PWD/viewer/managers/debugobjects_manager.h \
+        $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/utilities/loadersaver.h \
         $$PWD/viewer/utilities/consolestream.h \
-        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
-        $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.h \
-        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h
+        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h \
+        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h
 
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
@@ -91,15 +92,17 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_plane.cpp \
         $$PWD/viewer/drawable_objects/drawable_objects.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
+        #$$PWD/viewer/managers/debugobjects_manager.cpp \
+        $$PWD/viewer/opengl_objects/opengl_objects.tpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
         $$PWD/viewer/utilities/consolestream.tpp \
+        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp \
         $$PWD/viewer/drawable_objects/2d/drawable_segment2d.tpp \
-        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp \
-        $$PWD/viewer/opengl_objects/opengl_objects.tpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp
+        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp
 
     FORMS += \
-        $$PWD/viewer/mainwindow.ui
+        $$PWD/viewer/mainwindow.ui \
+        #$$PWD/viewer/managers/debugobjects_manager.ui
 
     contains(DEFINES, CG3_DCEL_DEFINED) {
         HEADERS += \

@@ -1,0 +1,48 @@
+/*
+ * This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+ * This Source Code Form is subject to the terms of the GNU GPL 3.0
+ *
+ * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+ */
+#include "debugobjects_manager.h"
+#include "ui_debugobjects_manager.h"
+
+#include <QColorDialog>
+
+namespace cg3 {
+namespace viewer {
+
+DebugObjectsManager::DebugObjectsManager(QWidget *parent) :
+    QFrame(parent),
+    ui(new Ui::DebugObjectsManager),
+    tmpColorSphere(128,128,128),
+    mw((cg3::viewer::MainWindow&)*parent)
+{
+    ui->setupUi(this);
+    mw.enableDebugObjects();
+}
+
+DebugObjectsManager::~DebugObjectsManager()
+{
+    delete ui;
+}
+
+void DebugObjectsManager::on_colorSpherePushButton_clicked()
+{
+    tmpColorSphere = QColorDialog::getColor(Qt::white, this);
+}
+
+void DebugObjectsManager::on_addSpherePushButton_clicked()
+{
+    mw.debugObjects.addSphere(Pointd(ui->xSphereSpinBox->value(),
+                                     ui->ySphereSpinBox->value(),
+                                     ui->zSphereSpinBox->value()),
+                              ui->radiusSphereSpinBox->value(),
+                              tmpColorSphere,
+                              ui->precisionSphereSpinBox->value()
+                              );
+    mw.canvas.update();
+}
+
+} //namespace cg3::viewer
+} //namespace cg3

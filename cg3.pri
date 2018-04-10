@@ -21,17 +21,9 @@ CG3_DATA_STRUCTURES {
     include (cg3/data_structures.pri)
 }
 
-#CG3_DCEL {
-#    include (cg3/meshes/dcel.pri)
-#}
-
 CG3_MESHES {
     include (cg3/meshes.pri)
 }
-
-#CG3_EIGENMESH {
-#    include (cg3/meshes/eigenmesh.pri)
-#}
 
 CG3_ALGORITHMS {
     include (cg3/algorithms.pri)

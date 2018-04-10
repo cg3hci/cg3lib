@@ -16,7 +16,7 @@
 namespace cg3 {
 namespace viewer {
 namespace Ui {
-    class EigenMeshManager;
+class EigenMeshManager;
 } //namespace cg3::viewer::Ui
 
 /**

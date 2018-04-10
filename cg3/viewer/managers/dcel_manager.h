@@ -17,7 +17,7 @@
 namespace cg3 {
 namespace viewer {
 namespace Ui {
-    class DcelManager;
+class DcelManager;
 } //namespace cg3::viewer::Ui
 
 /**
