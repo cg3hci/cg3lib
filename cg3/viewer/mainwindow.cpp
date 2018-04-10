@@ -46,8 +46,12 @@ MainWindow::MainWindow(QWidget *parent) :
     checkBoxMapper = new QSignalMapper(this);
     connect(checkBoxMapper, SIGNAL(mapped(int)), this, SLOT(checkBoxClicked(int)));
 
-    QVBoxLayout * layout = new QVBoxLayout(ui->scrollArea);
+    //QVBoxLayout * layout = new QVBoxLayout(ui->scrollArea);
+    QGridLayout * layout = new QGridLayout(ui->scrollArea);
     ui->scrollArea->setLayout(layout);
+    ((QGridLayout*)ui->scrollArea->layout())->setHorizontalSpacing(0);
+    ((QGridLayout*)ui->scrollArea->layout())->setVerticalSpacing(0);
+    //((QVBoxLayout*)ui->scrollArea->layout())->setSpacing(0);
 
     ui->console->hide();
 
@@ -86,6 +90,7 @@ void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bo
     ui->glCanvas->update();
 
     QCheckBox * cb = new QCheckBox();
+    cb->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     cb->setText(checkBoxName.c_str());
     cb->setEnabled(true);
     cb->setChecked(true);
@@ -96,7 +101,9 @@ void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bo
     checkBoxMapper->setMapping(cb, nMeshes);
     nMeshes++;
 
-    ((QVBoxLayout*)ui->scrollArea->layout())->addWidget(cb, 0, Qt::AlignTop);
+    //((QVBoxLayout*)ui->scrollArea->layout())->addWidget(cb, 0, Qt::AlignTop);
+    int nr = ((QGridLayout*)ui->scrollArea->layout())->rowCount();
+    ((QGridLayout*)ui->scrollArea->layout())->addWidget(cb, nr, 0, 1, 0, Qt::AlignTop);
 }
 
 /**
