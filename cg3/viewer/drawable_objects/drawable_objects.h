@@ -20,27 +20,48 @@ namespace cg3 {
 class DrawableObjects : public DrawableObject
 {
 public:
+    typedef enum {SPHERE, CYLINDER, POINT, LINE, TRIANGLE} Elements;
+
     DrawableObjects();
 
     // DrawableObject interface
     void draw() const;
     Pointd sceneCenter() const;
     double sceneRadius() const;
-    bool isVisible() const;
-    void setVisible(bool b);
 
     void updateBoundingBox();
     unsigned int numberObjects() const;
 
-    void addSphere(const Pointd& center, double radius, const QColor &color, int precision = 4);
+    unsigned int addSphere(
+            const Pointd& center,
+            double radius,
+            const QColor &color,
+            int precision = 4);
     void clearSpheres();
-    void addPoint(const Pointd& p, const QColor &color, int size = 8);
+    unsigned int addPoint(
+            const Pointd& p,
+            const QColor &color,
+            int size = 8);
     void clearPoints();
-    void addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color);
+    unsigned int addCylinder(
+            const Pointd& a,
+            const Pointd& b,
+            double radius,
+            const QColor color);
     void clearCylinders();
-    void addLine(const Pointd& a, const Pointd& b, const QColor color, int width= 3);
+    unsigned int addLine(
+            const Pointd& a,
+            const Pointd& b,
+            const QColor color,
+            int width= 3);
     void clearLines();
-    void addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width = 3, bool fill = false);
+    unsigned int addTriangle(
+            const Pointd& a,
+            const Pointd& b,
+            const Pointd& c,
+            const QColor color,
+            int width = 3,
+            bool fill = false);
     void clearTriangles();
 
 protected:
@@ -81,7 +102,6 @@ protected:
     std::vector<Point> points;
     std::vector<Triangle> triangles;
 
-    bool visible;
     BoundingBox bb;
 };
 

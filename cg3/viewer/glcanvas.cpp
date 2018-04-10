@@ -183,6 +183,18 @@ void GLCanvas::drawAxis(bool b)
     update();
 }
 
+Pointd GLCanvas::cameraPosition() const
+{
+    qglviewer::Vec p = camera()->position();
+    return cg3::Pointd(p.x, p.y, p.z);
+}
+
+Vec3 GLCanvas::cameraDirection() const
+{
+    qglviewer::Vec p = camera()->viewDirection();
+    return cg3::Vec3(p.x, p.y, p.z);
+}
+
 void GLCanvas::resetPointOfView()
 {
     qglviewer::Vec v(0,0,2.61313);
@@ -250,6 +262,12 @@ void GLCanvas::setCameraDirection(const Vec3 &vec)
     qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
     qglVec.normalize();
     camera()->setViewDirection(qglVec);
+}
+
+void GLCanvas::setCameraPosition(const Pointd &pos)
+{
+    qglviewer::Vec qglvec(pos.x(), pos.y(), pos.z());
+    camera()->setPosition(qglvec);
 }
 
 void GLCanvas::clearDrawableObjectsList()

@@ -78,6 +78,8 @@ public:
     void drawAxis(bool b);
 
     // Point of View member functions:
+    cg3::Pointd cameraPosition() const;
+    cg3::Vec3 cameraDirection() const;
     void resetPointOfView();
     void serializePointOfView(std::ofstream& file) const;
     bool deserializePointOfView(std::ifstream& file);
@@ -86,6 +88,7 @@ public:
     void savePointOfView(const std::string& filename) const;
     bool loadPointOfView(const std::string& filename);
     void setCameraDirection(const cg3::Vec3& vec);
+    void setCameraPosition(const cg3::Pointd& pos);
 
     //DrawableObjects List management:
     void clearDrawableObjectsList();

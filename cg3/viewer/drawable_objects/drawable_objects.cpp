@@ -12,29 +12,27 @@
 
 namespace cg3 {
 
-DrawableObjects::DrawableObjects() :
-    visible(true)
+DrawableObjects::DrawableObjects()
 {
 }
 
 void DrawableObjects::draw() const
 {
-    if (visible){
-        for (const Sphere& s : spheres){
-            opengl::drawSphere(s.center, s.radius, s.color, s.precision);
-        }
-        for (const Point& p : points){
-            opengl::drawPoint(p.p, p.color, p.size);
-        }
-        for (const Cylinder& c : cylinders){
-            opengl::drawCylinder(c.a, c.b, c.radius, c.radius, c.color);
-        }
-        for (const Line& l : lines){
-            opengl::drawLine(l.a, l.b, l.color, l.width);
-        }
-        for (const Triangle& t : triangles){
-            opengl::drawTriangle(t.a, t.b, t.c, t.color, t.width, t.fill);
-        }
+
+    for (const Sphere& s : spheres){
+        opengl::drawSphere(s.center, s.radius, s.color, s.precision);
+    }
+    for (const Point& p : points){
+        opengl::drawPoint(p.p, p.color, p.size);
+    }
+    for (const Cylinder& c : cylinders){
+        opengl::drawCylinder(c.a, c.b, c.radius, c.radius, c.color);
+    }
+    for (const Line& l : lines){
+        opengl::drawLine(l.a, l.b, l.color, l.width);
+    }
+    for (const Triangle& t : triangles){
+        opengl::drawTriangle(t.a, t.b, t.c, t.color, t.width, t.fill);
     }
 }
 
@@ -50,16 +48,6 @@ double DrawableObjects::sceneRadius() const
     //if (bb.diag() > 0)
     //    return bb.diag()/2;
     return -1;
-}
-
-bool DrawableObjects::isVisible() const
-{
-    return visible;
-}
-
-void DrawableObjects::setVisible(bool b)
-{
-    visible = b;
 }
 
 void DrawableObjects::updateBoundingBox()
@@ -99,12 +87,13 @@ unsigned int DrawableObjects::numberObjects() const
     return (unsigned int) (spheres.size() + cylinders.size() + lines.size());
 }
 
-void DrawableObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision)
+unsigned int DrawableObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision)
 {
     Sphere s = {center, radius, color, precision};
     spheres.push_back(s);
     bb.min() = bb.min().min(center);
     bb.max() = bb.max().max(center);
+    return spheres.size()-1;
 }
 
 void DrawableObjects::clearSpheres()
@@ -113,12 +102,13 @@ void DrawableObjects::clearSpheres()
     updateBoundingBox();
 }
 
-void DrawableObjects::addPoint(const Pointd& p, const QColor& color, int size)
+unsigned int DrawableObjects::addPoint(const Pointd& p, const QColor& color, int size)
 {
     Point pp = {p, color, size};
     points.push_back(pp);
     bb.min() = bb.min().min(p);
     bb.max() = bb.max().max(p);
+    return points.size()-1;
 }
 
 void DrawableObjects::clearPoints() {
@@ -126,7 +116,7 @@ void DrawableObjects::clearPoints() {
     updateBoundingBox();
 }
 
-void DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color)
+unsigned int DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color)
 {
     Cylinder c = {a, b, radius, color};
     cylinders.push_back(c);
@@ -135,6 +125,8 @@ void DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radiu
     bb.min() = bb.min().min(b);
     bb.max() = bb.max().max(a);
     bb.max() = bb.max().max(b);
+
+    return cylinders.size()-1;
 }
 
 void DrawableObjects::clearCylinders()
@@ -143,7 +135,7 @@ void DrawableObjects::clearCylinders()
     updateBoundingBox();
 }
 
-void DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor color, int width)
+unsigned int DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor color, int width)
 {
     Line l = {a, b, width, color};
     lines.push_back(l);
@@ -151,6 +143,7 @@ void DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor col
     bb.min() = bb.min().min(b);
     bb.max() = bb.max().max(a);
     bb.max() = bb.max().max(b);
+    return lines.size()-1;
 }
 
 void DrawableObjects::clearLines()
@@ -159,7 +152,7 @@ void DrawableObjects::clearLines()
     updateBoundingBox();
 }
 
-void DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width, bool fill)
+unsigned int DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width, bool fill)
 {
     Triangle t {a, b, c, width, color, fill};
     triangles.push_back(t);
@@ -169,6 +162,8 @@ void DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd
     bb.max() = bb.max().max(a);
     bb.max() = bb.max().max(b);
     bb.max() = bb.max().max(c);
+
+    return triangles.size()-1;
 }
 
 void DrawableObjects::clearTriangles()
