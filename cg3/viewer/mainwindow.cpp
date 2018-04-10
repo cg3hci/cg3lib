@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
         nMeshes(0),
         first(true),
         debugObjectsEnabled(false),
+        m_spacer(nullptr),
         canvas(*ui->glCanvas)
 {
     ui->toolBox->removeItem(0);
@@ -102,8 +103,13 @@ void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bo
     nMeshes++;
 
     //((QVBoxLayout*)ui->scrollArea->layout())->addWidget(cb, 0, Qt::AlignTop);
+    QSpacerItem* spacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    if (m_spacer != nullptr)
+        ((QGridLayout*)ui->scrollArea->layout())->removeItem(m_spacer);
     int nr = ((QGridLayout*)ui->scrollArea->layout())->rowCount();
     ((QGridLayout*)ui->scrollArea->layout())->addWidget(cb, nr, 0, 1, 0, Qt::AlignTop);
+    ((QGridLayout*)ui->scrollArea->layout())->addItem(spacer, nr+1, 0);
+    m_spacer = spacer;
 }
 
 /**

@@ -15,6 +15,7 @@
 #include <QFrame>
 #include <QSignalMapper>
 #include <QCheckBox>
+#include <QSpacerItem>
 #include <QProcess>
 #ifdef __APPLE__
 #pragma clang diagnostic push
@@ -139,6 +140,7 @@ private:
     int nMeshes;
     bool first;
     bool debugObjectsEnabled;
+    QSpacerItem* m_spacer;
 
 public:
 
