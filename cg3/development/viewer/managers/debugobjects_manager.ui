@@ -14,19 +14,19 @@
    <string>Frame</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0" colspan="2">
+   <item row="0" column="0">
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="addTab">
       <attribute name="title">
        <string>Add Debug Objects</string>
       </attribute>
@@ -180,10 +180,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="manageTab">
       <attribute name="title">
        <string>Manage Debug Objects</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_4"/>
      </widget>
     </widget>
    </item>

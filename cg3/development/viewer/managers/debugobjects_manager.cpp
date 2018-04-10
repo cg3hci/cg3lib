@@ -34,13 +34,22 @@ void DebugObjectsManager::on_colorSpherePushButton_clicked()
 
 void DebugObjectsManager::on_addSpherePushButton_clicked()
 {
-    mw.debugObjects.addSphere(Pointd(ui->xSphereSpinBox->value(),
+    int id = mw.debugObjects.addSphere(Pointd(ui->xSphereSpinBox->value(),
                                      ui->ySphereSpinBox->value(),
                                      ui->zSphereSpinBox->value()),
                               ui->radiusSphereSpinBox->value(),
                               tmpColorSphere,
                               ui->precisionSphereSpinBox->value()
                               );
+
+    QCheckBox * cb = new QCheckBox();
+    cb->setText("prova");
+    cb->setEnabled(true);
+    cb->setChecked(true);
+    ((QGridLayout*)ui->manageTab->layout())->addWidget(cb, id, 0);
+    QSpacerItem* spacer = new QSpacerItem(40, 20,
+                                          QSizePolicy::Minimum, QSizePolicy::Expanding);
+    ((QGridLayout*)ui->manageTab->layout())->addItem(spacer, id+1, 0);
     mw.canvas.update();
 }
 

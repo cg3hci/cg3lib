@@ -48,7 +48,7 @@ void GLCanvas::drawWithNames()
         if (objVisibility[i]){
             const PickableObject* obj =
                     dynamic_cast<const PickableObject*>(drawlist[i]);
-            if (obj) // se il drawable object è anche un pickable object, allora chiamo la draw with names
+            if (obj) // if it is a PickableObject
                 obj->drawWithNames();
         }
     }
@@ -57,7 +57,6 @@ void GLCanvas::drawWithNames()
 void GLCanvas::postSelection(const QPoint& point)
 {
     unsigned int idObject = selectedName();
-    // Note that "found" is different from (selectedObjectId()>=0) because of the size of the selected region.
 
     if ((int) idObject == -1){
         if (mode == _2D){
@@ -71,7 +70,9 @@ void GLCanvas::postSelection(const QPoint& point)
                 emit point2DClicked(Point2Dd(inters.x(), inters.y()));
             }
             else {
-                QMessageBox::information(this, "No selection", "No Intersection between Clicked Point and Z plane");
+                QMessageBox::information(
+                            this, "No selection",
+                            "No Intersection between Clicked Point and Z plane");
             }
         }
     }
@@ -207,7 +208,9 @@ void GLCanvas::serializePointOfView(std::ofstream &file) const
 {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
-    serializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
+    serializeObjectAttributes(
+                "cg3PointOfView", file, v.x, v.y, v.z,
+                q[0], q[1], q[2], q[3]);
 }
 
 bool GLCanvas::deserializePointOfView(std::ifstream &file)
@@ -215,7 +218,9 @@ bool GLCanvas::deserializePointOfView(std::ifstream &file)
     qglviewer::Vec v;
     qglviewer::Quaternion q;
     try {
-        deserializeObjectAttributes("cg3PointOfView", file, v.x, v.y, v.z, q[0], q[1], q[2], q[3]);
+        deserializeObjectAttributes(
+                    "cg3PointOfView", file, v.x, v.y, v.z,
+                    q[0], q[1], q[2], q[3]);
         this->camera()->setPosition(v);
         this->camera()->setOrientation(q);
         return true;
