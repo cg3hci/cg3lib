@@ -12,14 +12,10 @@ namespace cg3 {
 
 PickableEigenMesh::PickableEigenMesh()
 {
-    selection_color = Color(244,196,48);
-    selection_width = 3;
 }
 
 PickableEigenMesh::PickableEigenMesh(const EigenMesh &e) :DrawableEigenMesh(e)
 {
-    selection_color = Color(244,196,48);
-    selection_width = 3;
 }
 
 /**
@@ -63,32 +59,6 @@ void PickableEigenMesh::drawWithNames() const
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
 
-}
-
-/**
- * \~Italian
- * @brief PickableEigenmesh::drawFace Metodo che si occupa di effettuare il rendering di una faccia
- * @param f La faccia da renderizzare
- */
-void PickableEigenMesh::drawFace(int f) const
-{
-    std::vector<unsigned int> face_vertex;
-    face_vertex.push_back(F(f,0));
-    face_vertex.push_back(F(f,1));
-    face_vertex.push_back(F(f,2));
-
-    glDrawElements(GL_TRIANGLES, 1, GL_UNSIGNED_INT, face_vertex.data());
-
-}
-
-void PickableEigenMesh::setSelectedFaces(std::vector<int> selected_faces)
-{
-    this->selected_faces = selected_faces;
-}
-
-void PickableEigenMesh::setSelectionColor(Color color)
-{
-    selection_color = color;
 }
 
 } //namespace cg3

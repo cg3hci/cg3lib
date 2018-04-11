@@ -32,6 +32,7 @@ private slots:
 private:
     Ui::DebugObjectsManager *ui;
     QColor tmpColorSphere;
+    QSpacerItem* tmpSpacer;
 
     //reference to the MainWindow
     cg3::viewer::MainWindow& mw;

@@ -94,7 +94,8 @@ void GLCanvas::fitScene()
 
         for(int i=0; i<(int)drawlist.size(); ++i) {
             const DrawableObject * obj = drawlist[i];
-            if (objVisibility[i] && obj->sceneRadius() > std::numeric_limits<float>::epsilon()) {
+            if (objVisibility[i] &&
+                    obj->sceneRadius() > std::numeric_limits<float>::epsilon()) {
                 Pointd objCenter = obj->sceneCenter();
                 double objRadius = obj->sceneRadius();
 

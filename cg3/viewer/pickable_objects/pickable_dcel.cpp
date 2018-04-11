@@ -18,14 +18,14 @@ namespace cg3 {
 
 PickableDcel::PickableDcel()
 {
-    selection_color = Color(244,196,48);
-    selection_width = 3;
+    selectionColor = Color(244,196,48);
+    selectionWidth = 3;
 }
 
 PickableDcel::PickableDcel(const Dcel& d) : DrawableDcel(d)
 {
-    selection_color = Color(244,196,48);
-    selection_width = 3;
+    selectionColor = Color(244,196,48);
+    selectionWidth = 3;
 }
 
 /**
@@ -58,12 +58,11 @@ void PickableDcel::drawWithNames() const
  */
 void PickableDcel::draw() const
 {
-
     DrawableDcel::draw();
-    foreach(Dcel::HalfEdge* he, selected_faces_contour){
+    for(Dcel::HalfEdge* he : selectedFacesContour){
         glDisable(GL_LIGHTING);
-        glLineWidth(selection_width);
-        glColor3ub(selection_color.red(),selection_color.green(),selection_color.blue());
+        glLineWidth(selectionWidth);
+        glColor3ub(selectionColor.red(),selectionColor.green(),selectionColor.blue());
         glBegin(GL_LINES);
         Pointd p1 = he->getFromVertex()->getCoordinate();
         Pointd p2 = he->getToVertex()->getCoordinate();
@@ -75,12 +74,12 @@ void PickableDcel::draw() const
 
 void PickableDcel::setSelectionColor(Color color)
 {
-    selection_color = color;
+    selectionColor = color;
 }
 
 void PickableDcel::setSelectionWidth(int value)
 {
-    selection_width = 2*value;
+    selectionWidth = 2*value;
 }
 
 /**
@@ -121,7 +120,7 @@ std::vector<int> PickableDcel::obtainFaceTriangles(const Face* f) const
 
 void PickableDcel::setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour)
 {
-    this->selected_faces_contour = selected_faces_contour;
+    this->selectedFacesContour = selected_faces_contour;
 }
 
 } //namespace cg3

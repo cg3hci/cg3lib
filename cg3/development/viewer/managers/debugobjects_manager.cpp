@@ -8,6 +8,7 @@
 #include "ui_debugobjects_manager.h"
 
 #include <QColorDialog>
+#include <QGridLayout>
 
 namespace cg3 {
 namespace viewer {
@@ -16,6 +17,7 @@ DebugObjectsManager::DebugObjectsManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::DebugObjectsManager),
     tmpColorSphere(128,128,128),
+    tmpSpacer(nullptr),
     mw((cg3::viewer::MainWindow&)*parent)
 {
     ui->setupUi(this);
@@ -49,7 +51,10 @@ void DebugObjectsManager::on_addSpherePushButton_clicked()
     ((QGridLayout*)ui->manageTab->layout())->addWidget(cb, id, 0);
     QSpacerItem* spacer = new QSpacerItem(40, 20,
                                           QSizePolicy::Minimum, QSizePolicy::Expanding);
+    if (tmpSpacer != nullptr)
+        ((QGridLayout*)ui->manageTab->layout())->removeItem(tmpSpacer);
     ((QGridLayout*)ui->manageTab->layout())->addItem(spacer, id+1, 0);
+    tmpSpacer = spacer;
     mw.canvas.update();
 }
 

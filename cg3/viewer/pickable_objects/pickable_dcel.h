@@ -25,7 +25,7 @@ public:
     PickableDcel(const Dcel &d);
     void drawWithNames() const;
     void draw() const;
-    void setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour);
+    void setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selectedFacesContour);
     void setSelectionColor(Color color);
     void setSelectionWidth(int value);
 
@@ -33,9 +33,9 @@ protected:
     void drawFace(const Face* f) const;
     std::vector<int> obtainFaceTriangles(const Face* f) const;
 
-    std::vector<Dcel::HalfEdge*> selected_faces_contour;
-    Color selection_color;
-    int selection_width;
+    std::vector<Dcel::HalfEdge*> selectedFacesContour;
+    Color selectionColor;
+    int selectionWidth;
 };
 
 } //namespace cg3

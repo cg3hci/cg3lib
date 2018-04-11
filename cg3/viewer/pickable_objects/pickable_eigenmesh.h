@@ -24,14 +24,6 @@ public:
     PickableEigenMesh();
     PickableEigenMesh(const EigenMesh &e);
     void drawWithNames() const;
-    void setSelectedFaces(std::vector<int> selected_faces);
-    void setSelectionColor(Color color);
-protected:
-    void drawFace(int f) const;
-
-    std::vector<int> selected_faces;
-    Color selection_color;
-    int selection_width;
 };
 
 } //namespace cg3
