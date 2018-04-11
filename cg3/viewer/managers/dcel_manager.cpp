@@ -35,7 +35,7 @@ DcelManager::DcelManager(QWidget *parent) :
 DcelManager::~DcelManager()
 {
     if (loaded)
-        mainWindow.deleteObj(&drawableDcel);
+        mainWindow.deleteDrawableObject(&drawableDcel);
     delete ui;
 }
 
@@ -60,7 +60,7 @@ void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
 {
     cleanDcel();
     drawableDcel = dcel;
-    mainWindow.pushObj(&drawableDcel, name);
+    mainWindow.pushDrawableObject(&drawableDcel, name);
     mainWindow.canvas.update();
     loaded = true;
 
@@ -78,7 +78,7 @@ void DcelManager::cleanDcel()
         setButtonsDcelNotLoaded();
 
         resetDefaults();
-        mainWindow.deleteObj(&drawableDcel);
+        mainWindow.deleteDrawableObject(&drawableDcel);
         mainWindow.canvas.update();
         loaded = false;
     }
@@ -121,7 +121,7 @@ void DcelManager::on_loadDcelButton_clicked()
             //drawableDcel->setFacesWireframe(true);
             drawableDcel.setSmoothShading();
             drawableDcel.update();
-            mainWindow.pushObj(&drawableDcel, filename.substr(filename.find_last_of("/") + 1));
+            mainWindow.pushDrawableObject(&drawableDcel, filename.substr(filename.find_last_of("/") + 1));
             mainWindow.canvas.update();
 
             setButtonsDcelLoaded();

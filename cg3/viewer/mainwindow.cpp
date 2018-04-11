@@ -84,7 +84,7 @@ Point2Di MainWindow::getCanvasSize() const
  * @param obj: nuovo oggetto da visualizzare nella canvas
  * @param checkBoxName: nome assegnato alla checkbox relativa al nuovo oggetto
  */
-void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bool b)
+void MainWindow::pushDrawableObject(const DrawableObject* obj, std::string checkBoxName, bool b)
 {
     ui->glCanvas->pushDrawableObject(obj);
     if (b) ui->glCanvas->fitScene();
@@ -119,7 +119,7 @@ void MainWindow::pushObj(const DrawableObject* obj, std::string checkBoxName, bo
  *
  * @param obj: oggetto che verrà rimosso dalla canvas
  */
-bool MainWindow::deleteObj(const DrawableObject* obj, bool b)
+bool MainWindow::deleteDrawableObject(const DrawableObject* obj, bool b)
 {
     boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
     if (it != mapObjects.right.end()){
@@ -144,7 +144,7 @@ bool MainWindow::deleteObj(const DrawableObject* obj, bool b)
         return false;
 }
 
-void MainWindow::setObjVisibility(const DrawableObject *obj, bool visible)
+void MainWindow::setDrawableObjectVisibility(const DrawableObject *obj, bool visible)
 {
     boost::bimap<int, const DrawableObject*>::right_const_iterator it = mapObjects.right.find(obj);
     if (it != mapObjects.right.end()){
@@ -156,7 +156,7 @@ void MainWindow::setObjVisibility(const DrawableObject *obj, bool visible)
 
 }
 
-bool MainWindow::contains(const DrawableObject* obj)
+bool MainWindow::containsDrawableObject(const DrawableObject* obj)
 {
     boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter = mapObjects.right.find(obj);
     return (right_iter != mapObjects.right.end());
@@ -175,7 +175,7 @@ BoundingBox MainWindow::getFullBoundingBox()
  * @brief Restituisce il numero di oggetti visibili presenti nella canvas.
  * @return intero rappresentante il numero di oggetti visibili
  */
-int MainWindow::getNumberVisibleObjects()
+int MainWindow::getNumberVisibleDrawableObjects()
 {
     return ui->glCanvas->sizeVisibleDrawableObjects();
 }
@@ -184,7 +184,7 @@ int MainWindow::getNumberVisibleObjects()
 void MainWindow::enableDebugObjects()
 {
     if (debugObjectsEnabled == false){
-        pushObj(&debugObjects, "Debug Objects");
+        pushDrawableObject(&debugObjects, "Debug Objects");
         ui->actionEnable_Debug_Objects->setEnabled(false);
         ui->actionDisable_Debug_Objects->setEnabled(true);
         debugObjectsEnabled = true;
@@ -194,7 +194,7 @@ void MainWindow::enableDebugObjects()
 void MainWindow::disableDebugObjects()
 {
     if (debugObjectsEnabled == true){
-        if (deleteObj(&debugObjects)) {
+        if (deleteDrawableObject(&debugObjects)) {
             ui->actionEnable_Debug_Objects->setEnabled(true);
             ui->actionDisable_Debug_Objects->setEnabled(false);
             debugObjectsEnabled = false;
@@ -259,7 +259,7 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
  * @param[in] parent: di default è la toolbox alla quale aggiungiamo il manager
  * @return un intero rappresentante l'indice del manager inserito
  */
-int MainWindow::addManager(QFrame * f, std::string name, QToolBox * parent)
+unsigned int MainWindow::addManager(QFrame * f, std::string name, QToolBox * parent)
 {
     if (parent == nullptr) parent = ui->toolBox;
     ui->toolBox->insertItem((int)managers.size(), f, QString(name.c_str()));
@@ -297,7 +297,7 @@ void MainWindow::renameManager(unsigned int i, std::string s)
  * @brief Modifica il manager visualizzato all'i-esimo.
  * @param[in] i: indice del manager da visualizzare
  */
-void MainWindow::setCurrentIndexToolBox(unsigned int i)
+void MainWindow::setCurrentManager(unsigned int i)
 {
     if (i < managers.size())
         ui->toolBox->setCurrentIndex(i);

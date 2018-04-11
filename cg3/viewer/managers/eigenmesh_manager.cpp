@@ -26,10 +26,10 @@ EigenMeshManager::EigenMeshManager(QWidget *parent) :
 void EigenMeshManager::setEigenMesh(const EigenMesh& m)
 {
     if (loaded){
-        mainWindow.deleteObj(&mesh);
+        mainWindow.deleteDrawableObject(&mesh);
     }
     mesh = m;
-    mainWindow.pushObj(&mesh, "EigenMesh");
+    mainWindow.pushDrawableObject(&mesh, "EigenMesh");
     setButtonsMeshLoaded(true);
     loaded = true;
     mainWindow.canvas.update();
@@ -39,7 +39,7 @@ void EigenMeshManager::setEigenMesh(const EigenMesh& m)
 EigenMeshManager::~EigenMeshManager()
 {
     if (loaded){
-        mainWindow.deleteObj(&mesh);
+        mainWindow.deleteDrawableObject(&mesh);
     }
     delete ui;
 }
@@ -49,13 +49,13 @@ void EigenMeshManager::on_loadMeshButton_clicked()
     std::string filename = objls.loadDialog("Open Eigen Mesh");
     if (filename != "") {
         if (loaded){
-            mainWindow.deleteObj(&mesh);
+            mainWindow.deleteDrawableObject(&mesh);
         }
         loaded = mesh.readFromFile(filename);
 
         if (loaded) {
             mesh.setEnableTriangleColor();
-            mainWindow.pushObj(&mesh, filename.substr(filename.find_last_of("/") + 1));
+            mainWindow.pushDrawableObject(&mesh, filename.substr(filename.find_last_of("/") + 1));
             setButtonsMeshLoaded(true);
             mainWindow.canvas.update();
         }
@@ -69,7 +69,7 @@ void EigenMeshManager::on_clearMeshButton_clicked()
 {
     if (loaded) {
         setButtonsMeshLoaded(false);
-        mainWindow.deleteObj(&mesh);
+        mainWindow.deleteDrawableObject(&mesh);
         mainWindow.canvas.update();
     }
 }

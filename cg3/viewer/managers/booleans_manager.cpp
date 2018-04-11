@@ -34,7 +34,7 @@ BooleansManager::~BooleansManager()
     delete ui;
     for (unsigned int i = 0; i < meshes.size(); i++) {
         if (meshes[i]!=nullptr){
-            mainWindow.deleteObj(meshes[i]);
+            mainWindow.deleteDrawableObject(meshes[i]);
             delete meshes[i];
         }
     }
@@ -81,11 +81,11 @@ void BooleansManager::setButtonsResultLoaded(bool b)
 void BooleansManager::setMesh1(const EigenMesh& m)
 {
     if (meshes[0] != nullptr){
-        mainWindow.deleteObj(meshes[0]);
+        mainWindow.deleteDrawableObject(meshes[0]);
         delete meshes[0];
     }
     meshes[0] = new DrawableEigenMesh(m);
-    mainWindow.pushObj(meshes[0], "EigenMesh");
+    mainWindow.pushDrawableObject(meshes[0], "EigenMesh");
     setButtonsMeshLoaded(true);
     mainWindow.canvas.update();
 }
@@ -93,11 +93,11 @@ void BooleansManager::setMesh1(const EigenMesh& m)
 void BooleansManager::setMesh2(const EigenMesh& m)
 {
     if (meshes[1] != nullptr){
-        mainWindow.deleteObj(meshes[1]);
+        mainWindow.deleteDrawableObject(meshes[1]);
         delete meshes[1];
     }
     meshes[1] = new DrawableEigenMesh(m);
-    mainWindow.pushObj(meshes[1], "EigenMesh");
+    mainWindow.pushDrawableObject(meshes[1], "EigenMesh");
     setButtonsMeshLoaded_2(true);
     mainWindow.canvas.update();
 }
@@ -109,11 +109,11 @@ void BooleansManager::on_loadEigenMeshButton_clicked()
         DrawableEigenMesh* mesh = new DrawableEigenMesh();
         mesh->readFromObj(filename);
         //mesh->readFromObj(filename.toStdString());
-        mainWindow.pushObj(mesh, filename.substr(filename.find_last_of("/") + 1));
+        mainWindow.pushDrawableObject(mesh, filename.substr(filename.find_last_of("/") + 1));
         setButtonsMeshLoaded(true);
         mainWindow.canvas.update();
         if (meshes[0] != nullptr){
-            mainWindow.deleteObj(meshes[0]);
+            mainWindow.deleteDrawableObject(meshes[0]);
             delete meshes[0];
         }
         meshes[0] = mesh;
@@ -123,7 +123,7 @@ void BooleansManager::on_loadEigenMeshButton_clicked()
 void BooleansManager::on_clearEigenMeshButton_clicked()
 {
     setButtonsMeshLoaded(false);
-    mainWindow.deleteObj(meshes[0]);
+    mainWindow.deleteDrawableObject(meshes[0]);
     delete meshes[0];
     meshes[0] = nullptr;
 }
@@ -142,11 +142,11 @@ void BooleansManager::on_setFromResultButton_clicked()
 {
     if (result != nullptr){
         if (meshes[0] != nullptr){
-            mainWindow.deleteObj(meshes[0]);
+            mainWindow.deleteDrawableObject(meshes[0]);
             delete meshes[0];
         }
         meshes[0] = new DrawableEigenMesh(*result);
-        mainWindow.pushObj(meshes[0], "Result");
+        mainWindow.pushDrawableObject(meshes[0], "Result");
         setButtonsMeshLoaded(true);
         mainWindow.canvas.update();
 
@@ -189,11 +189,11 @@ void BooleansManager::on_loadEigenMeshButton_2_clicked()
     if (filename != "") {
         DrawableEigenMesh* mesh = new DrawableEigenMesh();
         mesh->readFromObj(filename);
-        mainWindow.pushObj(mesh, filename.substr(filename.find_last_of("/") + 1));
+        mainWindow.pushDrawableObject(mesh, filename.substr(filename.find_last_of("/") + 1));
         setButtonsMeshLoaded_2(true);
         mainWindow.canvas.update();
         if (meshes[1] != nullptr){
-            mainWindow.deleteObj(meshes[1]);
+            mainWindow.deleteDrawableObject(meshes[1]);
             delete meshes[1];
         }
         meshes[1] = mesh;
@@ -203,7 +203,7 @@ void BooleansManager::on_loadEigenMeshButton_2_clicked()
 void BooleansManager::on_clearEigenMeshButton_2_clicked()
 {
     setButtonsMeshLoaded_2(false);
-    mainWindow.deleteObj(meshes[1]);
+    mainWindow.deleteDrawableObject(meshes[1]);
     delete meshes[1];
     meshes[1] = nullptr;
 }
@@ -221,11 +221,11 @@ void BooleansManager::on_setFromResultButton_2_clicked()
 {
     if (result != nullptr){
         if (meshes[1] != nullptr){
-            mainWindow.deleteObj(meshes[1]);
+            mainWindow.deleteDrawableObject(meshes[1]);
             delete meshes[1];
         }
         meshes[1] = new DrawableEigenMesh(*result);
-        mainWindow.pushObj(meshes[1], "Result");
+        mainWindow.pushDrawableObject(meshes[1], "Result");
         setButtonsMeshLoaded(true);
         mainWindow.canvas.update();
 
@@ -266,12 +266,12 @@ void BooleansManager::on_intersectionButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
-            mainWindow.deleteObj(result);
+            mainWindow.deleteDrawableObject(result);
             delete result;
         }
         result = new DrawableEigenMesh();
         libigl::intersection(*result, *(meshes[0]), *(meshes[1]));
-        mainWindow.pushObj(result, "Intersection");
+        mainWindow.pushDrawableObject(result, "Intersection");
         mainWindow.canvas.update();
         setButtonsResultLoaded(true);
     }
@@ -281,12 +281,12 @@ void BooleansManager::on_differenceButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
-            mainWindow.deleteObj(result);
+            mainWindow.deleteDrawableObject(result);
             delete result;
         }
         result = new DrawableEigenMesh();
         libigl::difference(*result, *(meshes[0]), *(meshes[1]));
-        mainWindow.pushObj(result, "Difference");
+        mainWindow.pushDrawableObject(result, "Difference");
         mainWindow.canvas.update();
         setButtonsResultLoaded(true);
     }
@@ -296,12 +296,12 @@ void BooleansManager::on_unionButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
-            mainWindow.deleteObj(result);
+            mainWindow.deleteDrawableObject(result);
             delete result;
         }
         result = new DrawableEigenMesh();
         libigl::union_(*result, *(meshes[0]), *(meshes[1]));
-        mainWindow.pushObj(result, "Union");
+        mainWindow.pushDrawableObject(result, "Union");
         mainWindow.canvas.update();
         setButtonsResultLoaded(true);
     }
@@ -311,12 +311,12 @@ void BooleansManager::on_mergePushButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
-            mainWindow.deleteObj(result);
+            mainWindow.deleteDrawableObject(result);
             delete result;
         }
         result = new DrawableEigenMesh();
         EigenMesh::merge(*result, *(meshes[0]), *(meshes[1]));
-        mainWindow.pushObj(result, "Merge");
+        mainWindow.pushDrawableObject(result, "Merge");
         mainWindow.canvas.update();
         setButtonsResultLoaded(true);
     }
@@ -324,7 +324,7 @@ void BooleansManager::on_mergePushButton_clicked()
 
 void BooleansManager::on_clearEigenMeshButton_3_clicked()
 {
-    mainWindow.deleteObj(result);
+    mainWindow.deleteDrawableObject(result);
     delete result;
     result = nullptr;
     setButtonsResultLoaded(false);

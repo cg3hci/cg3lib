@@ -65,12 +65,12 @@ public:
     cg3::Point2Di getCanvasSize() const;
 
     //DrawableObjects for the Canvas
-    void pushObj(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
-    bool deleteObj(const cg3::DrawableObject * obj, bool b = true);
-    void setObjVisibility(const cg3::DrawableObject * obj, bool visible);
-    bool contains(const cg3::DrawableObject* obj);
+    void pushDrawableObject(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
+    bool deleteDrawableObject(const cg3::DrawableObject * obj, bool b = true);
+    void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
+    bool containsDrawableObject(const cg3::DrawableObject* obj);
     cg3::BoundingBox getFullBoundingBox();
-    int getNumberVisibleObjects();
+    int getNumberVisibleDrawableObjects();
 
     //Debug Objects
     void enableDebugObjects();
@@ -82,10 +82,10 @@ public:
     void keyPressEvent(QKeyEvent * event); //event options for keys pressed
 
     //Managers:
-    int addManager(QFrame *f, std::string name, QToolBox *parent = nullptr);
+    unsigned int addManager(QFrame *f, std::string name, QToolBox *parent = nullptr);
     QFrame *getManager(unsigned int i);
     void renameManager(unsigned int i, std::string s);
-    void setCurrentIndexToolBox(unsigned int i);
+    void setCurrentManager(unsigned int i);
 
 signals:
 
