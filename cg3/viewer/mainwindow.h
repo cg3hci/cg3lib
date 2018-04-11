@@ -31,7 +31,7 @@
 #include "interfaces/pickable_object.h"
 #include "utilities/loadersaver.h"
 #include <cg3/geometry/bounding_box.h>
-#include "drawable_objects/drawable_objects.h"
+#include "drawable_objects/drawable_mixed_objects.h"
 #include "utilities/consolestream.h"
 #include <cg3/geometry/2d/point2d.h>
 
@@ -40,11 +40,15 @@
 namespace cg3 {
 namespace viewer {
 namespace Ui {
-    class MainWindow;
+
+class MainWindow;
+
 } //namespace cg3::viewer::Ui
 
 namespace internal {
-    class UiMainWindowRaiiWrapper;
+
+class UiMainWindowRaiiWrapper;
+
 } //namespace cg3::viewer::internal
 
 /**
@@ -145,7 +149,7 @@ private:
 public:
 
     GLCanvas& canvas;
-    cg3::DrawableObjects debugObjects;
+    cg3::DrawableMixedObjects debugObjects;
 };
 
 } //namespace cg3::viewer

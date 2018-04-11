@@ -17,12 +17,12 @@ namespace cg3 {
  * @ingroup cg3viewer
  * @brief The DrawableObjects class
  */
-class DrawableObjects : public DrawableObject
+class DrawableMixedObjects : public DrawableObject
 {
 public:
     typedef enum {SPHERE, CYLINDER, POINT, LINE, TRIANGLE} Elements;
 
-    DrawableObjects();
+    DrawableMixedObjects();
 
     // DrawableObject interface
     void draw() const;
@@ -65,37 +65,46 @@ public:
     void clearTriangles();
 
 protected:
-    typedef struct {
+    struct Object
+    {
+    };
+
+    struct Sphere
+    {
             Pointd center;
             double radius;
             QColor color;
             int precision;
-    } Sphere;
-    typedef struct {
+    };
+    struct Cylinder
+    {
             Pointd a;
             Pointd b;
             double radius;
             QColor color;
-    } Cylinder;
-    typedef struct {
+    };
+    struct Point
+    {
             Pointd p;
             QColor color;
             int size;
-    } Point;
-    typedef struct {
+    };
+    struct Line
+    {
             Pointd a;
             Pointd b;
             int width;
             QColor color;
-    } Line;
-    typedef struct {
+    };
+    struct Triangle
+    {
             Pointd a;
             Pointd b;
             Pointd c;
             int width;
             QColor color;
             bool fill;
-    } Triangle;
+    };
     std::vector<Sphere> spheres;
     std::vector<Cylinder> cylinders;
     std::vector<Line> lines;

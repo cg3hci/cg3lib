@@ -73,8 +73,10 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/viewer.h \
         $$PWD/viewer/glcanvas.h \
         $$PWD/viewer/mainwindow.h \
+        $$PWD/viewer/drawable_objects/drawable_cylinder.h\
+        $$PWD/viewer/drawable_objects/drawable_sphere.h \
         $$PWD/viewer/drawable_objects/drawable_plane.h \
-        $$PWD/viewer/drawable_objects/drawable_objects.h \
+        $$PWD/viewer/drawable_objects/drawable_mixed_objects.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
         $$PWD/viewer/interfaces/drawable_mesh.h \
@@ -89,8 +91,10 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
         $$PWD/viewer/mainwindow.cpp \
+        $$PWD/viewer/drawable_objects/drawable_cylinder.cpp\
+        $$PWD/viewer/drawable_objects/drawable_sphere.cpp \
         $$PWD/viewer/drawable_objects/drawable_plane.cpp \
-        $$PWD/viewer/drawable_objects/drawable_objects.cpp \
+        $$PWD/viewer/drawable_objects/drawable_mixed_objects.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
@@ -150,5 +154,3 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
-
-

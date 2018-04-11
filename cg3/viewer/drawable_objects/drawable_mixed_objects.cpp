@@ -5,20 +5,19 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#include "drawable_objects.h"
+#include "drawable_mixed_objects.h"
 #include "../opengl_objects/opengl_objects.h"
 #include "../opengl_objects/2d/opengl_objects2d.h"
 
 
 namespace cg3 {
 
-DrawableObjects::DrawableObjects()
+DrawableMixedObjects::DrawableMixedObjects()
 {
 }
 
-void DrawableObjects::draw() const
+void DrawableMixedObjects::draw() const
 {
-
     for (const Sphere& s : spheres){
         opengl::drawSphere(s.center, s.radius, s.color, s.precision);
     }
@@ -36,21 +35,21 @@ void DrawableObjects::draw() const
     }
 }
 
-Pointd DrawableObjects::sceneCenter() const
+Pointd DrawableMixedObjects::sceneCenter() const
 {
     if (bb.diag() > 0)
         return bb.center();
     return Pointd();
 }
 
-double DrawableObjects::sceneRadius() const
+double DrawableMixedObjects::sceneRadius() const
 {
     //if (bb.diag() > 0)
     //    return bb.diag()/2;
     return -1;
 }
 
-void DrawableObjects::updateBoundingBox()
+void DrawableMixedObjects::updateBoundingBox()
 {
     if (numberObjects() == 0) {
         bb = BoundingBox();
@@ -82,12 +81,12 @@ void DrawableObjects::updateBoundingBox()
     }
 }
 
-unsigned int DrawableObjects::numberObjects() const
+unsigned int DrawableMixedObjects::numberObjects() const
 {
     return (unsigned int) (spheres.size() + cylinders.size() + lines.size());
 }
 
-unsigned int DrawableObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision)
+unsigned int DrawableMixedObjects::addSphere(const Pointd& center, double radius, const QColor& color, int precision)
 {
     Sphere s = {center, radius, color, precision};
     spheres.push_back(s);
@@ -96,13 +95,13 @@ unsigned int DrawableObjects::addSphere(const Pointd& center, double radius, con
     return spheres.size()-1;
 }
 
-void DrawableObjects::clearSpheres()
+void DrawableMixedObjects::clearSpheres()
 {
     spheres.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableObjects::addPoint(const Pointd& p, const QColor& color, int size)
+unsigned int DrawableMixedObjects::addPoint(const Pointd& p, const QColor& color, int size)
 {
     Point pp = {p, color, size};
     points.push_back(pp);
@@ -111,12 +110,12 @@ unsigned int DrawableObjects::addPoint(const Pointd& p, const QColor& color, int
     return points.size()-1;
 }
 
-void DrawableObjects::clearPoints() {
+void DrawableMixedObjects::clearPoints() {
     points.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color)
+unsigned int DrawableMixedObjects::addCylinder(const Pointd& a, const Pointd& b, double radius, const QColor color)
 {
     Cylinder c = {a, b, radius, color};
     cylinders.push_back(c);
@@ -129,13 +128,13 @@ unsigned int DrawableObjects::addCylinder(const Pointd& a, const Pointd& b, doub
     return cylinders.size()-1;
 }
 
-void DrawableObjects::clearCylinders()
+void DrawableMixedObjects::clearCylinders()
 {
     cylinders.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QColor color, int width)
+unsigned int DrawableMixedObjects::addLine(const Pointd &a, const Pointd &b, const QColor color, int width)
 {
     Line l = {a, b, width, color};
     lines.push_back(l);
@@ -146,13 +145,13 @@ unsigned int DrawableObjects::addLine(const Pointd &a, const Pointd &b, const QC
     return lines.size()-1;
 }
 
-void DrawableObjects::clearLines()
+void DrawableMixedObjects::clearLines()
 {
     lines.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width, bool fill)
+unsigned int DrawableMixedObjects::addTriangle(const Pointd& a, const Pointd& b, const Pointd& c, const QColor color, int width, bool fill)
 {
     Triangle t {a, b, c, width, color, fill};
     triangles.push_back(t);
@@ -166,7 +165,7 @@ unsigned int DrawableObjects::addTriangle(const Pointd& a, const Pointd& b, cons
     return triangles.size()-1;
 }
 
-void DrawableObjects::clearTriangles()
+void DrawableMixedObjects::clearTriangles()
 {
     triangles.clear();
     updateBoundingBox();

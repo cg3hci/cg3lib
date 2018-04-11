@@ -31,10 +31,12 @@ HEADERS += \
 #geometry
 HEADERS += \
     $$PWD/core/cg3/geometry/bounding_box.h \
+    $$PWD/core/cg3/geometry/cylinder.h \
     $$PWD/core/cg3/geometry/line.h \
     $$PWD/core/cg3/geometry/plane.h \
     $$PWD/core/cg3/geometry/point.h \
     $$PWD/core/cg3/geometry/segment.h \
+    $$PWD/core/cg3/geometry/sphere.h \
     $$PWD/core/cg3/geometry/transformations.h \
     $$PWD/core/cg3/geometry/triangle.h \
     $$PWD/core/cg3/geometry/utils3d.h \
@@ -49,10 +51,12 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/core/cg3/geometry/bounding_box.tpp \
+    $$PWD/core/cg3/geometry/cylinder.cpp \
     $$PWD/core/cg3/geometry/line.cpp \
     $$PWD/core/cg3/geometry/plane.cpp \
     $$PWD/core/cg3/geometry/point.tpp \
     $$PWD/core/cg3/geometry/segment.tpp \
+    $$PWD/core/cg3/geometry/sphere.cpp \
     $$PWD/core/cg3/geometry/transformations.cpp \
     $$PWD/core/cg3/geometry/triangle.tpp \
     $$PWD/core/cg3/geometry/utils3d.tpp \

@@ -11,9 +11,7 @@ namespace cg3 {
 namespace opengl {
 
 /**
- * @brief Viewer::drawPoint
- *
- * Draws a point on the plane (coord z = 0 if 3D).
+ * @brief Draws a point on the plane (coord z = 0 if 3D).
  *
  * @param p: coordinates of the point
  * @param c: color of the point
@@ -37,9 +35,7 @@ inline void drawPoint(
 }
 
 /**
- * @brief Viewer::drawSphere
- *
- * Draws a sphere with opengl
+ * @brief Draws a sphere with opengl
  *
  * @param center: coordinates of the center of the sphere
  * @param radius: radius of the sphere
@@ -84,9 +80,11 @@ inline void drawCylinder(
         const Pointd  & b,
         float         top_radius,
         float         bottom_radius,
-        const QColor& color)
+        const QColor& color,
+        unsigned int slices,
+        unsigned int stacks)
 {
-    Pointd dir     = b - a; dir.normalize();
+    Vec3 dir     = b - a; dir.normalize();
     Pointd z       = Pointd(0,0,1);
     Vec3 normal  = dir.cross(z);
     double angle = acos(dir.dot(z)) * 180 / M_PI;
@@ -101,7 +99,7 @@ inline void drawCylinder(
     GLUquadric *cylinder = gluNewQuadric();
     gluQuadricNormals(cylinder, GLU_SMOOTH);
     gluQuadricOrientation(cylinder, GLU_OUTSIDE);
-    gluCylinder(cylinder, top_radius, bottom_radius, (a-b).getLength(), 500, 100);
+    gluCylinder(cylinder, top_radius, bottom_radius, (a-b).getLength(), slices, stacks);
     glPopMatrix();
     glDisable(GL_CULL_FACE);
 }

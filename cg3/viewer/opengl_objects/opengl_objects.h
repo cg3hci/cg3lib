@@ -40,7 +40,9 @@ void drawCylinder(
         const Pointd& b,
         float top_radius,
         float bottom_radius,
-        const QColor& color);
+        const QColor& color,
+        unsigned int slices = 50,
+        unsigned int stacks = 10);
 
 void drawLine(
         const Pointd &a,
