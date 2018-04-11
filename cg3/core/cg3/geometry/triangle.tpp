@@ -141,6 +141,12 @@ inline double Triangle<T>::area() const
 }
 
 template<class T>
+inline double Triangle<T>::perimeter() const
+{
+    return _v1.dist(_v2) + _v2.dist(_v3) + _v3.dist(_v1);
+}
+
+template<class T>
 inline T Triangle<T>::barycenter() const
 {
     return (_v1 + _v2 +_v3) / 3;

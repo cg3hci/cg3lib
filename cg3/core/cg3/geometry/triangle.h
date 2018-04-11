@@ -44,6 +44,7 @@ public:
 
     T normal() const;
     double area() const;
+    double perimeter() const;
     T barycenter() const;
 
 

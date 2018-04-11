@@ -40,7 +40,7 @@ Pointd DrawableSegment::sceneCenter() const
 
 double DrawableSegment::sceneRadius() const
 {
-    return p1.dist(p2) / 2;
+    return length() / 2;
 }
 
 } //namespace cg3

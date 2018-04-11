@@ -78,6 +78,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_plane.h \
         $$PWD/viewer/drawable_objects/drawable_point.h \
         $$PWD/viewer/drawable_objects/drawable_segment.h \
+        $$PWD/viewer/drawable_objects/drawable_triangle.h \
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
@@ -98,6 +99,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_plane.cpp \
         $$PWD/viewer/drawable_objects/drawable_point.cpp \
         $$PWD/viewer/drawable_objects/drawable_segment.cpp \
+        $$PWD/viewer/drawable_objects/drawable_triangle.cpp \
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \

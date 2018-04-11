@@ -63,6 +63,14 @@ inline void Segment<T>::set(const T& p1, const T& p2)
     setP2(p2);
 }
 
+/* ----- Operators ----- */
+
+template<class T>
+inline double Segment<T>::length() const
+{
+    return p1.dist(p2);
+}
+
 /* ----- Operator override ----- */
 
 template <class T>

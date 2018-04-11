@@ -35,6 +35,9 @@ public:
     inline void setP2(const T& getP2);
     inline void set(const T& getP1, const T& getP2);
 
+    /* Operators */
+    inline double length() const;
+
     /* Operator overrides */
     inline bool operator == (const Segment& otherSegment) const;
     inline bool operator != (const Segment& otherSegment) const;
