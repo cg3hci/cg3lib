@@ -20,19 +20,19 @@
 #include <GL/glu.h>
 #endif
 
-#include <QColor>
 #include <cg3/geometry/point.h>
+#include <cg3/utilities/color.h>
 
 namespace cg3 {
 
 namespace opengl {
 
-void drawPoint(const Pointd& p, const QColor& c, int size = 8);
+void drawPoint(const Pointd& p, const Color& c, int size = 8);
 
 void drawSphere(
         const Pointd& center,
         float radius,
-        const QColor& color,
+        const Color& color,
         int precision = 4);
 
 void drawCylinder(
@@ -40,27 +40,33 @@ void drawCylinder(
         const Pointd& b,
         float top_radius,
         float bottom_radius,
-        const QColor& color,
+        const Color& color,
         unsigned int slices = 50,
         unsigned int stacks = 10);
 
 void drawLine(
         const Pointd &a,
         const Pointd &b,
-        const QColor& c,
+        const Color& c,
+        int width = 3);
+
+void drawSegment(
+        const Pointd &a,
+        const Pointd &b,
+        const Color& c,
         int width = 3);
 
 void drawDashedLine(
         const Pointd &a,
         const Pointd &b,
-        const QColor& c,
+        const Color& c,
         int width = 3);
 
 void drawTriangle(
         const Pointd &p1,
         const Pointd &p2,
         const Pointd &p3,
-        const QColor &c,
+        const Color &c,
         int width = 3,
         bool fill = false);
 
@@ -71,9 +77,9 @@ void drawQuad(
         const Pointd& d,
         int width = 3);
 
-void drawBox(const Pointd &min, const Pointd& max, const QColor& c, int width = 3);
+void drawBox(const Pointd &min, const Pointd& max, const Color& c, int width = 3);
 
-void drawBox(const std::vector<Pointd> &p, const QColor& c, int width = 3);
+void drawBox(const std::vector<Pointd> &p, const Color& c, int width = 3);
 
 void drawBox(
         const Pointd &p0,
@@ -84,7 +90,7 @@ void drawBox(
         const Pointd &p5,
         const Pointd &p6,
         const Pointd &p7,
-        const QColor& c,
+        const Color& c,
         int width = 3);
 
 } //namespace cg3::opengl

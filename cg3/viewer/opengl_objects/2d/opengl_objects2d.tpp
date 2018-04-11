@@ -20,7 +20,7 @@ namespace opengl {
  * @param size: size of the point (default: 8)
  * @ingroup cg3viewer
  */
-inline void drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8)
+inline void drawPoint2D(const Point2Dd& p, const Color& c, int size = 8)
 {
     glEnable(GL_POINT_SMOOTH);
     glPointSize(size);
@@ -45,11 +45,10 @@ inline void drawPoint2D(const Point2Dd& p, const QColor& c, int size = 8)
  * @param width: width of the line (default: 3)
  * @ingroup cg3viewer
  */
-template <typename T1, typename T2>
 inline void drawLine2D(
-        const Point2D<T1>& a,
-        const Point2D<T2>& b,
-        const QColor& c,
+        const Point2Dd& a,
+        const Point2Dd& b,
+        const Color& c,
         int width)
 {
 
@@ -75,7 +74,7 @@ inline void drawLine2D(
  */
 inline void drawTriangle2D(
         const std::array<Point2Dd, 3>& arr,
-        const QColor& c,
+        const Color& c,
         int width,
         bool fill)
 {
@@ -96,7 +95,7 @@ inline void drawTriangle2D(
         const Point2Dd &p1,
         const Point2Dd &p2,
         const Point2Dd &p3,
-        const QColor &c,
+        const Color &c,
         int width,
         bool fill)
 {
@@ -124,7 +123,7 @@ inline void drawTriangle2D(
  */
 inline void drawQuad2D(
         const std::array<Point2Dd, 4>& points,
-        const QColor &c,
+        const Color &c,
         int width,
         bool fill)
 {
@@ -161,7 +160,7 @@ inline void drawQuad2D(
         const Point2Dd &p2,
         const Point2Dd &p3,
         const Point2Dd &p4,
-        const QColor &c,
+        const Color &c,
         int width,
         bool fill)
 {

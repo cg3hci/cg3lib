@@ -20,24 +20,23 @@
 #include <GL/glu.h>
 #endif
 
-#include <QColor>
 #include <cg3/geometry/2d/point2d.h>
+#include <cg3/utilities/color.h>
 
 namespace cg3 {
 namespace opengl {
 
-void drawPoint2D(const Point2Dd& p, const QColor& c, int size);
+void drawPoint2D(const Point2Dd& p, const Color& c, int size);
 
-template<typename T1, typename T2>
 void drawLine2D(
-        const Point2D<T1>&a,
-        const Point2D<T2>& b,
-        const QColor& c,
+        const Point2Dd&a,
+        const Point2Dd& b,
+        const Color& c,
         int width = 3);
 
 void drawTriangle2D(
         const std::array<Point2Dd, 3>& arr,
-        const QColor& c,
+        const Color& c,
         int width = 3,
         bool fill = false);
 
@@ -45,13 +44,13 @@ void drawTriangle2D(
         const Point2Dd& p1,
         const Point2Dd& p2,
         const Point2Dd& p3,
-        const QColor& c,
+        const Color& c,
         int width = 3,
         bool fill = false);
 
 void drawQuad2D(
         const std::array<Point2Dd, 4>& arr,
-        const QColor& c,
+        const Color& c,
         int width = 3,
         bool fill = false);
 
@@ -60,7 +59,7 @@ void drawQuad2D(
         const Point2Dd& p2,
         const Point2Dd& p3,
         const Point2Dd& p4,
-        const QColor& c,
+        const Color& c,
         int width = 3,
         bool fill = false);
 

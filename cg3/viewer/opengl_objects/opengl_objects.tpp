@@ -20,7 +20,7 @@ namespace opengl {
  */
 inline void drawPoint(
         const Pointd& p,
-        const QColor& c,
+        const Color &c,
         int size)
 {
     glEnable(GL_POINT_SMOOTH);
@@ -46,7 +46,7 @@ inline void drawPoint(
 inline void drawSphere(
         const Pointd  & center,
         float         radius,
-        const QColor& color,
+        const Color &color,
         int precision)
 {
     glEnable(GL_LIGHTING);
@@ -80,7 +80,7 @@ inline void drawCylinder(
         const Pointd  & b,
         float         top_radius,
         float         bottom_radius,
-        const QColor& color,
+        const Color &color,
         unsigned int slices,
         unsigned int stacks)
 {
@@ -118,7 +118,7 @@ inline void drawCylinder(
 inline void drawLine(
         const Pointd &a,
         const Pointd &b,
-        const QColor& c,
+        const Color &c,
         int width)
 {
     glBegin(GL_LINES);
@@ -127,6 +127,19 @@ inline void drawLine(
     glVertex3f(a.x(), a.y(), a.z());
     glVertex3f(b.x(), b.y(), b.z());
     glEnd();
+}
+
+/**
+ * @brief
+ * @see cg3::opengl::drawLine
+ */
+inline void drawSegment(
+        const Pointd &a,
+        const Pointd &b,
+        const Color &c,
+        int width)
+{
+    drawLine(a, b, c, width);
 }
 
 /**
@@ -143,7 +156,7 @@ inline void drawLine(
 inline void drawDashedLine(
         const Pointd &a,
         const Pointd &b,
-        const QColor& c,
+        const Color& c,
         int width)
 {
     glPushAttrib(GL_ENABLE_BIT);
@@ -174,7 +187,7 @@ inline void drawTriangle(
         const Pointd &p1,
         const Pointd &p2,
         const Pointd &p3,
-        const QColor &c,
+        const Color &c,
         int width,
         bool fill)
 {
@@ -231,7 +244,7 @@ inline void drawQuad(
 inline void drawBox(
         const Pointd &min,
         const Pointd& max,
-        const QColor& c,
+        const Color& c,
         int width)
 {
     drawLine(min, Pointd(max.x(), min.y(), min.z()), c, width);
@@ -260,7 +273,7 @@ inline void drawBox(
  * @param width
  * @ingroup cg3viewer
  */
-inline void drawBox(const std::vector<Pointd> &p, const QColor& c, int width)
+inline void drawBox(const std::vector<Pointd> &p, const Color& c, int width)
 {
     drawLine(p[0], p[1], c, width);
     drawLine(p[1], p[2], c, width);
@@ -301,7 +314,7 @@ inline void drawBox(
         const Pointd &p5,
         const Pointd &p6,
         const Pointd &p7,
-        const QColor& c,
+        const Color& c,
         int width)
 {
     drawLine(p0, p1, c, width);
