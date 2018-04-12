@@ -104,7 +104,7 @@ public:
 
 signals:
 
-    void objectPicked(unsigned int);
+    void objectPicked(const PickableObject*, unsigned int);
     void point2DClicked(cg3::Point2Dd);
 
 private:
@@ -116,6 +116,8 @@ private:
 
     QColor backgroundColor;
     std::vector<const cg3::DrawableObject *> drawlist;
+    std::vector<const cg3::PickableObject*> pickList;
+    std::set<unsigned int> unusedPickableObjectsIds;
     std::set<unsigned int> unusedIds;
     std::vector<bool> objVisibility;
     Mode mode;

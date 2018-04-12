@@ -85,9 +85,9 @@ protected:
         DRAW_BOUNDINGBOX = 0b10000000
     };
 
-    int   drawMode;
-    int   wireframeWidth;
-    float wireframeColor[3];
+    mutable int   drawMode;
+    mutable int   wireframeWidth;
+    mutable float wireframeColor[3];
 };
 
 } //namespace cg3

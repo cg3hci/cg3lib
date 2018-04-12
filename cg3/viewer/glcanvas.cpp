@@ -16,7 +16,9 @@
 namespace cg3 {
 namespace viewer {
 
-GLCanvas::GLCanvas(QWidget * parent) : backgroundColor(Qt::white), mode(_3D)
+GLCanvas::GLCanvas(QWidget * parent) :
+    backgroundColor(Qt::white),
+    mode(_3D)
 {
     setParent(parent);
     setSnapshotQuality(100);
@@ -42,7 +44,7 @@ void GLCanvas::draw()
 
 void GLCanvas::drawWithNames()
 {
-    setBackgroundColor(backgroundColor);
+    QGLViewer::setBackgroundColor(backgroundColor);
 
     for(int i=0; i<(int)drawlist.size(); ++i){
         if (objVisibility[i]){
@@ -56,9 +58,9 @@ void GLCanvas::drawWithNames()
 
 void GLCanvas::postSelection(const QPoint& point)
 {
-    unsigned int idObject = selectedName();
+    unsigned int idName = selectedName();
 
-    if ((int) idObject == -1){
+    if ((int) idName == -1){
         if (mode == _2D){
             qglviewer::Vec orig, dir;
             camera()->convertClickToLine(point, orig, dir);
@@ -76,8 +78,12 @@ void GLCanvas::postSelection(const QPoint& point)
             }
         }
     }
-    else
-        objectPicked(idObject);
+    else {
+        unsigned int idObject, idElement;
+        PickableObject::getIdsFromIdName(idName, idObject, idElement);
+        if (idObject < pickList.size() && pickList[idObject] != nullptr)
+            emit objectPicked(pickList[idObject], idElement);
+    }
 }
 
 void GLCanvas::fitScene()
@@ -284,20 +290,36 @@ void GLCanvas::clearDrawableObjectsList()
 
 unsigned int GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
 {
+    unsigned int id;
     if (unusedIds.size() == 0) {
         drawlist.push_back(obj);
         objVisibility.push_back(visible);
         update();
-        return (unsigned int)drawlist.size();
+        id = drawlist.size();
     }
     else {
-        unsigned int id = *unusedIds.begin();
+        id = *unusedIds.begin();
         drawlist[id] = obj;
         objVisibility[id] = visible;
         unusedIds.erase(id);
         update();
-        return id;
     }
+
+    const PickableObject* pobj =
+            dynamic_cast<const PickableObject*>(obj);
+
+    if (pobj) {
+        if (unusedPickableObjectsIds.size() == 0){
+            pickList.push_back(pobj);
+            pobj->id = pickList.size();
+        }
+        else {
+            pobj->id = *unusedPickableObjectsIds.begin();
+            pickList[pobj->id] = pobj;
+            unusedPickableObjectsIds.erase(unusedPickableObjectsIds.begin());
+        }
+    }
+    return id;
 }
 
 bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
@@ -308,6 +330,15 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
         objVisibility[pos] = false;
         drawlist[pos] = nullptr;
         unusedIds.insert(pos);
+
+        const PickableObject* pobj =
+                dynamic_cast<const PickableObject*>(obj);
+
+        if (pobj) {
+            unusedPickableObjectsIds.insert(pobj->id);
+            pickList[pobj->id] = nullptr;
+        }
+
         return true;
     }
     return false;
@@ -316,9 +347,18 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
 bool GLCanvas::deleteDrawableObject(unsigned int idObject)
 {
     if (idObject < drawlist.size() && drawlist[idObject] != nullptr){
+        const cg3::DrawableObject* obj = drawlist[idObject];
         objVisibility[idObject] = false;
         drawlist[idObject] = nullptr;
         unusedIds.insert(idObject);
+
+        const PickableObject* pobj =
+                dynamic_cast<const PickableObject*>(obj);
+
+        if (pobj) {
+            unusedPickableObjectsIds.insert(pobj->id);
+            pickList[pobj->id] = nullptr;
+        }
         return true;
     }
     else

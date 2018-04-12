@@ -102,6 +102,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_triangle.cpp \
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
+        $$PWD/viewer/interfaces/pickable_object.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
         $$PWD/viewer/utilities/loadersaver.cpp \

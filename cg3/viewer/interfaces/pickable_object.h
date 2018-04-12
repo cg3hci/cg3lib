@@ -9,6 +9,11 @@
 #define CG3_PICKABLE_OBJECT_H
 
 namespace cg3 {
+namespace viewer {
+
+class GLCanvas;
+
+} //namespace cg3::viewer
 
 /**
  * @ingroup cg3viewer
@@ -18,14 +23,43 @@ namespace cg3 {
  * It contains methods that must be implemented by the classes that inherit from a PickableObject
  * to be picked by click on a GLCanvas.
  *
+ * In order to make an element "pickable" from the GLCanvas, you should draw the element
+ * in the following way:
+ * \code{.cpp}
+ * unsigned int idElement;
+ * //set idElement with an univoque id for the element inside the Object.
+ * glPushIdName(idElement); //note: use this function instead opengl's glPushName
+ * // opengl code that draws the element
+ * glPopName();
+ * \endcode
+ *
+ * The static value PickableObject::objectBits controls how many PickableObjects and how
+ * many elements per PickableObject can be supported by viewer::GlCanvas.
+ * Default value is 8, which means that 8 bits are used for the objects (2^8 : max 256
+ * Pickable Objects) and 32-8=24 bits are used for the elements for every object (2^24 :
+ * max xxx pickable elements for every PickableObject pushed in the canvas).
+ * If you need different values, be sure to change PickableObject::objectBits BEFORE
+ * pushing a PickableObject to the GLCanvas.
  */
 class PickableObject
 {
 public:
-    PickableObject() {}   /**< \~English @brief Empty constructor */
+    friend class viewer::GLCanvas;
+
+    PickableObject();
     virtual ~PickableObject() {}
 
-    virtual void drawWithNames() const = 0; /**< \~English @brief Draws all the pickable objects of the object */
+    virtual void drawWithNames() const = 0; /**< @brief Draws all the pickable objects of the object */
+
+protected:
+    static void setMeshBits(unsigned int nBits);
+    void glPushIdName(unsigned int idElement) const;
+
+private:
+    static void getIdsFromIdName(unsigned int idName, unsigned int& idObject, unsigned int &idElement);
+
+    static unsigned int objectBits; //default is 8 bit -> initialized in pickable_object.cpp
+    mutable unsigned int id = 0; //member reserved for GLCanvas
 };
 
 } //namespace cg3
