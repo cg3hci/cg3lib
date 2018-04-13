@@ -33,7 +33,7 @@ void PickableEigenMesh::drawWithNames() const
     std::array<double,3> vertex;
     for(unsigned int i = 0; i<F.rows();i++){
         glPushMatrix();
-        glPushIdName(i);
+        glPushName(i);
 
         glBegin(GL_TRIANGLES);
         vertex[0]=V(F(i,0),0);

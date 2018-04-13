@@ -27,9 +27,9 @@ void PickableObject::setMeshBits(unsigned int nBits)
     }
 }
 
-void PickableObject::glPushIdName(unsigned int idElement) const
+void PickableObject::glPushName(unsigned int idElement) const
 {
-    glPushName((id << (32 - objectBits)) + idElement);
+    ::glPushName((id << (32 - objectBits)) + idElement);
 }
 
 void PickableObject::getIdsFromIdName(unsigned int idName, unsigned int &idObject, unsigned int& idElement)

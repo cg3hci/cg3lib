@@ -28,7 +28,8 @@ class GLCanvas;
  * \code{.cpp}
  * unsigned int idElement;
  * //set idElement with an univoque id for the element inside the Object.
- * glPushIdName(idElement); //note: use this function instead opengl's glPushName
+ * glPushName(idElement); //note: this is a PickableObject member function
+ *                        //that calls opengl's glPushName
  * // opengl code that draws the element
  * glPopName();
  * \endcode
@@ -53,7 +54,7 @@ public:
 
 protected:
     static void setMeshBits(unsigned int nBits);
-    void glPushIdName(unsigned int idElement) const;
+    void glPushName(unsigned int idElement) const;
 
 private:
     static void getIdsFromIdName(unsigned int idName, unsigned int& idObject, unsigned int &idElement);
