@@ -81,6 +81,8 @@ void GLCanvas::postSelection(const QPoint& point)
     else {
         unsigned int idObject, idElement;
         PickableObject::getIdsFromIdName(idName, idObject, idElement);
+        std::cerr << "Id Name: " << idName << "\n";
+        std::cerr << "Id Object: " << idObject << "; Id Element: " << idElement << "\n\n";
         if (idObject < pickList.size() && pickList[idObject] != nullptr)
             emit objectPicked(pickList[idObject], idElement);
     }
@@ -295,7 +297,7 @@ unsigned int GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visibl
         drawlist.push_back(obj);
         objVisibility.push_back(visible);
         update();
-        id = drawlist.size();
+        id = (unsigned int)drawlist.size();
     }
     else {
         id = *unusedIds.begin();
@@ -311,7 +313,7 @@ unsigned int GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visibl
     if (pobj) {
         if (unusedPickableObjectsIds.size() == 0){
             pickList.push_back(pobj);
-            pobj->id = pickList.size()-1;
+            pobj->id = (unsigned int)pickList.size()-1;
         }
         else {
             pobj->id = *unusedPickableObjectsIds.begin();
@@ -403,7 +405,7 @@ unsigned int GLCanvas::sizeVisibleDrawableObjects() const
 
 unsigned int GLCanvas::sizeDrawableObjectsList() const
 {
-    return drawlist.size() - unusedIds.size();
+    return (unsigned int)drawlist.size() - (unsigned int)unusedIds.size();
 }
 
 BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const

@@ -7,6 +7,11 @@
 #include "drawable_cylinder.h"
 #include "../opengl_objects/opengl_objects.h"
 
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 namespace cg3 {
 
 DrawableCylinder::DrawableCylinder() :

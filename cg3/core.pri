@@ -15,6 +15,7 @@ include(core/find_eigen.pri)
 
 win32 {
     DEFINES += _USE_MATH_DEFINES
+    DEFINES+=NOMINMAX
 }
 
 CG3_OPENMP {

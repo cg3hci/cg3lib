@@ -108,12 +108,23 @@ std::vector<int> PickableDcel::obtainFaceTriangles(const Face* f) const
     std::vector<int> face_triangles;
 
     //Ricerca dei triangoli appartenenti alla faccia
-    for(unsigned int i=0; i<triangles_face.size(); i++)
-        if(triangles_face.at(i)==f->getId()){
+    /*for(unsigned int i=0; i<trianglesFacesMap.size(); i++)
+        if(trianglesFacesMap.at(i)==f->getId()){
             face_triangles.push_back(triangles.at(i*3));
             face_triangles.push_back(triangles.at(i*3+1));
             face_triangles.push_back(triangles.at(i*3+2));
         }
+
+    return face_triangles;*/
+    unsigned int firstIndex = facesTrianglesMap[f->getId()];
+    unsigned int lastIndex = f->getId()+1 != facesTrianglesMap.size() ?
+                facesTrianglesMap[f->getId()+1] : (unsigned int)triangles.size()/3;
+
+    for (unsigned int i = firstIndex; i < lastIndex; i++) {
+        face_triangles.push_back(triangles.at(i*3));
+        face_triangles.push_back(triangles.at(i*3+1));
+        face_triangles.push_back(triangles.at(i*3+2));
+    }
 
     return face_triangles;
 }

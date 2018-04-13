@@ -6,6 +6,10 @@
  */
 #include "pickable_object.h"
 
+#ifdef WIN32
+#include "windows.h"
+#endif
+
 #ifdef __APPLE__
 #include <gl.h>
 #else

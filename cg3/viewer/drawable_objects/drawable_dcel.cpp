@@ -110,6 +110,7 @@ void DrawableDcel::update()
     vertexColors.clear();
     triangleNormals.clear();
     facesWireframe.clear();
+    trianglesFacesMap.clear();
     vertexCoordinates.reserve(getNumberVertices()*3);
     vertexNormals.reserve(getNumberVertices()*3);
     triangles.reserve(getNumberFaces()*3);
@@ -117,6 +118,8 @@ void DrawableDcel::update()
     triangleNormals.reserve(getNumberFaces()*3);
     vertexColors.resize(getNumberVertices()*3,0.5);
     facesWireframe.reserve(getNumberHalfEdges());
+    trianglesFacesMap.reserve(getNumberFaces());
+    facesTrianglesMap.reserve(getNumberFaces());
     std::map<int, int> v_ids;
     int vi = 0;
 
@@ -133,8 +136,10 @@ void DrawableDcel::update()
         v_ids[v->getId()] = vi;
         vi++;
     }
+
+    unsigned int actualTriangle = 0;
     #ifdef CG3_CGAL_DEFINED
-    triangles_face.clear();
+
     for (const Dcel::Face* f : faceIterator()) {
         for (const Dcel::HalfEdge* he : f->incidentHalfEdgeIterator()) {
             unsigned int p1, p2;
@@ -154,9 +159,11 @@ void DrawableDcel::update()
             triangleNormals.push_back(f->getNormal().x());
             triangleNormals.push_back(f->getNormal().y());
             triangleNormals.push_back(f->getNormal().z());
-            triangles_face.push_back(f->getId());
+            trianglesFacesMap.push_back(f->getId());
+            facesTrianglesMap.push_back(actualTriangle++);
         }
         else {
+            facesTrianglesMap.push_back(actualTriangle);
             //Si ottiene la triangolazione della faccia e si inseriscono i triangoli
             //prodotti nell'array tris.
             std::vector<std::array<const Dcel::Vertex*, 3> > face_triangles;
@@ -170,36 +177,46 @@ void DrawableDcel::update()
                 triangles.push_back(v_ids[v1->getId()]);
                 triangles.push_back(v_ids[v3->getId()]);
                 triangles.push_back(v_ids[v2->getId()]);
-            }
-            //Si crea una mappatura triangolo->faccia di appartenenza
-            //Per ogni triangolo prodotto dalla triangolazione della faccia si aggiunge
-            //un colore (composto da una tripla di valori)
-            for(unsigned int ti = 0; ti < face_triangles.size(); ti++){
-                triangles_face.push_back(f->getId());
+                trianglesFacesMap.push_back(f->getId());
                 triangleColors.push_back(f->getColor().redF());
                 triangleColors.push_back(f->getColor().greenF());
                 triangleColors.push_back(f->getColor().blueF());
                 triangleNormals.push_back(f->getNormal().x());
                 triangleNormals.push_back(f->getNormal().y());
                 triangleNormals.push_back(f->getNormal().z());
+                actualTriangle++;
             }
+            //Si crea una mappatura triangolo->faccia di appartenenza
+            //Per ogni triangolo prodotto dalla triangolazione della faccia si aggiunge
+            //un colore (composto da una tripla di valori)
+            /*for(unsigned int ti = 0; ti < face_triangles.size(); ti++){
+                trianglesFacesMap.push_back(f->getId());
+                triangleColors.push_back(f->getColor().redF());
+                triangleColors.push_back(f->getColor().greenF());
+                triangleColors.push_back(f->getColor().blueF());
+                triangleNormals.push_back(f->getNormal().x());
+                triangleNormals.push_back(f->getNormal().y());
+                triangleNormals.push_back(f->getNormal().z());
+            }*/
             /***********************************************************************/
         }
     }
     #else
-    for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit) {
-        Dcel::Face::ConstIncidentVertexIterator vit = (*fit)->incidentVertexBegin();
+    for (const Dcel::Face* f : faceIterator()) {
+        Dcel::Face::ConstIncidentVertexIterator vit = f->incidentVertexBegin();
         triangles.push_back(v_ids[(*vit)->getId()]);
         ++vit;
         triangles.push_back(v_ids[(*vit)->getId()]);
         ++vit;
         triangles.push_back(v_ids[(*vit)->getId()]);
-        triangleColors.push_back((*fit)->getColor().redF());
-        triangleColors.push_back((*fit)->getColor().greenF());
-        triangleColors.push_back((*fit)->getColor().blueF());
-        triangleNormals.push_back((*fit)->getNormal().x());
-        triangleNormals.push_back((*fit)->getNormal().y());
-        triangleNormals.push_back((*fit)->getNormal().z());
+        triangleColors.push_back(f->getColor().redF());
+        triangleColors.push_back(f->getColor().greenF());
+        triangleColors.push_back(f->getColor().blueF());
+        triangleNormals.push_back(f->getNormal().x());
+        triangleNormals.push_back(f->getNormal().y());
+        triangleNormals.push_back(f->getNormal().z());
+        trianglesFacesMap.push_back(f->getId());
+        facesTrianglesMap.push_back(actualTriangle++);
     }
     #endif
 }

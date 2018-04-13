@@ -63,7 +63,8 @@ protected:
     std::vector<double> triangleNormals; /** \~Italian @brief vettore di normali ai triangoli usate per la visualizzazione: per aggiornare utilizzare il metodo update() */
     std::vector<float> triangleColors; /** \~Italian @brief vettore di colori associati ai triangoli (da considerare come triple rgb float) usati per la visualizzazione: per aggiornare utilizzare il metodo update() */
 
-    std::vector<unsigned int> triangles_face; /** \~Italian @brief vettore di mappatura triangoli->facce (ogni entrata ha posizione corrispondente a un terzo della posizione della tripla in tris e presenta l'identificativo di una faccia */
+    std::vector<unsigned int> facesTrianglesMap; /** Maps the DcelFace to the first triangle associated to it */
+    std::vector<unsigned int> trianglesFacesMap; /** \~Italian @brief vettore di mappatura triangoli->facce (ogni entrata ha posizione corrispondente a un terzo della posizione della tripla in tris e presenta l'identificativo di una faccia */
     std::vector<std::pair<unsigned int, unsigned int> > facesWireframe; /** \~Italian @brief vettore di coppie usate per renderizzare degli edge: per aggiornare utilizzare metodo update() */
 
     int facesWireframeWidth = 1;

@@ -92,7 +92,7 @@ unsigned int DrawableMixedObjects::addSphere(const Pointd& center, double radius
     spheres.push_back(s);
     bb.min() = bb.min().min(center);
     bb.max() = bb.max().max(center);
-    return spheres.size()-1;
+    return (unsigned int)spheres.size()-1;
 }
 
 void DrawableMixedObjects::clearSpheres()
@@ -107,7 +107,7 @@ unsigned int DrawableMixedObjects::addPoint(const Pointd& p, const QColor& color
     points.push_back(pp);
     bb.min() = bb.min().min(p);
     bb.max() = bb.max().max(p);
-    return points.size()-1;
+    return (unsigned int)points.size()-1;
 }
 
 void DrawableMixedObjects::clearPoints() {
@@ -125,7 +125,7 @@ unsigned int DrawableMixedObjects::addCylinder(const Pointd& a, const Pointd& b,
     bb.max() = bb.max().max(a);
     bb.max() = bb.max().max(b);
 
-    return cylinders.size()-1;
+    return (unsigned int)cylinders.size()-1;
 }
 
 void DrawableMixedObjects::clearCylinders()
@@ -142,7 +142,7 @@ unsigned int DrawableMixedObjects::addLine(const Pointd &a, const Pointd &b, con
     bb.min() = bb.min().min(b);
     bb.max() = bb.max().max(a);
     bb.max() = bb.max().max(b);
-    return lines.size()-1;
+    return (unsigned int)lines.size()-1;
 }
 
 void DrawableMixedObjects::clearLines()
@@ -162,7 +162,7 @@ unsigned int DrawableMixedObjects::addTriangle(const Pointd& a, const Pointd& b,
     bb.max() = bb.max().max(b);
     bb.max() = bb.max().max(c);
 
-    return triangles.size()-1;
+    return (unsigned int)triangles.size()-1;
 }
 
 void DrawableMixedObjects::clearTriangles()
