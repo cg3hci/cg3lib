@@ -89,36 +89,12 @@ void PickableDcel::setSelectionWidth(int value)
  */
 void PickableDcel::drawFace(const Face* f) const
 {
-
-    std::vector<int> face_triangles = obtainFaceTriangles(f);
-
-    glDrawElements(GL_TRIANGLES, (GLsizei)face_triangles.size(), GL_UNSIGNED_INT, face_triangles.data());
-
-}
-
-/**
- * \~Italian
- * @brief DrawableDcel::obtainFaceTriangles Metodo che si occupa della ricerca dei triangoli
- * appartenenti a una data faccia all'interno della lista tris
- * @param f la faccia a cui apparterranno i triangoli
- * @return una lista di triangoli (da interpretare nello stesso modo di tris)
- */
-std::vector<int> PickableDcel::obtainFaceTriangles(const Face* f) const
-{
-    std::vector<int> face_triangles;
-
-    //Ricerca dei triangoli appartenenti alla faccia
-    /*for(unsigned int i=0; i<trianglesFacesMap.size(); i++)
-        if(trianglesFacesMap.at(i)==f->getId()){
-            face_triangles.push_back(triangles.at(i*3));
-            face_triangles.push_back(triangles.at(i*3+1));
-            face_triangles.push_back(triangles.at(i*3+2));
-        }
-
-    return face_triangles;*/
     unsigned int firstIndex = facesTrianglesMap[f->getId()];
     unsigned int lastIndex = f->getId()+1 != facesTrianglesMap.size() ?
                 facesTrianglesMap[f->getId()+1] : (unsigned int)triangles.size()/3;
+
+    std::vector<int> face_triangles;
+    face_triangles.reserve((lastIndex-firstIndex)*3);
 
     for (unsigned int i = firstIndex; i < lastIndex; i++) {
         face_triangles.push_back(triangles.at(i*3));
@@ -126,7 +102,7 @@ std::vector<int> PickableDcel::obtainFaceTriangles(const Face* f) const
         face_triangles.push_back(triangles.at(i*3+2));
     }
 
-    return face_triangles;
+    glDrawElements(GL_TRIANGLES, (GLsizei)face_triangles.size(), GL_UNSIGNED_INT, face_triangles.data());
 }
 
 void PickableDcel::setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour)

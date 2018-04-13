@@ -81,8 +81,6 @@ void GLCanvas::postSelection(const QPoint& point)
     else {
         unsigned int idObject, idElement;
         PickableObject::getIdsFromIdName(idName, idObject, idElement);
-        std::cerr << "Id Name: " << idName << "\n";
-        std::cerr << "Id Object: " << idObject << "; Id Element: " << idElement << "\n\n";
         if (idObject < pickList.size() && pickList[idObject] != nullptr)
             emit objectPicked(pickList[idObject], idElement);
     }

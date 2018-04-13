@@ -31,7 +31,6 @@ public:
 
 protected:
     void drawFace(const Face* f) const;
-    std::vector<int> obtainFaceTriangles(const Face* f) const;
 
     std::vector<Dcel::HalfEdge*> selectedFacesContour;
     Color selectionColor;
