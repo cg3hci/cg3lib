@@ -89,9 +89,14 @@ void PickableDcel::setSelectionWidth(int value)
  */
 void PickableDcel::drawFace(const Face* f) const
 {
-    unsigned int firstIndex = facesTrianglesMap[f->getId()];
-    unsigned int lastIndex = f->getId()+1 != facesTrianglesMap.size() ?
-                facesTrianglesMap[f->getId()+1] : (unsigned int)triangles.size()/3;
+    unsigned int firstIndex = facesTrianglesMap.at(f->getId());
+    std::map<unsigned int, unsigned int>::const_iterator it = facesTrianglesMap.find(f->getId());
+    ++it;
+    unsigned int lastIndex;
+    if (it == facesTrianglesMap.end())
+        lastIndex = (unsigned int)triangles.size()/3;
+    else
+        lastIndex = it->second;
 
     std::vector<int> face_triangles;
     face_triangles.reserve((lastIndex-firstIndex)*3);

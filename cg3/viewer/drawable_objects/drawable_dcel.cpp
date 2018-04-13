@@ -119,7 +119,6 @@ void DrawableDcel::update()
     vertexColors.resize(getNumberVertices()*3,0.5);
     facesWireframe.reserve(getNumberHalfEdges());
     trianglesFacesMap.reserve(getNumberFaces());
-    facesTrianglesMap.reserve(getNumberFaces());
     std::map<int, int> v_ids;
     int vi = 0;
 
@@ -160,10 +159,10 @@ void DrawableDcel::update()
             triangleNormals.push_back(f->getNormal().y());
             triangleNormals.push_back(f->getNormal().z());
             trianglesFacesMap.push_back(f->getId());
-            facesTrianglesMap.push_back(actualTriangle++);
+            facesTrianglesMap[f->getId()] = actualTriangle++;
         }
         else {
-            facesTrianglesMap.push_back(actualTriangle);
+            facesTrianglesMap[f->getId()] = actualTriangle;
             //Si ottiene la triangolazione della faccia e si inseriscono i triangoli
             //prodotti nell'array tris.
             std::vector<std::array<const Dcel::Vertex*, 3> > face_triangles;
