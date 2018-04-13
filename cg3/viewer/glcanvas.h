@@ -104,7 +104,7 @@ public:
 
 signals:
 
-    void objectPicked(const PickableObject*, unsigned int);
+    void objectPicked(const cg3::PickableObject*, unsigned int);
     void point2DClicked(cg3::Point2Dd);
 
 private:

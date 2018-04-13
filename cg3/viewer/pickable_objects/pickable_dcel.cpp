@@ -43,7 +43,7 @@ void PickableDcel::drawWithNames() const
 
     //Per ogni faccia si effettua il push dell'id associato e quindi la si disegna
     for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit) {
-        glPushName((*fit)->getId());
+        glPushIdName((*fit)->getId());
         drawFace((*fit));
         glPopName();
     }

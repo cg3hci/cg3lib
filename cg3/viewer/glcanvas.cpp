@@ -311,7 +311,7 @@ unsigned int GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visibl
     if (pobj) {
         if (unusedPickableObjectsIds.size() == 0){
             pickList.push_back(pobj);
-            pobj->id = pickList.size();
+            pobj->id = pickList.size()-1;
         }
         else {
             pobj->id = *unusedPickableObjectsIds.begin();
