@@ -111,6 +111,7 @@ void DrawableDcel::update()
     triangleNormals.clear();
     facesWireframe.clear();
     trianglesFacesMap.clear();
+    facesTrianglesMap.clear();
     vertexCoordinates.reserve(getNumberVertices()*3);
     vertexNormals.reserve(getNumberVertices()*3);
     triangles.reserve(getNumberFaces()*3);
