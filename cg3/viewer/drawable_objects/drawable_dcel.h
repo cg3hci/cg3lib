@@ -29,7 +29,6 @@ public:
     DrawableDcel();
     DrawableDcel(const Dcel &d);
 
-    void init();
     void clear();
 
     // Implementation of the
@@ -49,6 +48,8 @@ public:
     void deserialize(std::ifstream& binaryFile);
 
 protected:
+
+    void init();
 
     void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
 

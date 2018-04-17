@@ -21,31 +21,62 @@ DrawableContainer::~DrawableContainer()
 {
 }
 
-void DrawableContainer::pushBack(const DrawableObject *obj, bool visibility)
+/**
+ * @brief Pushes a DrawableObject to the container. If the container is already drawn by
+ * the MainWindow::canvas, it emits a signal in order to communicate and apply the change
+ * to the interface.
+ * @param obj
+ * @param objectName
+ * @param visibility
+ */
+void DrawableContainer::pushBack(
+        const DrawableObject *obj,
+        const std::string& objectName,
+        bool visibility)
 {
     objects.push_back(obj);
+    objectNames.push_back(objectName);
     obj->setVisibility(visibility);
     #ifdef CG3_VIEWER_DEFINED
-    emit drawableContainerPushedObject(this, objects.size()-1, visibility);
+    emit drawableContainerPushedObject(this, objectName, visibility);
     #endif
 }
 
+/**
+ * @brief Access to the i-th element
+ * @param i
+ * @return
+ */
 const DrawableObject* DrawableContainer::operator [](unsigned int i) const
 {
     return objects[i];
 }
 
+/**
+ * @brief Returns the number of elements inside the container.
+ */
 unsigned int DrawableContainer::size() const
 {
     return objects.size();
 }
 
+/**
+ * @brief Removes the i-th element from the container, and shifts all the other
+ * objects starting from the i+1 position.
+ * @param i
+ */
 void DrawableContainer::erase(unsigned int i)
 {
-    objects.erase(objects.begin() + i);
     #ifdef CG3_VIEWER_DEFINED
     emit drawableContainerErasedObject(this, i);
     #endif
+    objects.erase(objects.begin() + i);
+    objectNames.erase(objectNames.begin() + i);
+}
+
+const std::string&DrawableContainer::objectName(unsigned int i) const
+{
+    return objectNames[i];
 }
 
 void DrawableContainer::draw() const
@@ -92,11 +123,13 @@ DrawableContainer::const_iterator DrawableContainer::end() const
 
 BoundingBox DrawableContainer::totalVisibleBoundingBox() const
 {
-    cg3::BoundingBox bb;
+    cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
     if (objects.size() > 0) {
         unsigned int i = 0;
         //searching the first visible object and with radius > 0 in order to initialize bb
-        while (i < objects.size() && objects[i]->isVisible() && objects[i]->sceneRadius() <= 0)
+        while (i < objects.size() &&
+               objects[i]->isVisible() &&
+               objects[i]->sceneRadius() <= 0)
             i++;
 
         if (i < objects.size()) { //i will point to the first visible object with radius >0
@@ -106,12 +139,14 @@ BoundingBox DrawableContainer::totalVisibleBoundingBox() const
 
         for (; i < objects.size(); i++) {
             if (objects[i]->isVisible() && objects[i]->sceneRadius() <= 0) {
-                bb.min() = bb.min().min(objects[i]->sceneCenter() - objects[i]->sceneRadius());
-                bb.max() = bb.max().max(objects[i]->sceneCenter() + objects[i]->sceneRadius());
+                bb.min() =
+                        bb.min().min(objects[i]->sceneCenter() - objects[i]->sceneRadius());
+                bb.max() =
+                        bb.max().max(objects[i]->sceneCenter() + objects[i]->sceneRadius());
             }
         }
     }
     return bb;
 }
 
-}
+} //namespace cg3

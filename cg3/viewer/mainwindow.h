@@ -110,6 +110,9 @@ signals:
 private slots:
     void checkBoxClicked(int i);
 
+    void addCheckBoxDrawableContainer(const DrawableContainer* cont, const std::string& objectName, bool vis);
+    void removeCheckBoxDrawableContainer(const DrawableContainer* cont, unsigned int i);
+
     //Menu Actions
     void on_actionSave_Snapshot_triggered();
     void on_actionShow_Axis_triggered();
@@ -148,7 +151,7 @@ private:
     std::map<int, QCheckBox*> checkBoxes;
     boost::bimap<int, const cg3::DrawableObject*> mapObjects;
     int nCheckBoxes;
-    std::map<const cg3::DrawableContainer*, std::set<QCheckBox*> > containerCheckBoxes;
+    std::map<const cg3::DrawableContainer*, std::vector<QCheckBox*> > containerCheckBoxes;
     bool first;
     bool debugObjectsEnabled;
     QSpacerItem* m_spacer;
