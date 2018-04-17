@@ -17,6 +17,7 @@
 #include <QCheckBox>
 #include <QSpacerItem>
 #include <QProcess>
+#include <QGridLayout>
 #ifdef __APPLE__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wredeclared-class-member"
@@ -29,6 +30,7 @@
 
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
+#include <cg3/development/viewer/interfaces/drawable_container.h>
 #include "utilities/loadersaver.h"
 #include <cg3/geometry/bounding_box.h>
 #include "drawable_objects/drawable_mixed_objects.h"
@@ -129,19 +131,22 @@ private slots:
 
 private:
 
+    QCheckBox* createCheckBoxAndLinkSignal(const DrawableObject* obj, const std::string& checkBoxName, bool isChecked = true);
+
     // GUI
     //
     internal::UiMainWindowRaiiWrapper* ui;
     std::vector<QFrame*> managers;
-    cg3::viewer::LoaderSaver povLS;
     ConsoleStream* consoleStream;
+    QGridLayout* scrollAreaLaout;
+    cg3::viewer::LoaderSaver povLS;
 
     // Mesh Stack
     //
     QSignalMapper* checkBoxMapper;
     std::map<int, QCheckBox*> checkBoxes;
     boost::bimap<int, const cg3::DrawableObject*> mapObjects;
-    int nMeshes;
+    int nCheckBoxes;
     bool first;
     bool debugObjectsEnabled;
     QSpacerItem* m_spacer;

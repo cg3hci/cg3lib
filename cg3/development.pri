@@ -33,7 +33,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/development/viewer/managers/debugobjects_manager.cpp \
-    $$PWD/development/viewer/interfaces/drawable_container.tpp
+    $$PWD/development/viewer/interfaces/drawable_container.cpp
 
 FORMS += \
     $$PWD/development/viewer/managers/debugobjects_manager.ui

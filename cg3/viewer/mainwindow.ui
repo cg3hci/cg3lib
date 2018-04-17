@@ -141,7 +141,7 @@
      <item row="0" column="0">
       <widget class="QScrollArea" name="scrollArea">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -151,6 +151,9 @@
          <width>160</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
        </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
@@ -169,7 +172,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>160</width>
+          <width>179</width>
           <height>541</height>
          </rect>
         </property>
@@ -208,7 +211,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>417</width>
+          <width>398</width>
           <height>508</height>
          </rect>
         </property>

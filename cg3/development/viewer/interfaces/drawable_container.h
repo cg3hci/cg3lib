@@ -14,39 +14,24 @@
 
 namespace cg3 {
 
-namespace internal {
-
-class DrawableContainerSignals : public QObject {
-    Q_OBJECT
-
-public:
-    explicit DrawableContainerSignals(QObject *parent = 0) :
-        QObject(parent) {}
-signals:
-    void drawableContainerPushedObject(const DrawableObject*, unsigned int i, bool vis);
-    void drawableContainerErasedObject(const DrawableObject*, unsigned int i);
-    void drawableCntainerVisibilityObject(const DrawableObject*, unsigned int i, bool vis);
-};
-
-}
-
 namespace viewer {
 class GLCanvas;
 class MainWindow;
-}
+} //namespace cg3::viewer
 
-template <typename T>
-class DrawableContainer : public DrawableObject, public internal::DrawableContainerSignals
+class DrawableContainer : public QObject, public DrawableObject
 {
+    Q_OBJECT
 public:
     friend class viewer::GLCanvas;
     friend class viewer::MainWindow;
 
-    DrawableContainer();
+    typedef std::vector<const DrawableObject*>::iterator iterator;
+
+    explicit DrawableContainer(QObject *parent = 0);
     virtual ~DrawableContainer();
-    virtual void pushBack(const T &obj, bool visibility = true);
-    virtual const T& operator [] (unsigned int i) const;
-    virtual T &operator [] (unsigned int i);
+    virtual void pushBack(const DrawableObject* obj, bool visibility = true);
+    virtual const DrawableObject* operator [] (unsigned int i) const;
     virtual unsigned int size() const;
     virtual void erase(unsigned int i);
 
@@ -55,18 +40,22 @@ public:
     virtual Pointd sceneCenter() const;
     virtual double sceneRadius() const;
 
-    typedef typename std::vector<T>::iterator iterator;
+    virtual iterator begin();
+    virtual iterator end();
+
+signals:
+    void drawableContainerPushedObject(const DrawableObject*, unsigned int i, bool vis);
+    void drawableContainerErasedObject(const DrawableObject*, unsigned int i);
+    void drawableCntainerVisibilityObject(const DrawableObject*, unsigned int i, bool vis);
 
 private:
     cg3::BoundingBox totalVisibleBoundingBox() const;
 
-    std::vector<T> objects;
+    std::vector<const cg3::DrawableObject*> objects;
     std::vector<bool> objectsVisibility;
 
 };
 
-}
-
-#include "drawable_container.tpp"
+} //namespace cg3
 
 #endif // CG3_DRAWABLE_CONTAINER_H
