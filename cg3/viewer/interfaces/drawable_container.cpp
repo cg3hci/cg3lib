@@ -128,8 +128,8 @@ BoundingBox DrawableContainer::totalVisibleBoundingBox() const
         unsigned int i = 0;
         //searching the first visible object and with radius > 0 in order to initialize bb
         while (i < objects.size() &&
-               objects[i]->isVisible() &&
-               objects[i]->sceneRadius() <= 0)
+               (!(objects[i]->isVisible()) ||
+               objects[i]->sceneRadius() <= 0))
             i++;
 
         if (i < objects.size()) { //i will point to the first visible object with radius >0
@@ -138,7 +138,7 @@ BoundingBox DrawableContainer::totalVisibleBoundingBox() const
         }
 
         for (; i < objects.size(); i++) {
-            if (objects[i]->isVisible() && objects[i]->sceneRadius() <= 0) {
+            if (objects[i]->isVisible() && objects[i]->sceneRadius() > 0) {
                 bb.min() =
                         bb.min().min(objects[i]->sceneCenter() - objects[i]->sceneRadius());
                 bb.max() =
