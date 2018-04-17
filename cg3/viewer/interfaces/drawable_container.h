@@ -10,25 +10,31 @@
 #include <cg3/viewer/interfaces/drawable_object.h>
 
 #include <cg3/geometry/bounding_box.h>
+#ifdef CG3_VIEWER_DEFINED
 #include <QtCore>
+#endif
 
 namespace cg3 {
 
-namespace viewer {
-class GLCanvas;
-class MainWindow;
-} //namespace cg3::viewer
-
-class DrawableContainer : public QObject, public DrawableObject
+class DrawableContainer :
+        #ifdef CG3_VIEWER_DEFINED
+        public QObject,
+        #endif
+        public DrawableObject
 {
+    #ifdef CG3_VIEWER_DEFINED
     Q_OBJECT
+    #endif
 public:
-    friend class viewer::GLCanvas;
-    friend class viewer::MainWindow;
 
     typedef std::vector<const DrawableObject*>::iterator iterator;
+    typedef std::vector<const DrawableObject*>::const_iterator const_iterator;
 
+    #ifdef CG3_VIEWER_DEFINED
     explicit DrawableContainer(QObject *parent = 0);
+    #else
+    DrawableContainer();
+    #endif
     virtual ~DrawableContainer();
     virtual void pushBack(const DrawableObject* obj, bool visibility = true);
     virtual const DrawableObject* operator [] (unsigned int i) const;
@@ -42,18 +48,19 @@ public:
 
     virtual iterator begin();
     virtual iterator end();
+    virtual const_iterator begin() const;
+    virtual const_iterator end() const;
 
+    #ifdef CG3_VIEWER_DEFINED
 signals:
     void drawableContainerPushedObject(const DrawableObject*, unsigned int i, bool vis);
     void drawableContainerErasedObject(const DrawableObject*, unsigned int i);
-    void drawableCntainerVisibilityObject(const DrawableObject*, unsigned int i, bool vis);
+    #endif
 
 private:
     cg3::BoundingBox totalVisibleBoundingBox() const;
 
     std::vector<const cg3::DrawableObject*> objects;
-    std::vector<bool> objectsVisibility;
-
 };
 
 } //namespace cg3

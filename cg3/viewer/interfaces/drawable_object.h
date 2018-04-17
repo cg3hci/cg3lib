@@ -12,7 +12,15 @@
 #include <float.h>
 #include <cg3/geometry/point.h>
 
+#ifdef CG3_VIEWER_DEFINED
 namespace cg3 {
+namespace viewer {
+class GLCanvas;
+class MainWindow;
+}
+#endif
+
+class DrawableContainer;
 
 /**
  * @ingroup cg3viewer
@@ -39,22 +47,45 @@ namespace cg3 {
 class DrawableObject
 {
 public :
+    #ifdef CG3_VIEWER_DEFINED
+    friend class cg3::viewer::GLCanvas;
+    friend class cg3::viewer::MainWindow;
+    #endif
+    friend class cg3::DrawableContainer;
 
     DrawableObject() {}                      /**< @brief Empty constructor */
 
     virtual ~DrawableObject() {}
 
-    virtual void  draw()          const = 0; /**< @brief This member function must draw the object through OpenGL calls.
-                                                         It will be called at every frame by the canvas. */
+    virtual void  draw() const = 0; /**< @brief This member function must draw the object through OpenGL calls.
+                                                It will be called at every frame by the canvas. */
 
-    virtual Pointd sceneCenter()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
-                                                         It must return the position of the center of the object. */
+    virtual Pointd sceneCenter() const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
+                                                        It must return the position of the center of the object. */
 
-    virtual double sceneRadius()  const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
+    virtual double sceneRadius() const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
                                                          It should return the ray of the bounding sphere of the object, but also half diagonal of the
                                                          bounding box of the object is a good approximation. Return -1 if the object shouldn't influence
                                                          the position of the camera. */
+
+protected:
+    virtual bool isVisible() const;
+    virtual void setVisibility(bool visible) const;
+
+private:
+    mutable bool visibility = true;
+
 };
+
+inline bool DrawableObject::isVisible() const
+{
+    return visibility;
+}
+
+inline void DrawableObject::setVisibility(bool visible) const
+{
+    visibility = visible;
+}
 
 } //namespace cg3
 

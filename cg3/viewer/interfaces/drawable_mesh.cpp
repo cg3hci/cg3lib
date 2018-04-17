@@ -11,16 +11,11 @@ namespace cg3 {
 
 void DrawableMesh::init()
 {
-    drawMode          = DRAW_MESH | DRAW_SMOOTH | DRAW_FACECOLOR;
+    drawMode          = DRAW_SMOOTH | DRAW_FACECOLOR;
     wireframeWidth    = 1;
     wireframeColor[0] = (float)0.1;
     wireframeColor[1] = (float)0.1;
     wireframeColor[2] = (float)0.1;
-}
-
-bool DrawableMesh::isVisible() const
-{
-    return (drawMode & DRAW_MESH);
 }
 
 void DrawableMesh::setWireframe(bool b)
@@ -80,12 +75,6 @@ void DrawableMesh::setVisibleBoundingBox(bool b)
     else   drawMode &= ~DRAW_BOUNDINGBOX;
 }
 
-void DrawableMesh::setVisible(bool b)
-{
-    if (b) drawMode |=  DRAW_MESH;
-    else   drawMode &= ~DRAW_MESH;
-}
-
 DrawableMesh::DrawableMesh()
 {
     init();
@@ -93,64 +82,62 @@ DrawableMesh::DrawableMesh()
 
 void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const
 {
-    if (drawMode & DRAW_MESH) {
-        if (drawMode & DRAW_WIREFRAME) {
-            if (drawMode & DRAW_POINTS) {
-                glDisable(GL_LIGHTING);
-                glShadeModel(GL_FLAT);
-                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                glDepthRange(0.0, 1.0);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
-                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            }
-            else if (drawMode & DRAW_FLAT) {
-                glEnable(GL_LIGHTING);
-                glShadeModel(GL_FLAT);
-                glDepthRange(0.01, 1.0);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
+    if (drawMode & DRAW_WIREFRAME) {
+        if (drawMode & DRAW_POINTS) {
+            glDisable(GL_LIGHTING);
+            glShadeModel(GL_FLAT);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            glDepthRange(0.0, 1.0);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+        else if (drawMode & DRAW_FLAT) {
+            glEnable(GL_LIGHTING);
+            glShadeModel(GL_FLAT);
+            glDepthRange(0.01, 1.0);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
 
-                glDisable(GL_LIGHTING);
-                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                glDepthRange(0.0, 1.0);
-                glDepthFunc(GL_LEQUAL);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
-                glDepthFunc(GL_LESS);
-                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            }
-            else if (drawMode & DRAW_SMOOTH) {
-                glEnable(GL_LIGHTING);
-                glShadeModel(GL_SMOOTH);
-                glDepthRange(0.01, 1.0);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
+            glDisable(GL_LIGHTING);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            glDepthRange(0.0, 1.0);
+            glDepthFunc(GL_LEQUAL);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
+            glDepthFunc(GL_LESS);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+        else if (drawMode & DRAW_SMOOTH) {
+            glEnable(GL_LIGHTING);
+            glShadeModel(GL_SMOOTH);
+            glDepthRange(0.01, 1.0);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
 
-                glDisable(GL_LIGHTING);
-                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                glDepthRange(0.0, 1.0);
-                glDepthFunc(GL_LEQUAL);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
-                glDepthFunc(GL_LESS);
-                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            }
+            glDisable(GL_LIGHTING);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            glDepthRange(0.0, 1.0);
+            glDepthFunc(GL_LEQUAL);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
+            glDepthFunc(GL_LESS);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
-        else {
-            if (drawMode & DRAW_POINTS) {
-                glDisable(GL_LIGHTING);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
-            }
-            else if (drawMode & DRAW_FLAT) {
-                glEnable(GL_LIGHTING);
-                glShadeModel(GL_FLAT);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
-            }
-            else if (drawMode & DRAW_SMOOTH) {
-                glEnable(GL_LIGHTING);
-                glShadeModel(GL_SMOOTH);
-                renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
-            }
+    }
+    else {
+        if (drawMode & DRAW_POINTS) {
+            glDisable(GL_LIGHTING);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
         }
-        if (drawMode & DRAW_BOUNDINGBOX) {
-            opengl::drawBox(min, max, QColor(0,0,0));
+        else if (drawMode & DRAW_FLAT) {
+            glEnable(GL_LIGHTING);
+            glShadeModel(GL_FLAT);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
         }
+        else if (drawMode & DRAW_SMOOTH) {
+            glEnable(GL_LIGHTING);
+            glShadeModel(GL_SMOOTH);
+            renderPass(nv, nt, pCoords, pTriangles, pVertexNormals, pVertexColors, pTriangleNormals, pTriangleColors);
+        }
+    }
+    if (drawMode & DRAW_BOUNDINGBOX) {
+        opengl::drawBox(min, max, QColor(0,0,0));
     }
 }
 

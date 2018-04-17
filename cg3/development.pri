@@ -28,12 +28,10 @@ SOURCES += \
 
 # ----- Viewer -----
 HEADERS += \
-    $$PWD/development/viewer/managers/debugobjects_manager.h \
-    $$PWD/development/viewer/interfaces/drawable_container.h \
+    $$PWD/development/viewer/managers/debugobjects_manager.h
 
 SOURCES += \
-    $$PWD/development/viewer/managers/debugobjects_manager.cpp \
-    $$PWD/development/viewer/interfaces/drawable_container.cpp
+    $$PWD/development/viewer/managers/debugobjects_manager.cpp
 
 FORMS += \
     $$PWD/development/viewer/managers/debugobjects_manager.ui

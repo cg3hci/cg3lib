@@ -30,7 +30,7 @@
 
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
-#include <cg3/development/viewer/interfaces/drawable_container.h>
+#include <cg3/viewer/interfaces/drawable_container.h>
 #include "utilities/loadersaver.h"
 #include <cg3/geometry/bounding_box.h>
 #include "drawable_objects/drawable_mixed_objects.h"
@@ -71,8 +71,8 @@ public:
     cg3::Point2Di getCanvasSize() const;
 
     //DrawableObjects for the Canvas
-    void pushDrawableObject(const cg3::DrawableObject * obj, std::string checkBoxName, bool b = true);
-    bool deleteDrawableObject(const cg3::DrawableObject * obj, bool b = true);
+    void pushDrawableObject(const cg3::DrawableObject * obj, std::string checkBoxName, bool checkBoxChecked = true);
+    bool deleteDrawableObject(const cg3::DrawableObject * obj);
     void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
     cg3::BoundingBox getFullBoundingBox();
@@ -132,13 +132,14 @@ private slots:
 private:
 
     QCheckBox* createCheckBoxAndLinkSignal(const DrawableObject* obj, const std::string& checkBoxName, bool isChecked = true);
+    void addContainerCheckBoxes(const DrawableContainer* container);
 
     // GUI
     //
     internal::UiMainWindowRaiiWrapper* ui;
     std::vector<QFrame*> managers;
     ConsoleStream* consoleStream;
-    QGridLayout* scrollAreaLaout;
+    QVBoxLayout* scrollAreaLayout;
     cg3::viewer::LoaderSaver povLS;
 
     // Mesh Stack
@@ -147,6 +148,7 @@ private:
     std::map<int, QCheckBox*> checkBoxes;
     boost::bimap<int, const cg3::DrawableObject*> mapObjects;
     int nCheckBoxes;
+    std::map<const cg3::DrawableContainer*, std::set<QCheckBox*> > containerCheckBoxes;
     bool first;
     bool debugObjectsEnabled;
     QSpacerItem* m_spacer;

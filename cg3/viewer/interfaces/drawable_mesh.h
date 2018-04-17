@@ -5,8 +5,8 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#ifndef CG3__DRAWABLE_MESH_H
-#define CG3__DRAWABLE_MESH_H
+#ifndef CG3_DRAWABLE_MESH_H
+#define CG3_DRAWABLE_MESH_H
 
 #ifdef WIN32
 #include "windows.h"
@@ -54,7 +54,6 @@ public:
     virtual void draw() const = 0;
     virtual Pointd sceneCenter() const = 0;
     virtual double sceneRadius() const = 0;
-    virtual bool isVisible() const;
 
     // rendering options
     //
@@ -67,7 +66,6 @@ public:
     void setEnableVertexColor();
     void setEnableTriangleColor();
     void setVisibleBoundingBox(bool b);
-    void setVisible(bool b);
 
 protected:
     DrawableMesh();

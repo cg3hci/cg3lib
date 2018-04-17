@@ -95,7 +95,7 @@ public:
     unsigned int pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
     bool deleteDrawableObject(const cg3::DrawableObject* obj);
     bool deleteDrawableObject(unsigned int idObject);
-    bool setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
+    void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
     bool isDrawableObjectVisible(const cg3::DrawableObject* obj) const;
     bool containsDrawableObject(const cg3::DrawableObject* obj) const;
     unsigned int sizeVisibleDrawableObjects() const;
@@ -119,7 +119,6 @@ private:
     std::vector<const cg3::PickableObject*> pickList;
     std::set<unsigned int> unusedPickableObjectsIds;
     std::set<unsigned int> unusedIds;
-    std::vector<bool> objVisibility;
     Mode mode;
 };
 

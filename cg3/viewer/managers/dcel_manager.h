@@ -45,7 +45,6 @@ private slots:
     void on_wireframeDcelCheckBox_stateChanged(int state);
     void on_wireframeWidthDcelSlider_valueChanged(int value);
     void on_wireframeColorDcelButton_clicked();
-    void on_drawDcelCheckBox_stateChanged(int state);
     void on_pointsDcelRadioButton_toggled(bool checked);
     void on_flatDcelRadioButton_toggled(bool checked);
     void on_smoothDcelRadioButton_toggled(bool checked);

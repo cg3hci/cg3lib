@@ -37,7 +37,7 @@ void GLCanvas::draw()
     QGLViewer::setBackgroundColor(backgroundColor);
 
     for(unsigned int i=0; i<drawlist.size(); ++i) {
-        if (objVisibility[i] && drawlist[i] != nullptr)
+        if (drawlist[i]->isVisible() && drawlist[i] != nullptr)
             drawlist[i]->draw();
     }
 }
@@ -47,7 +47,7 @@ void GLCanvas::drawWithNames()
     QGLViewer::setBackgroundColor(backgroundColor);
 
     for(int i=0; i<(int)drawlist.size(); ++i){
-        if (objVisibility[i]){
+        if (drawlist[i]->isVisible()){
             const PickableObject* obj =
                     dynamic_cast<const PickableObject*>(drawlist[i]);
             if (obj) // if it is a PickableObject
@@ -100,7 +100,7 @@ void GLCanvas::fitScene()
 
         for(int i=0; i<(int)drawlist.size(); ++i) {
             const DrawableObject * obj = drawlist[i];
-            if (objVisibility[i] &&
+            if (drawlist[i]->isVisible() &&
                     obj->sceneRadius() > std::numeric_limits<float>::epsilon()) {
                 Pointd objCenter = obj->sceneCenter();
                 double objRadius = obj->sceneRadius();
@@ -285,22 +285,20 @@ void GLCanvas::setCameraPosition(const Pointd &pos)
 void GLCanvas::clearDrawableObjectsList()
 {
     drawlist.clear();
-    objVisibility.clear();
 }
 
 unsigned int GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
 {
     unsigned int id;
+    obj->setVisibility(visible);
     if (unusedIds.size() == 0) {
         drawlist.push_back(obj);
-        objVisibility.push_back(visible);
         update();
         id = (unsigned int)drawlist.size();
     }
     else {
         id = *unusedIds.begin();
         drawlist[id] = obj;
-        objVisibility[id] = visible;
         unusedIds.erase(id);
         update();
     }
@@ -327,7 +325,6 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
     std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = std::distance(drawlist.begin(), it);
-        objVisibility[pos] = false;
         drawlist[pos] = nullptr;
         unusedIds.insert(pos);
 
@@ -348,7 +345,6 @@ bool GLCanvas::deleteDrawableObject(unsigned int idObject)
 {
     if (idObject < drawlist.size() && drawlist[idObject] != nullptr){
         const cg3::DrawableObject* obj = drawlist[idObject];
-        objVisibility[idObject] = false;
         drawlist[idObject] = nullptr;
         unusedIds.insert(idObject);
 
@@ -365,30 +361,19 @@ bool GLCanvas::deleteDrawableObject(unsigned int idObject)
         return false;
 }
 
-bool GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
+void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
-    std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
-    if (it != drawlist.end()) {
-        int pos = it - drawlist.begin();
-        objVisibility[pos] = visible;
-        return true;
-    }
-    return false;
+    obj->setVisibility(visible);
 }
 
 bool GLCanvas::isDrawableObjectVisible(const DrawableObject* obj) const
 {
-    std::vector<const DrawableObject *>::const_iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
-    if (it != drawlist.end()) {
-        int pos = it - drawlist.begin();
-        return objVisibility[pos];
-    }
-    return false;
+    return obj->isVisible();
 }
 
 bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
 {
-    std::vector<const DrawableObject *>::const_iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
+    std::vector<const DrawableObject*>::const_iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     return it != drawlist.end();
 }
 
@@ -396,7 +381,7 @@ unsigned int GLCanvas::sizeVisibleDrawableObjects() const
 {
     unsigned int count = 0;
     for(unsigned int i=0; i<drawlist.size(); ++i) {
-        if (objVisibility[i]) count++;
+        if (drawlist[i]->isVisible()) count++;
     }
     return count;
 }
@@ -410,10 +395,10 @@ BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const
 {
     BoundingBox bb;
     for(int i=0; i<(int)drawlist.size(); ++i) {
-        const DrawableObject * obj = drawlist[i];
+        const DrawableObject* obj = drawlist[i];
         if (obj != nullptr) {
             if (onlyVisible) {
-                if (objVisibility[i] && obj->sceneRadius() > 0) {
+                if (drawlist[i]->isVisible() && obj->sceneRadius() > 0) {
                     Pointd center = obj->sceneCenter();
                     bb.setMin(bb.getMin().min(Pointd(center.x() - obj->sceneRadius(), center.y() - obj->sceneRadius(), center.z() - obj->sceneRadius())));
                     bb.setMax(bb.getMax().max(Pointd(center.x() + obj->sceneRadius(), center.y() + obj->sceneRadius(), center.z() + obj->sceneRadius())));

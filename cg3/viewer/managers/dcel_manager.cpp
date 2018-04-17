@@ -193,14 +193,6 @@ void DcelManager::on_wireframeColorDcelButton_clicked()
     }
 }
 
-void DcelManager::on_drawDcelCheckBox_stateChanged(int state)
-{
-    if (loaded) {
-        drawableDcel.setVisible(state == Qt::Checked);
-        mainWindow.canvas.update();
-    }
-}
-
 void DcelManager::on_pointsDcelRadioButton_toggled(bool checked)
 {
     if (loaded) {
@@ -269,7 +261,6 @@ void DcelManager::resetDefaults()
 {
     ui->wireframeDcelCheckBox->setChecked(false);
     ui->boundingBoxCheckBox->setChecked(false);
-    ui->drawDcelCheckBox->setChecked(true);
     ui->smoothDcelRadioButton->setChecked(true);
     ui->triangleColorDcelRadioButton->setChecked(true);
     ui->wireframeWidthDcelSlider->setValue(1);
@@ -287,7 +278,6 @@ void DcelManager::setButtonsDcelLoaded()
 {
     ui->wireframeColorDcelButton->setEnabled(true);
     ui->boundingBoxCheckBox->setEnabled(true);
-    ui->drawDcelCheckBox->setEnabled(true);
     ui->wireframeDcelCheckBox->setEnabled(true);
     ui->wireframeWidthDcelSlider->setEnabled(true);
     ui->flatDcelRadioButton->setEnabled(true);
@@ -310,7 +300,6 @@ void DcelManager::setButtonsDcelNotLoaded()
 {
     ui->boundingBoxCheckBox->setEnabled(false);
     ui->wireframeColorDcelButton->setEnabled(false);
-    ui->drawDcelCheckBox->setEnabled(false);
     ui->wireframeDcelCheckBox->setEnabled(false);
     ui->wireframeWidthDcelSlider->setEnabled(false);
     ui->facesWireframeDcelCheckBox->setEnabled(false);
