@@ -78,6 +78,7 @@ public:
             bool checkBoxChecked = true);
     bool deleteDrawableObject(const cg3::DrawableObject * obj);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
+    bool refreshDrawableObject(const cg3::DrawableObject* obj);
 
     //Debug Objects
     void enableDebugObjects();

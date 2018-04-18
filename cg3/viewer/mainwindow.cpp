@@ -96,7 +96,10 @@ Point2Di MainWindow::getCanvasSize() const
  * @param checkBoxName: a name associated to the DrawableObject
  * @param checkBoxChecked: true if the object will be visible, false otherwise
  */
-void MainWindow::pushDrawableObject(const DrawableObject* obj, std::string checkBoxName, bool checkBoxChecked)
+void MainWindow::pushDrawableObject(
+        const DrawableObject* obj,
+        std::string checkBoxName,
+        bool checkBoxChecked)
 {
     if (obj != nullptr){
         canvas.pushDrawableObject(obj, checkBoxChecked);
@@ -178,6 +181,27 @@ bool MainWindow::containsDrawableObject(const DrawableObject* obj)
     boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter =
             mapObjects.right.find(obj);
     return (right_iter != mapObjects.right.end());
+}
+
+/**
+ * @brief Refreshes the visibility of a DrawableObject if it was assigned.
+ * @todo Manage PickableObject and DrawableContainer..
+ */
+bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
+{
+    boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter =
+            mapObjects.right.find(obj);
+    if (right_iter != mapObjects.right.end()){
+        int i = right_iter->second;
+
+        QCheckBox * cb = checkBoxes[i];
+        obj->setVisibility(cb->isChecked());
+
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 /**
