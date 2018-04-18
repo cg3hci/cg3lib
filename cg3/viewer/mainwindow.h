@@ -77,7 +77,6 @@ public:
             std::string checkBoxName = "",
             bool checkBoxChecked = true);
     bool deleteDrawableObject(const cg3::DrawableObject * obj);
-    void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
 
     //Debug Objects
@@ -94,6 +93,9 @@ public:
     QFrame *getManager(unsigned int i);
     void renameManager(unsigned int i, std::string s);
     void setCurrentManager(unsigned int i);
+
+public slots:
+    void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
 
 signals:
 

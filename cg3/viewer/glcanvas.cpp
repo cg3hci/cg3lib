@@ -307,8 +307,10 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
 
 void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
-    if (obj != nullptr)
+    if (obj != nullptr){
         obj->setVisibility(visible);
+        emit objectVisibilityChanged(obj, visible);
+    }
 }
 
 bool GLCanvas::isDrawableObjectVisible(const DrawableObject* obj) const
