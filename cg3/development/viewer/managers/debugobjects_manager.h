@@ -8,10 +8,14 @@
 #define CG3_DEBUGOBJECTS_MANAGER_H
 
 #include <QFrame>
-#include <cg3/viewer/mainwindow.h>
+
+class QSpacerItem;
 
 namespace cg3 {
 namespace viewer {
+
+class MainWindow;
+
 namespace Ui {
 class DebugObjectsManager;
 } //namespace cg3::viewer::Ui

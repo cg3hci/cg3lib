@@ -102,6 +102,8 @@ public:
     unsigned int sizeDrawableObjectsList() const;
     cg3::BoundingBox getFullBoundingBoxDrawableObjects(bool onlyVisible = false) const;
 
+    unsigned int zoomSceneFactor;
+
 signals:
 
     void objectPicked(const cg3::PickableObject*, unsigned int);

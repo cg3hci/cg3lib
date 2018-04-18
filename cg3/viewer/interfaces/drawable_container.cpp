@@ -5,6 +5,9 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 #include "drawable_container.h"
+
+#include <cg3/viewer/utilities/utils.h>
+
 namespace cg3 {
 
 #ifdef CG3_VIEWER_DEFINED
@@ -123,7 +126,7 @@ DrawableContainer::const_iterator DrawableContainer::end() const
 
 BoundingBox DrawableContainer::totalVisibleBoundingBox() const
 {
-    cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
+    /*cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
     if (objects.size() > 0) {
         unsigned int i = 0;
         //searching the first visible object and with radius > 0 in order to initialize bb
@@ -146,7 +149,8 @@ BoundingBox DrawableContainer::totalVisibleBoundingBox() const
             }
         }
     }
-    return bb;
+    return bb;*/
+    return cg3::getFullBoundingBoxDrawableObjects(objects, true);
 }
 
 } //namespace cg3

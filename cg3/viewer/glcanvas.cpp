@@ -10,13 +10,14 @@
 
 #include "glcanvas.h"
 #include <cg3/geometry/plane.h>
-#include <cg3/geometry/2d/point2d.h>
 #include <cg3/utilities/cg3config.h>
+#include <cg3/viewer/utilities/utils.h>
 
 namespace cg3 {
 namespace viewer {
 
 GLCanvas::GLCanvas(QWidget * parent) :
+    zoomSceneFactor(6),
     backgroundColor(Qt::white),
     mode(_3D)
 {
@@ -88,43 +89,10 @@ void GLCanvas::postSelection(const QPoint& point)
 
 void GLCanvas::fitScene()
 {
-    Pointd sceneCenter(0,0,0);
-    double sceneRadius = 0.0;
-    int   count  = 0;
+    BoundingBox bb = getFullBoundingBoxDrawableObjects(true);
 
-    if (sizeVisibleDrawableObjects() == 0) sceneRadius = 1.0;
-    else {
-        const double dmax = std::numeric_limits<double>::max();
-        const double dmin = std::numeric_limits<double>::min();
-        BoundingBox bb(Pointd(dmax, dmax, dmax), Pointd(dmin, dmin, dmin));
-
-        for(int i=0; i<(int)drawlist.size(); ++i) {
-            const DrawableObject * obj = drawlist[i];
-            if (drawlist[i]->isVisible() &&
-                    obj->sceneRadius() > std::numeric_limits<float>::epsilon()) {
-                Pointd objCenter = obj->sceneCenter();
-                double objRadius = obj->sceneRadius();
-
-                bb.minX() = std::min((objCenter + Pointd(-objRadius,0,0)).x(), bb.minX());
-                bb.maxX() = std::max((objCenter + Pointd( objRadius,0,0)).x(), bb.maxX());
-
-                bb.minY() = std::min((objCenter + Pointd(0,-objRadius,0)).y(), bb.minY());
-                bb.maxY() = std::max((objCenter + Pointd(0, objRadius,0)).y(), bb.maxY());
-
-                bb.minZ() = std::min((objCenter + Pointd(0,0,-objRadius)).z(), bb.minZ());
-                bb.maxZ() = std::max((objCenter + Pointd(0,0, objRadius)).z(), bb.maxZ());
-
-                ++count;
-            }
-        }
-        if (count == 0) {
-            bb.min() = Pointd(-1,-1,-1);
-            bb.max() = Pointd( 1, 1, 1);
-        }
-
-        sceneRadius = bb.diag() / 2;
-        sceneCenter = bb.center();
-    }
+    Pointd sceneCenter = bb.center();
+    double sceneRadius = bb.diag() / zoomSceneFactor;
 
     setSceneCenter(qglviewer::Vec(sceneCenter.x(), sceneCenter.y(), sceneCenter.z()));
     setSceneRadius(sceneRadius);
@@ -289,40 +257,46 @@ void GLCanvas::clearDrawableObjectsList()
 
 unsigned int GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
 {
-    unsigned int id;
-    obj->setVisibility(visible);
-    if (unusedIds.size() == 0) {
-        drawlist.push_back(obj);
-        update();
-        id = (unsigned int)drawlist.size();
-    }
-    else {
-        id = *unusedIds.begin();
-        drawlist[id] = obj;
-        unusedIds.erase(id);
-        update();
-    }
-
-    const PickableObject* pobj =
-            dynamic_cast<const PickableObject*>(obj);
-
-    if (pobj) {
-        if (unusedPickableObjectsIds.size() == 0){
-            pickList.push_back(pobj);
-            pobj->id = (unsigned int)pickList.size()-1;
+    if (obj != nullptr){
+        unsigned int id;
+        obj->setVisibility(visible);
+        if (unusedIds.size() == 0) {
+            drawlist.push_back(obj);
+            update();
+            id = (unsigned int)drawlist.size();
         }
         else {
-            pobj->id = *unusedPickableObjectsIds.begin();
-            pickList[pobj->id] = pobj;
-            unusedPickableObjectsIds.erase(unusedPickableObjectsIds.begin());
+            id = *unusedIds.begin();
+            drawlist[id] = obj;
+            unusedIds.erase(id);
+            update();
         }
+
+        const PickableObject* pobj =
+                dynamic_cast<const PickableObject*>(obj);
+
+        if (pobj) {
+            if (unusedPickableObjectsIds.size() == 0){
+                pickList.push_back(pobj);
+                pobj->id = (unsigned int)pickList.size()-1;
+            }
+            else {
+                pobj->id = *unusedPickableObjectsIds.begin();
+                pickList[pobj->id] = pobj;
+                unusedPickableObjectsIds.erase(unusedPickableObjectsIds.begin());
+            }
+        }
+        return id;
     }
-    return id;
+    else{
+        return 0;
+    }
 }
 
 bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
 {
-    std::vector<const DrawableObject *>::iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
+    std::vector<const DrawableObject *>::iterator it =
+            std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
         int pos = std::distance(drawlist.begin(), it);
         drawlist[pos] = nullptr;
@@ -363,12 +337,16 @@ bool GLCanvas::deleteDrawableObject(unsigned int idObject)
 
 void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
-    obj->setVisibility(visible);
+    if (obj != nullptr)
+        obj->setVisibility(visible);
 }
 
 bool GLCanvas::isDrawableObjectVisible(const DrawableObject* obj) const
 {
-    return obj->isVisible();
+    if (obj != nullptr)
+        return obj->isVisible();
+    else
+        return false;
 }
 
 bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
@@ -393,27 +371,38 @@ unsigned int GLCanvas::sizeDrawableObjectsList() const
 
 BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const
 {
-    BoundingBox bb;
-    for(int i=0; i<(int)drawlist.size(); ++i) {
-        const DrawableObject* obj = drawlist[i];
-        if (obj != nullptr) {
-            if (onlyVisible) {
-                if (drawlist[i]->isVisible() && obj->sceneRadius() > 0) {
-                    Pointd center = obj->sceneCenter();
-                    bb.setMin(bb.getMin().min(Pointd(center.x() - obj->sceneRadius(), center.y() - obj->sceneRadius(), center.z() - obj->sceneRadius())));
-                    bb.setMax(bb.getMax().max(Pointd(center.x() + obj->sceneRadius(), center.y() + obj->sceneRadius(), center.z() + obj->sceneRadius())));
-                }
-            }
-            else {
-                if (obj->sceneRadius() > 0) {
-                    Pointd center = obj->sceneCenter();
-                    bb.setMin(bb.getMin().min(Pointd(center.x() - obj->sceneRadius(), center.y() - obj->sceneRadius(), center.z() - obj->sceneRadius())));
-                    bb.setMax(bb.getMax().max(Pointd(center.x() + obj->sceneRadius(), center.y() + obj->sceneRadius(), center.z() + obj->sceneRadius())));
-                }
+    /*cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
+    if (drawlist.size() > 0) {
+        unsigned int i = 0;
+        if (onlyVisible) {
+            //searching the first visible object and with radius > 0 in order to initialize bb
+            while (i < drawlist.size() &&
+                   (!(drawlist[i]->isVisible()) ||
+                   drawlist[i]->sceneRadius() <= 0))
+                i++;
+        }
+        else {
+            //searching the first visible object and with radius > 0 in order to initialize bb
+            while (i < drawlist.size() && drawlist[i]->sceneRadius() <= 0)
+                i++;
+        }
+
+        if (i < drawlist.size()) { //i will point to the first visible object with radius >0
+            bb.min() = drawlist[i]->sceneCenter() - drawlist[i]->sceneRadius();
+            bb.max() = drawlist[i]->sceneCenter() + drawlist[i]->sceneRadius();
+        }
+
+        for (; i < drawlist.size(); i++) {
+            if ((!onlyVisible || (drawlist[i]->isVisible())) && drawlist[i]->sceneRadius() > 0) {
+                bb.min() =
+                        bb.min().min(drawlist[i]->sceneCenter() - drawlist[i]->sceneRadius());
+                bb.max() =
+                        bb.max().max(drawlist[i]->sceneCenter() + drawlist[i]->sceneRadius());
             }
         }
     }
-    return bb;
+    return bb;*/
+    return cg3::getFullBoundingBoxDrawableObjects(drawlist, onlyVisible);
 }
 
 void GLCanvas::enableRotation(bool b)

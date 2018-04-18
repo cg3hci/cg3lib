@@ -7,8 +7,12 @@
 #include "debugobjects_manager.h"
 #include "ui_debugobjects_manager.h"
 
+#include <cg3/viewer/mainwindow.h>
+
 #include <QColorDialog>
 #include <QGridLayout>
+#include <QCheckBox>
+#include <QSpacerItem>
 
 namespace cg3 {
 namespace viewer {

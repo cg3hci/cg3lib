@@ -10,14 +10,10 @@
 #define CG3_MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QDockWidget>
-#include <QToolBox>
-#include <QFrame>
+#include <QApplication>
 #include <QSignalMapper>
-#include <QCheckBox>
-#include <QSpacerItem>
+
 #include <QProcess>
-#include <QGridLayout>
 #ifdef __APPLE__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wredeclared-class-member"
@@ -26,21 +22,26 @@
 #ifdef __APPLE__
 #pragma clang diagnostic pop
 #endif
-#include <QApplication>
-
-#include "interfaces/drawable_object.h"
-#include "interfaces/pickable_object.h"
-#include <cg3/viewer/interfaces/drawable_container.h>
-#include "utilities/loadersaver.h"
-#include <cg3/geometry/bounding_box.h>
-#include "drawable_objects/drawable_mixed_objects.h"
-#include "utilities/consolestream.h"
-#include <cg3/geometry/2d/point2d.h>
 
 #include "glcanvas.h"
+#include "utilities/loadersaver.h"
+#include "utilities/consolestream.h"
+#include "drawable_objects/drawable_mixed_objects.h"
+
+class QToolBox;
+class QVBoxLayout;
+class QSpacerItem;
 
 namespace cg3 {
+
+class DrawableObject;
+class PickableObject;
+class DrawableContainer;
+
 namespace viewer {
+
+class GLCanvas;
+
 namespace Ui {
 
 class MainWindow;
@@ -54,8 +55,8 @@ class UiMainWindowRaiiWrapper;
 } //namespace cg3::viewer::internal
 
 /**
- * @brief MainWindow is a class that manages a QGLViewer canvas and all the managers
- * which are added to it.
+ * @brief Class that describes a Window containing an QGLViewer canvas and that manages
+ * Managers and DrawableObjects.
  * @ingroup cg3viewer
  */
 class MainWindow : public QMainWindow
@@ -71,12 +72,13 @@ public:
     cg3::Point2Di getCanvasSize() const;
 
     //DrawableObjects for the Canvas
-    void pushDrawableObject(const cg3::DrawableObject * obj, std::string checkBoxName, bool checkBoxChecked = true);
+    void pushDrawableObject(
+            const cg3::DrawableObject * obj,
+            std::string checkBoxName = "",
+            bool checkBoxChecked = true);
     bool deleteDrawableObject(const cg3::DrawableObject * obj);
     void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
-    cg3::BoundingBox getFullBoundingBox();
-    int getNumberVisibleDrawableObjects();
 
     //Debug Objects
     void enableDebugObjects();
@@ -97,20 +99,25 @@ signals:
 
     /**
      * @brief undoEvent
-     * Segnale da "catchare", viene lanciato quando viene premuto CTRL+Z
+     * Conntect your slot with this signal in ordert to execute an action when the
+     * user uses CTRL+Z in the MainWindow
      */
     void undoEvent();
 
     /**
-     * @brief undoEvent
-     * Segnale da "catchare", viene lanciato quando viene premuto MAIUSC+CTRL+Z
+     * @brief redoEvent
+     * Conntect your slot with this signal in ordert to execute an action when the
+     * user uses MAIUSC+CTRL+Z in the MainWindow
      */
     void redoEvent();
 
 private slots:
     void checkBoxClicked(int i);
 
-    void addCheckBoxDrawableContainer(const DrawableContainer* cont, const std::string& objectName, bool vis);
+    void addCheckBoxDrawableContainer(
+            const DrawableContainer* cont,
+            const std::string& objectName,
+            bool vis);
     void removeCheckBoxDrawableContainer(const DrawableContainer* cont, unsigned int i);
 
     //Menu Actions
@@ -134,7 +141,10 @@ private slots:
 
 private:
 
-    QCheckBox* createCheckBoxAndLinkSignal(const DrawableObject* obj, const std::string& checkBoxName, bool isChecked = true);
+    QCheckBox* createCheckBoxAndLinkSignal(
+            const DrawableObject* obj,
+            const std::string& checkBoxName,
+            bool isChecked = true);
     void addContainerCheckBoxes(const DrawableContainer* container);
 
     // GUI
@@ -158,8 +168,14 @@ private:
 
 public:
 
-    GLCanvas& canvas;
-    cg3::DrawableMixedObjects debugObjects;
+    GLCanvas& canvas; /** @brief Public member of type cg3::viewer::GLCanvas that allows
+                          to manage the canvas contained in the MainWindow. */
+    cg3::DrawableMixedObjects debugObjects; /** @brief Public member of type
+                                                cg3::DrawableMixedObjects that allows to
+                                                manage the debug objects that can be shown
+                                                in the canvas. In order to use this member,
+                                                remember to call the function
+                                                "MainWindow::enableDebugObjects()".*/
 };
 
 } //namespace cg3::viewer
