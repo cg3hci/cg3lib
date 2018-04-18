@@ -92,9 +92,8 @@ public:
 
     //DrawableObjects List management:
     void clearDrawableObjectsList();
-    unsigned int pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
+    void pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
     bool deleteDrawableObject(const cg3::DrawableObject* obj);
-    bool deleteDrawableObject(unsigned int idObject);
     void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
     bool isDrawableObjectVisible(const cg3::DrawableObject* obj) const;
     bool containsDrawableObject(const cg3::DrawableObject* obj) const;
