@@ -77,6 +77,20 @@ void DrawableContainer::erase(unsigned int i)
     objectNames.erase(objectNames.begin() + i);
 }
 
+/**
+ * @brief Clears the container.
+ */
+void DrawableContainer::clear()
+{
+    for (int i = objects.size()-1; i >= 0; i--){
+        #ifdef CG3_VIEWER_DEFINED
+        emit drawableContainerErasedObject(this, i);
+        #endif
+        objects.pop_back();
+        objectNames.pop_back();
+    }
+}
+
 const std::string&DrawableContainer::objectName(unsigned int i) const
 {
     return objectNames[i];

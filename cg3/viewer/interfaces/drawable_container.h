@@ -54,6 +54,7 @@ public:
     virtual const DrawableObject* operator [] (unsigned int i) const;
     virtual unsigned int size() const;
     virtual void erase(unsigned int i);
+    virtual void clear();
     virtual const std::string& objectName(unsigned int i) const;
 
     // DrawableObject interface
