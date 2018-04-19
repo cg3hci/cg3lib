@@ -91,14 +91,9 @@ public:
     void setCameraPosition(const cg3::Pointd& pos);
 
     //DrawableObjects List management:
-    void clearDrawableObjectsList();
-    void pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
-    bool deleteDrawableObject(const cg3::DrawableObject* obj);
-    void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
-    bool isDrawableObjectVisible(const cg3::DrawableObject* obj) const;
-    bool containsDrawableObject(const cg3::DrawableObject* obj) const;
     unsigned int sizeVisibleDrawableObjects() const;
     unsigned int sizeDrawableObjectsList() const;
+    bool isDrawableObjectVisible(const cg3::DrawableObject* obj) const;
     cg3::BoundingBox getFullBoundingBoxDrawableObjects(bool onlyVisible = false) const;
 
     unsigned int zoomSceneFactor;
@@ -110,13 +105,21 @@ signals:
 
 private:
 
+    //DrawableObjects List management: these members should be used by cg3::MainWindow
+    void clearDrawableObjectsList();
+    void pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
+    bool deleteDrawableObject(const cg3::DrawableObject* obj);
+    void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
+    bool containsDrawableObject(const cg3::DrawableObject* obj) const;
+
+
     void enableRotation(bool b = true);
     void enableTranslation(bool b = true);
     void enableZoom(bool b = true);
     void setSelectionLeftButton(bool b = true);
 
     QColor backgroundColor;
-    std::vector<const cg3::DrawableObject *> drawlist;
+    std::vector<const cg3::DrawableObject*> drawlist;
     std::vector<const cg3::PickableObject*> pickList;
     std::set<unsigned int> unusedPickableObjectsIds;
     std::set<unsigned int> unusedIds;

@@ -254,6 +254,33 @@ void GLCanvas::setCameraPosition(const Pointd &pos)
     camera()->setPosition(qglvec);
 }
 
+unsigned int GLCanvas::sizeVisibleDrawableObjects() const
+{
+    unsigned int count = 0;
+    for(unsigned int i=0; i<drawlist.size(); ++i) {
+        if (drawlist[i]->isVisible()) count++;
+    }
+    return count;
+}
+
+unsigned int GLCanvas::sizeDrawableObjectsList() const
+{
+    return (unsigned int)drawlist.size() - (unsigned int)unusedIds.size();
+}
+
+bool GLCanvas::isDrawableObjectVisible(const DrawableObject* obj) const
+{
+    if (obj != nullptr)
+        return obj->isVisible();
+    else
+        return false;
+}
+
+BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const
+{
+    return cg3::getFullBoundingBoxDrawableObjects(drawlist, onlyVisible);
+}
+
 void GLCanvas::clearDrawableObjectsList()
 {
     drawlist.clear();
@@ -311,68 +338,10 @@ void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool visib
         obj->setVisibility(visible);
 }
 
-bool GLCanvas::isDrawableObjectVisible(const DrawableObject* obj) const
-{
-    if (obj != nullptr)
-        return obj->isVisible();
-    else
-        return false;
-}
-
 bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
 {
     std::vector<const DrawableObject*>::const_iterator it = std::find(drawlist.begin(), drawlist.end(), obj);
     return it != drawlist.end();
-}
-
-unsigned int GLCanvas::sizeVisibleDrawableObjects() const
-{
-    unsigned int count = 0;
-    for(unsigned int i=0; i<drawlist.size(); ++i) {
-        if (drawlist[i]->isVisible()) count++;
-    }
-    return count;
-}
-
-unsigned int GLCanvas::sizeDrawableObjectsList() const
-{
-    return (unsigned int)drawlist.size() - (unsigned int)unusedIds.size();
-}
-
-BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const
-{
-    /*cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
-    if (drawlist.size() > 0) {
-        unsigned int i = 0;
-        if (onlyVisible) {
-            //searching the first visible object and with radius > 0 in order to initialize bb
-            while (i < drawlist.size() &&
-                   (!(drawlist[i]->isVisible()) ||
-                   drawlist[i]->sceneRadius() <= 0))
-                i++;
-        }
-        else {
-            //searching the first visible object and with radius > 0 in order to initialize bb
-            while (i < drawlist.size() && drawlist[i]->sceneRadius() <= 0)
-                i++;
-        }
-
-        if (i < drawlist.size()) { //i will point to the first visible object with radius >0
-            bb.min() = drawlist[i]->sceneCenter() - drawlist[i]->sceneRadius();
-            bb.max() = drawlist[i]->sceneCenter() + drawlist[i]->sceneRadius();
-        }
-
-        for (; i < drawlist.size(); i++) {
-            if ((!onlyVisible || (drawlist[i]->isVisible())) && drawlist[i]->sceneRadius() > 0) {
-                bb.min() =
-                        bb.min().min(drawlist[i]->sceneCenter() - drawlist[i]->sceneRadius());
-                bb.max() =
-                        bb.max().max(drawlist[i]->sceneCenter() + drawlist[i]->sceneRadius());
-            }
-        }
-    }
-    return bb;*/
-    return cg3::getFullBoundingBoxDrawableObjects(drawlist, onlyVisible);
 }
 
 void GLCanvas::enableRotation(bool b)
