@@ -99,40 +99,11 @@ void MainWindow::pushDrawableObject(
         bool checkBoxChecked)
 {
     if (obj != nullptr){
-        canvas.pushDrawableObject(obj, checkBoxChecked);
-        canvas.update();
-
-        QCheckBox* cb = createCheckBoxAndLinkSignal(obj, checkBoxName, checkBoxChecked);
-        const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
-        //if the DrawableObject is a DrawableContainer, the checkbox will be tristate,
-        //and we link
-        if (cont) {
-            connect(cont,
-                    SIGNAL(drawableContainerPushedObject(
-                               const DrawableContainer*,
-                               const std::string&,
-                               bool)),
-                    this,
-                    SLOT(addCheckBoxDrawableContainer(
-                             const DrawableContainer*,
-                             const std::string&,
-                             bool)));
-
-            connect(cont,
-                    SIGNAL(drawableContainerErasedObject
-                           (const DrawableContainer*,
-                            unsigned int)),
-                    this,
-                    SLOT(removeCheckBoxDrawableContainer(
-                             const DrawableContainer*,
-                             unsigned int)));
-
-            cb->setTristate(true);
-            cb->setCheckState(Qt::PartiallyChecked);
-        }
-        scrollAreaLayout->addWidget(cb, 0, Qt::AlignTop);
-        if (cont)
-            addContainerCheckBoxes(cont);
+        pushDrawableObject(
+                    obj,
+                    ui->scrollArea,
+                    checkBoxName,
+                    checkBoxChecked);
 
         scrollAreaLayout->removeItem(m_spacer);
         scrollAreaLayout->addItem(m_spacer);
@@ -374,21 +345,21 @@ void MainWindow::checkBoxClicked(int i)
         if (state == Qt::Unchecked){
             canvas.setDrawableObjectVisibility(obj, false);
             //set visibility checkboxes -> false
-            for (QCheckBox* cb : containerCheckBoxes[cont]){
+            for (QCheckBox* cb : containerFrames[cont].checkBoxes){
                 cb->setVisible(false);
             }
         }
         else if (state == Qt::PartiallyChecked) {
             canvas.setDrawableObjectVisibility(obj, true);
             //set visibility checkboxes -> false
-            for (QCheckBox* cb : containerCheckBoxes[cont]){
+            for (QCheckBox* cb : containerFrames[cont].checkBoxes){
                 cb->setVisible(false);
             }
         }
         else {
             canvas.setDrawableObjectVisibility(obj, true);
             //set visibility checkboxes -> true
-            for (QCheckBox* cb : containerCheckBoxes[cont]){
+            for (QCheckBox* cb : containerFrames[cont].checkBoxes){
                 cb->setVisible(true);
             }
         }
@@ -410,7 +381,7 @@ void MainWindow::addCheckBoxDrawableContainer(
     boost::bimap<int, const DrawableObject*>::right_const_iterator it =
             mapObjects.right.find((const DrawableObject*)cont);
     if (it != mapObjects.right.end()){
-        assert(containerCheckBoxes.find(cont) != containerCheckBoxes.end());
+        assert(containerFrames.find(cont) != containerFrames.end());
         int i = it->second;
         QCheckBox* newCheckBox =
                 createCheckBoxAndLinkSignal((*cont)[cont->size()-1], objectName, vis);
@@ -419,7 +390,7 @@ void MainWindow::addCheckBoxDrawableContainer(
         Qt::CheckState tmpState = containerCheckBox->checkState();
         containerCheckBox->setChecked(true);
         scrollAreaLayout->insertWidget(position, newCheckBox);
-        containerCheckBoxes[cont].push_back(newCheckBox);
+        containerFrames[cont].checkBoxes.push_back(newCheckBox);
         containerCheckBox->setCheckState(tmpState);
     }
 }
@@ -428,8 +399,8 @@ void MainWindow::removeCheckBoxDrawableContainer(
         const DrawableContainer* cont,
         unsigned int i)
 {
-    assert(containerCheckBoxes.find(cont) != containerCheckBoxes.end());
-    QCheckBox* rmcb = containerCheckBoxes[cont][i];
+    assert(containerFrames.find(cont) != containerFrames.end());
+    QCheckBox* rmcb = containerFrames[cont].checkBoxes[i];
     checkBoxMapper->removeMappings(rmcb);
     rmcb->setVisible(false);
     scrollAreaLayout->removeWidget(rmcb);
@@ -439,7 +410,7 @@ void MainWindow::removeCheckBoxDrawableContainer(
     int idcb = it->second;
     checkBoxes.erase(idcb);
     mapObjects.left.erase(idcb);
-    containerCheckBoxes[cont].erase(containerCheckBoxes[cont].begin()+ i);
+    containerFrames[cont].checkBoxes.erase(containerFrames[cont].checkBoxes.begin()+ i);
 }
 
 void MainWindow::on_actionSave_Snapshot_triggered()
@@ -541,6 +512,65 @@ void MainWindow::on_actionReset_Point_of_View_triggered()
     canvas.resetPointOfView();
 }
 
+QCheckBox* MainWindow::pushDrawableObject(
+        const DrawableObject* obj,
+        QWidget* parent,
+        std::string checkBoxName,
+        bool checkBoxChecked)
+{
+    canvas.pushDrawableObject(obj, checkBoxChecked);
+    canvas.update();
+
+    QCheckBox* cb = createCheckBoxAndLinkSignal(obj, checkBoxName, checkBoxChecked);
+    const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
+    //if the DrawableObject is a DrawableContainer, the checkbox will be tristate,
+    //and we link
+    if (cont) {
+        connect(cont,
+                SIGNAL(drawableContainerPushedObject(
+                           const DrawableContainer*,
+                           const std::string&,
+                           bool)),
+                this,
+                SLOT(addCheckBoxDrawableContainer(
+                         const DrawableContainer*,
+                         const std::string&,
+                         bool)));
+
+        connect(cont,
+                SIGNAL(drawableContainerErasedObject
+                       (const DrawableContainer*,
+                        unsigned int)),
+                this,
+                SLOT(removeCheckBoxDrawableContainer(
+                         const DrawableContainer*,
+                         unsigned int)));
+
+        cb->setTristate(true);
+        cb->setCheckState(Qt::PartiallyChecked);
+    }
+    ((QVBoxLayout*)parent->layout())->addWidget(cb, 0, Qt::AlignTop);
+    if (cont){
+        //to modify:
+        //create a new QFrame with a QVBoxLayout  called frame,
+        //and for every object of the container
+        //execute a pushDrawableObject(ithobj, frame, ...).
+        //therefore, this member function becames recursive
+        std::vector<QCheckBox*> vec;
+        vec.reserve(cont->size());
+        for (unsigned int i = 0; i < cont->size(); i++){
+            const DrawableObject* obj = (*cont)[i];
+            QCheckBox* ccb = pushDrawableObject(obj, parent/**/, cont->objectName(i), true);
+            vec.push_back(ccb);
+        }
+        containerFrames[cont].checkBoxes = vec;
+        for (QCheckBox* cb : containerFrames[cont].checkBoxes){
+            cb->setVisible(false);
+        }
+    }
+    return cb;
+}
+
 QCheckBox *MainWindow::createCheckBoxAndLinkSignal(
         const DrawableObject *obj,
         const std::string &checkBoxName,
@@ -560,25 +590,6 @@ QCheckBox *MainWindow::createCheckBoxAndLinkSignal(
     nCheckBoxes++;
 
     return cb;
-}
-
-void MainWindow::addContainerCheckBoxes(const DrawableContainer* container)
-{
-    std::vector<QCheckBox*> vec;
-    vec.reserve(container->size());
-    for (unsigned int i = 0; i < container->size(); i++){
-        const DrawableObject* obj = (*container)[i];
-        QCheckBox* cb = createCheckBoxAndLinkSignal(
-                            obj,
-                            container->objectName(i),
-                            (*container)[i]->isVisible());
-        scrollAreaLayout->addWidget(cb, 0, Qt::AlignTop);
-        vec.push_back(cb);
-    }
-    containerCheckBoxes[container] = vec;
-    for (QCheckBox* cb : containerCheckBoxes[container]){
-        cb->setVisible(false);
-    }
 }
 
 } //namespace cg3::viewer

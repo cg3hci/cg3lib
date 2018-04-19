@@ -96,8 +96,6 @@ public:
     void renameManager(unsigned int i, std::string s);
     void setCurrentManager(unsigned int i);
 
-public slots:
-
 signals:
 
     /**
@@ -144,11 +142,21 @@ private slots:
 
 private:
 
+    struct ContainerProperties {
+        QFrame* frame;
+        std::vector<QCheckBox*> checkBoxes;
+    };
+
+    QCheckBox* pushDrawableObject(
+            const cg3::DrawableObject * obj,
+            QWidget* parent,
+            std::string checkBoxName,
+            bool checkBoxChecked);
+
     QCheckBox* createCheckBoxAndLinkSignal(
             const DrawableObject* obj,
             const std::string& checkBoxName,
             bool isChecked = true);
-    void addContainerCheckBoxes(const DrawableContainer* container);
 
     // GUI
     //
@@ -164,7 +172,7 @@ private:
     std::map<int, QCheckBox*> checkBoxes;
     boost::bimap<int, const cg3::DrawableObject*> mapObjects;
     int nCheckBoxes;
-    std::map<const cg3::DrawableContainer*, std::vector<QCheckBox*> > containerCheckBoxes;
+    std::map<const cg3::DrawableContainer*, ContainerProperties > containerFrames;
     bool first;
     bool debugObjectsEnabled;
     QSpacerItem* m_spacer;

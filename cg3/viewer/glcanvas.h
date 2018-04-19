@@ -112,7 +112,6 @@ private:
     void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
     bool containsDrawableObject(const cg3::DrawableObject* obj) const;
 
-
     void enableRotation(bool b = true);
     void enableTranslation(bool b = true);
     void enableZoom(bool b = true);
