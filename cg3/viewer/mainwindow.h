@@ -77,6 +77,7 @@ public:
             std::string checkBoxName = "",
             bool checkBoxChecked = true);
     bool deleteDrawableObject(const cg3::DrawableObject * obj);
+    void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
     bool refreshDrawableObject(const cg3::DrawableObject* obj);
 
@@ -96,7 +97,6 @@ public:
     void setCurrentManager(unsigned int i);
 
 public slots:
-    void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
 
 signals:
 

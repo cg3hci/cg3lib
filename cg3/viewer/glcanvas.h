@@ -105,7 +105,6 @@ public:
 
 signals:
 
-    void objectVisibilityChanged(const cg3::DrawableObject*, bool);
     void objectPicked(const cg3::PickableObject*, unsigned int);
     void point2DClicked(cg3::Point2Dd);
 

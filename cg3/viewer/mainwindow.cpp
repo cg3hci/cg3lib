@@ -55,9 +55,6 @@ MainWindow::MainWindow(QWidget* parent) :
     checkBoxMapper = new QSignalMapper(this);
     connect(checkBoxMapper, SIGNAL(mapped(int)), this, SLOT(checkBoxClicked(int)));
 
-    connect(&canvas, SIGNAL(objectVisibilityChanged(const cg3::DrawableObject*,bool)),
-            this, SLOT(setDrawableObjectVisibility(const cg3::DrawableObject*,bool)));
-
     scrollAreaLayout = new QVBoxLayout(ui->scrollArea);
     ui->scrollArea->setLayout(scrollAreaLayout);
 
@@ -171,6 +168,23 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
     }
     else
         return false;
+}
+
+/**
+ * @brief Sets the visibility/non visibility of a DrawableObject, checking/unchecking its
+ * checkbox accordingly.
+ */
+void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
+{
+    boost::bimap<int, const DrawableObject*>::right_const_iterator it =
+            mapObjects.right.find(obj);
+    if (it != mapObjects.right.end()){
+        int i = it->second;
+
+        QCheckBox * cb = checkBoxes[i];
+        cb->setChecked(visible);
+    }
+
 }
 
 /**
@@ -344,23 +358,6 @@ void MainWindow::setCurrentManager(unsigned int i)
 {
     if (i < managers.size())
         ui->toolBox->setCurrentIndex(i);
-}
-
-/**
- * @brief Sets the visibility/non visibility of a DrawableObject, checking/unchecking its
- * checkbox accordingly.
- */
-void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
-{
-    boost::bimap<int, const DrawableObject*>::right_const_iterator it =
-            mapObjects.right.find(obj);
-    if (it != mapObjects.right.end()){
-        int i = it->second;
-
-        QCheckBox * cb = checkBoxes[i];
-        cb->setChecked(visible);
-    }
-
 }
 
 /**
