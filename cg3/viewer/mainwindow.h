@@ -113,13 +113,6 @@ signals:
     void redoEvent();
 
 private slots:
-    void checkBoxClicked(int i);
-
-    void addCheckBoxDrawableContainer(
-            const DrawableContainer* cont,
-            const std::string& objectName,
-            bool vis);
-    void removeCheckBoxDrawableContainer(const DrawableContainer* cont, unsigned int i);
 
     //Menu Actions
     void on_actionSave_Snapshot_triggered();
@@ -140,6 +133,14 @@ private slots:
     void on_action3D_Mode_triggered();
     void on_actionReset_Point_of_View_triggered();
 
+    void checkBoxClicked(int i);
+
+    void addCheckBoxDrawableContainer(
+            const DrawableContainer* cont,
+            const std::string& objectName,
+            bool vis);
+    void removeCheckBoxDrawableContainer(const DrawableContainer* cont, unsigned int i);
+
 private:
 
     struct ContainerProperties {
@@ -152,6 +153,9 @@ private:
             QWidget* parent,
             std::string checkBoxName,
             bool checkBoxChecked);
+    bool deleteDrawableObject(
+            const cg3::DrawableObject * obj,
+            QWidget* parent);
 
     QCheckBox* createCheckBoxAndLinkSignal(
             const DrawableObject* obj,
