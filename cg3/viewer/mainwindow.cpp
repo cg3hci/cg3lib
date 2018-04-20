@@ -153,11 +153,7 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
 {
     boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter =
             mapObjects.right.find(obj);
-    if (right_iter != mapObjects.right.end()){
-        int i = right_iter->second;
-
-        QCheckBox * cb = checkBoxes[i];
-        canvas.setDrawableObjectVisibility(obj, cb->isChecked());
+    if (right_iter != mapObjects.right.end()) {
 
         const PickableObject* pobj = dynamic_cast<const PickableObject*>(obj);
         if (pobj) {
@@ -167,6 +163,19 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
             canvas.update();
         }
 
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::string& newName)
+{
+    int id;
+    QCheckBox* cb = getCheckBoxDrawableObject(obj, id);
+    if (cb != nullptr){
+        cb->setText(QString::fromStdString(newName));
         return true;
     }
     else {
@@ -460,7 +469,7 @@ void MainWindow::checkBoxClicked(int i)
     canvas.update();
 }
 
-void MainWindow::addCheckBoxDrawableContainer(
+void MainWindow::addCheckBoxOfDrawableContainer(
         const DrawableContainer* cont,
         const std::string& objectName,
         bool vis)
@@ -479,21 +488,14 @@ void MainWindow::addCheckBoxDrawableContainer(
     }
 }
 
-void MainWindow::removeCheckBoxDrawableContainer(
+void MainWindow::removeCheckBoxOfDrawableContainer(
         const DrawableContainer* cont,
         unsigned int i)
 {
     assert(containerFrames.find(cont) != containerFrames.end());
-    QCheckBox* rmcb = containerFrames[cont].checkBoxes[i];
-    checkBoxMapper->removeMappings(rmcb);
-    rmcb->setVisible(false);
-    containerFrames[cont].frame->layout()->removeWidget(rmcb);
-    const DrawableObject* obj = (*cont)[i];
-    boost::bimap<int, const DrawableObject*>::right_const_iterator it =
-            mapObjects.right.find(obj);
-    int idcb = it->second;
-    checkBoxes.erase(idcb);
-    mapObjects.left.erase(idcb);
+
+    deleteDrawableObject((*cont)[i], containerFrames[cont].frame);
+
     containerFrames[cont].checkBoxes.erase(containerFrames[cont].checkBoxes.begin()+ i);
 }
 
@@ -519,7 +521,7 @@ QCheckBox* MainWindow::pushDrawableObject(
                            const std::string&,
                            bool)),
                 this,
-                SLOT(addCheckBoxDrawableContainer(
+                SLOT(addCheckBoxOfDrawableContainer(
                          const DrawableContainer*,
                          const std::string&,
                          bool)));
@@ -529,7 +531,7 @@ QCheckBox* MainWindow::pushDrawableObject(
                        (const DrawableContainer*,
                         unsigned int)),
                 this,
-                SLOT(removeCheckBoxDrawableContainer(
+                SLOT(removeCheckBoxOfDrawableContainer(
                          const DrawableContainer*,
                          unsigned int)));
 
@@ -546,9 +548,6 @@ QCheckBox* MainWindow::pushDrawableObject(
         }
         containerFrames[cont].checkBoxes = vec;
         containerFrames[cont].frame = frame;
-        /*for (QCheckBox* cb : containerFrames[cont].checkBoxes){
-            cb->setVisible(false);
-        }*/
 
         cb->setCheckState(Qt::PartiallyChecked);
         cb->setTristate(true);
@@ -558,20 +557,10 @@ QCheckBox* MainWindow::pushDrawableObject(
 
 bool MainWindow::deleteDrawableObject(const DrawableObject* obj, QWidget* parent)
 {
-    boost::bimap<int, const DrawableObject*>::right_const_iterator it =
-            mapObjects.right.find(obj);
-    if (it != mapObjects.right.end()){ //if the object exists
-        int i = it->second;
-
-        QCheckBox * cb = checkBoxes[i];
-        checkBoxMapper->removeMappings(cb);
-        cb->setVisible(false);
-        ((QVBoxLayout*)parent->layout())->removeWidget(cb);
-
-        checkBoxes.erase(i);
-        mapObjects.left.erase(i);
-
-        delete cb;
+    int idCheckBox;
+    QCheckBox* cb = getCheckBoxDrawableObject(obj, idCheckBox);
+    if (cb != nullptr){
+        removeCheckBox(cb, idCheckBox);
 
         const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
         if (cont){ // if it is a container, remove recursively all its objects
@@ -611,6 +600,32 @@ QCheckBox *MainWindow::createCheckBoxAndLinkSignal(
     nCheckBoxes++;
 
     return cb;
+}
+
+QCheckBox*MainWindow::getCheckBoxDrawableObject(const DrawableObject* obj, int& idCheckBox)
+{
+    boost::bimap<int, const DrawableObject*>::right_const_iterator it =
+            mapObjects.right.find(obj);
+    if (it != mapObjects.right.end()){ //if the object exists
+        idCheckBox = it->second;
+        return checkBoxes.at(it->second);
+    }
+    else {
+        idCheckBox = -1;
+        return nullptr;
+    }
+}
+
+void MainWindow::removeCheckBox(QCheckBox* cb, int idCheckBox)
+{
+    checkBoxMapper->removeMappings(cb);
+    cb->setVisible(false);
+    ((QVBoxLayout*)((QWidget*)cb->parent())->layout())->removeWidget(cb);
+
+    checkBoxes.erase(idCheckBox);
+    mapObjects.left.erase(idCheckBox);
+
+    delete cb;
 }
 
 } //namespace cg3::viewer

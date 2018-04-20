@@ -80,6 +80,9 @@ public:
     void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
     bool refreshDrawableObject(const cg3::DrawableObject* obj);
+    bool setDrawableObjectName(
+            const cg3::DrawableObject* obj,
+            const std::string& newName);
 
     //Debug Objects
     void enableDebugObjects();
@@ -135,11 +138,11 @@ private slots:
 
     void checkBoxClicked(int i);
 
-    void addCheckBoxDrawableContainer(
+    void addCheckBoxOfDrawableContainer(
             const DrawableContainer* cont,
             const std::string& objectName,
             bool vis);
-    void removeCheckBoxDrawableContainer(const DrawableContainer* cont, unsigned int i);
+    void removeCheckBoxOfDrawableContainer(const DrawableContainer* cont, unsigned int i);
 
 private:
 
@@ -153,14 +156,20 @@ private:
             QWidget* parent,
             std::string checkBoxName,
             bool checkBoxChecked);
+
     bool deleteDrawableObject(
             const cg3::DrawableObject * obj,
             QWidget* parent);
 
+    //CheckBox management
     QCheckBox* createCheckBoxAndLinkSignal(
             const DrawableObject* obj,
             const std::string& checkBoxName,
             bool isChecked = true);
+
+    QCheckBox* getCheckBoxDrawableObject(const DrawableObject* obj, int& idCheckBox);
+
+    void removeCheckBox(QCheckBox* cb, int idCheckBox);
 
     // GUI
     //

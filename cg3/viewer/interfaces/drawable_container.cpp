@@ -93,7 +93,7 @@ void DrawableContainer::clear()
     visibility.clear();
 }
 
-const std::string&DrawableContainer::objectName(unsigned int i) const
+const std::string& DrawableContainer::objectName(unsigned int i) const
 {
     return objectNames[i];
 }
