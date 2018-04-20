@@ -49,7 +49,6 @@ class DrawableObject
 public :
     #ifdef CG3_VIEWER_DEFINED
     friend class cg3::viewer::GLCanvas;
-    friend class cg3::viewer::MainWindow;
     #endif
     friend class cg3::DrawableContainer;
 
