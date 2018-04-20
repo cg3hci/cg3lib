@@ -35,13 +35,13 @@ DrawableContainer::~DrawableContainer()
 void DrawableContainer::pushBack(
         const DrawableObject *obj,
         const std::string& objectName,
-        bool visibility)
+        bool objVisibility)
 {
     objects.push_back(obj);
     objectNames.push_back(objectName);
-    obj->setVisibility(visibility);
+    visibility.push_back(objVisibility);
     #ifdef CG3_VIEWER_DEFINED
-    emit drawableContainerPushedObject(this, objectName, visibility);
+    emit drawableContainerPushedObject(this, objectName, objVisibility);
     #endif
 }
 
@@ -75,6 +75,7 @@ void DrawableContainer::erase(unsigned int i)
     #endif
     objects.erase(objects.begin() + i);
     objectNames.erase(objectNames.begin() + i);
+    visibility.erase(visibility.begin() + i);
 }
 
 /**
@@ -86,9 +87,10 @@ void DrawableContainer::clear()
         #ifdef CG3_VIEWER_DEFINED
         emit drawableContainerErasedObject(this, i);
         #endif
-        objects.pop_back();
-        objectNames.pop_back();
     }
+    objects.clear();
+    objectNames.clear();
+    visibility.clear();
 }
 
 const std::string&DrawableContainer::objectName(unsigned int i) const
@@ -98,24 +100,17 @@ const std::string&DrawableContainer::objectName(unsigned int i) const
 
 void DrawableContainer::draw() const
 {
-    for (unsigned int i = 0; i < objects.size(); i++){
-        if (objects[i]->isVisible())
-            objects[i]->draw();
-    }
+
 }
 
 Pointd DrawableContainer::sceneCenter() const
 {
-    return totalVisibleBoundingBox().center();
+    return Pointd();
 }
 
 double DrawableContainer::sceneRadius() const
 {
-    BoundingBox bb = totalVisibleBoundingBox();
-    if (bb.min() != bb.max())
-        return bb.diag() /2;
-    else
-        return -1;
+    return -1;
 }
 
 DrawableContainer::iterator DrawableContainer::begin()
@@ -140,31 +135,7 @@ DrawableContainer::const_iterator DrawableContainer::end() const
 
 BoundingBox DrawableContainer::totalVisibleBoundingBox() const
 {
-    /*cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
-    if (objects.size() > 0) {
-        unsigned int i = 0;
-        //searching the first visible object and with radius > 0 in order to initialize bb
-        while (i < objects.size() &&
-               (!(objects[i]->isVisible()) ||
-               objects[i]->sceneRadius() <= 0))
-            i++;
-
-        if (i < objects.size()) { //i will point to the first visible object with radius >0
-            bb.min() = objects[i]->sceneCenter() - objects[i]->sceneRadius();
-            bb.max() = objects[i]->sceneCenter() + objects[i]->sceneRadius();
-        }
-
-        for (; i < objects.size(); i++) {
-            if (objects[i]->isVisible() && objects[i]->sceneRadius() > 0) {
-                bb.min() =
-                        bb.min().min(objects[i]->sceneCenter() - objects[i]->sceneRadius());
-                bb.max() =
-                        bb.max().max(objects[i]->sceneCenter() + objects[i]->sceneRadius());
-            }
-        }
-    }
-    return bb;*/
-    return cg3::getFullBoundingBoxDrawableObjects(objects, true);
+    return cg3::getFullBoundingBoxDrawableObjects(objects, visibility, true);
 }
 
 } //namespace cg3

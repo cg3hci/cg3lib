@@ -15,6 +15,7 @@ class BoundingBox;
 class DrawableObject;
 
 BoundingBox getFullBoundingBoxDrawableObjects(const std::vector<const DrawableObject*>& drawlist,
+        const std::vector<bool>& visibility,
         bool onlyVisible = true);
 
 }

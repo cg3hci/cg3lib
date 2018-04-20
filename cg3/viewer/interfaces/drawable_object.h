@@ -67,26 +67,7 @@ public :
                                                          bounding box of the object is a good approximation. Return -1 if the object shouldn't influence
                                                          the position of the camera. */
 
-    virtual bool isVisible() const final;
-
-protected:
-
-    virtual void setVisibility(bool visible) const;
-
-private:
-    mutable bool visibility = true;
-
 };
-
-inline bool DrawableObject::isVisible() const
-{
-    return visibility;
-}
-
-inline void DrawableObject::setVisibility(bool visible) const
-{
-    visibility = visible;
-}
 
 } //namespace cg3
 

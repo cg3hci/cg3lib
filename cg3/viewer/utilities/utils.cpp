@@ -13,6 +13,7 @@ namespace cg3 {
 
 BoundingBox getFullBoundingBoxDrawableObjects(
         const std::vector<const cg3::DrawableObject*>& drawlist,
+        const std::vector<bool>& visibility,
         bool onlyVisible)
 {
     cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
@@ -22,7 +23,7 @@ BoundingBox getFullBoundingBoxDrawableObjects(
             //searching the first visible object and with radius > 0 in order to initialize bb
             while (i < drawlist.size() &&
                    drawlist[i] != nullptr &&
-                   (!(drawlist[i]->isVisible()) ||
+                   (!visibility[i] ||
                    drawlist[i]->sceneRadius() <= 0))
                 i++;
         }
@@ -41,7 +42,7 @@ BoundingBox getFullBoundingBoxDrawableObjects(
 
         for (; i < drawlist.size(); i++) {
             if (drawlist[i] != nullptr) {
-                if ((!onlyVisible || (drawlist[i]->isVisible())) && drawlist[i]->sceneRadius() > 0) {
+                if ((!onlyVisible || visibility[i]) && drawlist[i]->sceneRadius() > 0) {
                     bb.min() =
                             bb.min().min(drawlist[i]->sceneCenter() - drawlist[i]->sceneRadius());
                     bb.max() =

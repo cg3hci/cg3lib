@@ -161,8 +161,9 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
 
         const PickableObject* pobj = dynamic_cast<const PickableObject*>(obj);
         if (pobj) {
+            bool b = canvas.isDrawableObjectVisible(obj);
             canvas.deleteDrawableObject(obj);
-            canvas.pushDrawableObject(obj, obj->isVisible());
+            canvas.pushDrawableObject(obj, b);
             canvas.update();
         }
 
@@ -557,10 +558,9 @@ QCheckBox* MainWindow::pushDrawableObject(
 
 bool MainWindow::deleteDrawableObject(const DrawableObject* obj, QWidget* parent)
 {
-    //TODO
     boost::bimap<int, const DrawableObject*>::right_const_iterator it =
             mapObjects.right.find(obj);
-    if (it != mapObjects.right.end()){
+    if (it != mapObjects.right.end()){ //if the object exists
         int i = it->second;
 
         QCheckBox * cb = checkBoxes[i];
@@ -573,7 +573,18 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj, QWidget* parent
 
         delete cb;
 
-        canvas.deleteDrawableObject(obj);
+        const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
+        if (cont){ // if it is a container, remove recursively all its objects
+            for (const DrawableObject* obj: *cont){
+                deleteDrawableObject(obj, containerFrames[cont].frame);
+            }
+            //remove its frame from the parent
+            ((QVBoxLayout*)parent->layout())->removeWidget(containerFrames[cont].frame);
+            containerFrames.erase(cont);
+        }
+        else {
+            canvas.deleteDrawableObject(obj);
+        }
         canvas.update();
         return true;
     }

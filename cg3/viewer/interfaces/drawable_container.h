@@ -47,10 +47,9 @@ public:
     DrawableContainer();
     #endif
     virtual ~DrawableContainer();
-    virtual void pushBack(
-            const DrawableObject* obj,
+    virtual void pushBack(const DrawableObject* obj,
             const std::string& objectName = "",
-            bool visibility = true);
+            bool objVisibility = true);
     virtual const DrawableObject* operator [] (unsigned int i) const;
     virtual unsigned int size() const;
     virtual void erase(unsigned int i);
@@ -80,6 +79,7 @@ private:
     cg3::BoundingBox totalVisibleBoundingBox() const;
 
     std::vector<const cg3::DrawableObject*> objects;
+    std::vector<bool> visibility;
     std::vector<std::string> objectNames;
 };
 
