@@ -101,6 +101,8 @@ template<class T>
 bool triangleOverlap(
         const cg3::Triangle<Point2D<T>>& t1, const cg3::Triangle<Point2D<T>>& t2)
 {
+    //TODO more efficient with left/right turns
+
     //Triangle data
     std::vector<cg3::Segment2D<T>> sides1 = t1.getSides();
     std::vector<cg3::Segment2D<T>> sides2 = t2.getSides();
@@ -194,7 +196,7 @@ inline bool isPointLyingInTriangle(
     }
 
     //If edges are not included in the inside region
-    if (
+    else if (
             !includeEdges &&
             alpha > 0 &&
             beta > 0 &&
