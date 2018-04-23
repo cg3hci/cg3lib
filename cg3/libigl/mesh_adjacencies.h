@@ -13,12 +13,13 @@
 namespace cg3 {
 namespace libigl {
 
-std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh& m);
+std::vector<std::vector<int>> getVertexVertexAdjacencies(const SimpleEigenMesh& m);
 std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh& m);
+std::vector<std::vector<int>> getFaceFaceAdjacencies(const SimpleEigenMesh &m);
 
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "vertex_adjacencies.tpp"
+#include "mesh_adjacencies.tpp"
 
 #endif // CG3_LIBIGL_VERTEXADJACENCIES_H

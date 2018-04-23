@@ -41,9 +41,9 @@ public:
 
     /* Adjacencies */
     static std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);
-    static std::vector<std::vector<int>> getVertexAdjacencies(const SimpleEigenMesh &m);
-    static Eigen::MatrixXi getFaceAdjacences(const SimpleEigenMesh &m);
+    static std::vector<std::vector<int>> getVertexVertexAdjacencies(const SimpleEigenMesh &m);
     static std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh &m);
+    static std::vector<std::vector<int>> getFaceFaceAdjacencies(const SimpleEigenMesh &m);
 
     /* Mesh distances */
     static double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
