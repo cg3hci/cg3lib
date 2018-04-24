@@ -105,6 +105,28 @@ inline void drawCylinder(
 }
 
 /**
+ * @brief drawArrow
+ * @param a
+ * @param b
+ * @param bottom_radius
+ * @param color
+ * @param slices
+ * @param stacks
+ */
+inline void drawArrow(
+        const Pointd& a,
+        const Pointd& b,
+        float bottom_radius,
+        const Color& color,
+        unsigned int slices,
+        unsigned int stacks)
+{
+    Pointd midPoint = (a * 1 + b * 9) / 10;
+    drawCylinder(a, midPoint, bottom_radius, bottom_radius, color, slices, stacks);
+    drawCylinder(midPoint, b, bottom_radius*2, 0, color, slices, stacks);
+}
+
+/**
  * @brief Viewer::drawLine
  *
  * Draws a line with opengl that links the two points passed as parameters.

@@ -44,6 +44,14 @@ void drawCylinder(
         unsigned int slices = 50,
         unsigned int stacks = 10);
 
+void drawArrow(
+        const Pointd& a,
+        const Pointd& b,
+        float bottom_radius,
+        const Color& color,
+        unsigned int slices = 50,
+        unsigned int stacks = 10);
+
 void drawLine(
         const Pointd &a,
         const Pointd &b,

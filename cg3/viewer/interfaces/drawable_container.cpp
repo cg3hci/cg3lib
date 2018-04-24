@@ -10,18 +10,13 @@
 
 namespace cg3 {
 
-#ifdef CG3_VIEWER_DEFINED
 DrawableContainer::DrawableContainer(QObject *parent) : QObject(parent)
 {
 }
-#else
-DrawableContainer::DrawableContainer()
-{
-}
-#endif
 
 DrawableContainer::~DrawableContainer()
 {
+    clear();
 }
 
 /**
@@ -39,10 +34,7 @@ void DrawableContainer::pushBack(
 {
     objects.push_back(obj);
     objectNames.push_back(objectName);
-    visibility.push_back(objVisibility);
-    #ifdef CG3_VIEWER_DEFINED
     emit drawableContainerPushedObject(this, objectName, objVisibility);
-    #endif
 }
 
 /**
@@ -70,12 +62,9 @@ unsigned int DrawableContainer::size() const
  */
 void DrawableContainer::erase(unsigned int i)
 {
-    #ifdef CG3_VIEWER_DEFINED
     emit drawableContainerErasedObject(this, i);
-    #endif
     objects.erase(objects.begin() + i);
     objectNames.erase(objectNames.begin() + i);
-    visibility.erase(visibility.begin() + i);
 }
 
 /**
@@ -84,13 +73,10 @@ void DrawableContainer::erase(unsigned int i)
 void DrawableContainer::clear()
 {
     for (int i = objects.size()-1; i >= 0; i--){
-        #ifdef CG3_VIEWER_DEFINED
         emit drawableContainerErasedObject(this, i);
-        #endif
     }
     objects.clear();
     objectNames.clear();
-    visibility.clear();
 }
 
 const std::string& DrawableContainer::objectName(unsigned int i) const
@@ -113,29 +99,10 @@ double DrawableContainer::sceneRadius() const
     return -1;
 }
 
-DrawableContainer::iterator DrawableContainer::begin()
+BoundingBox DrawableContainer::totalBoundingBox() const
 {
-    return objects.begin();
-}
-
-DrawableContainer::iterator DrawableContainer::end()
-{
-    return objects.end();
-}
-
-DrawableContainer::const_iterator DrawableContainer::begin() const
-{
-    return objects.begin();
-}
-
-DrawableContainer::const_iterator DrawableContainer::end() const
-{
-    return objects.end();
-}
-
-BoundingBox DrawableContainer::totalVisibleBoundingBox() const
-{
-    return cg3::getFullBoundingBoxDrawableObjects(objects, visibility, true);
+    std::vector<bool> vis(objects.size(), true);
+    return cg3::getFullBoundingBoxDrawableObjects(objects, vis, true);
 }
 
 } //namespace cg3

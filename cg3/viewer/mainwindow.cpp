@@ -492,11 +492,10 @@ void MainWindow::removeCheckBoxOfDrawableContainer(
         const DrawableContainer* cont,
         unsigned int i)
 {
-    assert(containerFrames.find(cont) != containerFrames.end());
-
-    deleteDrawableObject((*cont)[i], containerFrames[cont].frame);
-
-    containerFrames[cont].checkBoxes.erase(containerFrames[cont].checkBoxes.begin()+ i);
+    if(containerFrames.find(cont) != containerFrames.end()){
+        deleteDrawableObject((*cont)[i], containerFrames[cont].frame);
+        containerFrames[cont].checkBoxes.erase(containerFrames[cont].checkBoxes.begin()+ i);
+    }
 }
 
 QCheckBox* MainWindow::pushDrawableObject(
@@ -564,8 +563,30 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj, QWidget* parent
 
         const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
         if (cont){ // if it is a container, remove recursively all its objects
-            for (const DrawableObject* obj: *cont){
-                deleteDrawableObject(obj, containerFrames[cont].frame);
+
+            disconnect(cont,
+                    SIGNAL(drawableContainerPushedObject(
+                               const DrawableContainer*,
+                               const std::string&,
+                               bool)),
+                    this,
+                    SLOT(addCheckBoxOfDrawableContainer(
+                             const DrawableContainer*,
+                             const std::string&,
+                             bool)));
+
+            disconnect(cont,
+                    SIGNAL(drawableContainerErasedObject
+                           (const DrawableContainer*,
+                            unsigned int)),
+                    this,
+                    SLOT(removeCheckBoxOfDrawableContainer(
+                             const DrawableContainer*,
+                             unsigned int)));
+
+
+            for (unsigned int i = 0; i < cont->size(); i++){
+                deleteDrawableObject((*cont)[i], containerFrames[cont].frame);
             }
             //remove its frame from the parent
             ((QVBoxLayout*)parent->layout())->removeWidget(containerFrames[cont].frame);

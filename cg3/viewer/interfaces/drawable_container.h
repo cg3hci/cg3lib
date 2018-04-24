@@ -10,9 +10,7 @@
 #include <cg3/viewer/interfaces/drawable_object.h>
 
 #include <cg3/geometry/bounding_box.h>
-#ifdef CG3_VIEWER_DEFINED
 #include <QtCore>
-#endif
 
 namespace cg3 {
 
@@ -28,24 +26,13 @@ namespace cg3 {
  * element.
  */
 class DrawableContainer :
-        #ifdef CG3_VIEWER_DEFINED
         public QObject,
-        #endif
         public DrawableObject
 {
-    #ifdef CG3_VIEWER_DEFINED
     Q_OBJECT
-    #endif
 public:
-
-    typedef std::vector<const DrawableObject*>::iterator iterator;
-    typedef std::vector<const DrawableObject*>::const_iterator const_iterator;
-
-    #ifdef CG3_VIEWER_DEFINED
     explicit DrawableContainer(QObject *parent = 0);
-    #else
-    DrawableContainer();
-    #endif
+
     virtual ~DrawableContainer();
     virtual void pushBack(const DrawableObject* obj,
             const std::string& objectName = "",
@@ -61,25 +48,17 @@ public:
     virtual Pointd sceneCenter() const;
     virtual double sceneRadius() const;
 
-    virtual iterator begin();
-    virtual iterator end();
-    virtual const_iterator begin() const;
-    virtual const_iterator end() const;
-
-    #ifdef CG3_VIEWER_DEFINED
 signals:
     void drawableContainerPushedObject(
             const DrawableContainer*,
             const std::string& objectName,
             bool vis);
     void drawableContainerErasedObject(const DrawableContainer*, unsigned int i);
-    #endif
 
 private:
-    cg3::BoundingBox totalVisibleBoundingBox() const;
+    cg3::BoundingBox totalBoundingBox() const;
 
     std::vector<const cg3::DrawableObject*> objects;
-    std::vector<bool> visibility;
     std::vector<std::string> objectNames;
 };
 
