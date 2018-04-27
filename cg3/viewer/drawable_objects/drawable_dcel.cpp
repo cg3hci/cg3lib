@@ -215,7 +215,7 @@ void DrawableDcel::update()
         triangleNormals.push_back(f->getNormal().y());
         triangleNormals.push_back(f->getNormal().z());
         trianglesFacesMap.push_back(f->getId());
-        facesTrianglesMap.push_back(actualTriangle++);
+        facesTrianglesMap[f->getId()] = actualTriangle++;
     }
     #endif
 }
