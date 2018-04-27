@@ -20,6 +20,11 @@ SimpleEigenMesh decimateMesh(
 
 SimpleEigenMesh decimateMesh(
         const SimpleEigenMesh& m,
+        int numberDesiredFaces,
+        std::vector<int> &mapping);
+
+SimpleEigenMesh decimateMesh(
+        const SimpleEigenMesh& m,
         int numberDesiredFaces);
 
 EigenMesh decimateMesh(

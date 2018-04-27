@@ -8,6 +8,7 @@
 #include "decimate.h"
 
 #include "internal/eigenmesh_libigl_algorithms.h"
+#include <cg3/utilities/eigen.h>
 
 namespace cg3 {
 namespace libigl {
@@ -27,6 +28,29 @@ inline SimpleEigenMesh decimateMesh(
 {
     return internal::EigenMeshLibIglAlgorithms::decimateMesh(m, numberDesiredFaces, mapping);
 }
+
+/**
+ * @ingroup cg3libigl
+ * @brief decimateMesh
+ * @param m
+ * @param numberDesiredFaces
+ * @param mapping
+ * @return
+ */
+inline SimpleEigenMesh decimateMesh(
+        const SimpleEigenMesh& m,
+        int numberDesiredFaces,
+        std::vector<int>& mapping)
+{
+    Eigen::VectorXi map;
+    SimpleEigenMesh res = internal::EigenMeshLibIglAlgorithms::decimateMesh(
+                              m,
+                              numberDesiredFaces,
+                              map);
+    mapping = cg3::eigenVectorToStdVector(map);
+    return res;
+}
+
 
 /**
  * @ingroup cg3libigl

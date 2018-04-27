@@ -47,6 +47,12 @@ public:
     // SerializableObject interface
     void deserialize(std::ifstream& binaryFile);
 
+    //Override Dcel
+    bool loadFromDcelFile(const std::string &filename);
+    bool loadFromObjFile(const std::string &filename);
+    bool loadFromPlyFile(const std::string &filename);
+    bool loadFromFile(const std::string &filename);
+
 protected:
 
     void init();

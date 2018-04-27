@@ -139,7 +139,6 @@ void DrawableDcel::update()
 
     unsigned int actualTriangle = 0;
     #ifdef CG3_CGAL_DEFINED
-
     for (const Dcel::Face* f : faceIterator()) {
         for (const Dcel::HalfEdge* he : f->incidentHalfEdgeIterator()) {
             unsigned int p1, p2;
@@ -274,6 +273,42 @@ void DrawableDcel::deserialize(std::ifstream& binaryFile)
 {
     Dcel::deserialize(binaryFile);
     update();
+}
+
+bool DrawableDcel::loadFromDcelFile(const std::string& filename)
+{
+    if (Dcel::loadFromDcelFile(filename)){
+        update();
+        return true;
+    }
+    return false;
+}
+
+bool DrawableDcel::loadFromObjFile(const std::string& filename)
+{
+    if (Dcel::loadFromObjFile(filename)){
+        update();
+        return true;
+    }
+    return false;
+}
+
+bool DrawableDcel::loadFromPlyFile(const std::string& filename)
+{
+    if (Dcel::loadFromPlyFile(filename)) {
+        update();
+        return true;
+    }
+    return false;
+}
+
+bool DrawableDcel::loadFromFile(const std::string& filename)
+{
+    if (Dcel::loadFromFile(filename)){
+        update();
+        return true;
+    }
+    return false;
 }
 
 } //namespace cg3
