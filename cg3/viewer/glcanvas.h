@@ -96,6 +96,13 @@ public:
     bool isDrawableObjectVisible(const cg3::DrawableObject* obj) const;
     cg3::BoundingBox getFullBoundingBoxDrawableObjects(bool onlyVisible = false) const;
 
+    //DrawableObjects List management: these members should be used by cg3::MainWindow
+    void clearDrawableObjectsList();
+    void pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
+    bool deleteDrawableObject(const cg3::DrawableObject* obj);
+    void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
+    bool containsDrawableObject(const cg3::DrawableObject* obj) const;
+
     unsigned int zoomSceneFactor;
 
 signals:
@@ -104,13 +111,6 @@ signals:
     void point2DClicked(cg3::Point2Dd);
 
 private:
-
-    //DrawableObjects List management: these members should be used by cg3::MainWindow
-    void clearDrawableObjectsList();
-    void pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
-    bool deleteDrawableObject(const cg3::DrawableObject* obj);
-    void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool visible = true);
-    bool containsDrawableObject(const cg3::DrawableObject* obj) const;
 
     void enableRotation(bool b = true);
     void enableTranslation(bool b = true);
