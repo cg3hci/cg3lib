@@ -80,6 +80,7 @@ void DcelManager::cleanDcel()
         resetDefaults();
         mainWindow.deleteDrawableObject(&drawableDcel);
         mainWindow.canvas.update();
+        mainWindow.canvas.fitScene();
         loaded = false;
     }
 }
@@ -92,6 +93,8 @@ void DcelManager::updateDcel()
 {
     if (loaded){
         drawableDcel.update();
+        mainWindow.canvas.update();
+        mainWindow.canvas.fitScene();
     }
 }
 
@@ -123,7 +126,7 @@ void DcelManager::on_loadDcelButton_clicked()
             drawableDcel.update();
             mainWindow.pushDrawableObject(&drawableDcel, filename.substr(filename.find_last_of("/") + 1));
             mainWindow.canvas.update();
-
+            mainWindow.canvas.fitScene();
             setButtonsDcelLoaded();
             loaded = true;
         }

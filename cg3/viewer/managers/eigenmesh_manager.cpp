@@ -33,7 +33,7 @@ void EigenMeshManager::setEigenMesh(const EigenMesh& m)
     setButtonsMeshLoaded(true);
     loaded = true;
     mainWindow.canvas.update();
-
+    mainWindow.canvas.fitScene();
 }
 
 EigenMeshManager::~EigenMeshManager()
@@ -58,6 +58,7 @@ void EigenMeshManager::on_loadMeshButton_clicked()
             mainWindow.pushDrawableObject(&mesh, filename.substr(filename.find_last_of("/") + 1));
             setButtonsMeshLoaded(true);
             mainWindow.canvas.update();
+            mainWindow.canvas.fitScene();
         }
         else {
             std::cerr << "Error while loading file " << filename << ".\n";
@@ -71,6 +72,7 @@ void EigenMeshManager::on_clearMeshButton_clicked()
         setButtonsMeshLoaded(false);
         mainWindow.deleteDrawableObject(&mesh);
         mainWindow.canvas.update();
+        mainWindow.canvas.fitScene();
     }
 }
 
