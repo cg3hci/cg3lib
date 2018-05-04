@@ -1038,7 +1038,7 @@ bool Dcel::loadFromObjFile(const std::string& filename)
 
     if (loadMeshFromObj(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
         clear();
-        afterLoadFile(coords, faces, mode, vnorm,vcolor, fcolor, fsizes);
+        afterLoadFile(coords, faces, mode, vnorm, vcolor, fcolor, fsizes);
         return true;
     }
     else
@@ -1539,7 +1539,14 @@ void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& vert
     }
 }
 
-void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsigned int> &faces, int mode, const std::list<double> &vnorm, const std::list<Color> &vcolor, const std::list<Color> &fcolor, const std::list<unsigned int> &fsizes)
+void Dcel::afterLoadFile(
+        const std::list<double> &coords,
+        const std::list<unsigned int> &faces,
+        int mode,
+        const std::list<double> &vnorm,
+        const std::list<Color> &vcolor,
+        const std::list<Color> &fcolor,
+        const std::list<unsigned int> &fsizes)
 {
     std::vector<Vertex*> vertices;
 
@@ -1549,6 +1556,7 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
     bool first = true;
 
     std::list<double>::const_iterator vnit = vnorm.begin();
+    std::list<Color>::const_iterator vcit = vcolor.begin();
     for (std::list<double>::const_iterator it = coords.begin(); it != coords.end(); ){
         double x = *(it++), y = *(it++), z = *(it++);
         Pointd coord(x,y,z);
@@ -1565,16 +1573,15 @@ void Dcel::afterLoadFile(const std::list<double> &coords, const std::list<unsign
         vertices.push_back(vid);
 
         if (mode & io::NORMAL_VERTICES){
-            Vec3 norm(*(vnit++),*(vnit++),*(vnit++));
+            Vec3 norm;
+            norm.setX(*(vnit++));
+            norm.setY(*(vnit++));
+            norm.setZ(*(vnit++));
             vid->setNormal(norm);
         }
         if (mode & io::COLOR_VERTICES){
-            /**
-              @todo manage vertices color
-              */
-            CG3_SUPPRESS_WARNING(vcolor);
+            vid->setColor(*(vcit++));
         }
-
     }
 
     std::list<unsigned int>::const_iterator fit = faces.begin();
