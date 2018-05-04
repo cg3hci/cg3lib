@@ -73,7 +73,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/viewer.h \
         $$PWD/viewer/glcanvas.h \
         $$PWD/viewer/mainwindow.h \
-        $$PWD/viewer/drawable_objects/drawable_cylinder.h\
+        $$PWD/viewer/drawable_objects/drawable_cylinder.h \
+        $$PWD/viewer/drawable_objects/drawable_objects_container.h\
         $$PWD/viewer/drawable_objects/drawable_sphere.h \
         $$PWD/viewer/drawable_objects/drawable_plane.h \
         $$PWD/viewer/drawable_objects/drawable_point.h \
@@ -96,7 +97,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
         $$PWD/viewer/mainwindow.cpp \
-        $$PWD/viewer/drawable_objects/drawable_cylinder.cpp\
+        $$PWD/viewer/drawable_objects/drawable_cylinder.cpp \
+        $$PWD/viewer/drawable_objects/drawable_objects_container.tpp \
         $$PWD/viewer/drawable_objects/drawable_sphere.cpp \
         $$PWD/viewer/drawable_objects/drawable_plane.cpp \
         $$PWD/viewer/drawable_objects/drawable_point.cpp \
