@@ -207,7 +207,7 @@ inline unsigned int EigenMesh::addFace(const Eigen::VectorXi& f)
     CF.conservativeResize(F.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CF(F.rows()-1, i) = 0.5;
-    return (unsigned int)F.rows();
+    return (unsigned int)F.rows()-1;
 }
 
 inline unsigned int EigenMesh::addFace(int t1, int t2, int t3)
@@ -220,7 +220,7 @@ inline unsigned int EigenMesh::addFace(int t1, int t2, int t3)
     CF.conservativeResize(F.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CF(F.rows()-1, i) = 0.5;
-    return (unsigned int)F.rows();
+    return (unsigned int)F.rows()-1;
 }
 
 inline unsigned int EigenMesh::addVertex(const Eigen::VectorXd& p)
@@ -232,7 +232,7 @@ inline unsigned int EigenMesh::addVertex(const Eigen::VectorXd& p)
     CV.conservativeResize(V.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CV(V.rows()-1, i) = 0.5;
-    return (unsigned int)V.rows();
+    return (unsigned int)V.rows()-1;
 }
 
 inline unsigned int EigenMesh::addVertex(const Pointd &p)
@@ -244,7 +244,7 @@ inline unsigned int EigenMesh::addVertex(const Pointd &p)
     CV.conservativeResize(V.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CV(V.rows()-1, i) = 0.5;
-    return (unsigned int)V.rows();
+    return (unsigned int)V.rows()-1;
 }
 
 inline unsigned int EigenMesh::addVertex(double x, double y, double z)
@@ -256,7 +256,7 @@ inline unsigned int EigenMesh::addVertex(double x, double y, double z)
     CV.conservativeResize(V.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CV(V.rows()-1, i) = 0.5;
-    return (unsigned int)V.rows();
+    return (unsigned int)V.rows()-1;
 }
 
 inline void EigenMesh::removeFace(unsigned int f)

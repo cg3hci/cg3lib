@@ -270,21 +270,21 @@ inline unsigned int SimpleEigenMesh::addVertex(const Eigen::VectorXd& p)
     assert (p.size() == 3);
     V.conservativeResize(V.rows()+1, Eigen::NoChange);
     V.row(V.rows()-1) = p;
-    return (unsigned int)V.rows();
+    return (unsigned int)V.rows()-1;
 }
 
 inline unsigned int SimpleEigenMesh::addVertex(const Pointd& p)
 {
     V.conservativeResize(V.rows()+1, Eigen::NoChange);
     V(V.rows()-1, 0) = p.x(); V(V.rows()-1, 1) = p.y(); V(V.rows()-1, 2) = p.z();
-    return (unsigned int)V.rows();
+    return (unsigned int)V.rows()-1;
 }
 
 inline unsigned int SimpleEigenMesh::addVertex(double x, double y, double z)
 {
     V.conservativeResize(V.rows()+1, Eigen::NoChange);
     V(V.rows()-1, 0) = x; V(V.rows()-1, 1) = y; V(V.rows()-1, 2) = z;
-    return (unsigned int)V.rows();
+    return (unsigned int)V.rows()-1;
 }
 
 inline void SimpleEigenMesh::resizeFaces(unsigned int nf)
@@ -310,14 +310,14 @@ inline unsigned int SimpleEigenMesh::addFace(const Eigen::VectorXi& f)
     assert (f.size() == 3);
     F.conservativeResize(F.rows()+1, Eigen::NoChange);
     F.row(F.rows()-1) = f;
-    return (unsigned int)F.rows();
+    return (unsigned int)F.rows()-1;
 }
 
 inline unsigned int SimpleEigenMesh::addFace(int t1, int t2, int t3)
 {
     F.conservativeResize(F.rows()+1, Eigen::NoChange);
     F(F.rows()-1, 0) = t1; F(F.rows()-1, 1) = t2; F(F.rows()-1, 2) = t3;
-    return (unsigned int)F.rows();
+    return (unsigned int)F.rows()-1;
 }
 
 inline void SimpleEigenMesh::removeFace(unsigned int f)
