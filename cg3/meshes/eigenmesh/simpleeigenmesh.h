@@ -83,20 +83,19 @@ public:
     void setVertex(unsigned int i, const Eigen::VectorXd &p);
     void setVertex(unsigned int i, const Pointd &p);
     void setVertex(unsigned int i, double x, double y, double z);
-    virtual void addVertex(const Eigen::VectorXd &p);
-    virtual void addVertex(const Pointd &p);
-    virtual void addVertex(double x, double y, double z);
+    virtual unsigned int addVertex(const Eigen::VectorXd &p);
+    virtual unsigned int addVertex(const Pointd &p);
+    virtual unsigned int addVertex(double x, double y, double z);
     virtual void resizeFaces(unsigned int nf);
     void setFace(unsigned int i, const Eigen::VectorXi &f);
     void setFace(unsigned int i, int t1, int t2, int t3);
-    virtual void addFace(const Eigen::VectorXi &f);
-    virtual void addFace(int t1, int t2, int t3);
+    virtual unsigned int addFace(const Eigen::VectorXi &f);
+    virtual unsigned int addFace(int t1, int t2, int t3);
     virtual void removeFace(unsigned int f);
     bool isDegenerateTriangle(unsigned int f, double epsilon = CG3_EPSILON) const;
     virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
     template <typename T, int ...A> void setVerticesMatrix(const Eigen::Matrix<T, A...>& V);
     template <typename U, int ...A> void setFacesMatrix(const Eigen::Matrix<U, A...>& F);
-
 
     virtual bool readFromObj(const std::string &filename);
     virtual bool readFromPly(const std::string &filename);
@@ -266,23 +265,26 @@ inline void SimpleEigenMesh::setVertex(unsigned int i, double x, double y, doubl
     V(i, 0) = x; V(i, 1) = y; V(i, 2) = z;
 }
 
-inline void SimpleEigenMesh::addVertex(const Eigen::VectorXd& p)
+inline unsigned int SimpleEigenMesh::addVertex(const Eigen::VectorXd& p)
 {
     assert (p.size() == 3);
     V.conservativeResize(V.rows()+1, Eigen::NoChange);
     V.row(V.rows()-1) = p;
+    return (unsigned int)V.rows();
 }
 
-inline void SimpleEigenMesh::addVertex(const Pointd& p)
+inline unsigned int SimpleEigenMesh::addVertex(const Pointd& p)
 {
     V.conservativeResize(V.rows()+1, Eigen::NoChange);
     V(V.rows()-1, 0) = p.x(); V(V.rows()-1, 1) = p.y(); V(V.rows()-1, 2) = p.z();
+    return (unsigned int)V.rows();
 }
 
-inline void SimpleEigenMesh::addVertex(double x, double y, double z)
+inline unsigned int SimpleEigenMesh::addVertex(double x, double y, double z)
 {
     V.conservativeResize(V.rows()+1, Eigen::NoChange);
     V(V.rows()-1, 0) = x; V(V.rows()-1, 1) = y; V(V.rows()-1, 2) = z;
+    return (unsigned int)V.rows();
 }
 
 inline void SimpleEigenMesh::resizeFaces(unsigned int nf)
@@ -303,17 +305,19 @@ inline void SimpleEigenMesh::setFace(unsigned int i, int t1, int t2, int t3)
     F(i, 0) = t1; F(i, 1) = t2; F(i, 2) = t3;
 }
 
-inline void SimpleEigenMesh::addFace(const Eigen::VectorXi& f)
+inline unsigned int SimpleEigenMesh::addFace(const Eigen::VectorXi& f)
 {
     assert (f.size() == 3);
     F.conservativeResize(F.rows()+1, Eigen::NoChange);
     F.row(F.rows()-1) = f;
+    return (unsigned int)F.rows();
 }
 
-inline void SimpleEigenMesh::addFace(int t1, int t2, int t3)
+inline unsigned int SimpleEigenMesh::addFace(int t1, int t2, int t3)
 {
     F.conservativeResize(F.rows()+1, Eigen::NoChange);
     F(F.rows()-1, 0) = t1; F(F.rows()-1, 1) = t2; F(F.rows()-1, 2) = t3;
+    return (unsigned int)F.rows();
 }
 
 inline void SimpleEigenMesh::removeFace(unsigned int f)

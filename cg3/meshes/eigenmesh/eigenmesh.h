@@ -58,9 +58,11 @@ public:
     virtual void resizeFaces(unsigned int nf);
     void updateBoundingBox();
     virtual void clear();
-    virtual void addFace(const Eigen::VectorXi &f);
-    virtual void addFace(int t1, int t2, int t3);
-    virtual void addVertex(const Pointd &p);
+    virtual unsigned int addFace(const Eigen::VectorXi &f);
+    virtual unsigned int addFace(int t1, int t2, int t3);
+    virtual unsigned int addVertex(const Eigen::VectorXd &p);
+    virtual unsigned int addVertex(const Pointd &p);
+    virtual unsigned int addVertex(double x, double y, double z);
     virtual void removeFace(unsigned int f);
     virtual bool readFromObj(const std::string &filename);
     virtual bool readFromPly(const std::string &filename);
@@ -195,7 +197,7 @@ inline void EigenMesh::clear()
     NF.resize(0,Eigen::NoChange);
 }
 
-inline void EigenMesh::addFace(const Eigen::VectorXi& f)
+inline unsigned int EigenMesh::addFace(const Eigen::VectorXi& f)
 {
     SimpleEigenMesh::addFace(f);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
@@ -205,9 +207,10 @@ inline void EigenMesh::addFace(const Eigen::VectorXi& f)
     CF.conservativeResize(F.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CF(F.rows()-1, i) = 0.5;
+    return (unsigned int)F.rows();
 }
 
-inline void EigenMesh::addFace(int t1, int t2, int t3)
+inline unsigned int EigenMesh::addFace(int t1, int t2, int t3)
 {
     SimpleEigenMesh::addFace(t1, t2, t3);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
@@ -217,9 +220,10 @@ inline void EigenMesh::addFace(int t1, int t2, int t3)
     CF.conservativeResize(F.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CF(F.rows()-1, i) = 0.5;
+    return (unsigned int)F.rows();
 }
 
-inline void EigenMesh::addVertex(const Pointd &p)
+inline unsigned int EigenMesh::addVertex(const Eigen::VectorXd& p)
 {
     SimpleEigenMesh::addVertex(p);
     NV.conservativeResize(V.rows(), Eigen::NoChange);
@@ -228,6 +232,31 @@ inline void EigenMesh::addVertex(const Pointd &p)
     CV.conservativeResize(V.rows(), Eigen::NoChange);
     for (unsigned int i = 0; i < 3; i++)
         CV(V.rows()-1, i) = 0.5;
+    return (unsigned int)V.rows();
+}
+
+inline unsigned int EigenMesh::addVertex(const Pointd &p)
+{
+    SimpleEigenMesh::addVertex(p);
+    NV.conservativeResize(V.rows(), Eigen::NoChange);
+    for (unsigned int i = 0; i < 3; i++)
+        NV(V.rows()-1, i) = 0;
+    CV.conservativeResize(V.rows(), Eigen::NoChange);
+    for (unsigned int i = 0; i < 3; i++)
+        CV(V.rows()-1, i) = 0.5;
+    return (unsigned int)V.rows();
+}
+
+inline unsigned int EigenMesh::addVertex(double x, double y, double z)
+{
+    SimpleEigenMesh::addVertex(x,y,z);
+    NV.conservativeResize(V.rows(), Eigen::NoChange);
+    for (unsigned int i = 0; i < 3; i++)
+        NV(V.rows()-1, i) = 0;
+    CV.conservativeResize(V.rows(), Eigen::NoChange);
+    for (unsigned int i = 0; i < 3; i++)
+        CV(V.rows()-1, i) = 0.5;
+    return (unsigned int)V.rows();
 }
 
 inline void EigenMesh::removeFace(unsigned int f)
