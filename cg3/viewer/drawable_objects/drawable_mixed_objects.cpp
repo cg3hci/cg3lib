@@ -145,6 +145,19 @@ unsigned int DrawableMixedObjects::addLine(const Pointd &a, const Pointd &b, con
     return (unsigned int)lines.size()-1;
 }
 
+unsigned int DrawableMixedObjects::addLine(const Point2Dd& a, const Point2Dd& b, const QColor color, int width)
+{
+    Pointd a_(a.x(), a.y(), 0);
+    Pointd b_(b.x(), b.y(), 0);
+    Line l = {a_, b_, width, color};
+    lines.push_back(l);
+    bb.min() = bb.min().min(a_);
+    bb.min() = bb.min().min(b_);
+    bb.max() = bb.max().max(a_);
+    bb.max() = bb.max().max(b_);
+    return (unsigned int)lines.size()-1;
+}
+
 void DrawableMixedObjects::clearLines()
 {
     lines.clear();
@@ -161,6 +174,23 @@ unsigned int DrawableMixedObjects::addTriangle(const Pointd& a, const Pointd& b,
     bb.max() = bb.max().max(a);
     bb.max() = bb.max().max(b);
     bb.max() = bb.max().max(c);
+
+    return (unsigned int)triangles.size()-1;
+}
+
+unsigned int DrawableMixedObjects::addTriangle(const Point2Dd& a, const Point2Dd& b, const Point2Dd& c, const QColor color, int width, bool fill)
+{
+    Pointd a_(a.x(), a.y(), 0);
+    Pointd b_(b.x(), b.y(), 0);
+    Pointd c_(c.x(), c.y(), 0);
+    Triangle t {a_, b_, c_, width, color, fill};
+    triangles.push_back(t);
+    bb.min() = bb.min().min(a_);
+    bb.min() = bb.min().min(b_);
+    bb.min() = bb.min().min(c_);
+    bb.max() = bb.max().max(a_);
+    bb.max() = bb.max().max(b_);
+    bb.max() = bb.max().max(c_);
 
     return (unsigned int)triangles.size()-1;
 }

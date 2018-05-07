@@ -57,7 +57,7 @@ public:
     typedef enum {_2D, _3D} Mode;
 
     friend class cg3::viewer::MainWindow;
-    GLCanvas(QWidget * parent = nullptr);
+    GLCanvas(QWidget* parent = nullptr);
 
     //QGLViewer Override:
     void init();

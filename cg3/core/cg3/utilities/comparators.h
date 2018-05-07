@@ -12,6 +12,28 @@
 
 namespace cg3 {
 
+template <class T>
+struct cmpStdPair
+{
+    bool operator()(const std::pair<T,T>& a, const std::pair<T,T>& b) const
+    {
+        if (a.first < a.second) {
+            return true;
+        }
+        else {
+            if (a.first == a.second){
+                if (b.first < b.second)
+                    return true;
+                else
+                    return false;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+};
+
 /**
  * @ingroup cg3core
  * @struct cmpUnorderedStdPair

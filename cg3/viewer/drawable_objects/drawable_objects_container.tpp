@@ -60,6 +60,18 @@ void DrawableObjectsContainer<T>::erase(unsigned int i)
     }
 }
 
+template<typename T>
+const T& DrawableObjectsContainer<T>::at(unsigned int i) const
+{
+    return (T&)*((*this)[i]);
+}
+
+template<typename T>
+T& DrawableObjectsContainer<T>::at(unsigned int i)
+{
+    return (T&)*((*this)[i]);
+}
+
 template <typename T>
 void DrawableObjectsContainer<T>::setVisibleObject(int objectId)
 {

@@ -35,6 +35,9 @@ BoundingBox getBoundingBoxOfFaces(InputIterator first, InputIterator last);
 template <typename Comp>
 std::set<const Dcel::Face*> flood(const Dcel::Face* seed, Comp c);
 
+template <typename Comp>
+std::set<unsigned int> flood(const Dcel& d, unsigned int seed, Comp c);
+
 template <typename InputIterator>
 std::vector< std::set<const Dcel::Face*> > getConnectedComponents(
         InputIterator first,
@@ -93,6 +96,35 @@ std::set<const Dcel::Face*> dcelAlgorithms::flood(const Dcel::Face* seed, Comp c
         for (const Dcel::Face* adjacent : fi->adjacentFaceIterator()) {
             if (c(adjacent)) {
                 if (faces.find(adjacent) == faces.end())
+                    stack_faces.push_back(adjacent);
+            }
+        }
+    }
+    return faces;
+}
+
+template<typename Comp>
+std::set<unsigned int> dcelAlgorithms::flood(const Dcel& d, unsigned int seed, Comp c)
+{
+    std::set<unsigned int> faces;
+    std::vector<const Dcel::Face *> stack_faces; // only triangles with same label of
+                                                 //the patch will stay on the stack
+
+    faces.insert(seed);
+
+    for (const Dcel::Face* adjacent : d.getFace(seed)->adjacentFaceIterator()){
+        // adding neighbor triangles (if comp returns true) to the stack
+        if (c(adjacent)) stack_faces.push_back(adjacent);
+    }
+
+    // while there aren't other triangles on the stack
+    while (stack_faces.size() > 0) {
+        const Dcel::Face* fi = stack_faces[stack_faces.size()-1];
+        stack_faces.pop_back(); //pop
+        faces.insert(fi->getId());
+        for (const Dcel::Face* adjacent : fi->adjacentFaceIterator()) {
+            if (c(adjacent)) {
+                if (faces.find(adjacent->getId()) == faces.end())
                     stack_faces.push_back(adjacent);
             }
         }

@@ -38,6 +38,9 @@ public:
     void clear();
     void erase(unsigned int i);
 
+    const T& at(unsigned int i) const;
+    T& at(unsigned int i);
+
     void setVisibleObject(int objectId);
 
     iterator begin();

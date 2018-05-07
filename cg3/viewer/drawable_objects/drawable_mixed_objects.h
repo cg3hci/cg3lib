@@ -10,6 +10,7 @@
 
 #include "../interfaces/drawable_object.h"
 #include <cg3/geometry/bounding_box.h>
+#include <cg3/geometry/2d/bounding_box2d.h>
 
 namespace cg3 {
 
@@ -54,11 +55,23 @@ public:
             const Pointd& b,
             const QColor color,
             int width= 3);
+    unsigned int addLine(
+            const Point2Dd& a,
+            const Point2Dd& b,
+            const QColor color,
+            int width= 3);
     void clearLines();
     unsigned int addTriangle(
             const Pointd& a,
             const Pointd& b,
             const Pointd& c,
+            const QColor color,
+            int width = 3,
+            bool fill = false);
+    unsigned int addTriangle(
+            const Point2Dd& a,
+            const Point2Dd& b,
+            const Point2Dd& c,
             const QColor color,
             int width = 3,
             bool fill = false);
