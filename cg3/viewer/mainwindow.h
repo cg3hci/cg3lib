@@ -135,6 +135,7 @@ private slots:
     void on_action2D_Mode_triggered();
     void on_action3D_Mode_triggered();
     void on_actionReset_Point_of_View_triggered();
+    void on_actionPerspective_Orthographic_Camera_Mode_triggered();
 
     void checkBoxClicked(int i);
 
@@ -173,6 +174,7 @@ private:
 
     // GUI
     //
+    //Ui::MainWindow* ui;
     internal::UiMainWindowRaiiWrapper* ui;
     std::vector<QFrame*> managers;
     ConsoleStream* consoleStream;

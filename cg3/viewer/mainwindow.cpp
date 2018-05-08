@@ -263,6 +263,10 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
     if (event->key() == Qt::Key_C){ //c
         toggleConsoleStream();
     }
+    if (event->key() == Qt::Key_T){ //t
+        canvas.toggleCameraType();
+        canvas.update();
+    }
 
     if (event->matches(QKeySequence::Print)){ //ctrl+p
         canvas.savePointOfView();
@@ -422,6 +426,12 @@ void MainWindow::on_action3D_Mode_triggered()
 void MainWindow::on_actionReset_Point_of_View_triggered()
 {
     canvas.resetPointOfView();
+}
+
+void MainWindow::on_actionPerspective_Orthographic_Camera_Mode_triggered()
+{
+    canvas.toggleCameraType();
+    canvas.update();
 }
 
 /**
@@ -648,6 +658,8 @@ void MainWindow::removeCheckBox(QCheckBox* cb, int idCheckBox)
 
     delete cb;
 }
+
+
 
 } //namespace cg3::viewer
 } //namespace cg3

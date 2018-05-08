@@ -89,6 +89,10 @@ public:
     bool loadPointOfView(const std::string& filename);
     void setCameraDirection(const cg3::Vec3& vec);
     void setCameraPosition(const cg3::Pointd& pos);
+    void setPerspectiveCamera();
+    void setOrthographicCamera();
+    void toggleCameraType();
+    bool isOrthographicCamera() const;
 
     //DrawableObjects List management:
     unsigned int sizeVisibleDrawableObjects() const;

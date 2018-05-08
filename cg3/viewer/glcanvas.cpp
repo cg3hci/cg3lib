@@ -254,6 +254,36 @@ void GLCanvas::setCameraPosition(const Pointd &pos)
     camera()->setPosition(qglvec);
 }
 
+void GLCanvas::setPerspectiveCamera()
+{
+    camera()->setType(qglviewer::Camera::PERSPECTIVE);
+}
+
+void GLCanvas::setOrthographicCamera()
+{
+    camera()->setType(qglviewer::Camera::ORTHOGRAPHIC);
+}
+
+/**
+ * @brief Toggles the camera type, Perspective or Orthographic.
+ */
+void GLCanvas::toggleCameraType()
+{
+    if (isOrthographicCamera())
+        setPerspectiveCamera();
+    else
+        setOrthographicCamera();
+}
+
+/**
+ * @brief
+ * @return true if the camera type si Orthographic.
+ */
+bool GLCanvas::isOrthographicCamera() const
+{
+    return camera()->type() == qglviewer::Camera::ORTHOGRAPHIC;
+}
+
 unsigned int GLCanvas::sizeVisibleDrawableObjects() const
 {
     unsigned int count = 0;

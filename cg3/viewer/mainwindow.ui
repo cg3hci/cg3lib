@@ -55,7 +55,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>22</height>
+     <height>39</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -65,6 +65,7 @@
     <addaction name="actionChange_Background_Color"/>
     <addaction name="actionFit_Scene"/>
     <addaction name="actionReset_Point_of_View"/>
+    <addaction name="actionPerspective_Orthographic_Camera_Mode"/>
     <addaction name="actionShow_Axis"/>
     <addaction name="actionUpdate_Canvas"/>
     <addaction name="separator"/>
@@ -111,7 +112,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>603</width>
+     <width>608</width>
      <height>575</height>
     </size>
    </property>
@@ -172,8 +173,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>179</width>
-          <height>541</height>
+          <width>160</width>
+          <height>501</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -212,7 +213,7 @@
           <x>0</x>
           <y>0</y>
           <width>398</width>
-          <height>508</height>
+          <height>445</height>
          </rect>
         </property>
         <attribute name="label">
@@ -355,6 +356,11 @@
   <action name="actionReset_Point_of_View">
    <property name="text">
     <string>Reset Point of View</string>
+   </property>
+  </action>
+  <action name="actionPerspective_Orthographic_Camera_Mode">
+   <property name="text">
+    <string>Perspective/Orthographic Camera Mode</string>
    </property>
   </action>
  </widget>
