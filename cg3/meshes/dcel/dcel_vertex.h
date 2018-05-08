@@ -80,7 +80,7 @@ public:
     unsigned int getId()                                const;
     int getFlag()                                       const;
     Vec3 getNormal()                                    const;
-    Pointd getCoordinate()                              const;
+    const Pointd& getCoordinate()                       const;
     Color getColor()                                    const;
     int getCardinality()                                const;
     const Dcel::HalfEdge* getIncidentHalfEdge()         const;

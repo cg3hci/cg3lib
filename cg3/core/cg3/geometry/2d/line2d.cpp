@@ -36,6 +36,11 @@ Line2D::Line2D(const Point2Dd& p1, const Point2Dd& p2)
     }
 }
 
+Line2D::Line2D(const Segment2Dd& s) :
+    Line2D(s.getP1(), s.getP2())
+{
+}
+
 Line2D::Line2D(double m, const Point2Dd& p) : _m(m)
 {
     _q = p.y() - m*p.x();
@@ -71,6 +76,22 @@ double Line2D::xValue(double y) const
     if (_m == std::numeric_limits<double>::infinity())
         return _q;
     return (y-_q)/_m;
+}
+
+Point2Dd Line2D::intersection(const Line2D& l) const
+{
+    if (_m != l._m){
+        if (_m == std::numeric_limits<double>::infinity()){
+            return Point2Dd(_q, l.yValue(_q));
+        }
+        if (l._m == std::numeric_limits<double>::infinity()){
+            return Point2Dd(l._q, yValue(l._q));
+        }
+        return Point2Dd(
+                    (l._q - _q) / (_m - l._m),
+                    (_m*l._q - l._m*_q) / (_m - l._m));
+    }
+    return Point2Dd();
 }
 
 void Line2D::serialize(std::ofstream& binaryFile) const

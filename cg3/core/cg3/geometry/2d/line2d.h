@@ -8,6 +8,7 @@
 #define CG3_LINE2D_H
 
 #include "point2d.h"
+#include "segment2d.h"
 
 namespace cg3 {
 
@@ -24,12 +25,15 @@ public:
     Line2D();
     Line2D(double m, double q);
     Line2D(const Point2Dd& p1, const Point2Dd& p2);
+    Line2D(const Segment2Dd& s);
     Line2D(double m, const Point2Dd& p);
     double m() const;
     double q() const;
 
     double yValue(double x) const;
     double xValue(double y) const;
+
+    Point2Dd intersection(const cg3::Line2D& l) const;
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;

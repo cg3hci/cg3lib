@@ -164,6 +164,12 @@ inline bool BoundingBox2D::isInside(const Point2Dd& p) const
             p.x() <= maxCoord.x() && p.y() <= maxCoord.y());
 }
 
+inline bool BoundingBox2D::isStrictlyInside(const Point2Dd& p) const
+{
+    return (p.x() > minCoord.x() && p.y() > minCoord.y() &&
+            p.x() < maxCoord.x() && p.y() < maxCoord.y());
+}
+
 /**
  * @brief Serializes a Bounding Box 2D in a binary file
  * @param binaryFile

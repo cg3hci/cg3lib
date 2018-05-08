@@ -54,7 +54,7 @@ inline Vec3 Dcel::Vertex::getNormal() const
  * @brief Restituisce le coordinate del vertice
  * @return Pointd rappresentante la posizione nello spazio del vertice
  */
-inline Pointd Dcel::Vertex::getCoordinate() const
+inline const Pointd& Dcel::Vertex::getCoordinate() const
 {
     #ifdef NDEBUG
     return parent->vertexCoordinates[id];

@@ -48,6 +48,7 @@ public:
     double lengthY() const;
 
     bool isInside(const Point2Dd& p) const;
+    bool isStrictlyInside(const Point2Dd& p) const;
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
