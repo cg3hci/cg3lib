@@ -1,7 +1,7 @@
 #ifndef CG3_BOOLEAN_ALGORITHMS_H
 #define CG3_BOOLEAN_ALGORITHMS_H
 
-#ifdef  CG3_CGAL_DEFINED
+#ifdef CG3_CGAL_DEFINED
 
 #ifdef __GNUC__
 #ifndef __clang__

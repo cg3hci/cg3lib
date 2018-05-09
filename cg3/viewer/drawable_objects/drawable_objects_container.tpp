@@ -55,7 +55,7 @@ void DrawableObjectsContainer<T>::erase(unsigned int i)
     list.erase(it);
     if ((int)i == visibleObject) {
         if (i >= list.size())
-            i = list.size()-1;
+            i = (unsigned int)list.size()-1;
         setVisibleObject(i);
     }
 }

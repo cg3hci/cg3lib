@@ -56,25 +56,54 @@ win32{
 #               Library names could change when using different
 #               version of MSVC/Boost/CGAL
 
+                # looking for a file called fileXX where XX is a version that we don't care.
+                # usage:
+                #   VAR = $$files(file*);
+                #   NAME = $$getFileName(VAR)
+                defineReplace(getFileName){
+                    L1 = $$basename($$1)
+                    L1 = $$last(L1)
+                    message(AAA: $$L1)
+                    L1 = $$split(L1, .)
+                    L1 = $$first(L1)
+                    return($$L1)
+                }
+
                 CONFIG(debug, debug|release){
-                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-gd-4.10.2
+                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-gd-4.11
                 }
                 CONFIG(release, debug|release){
-                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-4.10.2
+                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-4.11
                 }
 
                 LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibgmp-10
                 LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibmpfr-4
 
                 CONFIG(debug, debug|release){
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -lboost_system-vc141-mt-gd-x64-1_66
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -lboost_log-vc141-mt-gd-x64-1_66
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -lboost_thread-vc141-mt-gd-x64-1_66
+                    L = $$files($$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-gd-x64*)
+                    L = $$getFileName(L)
+                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$L
+
+                    L = $$files($$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-gd-x64*)
+                    L = $$getFileName(L)
+                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$L
+
+                    L = $$files($$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-gd-x64*)
+                    L = $$getFileName(L)
+                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$L
                 }
                 CONFIG(release, debug|release){
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -lboost_system-vc141-mt-x64-1_66
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -lboost_log-vc141-mt-x64-1_66
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -lboost_thread-vc141-mt-x64-1_66
+                    L = $$files($$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-x64*)
+                    L = $$getFileName(L)
+                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$L
+
+                    L = $$files($$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-x64*)
+                    L = $$getFileName(L)
+                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$L
+
+                    L = $$files($$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-x64*)
+                    L = $$getFileName(L)
+                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$L
                 }
 
                 LIBS += -DBOOST_LOG_DYN_LINK

@@ -52,7 +52,7 @@ const DrawableObject* DrawableContainer::operator [](unsigned int i) const
  */
 unsigned int DrawableContainer::size() const
 {
-    return objects.size();
+    return (unsigned int)objects.size();
 }
 
 /**
@@ -72,7 +72,7 @@ void DrawableContainer::erase(unsigned int i)
  */
 void DrawableContainer::clear()
 {
-    for (int i = objects.size()-1; i >= 0; i--){
+    for (int i = (int)objects.size()-1; i >= 0; i--){
         emit drawableContainerErasedObject(this, i);
     }
     objects.clear();

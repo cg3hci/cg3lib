@@ -44,6 +44,7 @@ exists($$(LIBIGL_HOME)){
         }
 
         INCLUDEPATH += $$LIBIGLPATH/include/
+        QMAKE_CXXFLAGS += -bigobj
     }
 
     HEADERS += \

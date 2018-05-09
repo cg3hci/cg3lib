@@ -52,7 +52,7 @@ public:
 
     /* CSG conversions */
     static CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m);
-    static SimpleEigenMesh CSGTreeToEigenMesh(const igl::copyleft::cgal::CSGTree& tree);
+    static SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree);
 
     /* Mesh intersections */
     static SimpleEigenMesh intersection(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);

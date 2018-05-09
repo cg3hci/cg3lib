@@ -7,7 +7,6 @@
 
 #include "eigenmesh_libigl_algorithms.h"
 
-
 #ifdef CG3_CGAL_DEFINED
 
 namespace cg3 {
