@@ -39,6 +39,12 @@ void DrawableObjectsContainer<T>::pushList(const std::list<T>& list)
 }
 
 template <typename T>
+const std::list<T>& DrawableObjectsContainer<T>::getList() const
+{
+    return list;
+}
+
+template <typename T>
 void DrawableObjectsContainer<T>::clear()
 {
     cg3::DrawableContainer::clear();

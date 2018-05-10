@@ -495,6 +495,8 @@ void MainWindow::addCheckBoxOfDrawableContainer(
                 objectName,
                 vis);
         containerFrames[cont].checkBoxes.push_back(cb);
+        if (!canvas.isDrawableObjectVisible(cont))
+            canvas.setDrawableObjectVisibility((*cont)[cont->size()-1], false);
     }
 }
 

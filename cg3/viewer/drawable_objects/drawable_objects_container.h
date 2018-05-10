@@ -35,6 +35,7 @@ public:
     ~DrawableObjectsContainer();
     unsigned int pushBack(const T& d, const std::string& name);
     void pushList(const std::list<T>& list);
+    const std::list<T>& getList() const;
     void clear();
     void erase(unsigned int i);
 
