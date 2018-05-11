@@ -13,6 +13,10 @@
 #include "../io/serialize.h"
 #include "../utilities/hash.h"
 
+#ifdef CG3_WITH_EIGEN
+#include <Eigen/Core>
+#endif //CG3_WITH_EIGEN
+
 #ifdef CG3_CINOLIB_DEFINED
 #ifdef __GNUC__
 #pragma GCC diagnostic push

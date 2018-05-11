@@ -8,7 +8,7 @@
 #ifndef CG3_CGAL_TRIANGULATION_H
 #define CG3_CGAL_TRIANGULATION_H
 
-#include "2d/triangulation2d.h"
+#include <cg3/geometry/point.h>
 
 namespace cg3 {
 namespace cgal {

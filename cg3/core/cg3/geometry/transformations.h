@@ -10,10 +10,6 @@
 
 #include "point.h"
 
-#ifdef CG3_WITH_EIGEN
-#include <Eigen/Core>
-#endif
-
 namespace cg3 {
 
 #ifdef CG3_WITH_EIGEN

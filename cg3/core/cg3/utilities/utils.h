@@ -17,6 +17,7 @@
 #endif
 #include <string>
 #include <cstdlib>
+#include <map>
 #include "../geometry/point.h"
 #include "../geometry/2d/point2d.h"
 #include "../utilities/color.h"

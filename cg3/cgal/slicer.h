@@ -8,13 +8,14 @@
 #ifndef CG3_CGAL_SLICER_H
 #define CG3_CGAL_SLICER_H
 
-#include <cg3/utilities/utils.h>
-#include <cg3/geometry/2d/point2d.h>
-#include <cg3/geometry/plane.h>
+#include <cg3/geometry/point.h>
 
 #include "surfacemesh.h"
 
 namespace cg3 {
+
+class Plane;
+
 namespace cgal {
 
 std::vector<std::vector<Pointd> > getPolylines(

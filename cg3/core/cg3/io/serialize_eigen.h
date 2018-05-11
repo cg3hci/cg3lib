@@ -11,6 +11,8 @@
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
 
+#include "serialize.h"
+
 namespace cg3 {
 namespace internal {
 

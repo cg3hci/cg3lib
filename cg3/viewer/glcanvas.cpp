@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "glcanvas.h"
+#include <cg3/geometry/line.h>
 #include <cg3/geometry/plane.h>
 #include <cg3/utilities/cg3config.h>
 #include <cg3/viewer/utilities/utils.h>

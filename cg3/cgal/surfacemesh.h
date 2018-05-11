@@ -10,15 +10,16 @@
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Surface_mesh.h>
 
+namespace cg3 {
+
 #ifdef  CG3_DCEL_DEFINED
-#include <cg3/meshes/dcel/dcel.h>
+class Dcel;
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
-#include <cg3/meshes/eigenmesh/eigenmesh.h>
+class SimpleEigenMesh;
 #endif
 
-namespace cg3 {
 namespace cgal {
 
 /**

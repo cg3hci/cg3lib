@@ -7,6 +7,9 @@
 
 #include "slicer.h"
 
+#include <cg3/geometry/plane.h>
+#include <cg3/utilities/utils.h>
+
 #include <CGAL/boost/graph/graph_traits_Surface_mesh.h>
 #include <CGAL/AABB_halfedge_graph_segment_primitive.h>
 #include <CGAL/AABB_tree.h>

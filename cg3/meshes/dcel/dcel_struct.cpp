@@ -11,6 +11,8 @@
 #include <cg3/utilities/comparators.h>
 #include <cg3/utilities/utils.h>
 #include <cg3/utilities/const.h>
+#include <cg3/io/serialize_std.h>
+#include <cg3/io/serialize_qt.h>
 #include <cg3/io/load_save_file.h>
 
 #ifdef  CG3_CGAL_DEFINED

@@ -10,6 +10,14 @@
 
 #include <random>
 
+#ifdef TRIMESH_DEFINED
+#include <trimesh/trimesh.h>
+#endif
+
+#ifdef  CG3_EIGENMESH_DEFINED
+#include <cg3/meshes/eigenmesh/eigenmesh.h>
+#endif
+
 namespace cg3 {
 namespace cgal {
 

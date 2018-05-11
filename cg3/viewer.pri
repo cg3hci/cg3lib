@@ -91,6 +91,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/consolestream.h \
         $$PWD/viewer/utilities/utils.h \
         $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.h \
+        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.h \
         $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h
 
@@ -114,6 +115,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/utilities/consolestream.tpp \
         $$PWD/viewer/utilities/utils.cpp \
         $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp \
+        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.cpp \
         $$PWD/viewer/drawable_objects/2d/drawable_segment2d.cpp \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp
 
@@ -167,4 +169,3 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
-

@@ -45,6 +45,7 @@ HEADERS += \
     $$PWD/core/cg3/geometry/2d/intersections2d.h \
     $$PWD/core/cg3/geometry/2d/line2d.h \
     $$PWD/core/cg3/geometry/2d/point2d.h \
+    $$PWD/core/cg3/geometry/2d/polygon2d.h \
     $$PWD/core/cg3/geometry/2d/segment2d.h \
     $$PWD/core/cg3/geometry/2d/triangle2d.h \
     $$PWD/core/cg3/geometry/2d/utils2d.h \
@@ -65,6 +66,7 @@ SOURCES += \
     $$PWD/core/cg3/geometry/2d/intersections2d.cpp \
     $$PWD/core/cg3/geometry/2d/line2d.cpp \
     $$PWD/core/cg3/geometry/2d/point2d.tpp \
+    $$PWD/core/cg3/geometry/2d/polygon2d.cpp \
     $$PWD/core/cg3/geometry/2d/utils2d.tpp \
     $$PWD/core/cg3/geometry/2d/triangle2d_utils.tpp
 
@@ -74,13 +76,15 @@ HEADERS += \
     $$PWD/core/cg3/io/serializable_object.h \
     $$PWD/core/cg3/io/serialize.h \
     $$PWD/core/cg3/io/serialize_eigen.h \
-    $$PWD/core/cg3/io/serialize_qt.h
+    $$PWD/core/cg3/io/serialize_qt.h \
+    $$PWD/core/cg3/io/serialize_std.h
 
 SOURCES += \
     $$PWD/core/cg3/io/load_save_file.tpp \
     $$PWD/core/cg3/io/serialize.tpp \
     $$PWD/core/cg3/io/serialize_eigen.tpp \
-    $$PWD/core/cg3/io/serialize_qt.tpp
+    $$PWD/core/cg3/io/serialize_qt.tpp \
+    $$PWD/core/cg3/io/serialize_std.tpp
 
 #utilities
 HEADERS += \

@@ -7,6 +7,11 @@
 
 #include "signeddistances.h"
 
+#include <cg3/geometry/2d/point2d.h>
+#include <cg3/utilities/utils.h>
+
+#include "aabbtree.h"
+
 namespace cg3 {
 namespace cgal {
 

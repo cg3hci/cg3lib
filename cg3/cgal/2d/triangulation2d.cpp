@@ -7,6 +7,8 @@
 
 #include "triangulation2d.h"
 
+#include <cg3/utilities/utils.h>
+
 #ifdef __APPLE__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshift-negative-value"

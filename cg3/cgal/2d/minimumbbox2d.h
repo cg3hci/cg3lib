@@ -10,9 +10,9 @@
 
 #include <vector>
 #include <cg3/geometry/2d/point2d.h>
-#include <cg3/meshes/dcel/dcel.h>
 
 namespace cg3 {
+class Dcel;
 namespace cgal {
 
 #ifdef  CG3_DCEL_DEFINED

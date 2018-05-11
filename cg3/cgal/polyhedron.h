@@ -9,8 +9,6 @@
 #ifndef CG3_CGAL_POLYHEDRON_H
 #define CG3_CGAL_POLYHEDRON_H
 
-#include <CGAL/Simple_cartesian.h>
-#include <CGAL/Polyhedron_incremental_builder_3.h>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polyhedron_3.h>
 
@@ -18,11 +16,11 @@
 #include <cg3/meshes/dcel/dcel.h>
 #endif
 
+namespace cg3 {
 #ifdef  CG3_EIGENMESH_DEFINED
-#include <cg3/meshes/eigenmesh/eigenmesh.h>
+class SimpleEigenMesh;
 #endif
 
-namespace cg3 {
 namespace cgal {
 
 /**

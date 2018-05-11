@@ -15,11 +15,14 @@
 #endif
 
 #ifdef TRIMESH_DEFINED
-#include <trimesh/trimesh.h>
+class Trimesh;
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
-#include <cg3/meshes/eigenmesh/eigenmesh.h>
+namespace cg3 {
+class SimpleEigenMesh;
+class EigenMesh;
+}
 #endif
 
 #include <CGAL/Simple_cartesian.h>

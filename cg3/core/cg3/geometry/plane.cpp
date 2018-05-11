@@ -7,6 +7,8 @@
  */
 
 #include "plane.h"
+
+#include "line.h"
 #include <cg3/utilities/utils.h>
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/QR>

@@ -6,10 +6,14 @@
  * @author Marco Livesu (marco.livesu@gmail.com)
  */
 #include "global_optimal_rotation_matrix.h"
-#include <cg3/geometry/transformations.h>
 
-#ifdef CG3_EIGENMESH_DEFINED
-#include <cg3/meshes/eigenmesh/eigenmesh.h>
+#include "sphere_coverage.h"
+#include <cg3/geometry/transformations.h>
+#ifdef CG3_WITH_EIGEN
+#include <Eigen/Core>
+#endif
+#ifdef CG3_DCEL_DEFINED
+#include <cg3/meshes/dcel/dcel.h>
 #endif
 
 namespace cg3 {

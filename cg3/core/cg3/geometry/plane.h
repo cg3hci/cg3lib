@@ -10,10 +10,11 @@
 #define CG3_PLANE_H
 
 #include "point.h"
-#include "line.h"
 #include <cg3/utilities/const.h>
 
 namespace cg3 {
+
+class Line;
 
 /**
  * @ingroup cg3core

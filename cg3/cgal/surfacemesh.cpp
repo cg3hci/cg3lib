@@ -7,6 +7,14 @@
 
 #include "surfacemesh.h"
 
+#ifdef  CG3_DCEL_DEFINED
+#include <cg3/meshes/dcel/dcel.h>
+#endif
+
+#ifdef  CG3_EIGENMESH_DEFINED
+#include <cg3/meshes/eigenmesh/eigenmesh.h>
+#endif
+
 namespace cg3 {
 namespace cgal {
 namespace internal {

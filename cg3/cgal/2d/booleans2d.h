@@ -8,8 +8,6 @@
 #ifndef CG3_CGAL_BOOLEANS2D_H
 #define CG3_CGAL_BOOLEANS2D_H
 
-#include <cg3/utilities/utils.h>
-#include <cg3/geometry/point.h>
 #include <cg3/geometry/2d/point2d.h>
 
 namespace cg3 {

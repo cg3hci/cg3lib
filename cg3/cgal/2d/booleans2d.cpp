@@ -7,6 +7,8 @@
 
 #include "booleans2d.h"
 
+#include <cg3/utilities/utils.h>
+
 #include <CGAL/Exact_predicates_exact_constructions_kernel.h>
 #include <CGAL/Boolean_set_operations_2.h>
 #include <CGAL/Polygon_2.h>

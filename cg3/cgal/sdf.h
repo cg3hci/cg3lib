@@ -16,6 +16,7 @@
 #endif
 
 namespace cg3 {
+
 namespace cgal {
 
 std::vector<double> getSDFMap(const cgal::Polyhedron& mesh);

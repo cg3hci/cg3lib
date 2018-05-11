@@ -11,6 +11,10 @@
 #include <string>
 #include <ostream>
 
+#ifdef CG3_WITH_EIGEN
+#include <Eigen/Core>
+#endif //CG3_WITH_EIGEN
+
 #include "../../io/serialize.h"
 #include "../../utilities/hash.h"
 

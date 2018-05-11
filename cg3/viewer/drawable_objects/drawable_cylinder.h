@@ -9,6 +9,7 @@
 
 #include "../interfaces/drawable_object.h"
 #include <cg3/geometry/cylinder.h>
+#include <cg3/utilities/color.h>
 
 namespace cg3 {
 

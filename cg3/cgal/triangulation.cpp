@@ -7,6 +7,9 @@
 
 #include "triangulation.h"
 
+#include <map>
+
+#include "2d/triangulation2d.h"
 #include <cg3/geometry/transformations.h>
 
 namespace cg3 {

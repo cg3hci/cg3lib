@@ -7,6 +7,8 @@
 
 #include "minimumbbox2d.h"
 
+#include <cg3/meshes/dcel/dcel.h>
+
 #include <CGAL/Polygon_2.h>
 #include <CGAL/min_quadrilateral_2.h>
 #include <CGAL/ch_graham_andrew.h>

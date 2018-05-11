@@ -8,9 +8,16 @@
 
 #include "polyhedron.h"
 
+#include <CGAL/Simple_cartesian.h>
+#include <CGAL/Polyhedron_incremental_builder_3.h>
+
 #include <vector>
 #include <string>
 #include <algorithm>
+
+#ifdef  CG3_EIGENMESH_DEFINED
+#include <cg3/meshes/eigenmesh/eigenmesh.h>
+#endif
 
 namespace cg3 {
 namespace cgal {
