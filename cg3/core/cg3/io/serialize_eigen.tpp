@@ -129,5 +129,5 @@ inline void deserialize(Eigen::Matrix<int, -1, 3, 1, -1, 3>& m, std::ifstream& b
     internal::deserializeEigen(m, binaryFile);
 }
 
-}
+} //namespace cg3
 #endif //CG3_WITH_EIGEN*/

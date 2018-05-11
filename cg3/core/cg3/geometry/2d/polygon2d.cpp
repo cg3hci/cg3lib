@@ -62,6 +62,17 @@ bool Polygon2D::isCunterClockWise() const
     return cg3::isPolygonCounterClockwise(pol);
 }
 
+const std::vector<Point2Dd>& Polygon2D::vectorPoints() const
+{
+    return pol;
+}
+
+void Polygon2D::clear()
+{
+    pol.clear();
+    bb = BoundingBox2D();
+}
+
 void Polygon2D::serialize(std::ofstream& binaryFile) const
 {
     cg3::serializeObjectAttributes("cg3Polygon2D", binaryFile, pol, bb);

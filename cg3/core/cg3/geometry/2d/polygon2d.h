@@ -23,6 +23,8 @@ public:
     void updateBoundingBox();
     void pushBack(const cg3::Point2Dd& p);
     bool isCunterClockWise() const;
+    const std::vector<cg3::Point2Dd>& vectorPoints() const;
+    void clear();
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;

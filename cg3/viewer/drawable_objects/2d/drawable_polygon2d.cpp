@@ -40,11 +40,11 @@ void DrawablePolygon2D::setSegmentSize(int value)
 
 void DrawablePolygon2D::draw() const
 {
-    for (unsigned int i = 0; i < pol.size()-1; i++){
-        cg3::opengl::drawPoint2D(pol[i], pointColor, pointSize);
-        cg3::opengl::drawLine2D(pol[i], pol[i+1], segmentColor, segmentSize);
-    }
     if (pol.size() > 0){
+        for (unsigned int i = 0; i < pol.size()-1; i++){
+            cg3::opengl::drawPoint2D(pol[i], pointColor, pointSize);
+            cg3::opengl::drawLine2D(pol[i], pol[i+1], segmentColor, segmentSize);
+        }
         cg3::opengl::drawPoint2D(pol[pol.size()-1], pointColor, pointSize);
         cg3::opengl::drawLine2D(pol[pol.size()-1], pol[0], segmentColor, segmentSize);
     }
