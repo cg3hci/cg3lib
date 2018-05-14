@@ -18,7 +18,7 @@ Polygon2D::Polygon2D()
 
 unsigned int Polygon2D::size() const
 {
-    return pol.size();
+    return (unsigned int)pol.size();
 }
 
 Point2Dd&Polygon2D::operator [](unsigned int i)

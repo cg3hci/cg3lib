@@ -75,9 +75,9 @@ void deserializeAttribute(std::ifstream& binaryFile, T& t, Args&... args);
 } //namespace cg3::internal
 } //namespace cg3
 
-//#include "serialize_std.h"
+#include "serialize_std.h"
 #include "serialize_eigen.h"
-//#include "serialize_qt.h"
+#include "serialize_qt.h"
 
 #include "serialize.tpp"
 

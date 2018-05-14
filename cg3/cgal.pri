@@ -63,7 +63,7 @@ win32{
                 defineReplace(getFileName){
                     L1 = $$basename($$1)
                     L1 = $$last(L1)
-                    message(AAA: $$L1)
+                    #message(AAA: $$L1)
                     L1 = $$split(L1, .)
                     L1 = $$first(L1)
                     return($$L1)
