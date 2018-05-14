@@ -9,7 +9,7 @@
 #define CG3_GLOBAL_OPTIMAL_ROTATION_MATRIX_H
 
 #ifdef CG3_WITH_EIGEN
-class Eigen::Matrix3d;
+#include <Eigen/Core>
 #endif
 
 namespace cg3 {

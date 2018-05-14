@@ -8,12 +8,15 @@
 #include "global_optimal_rotation_matrix.h"
 
 #include "sphere_coverage.h"
+
 #include <cg3/geometry/transformations.h>
-#ifdef CG3_WITH_EIGEN
-#include <Eigen/Core>
-#endif
+
 #ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
+#endif
+
+#ifdef CG3_EIGENMESH_DEFINED
+#include <cg3/meshes/eigenmesh/simpleeigenmesh.h>
 #endif
 
 namespace cg3 {
