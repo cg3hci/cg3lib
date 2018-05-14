@@ -186,23 +186,23 @@ inline bool isPointLyingInTriangle(
     double gamma = 1.0f - alpha - beta;
 
     //If edges are included in the inside region
-    if (
-            includeEdges &&
-            alpha >= -std::numeric_limits<double>::epsilon() &&
+    if (includeEdges) {
+        if (alpha >= -std::numeric_limits<double>::epsilon() &&
             beta >= -std::numeric_limits<double>::epsilon() &&
             gamma >= -std::numeric_limits<double>::epsilon())
-    {
-        return true;
+        {
+            return true;
+        }
     }
 
     //If edges are not included in the inside region
-    else if (
-            !includeEdges &&
-            alpha > 0 &&
+    else {
+        if (alpha > 0 &&
             beta > 0 &&
             gamma > 0)
-    {
-        return true;
+        {
+            return true;
+        }
     }
 
     return false;
