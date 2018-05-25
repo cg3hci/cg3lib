@@ -57,6 +57,11 @@ std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::getVertexVertexAdjacenc
     Eigen::MatrixXi FF = m.F;
     igl::adjacency_list(FF, result);
 
+    //Libigl algorithm takes only the max value in m.F
+    //so we resize the vector to be of the same size of
+    //the vertex matrix
+    result.resize(m.V.rows());
+
     return result;
 }
 
