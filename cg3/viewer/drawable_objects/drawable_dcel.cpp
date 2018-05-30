@@ -129,6 +129,7 @@ void DrawableDcel::update()
         vertexCoordinates.push_back(p.x());
         vertexCoordinates.push_back(p.y());
         vertexCoordinates.push_back(p.z());
+        n.normalize();
         vertexNormals.push_back(n.x());
         vertexNormals.push_back(n.y());
         vertexNormals.push_back(n.z());

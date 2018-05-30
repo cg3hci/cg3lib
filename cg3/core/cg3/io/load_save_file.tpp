@@ -439,9 +439,9 @@ bool loadMeshFromObj(
 {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
 
-    static std::string vertex = "v";
-    static std::string vertexNormal = "vn";
-    static std::string face   = "f";
+    static const std::string vertex = "v";
+    static const std::string vertexNormal = "vn";
+    static const std::string face   = "f";
 
     std::ifstream file(filename.c_str());
     std::string   line;
@@ -556,7 +556,7 @@ bool loadMeshFromObj(
 
                 std::vector<cg3::Tokenizer> slashTokenizer;
                 for (unsigned int i=0; i<dummy.size(); i++){
-                    cg3::Tokenizer t(dummy[i], ' ');
+                    cg3::Tokenizer t(dummy[i], '/');
                     slashTokenizer.push_back(t);
                 }
 

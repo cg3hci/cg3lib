@@ -69,6 +69,7 @@ EigenMesh::EigenMesh(const Dcel& dcel)
         vids[v->getId()] = i;
         Pointd p = v->getCoordinate();
         Vec3 n = v->getNormal();
+        n.normalize();
         V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
         NV(i,0) = n.x(); NV(i,1) = n.y(); NV(i,2) = n.z();
         i++;
@@ -98,6 +99,8 @@ bool EigenMesh::readFromObj(const std::string& filename)
         if (!(mode & io::NORMAL_VERTICES)){
             updateVerticesNormals();
         }
+        else
+            NV.rowwise().normalize();
         if (!(mode & io::COLOR_VERTICES)){
             updateVertexColorsSize();
         }
@@ -120,6 +123,8 @@ bool EigenMesh::readFromPly(const std::string& filename)
         if (!(mode & io::NORMAL_VERTICES)){
             updateVerticesNormals();
         }
+        else
+            NV.rowwise().normalize();
         if (!(mode & io::COLOR_VERTICES)){
             updateVertexColorsSize();
         }
