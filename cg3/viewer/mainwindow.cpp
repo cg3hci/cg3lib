@@ -554,7 +554,7 @@ QCheckBox* MainWindow::pushDrawableObject(
         ((QVBoxLayout*)parent->layout())->addWidget(frame, 0, Qt::AlignTop);
         for (unsigned int i = 0; i < cont->size(); i++){
             const DrawableObject* obj = (*cont)[i];
-            QCheckBox* ccb = pushDrawableObject(obj, frame, cont->objectName(i), true);
+            QCheckBox* ccb = pushDrawableObject(obj, frame, cont->objectName(i), checkBoxChecked);
             vec.push_back(ccb);
         }
         containerFrames[cont].checkBoxes = vec;
