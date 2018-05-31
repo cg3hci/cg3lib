@@ -561,7 +561,7 @@ QCheckBox* MainWindow::pushDrawableObject(
         containerFrames[cont].frame = frame;
 
         cb->setCheckState(Qt::PartiallyChecked);
-        cb->setTristate(true);
+        cb->setTristate(checkBoxChecked);
     }
     return cb;
 }
