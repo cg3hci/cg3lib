@@ -560,8 +560,13 @@ QCheckBox* MainWindow::pushDrawableObject(
         containerFrames[cont].checkBoxes = vec;
         containerFrames[cont].frame = frame;
 
-        cb->setCheckState(Qt::PartiallyChecked);
-        cb->setTristate(checkBoxChecked);
+        cb->setTristate(true);
+        if (checkBoxChecked)
+            cb->setCheckState(Qt::PartiallyChecked);
+        else {
+            cb->setCheckState(Qt::Unchecked);
+            frame->setVisible(false);
+        }
     }
     return cb;
 }
