@@ -38,10 +38,11 @@ public:
     void updateDcel();
 
 
-private slots:
+public slots:
     void on_loadDcelButton_clicked();
     void on_cleanDcelButton_clicked();
     void on_saveDcelButton_clicked();
+private slots:
     void on_wireframeDcelCheckBox_stateChanged(int state);
     void on_wireframeWidthDcelSlider_valueChanged(int value);
     void on_wireframeColorDcelButton_clicked();
