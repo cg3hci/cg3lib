@@ -170,14 +170,6 @@ void SimpleEigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox
 void SimpleEigenMesh::scale(const Vec3& scaleFactor)
 {
     if (scaleFactor.x() > 0 && scaleFactor.y() > 0 && scaleFactor.z() > 0){
-        /*BoundingBox bb = getBoundingBox();
-        Pointd center = bb.center();
-        Pointd newMax(bb.min().x() + bb.getLengthX()*scaleFactor.x(), bb.min().y() + bb.getLengthY()*scaleFactor.y(), bb.min().z() + bb.getLengthZ()*scaleFactor.z());
-        bb.setMax(newMax);
-        Pointd trans = center - bb.center();
-        bb.min() += trans;
-        bb.max() += trans;
-        scale(bb);*/
         for (unsigned int i = 0; i < V.rows(); i++){
             V.row(i) = Eigen::Vector3d(V(i,0) * scaleFactor.x(),
                                        V(i,1) * scaleFactor.y(),
