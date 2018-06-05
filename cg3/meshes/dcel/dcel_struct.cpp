@@ -656,6 +656,21 @@ void Dcel::setColor(const Color& c)
         f->setColor(c);
 }
 
+void Dcel::scale(double scaleFactor)
+{
+    scale(cg3::Vec3(scaleFactor, scaleFactor, scaleFactor));
+}
+
+void Dcel::scale(const Vec3& scaleVector)
+{
+    for (Dcel::Vertex* v : vertexIterator()){
+        cg3::Pointd p = v->getCoordinate();
+        p *= scaleVector;
+        v->setCoordinate(p);
+    }
+    updateBoundingBox();
+}
+
 void Dcel::scale(const BoundingBox& newBoundingBox)
 {
     Pointd oldCenter = boundingBox.center();

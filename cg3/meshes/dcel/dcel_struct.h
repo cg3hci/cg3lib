@@ -169,6 +169,8 @@ public:
     void updateVertexNormals();
     BoundingBox updateBoundingBox();
     void setColor(const Color &c);
+    void scale(double scaleFactor);
+    void scale(const cg3::Vec3& scaleVector);
     void scale(const BoundingBox &newBoundingBox);
     #ifdef CG3_WITH_EIGEN
     void rotate(const Eigen::Matrix3d& matrix);
