@@ -16,8 +16,8 @@ namespace cg3 {
 namespace viewer {
 
 /**
- * @brief Crea un DcelManager
- * @param parent
+ * @brief Creates a Dcel Manager
+ * @param parent: this parameter must be the pointer to the MainWindow.
  */
 DcelManager::DcelManager(QWidget *parent) :
     QFrame(parent),
@@ -30,7 +30,7 @@ DcelManager::DcelManager(QWidget *parent) :
 }
 
 /**
- * @brief Elimina un DcelManager e la DrawableDcel contenuta in esso
+ * @brief Deletes the Dcel Manager and removes the Dcel from the MainWindow eventually.
  */
 DcelManager::~DcelManager()
 {
@@ -40,8 +40,8 @@ DcelManager::~DcelManager()
 }
 
 /**
- * @brief Restituisce il puntatore alla drawableDcel contenuta nel manager
- * @return La drawableDcel presente nel manager
+ * @brief Returns a reference to the Dcel of contained in the Manager
+ * @return
  */
 DrawableDcel &DcelManager::getDcel()
 {
@@ -49,12 +49,11 @@ DrawableDcel &DcelManager::getDcel()
 }
 
 /**
- * @brief Setta la Dcel contenuta nel manager, creando una \i copia della Dcel passata come parametro.
+ * @brief Allows to set from the outside the Dcel contained in the manager.
+ * The manager passes in "Dcel Loaded" mode, enabling/disabling all the gui's elements
+ * accordingly.
  *
- * Aggiorna in automatico la canvas, e setta i pulsanti del manager in modalità "dcelLoaded".
- * Elimina eventuali altre Dcel presenti precedentemente nel manager.
- *
- * @param[in] dcel: la dcel che verrà copiata all'interno del manager
+ * @param[in] dcel
  */
 void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
 {
@@ -68,9 +67,9 @@ void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
 }
 
 /**
- * @brief Elimina la Dcel contenuta nel manager.
- *
- * Aggiorna in automatico la canvasm e setta i pulsanti del manager in modalità "dcelNotLoaded".
+ * @brief Deletes the contained Dcel in the manager.
+ * The manager passes in "Dcel not Loaded" mode, enabling/disabling all the gui's elements
+ * accordingly.
  */
 void DcelManager::cleanDcel()
 {
@@ -86,8 +85,8 @@ void DcelManager::cleanDcel()
 }
 
 /**
- * @brief Applica le modifiche effettuate nella Dcel alla DrawableDcel.
- * Vedi DrawableDcel::update().
+ * @brief Calls the update() member of the contained dcel.
+ * @see DrawableDcel::update().
  */
 void DcelManager::updateDcel()
 {
@@ -96,6 +95,14 @@ void DcelManager::updateDcel()
         mainWindow.canvas.update();
         mainWindow.canvas.fitScene();
     }
+}
+
+/**
+ * @brief DcelManager::isDcelLoaded
+ */
+bool DcelManager::isDcelLoaded() const
+{
+    return loaded;
 }
 
 /**

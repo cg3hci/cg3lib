@@ -36,7 +36,7 @@ public:
     void setDcel(const cg3::Dcel& dcel, const std::string& name = "Dcel");
     void cleanDcel();
     void updateDcel();
-
+    bool isDcelLoaded() const;
 
 public slots:
     void on_loadDcelButton_clicked();
