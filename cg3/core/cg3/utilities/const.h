@@ -33,6 +33,10 @@ static const std::array<Vec3, 6> AXIS
     Vec3( 0, 0,-1),
 };
 
+static const cg3::Vec3 X_AXIS(1, 0, 0);
+static const cg3::Vec3 Y_AXIS(0, 1, 0);
+static const cg3::Vec3 Z_AXIS(0, 0, 1);
+
 /**
  * @ingroup cg3core
  * @brief PASTEL_COLORS
@@ -50,6 +54,16 @@ static const std::vector<Color> PASTEL_COLORS =
     Color(249, 203, 156), //
     Color(180, 167, 214) //
 };
+
+static const cg3::Color RED(255,0,0);
+static const cg3::Color GREEN(0,255,0);
+static const cg3::Color BLUE(0,0,255);
+static const cg3::Color YELLOW(255,255,0);
+static const cg3::Color CYAN(0,255,255);
+static const cg3::Color MAGENTA(255,0,255);
+static const cg3::Color WHITE(255,255,255);
+static const cg3::Color BLACK(0,0,0);
+static const cg3::Color GREY(128,128,128);
 
 } //namespace cg3
 
