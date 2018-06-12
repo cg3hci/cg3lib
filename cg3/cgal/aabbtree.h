@@ -71,12 +71,14 @@ public:
     void getCompletelyContainedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox &b) const;
     void getCompletelyContainedDcelFaces(std::list<unsigned int> &outputList, const BoundingBox &b) const;
     std::list<const Dcel::Face*> getCompletelyContainedDcelFaces(const BoundingBox &b) const;
+    void getIntersectedDcelFaces(const Pointd& p1, const Pointd& p2, std::list<const Dcel::Face*> &outputList) const;
+    std::list<const Dcel::Face*> getIntersectedDcelFaces(const Pointd& p1, const Pointd& p2) const;
     const Dcel::Face* getNearestDcelFace(const Pointd &p) const;
     const Dcel::Vertex* getNearestDcelVertex(const Pointd &p) const;
     #endif
 
     #ifdef  CG3_EIGENMESH_DEFINED
-    void getIntersectEigenFaces(const Pointd& p1, const Pointd &p2, std::vector<int> &outputList);
+    void getIntersectedEigenFaces(const Pointd& p1, const Pointd &p2, std::list<int> &outputList);
     unsigned int getNearestEigenFace(const Pointd& p) const;
     #endif
 

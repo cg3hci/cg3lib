@@ -465,12 +465,42 @@ void AABBTree::getCompletelyContainedDcelFaces(
  * @param b
  * @return
  */
-std::list<const Dcel::Face*> AABBTree::getCompletelyContainedDcelFaces(const BoundingBox& b) const
+std::list<const Dcel::Face*> AABBTree::getCompletelyContainedDcelFaces(
+        const BoundingBox& b) const
 {
-    assert(treeType == DCEL);
     std::list<const Dcel::Face*> output;
     getCompletelyContainedDcelFaces(output, b);
     return output;
+}
+
+void AABBTree::getIntersectedDcelFaces(
+        const Pointd& p1,
+        const Pointd& p2,
+        std::list<const Dcel::Face*>& outputList) const
+{
+    assert(treeType == DCEL);
+    outputList.clear();
+    CGALPoint pa(p1.x(), p1.y(), p1.z());
+    CGALPoint pb(p2.x(), p2.y(), p2.z());
+    //CGALRay ray_query(pa,pb);
+    K::Segment_3 ray_query(pa,pb);
+    std::list< Tree::Primitive_id > trianglesIds;
+    tree.all_intersected_primitives(ray_query, std::back_inserter(trianglesIds));
+    for (std::list< Tree::Primitive_id >::const_iterator it = trianglesIds.begin(); it != trianglesIds.end(); ++it){
+        const Tree::Primitive_id id = *it;
+        const CGALTriangle t = *id;
+        std::map<CGALTriangle, const cg3::Dcel::Face*, cmpCGALTriangle>::const_iterator mit = mapCgalTrianglesToDcelFaces.find(t);
+        outputList.push_back(mit->second);
+    }
+}
+
+std::list<const Dcel::Face*> AABBTree::getIntersectedDcelFaces(
+        const Pointd& p1,
+        const Pointd& p2) const
+{
+    std::list<const Dcel::Face*> outputList;
+    getIntersectedDcelFaces(p1, p2, outputList);
+    return outputList;
 }
 
 /**
@@ -520,9 +550,10 @@ const Dcel::Vertex* AABBTree::getNearestDcelVertex(const Pointd& p) const
  * @param p2
  * @param outputList
  */
-void AABBTree::getIntersectEigenFaces(const Pointd& p1, const Pointd &p2, std::vector<int> &outputList)
+void AABBTree::getIntersectedEigenFaces(const Pointd& p1, const Pointd &p2, std::list<int> &outputList)
 {
     assert(treeType == EIGENMESH);
+    outputList.clear();
     CGALPoint pa(p1.x(), p1.y(), p1.z());
     CGALPoint pb(p2.x(), p2.y(), p2.z());
     //CGALRay ray_query(pa,pb);
