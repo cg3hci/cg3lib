@@ -4,12 +4,17 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
+#ifndef CG3_DCEL_COLORING_H
+#define CG3_DCEL_COLORING_H
 
-#include "dcel_algorithms.h"
-#include <cg3/utilities//utils.h>
+#include <cg3/meshes/dcel/dcel.h>
 
 namespace cg3 {
+namespace dcelAlgorithms {
 
+void smartColoring(Dcel &d);
 
-
+} //namespace cg3::dcelAlgorithms
 } //namespace cg3
+
+#endif // CG3_DCEL_COLORING_H

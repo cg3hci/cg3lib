@@ -22,7 +22,11 @@ HEADERS += \
     $$PWD/meshes/dcel/dcel_struct.h \
     $$PWD/meshes/dcel/dcel_vertex.h \
     $$PWD/meshes/dcel/dcel_vertex_iterators.h \
-    $$PWD/meshes/dcel/algorithms/dcel_algorithms.h
+    $$PWD/meshes/dcel/algorithms/dcel_algorithms.h  \
+    $$PWD/meshes/dcel/algorithms/dcel_to_vectors.h \
+    $$PWD/meshes/dcel/algorithms/dcel_flooding.h \
+    $$PWD/meshes/dcel/algorithms/dcel_coloring.h \
+    $$PWD/meshes/dcel/dcel_builder.h
 
 SOURCES += \
     $$PWD/meshes/dcel/dcel_face.cpp \
@@ -36,7 +40,11 @@ SOURCES += \
     $$PWD/meshes/dcel/dcel_iterators_inline.tpp \
     $$PWD/meshes/dcel/dcel_vertex_inline.tpp \
     $$PWD/meshes/dcel/dcel_vertex_iterators_inline.tpp \
-    $$PWD/meshes/dcel/dcel_face_inline.tpp
+    $$PWD/meshes/dcel/dcel_face_inline.tpp \
+    $$PWD/meshes/dcel/algorithms/dcel_to_vectors.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_flooding.tpp \
+    $$PWD/meshes/dcel/algorithms/dcel_coloring.cpp \
+    $$PWD/meshes/dcel/dcel_builder.cpp
 
 contains(DEFINES, CG3_WITH_EIGEN) {
 

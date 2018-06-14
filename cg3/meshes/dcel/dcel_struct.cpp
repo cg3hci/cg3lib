@@ -503,6 +503,33 @@ bool Dcel::deleteVertex(Dcel::Vertex* v)
     return true;
 }
 
+bool Dcel::vertexBelongsToThis(const Dcel::Vertex* v) const
+{
+#ifdef NDEBUG
+    return v->parent == this;
+#else
+    return std::find(vertices.begin(), vertices.end(), v) != vertices.end();
+#endif
+}
+
+bool Dcel::halfEdgeBelongsToThis(const Dcel::HalfEdge* he) const
+{
+#ifdef NDEBUG
+    return he->parent == this;
+#else
+    return std::find(halfEdges.begin(), halfEdges.end(), he) != halfEdges.end();
+#endif
+}
+
+bool Dcel::faceBelongsToThis(const Dcel::Face* f) const
+{
+#ifdef NDEBUG
+    return f->parent == this;
+#else
+    return std::find(faces.begin(), faces.end(), f) != faces.end();
+#endif
+}
+
 /**
  * \~Italian
  * @brief Funzione che elimina l'half edge passato in input.

@@ -152,6 +152,9 @@ public:
     ******************/
 
     bool deleteVertex (Vertex* v);
+    bool vertexBelongsToThis(const Vertex* v)               const;
+    bool halfEdgeBelongsToThis(const HalfEdge* he)          const;
+    bool faceBelongsToThis(const Face* f)                   const;
     bool isTriangleMesh()                                   const;
     double getSurfaceArea()                                 const;
     Pointd getBarycenter()                                  const;
