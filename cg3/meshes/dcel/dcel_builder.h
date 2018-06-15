@@ -46,9 +46,8 @@ public:
 protected:
 
     cg3::Dcel d;
-    std::vector<cg3::Dcel::Vertex*> vectorVertices;
-    std::unordered_map<cg3::Pointd, cg3::Dcel::Vertex*> mapVertices;
-    std::unordered_map<std::pair<unsigned int, unsigned int>, cg3::Dcel::HalfEdge*> mapHalfEdges;
+    std::map<cg3::Pointd, unsigned int> mapVertices;
+    std::map<std::pair<unsigned int, unsigned int>, unsigned int> mapHalfEdges;
 };
 
 } //namespace cg3

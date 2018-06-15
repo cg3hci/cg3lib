@@ -10,17 +10,10 @@ namespace cg3 {
 
 DcelBuilder::DcelBuilder(Dcel startingDcel) : d(startingDcel)
 {
-    vectorVertices.resize(d.getNumberVertices(), nullptr);
     for (cg3::Dcel::Vertex* v : d.vertexIterator()) {
-        if (v->getId() >= vectorVertices.size()){
-            unsigned int oldsize = vectorVertices.size();
-            vectorVertices.resize(v->getId()+1);
-            for (unsigned int i = oldsize; i < v->getId(); i++)
-                vectorVertices[i] = nullptr;
-        }
-        vectorVertices[v->getId()] = v;
-        mapVertices[v->getCoordinate()] = v;
+        mapVertices[v->getCoordinate()] = v->getId();
     }
+    //maybe initializa also edges?
 }
 
 Dcel& DcelBuilder::dcel()
@@ -32,11 +25,11 @@ unsigned int DcelBuilder::addVertex(const Pointd& p, const Vec3& n, const Color 
 {
     if (mapVertices.find(p) == mapVertices.end()){
         cg3::Dcel::Vertex* v = d.addVertex(p, n, c);
-        mapVertices[p] = v;
+        mapVertices[p] = v->getId();
         return v->getId();
     }
     else
-        return mapVertices[p]->getId();
+        return mapVertices[p];
 }
 
 int DcelBuilder::addFace(
@@ -46,13 +39,9 @@ int DcelBuilder::addFace(
         const Color& c)
 {
     //one of the three ids does not exist in the dcel
-    if (vid1 >= vectorVertices.size() ||
-            vid2 >= vectorVertices.size() ||
-            vid3 >= vectorVertices.size())
-        return -1;
-    if (vectorVertices[vid1] == nullptr ||
-            vectorVertices[vid2] == nullptr ||
-            vectorVertices[vid3] == nullptr)
+    if (d.getVertex(vid1) == nullptr ||
+            d.getVertex(vid2) == nullptr ||
+            d.getVertex(vid3) == nullptr)
         return -1;
 
     std::pair<unsigned int, unsigned int> pe1(vid1, vid2);
@@ -71,21 +60,21 @@ int DcelBuilder::addFace(
     std::pair<unsigned int, unsigned int> tpe3(vid1, vid3);
 
     cg3::Dcel::HalfEdge* te1 = nullptr, *te2 = nullptr, *te3 = nullptr;
-    std::unordered_map<std::pair<unsigned int, unsigned int>, cg3::Dcel::HalfEdge*>::iterator it =
+    std::map<std::pair<unsigned int, unsigned int>, unsigned int>::iterator it =
             mapHalfEdges.find(tpe1);
     if (it != mapHalfEdges.end())
-        te1 = it->second;
+        te1 = d.getHalfEdge(it->second);
     it = mapHalfEdges.find(tpe2);
     if (it != mapHalfEdges.end())
-        te2 = it->second;
+        te2 = d.getHalfEdge(it->second);
     it = mapHalfEdges.find(tpe3);
     if (it != mapHalfEdges.end())
-        te3 = it->second;
+        te3 = d.getHalfEdge(it->second);
 
     //get vertices
-    cg3::Dcel::Vertex* v1 = vectorVertices[vid1];
-    cg3::Dcel::Vertex* v2 = vectorVertices[vid2];
-    cg3::Dcel::Vertex* v3 = vectorVertices[vid3];
+    cg3::Dcel::Vertex* v1 = d.getVertex(vid1);
+    cg3::Dcel::Vertex* v2 = d.getVertex(vid2);
+    cg3::Dcel::Vertex* v3 = d.getVertex(vid3);
 
     //add half edges
     cg3::Dcel::HalfEdge* he1 = d.addHalfEdge();
@@ -94,8 +83,8 @@ int DcelBuilder::addFace(
 
     //from and to vertex
     he1->setFromVertex(v1); he1->setToVertex(v2);
-    he2->setFromVertex(v2); he1->setToVertex(v3);
-    he3->setFromVertex(v3); he1->setToVertex(v1);
+    he2->setFromVertex(v2); he2->setToVertex(v3);
+    he3->setFromVertex(v3); he3->setToVertex(v1);
 
     //prev and next
     he1->setPrev(he3); he1->setNext(he2);
@@ -104,8 +93,14 @@ int DcelBuilder::addFace(
 
     //twin
     he1->setTwin(te1);
+    if (te1)
+        te1->setTwin(he1);
     he2->setTwin(te2);
+    if (te2)
+        te2->setTwin(he2);
     he3->setTwin(te3);
+    if (te3)
+        te3->setTwin(he3);
 
     //vertex incident
     v1->setIncidentHalfEdge(he1);
@@ -120,9 +115,9 @@ int DcelBuilder::addFace(
     f->setColor(c);
     f->setOuterHalfEdge(he1);
 
-    mapHalfEdges.insert(std::make_pair(std::make_pair(vid1, vid2), he1));
-    mapHalfEdges.insert(std::make_pair(std::make_pair(vid2, vid3), he2));
-    mapHalfEdges.insert(std::make_pair(std::make_pair(vid3, vid1), he3));
+    mapHalfEdges.insert(std::make_pair(std::make_pair(vid1, vid2), he1->getId()));
+    mapHalfEdges.insert(std::make_pair(std::make_pair(vid2, vid3), he2->getId()));
+    mapHalfEdges.insert(std::make_pair(std::make_pair(vid3, vid1), he3->getId()));
 
     f->updateNormal();
     return f->getId();
@@ -137,24 +132,24 @@ int DcelBuilder::addFace(
     unsigned int vid1, vid2, vid3;
 
     //setting vids
-    std::unordered_map<cg3::Pointd, cg3::Dcel::Vertex*>::iterator it;
+    std::map<cg3::Pointd, unsigned int>::iterator it;
     it = mapVertices.find(p1);
     if (it == mapVertices.end())
         vid1 = addVertex(p1);
     else
-        vid1 = it->second->getId();
+        vid1 = it->second;
 
     it = mapVertices.find(p2);
     if (it == mapVertices.end())
         vid2 = addVertex(p2);
     else
-        vid2 = it->second->getId();
+        vid2 = it->second;
 
     it = mapVertices.find(p3);
     if (it == mapVertices.end())
         vid3 = addVertex(p3);
     else
-        vid3 = it->second->getId();
+        vid3 = it->second;
 
     return addFace(vid1, vid2, vid3, c);
 }
