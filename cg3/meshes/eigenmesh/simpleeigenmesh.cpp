@@ -178,6 +178,11 @@ void SimpleEigenMesh::scale(const Vec3& scaleFactor)
     }
 }
 
+void SimpleEigenMesh::scale(double scaleFactor)
+{
+    scale(cg3::Vec3(scaleFactor, scaleFactor, scaleFactor));
+}
+
 void SimpleEigenMesh::merge(SimpleEigenMesh &result, const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
 {
     result.V.resize(m1.V.rows()+m2.V.rows(), 3);

@@ -110,6 +110,7 @@ public:
     virtual void scale(const BoundingBox& newBoundingBox);
     virtual void scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox);
     virtual void scale(const Vec3 &scaleFactor);
+    virtual void scale(double scaleFactor);
     static void merge(SimpleEigenMesh &result, const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
     static SimpleEigenMesh merge(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
 
