@@ -38,6 +38,21 @@ bool DrawableMesh::isSmoothShadingEnabled() const
     return drawMode & DRAW_SMOOTH;
 }
 
+bool DrawableMesh::isBboxEnabled() const
+{
+    return drawMode & DRAW_BOUNDINGBOX;
+}
+
+bool DrawableMesh::isTriangleColorEnabled() const
+{
+    return drawMode & DRAW_FACECOLOR;
+}
+
+bool DrawableMesh::isVertexColorEnabled() const
+{
+    return drawMode & DRAW_VERTEXCOLOR;
+}
+
 void DrawableMesh::setWireframe(bool b) const
 {
     if (b) drawMode |=  DRAW_WIREFRAME;

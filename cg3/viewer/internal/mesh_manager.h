@@ -38,6 +38,12 @@ private slots:
 
     void on_wireframeCheckBox_stateChanged(int arg1);
 
+    void on_bboxCheckBox_stateChanged(int arg1);
+
+    void on_vColorRadioButton_toggled(bool checked);
+
+    void on_tColorRadioButton_toggled(bool checked);
+
 private:
     Ui::MeshManager *ui;
     MainWindow& mw;

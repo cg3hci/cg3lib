@@ -27,6 +27,11 @@ MeshManager::MeshManager(QWidget *parent, const DrawableMesh* mesh) :
     else
         ui->smoothRadioButton->toggle();
     ui->wireframeCheckBox->setChecked(mesh->isWireframeEnabled());
+    ui->bboxCheckBox->setChecked(mesh->isBboxEnabled());
+    if (mesh->isTriangleColorEnabled())
+        ui->tColorRadioButton->toggle();
+    else
+        ui->vColorRadioButton->toggle();
 }
 
 MeshManager::~MeshManager()
@@ -63,6 +68,29 @@ void MeshManager::on_wireframeCheckBox_stateChanged(int arg1)
     mesh->setWireframe(arg1 == Qt::Checked);
     mw.canvas.update();
 }
+
+void MeshManager::on_bboxCheckBox_stateChanged(int arg1)
+{
+    mesh->setVisibleBoundingBox(arg1 == Qt::Checked);
+    mw.canvas.update();
+}
+
+void MeshManager::on_vColorRadioButton_toggled(bool checked)
+{
+    if (checked){
+        mesh->setEnableVertexColor();
+        mw.canvas.update();
+    }
+}
+
+void MeshManager::on_tColorRadioButton_toggled(bool checked)
+{
+    if (checked){
+        mesh->setEnableTriangleColor();
+        mw.canvas.update();
+    }
+}
+
 
 } //namespace cg3::viewer
 } //namespace cg3

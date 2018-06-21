@@ -61,6 +61,9 @@ public:
     bool isPointShadingEnabled() const;
     bool isFlatShadingEnabled() const;
     bool isSmoothShadingEnabled() const;
+    bool isBboxEnabled() const;
+    bool isTriangleColorEnabled() const;
+    bool isVertexColorEnabled() const;
 
     // rendering options setters
     //

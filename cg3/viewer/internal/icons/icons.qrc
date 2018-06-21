@@ -1,8 +1,11 @@
 <RCC>
     <qresource prefix="/">
+        <file>bbox.png</file>
         <file>flat.png</file>
         <file>points.png</file>
         <file>smooth.png</file>
         <file>wire.png</file>
+        <file>tcolor.png</file>
+        <file>vcolor.png</file>
     </qresource>
 </RCC>

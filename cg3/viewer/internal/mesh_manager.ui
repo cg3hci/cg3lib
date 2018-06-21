@@ -7,61 +7,113 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>97</height>
+    <height>190</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="QRadioButton" name="pointsRadioButton">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../icons/icons.qrc">
-       <normaloff>:/points.png</normaloff>:/points.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
     <widget class="QRadioButton" name="flatRadioButton">
      <property name="text">
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../icons/icons.qrc">
+      <iconset resource="icons/icons.qrc">
        <normaloff>:/flat.png</normaloff>:/flat.png</iconset>
      </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
     </widget>
    </item>
-   <item>
+   <item row="0" column="2">
     <widget class="QRadioButton" name="smoothRadioButton">
      <property name="text">
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../icons/icons.qrc">
+      <iconset resource="icons/icons.qrc">
        <normaloff>:/smooth.png</normaloff>:/smooth.png</iconset>
      </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
     </widget>
    </item>
-   <item>
+   <item row="0" column="0">
+    <widget class="QRadioButton" name="pointsRadioButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/points.png</normaloff>:/points.png</iconset>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+   <item row="0" column="3">
     <widget class="QCheckBox" name="wireframeCheckBox">
      <property name="text">
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../icons/icons.qrc">
+      <iconset resource="icons/icons.qrc">
        <normaloff>:/wire.png</normaloff>:/wire.png</iconset>
      </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QCheckBox" name="bboxCheckBox">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/bbox.png</normaloff>:/bbox.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QRadioButton" name="tColorRadioButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/vcolor.png</normaloff>:/vcolor.png</iconset>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup_2</string>
+     </attribute>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QRadioButton" name="vColorRadioButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/tcolor.png</normaloff>:/tcolor.png</iconset>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup_2</string>
+     </attribute>
     </widget>
    </item>
   </layout>
  </widget>
  <resources>
-  <include location="../../icons/icons.qrc"/>
+  <include location="icons/icons.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+ </buttongroups>
 </ui>
