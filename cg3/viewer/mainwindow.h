@@ -41,6 +41,7 @@ class DrawableContainer;
 namespace viewer {
 
 class GLCanvas;
+class MeshManager;
 
 namespace Ui {
 
@@ -50,6 +51,7 @@ class MainWindow;
 
 namespace internal {
 
+//class MeshManager;
 class UiMainWindowRaiiWrapper;
 
 } //namespace cg3::viewer::internal
@@ -188,6 +190,7 @@ private:
     boost::bimap<int, const cg3::DrawableObject*> mapObjects;
     int nCheckBoxes;
     std::map<const cg3::DrawableContainer*, ContainerProperties > containerFrames;
+    std::map<const DrawableObject*, MeshManager*> mapMeshManagers;
     bool first;
     bool debugObjectsEnabled;
     QSpacerItem* m_spacer;

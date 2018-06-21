@@ -18,58 +18,78 @@ void DrawableMesh::init()
     wireframeColor[2] = (float)0.1;
 }
 
-void DrawableMesh::setWireframe(bool b)
+bool DrawableMesh::isWireframeEnabled() const
+{
+    return drawMode & DRAW_WIREFRAME;
+}
+
+bool DrawableMesh::isPointShadingEnabled() const
+{
+    return drawMode & DRAW_POINTS;
+}
+
+bool DrawableMesh::isFlatShadingEnabled() const
+{
+    return drawMode & DRAW_FLAT;
+}
+
+bool DrawableMesh::isSmoothShadingEnabled() const
+{
+    return drawMode & DRAW_SMOOTH;
+}
+
+void DrawableMesh::setWireframe(bool b) const
 {
     if (b) drawMode |=  DRAW_WIREFRAME;
     else   drawMode &= ~DRAW_WIREFRAME;
 }
 
-void DrawableMesh::setFlatShading()
+void DrawableMesh::setFlatShading() const
 {
     drawMode |=  DRAW_FLAT;
     drawMode &= ~DRAW_SMOOTH;
     drawMode &= ~DRAW_POINTS;
 }
 
-void DrawableMesh::setSmoothShading()
+void DrawableMesh::setSmoothShading() const
 {
     drawMode |=  DRAW_SMOOTH;
     drawMode &= ~DRAW_FLAT;
     drawMode &= ~DRAW_POINTS;
 }
 
-void DrawableMesh::setPointsShading()
+void DrawableMesh::setPointsShading() const
 {
     drawMode |=  DRAW_POINTS;
     drawMode &= ~DRAW_FLAT;
     drawMode &= ~DRAW_SMOOTH;
 }
 
-void DrawableMesh::setWireframeColor(float r, float g, float b)
+void DrawableMesh::setWireframeColor(float r, float g, float b) const
 {
     wireframeColor[0] = r;
     wireframeColor[1] = g;
     wireframeColor[2] = b;
 }
 
-void DrawableMesh::setWireframeWidth(float width)
+void DrawableMesh::setWireframeWidth(float width) const
 {
     wireframeWidth = width;
 }
 
-void DrawableMesh::setEnableVertexColor()
+void DrawableMesh::setEnableVertexColor() const
 {
     drawMode |=  DRAW_VERTEXCOLOR;
     drawMode &= ~DRAW_FACECOLOR;
 }
 
-void DrawableMesh::setEnableTriangleColor()
+void DrawableMesh::setEnableTriangleColor() const
 {
     drawMode |=  DRAW_FACECOLOR;
     drawMode &= ~DRAW_VERTEXCOLOR;
 }
 
-void DrawableMesh::setVisibleBoundingBox(bool b)
+void DrawableMesh::setVisibleBoundingBox(bool b) const
 {
     if (b) drawMode |=  DRAW_BOUNDINGBOX;
     else   drawMode &= ~DRAW_BOUNDINGBOX;

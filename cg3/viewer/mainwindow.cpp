@@ -19,6 +19,8 @@
 #include <QFrame>
 
 #include "interfaces/drawable_container.h"
+#include "interfaces/drawable_mesh.h"
+#include "internal/mesh_manager.h"
 #include "utilities/consolestream.h"
 
 #include <cg3/utilities/cg3config.h>
@@ -472,10 +474,12 @@ void MainWindow::checkBoxClicked(int i)
         }
     }
     else {
-        if (cb->isChecked())
-            canvas.setDrawableObjectVisibility(obj, true);
-        else
-            canvas.setDrawableObjectVisibility(obj, false);
+        canvas.setDrawableObjectVisibility(obj, cb->isChecked());
+        const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
+        if (mesh){
+            mapMeshManagers[mesh]->setVisible(cb->isChecked());
+        }
+
     }
     canvas.update();
 }
@@ -523,6 +527,12 @@ QCheckBox* MainWindow::pushDrawableObject(
 
     const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
     if (!cont){ //if is not a DrawableContainer, it will be a DrawableObject in the canvas
+        const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
+        if (mesh){
+            MeshManager* manager = new MeshManager(this, mesh);
+            mapMeshManagers[mesh] = manager;
+            ((QVBoxLayout*)parent->layout())->addWidget(manager);
+        }
         canvas.pushDrawableObject(obj, checkBoxChecked);
         canvas.update();
     }
@@ -611,6 +621,12 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj, QWidget* parent
             containerFrames.erase(cont);
         }
         else {
+            const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
+            if (mesh){
+                ((QVBoxLayout*)parent->layout())->removeWidget(mapMeshManagers[mesh]);
+                delete mapMeshManagers[mesh];
+                mapMeshManagers.erase(mesh);
+            }
             canvas.deleteDrawableObject(obj);
         }
         canvas.update();

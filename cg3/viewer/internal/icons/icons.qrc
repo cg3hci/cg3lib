@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>flat.png</file>
+        <file>points.png</file>
+        <file>smooth.png</file>
+        <file>wire.png</file>
+    </qresource>
+</RCC>

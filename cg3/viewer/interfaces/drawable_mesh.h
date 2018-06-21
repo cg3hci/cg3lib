@@ -55,17 +55,24 @@ public:
     virtual Pointd sceneCenter() const = 0;
     virtual double sceneRadius() const = 0;
 
-    // rendering options
+    //rendering options getters
     //
-    void setWireframe(bool b);
-    void setFlatShading();
-    void setSmoothShading();
-    void setPointsShading();
-    void setWireframeColor(float r, float g, float b);
-    void setWireframeWidth(float width);
-    void setEnableVertexColor();
-    void setEnableTriangleColor();
-    void setVisibleBoundingBox(bool b);
+    bool isWireframeEnabled() const;
+    bool isPointShadingEnabled() const;
+    bool isFlatShadingEnabled() const;
+    bool isSmoothShadingEnabled() const;
+
+    // rendering options setters
+    //
+    void setWireframe(bool b) const;
+    void setFlatShading() const;
+    void setSmoothShading() const;
+    void setPointsShading() const;
+    void setWireframeColor(float r, float g, float b) const;
+    void setWireframeWidth(float width) const;
+    void setEnableVertexColor() const;
+    void setEnableTriangleColor() const;
+    void setVisibleBoundingBox(bool b) const;
 
 protected:
     DrawableMesh();

@@ -85,6 +85,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
         $$PWD/viewer/interfaces/drawable_mesh.h \
+        $$PWD/viewer/internal/mesh_manager.h \
         #$$PWD/viewer/managers/debugobjects_manager.h \
         $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/utilities/loadersaver.h \
@@ -109,6 +110,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/interfaces/drawable_container.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/interfaces/pickable_object.cpp \
+        $$PWD/viewer/internal/mesh_manager.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
@@ -121,7 +123,11 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 
     FORMS += \
         $$PWD/viewer/mainwindow.ui \
+        $$PWD/viewer/internal/mesh_manager.ui
         #$$PWD/viewer/managers/debugobjects_manager.ui
+
+    RESOURCES += \
+        $$PWD/viewer/internal/icons/icons.qrc
 
     contains(DEFINES, CG3_DCEL_DEFINED) {
         HEADERS += \
@@ -169,3 +175,5 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
+
+
