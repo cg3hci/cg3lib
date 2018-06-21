@@ -11,6 +11,7 @@
 #include "../interfaces/drawable_object.h"
 #include <cg3/geometry/bounding_box.h>
 #include <cg3/geometry/2d/bounding_box2d.h>
+#include <cg3/viewer/glcanvas.h>
 
 namespace cg3 {
 
@@ -23,7 +24,7 @@ class DrawableMixedObjects : public DrawableObject
 public:
     typedef enum {SPHERE, CYLINDER, POINT, LINE, TRIANGLE} Elements;
 
-    DrawableMixedObjects();
+    DrawableMixedObjects(cg3::viewer::GLCanvas* canvas = nullptr);
 
     // DrawableObject interface
     void draw() const;
@@ -76,6 +77,10 @@ public:
             int width = 3,
             bool fill = false);
     void clearTriangles();
+    unsigned int addText(
+            const Pointd& pos,
+            const std::string& text);
+    void clearTexts();
 
 protected:
     struct Object
@@ -118,13 +123,21 @@ protected:
             QColor color;
             bool fill;
     };
+    struct Text
+    {
+            Pointd pos;
+            std::string text;
+    };
     std::vector<Sphere> spheres;
     std::vector<Cylinder> cylinders;
     std::vector<Line> lines;
     std::vector<Point> points;
     std::vector<Triangle> triangles;
+    std::vector<Text> texts;
 
     BoundingBox bb;
+
+    cg3::viewer::GLCanvas* canvas;
 };
 
 } //namespace cg3

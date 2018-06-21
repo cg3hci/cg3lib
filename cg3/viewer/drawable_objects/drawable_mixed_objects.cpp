@@ -12,7 +12,8 @@
 
 namespace cg3 {
 
-DrawableMixedObjects::DrawableMixedObjects()
+DrawableMixedObjects::DrawableMixedObjects(viewer::GLCanvas* canvas) :
+    canvas(canvas)
 {
 }
 
@@ -32,6 +33,13 @@ void DrawableMixedObjects::draw() const
     }
     for (const Triangle& t : triangles){
         opengl::drawTriangle(t.a, t.b, t.c, t.color, t.width, t.fill);
+    }
+    if (canvas != nullptr){
+        for (const Text& t : texts) {
+            qglviewer::Vec pos2d =
+                    canvas->camera()->projectedCoordinatesOf(qglviewer::Vec(t.pos.x(), t.pos.y(), t.pos.z()));
+            canvas->drawText(pos2d.x, pos2d.y, QString::fromStdString(t.text));
+        }
     }
 }
 
@@ -199,6 +207,17 @@ void DrawableMixedObjects::clearTriangles()
 {
     triangles.clear();
     updateBoundingBox();
+}
+
+unsigned int DrawableMixedObjects::addText(const Pointd& pos, const std::string& text)
+{
+    texts.push_back({pos, text});
+    return (unsigned int) texts.size()-1;
+}
+
+void DrawableMixedObjects::clearTexts()
+{
+    texts.clear();
 }
 
 } //namespace cg3

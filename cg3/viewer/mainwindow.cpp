@@ -48,7 +48,8 @@ MainWindow::MainWindow(QWidget* parent) :
         nCheckBoxes(0),
         first(true),
         debugObjectsEnabled(false),
-        canvas(*ui->glCanvas)
+        canvas(*ui->glCanvas),
+        debugObjects(&canvas)
 {
     ui->toolBox->removeItem(0);
 
