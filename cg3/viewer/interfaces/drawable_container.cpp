@@ -86,7 +86,10 @@ const std::string& DrawableContainer::objectName(unsigned int i) const
 
 void DrawableContainer::draw() const
 {
-
+    for (const DrawableObject* o : objects){
+        if (o->isVisible())
+            o->draw();
+    }
 }
 
 Pointd DrawableContainer::sceneCenter() const

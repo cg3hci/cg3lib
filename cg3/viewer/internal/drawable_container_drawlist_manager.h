@@ -10,7 +10,14 @@
 #include <QFrame>
 
 namespace cg3 {
+
+class DrawableObject;
+class DrawableContainer;
+
 namespace viewer {
+
+class MainWindow;
+class DrawableObjectDrawListManager;
 
 namespace Ui {
 class DrawableContainerDrawListManager;
@@ -21,11 +28,16 @@ class DrawableContainerDrawListManager : public QFrame
     Q_OBJECT
 
 public:
-    explicit DrawableContainerDrawListManager(QWidget *parent = 0);
+    explicit DrawableContainerDrawListManager(
+            QWidget *parent,
+            const DrawableContainer* cont);
     ~DrawableContainerDrawListManager();
 
 private:
     Ui::DrawableContainerDrawListManager *ui;
+    MainWindow& mw;
+    const DrawableContainer* cont;
+    std::map<const DrawableObject*, DrawableObjectDrawListManager*> mapSubManagers;
 };
 
 } //namespace cg3::viewer

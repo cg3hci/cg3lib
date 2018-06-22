@@ -26,18 +26,24 @@ class DrawableObjectDrawListManager : public QFrame
     Q_OBJECT
 
 public:
-    explicit DrawableObjectDrawListManager(QWidget *parent, const DrawableObject* object, const std::string& name);
+    explicit DrawableObjectDrawListManager(
+            QWidget *parent,
+            const DrawableObject* object,
+            const std::string& name);
     ~DrawableObjectDrawListManager();
 
     void setDrawableObjectVisibility(bool vis);
+    void setNameCheckBox(const std::string& newName);
+    void setSubFrame(QFrame* frame);
 
 private slots:
-    void on_checkBox_stateChanged(int arg1);
+    void on_checkBox_stateChanged(int state);
 
 private:
     Ui::DrawableObjectDrawListManager *ui;
     MainWindow& mw;
     const DrawableObject* object;
+    QFrame* subframe;
 };
 
 } //namespace cg3::viewer

@@ -5,7 +5,7 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 #include "drawable_mesh_drawlist_manager.h"
-#include "ui_mesh_drawlist_manager.h"
+#include "ui_drawable_mesh_drawlist_manager.h"
 
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/interfaces/drawable_mesh.h>

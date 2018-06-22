@@ -41,7 +41,7 @@ class DrawableContainer;
 namespace viewer {
 
 class GLCanvas;
-class DrawableObjectDrawListManager;
+class DrawableMeshDrawListManager;
 
 namespace Ui {
 
@@ -139,13 +139,13 @@ private slots:
     void on_actionReset_Point_of_View_triggered();
     void on_actionPerspective_Orthographic_Camera_Mode_triggered();
 
-    //void checkBoxClicked(int i);
+    void checkBoxClicked(int i);
 
-    /*void addCheckBoxOfDrawableContainer(
+    void addCheckBoxOfDrawableContainer(
             const DrawableContainer* cont,
             const std::string& objectName,
             bool vis);
-    void removeCheckBoxOfDrawableContainer(const DrawableContainer* cont, unsigned int i);*/
+    void removeCheckBoxOfDrawableContainer(const DrawableContainer* cont, unsigned int i);
 
 private:
 
@@ -154,7 +154,7 @@ private:
         std::vector<QCheckBox*> checkBoxes;
     };
 
-    /*QCheckBox* pushDrawableObject(
+    QCheckBox* pushDrawableObject(
             const cg3::DrawableObject * obj,
             QWidget* parent,
             std::string checkBoxName,
@@ -172,7 +172,7 @@ private:
 
     QCheckBox* getCheckBoxDrawableObject(const DrawableObject* obj, int& idCheckBox);
 
-    void removeCheckBox(QCheckBox* cb, int idCheckBox);*/
+    void removeCheckBox(QCheckBox* cb, int idCheckBox);
 
     // GUI
     //
@@ -185,7 +185,12 @@ private:
 
     // Mesh Stack
     //
-    std::map<const DrawableObject*, DrawableObjectDrawListManager*> mapDrawListManagers;
+    QSignalMapper* checkBoxMapper;
+    std::map<int, QCheckBox*> checkBoxes;
+    boost::bimap<int, const cg3::DrawableObject*> mapObjects;
+    int nCheckBoxes;
+    std::map<const cg3::DrawableContainer*, ContainerProperties > containerFrames;
+    std::map<const DrawableObject*, DrawableMeshDrawListManager*> mapMeshManagers;
     bool first;
     bool debugObjectsEnabled;
     QSpacerItem* m_spacer;

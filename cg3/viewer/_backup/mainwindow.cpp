@@ -21,8 +21,6 @@
 #include "interfaces/drawable_container.h"
 #include "interfaces/drawable_mesh.h"
 #include "internal/drawable_mesh_drawlist_manager.h"
-#include "internal/drawable_container_drawlist_manager.h"
-#include "internal/drawable_object_drawlist_manager.h"
 #include "utilities/consolestream.h"
 
 #include <cg3/utilities/cg3config.h>
@@ -49,12 +47,16 @@ MainWindow::MainWindow(QWidget* parent) :
         QMainWindow(parent),
         ui(new internal::UiMainWindowRaiiWrapper(this)),
         consoleStream(nullptr),
+        nCheckBoxes(0),
         first(true),
         debugObjectsEnabled(false),
         canvas(*ui->glCanvas),
         debugObjects(&canvas)
 {
     ui->toolBox->removeItem(0);
+
+    checkBoxMapper = new QSignalMapper(this);
+    connect(checkBoxMapper, SIGNAL(mapped(int)), this, SLOT(checkBoxClicked(int)));
 
     scrollAreaLayout = new QVBoxLayout(ui->scrollArea);
     ui->scrollArea->setLayout(scrollAreaLayout);
@@ -101,28 +103,10 @@ void MainWindow::pushDrawableObject(
         bool checkBoxChecked)
 {
     if (obj != nullptr){
-        canvas.pushDrawableObject(obj);
-        obj->setVisibility(checkBoxChecked);
-        DrawableObjectDrawListManager* manager = new DrawableObjectDrawListManager(this, obj, checkBoxName);
-        mapDrawListManagers[obj] = manager;
-        scrollAreaLayout->addWidget(manager);
-
-        const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
-        const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
-
-
-        if (mesh){
-            DrawableMeshDrawListManager* submanager = new DrawableMeshDrawListManager(this, mesh);
-            manager->setSubFrame(submanager);
-        }
-        else if (cont) {
-            DrawableContainerDrawListManager* subManager = new DrawableContainerDrawListManager(this, cont);
-            manager->setSubFrame(subManager);
-        }
+        pushDrawableObject(obj, ui->scrollArea, checkBoxName, checkBoxChecked);
 
         scrollAreaLayout->removeItem(m_spacer);
         scrollAreaLayout->addItem(m_spacer);
-        canvas.update();
     }
 }
 
@@ -134,16 +118,7 @@ void MainWindow::pushDrawableObject(
  */
 bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
 {
-    if (obj != nullptr && mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
-        canvas.deleteDrawableObject(obj);
-        scrollAreaLayout->removeWidget(mapDrawListManagers[obj]);
-        delete mapDrawListManagers[obj];
-        mapDrawListManagers.erase(obj);
-        canvas.update();
-        return true;
-    }
-    return false;
-    //return deleteDrawableObject(obj, ui->scrollArea);
+    return deleteDrawableObject(obj, ui->scrollArea);
 }
 
 /**
@@ -152,9 +127,15 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
  */
 void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
-    if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
-        obj->setVisibility(visible);
+    boost::bimap<int, const DrawableObject*>::right_const_iterator it =
+            mapObjects.right.find(obj);
+    if (it != mapObjects.right.end()){
+        int i = it->second;
+
+        QCheckBox * cb = checkBoxes[i];
+        cb->setChecked(visible);
     }
+
 }
 
 /**
@@ -162,7 +143,9 @@ void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool vis
  */
 bool MainWindow::containsDrawableObject(const DrawableObject* obj)
 {
-    return (mapDrawListManagers.find(obj) != mapDrawListManagers.end());
+    boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter =
+            mapObjects.right.find(obj);
+    return (right_iter != mapObjects.right.end());
 }
 
 /**
@@ -171,7 +154,9 @@ bool MainWindow::containsDrawableObject(const DrawableObject* obj)
  */
 bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
 {
-    if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()) {
+    boost::bimap<int, const DrawableObject*>::right_const_iterator right_iter =
+            mapObjects.right.find(obj);
+    if (right_iter != mapObjects.right.end()) {
 
         const PickableObject* pobj = dynamic_cast<const PickableObject*>(obj);
         if (pobj) {
@@ -189,11 +174,15 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
 
 bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::string& newName)
 {
-    if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
-        mapDrawListManagers[obj]->setNameCheckBox(newName);
+    int id;
+    QCheckBox* cb = getCheckBoxDrawableObject(obj, id);
+    if (cb != nullptr){
+        cb->setText(QString::fromStdString(newName));
         return true;
     }
-    return false;
+    else {
+        return false;
+    }
 }
 
 /**
@@ -451,7 +440,7 @@ void MainWindow::on_actionPerspective_Orthographic_Camera_Mode_triggered()
  * @brief Evento i-esima checkBox cliccata, modifica la visibilità dell'oggetto ad essa collegato
  * @param[in] i: indice della checkBox cliccata
  */
-/*void MainWindow::checkBoxClicked(int i)
+void MainWindow::checkBoxClicked(int i)
 {
     QCheckBox * cb = checkBoxes[i];
     const DrawableObject * obj = mapObjects.left.at(i);
@@ -483,13 +472,14 @@ void MainWindow::on_actionPerspective_Orthographic_Camera_Mode_triggered()
         obj->setVisibility(cb->isChecked());
         const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
         if (mesh){
-            mapDrawListManagers[mesh]->setVisible(cb->isChecked());
+            mapMeshManagers[mesh]->setVisible(cb->isChecked());
         }
+
     }
     canvas.update();
-}*/
+}
 
-/*void MainWindow::addCheckBoxOfDrawableContainer(
+void MainWindow::addCheckBoxOfDrawableContainer(
         const DrawableContainer* cont,
         const std::string& objectName,
         bool vis)
@@ -518,9 +508,9 @@ void MainWindow::removeCheckBoxOfDrawableContainer(
         deleteDrawableObject((*cont)[i], containerFrames[cont].frame);
         containerFrames[cont].checkBoxes.erase(containerFrames[cont].checkBoxes.begin()+ i);
     }
-}*/
+}
 
-/*QCheckBox* MainWindow::pushDrawableObject(
+QCheckBox* MainWindow::pushDrawableObject(
         const DrawableObject* obj,
         QWidget* parent,
         std::string checkBoxName,
@@ -535,7 +525,7 @@ void MainWindow::removeCheckBoxOfDrawableContainer(
         const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
         if (mesh){
             DrawableMeshDrawListManager* manager = new DrawableMeshDrawListManager(this, mesh);
-            mapDrawListManagers[mesh] = manager;
+            mapMeshManagers[mesh] = manager;
             ((QVBoxLayout*)parent->layout())->addWidget(manager);
         }
         canvas.pushDrawableObject(obj, checkBoxChecked);
@@ -585,9 +575,9 @@ void MainWindow::removeCheckBoxOfDrawableContainer(
         }
     }
     return cb;
-}*/
+}
 
-/*bool MainWindow::deleteDrawableObject(const DrawableObject* obj, QWidget* parent)
+bool MainWindow::deleteDrawableObject(const DrawableObject* obj, QWidget* parent)
 {
     int idCheckBox;
     QCheckBox* cb = getCheckBoxDrawableObject(obj, idCheckBox);
@@ -628,9 +618,9 @@ void MainWindow::removeCheckBoxOfDrawableContainer(
         else {
             const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
             if (mesh){
-                ((QVBoxLayout*)parent->layout())->removeWidget(mapDrawListManagers[mesh]);
-                delete mapDrawListManagers[mesh];
-                mapDrawListManagers.erase(mesh);
+                ((QVBoxLayout*)parent->layout())->removeWidget(mapMeshManagers[mesh]);
+                delete mapMeshManagers[mesh];
+                mapMeshManagers.erase(mesh);
             }
             canvas.deleteDrawableObject(obj);
         }
@@ -639,9 +629,9 @@ void MainWindow::removeCheckBoxOfDrawableContainer(
     }
     else
         return false;
-}*/
+}
 
-/*QCheckBox *MainWindow::createCheckBoxAndLinkSignal(
+QCheckBox *MainWindow::createCheckBoxAndLinkSignal(
         const DrawableObject *obj,
         const std::string &checkBoxName,
         bool isChecked)
@@ -660,9 +650,9 @@ void MainWindow::removeCheckBoxOfDrawableContainer(
     nCheckBoxes++;
 
     return cb;
-}*/
+}
 
-/*QCheckBox*MainWindow::getCheckBoxDrawableObject(const DrawableObject* obj, int& idCheckBox)
+QCheckBox*MainWindow::getCheckBoxDrawableObject(const DrawableObject* obj, int& idCheckBox)
 {
     boost::bimap<int, const DrawableObject*>::right_const_iterator it =
             mapObjects.right.find(obj);
@@ -686,7 +676,7 @@ void MainWindow::removeCheckBox(QCheckBox* cb, int idCheckBox)
     mapObjects.left.erase(idCheckBox);
 
     delete cb;
-}*/
+}
 
 
 

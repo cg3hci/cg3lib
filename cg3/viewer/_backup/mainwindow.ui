@@ -112,7 +112,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>948</width>
+     <width>848</width>
      <height>575</height>
     </size>
    </property>
@@ -142,14 +142,14 @@
      <item row="0" column="0">
       <widget class="QScrollArea" name="scrollArea">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>500</width>
+         <width>400</width>
          <height>0</height>
         </size>
        </property>
@@ -173,7 +173,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>500</width>
+          <width>400</width>
           <height>501</height>
          </rect>
         </property>
