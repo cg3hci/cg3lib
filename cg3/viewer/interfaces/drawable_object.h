@@ -52,7 +52,7 @@ public :
     #endif
     friend class cg3::DrawableContainer;
 
-    DrawableObject() {}                      /**< @brief Empty constructor */
+    DrawableObject() : visibility(true) {}                      /**< @brief Empty constructor */
 
     virtual ~DrawableObject() {}
 
@@ -66,7 +66,16 @@ public :
                                                          It should return the ray of the bounding sphere of the object, but also half diagonal of the
                                                          bounding box of the object is a good approximation. Return -1 if the object shouldn't influence
                                                          the position of the camera. */
+    inline virtual bool isVisible() const {
+        return visibility;
+    }
 
+    inline virtual void setVisibility(bool vis) const {
+        visibility = vis;
+    }
+
+private:
+    mutable bool visibility;
 };
 
 } //namespace cg3

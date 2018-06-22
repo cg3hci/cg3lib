@@ -41,7 +41,7 @@ class DrawableContainer;
 namespace viewer {
 
 class GLCanvas;
-class MeshDrawListManager;
+class DrawableMeshDrawListManager;
 
 namespace Ui {
 
@@ -190,7 +190,7 @@ private:
     boost::bimap<int, const cg3::DrawableObject*> mapObjects;
     int nCheckBoxes;
     std::map<const cg3::DrawableContainer*, ContainerProperties > containerFrames;
-    std::map<const DrawableObject*, MeshDrawListManager*> mapMeshManagers;
+    std::map<const DrawableObject*, DrawableMeshDrawListManager*> mapMeshManagers;
     bool first;
     bool debugObjectsEnabled;
     QSpacerItem* m_spacer;

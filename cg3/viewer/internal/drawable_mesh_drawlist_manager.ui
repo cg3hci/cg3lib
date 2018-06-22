@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cg3::viewer::MeshDrawListManager</class>
- <widget class="QFrame" name="cg3::viewer::MeshDrawListManager">
+ <class>cg3::viewer::DrawableMeshDrawListManager</class>
+ <widget class="QFrame" name="cg3::viewer::DrawableMeshDrawListManager">
   <property name="geometry">
    <rect>
     <x>0</x>

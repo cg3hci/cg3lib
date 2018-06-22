@@ -20,7 +20,7 @@
 
 #include "interfaces/drawable_container.h"
 #include "interfaces/drawable_mesh.h"
-#include "internal/mesh_drawlist_manager.h"
+#include "internal/drawable_mesh_drawlist_manager.h"
 #include "utilities/consolestream.h"
 
 #include <cg3/utilities/cg3config.h>
@@ -160,9 +160,8 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
 
         const PickableObject* pobj = dynamic_cast<const PickableObject*>(obj);
         if (pobj) {
-            bool b = canvas.isDrawableObjectVisible(obj);
             canvas.deleteDrawableObject(obj);
-            canvas.pushDrawableObject(obj, b);
+            canvas.pushDrawableObject(obj, obj->isVisible());
             canvas.update();
         }
 
@@ -450,31 +449,27 @@ void MainWindow::checkBoxClicked(int i)
         Qt::CheckState state = cb->checkState();
         if (state == Qt::Unchecked){
             for (unsigned int i = 0; i < cont->size(); i++)
-                canvas.setDrawableObjectVisibility((*cont)[i], false);
+                (*cont)[i]->setVisibility(false);
             //set visibility checkboxes -> false
             containerFrames[cont].frame->setVisible(false);
         }
         else if (state == Qt::PartiallyChecked) {
             for (unsigned int i = 0; i < cont->size(); i++){
-                canvas.setDrawableObjectVisibility(
-                            (*cont)[i],
-                            containerFrames[cont].checkBoxes[i]->isChecked());
+                (*cont)[i]->setVisibility(containerFrames[cont].checkBoxes[i]->isChecked());
             }
             //set visibility checkboxes -> false
             containerFrames[cont].frame->setVisible(false);
         }
         else {
             for (unsigned int i = 0; i < cont->size(); i++){
-                canvas.setDrawableObjectVisibility(
-                            (*cont)[i],
-                            containerFrames[cont].checkBoxes[i]->isChecked());
+                (*cont)[i]->setVisibility(containerFrames[cont].checkBoxes[i]->isChecked());
             }
             //set visibility checkboxes -> true
             containerFrames[cont].frame->setVisible(true);
         }
     }
     else {
-        canvas.setDrawableObjectVisibility(obj, cb->isChecked());
+        obj->setVisibility(cb->isChecked());
         const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
         if (mesh){
             mapMeshManagers[mesh]->setVisible(cb->isChecked());
@@ -500,8 +495,8 @@ void MainWindow::addCheckBoxOfDrawableContainer(
                 objectName,
                 vis);
         containerFrames[cont].checkBoxes.push_back(cb);
-        if (!canvas.isDrawableObjectVisible(cont))
-            canvas.setDrawableObjectVisibility((*cont)[cont->size()-1], false);
+        if (!cont->isVisible())
+            (*cont)[cont->size()-1]->setVisibility(false);
     }
 }
 
@@ -529,7 +524,7 @@ QCheckBox* MainWindow::pushDrawableObject(
     if (!cont){ //if is not a DrawableContainer, it will be a DrawableObject in the canvas
         const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
         if (mesh){
-            MeshDrawListManager* manager = new MeshDrawListManager(this, mesh);
+            DrawableMeshDrawListManager* manager = new DrawableMeshDrawListManager(this, mesh);
             mapMeshManagers[mesh] = manager;
             ((QVBoxLayout*)parent->layout())->addWidget(manager);
         }

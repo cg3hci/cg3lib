@@ -14,19 +14,20 @@ namespace cg3 {
 class DrawableMesh;
 
 namespace viewer {
+
 class MainWindow;
 
 namespace Ui {
-class MeshDrawListManager;
+class DrawableMeshDrawListManager;
 }
 
-class MeshDrawListManager : public QFrame
+class DrawableMeshDrawListManager : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit MeshDrawListManager(QWidget *parent, const DrawableMesh* mesh);
-    ~MeshDrawListManager();
+    explicit DrawableMeshDrawListManager(QWidget *parent, const DrawableMesh* mesh);
+    ~DrawableMeshDrawListManager();
 
 private slots:
 
@@ -45,7 +46,7 @@ private slots:
     void on_tColorRadioButton_toggled(bool checked);
 
 private:
-    Ui::MeshDrawListManager *ui;
+    Ui::DrawableMeshDrawListManager *ui;
     MainWindow& mw;
     const DrawableMesh* mesh;
 };

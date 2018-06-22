@@ -101,8 +101,7 @@ double DrawableContainer::sceneRadius() const
 
 BoundingBox DrawableContainer::totalBoundingBox() const
 {
-    std::vector<bool> vis(objects.size(), true);
-    return cg3::getFullBoundingBoxDrawableObjects(objects, vis, true);
+    return cg3::getFullBoundingBoxDrawableObjects(objects, true);
 }
 
 } //namespace cg3

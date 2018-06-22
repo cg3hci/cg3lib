@@ -39,7 +39,7 @@ void GLCanvas::draw()
     QGLViewer::setBackgroundColor(backgroundColor);
 
     for(unsigned int i=0; i<drawlist.size(); ++i) {
-        if (drawlist[i] != nullptr && visibility[i])
+        if (drawlist[i]->isVisible())
             drawlist[i]->draw();
     }
 }
@@ -49,7 +49,7 @@ void GLCanvas::drawWithNames()
     QGLViewer::setBackgroundColor(backgroundColor);
 
     for(int i=0; i<(int)drawlist.size(); ++i){
-        if (visibility[i]){
+        if (drawlist[i]->isVisible()){
             const PickableObject* obj =
                     dynamic_cast<const PickableObject*>(drawlist[i]);
             if (obj) // if it is a PickableObject
@@ -289,33 +289,19 @@ unsigned int GLCanvas::sizeVisibleDrawableObjects() const
 {
     unsigned int count = 0;
     for(unsigned int i=0; i<drawlist.size(); ++i) {
-        if (visibility[i]) count++;
+        if (drawlist[i]->isVisible()) count++;
     }
     return count;
 }
 
 unsigned int GLCanvas::sizeDrawableObjectsList() const
 {
-    return (unsigned int)drawlist.size() - (unsigned int)unusedIds.size();
-}
-
-bool GLCanvas::isDrawableObjectVisible(const DrawableObject* obj) const
-{
-    if (obj != nullptr){
-        std::vector<const DrawableObject*>::const_iterator it =
-                std::find(drawlist.begin(), drawlist.end(), obj);
-        if (it != drawlist.end())
-            return visibility[it - drawlist.begin()];
-        else
-            return false;
-    }
-    else
-        return false;
+    return (unsigned int)drawlist.size();
 }
 
 BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const
 {
-    return cg3::getFullBoundingBoxDrawableObjects(drawlist, visibility, onlyVisible);
+    return cg3::getFullBoundingBoxDrawableObjects(drawlist, onlyVisible);
 }
 
 void GLCanvas::clearDrawableObjectsList()
@@ -326,7 +312,7 @@ void GLCanvas::clearDrawableObjectsList()
 void GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
 {
     if (obj != nullptr){
-        visibility.push_back(visible);
+        obj->setVisibility(visible);
         drawlist.push_back(obj);
         update();
 
@@ -352,9 +338,7 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
     std::vector<const DrawableObject *>::iterator it =
             std::find(drawlist.begin(), drawlist.end(), obj);
     if (it != drawlist.end()) {
-        unsigned int pos = it - drawlist.begin();
         drawlist.erase(it);
-        visibility.erase(visibility.begin() + pos);
 
         const PickableObject* pobj =
                 dynamic_cast<const PickableObject*>(obj);
@@ -369,18 +353,6 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
         return true;
     }
     return false;
-}
-
-void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
-{
-    if (obj != nullptr){
-        std::vector<const DrawableObject*>::const_iterator it =
-                std::find(drawlist.begin(), drawlist.end(), obj);
-        if (it != drawlist.end()){
-            visibility[it - drawlist.begin()] = visible;
-            update();
-        }
-    }
 }
 
 bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
