@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#include "mesh_manager.h"
-#include "ui_mesh_manager.h"
+#include "mesh_drawlist_manager.h"
+#include "ui_mesh_drawlist_manager.h"
 
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/interfaces/drawable_mesh.h>
@@ -13,9 +13,9 @@
 namespace cg3 {
 namespace viewer {
 
-MeshManager::MeshManager(QWidget *parent, const DrawableMesh* mesh) :
+MeshDrawListManager::MeshDrawListManager(QWidget *parent, const DrawableMesh* mesh) :
     QFrame(parent),
-    ui(new Ui::MeshManager),
+    ui(new Ui::MeshDrawListManager),
     mw((MainWindow&)*parent),
     mesh(mesh)
 {
@@ -34,12 +34,12 @@ MeshManager::MeshManager(QWidget *parent, const DrawableMesh* mesh) :
         ui->vColorRadioButton->toggle();
 }
 
-MeshManager::~MeshManager()
+MeshDrawListManager::~MeshDrawListManager()
 {
     delete ui;
 }
 
-void MeshManager::on_pointsRadioButton_toggled(bool checked)
+void MeshDrawListManager::on_pointsRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setPointsShading();
@@ -47,7 +47,7 @@ void MeshManager::on_pointsRadioButton_toggled(bool checked)
     }
 }
 
-void MeshManager::on_flatRadioButton_toggled(bool checked)
+void MeshDrawListManager::on_flatRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setFlatShading();
@@ -55,7 +55,7 @@ void MeshManager::on_flatRadioButton_toggled(bool checked)
     }
 }
 
-void MeshManager::on_smoothRadioButton_toggled(bool checked)
+void MeshDrawListManager::on_smoothRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setSmoothShading();
@@ -63,19 +63,19 @@ void MeshManager::on_smoothRadioButton_toggled(bool checked)
     }
 }
 
-void MeshManager::on_wireframeCheckBox_stateChanged(int arg1)
+void MeshDrawListManager::on_wireframeCheckBox_stateChanged(int arg1)
 {
     mesh->setWireframe(arg1 == Qt::Checked);
     mw.canvas.update();
 }
 
-void MeshManager::on_bboxCheckBox_stateChanged(int arg1)
+void MeshDrawListManager::on_bboxCheckBox_stateChanged(int arg1)
 {
     mesh->setVisibleBoundingBox(arg1 == Qt::Checked);
     mw.canvas.update();
 }
 
-void MeshManager::on_vColorRadioButton_toggled(bool checked)
+void MeshDrawListManager::on_vColorRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setEnableVertexColor();
@@ -83,7 +83,7 @@ void MeshManager::on_vColorRadioButton_toggled(bool checked)
     }
 }
 
-void MeshManager::on_tColorRadioButton_toggled(bool checked)
+void MeshDrawListManager::on_tColorRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setEnableTriangleColor();

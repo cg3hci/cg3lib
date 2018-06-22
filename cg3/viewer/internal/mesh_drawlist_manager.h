@@ -17,16 +17,16 @@ namespace viewer {
 class MainWindow;
 
 namespace Ui {
-class MeshManager;
+class MeshDrawListManager;
 }
 
-class MeshManager : public QFrame
+class MeshDrawListManager : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit MeshManager(QWidget *parent, const DrawableMesh* mesh);
-    ~MeshManager();
+    explicit MeshDrawListManager(QWidget *parent, const DrawableMesh* mesh);
+    ~MeshDrawListManager();
 
 private slots:
 
@@ -45,7 +45,7 @@ private slots:
     void on_tColorRadioButton_toggled(bool checked);
 
 private:
-    Ui::MeshManager *ui;
+    Ui::MeshDrawListManager *ui;
     MainWindow& mw;
     const DrawableMesh* mesh;
 };

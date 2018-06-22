@@ -20,7 +20,7 @@
 
 #include "interfaces/drawable_container.h"
 #include "interfaces/drawable_mesh.h"
-#include "internal/mesh_manager.h"
+#include "internal/mesh_drawlist_manager.h"
 #include "utilities/consolestream.h"
 
 #include <cg3/utilities/cg3config.h>
@@ -529,7 +529,7 @@ QCheckBox* MainWindow::pushDrawableObject(
     if (!cont){ //if is not a DrawableContainer, it will be a DrawableObject in the canvas
         const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
         if (mesh){
-            MeshManager* manager = new MeshManager(this, mesh);
+            MeshDrawListManager* manager = new MeshDrawListManager(this, mesh);
             mapMeshManagers[mesh] = manager;
             ((QVBoxLayout*)parent->layout())->addWidget(manager);
         }

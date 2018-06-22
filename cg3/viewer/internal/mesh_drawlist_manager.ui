@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cg3::viewer::MeshManager</class>
- <widget class="QFrame" name="cg3::viewer::MeshManager">
+ <class>cg3::viewer::MeshDrawListManager</class>
+ <widget class="QFrame" name="cg3::viewer::MeshDrawListManager">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -113,7 +113,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
