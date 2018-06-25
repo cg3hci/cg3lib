@@ -29,15 +29,16 @@ public:
     explicit DrawableObjectDrawListManager(
             QWidget *parent,
             const DrawableObject* object,
-            const std::string& name);
+            const std::string& name,
+            bool visible = true);
     ~DrawableObjectDrawListManager();
 
     void setDrawableObjectVisibility(bool vis);
     void setNameCheckBox(const std::string& newName);
-    void setSubFrame(QFrame* frame);
-    void setSubFrameVisibility(bool vis);
 
 private slots:
+    void setSubFrame(QFrame* frame, bool vis = true);
+    void setSubFrameVisibility(bool vis);
     void on_checkBox_stateChanged(int state);
 
 private:

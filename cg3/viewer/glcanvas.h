@@ -98,6 +98,7 @@ public:
     unsigned int sizeVisibleDrawableObjects() const;
     unsigned int sizeDrawableObjectsList() const;
     cg3::BoundingBox getFullBoundingBoxDrawableObjects(bool onlyVisible = false) const;
+    void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool vis);
 
     //DrawableObjects List management: these members should be used by cg3::MainWindow
     void clearDrawableObjectsList();

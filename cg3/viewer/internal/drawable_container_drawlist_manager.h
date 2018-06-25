@@ -30,7 +30,8 @@ class DrawableContainerDrawListManager : public QFrame
 public:
     explicit DrawableContainerDrawListManager(
             QWidget *parent,
-            const DrawableContainer* cont);
+            const DrawableContainer* cont,
+            bool visible = true);
     ~DrawableContainerDrawListManager();
 
 private slots:

@@ -8,7 +8,10 @@
 #include "ui_drawable_object_drawlist_manager.h"
 
 #include <cg3/viewer/mainwindow.h>
-#include <cg3/viewer/interfaces/drawable_object.h>
+#include <cg3/viewer/interfaces/drawable_mesh.h>
+#include <cg3/viewer/interfaces/drawable_container.h>
+#include <cg3/viewer/internal/drawable_container_drawlist_manager.h>
+#include <cg3/viewer/internal/drawable_mesh_drawlist_manager.h>
 
 namespace cg3 {
 namespace viewer {
@@ -16,7 +19,8 @@ namespace viewer {
 DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         QWidget *parent,
         const DrawableObject* object,
-        const std::string& name) :
+        const std::string& name,
+        bool visible) :
     QFrame(parent),
     ui(new Ui::DrawableObjectDrawListManager),
     mw((MainWindow&)*parent),
@@ -24,8 +28,22 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
     subframe(nullptr)
 {
     ui->setupUi(this);
+    mw.canvas.pushDrawableObject(object, visible);
     ui->checkBox->setText(QString::fromStdString(name));
-    ui->checkBox->setChecked(object->isVisible());
+
+    const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
+    const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(object);
+
+    if (mesh){
+        DrawableMeshDrawListManager* submanager =
+                new DrawableMeshDrawListManager(&mw, mesh);
+        setSubFrame(submanager);
+    }
+    else if (cont) {
+        DrawableContainerDrawListManager* subManager =
+                new DrawableContainerDrawListManager(&mw, cont, visible);
+        setSubFrame(subManager);
+    }
 }
 
 DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
@@ -36,6 +54,7 @@ DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
 void DrawableObjectDrawListManager::setDrawableObjectVisibility(bool vis)
 {
     ui->checkBox->setChecked(vis);
+    setSubFrameVisibility(vis);
 }
 
 void DrawableObjectDrawListManager::setNameCheckBox(const std::string& newName)
@@ -43,12 +62,13 @@ void DrawableObjectDrawListManager::setNameCheckBox(const std::string& newName)
     ui->checkBox->setText(QString::fromStdString(newName));
 }
 
-void DrawableObjectDrawListManager::setSubFrame(QFrame* frame)
+void DrawableObjectDrawListManager::setSubFrame(QFrame* frame, bool vis)
 {
     subframe = frame;
     subframe->setParent(this);
     ui->checkBox->setTristate();
     layout()->addWidget(frame);
+    setSubFrameVisibility(vis);
 }
 
 void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
@@ -68,19 +88,19 @@ void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
 void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)
 {
     if (!(ui->checkBox->isTristate())){
-        object->setVisibility(state == Qt::Checked);
+        mw.canvas.setDrawableObjectVisibility(object, state == Qt::Checked);
     }
     else {
         if (state == Qt::Unchecked){
-            object->setVisibility(false);
+            mw.canvas.setDrawableObjectVisibility(object, false);
             subframe->setVisible(false);
         }
         else if (state == Qt::PartiallyChecked){
-            object->setVisibility(true);
+            mw.canvas.setDrawableObjectVisibility(object, true);
             subframe->setVisible(false);
         }
         else {
-            object->setVisibility(true);
+            mw.canvas.setDrawableObjectVisibility(object, true);
             subframe->setVisible(true);
         }
     }

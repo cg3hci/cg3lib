@@ -26,7 +26,9 @@ class DrawableMeshDrawListManager : public QFrame
     Q_OBJECT
 
 public:
-    explicit DrawableMeshDrawListManager(QWidget *parent, const DrawableMesh* mesh);
+    explicit DrawableMeshDrawListManager(
+            QWidget *parent,
+            const DrawableMesh* mesh);
     ~DrawableMeshDrawListManager();
 
 private slots:

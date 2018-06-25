@@ -8,17 +8,16 @@
 #include "ui_drawable_container_drawlist_manager.h"
 
 #include <cg3/viewer/mainwindow.h>
-#include <cg3/viewer/interfaces/drawable_mesh.h>
-#include <cg3/viewer/interfaces/drawable_container.h>
 #include <cg3/viewer/internal/drawable_object_drawlist_manager.h>
-#include <cg3/viewer/internal/drawable_mesh_drawlist_manager.h>
+#include <cg3/viewer/interfaces/drawable_container.h>
 
 namespace cg3 {
 namespace viewer {
 
 DrawableContainerDrawListManager::DrawableContainerDrawListManager(
         QWidget *parent,
-        const DrawableContainer* cont) :
+        const DrawableContainer* cont,
+        bool visible) :
     QFrame(parent),
     ui(new Ui::DrawableContainerDrawListManager),
     mw((MainWindow&)*parent),
@@ -29,22 +28,7 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
 
     for (unsigned int i = 0; i < cont->size(); i++) {
         DrawableObjectDrawListManager* manager =
-                new DrawableObjectDrawListManager(&mw, (*cont)[i], cont->objectName(i));
-
-        const DrawableContainer* cont2 = dynamic_cast<const DrawableContainer*>((*cont)[i]);
-        const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>((*cont)[i]);
-
-
-        if (mesh){
-            DrawableMeshDrawListManager* submanager =
-                    new DrawableMeshDrawListManager(&mw, mesh);
-            manager->setSubFrame(submanager);
-        }
-        else if (cont2) {
-            DrawableContainerDrawListManager* subManager =
-                    new DrawableContainerDrawListManager(&mw, cont);
-            manager->setSubFrame(subManager);
-        }
+                new DrawableObjectDrawListManager(&mw, (*cont)[i], cont->objectName(i), visible);
 
         ui->verticalLayout->addWidget(manager);
         mapSubManagers[(*cont)[i]] = manager;
@@ -83,26 +67,7 @@ void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(
 {
     unsigned int elem = cont->size()-1;
     DrawableObjectDrawListManager* manager =
-            new DrawableObjectDrawListManager(&mw, (*cont)[elem], name);
-
-    const DrawableContainer* cont2 = dynamic_cast<const DrawableContainer*>((*cont)[elem]);
-    const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>((*cont)[elem]);
-
-
-    if (mesh){
-        DrawableMeshDrawListManager* submanager =
-                new DrawableMeshDrawListManager(&mw, mesh);
-        manager->setSubFrame(submanager);
-        manager->setSubFrameVisibility(visible);
-    }
-    else if (cont2) {
-        DrawableContainerDrawListManager* subManager =
-                new DrawableContainerDrawListManager(&mw, cont);
-        manager->setSubFrame(subManager);
-        manager->setSubFrameVisibility(visible);
-    }
-
-    manager->setDrawableObjectVisibility(visible);
+            new DrawableObjectDrawListManager(&mw, (*cont)[elem], name, visible);
 
     ui->verticalLayout->addWidget(manager);
     mapSubManagers[(*cont)[elem]] = manager;

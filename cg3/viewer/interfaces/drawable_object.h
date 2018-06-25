@@ -70,11 +70,11 @@ public :
         return visibility;
     }
 
+private:
     inline virtual void setVisibility(bool vis) const {
         visibility = vis;
     }
 
-private:
     mutable bool visibility;
 };
 

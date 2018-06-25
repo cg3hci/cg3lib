@@ -101,13 +101,12 @@ void MainWindow::pushDrawableObject(
         bool checkBoxChecked)
 {
     if (obj != nullptr){
-        canvas.pushDrawableObject(obj);
-        obj->setVisibility(checkBoxChecked);
-        DrawableObjectDrawListManager* manager = new DrawableObjectDrawListManager(this, obj, checkBoxName);
+        DrawableObjectDrawListManager* manager =
+                new DrawableObjectDrawListManager(this, obj, checkBoxName, checkBoxChecked);
         mapDrawListManagers[obj] = manager;
         scrollAreaLayout->addWidget(manager);
 
-        const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
+        /*const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
         const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
 
 
@@ -120,7 +119,7 @@ void MainWindow::pushDrawableObject(
             DrawableContainerDrawListManager* subManager = new DrawableContainerDrawListManager(this, cont);
             manager->setSubFrame(subManager);
             manager->setSubFrameVisibility(checkBoxChecked);
-        }
+        }*/
 
         scrollAreaLayout->removeItem(m_spacer);
         scrollAreaLayout->addItem(m_spacer);
@@ -136,11 +135,13 @@ void MainWindow::pushDrawableObject(
  */
 bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
 {
-    if (obj != nullptr && mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
+    if (obj != nullptr){
         canvas.deleteDrawableObject(obj);
-        scrollAreaLayout->removeWidget(mapDrawListManagers[obj]);
-        delete mapDrawListManagers[obj];
-        mapDrawListManagers.erase(obj);
+        if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
+            scrollAreaLayout->removeWidget(mapDrawListManagers[obj]);
+            delete mapDrawListManagers[obj];
+            mapDrawListManagers.erase(obj);
+        }
         canvas.update();
         return true;
     }
@@ -155,7 +156,8 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
 void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
     if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
-        obj->setVisibility(visible);
+        canvas.setDrawableObjectVisibility(obj, visible);
+        mapDrawListManagers[obj]->setDrawableObjectVisibility(visible);
     }
 }
 
