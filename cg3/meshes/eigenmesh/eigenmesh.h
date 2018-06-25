@@ -64,8 +64,8 @@ public:
     virtual unsigned int addVertex(const Pointd &p);
     virtual unsigned int addVertex(double x, double y, double z);
     virtual void removeFace(unsigned int f);
-    virtual bool readFromObj(const std::string &filename);
-    virtual bool readFromPly(const std::string &filename);
+    virtual bool loadFromObj(const std::string &filename);
+    virtual bool loadFromPly(const std::string &filename);
     void setFaceColor(const Color &c, int f = -1);
     void setFaceColor(int red, int green, int blue, int f = -1);
     void setFaceColor(double red, double green, double blue, int f = -1);
@@ -143,7 +143,7 @@ inline EigenMesh::EigenMesh(const Trimesh<T>& trimesh) :
 
 inline EigenMesh::EigenMesh(const std::string &filename)
 {
-    readFromFile(filename);
+    loadFromFile(filename);
 }
 
 inline const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& EigenMesh::getVerticesNormalsMatrix() const

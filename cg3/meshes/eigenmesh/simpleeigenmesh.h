@@ -10,6 +10,7 @@
 
 #include <Eigen/Core>
 
+#include <cg3/meshes/mesh.h>
 #include <cg3/geometry/point.h>
 #include <cg3/geometry/bounding_box.h>
 #include <cg3/utilities/color.h>
@@ -43,7 +44,7 @@ class Trimesh;
 
 class EigenMeshAlgorithms;
 
-class SimpleEigenMesh : public SerializableObject
+class SimpleEigenMesh : public SerializableObject, public Mesh
 {
     friend class EigenMeshAlgorithms;
 
@@ -97,9 +98,9 @@ public:
     template <typename T, int ...A> void setVerticesMatrix(const Eigen::Matrix<T, A...>& V);
     template <typename U, int ...A> void setFacesMatrix(const Eigen::Matrix<U, A...>& F);
 
-    virtual bool readFromObj(const std::string &filename);
-    virtual bool readFromPly(const std::string &filename);
-    virtual bool readFromFile(const std::string &filename);
+    virtual bool loadFromObj(const std::string &filename);
+    virtual bool loadFromPly(const std::string &filename);
+    virtual bool loadFromFile(const std::string &filename);
 
     virtual bool saveOnPly(const std::string &filename) const;
     virtual bool saveOnObj(const std::string &filename) const;
@@ -134,7 +135,7 @@ inline SimpleEigenMesh::SimpleEigenMesh()
 
 inline SimpleEigenMesh::SimpleEigenMesh(const std::string &filename)
 {
-    readFromFile(filename);
+    loadFromFile(filename);
 }
 
 template <typename T, typename U>

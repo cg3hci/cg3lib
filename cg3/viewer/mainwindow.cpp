@@ -106,21 +106,6 @@ void MainWindow::pushDrawableObject(
         mapDrawListManagers[obj] = manager;
         scrollAreaLayout->addWidget(manager);
 
-        /*const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(obj);
-        const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(obj);
-
-
-        if (mesh){
-            DrawableMeshDrawListManager* submanager = new DrawableMeshDrawListManager(this, mesh);
-            manager->setSubFrame(submanager);
-            manager->setSubFrameVisibility(checkBoxChecked);
-        }
-        else if (cont) {
-            DrawableContainerDrawListManager* subManager = new DrawableContainerDrawListManager(this, cont);
-            manager->setSubFrame(subManager);
-            manager->setSubFrameVisibility(checkBoxChecked);
-        }*/
-
         scrollAreaLayout->removeItem(m_spacer);
         scrollAreaLayout->addItem(m_spacer);
         canvas.update();
@@ -135,13 +120,12 @@ void MainWindow::pushDrawableObject(
  */
 bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
 {
-    if (obj != nullptr){
+    if (obj != nullptr && mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
         canvas.deleteDrawableObject(obj);
-        if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
-            scrollAreaLayout->removeWidget(mapDrawListManagers[obj]);
-            delete mapDrawListManagers[obj];
-            mapDrawListManagers.erase(obj);
-        }
+        //mapDrawListManagers[obj]->deleteSubManager();
+        scrollAreaLayout->removeWidget(mapDrawListManagers[obj]);
+        delete mapDrawListManagers[obj];
+        mapDrawListManagers.erase(obj);
         canvas.update();
         return true;
     }

@@ -274,7 +274,7 @@ double Dcel::getAverageHalfEdgesLength() const
  * @par Complessità:
  *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
  */
-void Dcel::saveOnObjFile(std::string fileNameObj) const
+bool Dcel::saveOnObj(const std::string& fileNameObj) const
 {
     std::vector<double> vertices;
     std::vector<double> verticesNormals;
@@ -286,7 +286,7 @@ void Dcel::saveOnObjFile(std::string fileNameObj) const
 
     io::MeshType meshType = io::POLYGON_MESH;
     int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
-    saveMeshOnObj(fileNameObj, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    return saveMeshOnObj(fileNameObj, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
 /**
@@ -304,7 +304,7 @@ void Dcel::saveOnObjFile(std::string fileNameObj) const
  * @par Complessità:
  *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
  */
-void Dcel::saveOnPlyFile(std::string fileNamePly) const
+bool Dcel::saveOnPly(const std::string& fileNamePly) const
 {
     std::vector<double> vertices;
     std::vector<double> verticesNormals;
@@ -316,10 +316,10 @@ void Dcel::saveOnPlyFile(std::string fileNamePly) const
 
     io::MeshType meshType = io::POLYGON_MESH;
     int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
-    saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    return saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
-void Dcel::saveOnDcelFile(std::string fileNameDcel) const
+void Dcel::saveOnDcelFile(const std::string& fileNameDcel) const
 {
     std::ofstream myfile;
     myfile.open (fileNameDcel, std::ios::out | std::ios::binary);
@@ -1041,11 +1041,11 @@ bool Dcel::loadFromFile(const std::string& filename)
 {
     std::string ext = filename.substr(filename.find_last_of(".") + 1);
     if(ext == "obj" || ext == "OBJ") { //obj file
-        loadFromObjFile(filename);
+        loadFromObj(filename);
         return true;
     }
     else if(ext == "ply" || ext == "PLY") { //ply file
-        loadFromPlyFile(filename);
+        loadFromPly(filename);
         return true;
     }
     else if (ext == "dcel" || ext == "DCEL") {
@@ -1071,7 +1071,7 @@ bool Dcel::loadFromFile(const std::string& filename)
  * @warning Se regular, utilizza Dcel::Vertex::ConstIncidentFaceIterator
  * @return Una stringa indicante da quanti vertici, half edge e facce è composta la mesh caricata
  */
-bool Dcel::loadFromObjFile(const std::string& filename)
+bool Dcel::loadFromObj(const std::string& filename)
 {
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
@@ -1103,7 +1103,7 @@ bool Dcel::loadFromObjFile(const std::string& filename)
  * @todo Gestione colori vertici
  * @return Una stringa indicante da quanti vertici, half edge e facce è composta la mesh caricata
  */
-bool Dcel::loadFromPlyFile(const std::string& filename)
+bool Dcel::loadFromPly(const std::string& filename)
 {
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;

@@ -87,7 +87,7 @@ EigenMesh::EigenMesh(const Dcel& dcel)
 }
 #endif
 
-bool EigenMesh::readFromObj(const std::string& filename)
+bool EigenMesh::loadFromObj(const std::string& filename)
 {
     clear();
     int mode = 0;
@@ -111,7 +111,7 @@ bool EigenMesh::readFromObj(const std::string& filename)
     return b;
 }
 
-bool EigenMesh::readFromPly(const std::string& filename)
+bool EigenMesh::loadFromPly(const std::string& filename)
 {
     clear();
     int mode = 0;

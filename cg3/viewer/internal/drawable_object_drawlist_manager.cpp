@@ -37,17 +37,24 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
     if (mesh){
         DrawableMeshDrawListManager* submanager =
                 new DrawableMeshDrawListManager(&mw, mesh);
-        setSubFrame(submanager);
+        setSubFrame(submanager, visible);
     }
     else if (cont) {
         DrawableContainerDrawListManager* subManager =
                 new DrawableContainerDrawListManager(&mw, cont, visible);
-        setSubFrame(subManager);
+        setSubFrame(subManager, visible);
     }
 }
 
 DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
 {
+    if (subframe){
+        const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
+        if (cont){
+            for (unsigned int i = 0; i < cont->size(); i++)
+                mw.canvas.deleteDrawableObject((*cont)[i]);
+        }
+    }
     delete ui;
 }
 

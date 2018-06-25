@@ -26,7 +26,8 @@ HEADERS += \
     $$PWD/meshes/dcel/algorithms/dcel_to_vectors.h \
     $$PWD/meshes/dcel/algorithms/dcel_flooding.h \
     $$PWD/meshes/dcel/algorithms/dcel_coloring.h \
-    $$PWD/meshes/dcel/dcel_builder.h
+    $$PWD/meshes/dcel/dcel_builder.h \
+    $$PWD/meshes/mesh.h
 
 SOURCES += \
     $$PWD/meshes/dcel/dcel_face.cpp \

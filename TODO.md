@@ -31,6 +31,7 @@
 - Viewer:
   - [ ] GLCanvas becomes a private nested class of the MainWindow
   - [ ] Disable "Space" event for 3D viewer
+  - [ ] Add iterators on DrawableContainer
 - CGAL:
   - [ ] Booleans 2D: transform vector of point in container of point for polygons
   - [ ] Voronoi 2D: insert on the diagram the inf edges (intersections with a built bounding box)

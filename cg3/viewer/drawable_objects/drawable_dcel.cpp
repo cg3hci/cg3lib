@@ -285,18 +285,18 @@ bool DrawableDcel::loadFromDcelFile(const std::string& filename)
     return false;
 }
 
-bool DrawableDcel::loadFromObjFile(const std::string& filename)
+bool DrawableDcel::loadFromObj(const std::string& filename)
 {
-    if (Dcel::loadFromObjFile(filename)){
+    if (Dcel::loadFromObj(filename)){
         update();
         return true;
     }
     return false;
 }
 
-bool DrawableDcel::loadFromPlyFile(const std::string& filename)
+bool DrawableDcel::loadFromPly(const std::string& filename)
 {
-    if (Dcel::loadFromPlyFile(filename)) {
+    if (Dcel::loadFromPly(filename)) {
         update();
         return true;
     }
@@ -310,6 +310,16 @@ bool DrawableDcel::loadFromFile(const std::string& filename)
         return true;
     }
     return false;
+}
+
+bool DrawableDcel::saveOnObj(const std::string& filename) const
+{
+    return Dcel::saveOnObj(filename);
+}
+
+bool DrawableDcel::saveOnPly(const std::string& filename) const
+{
+    return Dcel::saveOnPly(filename);
 }
 
 } //namespace cg3

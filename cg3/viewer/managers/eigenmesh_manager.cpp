@@ -51,7 +51,7 @@ void EigenMeshManager::on_loadMeshButton_clicked()
         if (loaded){
             mainWindow.deleteDrawableObject(&mesh);
         }
-        loaded = mesh.readFromFile(filename);
+        loaded = mesh.loadFromFile(filename);
 
         if (loaded) {
             mesh.setEnableTriangleColor();

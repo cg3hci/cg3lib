@@ -107,7 +107,7 @@ void BooleansManager::on_loadEigenMeshButton_clicked()
     std::string filename = objls.loadDialog("Load Mesh 1");
     if (filename != "") {
         DrawableEigenMesh* mesh = new DrawableEigenMesh();
-        mesh->readFromObj(filename);
+        mesh->loadFromObj(filename);
         //mesh->readFromObj(filename.toStdString());
         mainWindow.pushDrawableObject(mesh, filename.substr(filename.find_last_of("/") + 1));
         setButtonsMeshLoaded(true);
@@ -188,7 +188,7 @@ void BooleansManager::on_loadEigenMeshButton_2_clicked()
     std::string filename = objls.loadDialog("Load Mesh 2");
     if (filename != "") {
         DrawableEigenMesh* mesh = new DrawableEigenMesh();
-        mesh->readFromObj(filename);
+        mesh->loadFromObj(filename);
         mainWindow.pushDrawableObject(mesh, filename.substr(filename.find_last_of("/") + 1));
         setButtonsMeshLoaded_2(true);
         mainWindow.canvas.update();

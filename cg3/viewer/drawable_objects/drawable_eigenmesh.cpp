@@ -52,4 +52,29 @@ double DrawableEigenMesh::sceneRadius() const
         return -1;
 }
 
+bool DrawableEigenMesh::loadFromFile(const std::string& filename)
+{
+    return EigenMesh::loadFromFile(filename);
+}
+
+bool DrawableEigenMesh::loadFromObj(const std::string& filename)
+{
+    return EigenMesh::loadFromObj(filename);
+}
+
+bool DrawableEigenMesh::loadFromPly(const std::string& filename)
+{
+    return EigenMesh::loadFromPly(filename);
+}
+
+bool DrawableEigenMesh::saveOnObj(const std::string& filename) const
+{
+    return EigenMesh::saveOnObj(filename);
+}
+
+bool DrawableEigenMesh::saveOnPly(const std::string& filename) const
+{
+    return EigenMesh::saveOnPly(filename);
+}
+
 } //namespace cg3

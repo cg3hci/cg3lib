@@ -10,6 +10,7 @@
 
 #include <cg3/geometry/bounding_box.h>
 #include <cg3/utilities/color.h>
+#include <cg3/meshes/mesh.h>
 
 #ifdef  CG3_EIGENMESH_DEFINED
 namespace cg3 {
@@ -62,7 +63,7 @@ namespace cg3 {
  * that allows to access to incident/adjacent elements. See the documentation for all the specific iterators.
  */
 
-class Dcel : public SerializableObject
+class Dcel : public SerializableObject, public Mesh
 {
 public:
 
@@ -159,9 +160,9 @@ public:
     double getSurfaceArea()                                 const;
     Pointd getBarycenter()                                  const;
     double getAverageHalfEdgesLength()                      const;
-    void saveOnObjFile(std::string fileNameObj)             const;
-    void saveOnPlyFile(std::string fileNamePly)             const;
-    void saveOnDcelFile(std::string fileNameDcel)           const;
+    bool saveOnObj(const std::string& fileNameObj)             const;
+    bool saveOnPly(const std::string& fileNamePly)             const;
+    void saveOnDcelFile(const std::string& fileNameDcel)           const;
 
     Vertex* addVertex(const Pointd& p = Pointd(), const Vec3& n = Vec3(), const Color &c = Color(128, 128, 128));
     HalfEdge* addHalfEdge();
@@ -189,8 +190,8 @@ public:
     void triangulate();
     #endif
     bool loadFromFile(const std::string& filename);
-    bool loadFromObjFile(const std::string& filename);
-    bool loadFromPlyFile(const std::string& filename);
+    bool loadFromObj(const std::string& filename);
+    bool loadFromPly(const std::string& filename);
     bool loadFromDcelFile(const std::string& filename);
 
     void swap(Dcel& d);

@@ -78,7 +78,7 @@ void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContainer(
         const DrawableObject* obj)
 {
     //if (cont == this) {
-        mw.deleteDrawableObject(obj);
+        mw.canvas.deleteDrawableObject(obj);
         ui->verticalLayout->removeWidget(mapSubManagers[obj]);
         mapSubManagers[obj]->setVisible(false);
         mapSubManagers.erase(obj);

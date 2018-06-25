@@ -82,24 +82,24 @@ void SimpleEigenMesh::removeDegenerateTriangles(double epsilon)
     }
 }
 
-bool SimpleEigenMesh::readFromObj(const std::string& filename)
+bool SimpleEigenMesh::loadFromObj(const std::string& filename)
 {
     return loadTriangleMeshFromObj(filename, V, F);
 }
 
-bool SimpleEigenMesh::readFromPly(const std::string& filename)
+bool SimpleEigenMesh::loadFromPly(const std::string& filename)
 {
     return loadTriangleMeshFromPly(filename, V, F);
 }
 
-bool SimpleEigenMesh::readFromFile(const std::string& filename)
+bool SimpleEigenMesh::loadFromFile(const std::string& filename)
 {
     std::string ext = filename.substr(filename.find_last_of(".") + 1);
     if(ext == "obj" || ext == "OBJ") { //obj file
-        return readFromObj(filename);
+        return loadFromObj(filename);
     }
     else if(ext == "ply" || ext == "PLY") { //ply file
-        return readFromPly(filename);
+        return loadFromPly(filename);
     }
     else
         return false;

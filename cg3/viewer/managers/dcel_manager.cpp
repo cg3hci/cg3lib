@@ -165,10 +165,10 @@ void DcelManager::on_saveDcelButton_clicked()
             std::cout << "save: " << filename << std::endl;
 
             if (selectedFilter == "ply") {
-                drawableDcel.saveOnPlyFile(filename);
+                drawableDcel.saveOnPly(filename);
             }
             else  if (selectedFilter == "obj") {
-                drawableDcel.saveOnObjFile(filename);
+                drawableDcel.saveOnObj(filename);
             }
             else {
                 drawableDcel.saveOnDcelFile(filename);
