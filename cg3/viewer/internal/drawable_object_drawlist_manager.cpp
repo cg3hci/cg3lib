@@ -35,7 +35,7 @@ DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
 
 void DrawableObjectDrawListManager::setDrawableObjectVisibility(bool vis)
 {
-    ui->checkBox->setCheckable(vis);
+    ui->checkBox->setChecked(vis);
 }
 
 void DrawableObjectDrawListManager::setNameCheckBox(const std::string& newName)
@@ -49,6 +49,20 @@ void DrawableObjectDrawListManager::setSubFrame(QFrame* frame)
     subframe->setParent(this);
     ui->checkBox->setTristate();
     layout()->addWidget(frame);
+}
+
+void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
+{
+    if (subframe){
+        if (vis){
+            ui->checkBox->setCheckState(Qt::PartiallyChecked);
+            subframe->setVisible(false);
+        }
+        else {
+            ui->checkBox->setCheckState(Qt::Unchecked);
+            subframe->setVisible(false);
+        }
+    }
 }
 
 void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)

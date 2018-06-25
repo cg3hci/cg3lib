@@ -26,6 +26,7 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
 {
     ui->setupUi(this);
     ui->line->setVisible(false);
+
     for (unsigned int i = 0; i < cont->size(); i++) {
         DrawableObjectDrawListManager* manager =
                 new DrawableObjectDrawListManager(&mw, (*cont)[i], cont->objectName(i));
@@ -35,11 +36,13 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
 
 
         if (mesh){
-            DrawableMeshDrawListManager* submanager = new DrawableMeshDrawListManager(&mw, mesh);
+            DrawableMeshDrawListManager* submanager =
+                    new DrawableMeshDrawListManager(&mw, mesh);
             manager->setSubFrame(submanager);
         }
-        else  if (cont2) {
-            DrawableContainerDrawListManager* subManager = new DrawableContainerDrawListManager(&mw, cont);
+        else if (cont2) {
+            DrawableContainerDrawListManager* subManager =
+                    new DrawableContainerDrawListManager(&mw, cont);
             manager->setSubFrame(subManager);
         }
 
@@ -61,16 +64,61 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
     connect(cont,
             SIGNAL(drawableContainerErasedObject
                    (const DrawableContainer*,
-                    unsigned int)),
+                    const DrawableObject*)),
             this,
             SLOT(removeCheckBoxOfDrawableContainer(
                      const DrawableContainer*,
-                     unsigned int)));
+                     const DrawableObject*)));
 }
 
 DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
 {
     delete ui;
+}
+
+void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(
+        const DrawableContainer* cont,
+        const std::string& name,
+        bool visible)
+{
+    unsigned int elem = cont->size()-1;
+    DrawableObjectDrawListManager* manager =
+            new DrawableObjectDrawListManager(&mw, (*cont)[elem], name);
+
+    const DrawableContainer* cont2 = dynamic_cast<const DrawableContainer*>((*cont)[elem]);
+    const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>((*cont)[elem]);
+
+
+    if (mesh){
+        DrawableMeshDrawListManager* submanager =
+                new DrawableMeshDrawListManager(&mw, mesh);
+        manager->setSubFrame(submanager);
+        manager->setSubFrameVisibility(visible);
+    }
+    else if (cont2) {
+        DrawableContainerDrawListManager* subManager =
+                new DrawableContainerDrawListManager(&mw, cont);
+        manager->setSubFrame(subManager);
+        manager->setSubFrameVisibility(visible);
+    }
+
+    manager->setDrawableObjectVisibility(visible);
+
+    ui->verticalLayout->addWidget(manager);
+    mapSubManagers[(*cont)[elem]] = manager;
+}
+
+void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContainer(
+        const DrawableContainer* cont,
+        const DrawableObject* obj)
+{
+    //if (cont == this) {
+        mw.deleteDrawableObject(obj);
+        ui->verticalLayout->removeWidget(mapSubManagers[obj]);
+        mapSubManagers[obj]->setVisible(false);
+        mapSubManagers.erase(obj);
+        mw.canvas.update();
+    //}
 }
 
 } //namespace cg3::viewer

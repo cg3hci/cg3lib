@@ -62,7 +62,7 @@ unsigned int DrawableContainer::size() const
  */
 void DrawableContainer::erase(unsigned int i)
 {
-    emit drawableContainerErasedObject(this, i);
+    emit drawableContainerErasedObject(this, objects[i]);
     objects.erase(objects.begin() + i);
     objectNames.erase(objectNames.begin() + i);
 }
@@ -73,7 +73,7 @@ void DrawableContainer::erase(unsigned int i)
 void DrawableContainer::clear()
 {
     for (int i = (int)objects.size()-1; i >= 0; i--){
-        emit drawableContainerErasedObject(this, i);
+        emit drawableContainerErasedObject(this, objects[i]);
     }
     objects.clear();
     objectNames.clear();

@@ -51,9 +51,9 @@ public:
 signals:
     void drawableContainerPushedObject(
             const DrawableContainer*,
-            const std::string& objectName,
-            bool vis);
-    void drawableContainerErasedObject(const DrawableContainer*, unsigned int i);
+            const std::string&,
+            bool);
+    void drawableContainerErasedObject(const DrawableContainer*, const DrawableObject*);
 
 private:
     cg3::BoundingBox totalBoundingBox() const;

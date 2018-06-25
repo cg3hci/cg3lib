@@ -114,10 +114,12 @@ void MainWindow::pushDrawableObject(
         if (mesh){
             DrawableMeshDrawListManager* submanager = new DrawableMeshDrawListManager(this, mesh);
             manager->setSubFrame(submanager);
+            manager->setSubFrameVisibility(checkBoxChecked);
         }
         else if (cont) {
             DrawableContainerDrawListManager* subManager = new DrawableContainerDrawListManager(this, cont);
             manager->setSubFrame(subManager);
+            manager->setSubFrameVisibility(checkBoxChecked);
         }
 
         scrollAreaLayout->removeItem(m_spacer);

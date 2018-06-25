@@ -35,6 +35,7 @@ public:
     void setDrawableObjectVisibility(bool vis);
     void setNameCheckBox(const std::string& newName);
     void setSubFrame(QFrame* frame);
+    void setSubFrameVisibility(bool vis);
 
 private slots:
     void on_checkBox_stateChanged(int state);
