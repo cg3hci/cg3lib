@@ -101,6 +101,7 @@ void MainWindow::pushDrawableObject(
         bool checkBoxChecked)
 {
     if (obj != nullptr){
+        canvas.pushDrawableObject(obj, checkBoxChecked);
         DrawableObjectDrawListManager* manager =
                 new DrawableObjectDrawListManager(this, obj, checkBoxName, checkBoxChecked);
         mapDrawListManagers[obj] = manager;

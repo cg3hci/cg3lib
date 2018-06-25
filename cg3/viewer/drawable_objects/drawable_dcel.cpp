@@ -312,14 +312,4 @@ bool DrawableDcel::loadFromFile(const std::string& filename)
     return false;
 }
 
-bool DrawableDcel::saveOnObj(const std::string& filename) const
-{
-    return Dcel::saveOnObj(filename);
-}
-
-bool DrawableDcel::saveOnPly(const std::string& filename) const
-{
-    return Dcel::saveOnPly(filename);
-}
-
 } //namespace cg3

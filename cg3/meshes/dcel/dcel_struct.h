@@ -63,7 +63,7 @@ namespace cg3 {
  * that allows to access to incident/adjacent elements. See the documentation for all the specific iterators.
  */
 
-class Dcel : public SerializableObject, public Mesh
+class Dcel : public SerializableObject, public virtual Mesh
 {
 public:
 

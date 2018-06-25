@@ -30,17 +30,6 @@ public:
     Pointd sceneCenter() const;
     double sceneRadius() const;
 
-    // Mesh interface
-    //using EigenMesh::loadFromFile;
-    //using EigenMesh::loadFromObj;
-    //using EigenMesh::loadFromPly;
-    //using EigenMesh::saveOnObj;
-    //using EigenMesh::saveOnPly;
-    bool loadFromFile(const std::string& filename);
-    bool loadFromObj(const std::string& filename);
-    bool loadFromPly(const std::string& filename);
-    bool saveOnObj(const std::string& filename) const;
-    bool saveOnPly(const std::string& filename) const;
 };
 
 } //namespace cg3

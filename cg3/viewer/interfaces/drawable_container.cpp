@@ -86,9 +86,11 @@ const std::string& DrawableContainer::objectName(unsigned int i) const
 
 void DrawableContainer::draw() const
 {
-    for (const DrawableObject* o : objects){
-        if (o->isVisible())
-            o->draw();
+    if (isVisible()){
+        for (const DrawableObject* o : objects){
+            if (o->isVisible())
+                o->draw();
+        }
     }
 }
 

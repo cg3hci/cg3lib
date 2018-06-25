@@ -45,24 +45,11 @@ void _check_gl_error(const char *file, int line);
  * This is a non-instantiable class.
  * You can only inherit this class (protected constructors).
  */
-class DrawableMesh : public DrawableObject, public Mesh
+class DrawableMesh : public DrawableObject, public virtual Mesh
 {
 public:
 
     void init();
-
-    // Implementation of the
-    // DrawableObject interface
-    virtual void draw() const = 0;
-    virtual Pointd sceneCenter() const = 0;
-    virtual double sceneRadius() const = 0;
-
-    // Mesh interface
-    bool loadFromFile(const std::string& filename) = 0;
-    bool loadFromObj(const std::string& filename) = 0;
-    bool loadFromPly(const std::string& filename) = 0;
-    bool saveOnObj(const std::string& filename) const = 0;
-    bool saveOnPly(const std::string& filename) const = 0;
 
     //rendering options getters
     //

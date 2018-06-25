@@ -28,7 +28,6 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
     subframe(nullptr)
 {
     ui->setupUi(this);
-    mw.canvas.pushDrawableObject(object, visible);
     ui->checkBox->setText(QString::fromStdString(name));
 
     const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
@@ -41,20 +40,13 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
     }
     else if (cont) {
         DrawableContainerDrawListManager* subManager =
-                new DrawableContainerDrawListManager(&mw, cont, visible);
+                new DrawableContainerDrawListManager(&mw, cont/*, visible*/);
         setSubFrame(subManager, visible);
     }
 }
 
 DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
 {
-    if (subframe){
-        const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
-        if (cont){
-            for (unsigned int i = 0; i < cont->size(); i++)
-                mw.canvas.deleteDrawableObject((*cont)[i]);
-        }
-    }
     delete ui;
 }
 

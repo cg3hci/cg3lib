@@ -53,8 +53,6 @@ public:
     bool loadFromObj(const std::string &filename);
     bool loadFromPly(const std::string &filename);
     bool loadFromFile(const std::string &filename);
-    bool saveOnObj(const std::string& filename) const;
-    bool saveOnPly(const std::string& filename) const;
 
 protected:
 

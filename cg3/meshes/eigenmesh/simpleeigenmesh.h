@@ -44,7 +44,7 @@ class Trimesh;
 
 class EigenMeshAlgorithms;
 
-class SimpleEigenMesh : public SerializableObject, public Mesh
+class SimpleEigenMesh : public SerializableObject, public virtual Mesh
 {
     friend class EigenMeshAlgorithms;
 
