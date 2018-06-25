@@ -8,6 +8,8 @@
 #ifndef CG3_PICKABLE_OBJECT_H
 #define CG3_PICKABLE_OBJECT_H
 
+#include "drawable_object.h"
+
 namespace cg3 {
 namespace viewer {
 
@@ -42,7 +44,7 @@ class GLCanvas;
  * If you need different values, be sure to change PickableObject::objectBits BEFORE
  * pushing a PickableObject to the GLCanvas.
  */
-class PickableObject
+class PickableObject : public virtual DrawableObject
 {
 public:
     friend class viewer::GLCanvas;

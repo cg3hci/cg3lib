@@ -45,7 +45,7 @@ void _check_gl_error(const char *file, int line);
  * This is a non-instantiable class.
  * You can only inherit this class (protected constructors).
  */
-class DrawableMesh : public DrawableObject, public virtual Mesh
+class DrawableMesh : public virtual DrawableObject, public virtual Mesh
 {
 public:
 

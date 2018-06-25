@@ -48,12 +48,9 @@ void GLCanvas::drawWithNames()
 {
     QGLViewer::setBackgroundColor(backgroundColor);
 
-    for(int i=0; i<(int)drawlist.size(); ++i){
-        if (drawlist[i]->isVisible()){
-            const PickableObject* obj =
-                    dynamic_cast<const PickableObject*>(drawlist[i]);
-            if (obj) // if it is a PickableObject
-                obj->drawWithNames();
+    for(unsigned int i=0; i<pickList.size(); ++i){
+        if (pickList[i]->isVisible()){
+            pickList[i]->drawWithNames();
         }
     }
 }
