@@ -96,12 +96,12 @@ void DrawableContainer::draw() const
 
 Pointd DrawableContainer::sceneCenter() const
 {
-    return Pointd();
+    return totalBoundingBox().center();
 }
 
 double DrawableContainer::sceneRadius() const
 {
-    return -1;
+    return totalBoundingBox().diag() / 2;
 }
 
 BoundingBox DrawableContainer::totalBoundingBox() const
