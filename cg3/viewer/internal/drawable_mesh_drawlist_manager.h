@@ -9,6 +9,8 @@
 
 #include <QFrame>
 
+#include <cg3/viewer/utilities/loadersaver.h>
+
 namespace cg3 {
 
 class DrawableMesh;
@@ -47,10 +49,13 @@ private slots:
 
     void on_tColorRadioButton_toggled(bool checked);
 
+    void on_savePushButton_clicked();
+
 private:
     Ui::DrawableMeshDrawListManager *ui;
     MainWindow& mw;
     const DrawableMesh* mesh;
+    LoaderSaver ls;
 };
 
 } //namespace cg3::viewer

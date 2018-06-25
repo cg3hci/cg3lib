@@ -139,40 +139,12 @@ private slots:
     void on_actionReset_Point_of_View_triggered();
     void on_actionPerspective_Orthographic_Camera_Mode_triggered();
 
-    //void checkBoxClicked(int i);
-
-    /*void addCheckBoxOfDrawableContainer(
-            const DrawableContainer* cont,
-            const std::string& objectName,
-            bool vis);
-    void removeCheckBoxOfDrawableContainer(const DrawableContainer* cont, unsigned int i);*/
-
 private:
 
     struct ContainerProperties {
         QFrame* frame;
         std::vector<QCheckBox*> checkBoxes;
     };
-
-    /*QCheckBox* pushDrawableObject(
-            const cg3::DrawableObject * obj,
-            QWidget* parent,
-            std::string checkBoxName,
-            bool checkBoxChecked);
-
-    bool deleteDrawableObject(
-            const cg3::DrawableObject * obj,
-            QWidget* parent);
-
-    //CheckBox management
-    QCheckBox* createCheckBoxAndLinkSignal(
-            const DrawableObject* obj,
-            const std::string& checkBoxName,
-            bool isChecked = true);
-
-    QCheckBox* getCheckBoxDrawableObject(const DrawableObject* obj, int& idCheckBox);
-
-    void removeCheckBox(QCheckBox* cb, int idCheckBox);*/
 
     // GUI
     //

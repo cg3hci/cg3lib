@@ -36,12 +36,9 @@ public:
 
 private slots:
     void addCheckBoxOfDrawableContainer(
-            const DrawableContainer* cont,
             const std::string& name,
             bool visible);
-    void removeCheckBoxOfDrawableContainer(
-            const DrawableContainer* cont,
-            const DrawableObject* obj);
+    void removeCheckBoxOfDrawableContainer(const DrawableObject* obj);
 
 private:
     Ui::DrawableContainerDrawListManager *ui;

@@ -7,5 +7,6 @@
         <file>wire.png</file>
         <file>tcolor.png</file>
         <file>vcolor.png</file>
+        <file>save.png</file>
     </qresource>
 </RCC>

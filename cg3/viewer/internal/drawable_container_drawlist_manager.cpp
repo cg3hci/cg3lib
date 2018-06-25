@@ -36,22 +36,18 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
 
     connect(cont,
             SIGNAL(drawableContainerPushedObject(
-                       const DrawableContainer*,
                        const std::string&,
                        bool)),
             this,
             SLOT(addCheckBoxOfDrawableContainer(
-                     const DrawableContainer*,
                      const std::string&,
                      bool)));
 
     connect(cont,
-            SIGNAL(drawableContainerErasedObject
-                   (const DrawableContainer*,
-                    const DrawableObject*)),
+            SIGNAL(drawableContainerErasedObject(
+                       const DrawableObject*)),
             this,
             SLOT(removeCheckBoxOfDrawableContainer(
-                     const DrawableContainer*,
                      const DrawableObject*)));
 }
 
@@ -61,7 +57,6 @@ DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
 }
 
 void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(
-        const DrawableContainer* cont,
         const std::string& name,
         bool visible)
 {
@@ -74,16 +69,14 @@ void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(
 }
 
 void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContainer(
-        const DrawableContainer* cont,
         const DrawableObject* obj)
 {
-    //if (cont == this) {
-        mw.canvas.deleteDrawableObject(obj);
-        ui->verticalLayout->removeWidget(mapSubManagers[obj]);
-        mapSubManagers[obj]->setVisible(false);
-        mapSubManagers.erase(obj);
-        mw.canvas.update();
-    //}
+
+    mw.canvas.deleteDrawableObject(obj);
+    ui->verticalLayout->removeWidget(mapSubManagers[obj]);
+    mapSubManagers[obj]->setVisible(false);
+    mapSubManagers.erase(obj);
+    mw.canvas.update();
 }
 
 } //namespace cg3::viewer

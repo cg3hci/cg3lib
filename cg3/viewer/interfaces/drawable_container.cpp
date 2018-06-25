@@ -34,7 +34,7 @@ void DrawableContainer::pushBack(
 {
     objects.push_back(obj);
     objectNames.push_back(objectName);
-    emit drawableContainerPushedObject(this, objectName, objVisibility);
+    emit drawableContainerPushedObject(objectName, objVisibility);
 }
 
 /**
@@ -62,7 +62,7 @@ unsigned int DrawableContainer::size() const
  */
 void DrawableContainer::erase(unsigned int i)
 {
-    emit drawableContainerErasedObject(this, objects[i]);
+    emit drawableContainerErasedObject(objects[i]);
     objects.erase(objects.begin() + i);
     objectNames.erase(objectNames.begin() + i);
 }
@@ -73,7 +73,7 @@ void DrawableContainer::erase(unsigned int i)
 void DrawableContainer::clear()
 {
     for (int i = (int)objects.size()-1; i >= 0; i--){
-        emit drawableContainerErasedObject(this, objects[i]);
+        emit drawableContainerErasedObject(objects[i]);
     }
     objects.clear();
     objectNames.clear();

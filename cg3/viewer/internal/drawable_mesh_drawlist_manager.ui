@@ -112,6 +112,17 @@
      </attribute>
     </widget>
    </item>
+   <item row="1" column="3">
+    <widget class="QPushButton" name="savePushButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/save.png</normaloff>:/save.png</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>

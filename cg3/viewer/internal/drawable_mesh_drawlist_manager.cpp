@@ -34,6 +34,8 @@ DrawableMeshDrawListManager::DrawableMeshDrawListManager(
         ui->tColorRadioButton->toggle();
     else
         ui->vColorRadioButton->toggle();
+
+    ls.addSupportedExtension("obj", "ply");
 }
 
 DrawableMeshDrawListManager::~DrawableMeshDrawListManager()
@@ -90,6 +92,20 @@ void DrawableMeshDrawListManager::on_tColorRadioButton_toggled(bool checked)
     if (checked){
         mesh->setEnableTriangleColor();
         mw.canvas.update();
+    }
+}
+
+void DrawableMeshDrawListManager::on_savePushButton_clicked()
+{
+    std::string ext;
+    std::string filename = ls.saveDialog("Save Mesh", ext);
+    if (filename != ""){
+        if (ext == "obj"){
+            mesh->saveOnObj(filename);
+        }
+        else{
+            mesh->saveOnPly(filename);
+        }
     }
 }
 
