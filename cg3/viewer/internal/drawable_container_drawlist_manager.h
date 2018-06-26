@@ -31,7 +31,8 @@ public:
     explicit DrawableContainerDrawListManager(
             QWidget *parent,
             const DrawableContainer* cont,
-            bool visible = true);
+            bool visible = true,
+            bool closeButtonVisible = false);
     ~DrawableContainerDrawListManager();
 
 private slots:

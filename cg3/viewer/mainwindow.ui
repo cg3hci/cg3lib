@@ -84,10 +84,14 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="separator"/>
+    <addaction name="actionLoad_Mesh"/>
+    <addaction name="separator"/>
     <addaction name="actionLoad_Point_of_View"/>
     <addaction name="actionLoad_Point_Of_View_from"/>
     <addaction name="actionSave_Point_Of_View"/>
     <addaction name="actionSave_Point_Of_View_as"/>
+    <addaction name="separator"/>
     <addaction name="actionSave_Snapshot"/>
    </widget>
    <widget class="QMenu" name="menuDebug_Objects">
@@ -361,6 +365,11 @@
   <action name="actionPerspective_Orthographic_Camera_Mode">
    <property name="text">
     <string>Perspective/Orthographic Camera Mode</string>
+   </property>
+  </action>
+  <action name="actionLoad_Mesh">
+   <property name="text">
+    <string>Load Mesh</string>
    </property>
   </action>
  </widget>

@@ -8,5 +8,6 @@
         <file>tcolor.png</file>
         <file>vcolor.png</file>
         <file>save.png</file>
+        <file>close.png</file>
     </qresource>
 </RCC>

@@ -17,7 +17,8 @@ namespace viewer {
 DrawableContainerDrawListManager::DrawableContainerDrawListManager(
         QWidget *parent,
         const DrawableContainer* cont,
-        bool visible) :
+        bool visible,
+        bool closeButtonVisible) :
     QFrame(parent),
     ui(new Ui::DrawableContainerDrawListManager),
     mw((MainWindow&)*parent),
@@ -28,7 +29,7 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
 
     for (unsigned int i = 0; i < cont->size(); i++) {
         DrawableObjectDrawListManager* manager =
-                new DrawableObjectDrawListManager(&mw, (*cont)[i], cont->objectName(i), visible);
+                new DrawableObjectDrawListManager(&mw, (*cont)[i], cont->objectName(i), visible, closeButtonVisible);
 
         ui->verticalLayout->addWidget(manager);
         mapSubManagers[(*cont)[i]] = manager;

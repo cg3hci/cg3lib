@@ -30,7 +30,8 @@ public:
             QWidget *parent,
             const DrawableObject* object,
             const std::string& name,
-            bool visible = true);
+            bool visible = true,
+            bool closeButtonVisible = false);
     ~DrawableObjectDrawListManager();
 
     void setDrawableObjectVisibility(bool vis);
@@ -40,6 +41,8 @@ private slots:
     void setSubFrame(QFrame* frame, bool vis = true);
     void setSubFrameVisibility(bool vis);
     void on_checkBox_stateChanged(int state);
+
+    void on_closePushButton_clicked();
 
 private:
     Ui::DrawableObjectDrawListManager *ui;

@@ -20,7 +20,8 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         QWidget *parent,
         const DrawableObject* object,
         const std::string& name,
-        bool visible) :
+        bool visible,
+        bool closeButtonVisible) :
     QFrame(parent),
     ui(new Ui::DrawableObjectDrawListManager),
     mw((MainWindow&)*parent),
@@ -30,6 +31,8 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
     ui->setupUi(this);
     ui->checkBox->setText(QString::fromStdString(name));
 
+    if (!closeButtonVisible)
+        ui->closePushButton->setVisible(false);
     const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
     const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(object);
 
@@ -108,3 +111,8 @@ void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)
 
 } //namespace cg3::viewer
 } //namespace cg3
+
+void cg3::viewer::DrawableObjectDrawListManager::on_closePushButton_clicked()
+{
+    mw.deleteDrawableObject(object);
+}
