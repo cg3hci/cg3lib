@@ -84,6 +84,11 @@ const std::string& DrawableContainer::objectName(unsigned int i) const
     return objectNames[i];
 }
 
+void DrawableContainer::setObjectVisibility(unsigned int i, bool vis) const
+{
+    emit drawableContainerVisibilityObjectChanged(objects[i], vis);
+}
+
 void DrawableContainer::draw() const
 {
     if (isVisible()){

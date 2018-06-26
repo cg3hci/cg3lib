@@ -40,6 +40,7 @@ private slots:
             const std::string& name,
             bool visible);
     void removeCheckBoxOfDrawableContainer(const DrawableObject* obj);
+    void changeVisibilityObject(const DrawableObject* obj, bool vis);
 
 private:
     Ui::DrawableContainerDrawListManager *ui;

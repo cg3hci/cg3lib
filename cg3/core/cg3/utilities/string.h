@@ -27,6 +27,8 @@ void separateFilenameFromPath(
         std::string& path,
         std::string& filename);
 
+std::string getFilenameWithoutExtension(const std::string& fullpath);
+
 } //namespace cg3
 
 #include "string.tpp"

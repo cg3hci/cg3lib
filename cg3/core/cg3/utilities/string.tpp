@@ -85,4 +85,25 @@ inline void separateFilenameFromPath(
     filename = fullpath.substr(lastindex+1, fullpath.size());
 }
 
+/**
+ * @ingroup cg3core
+ * @brief getFilenameWithoutExtension
+ *
+ * \code{.cpp}
+ * std::string fullname = "/usr/bin/foo.sh";
+ * std::string filename = cg3::getFilenameWithoutExtension(fullname);
+ * //filename = "foo"
+ * \endcode
+ *
+ * @param fullpath
+ * @return
+ */
+inline std::string getFilenameWithoutExtension(const std::string& fullpath)
+{
+    std::string filename, path, ext;
+    separateFilenameFromPath(fullpath, path, filename);
+    separateExtensionFromFilename(filename, filename, ext);
+    return filename;
+}
+
 } //namespace cg3

@@ -26,6 +26,7 @@
 #include "utilities/consolestream.h"
 
 #include <cg3/utilities/cg3config.h>
+#include <cg3/utilities/string.h>
 
 namespace cg3 {
 namespace viewer {
@@ -65,6 +66,11 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->console->hide();
 
     povLS.addSupportedExtension("cg3pov");
+    #ifdef CG3_DCEL_DEFINED
+    meshLS.addSupportedExtension("obj", "ply", "dcel");
+    #else
+    ui->actionLoad_Mesh->setVisible(false);
+    #endif
 
     showMaximized();
 
@@ -98,12 +104,13 @@ Point2Di MainWindow::getCanvasSize() const
 void MainWindow::pushDrawableObject(
         const DrawableObject* obj,
         std::string checkBoxName,
-        bool checkBoxChecked)
+        bool checkBoxChecked,
+        bool closeButtonVisible)
 {
     if (obj != nullptr){
         canvas.pushDrawableObject(obj, checkBoxChecked);
         DrawableObjectDrawListManager* manager =
-                new DrawableObjectDrawListManager(this, obj, checkBoxName, checkBoxChecked);
+                new DrawableObjectDrawListManager(this, obj, checkBoxName, checkBoxChecked, closeButtonVisible);
         mapDrawListManagers[obj] = manager;
         scrollAreaLayout->addWidget(manager);
 
@@ -434,6 +441,19 @@ void MainWindow::on_actionPerspective_Orthographic_Camera_Mode_triggered()
     canvas.toggleCameraType();
     canvas.update();
 }
+
+#ifdef CG3_DCEL_DEFINED
+void MainWindow::on_actionLoad_Mesh_triggered()
+{
+    std::string filename = meshLS.loadDialog("Open Mesh");
+    if (filename != ""){
+        std::string name = cg3::getFilenameWithoutExtension(filename);
+        unsigned int i = openedDcels.pushBack(cg3::DrawableDcel(filename), name);
+        pushDrawableObject((openedDcels[i]), name, true, true);
+        canvas.fitScene();
+    }
+}
+#endif
 
 } //namespace cg3::viewer
 } //namespace cg3

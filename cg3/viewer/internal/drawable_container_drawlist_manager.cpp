@@ -50,6 +50,14 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
             this,
             SLOT(removeCheckBoxOfDrawableContainer(
                      const DrawableObject*)));
+
+    connect(cont,
+            SIGNAL(drawableContainerVisibilityObjectChanged(
+                       const DrawableObject*,
+                       bool)),
+            SLOT(changeVisibilityObject(
+                     const DrawableObject*,
+                     bool)));
 }
 
 DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
@@ -77,6 +85,15 @@ void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContainer(
     ui->verticalLayout->removeWidget(mapSubManagers[obj]);
     mapSubManagers[obj]->setVisible(false);
     mapSubManagers.erase(obj);
+    mw.canvas.update();
+}
+
+void DrawableContainerDrawListManager::changeVisibilityObject(
+        const DrawableObject* obj,
+        bool vis)
+{
+    mw.canvas.setDrawableObjectVisibility(obj, vis);
+    mapSubManagers[obj]->setDrawableObjectVisibility(vis);
     mw.canvas.update();
 }
 

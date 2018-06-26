@@ -8,7 +8,6 @@
 #define DRAWABLEDCELVECTOR_H
 
 #include <cg3/viewer/interfaces/drawable_container.h>
-#include <cg3/viewer/mainwindow.h>
 
 namespace cg3 {
 
@@ -31,7 +30,7 @@ public:
     using iterator = typename std::list<T>::iterator;
     using const_iterator = typename std::list<T>::const_iterator;
 
-    DrawableObjectsContainer(cg3::viewer::MainWindow& mw);
+    DrawableObjectsContainer();
     ~DrawableObjectsContainer();
     unsigned int pushBack(const T& d, const std::string& name);
     void pushList(const std::list<T>& list);
@@ -53,7 +52,6 @@ private:
     using DrawableContainer::pushBack;
     using DrawableContainer::erase;
     using DrawableContainer::clear;
-    cg3::viewer::MainWindow& mw;
     std::list<T> list;
     int visibleObject;
 };

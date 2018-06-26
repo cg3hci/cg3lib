@@ -9,8 +9,7 @@
 namespace cg3 {
 
 template <typename T>
-DrawableObjectsContainer<T>::DrawableObjectsContainer(cg3::viewer::MainWindow& mw) :
-    mw(mw),
+DrawableObjectsContainer<T>::DrawableObjectsContainer() :
     visibleObject(-1)
 {
 }
@@ -84,22 +83,27 @@ void DrawableObjectsContainer<T>::setVisibleObject(int objectId)
     if (visibleObject < 0) {
         if (objectId >= 0) {
             for (unsigned int i = 0; i < size(); i++){
-                mw.setDrawableObjectVisibility((*this)[i], false);
+                setObjectVisibility(i, false);
+                //mw.setDrawableObjectVisibility((*this)[i], false);
             }
-            mw.setDrawableObjectVisibility((*this)[objectId], true);
+            setObjectVisibility(objectId, true);
+            //mw.setDrawableObjectVisibility((*this)[objectId], true);
             visibleObject = objectId;
         }
     }
     else {
         if (objectId < 0) {
             for (unsigned int i = 0; i < size(); i++){
-                mw.setDrawableObjectVisibility((*this)[i], true);
+                setObjectVisibility(i, true);
+                //mw.setDrawableObjectVisibility((*this)[i], true);
             }
             visibleObject = objectId;
         }
         else {
-            mw.setDrawableObjectVisibility((*this)[visibleObject], false);
-            mw.setDrawableObjectVisibility((*this)[objectId], true);
+            setObjectVisibility(visibleObject, false);
+            //mw.setDrawableObjectVisibility((*this)[visibleObject], false);
+            setObjectVisibility(objectId, true);
+            //mw.setDrawableObjectVisibility((*this)[objectId], true);
             visibleObject = objectId;
         }
     }

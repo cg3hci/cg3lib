@@ -28,6 +28,11 @@
 #include "utilities/consolestream.h"
 #include "drawable_objects/drawable_mixed_objects.h"
 
+#ifdef CG3_DCEL_DEFINED
+#include "drawable_objects/drawable_dcel.h"
+#include "drawable_objects/drawable_objects_container.h"
+#endif
+
 class QToolBox;
 class QVBoxLayout;
 class QSpacerItem;
@@ -77,7 +82,8 @@ public:
     void pushDrawableObject(
             const cg3::DrawableObject * obj,
             std::string checkBoxName = "",
-            bool checkBoxChecked = true);
+            bool checkBoxChecked = true,
+            bool closeButtonVisible = false);
     bool deleteDrawableObject(const cg3::DrawableObject * obj);
     void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
@@ -138,6 +144,9 @@ private slots:
     void on_action3D_Mode_triggered();
     void on_actionReset_Point_of_View_triggered();
     void on_actionPerspective_Orthographic_Camera_Mode_triggered();
+    #ifdef CG3_DCEL_DEFINED
+    void on_actionLoad_Mesh_triggered();
+    #endif
 
 private:
 
@@ -154,13 +163,18 @@ private:
     ConsoleStream* consoleStream;
     QVBoxLayout* scrollAreaLayout;
     cg3::viewer::LoaderSaver povLS;
+    QSpacerItem* m_spacer;
 
     // Mesh Stack
     //
     std::map<const DrawableObject*, DrawableObjectDrawListManager*> mapDrawListManagers;
     bool first;
     bool debugObjectsEnabled;
-    QSpacerItem* m_spacer;
+
+    #ifdef CG3_DCEL_DEFINED
+    cg3::DrawableObjectsContainer<cg3::DrawableDcel> openedDcels;
+    cg3::viewer::LoaderSaver meshLS;
+    #endif
 
 public:
 

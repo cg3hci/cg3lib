@@ -42,6 +42,7 @@ public:
     virtual void erase(unsigned int i);
     virtual void clear();
     virtual const std::string& objectName(unsigned int i) const;
+    virtual void setObjectVisibility(unsigned int i, bool vis) const;
 
     // DrawableObject interface
     virtual void draw() const;
@@ -53,6 +54,7 @@ signals:
             const std::string&,
             bool);
     void drawableContainerErasedObject(const DrawableObject*);
+    void drawableContainerVisibilityObjectChanged(const DrawableObject*, bool) const;
 
 private:
     cg3::BoundingBox totalBoundingBox() const;
