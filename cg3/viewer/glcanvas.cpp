@@ -91,7 +91,10 @@ void GLCanvas::postSelection(const QPoint& point)
 
 void GLCanvas::fitScene()
 {
-    BoundingBox bb = getFullBoundingBoxDrawableObjects(true);
+    bool onlyVisible = true;
+    if (sizeVisibleDrawableObjects() == 0 && drawlist.size() > 0)
+        onlyVisible = false;
+    BoundingBox bb = getFullBoundingBoxDrawableObjects(onlyVisible);
 
     Pointd sceneCenter = bb.center();
     double sceneRadius = bb.diag() / zoomSceneFactor;

@@ -46,6 +46,8 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
                 new DrawableContainerDrawListManager(&mw, cont/*, visible*/);
         setSubFrame(subManager, visible);
     }
+    else
+        ui->checkBox->setChecked(visible);
 }
 
 DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
