@@ -14,35 +14,56 @@ namespace libigl {
 
 /**
  * @ingroup cg3libigl
- * @brief Get vertex-vertex adjacencies
+ * @brief Get vertex to vertex adjacencies
  * @param m Input mesh
  * @return Vector of vector of indices
  */
-inline std::vector<std::vector<int>> getVertexVertexAdjacencies(const SimpleEigenMesh& m)
+inline std::vector<std::vector<int>> vertexToVertexAdjacencies(const SimpleEigenMesh& m)
 {
-    return internal::EigenMeshLibIglAlgorithms::getVertexVertexAdjacencies(m);
+    return internal::EigenMeshLibIglAlgorithms::vertexToVertexAdjacencies(m);
 }
 
 /**
  * @ingroup cg3libigl
- * @brief Get vertex-face adjacencies
+ * @brief Get vertex to face incidences
  * @param m Input mesh
  * @return Vector of vector of indices
  */
-inline std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh& m)
+inline std::vector<std::vector<int>> vertexToFaceIncidences(const SimpleEigenMesh& m)
 {
-    return internal::EigenMeshLibIglAlgorithms::getVertexFaceAdjacencies(m);
+    return internal::EigenMeshLibIglAlgorithms::vertexToFaceIncidences(m);
 }
 
 /**
  * @ingroup cg3libigl
- * @brief Get face-face adjacencies
+ * @brief Get faceto face adjacencies
  * @param m Input mesh
  * @return Vector of vector of indices
  */
-inline std::vector<std::vector<int>> getFaceFaceAdjacencies(const SimpleEigenMesh &m)
+inline std::vector<std::vector<int>> faceToFaceAdjacencies(const SimpleEigenMesh &m)
 {
-    return internal::EigenMeshLibIglAlgorithms::getFaceFaceAdjacencies(m);
+    Eigen::MatrixXi eigenResult =
+            internal::EigenMeshLibIglAlgorithms::faceToFaceAdjacencies(m);
+    std::vector<std::vector<int>> result(eigenResult.rows());
+    for (int i = 0; i < eigenResult.rows(); i++) {
+        result[i].resize(eigenResult.cols());
+        for (int j = 0; j < eigenResult.cols(); j++) {
+            result[i][j] = eigenResult(i,j);
+        }
+    }
+
+    return result;
+}
+
+/**
+ * @ingroup cg3libigl
+ * @brief Get faceto face adjacencies
+ * @param m Input mesh
+ * @param adjacences Output Adjacency Matrix
+ */
+inline void faceToFaceAdjacencies(const SimpleEigenMesh& m, Eigen::MatrixXi& adjacences)
+{
+    adjacences = internal::EigenMeshLibIglAlgorithms::faceToFaceAdjacencies(m);
 }
 
 } //namespace cg3::libigl

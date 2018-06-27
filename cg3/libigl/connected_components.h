@@ -13,7 +13,7 @@
 namespace cg3 {
 namespace libigl {
 
-std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);
+std::vector<SimpleEigenMesh> connectedComponents(const SimpleEigenMesh &m);
 
 } //namespace cg3::libigl
 } //namespace cg3

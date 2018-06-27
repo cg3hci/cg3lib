@@ -40,10 +40,10 @@ public:
     static unsigned int extractManifoldPatches(const SimpleEigenMesh &m, Eigen::Matrix<int, Eigen::Dynamic, 1> &I);
 
     /* Adjacencies */
-    static std::vector<SimpleEigenMesh> getConnectedComponents(const SimpleEigenMesh &m);
-    static std::vector<std::vector<int>> getVertexVertexAdjacencies(const SimpleEigenMesh &m);
-    static std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh &m);
-    static std::vector<std::vector<int>> getFaceFaceAdjacencies(const SimpleEigenMesh &m);
+    static std::vector<SimpleEigenMesh> connectedComponents(const SimpleEigenMesh &m);
+    static std::vector<std::vector<int>> vertexToVertexAdjacencies(const SimpleEigenMesh &m);
+    static std::vector<std::vector<int>> vertexToFaceIncidences(const SimpleEigenMesh &m);
+    static Eigen::MatrixXi faceToFaceAdjacencies(const SimpleEigenMesh &m);
 
     /* Mesh distances */
     static double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);

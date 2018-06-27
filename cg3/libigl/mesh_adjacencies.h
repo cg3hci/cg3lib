@@ -13,9 +13,12 @@
 namespace cg3 {
 namespace libigl {
 
-std::vector<std::vector<int>> getVertexVertexAdjacencies(const SimpleEigenMesh& m);
-std::vector<std::vector<int>> getVertexFaceAdjacencies(const SimpleEigenMesh& m);
-std::vector<std::vector<int>> getFaceFaceAdjacencies(const SimpleEigenMesh &m);
+std::vector<std::vector<int>> vertexToVertexAdjacencies(const SimpleEigenMesh& m);
+
+std::vector<std::vector<int>> vertexToFaceIncidences(const SimpleEigenMesh& m);
+
+std::vector<std::vector<int>> faceToFaceAdjacencies(const SimpleEigenMesh &m);
+void faceToFaceAdjacencies(const SimpleEigenMesh &m, Eigen::MatrixXi& adjacences);
 
 } //namespace cg3::libigl
 } //namespace cg3

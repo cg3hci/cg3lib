@@ -13,7 +13,7 @@
 namespace cg3 {
 namespace libigl {
 
-static double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
+double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
 
 } //namespace cg3::libigl
 } //namespace cg3

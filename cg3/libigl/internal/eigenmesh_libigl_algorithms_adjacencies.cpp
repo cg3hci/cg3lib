@@ -19,7 +19,7 @@ namespace internal {
 
 /* ----- ADJACENCIES ----- */
 
-std::vector<SimpleEigenMesh> EigenMeshLibIglAlgorithms::getConnectedComponents(
+std::vector<SimpleEigenMesh> EigenMeshLibIglAlgorithms::connectedComponents(
         const SimpleEigenMesh& mm)
 {
     std::vector<SimpleEigenMesh> connectedComponents;
@@ -49,7 +49,7 @@ std::vector<SimpleEigenMesh> EigenMeshLibIglAlgorithms::getConnectedComponents(
     return connectedComponents;
 }
 
-std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::getVertexVertexAdjacencies(
+std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToVertexAdjacencies(
         const SimpleEigenMesh &m)
 {
     std::vector<std::vector<int>> result;
@@ -65,7 +65,7 @@ std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::getVertexVertexAdjacenc
     return result;
 }
 
-std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::getVertexFaceAdjacencies(
+std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToFaceIncidences(
         const SimpleEigenMesh &m)
 {
     std::vector<std::vector<int>> VF;
@@ -78,22 +78,14 @@ std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::getVertexFaceAdjacencie
     return VF;
 }
 
-std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::getFaceFaceAdjacencies(
+Eigen::MatrixXi EigenMeshLibIglAlgorithms::faceToFaceAdjacencies(
         const SimpleEigenMesh& m)
 {
     Eigen::MatrixXi eigenResult;
     Eigen::MatrixXi FF = m.F;
     igl::triangle_triangle_adjacency(FF, eigenResult);
 
-    std::vector<std::vector<int>> result(eigenResult.rows());
-    for (int i = 0; i < eigenResult.rows(); i++) {
-        result[i].resize(eigenResult.cols());
-        for (int j = 0; j < eigenResult.cols(); j++) {
-            result[i][j] = eigenResult(i,j);
-        }
-    }
-
-    return result;
+    return eigenResult;
 }
 
 
