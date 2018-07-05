@@ -265,10 +265,10 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
     if (event->matches(QKeySequence::Redo))
         emit(redoEvent());
     if (event->matches(QKeySequence::Replace)){ //ctrl+h
-        if (ui->dockWidget->isHidden())
-            ui->dockWidget->show();
+        if (ui->dockToolBox->isHidden())
+            ui->dockToolBox->show();
         else
-            ui->dockWidget->hide();
+            ui->dockToolBox->hide();
     }
     if (event->key() == Qt::Key_C){ //c
         toggleConsoleStream();
