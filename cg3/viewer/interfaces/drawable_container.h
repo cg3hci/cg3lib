@@ -32,6 +32,8 @@ class DrawableContainer :
     Q_OBJECT
 public:
     explicit DrawableContainer(QObject *parent = 0);
+    DrawableContainer(const DrawableContainer&) = delete;
+    DrawableContainer & operator=(const DrawableContainer&) = delete;
 
     virtual ~DrawableContainer();
     virtual void pushBack(const DrawableObject* obj,

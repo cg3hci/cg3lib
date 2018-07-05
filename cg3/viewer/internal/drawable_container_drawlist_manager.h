@@ -7,7 +7,7 @@
 #ifndef CONTAINER_DRAWLIST_MANAGER_H
 #define CONTAINER_DRAWLIST_MANAGER_H
 
-#include <QFrame>
+#include "submanager.h"
 
 namespace cg3 {
 
@@ -23,7 +23,7 @@ namespace Ui {
 class DrawableContainerDrawListManager;
 }
 
-class DrawableContainerDrawListManager : public QFrame
+class DrawableContainerDrawListManager : public SubManager
 {
     Q_OBJECT
 
@@ -34,6 +34,10 @@ public:
             bool visible = true,
             bool closeButtonVisible = false);
     ~DrawableContainerDrawListManager();
+
+    // SubManager interface
+    void updateObjctProperties();
+    void updateManagerProperties();
 
 private slots:
     void addCheckBoxOfDrawableContainer(

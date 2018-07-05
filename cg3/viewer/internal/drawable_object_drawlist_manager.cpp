@@ -66,7 +66,30 @@ void DrawableObjectDrawListManager::setNameCheckBox(const std::string& newName)
     ui->checkBox->setText(QString::fromStdString(newName));
 }
 
-void DrawableObjectDrawListManager::setSubFrame(QFrame* frame, bool vis)
+/**
+ * @brief Allows to update the properties of the DrawableObject according to the properties
+ * setted in the user interface.
+ */
+void DrawableObjectDrawListManager::updateObjctProperties()
+{
+    mw.canvas.setDrawableObjectVisibility(object, ui->checkBox->isChecked());
+    if (subframe)
+        subframe->updateObjctProperties();
+}
+
+/**
+ * @brief Allows to update the properties setted in the user interface according to the
+ * properties of the DrawableObject.
+ */
+void DrawableObjectDrawListManager::updateManagerProperties()
+{
+    if (object->isVisible() == ! ui->checkBox->isChecked())
+        setDrawableObjectVisibility(object->isVisible());
+    if (subframe)
+        subframe->updateManagerProperties();
+}
+
+void DrawableObjectDrawListManager::setSubFrame(SubManager* frame, bool vis)
 {
     subframe = frame;
     subframe->setParent(this);

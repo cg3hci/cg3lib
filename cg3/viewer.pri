@@ -112,6 +112,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/interfaces/drawable_container.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/interfaces/pickable_object.cpp \
+        $$PWD/viewer/internal/submanager.h \
         $$PWD/viewer/internal/drawable_mesh_drawlist_manager.cpp \
         $$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \

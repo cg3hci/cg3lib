@@ -16,7 +16,7 @@ namespace viewer {
 DrawableMeshDrawListManager::DrawableMeshDrawListManager(
         QWidget *parent,
         const DrawableMesh* mesh) :
-    QFrame(parent),
+    SubManager(parent),
     ui(new Ui::DrawableMeshDrawListManager),
     mw((MainWindow&)*parent),
     mesh(mesh)
@@ -41,6 +41,34 @@ DrawableMeshDrawListManager::DrawableMeshDrawListManager(
 DrawableMeshDrawListManager::~DrawableMeshDrawListManager()
 {
     delete ui;
+}
+
+void DrawableMeshDrawListManager::updateObjctProperties()
+{
+    if (ui->pointsRadioButton->isChecked())
+        mesh->setPointsShading();
+    else if (ui->flatRadioButton->isChecked())
+        mesh->setFlatShading();
+    else
+        mesh->setSmoothShading();
+    mesh->setWireframe(ui->wireframeCheckBox->isChecked());
+    mesh->setVisibleBoundingBox(ui->bboxCheckBox->isChecked());
+    if (ui->vColorRadioButton->isChecked())
+        mesh->setEnableVertexColor();
+    else
+        mesh->setEnableTriangleColor();
+    mw.canvas.update();
+}
+
+void DrawableMeshDrawListManager::updateManagerProperties()
+{
+    ui->pointsRadioButton->setChecked(mesh->isPointShadingEnabled());
+    ui->flatRadioButton->setChecked(mesh->isFlatShadingEnabled());
+    ui->smoothRadioButton->setChecked(mesh->isSmoothShadingEnabled());
+    ui->wireframeCheckBox->setChecked(mesh->isWireframeEnabled());
+    ui->bboxCheckBox->setChecked(mesh->isBboxEnabled());
+    ui->vColorRadioButton->setChecked(mesh->isVertexColorEnabled());
+    ui->tColorRadioButton->setChecked(mesh->isTriangleColorEnabled());
 }
 
 void DrawableMeshDrawListManager::on_pointsRadioButton_toggled(bool checked)

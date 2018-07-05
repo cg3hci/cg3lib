@@ -7,7 +7,7 @@
 #ifndef CG3_MESH_MANAGER_H
 #define CG3_MESH_MANAGER_H
 
-#include <QFrame>
+#include "submanager.h"
 
 #include <cg3/viewer/utilities/loadersaver.h>
 
@@ -23,7 +23,7 @@ namespace Ui {
 class DrawableMeshDrawListManager;
 }
 
-class DrawableMeshDrawListManager : public QFrame
+class DrawableMeshDrawListManager : public SubManager
 {
     Q_OBJECT
 
@@ -32,6 +32,10 @@ public:
             QWidget *parent,
             const DrawableMesh* mesh);
     ~DrawableMeshDrawListManager();
+
+    // SubManager interface
+    void updateObjctProperties();
+    void updateManagerProperties();
 
 private slots:
 

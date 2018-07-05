@@ -19,7 +19,7 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
         const DrawableContainer* cont,
         bool visible,
         bool closeButtonVisible) :
-    QFrame(parent),
+    SubManager(parent),
     ui(new Ui::DrawableContainerDrawListManager),
     mw((MainWindow&)*parent),
     cont(cont)
@@ -63,6 +63,18 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
 DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
 {
     delete ui;
+}
+
+void DrawableContainerDrawListManager::updateObjctProperties()
+{
+    for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter)
+        iter->second->updateObjctProperties();
+}
+
+void DrawableContainerDrawListManager::updateManagerProperties()
+{
+    for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter)
+        iter->second->updateManagerProperties();
 }
 
 void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(

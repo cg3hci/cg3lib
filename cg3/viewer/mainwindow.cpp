@@ -162,6 +162,7 @@ bool MainWindow::containsDrawableObject(const DrawableObject* obj)
 
 /**
  * @brief Refreshes the visibility of a DrawableObject if it was assigned.
+ * Sets the properties of the user interface in the DrawableObject.
  * @todo Manage PickableObject and DrawableContainer..
  */
 bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
@@ -174,6 +175,7 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
             canvas.pushDrawableObject(obj, obj->isVisible());
             canvas.update();
         }
+        mapDrawListManagers[obj]->updateObjectProperties();
 
         return true;
     }

@@ -7,7 +7,7 @@
 #ifndef DRAWABLE_OBJECT_DRAWLIST_MANAGER_H
 #define DRAWABLE_OBJECT_DRAWLIST_MANAGER_H
 
-#include <QFrame>
+#include "submanager.h"
 
 namespace cg3 {
 
@@ -36,9 +36,11 @@ public:
 
     void setDrawableObjectVisibility(bool vis);
     void setNameCheckBox(const std::string& newName);
+    void updateObjctProperties();
+    void updateManagerProperties();
 
 private slots:
-    void setSubFrame(QFrame* frame, bool vis = true);
+    void setSubFrame(SubManager* frame, bool vis = true);
     void setSubFrameVisibility(bool vis);
     void on_checkBox_stateChanged(int state);
 
@@ -48,7 +50,7 @@ private:
     Ui::DrawableObjectDrawListManager *ui;
     MainWindow& mw;
     const DrawableObject* object;
-    QFrame* subframe;
+    SubManager* subframe;
 };
 
 } //namespace cg3::viewer
