@@ -70,11 +70,11 @@ void DrawableObjectDrawListManager::setNameCheckBox(const std::string& newName)
  * @brief Allows to update the properties of the DrawableObject according to the properties
  * setted in the user interface.
  */
-void DrawableObjectDrawListManager::updateObjctProperties()
+void DrawableObjectDrawListManager::updateObjectProperties()
 {
     mw.canvas.setDrawableObjectVisibility(object, ui->checkBox->isChecked());
     if (subframe)
-        subframe->updateObjctProperties();
+        subframe->updateObjectProperties();
 }
 
 /**

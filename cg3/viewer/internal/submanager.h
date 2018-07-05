@@ -22,7 +22,7 @@ public:
      * @brief Allows to update the properties of the DrawableObject according to the properties
      * setted in the user interface.
      */
-    virtual void updateObjctProperties() = 0;
+    virtual void updateObjectProperties() = 0;
 
     /**
      * @brief Allows to update the properties setted in the user interface according to the

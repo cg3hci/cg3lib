@@ -43,7 +43,7 @@ DrawableMeshDrawListManager::~DrawableMeshDrawListManager()
     delete ui;
 }
 
-void DrawableMeshDrawListManager::updateObjctProperties()
+void DrawableMeshDrawListManager::updateObjectProperties()
 {
     if (ui->pointsRadioButton->isChecked())
         mesh->setPointsShading();

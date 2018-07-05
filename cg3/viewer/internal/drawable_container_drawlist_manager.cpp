@@ -65,10 +65,10 @@ DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
     delete ui;
 }
 
-void DrawableContainerDrawListManager::updateObjctProperties()
+void DrawableContainerDrawListManager::updateObjectProperties()
 {
     for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter)
-        iter->second->updateObjctProperties();
+        iter->second->updateObjectProperties();
 }
 
 void DrawableContainerDrawListManager::updateManagerProperties()

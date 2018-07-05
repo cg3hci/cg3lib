@@ -36,7 +36,7 @@ public:
 
     void setDrawableObjectVisibility(bool vis);
     void setNameCheckBox(const std::string& newName);
-    void updateObjctProperties();
+    void updateObjectProperties();
     void updateManagerProperties();
 
 private slots:

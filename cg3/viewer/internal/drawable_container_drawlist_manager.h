@@ -36,7 +36,7 @@ public:
     ~DrawableContainerDrawListManager();
 
     // SubManager interface
-    void updateObjctProperties();
+    void updateObjectProperties();
     void updateManagerProperties();
 
 private slots:
