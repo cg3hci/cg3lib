@@ -3,10 +3,10 @@
 - [ ] Make the library header only (at least for modules without dependencies)
 - [ ] Create CMake configuration files in order to double support qmake and cmake
 - [ ] Improve MainWindow GUI
-- [ ] Manage multiple pickable objects drawn in the Canvas
+- [x] Manage multiple pickable objects drawn in the Canvas
 - [ ] Unify Meshes data structures under single abstract class
 - [ ] Add a brief explanation of the content of headers containing functions (no classes)
-- [ ] Support LibIGL module with MSVC
+- [x] Support LibIGL module with MSVC
 - [ ] Geometric objects with type traits
 
 # Minor
@@ -39,6 +39,8 @@
 - LibIGL:
   - [ ] Remove EigenMeshLibIGLAlgorithms class, or use only when necessary
   - [ ] Too many files, it would be better to group them: for example "is_edge_manifold" and "is_vertex_manifold" functions can be grouped in a single file. Also "face_adjacencies", "vertex_adjacencies".
+- All
+  - [ ] Remove all "get" from member function names and make function names more "c++" like (support all old names by creating a CG3_OLD_NAMES_COMPATIBILITY and creating aliases)
 
 # To Implement
 - Algorithms:
