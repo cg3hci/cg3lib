@@ -158,12 +158,6 @@ void GLCanvas::saveSnapshot(const std::string &filename, bool overwrite)
     QGLViewer::saveSnapshot(QString::fromStdString(filename), overwrite);
 }
 
-void GLCanvas::drawAxis(bool b)
-{
-    setAxisIsDrawn(b);
-    update();
-}
-
 Pointd GLCanvas::cameraPosition() const
 {
     qglviewer::Vec p = camera()->position();
@@ -182,6 +176,7 @@ void GLCanvas::resetPointOfView()
     qglviewer::Quaternion q(0,0,0,1);
     camera()->setPosition(v);
     camera()->setOrientation(q);
+    update();
 }
 
 void GLCanvas::serializePointOfView(std::ofstream &file) const
@@ -238,6 +233,7 @@ bool GLCanvas::loadPointOfView(const std::string &filename)
     bool ok = deserializePointOfView(file);
 
     file.close();
+    update();
 
     return ok;
 }
@@ -247,22 +243,26 @@ void GLCanvas::setCameraDirection(const Vec3 &vec)
     qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
     qglVec.normalize();
     camera()->setViewDirection(qglVec);
+    update();
 }
 
 void GLCanvas::setCameraPosition(const Pointd &pos)
 {
     qglviewer::Vec qglvec(pos.x(), pos.y(), pos.z());
     camera()->setPosition(qglvec);
+    update();
 }
 
 void GLCanvas::setPerspectiveCamera()
 {
     camera()->setType(qglviewer::Camera::PERSPECTIVE);
+    update();
 }
 
 void GLCanvas::setOrthographicCamera()
 {
     camera()->setType(qglviewer::Camera::ORTHOGRAPHIC);
+    update();
 }
 
 /**

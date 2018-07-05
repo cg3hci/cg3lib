@@ -201,8 +201,7 @@ void MainWindow::enableDebugObjects()
 {
     if (debugObjectsEnabled == false){
         pushDrawableObject(&debugObjects, "Debug Objects");
-        ui->actionEnable_Debug_Objects->setEnabled(false);
-        ui->actionDisable_Debug_Objects->setEnabled(true);
+        ui->actionToggle_Debug_Objects->setChecked(true);
         debugObjectsEnabled = true;
     }
 }
@@ -215,12 +214,19 @@ void MainWindow::disableDebugObjects()
 {
     if (debugObjectsEnabled == true){
         if (deleteDrawableObject(&debugObjects)) {
-            ui->actionEnable_Debug_Objects->setEnabled(true);
-            ui->actionDisable_Debug_Objects->setEnabled(false);
+            ui->actionToggle_Debug_Objects->setChecked(false);
             debugObjectsEnabled = false;
         }
     }
     canvas.update();
+}
+
+void MainWindow::toggleDebugObjects()
+{
+    if (debugObjectsEnabled)
+        disableDebugObjects();
+    else
+        enableDebugObjects();
 }
 
 /**
@@ -256,35 +262,10 @@ void MainWindow::toggleConsoleStream()
  */
 void MainWindow::keyPressEvent(QKeyEvent * event)
 {
-    if (event->key() == Qt::Key_F)
-        canvas.fitScene();
-    if (event->key() == Qt::Key_U)
-        canvas.update();
     if(event->matches(QKeySequence::Undo))
         emit(undoEvent());
     if (event->matches(QKeySequence::Redo))
         emit(redoEvent());
-    if (event->matches(QKeySequence::Replace)){ //ctrl+h
-        if (ui->dockToolBox->isHidden())
-            ui->dockToolBox->show();
-        else
-            ui->dockToolBox->hide();
-    }
-    if (event->key() == Qt::Key_C){ //c
-        toggleConsoleStream();
-    }
-    if (event->key() == Qt::Key_T){ //t
-        canvas.toggleCameraType();
-        canvas.update();
-    }
-
-    if (event->matches(QKeySequence::Print)){ //ctrl+p
-        canvas.savePointOfView();
-    }
-    if (QKeySequence(event->key() | event->modifiers()) ==
-            QKeySequence(Qt::CTRL + Qt::Key_L)){ //ctrl+l
-        canvas.loadPointOfView();
-    }
 }
 
 /**
@@ -341,15 +322,12 @@ void MainWindow::setCurrentManager(unsigned int i)
 
 void MainWindow::on_actionSave_Snapshot_triggered()
 {
-    QKeyEvent *event =
-            new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_S, Qt::NoModifier);
-    QCoreApplication::postEvent (ui->glCanvas, event);
+    ui->glCanvas->saveSnapshot(QString(), false);
 }
 
 void MainWindow::on_actionShow_Axis_triggered()
 {
-    QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_A, Qt::NoModifier);
-    QCoreApplication::postEvent (ui->glCanvas, event);
+    ui->glCanvas->toggleAxisIsDrawn();
 }
 
 void MainWindow::on_actionFull_Screen_toggled(bool arg1)
@@ -387,9 +365,10 @@ void MainWindow::on_actionLoad_Point_of_View_triggered()
 
 void MainWindow::on_actionShow_Hide_Dock_Widget_triggered()
 {
-    QKeyEvent *event =
-            new QKeyEvent ( QEvent::KeyPress, Qt::CTRL | Qt::Key_H, Qt::NoModifier);
-    QCoreApplication::postEvent (ui->glCanvas, event);
+    if (ui->dockToolBox->isHidden())
+        ui->dockToolBox->show();
+    else
+        ui->dockToolBox->hide();
 }
 
 void MainWindow::on_actionLoad_Point_Of_View_from_triggered()
@@ -413,14 +392,9 @@ void MainWindow::on_actionShow_Hide_Console_Stream_triggered()
     toggleConsoleStream();
 }
 
-void MainWindow::on_actionEnable_Debug_Objects_triggered()
+void MainWindow::on_actionToggle_Debug_Objects_triggered()
 {
-    enableDebugObjects();
-}
-
-void MainWindow::on_actionDisable_Debug_Objects_triggered()
-{
-    disableDebugObjects();
+    toggleDebugObjects();
 }
 
 void MainWindow::on_action2D_Mode_triggered()

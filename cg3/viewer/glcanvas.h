@@ -75,7 +75,6 @@ public:
     void saveSnapshot();
     void saveSnapshot(const QString& filename, bool overwrite = true);
     void saveSnapshot(const std::string& filename, bool overwrite = true);
-    void drawAxis(bool b);
 
     // Point of View member functions:
     cg3::Pointd cameraPosition() const;

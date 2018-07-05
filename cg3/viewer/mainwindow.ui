@@ -98,9 +98,8 @@
     <property name="title">
      <string>Debug Objects</string>
     </property>
-    <addaction name="actionEnable_Debug_Objects"/>
-    <addaction name="actionDisable_Debug_Objects"/>
     <addaction name="separator"/>
+    <addaction name="actionToggle_Debug_Objects"/>
    </widget>
    <addaction name="menuFile_2"/>
    <addaction name="menuFile"/>
@@ -316,25 +315,6 @@
     <string>C</string>
    </property>
   </action>
-  <action name="actionEnable_Debug_Objects">
-   <property name="text">
-    <string>Enable Debug Objects</string>
-   </property>
-   <property name="shortcut">
-    <string>D</string>
-   </property>
-  </action>
-  <action name="actionDisable_Debug_Objects">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Disable Debug Objects</string>
-   </property>
-   <property name="shortcut">
-    <string>D</string>
-   </property>
-  </action>
   <action name="action2D_Mode">
    <property name="text">
     <string>2D Mode</string>
@@ -358,15 +338,35 @@
    <property name="text">
     <string>Reset Point of View</string>
    </property>
+   <property name="shortcut">
+    <string>R</string>
+   </property>
   </action>
   <action name="actionPerspective_Orthographic_Camera_Mode">
    <property name="text">
     <string>Perspective/Orthographic Camera Mode</string>
    </property>
+   <property name="shortcut">
+    <string>T</string>
+   </property>
   </action>
   <action name="actionLoad_Mesh">
    <property name="text">
     <string>Load Mesh</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionToggle_Debug_Objects">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toggle Debug Objects</string>
+   </property>
+   <property name="shortcut">
+    <string>D</string>
    </property>
   </action>
  </widget>

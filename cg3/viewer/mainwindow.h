@@ -95,6 +95,7 @@ public:
     //Debug Objects
     void enableDebugObjects();
     void disableDebugObjects();
+    void toggleDebugObjects();
 
     //Window Options:
     void setFullScreen(bool);
@@ -138,8 +139,7 @@ private slots:
     void on_actionLoad_Point_Of_View_from_triggered();
     void on_actionSave_Point_Of_View_as_triggered();
     void on_actionShow_Hide_Console_Stream_triggered();
-    void on_actionEnable_Debug_Objects_triggered();
-    void on_actionDisable_Debug_Objects_triggered();
+    void on_actionToggle_Debug_Objects_triggered();
     void on_action2D_Mode_triggered();
     void on_action3D_Mode_triggered();
     void on_actionReset_Point_of_View_triggered();
