@@ -48,7 +48,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
         double angle;
         zAxis.normalize();
         defineRotation(zAxis, axis, angle);
-        Eigen::Matrix3d mr = getRotationMatrix(axis, angle);
+        Eigen::Matrix3d mr = rotationMatrix(axis, angle);
 
         double L1_extent = 0.0;
         for(const Dcel::Face* f : inputMesh.faceIterator()) {
@@ -67,7 +67,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
     bestZ.normalize();
     defineRotation(bestZ, axis, angle);
 
-    return cg3::getRotationMatrix(Vec3(axis), angle);
+    return cg3::rotationMatrix(Vec3(axis), angle);
 }
 #endif
 
@@ -85,7 +85,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
         double angle;
         zAxis.normalize();
         defineRotation(zAxis, axis, angle);
-        Eigen::Matrix3d mr = getRotationMatrix(axis, angle);
+        Eigen::Matrix3d mr = rotationMatrix(axis, angle);
 
         double L1_extent = 0.0;
         for(unsigned int f = 0; f < inputMesh.getNumberFaces(); f++) {
@@ -104,7 +104,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
     bestZ.normalize();
     defineRotation(bestZ, axis, angle);
 
-    return cg3::getRotationMatrix(Vec3(axis), angle);
+    return cg3::rotationMatrix(Vec3(axis), angle);
 }
 #endif
 #endif

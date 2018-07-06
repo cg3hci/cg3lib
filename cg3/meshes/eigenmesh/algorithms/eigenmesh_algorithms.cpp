@@ -16,7 +16,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
     SimpleEigenMesh box;
     if (minimumEdge <= 0) {
         std::vector<Pointd> extremes;
-        bb.getExtremes(extremes);
+        bb.extremes(extremes);
         box.resizeVertices(8);
         for (unsigned int i = 0; i < 8; i++){
             box.setVertex(i, extremes[i].x(), extremes[i].y(), extremes[i].z());
@@ -38,12 +38,12 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
     else {
         unsigned int nSubdX, nSubdY, nSubdZ;
         //minimumEdge /= std::sqrt(2.f);
-        nSubdX = bb.getLengthX() / minimumEdge; nSubdX++;
-        nSubdY = bb.getLengthY() / minimumEdge; nSubdY++;
-        nSubdZ = bb.getLengthZ() / minimumEdge; nSubdZ++;
-        double edgeLengthX = bb.getLengthX() / nSubdX;
-        double edgeLengthY = bb.getLengthY() / nSubdY;
-        double edgeLengthZ = bb.getLengthZ() / nSubdZ;
+        nSubdX = bb.lengthX() / minimumEdge; nSubdX++;
+        nSubdY = bb.lengthY() / minimumEdge; nSubdY++;
+        nSubdZ = bb.lengthZ() / minimumEdge; nSubdZ++;
+        double edgeLengthX = bb.lengthX() / nSubdX;
+        double edgeLengthY = bb.lengthY() / nSubdY;
+        double edgeLengthZ = bb.lengthZ() / nSubdZ;
         //creation vertices
         std::map<Pointi, Pointd> vertices;
         double x, y, z;
@@ -323,7 +323,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(
     Vec3 vcrss = vector.cross(Vec3(0,0,1));
     std::cerr << "ang: " << angv << "\n";
     std::cerr << "vcross: " << vcrss << "\n";
-    Eigen::Matrix3d rot = getRotationMatrix(vcrss, -angv);
+    Eigen::Matrix3d rot = rotationMatrix(vcrss, -angv);
     std::cerr << "rot: \n" << rot << "\n";
     SimpleEigenMesh circle;
     double dist = p1.dist(p2);

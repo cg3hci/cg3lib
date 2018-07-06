@@ -22,7 +22,7 @@ class DrawableSegment2D : public Segment2Dd, public DrawableObject
 public:
     DrawableSegment2D();
     DrawableSegment2D(const Segment2Dd& s);
-    DrawableSegment2D(const Point2Dd& p1, const Point2Dd& p2);
+    DrawableSegment2D(const Point2Dd& _p1, const Point2Dd& _p2);
 
     // DrawableObject interface
     void draw() const;

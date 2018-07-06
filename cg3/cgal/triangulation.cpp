@@ -45,7 +45,7 @@ std::vector<std::array<Pointd, 3> > triangulate(
         if (normal == -zAxis){
             axis = Vec3(1,0,0);
         }
-        getRotationMatrix(axis, angle, r);
+        rotationMatrix(axis, angle, r);
     }
     else {
         r[0][0] = r[1][1] = r[2][2] = 1;

@@ -39,9 +39,9 @@ int DcelBuilder::addFace(
         const Color& c)
 {
     //one of the three ids does not exist in the dcel
-    if (d.getVertex(vid1) == nullptr ||
-            d.getVertex(vid2) == nullptr ||
-            d.getVertex(vid3) == nullptr)
+    if (d.vertex(vid1) == nullptr ||
+            d.vertex(vid2) == nullptr ||
+            d.vertex(vid3) == nullptr)
         return -1;
 
     std::pair<unsigned int, unsigned int> pe1(vid1, vid2);
@@ -63,18 +63,18 @@ int DcelBuilder::addFace(
     std::map<std::pair<unsigned int, unsigned int>, unsigned int>::iterator it =
             mapHalfEdges.find(tpe1);
     if (it != mapHalfEdges.end())
-        te1 = d.getHalfEdge(it->second);
+        te1 = d.halfEdge(it->second);
     it = mapHalfEdges.find(tpe2);
     if (it != mapHalfEdges.end())
-        te2 = d.getHalfEdge(it->second);
+        te2 = d.halfEdge(it->second);
     it = mapHalfEdges.find(tpe3);
     if (it != mapHalfEdges.end())
-        te3 = d.getHalfEdge(it->second);
+        te3 = d.halfEdge(it->second);
 
     //get vertices
-    cg3::Dcel::Vertex* v1 = d.getVertex(vid1);
-    cg3::Dcel::Vertex* v2 = d.getVertex(vid2);
-    cg3::Dcel::Vertex* v3 = d.getVertex(vid3);
+    cg3::Dcel::Vertex* v1 = d.vertex(vid1);
+    cg3::Dcel::Vertex* v2 = d.vertex(vid2);
+    cg3::Dcel::Vertex* v3 = d.vertex(vid3);
 
     //add half edges
     cg3::Dcel::HalfEdge* he1 = d.addHalfEdge();

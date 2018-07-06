@@ -23,8 +23,8 @@ namespace cg3 {
 SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel)
 {
     clear();
-    V.resize(dcel.getNumberVertices(), 3);
-    F.resize(dcel.getNumberFaces(), 3);
+    V.resize(dcel.numberVertices(), 3);
+    F.resize(dcel.numberFaces(), 3);
     std::map<int, int> vids;
     unsigned int i = 0;
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit){

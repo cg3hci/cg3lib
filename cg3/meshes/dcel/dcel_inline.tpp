@@ -28,7 +28,7 @@ inline Dcel::Dcel(const std::string& filename) : nVertices(0), nHalfEdges(0), nF
  * @par Complessità:
  *      \e O(1)
  */
-inline const Dcel::Vertex* Dcel::getVertex(unsigned int idVertex) const
+inline const Dcel::Vertex* Dcel::vertex(unsigned int idVertex) const
 {
     if (idVertex>= vertices.size()) return nullptr;
     return vertices[idVertex];
@@ -42,7 +42,7 @@ inline const Dcel::Vertex* Dcel::getVertex(unsigned int idVertex) const
  * @par Complessità:
  *      \e O(1)
  */
-inline const Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge) const
+inline const Dcel::HalfEdge* Dcel::halfEdge(unsigned int idHalfEdge) const
 {
     if (idHalfEdge>= halfEdges.size()) return nullptr;
     return halfEdges[idHalfEdge];
@@ -56,7 +56,7 @@ inline const Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge) const
  * @par Complessità:
  *      \e O(1)
  */
-inline const Dcel::Face* Dcel::getFace(unsigned int idFace) const
+inline const Dcel::Face* Dcel::face(unsigned int idFace) const
 {
     if (idFace>= faces.size()) return nullptr;
     return faces[idFace];
@@ -70,9 +70,9 @@ inline const Dcel::Face* Dcel::getFace(unsigned int idFace) const
  * @par Complessità:
  *      \e O(1)
  */
-inline BoundingBox Dcel::getBoundingBox() const
+inline BoundingBox Dcel::boundingBox() const
 {
-    return boundingBox;
+    return bBox;
 }
 
 /**
@@ -80,7 +80,7 @@ inline BoundingBox Dcel::getBoundingBox() const
  * @brief Restituisce il numero di vertici presenti nella Dcel.
  * @return Numero di vertici.
  */
-inline unsigned int Dcel::getNumberVertices () const
+inline unsigned int Dcel::numberVertices () const
 {
     return nVertices;
 }
@@ -90,7 +90,7 @@ inline unsigned int Dcel::getNumberVertices () const
  * @brief Restituisce il numero di half edge presenti nella Dcel.
  * @return Numero di half edge.
  */
-inline unsigned int Dcel::getNumberHalfEdges () const
+inline unsigned int Dcel::numberHalfEdges () const
 {
     return nHalfEdges;
 }
@@ -100,7 +100,7 @@ inline unsigned int Dcel::getNumberHalfEdges () const
  * @brief Restituisce il numero di facce presenti nella Dcel.
  * @return Numero di facce.
  */
-inline unsigned int Dcel::getNumberFaces () const
+inline unsigned int Dcel::numberFaces () const
 {
     return nFaces;
 }
@@ -178,7 +178,7 @@ inline Dcel::ConstFaceIterator Dcel::faceEnd() const
  * @par Complessità:
  *      \e O(1)
  */
-inline Dcel::Vertex* Dcel::getVertex(unsigned int idVertex)
+inline Dcel::Vertex* Dcel::vertex(unsigned int idVertex)
 {
     if (idVertex>= vertices.size()) return nullptr;
     return vertices[idVertex];
@@ -192,7 +192,7 @@ inline Dcel::Vertex* Dcel::getVertex(unsigned int idVertex)
  * @par Complessità:
  *      \e O(1)
  */
-inline Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge)
+inline Dcel::HalfEdge* Dcel::halfEdge(unsigned int idHalfEdge)
 {
     if (idHalfEdge>= halfEdges.size()) return nullptr;
     return halfEdges[idHalfEdge];
@@ -206,7 +206,7 @@ inline Dcel::HalfEdge* Dcel::getHalfEdge(unsigned int idHalfEdge)
  * @par Complessità:
  *      \e O(1)
  */
-inline Dcel::Face* Dcel::getFace(unsigned int idFace)
+inline Dcel::Face* Dcel::face(unsigned int idFace)
 {
     if (idFace>= faces.size()) return nullptr;
     return faces[idFace];

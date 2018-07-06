@@ -48,6 +48,8 @@
   - [ ] Taubin Smoothing
   - [ ] Extract SubGraph from Graphs
   - [ ] Johnson's Algorithm for Circuit enumeraiton
+  - [ ] Hausdorff distance
+  - [ ] Best Symmetry Plane of a 3D Mesh
 - Cgal:
   - [ ] Boolean union 2D between polygons
   - [ ] Polyhedron to Dcel conversion

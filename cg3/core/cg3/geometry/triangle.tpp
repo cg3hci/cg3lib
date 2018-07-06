@@ -44,7 +44,7 @@ inline const T& Triangle<T>::v3() const
 }
 
 template<class T>
-inline std::vector<T> Triangle<T>::getVertices() const
+inline std::vector<T> Triangle<T>::vertices() const
 {
     std::vector<T> vertices(3);
     vertices[0] = v1();

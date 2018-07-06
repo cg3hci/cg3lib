@@ -106,8 +106,8 @@ bool triangleOverlap(
     //Triangle data
     std::vector<cg3::Segment2D<T>> sides1 = t1.getSides();
     std::vector<cg3::Segment2D<T>> sides2 = t2.getSides();
-    std::vector<cg3::Point2D<T>> vertices1 = t1.getVertices();
-    std::vector<cg3::Point2D<T>> vertices2 = t2.getVertices();
+    std::vector<cg3::Point2D<T>> vertices1 = t1.vertices();
+    std::vector<cg3::Point2D<T>> vertices2 = t2.vertices();
 
     //Check edges intersections
     for (cg3::Segment2D<T>& s1 : sides1) {

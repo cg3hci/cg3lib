@@ -461,7 +461,7 @@ void BooleansManager::on_rotateButton_clicked()
     lastAxis = axis;
     lastAngle = angle;
     Eigen::Matrix3d m;
-    cg3::getRotationMatrix(axis, angle, m);
+    cg3::rotationMatrix(axis, angle, m);
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->rotate(m);
     }
@@ -478,7 +478,7 @@ void BooleansManager::on_rotateButton_clicked()
 void BooleansManager::on_undoRotateButton_clicked()
 {
     Eigen::Matrix3d m;
-    cg3::getRotationMatrix(-lastAxis, lastAngle, m);
+    cg3::rotationMatrix(-lastAxis, lastAngle, m);
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->rotate(m);
     }

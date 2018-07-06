@@ -320,7 +320,7 @@ Vec3 Dcel::Face::updateNormal()
             if (normal == -zAxis){
                 v = Vec3(1,0,0);
             }
-            getRotationMatrix(v, angle, r);
+            rotationMatrix(v, angle, r);
         }
         else {
             r[0][0] = r[1][1] = r[2][2] = 1;
@@ -369,7 +369,7 @@ double Dcel::Face::updateArea()
         Pointd v1 = outerHalfEdge->getFromVertex()->getCoordinate();
         Pointd v2 = outerHalfEdge->getToVertex()->getCoordinate();
         Pointd v3 = outerHalfEdge->getPrev()->getFromVertex()->getCoordinate();
-        area = (((v3 - v1).cross(v2 - v1)).getLength() / 2);
+        area = (((v3 - v1).cross(v2 - v1)).length() / 2);
     }
     #ifdef CG3_CGAL_DEFINED
     else {
@@ -385,7 +385,7 @@ double Dcel::Face::updateArea()
             Pointd v1 = tr[0]->getCoordinate();
             Pointd v2 = tr[1]->getCoordinate();
             Pointd v3 = tr[2]->getCoordinate();
-            area += (((v3 - v1).cross(v2 - v1)).getLength() / 2);
+            area += (((v3 - v1).cross(v2 - v1)).length() / 2);
         }
     }
     #endif

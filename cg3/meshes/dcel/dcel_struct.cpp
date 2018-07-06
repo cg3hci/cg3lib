@@ -61,7 +61,7 @@ Dcel::Dcel(const Dcel& dcel)
     this->nVertices = dcel.nVertices;
     this->nHalfEdges = dcel.nHalfEdges;
     this->nFaces = dcel.nFaces;
-    this->boundingBox = dcel.boundingBox;
+    this->bBox = dcel.bBox;
     std::map<const Dcel::Vertex*, Dcel::Vertex*> mapVertices;
     std::map<const Dcel::HalfEdge*, Dcel::HalfEdge*> mapHalfEdges;
     std::map<const Dcel::Face*, Dcel::Face*> mapFaces;
@@ -140,7 +140,7 @@ Dcel::Dcel(Dcel&& dcel)
     nVertices = std::move(dcel.nVertices);
     nHalfEdges = std::move(dcel.nHalfEdges);
     nFaces = std::move(dcel.nFaces);
-    boundingBox = std::move(dcel.boundingBox);
+    bBox = std::move(dcel.bBox);
     #ifdef NDEBUG
     vertexCoordinates = std::move(dcel.vertexCoordinates);
     vertexNormals = std::move(dcel.vertexNormals);
@@ -215,7 +215,7 @@ Dcel::~Dcel()
  */
 bool Dcel::isTriangleMesh() const
 {
-    if (getNumberFaces() == 0) return false;
+    if (numberFaces() == 0) return false;
     ConstFaceIterator fit;
     for (fit = faceBegin(); fit != faceEnd(); ++fit)
         if (! (*fit)->isTriangle()) return false;
@@ -229,7 +229,7 @@ bool Dcel::isTriangleMesh() const
  * @par Complessità:
  *      \e O(numFaces)
  */
-double Dcel::getSurfaceArea() const
+double Dcel::surfaceArea() const
 {
     double area = 0;
     for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit){
@@ -238,17 +238,17 @@ double Dcel::getSurfaceArea() const
     return area;
 }
 
-Pointd Dcel::getBarycenter() const
+Pointd Dcel::barycenter() const
 {
     Pointd bc;
     for (const Dcel::Vertex* v : vertexIterator()){
         bc += v->getCoordinate();
     }
-    bc /= getNumberVertices();
+    bc /= numberVertices();
     return bc;
 }
 
-double Dcel::getAverageHalfEdgesLength() const
+double Dcel::averageHalfEdgesLength() const
 {
     double average = 0;
     for (const HalfEdge* he : halfEdgeIterator()){
@@ -286,7 +286,7 @@ bool Dcel::saveOnObj(const std::string& fileNameObj) const
 
     io::MeshType meshType = io::POLYGON_MESH;
     int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
-    return saveMeshOnObj(fileNameObj, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    return saveMeshOnObj(fileNameObj, numberVertices(), numberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
 /**
@@ -316,7 +316,7 @@ bool Dcel::saveOnPly(const std::string& fileNamePly) const
 
     io::MeshType meshType = io::POLYGON_MESH;
     int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
-    return saveMeshOnPly(fileNamePly, getNumberVertices(), getNumberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    return saveMeshOnPly(fileNamePly, numberVertices(), numberFaces(), vertices.data(), faces.data(), meshType, mode, verticesNormals.data(), io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
 }
 
 void Dcel::saveOnDcelFile(const std::string& fileNameDcel) const
@@ -662,19 +662,19 @@ void Dcel::updateVertexNormals()
  */
 BoundingBox Dcel::updateBoundingBox()
 {
-    boundingBox.reset();
+    bBox.reset();
     for (ConstVertexIterator vit = vertexBegin(); vit!=vertexEnd(); ++vit){
         Pointd coord = (*vit)->getCoordinate();
 
-        boundingBox.setMinX(std::min(boundingBox.getMinX(), coord.x()));
-        boundingBox.setMinY(std::min(boundingBox.getMinY(), coord.y()));
-        boundingBox.setMinZ(std::min(boundingBox.getMinZ(), coord.z()));
+        bBox.setMinX(std::min(bBox.getMinX(), coord.x()));
+        bBox.setMinY(std::min(bBox.getMinY(), coord.y()));
+        bBox.setMinZ(std::min(bBox.getMinZ(), coord.z()));
 
-        boundingBox.setMaxX(std::max(boundingBox.getMaxX(), coord.x()));
-        boundingBox.setMaxY(std::max(boundingBox.getMaxY(), coord.y()));
-        boundingBox.setMaxZ(std::max(boundingBox.getMaxZ(), coord.z()));
+        bBox.setMaxX(std::max(bBox.getMaxX(), coord.x()));
+        bBox.setMaxY(std::max(bBox.getMaxY(), coord.y()));
+        bBox.setMaxZ(std::max(bBox.getMaxZ(), coord.z()));
     }
-    return boundingBox;
+    return bBox;
 }
 
 void Dcel::setColor(const Color& c)
@@ -700,9 +700,9 @@ void Dcel::scale(const Vec3& scaleVector)
 
 void Dcel::scale(const BoundingBox& newBoundingBox)
 {
-    Pointd oldCenter = boundingBox.center();
+    Pointd oldCenter = bBox.center();
     Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = boundingBox.getMax() - boundingBox.getMin();
+    Pointd deltaOld = bBox.getMax() - bBox.getMin();
     Pointd deltaNew = newBoundingBox.getMax() - newBoundingBox.getMin();
     for (Dcel::VertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit) {
         Dcel::Vertex* v = *vit;
@@ -710,7 +710,7 @@ void Dcel::scale(const BoundingBox& newBoundingBox)
         v->setCoordinate(v->getCoordinate() * (deltaNew / deltaOld));
         v->setCoordinate(v->getCoordinate() + newCenter);
     }
-    boundingBox = newBoundingBox;
+    bBox = newBoundingBox;
 }
 
 #ifdef CG3_WITH_EIGEN
@@ -1148,7 +1148,7 @@ void Dcel::swap(Dcel& d)
     std::swap(nVertices, d.nVertices);
     std::swap(nHalfEdges, d.nHalfEdges);
     std::swap(nFaces, d.nFaces);
-    std::swap(boundingBox, d.boundingBox);
+    std::swap(bBox, d.bBox);
 
     #ifdef NDEBUG
     std::swap(vertexCoordinates, d.vertexCoordinates);
@@ -1175,7 +1175,7 @@ void Dcel::serialize(std::ofstream& binaryFile) const
 {
     cg3::serialize("cg3Dcel", binaryFile);
     //BB
-    boundingBox.serialize(binaryFile);
+    bBox.serialize(binaryFile);
     //N
     cg3::serialize(nVertices, binaryFile);
     cg3::serialize(nHalfEdges, binaryFile);
@@ -1250,7 +1250,7 @@ void Dcel::deserialize(std::ifstream& binaryFile)
             throw std::ios_base::failure("Mismatching String: " + s + " != cg3Dcel");
         //BB
 
-        tmp.boundingBox.deserialize(binaryFile);
+        tmp.bBox.deserialize(binaryFile);
         cg3::deserialize(tmp.nVertices, binaryFile);
         cg3::deserialize(tmp.nHalfEdges, binaryFile);
         cg3::deserialize(tmp.nFaces, binaryFile);
@@ -1330,27 +1330,27 @@ void Dcel::deserialize(std::ifstream& binaryFile)
             f->setNormal(norm);
             f->setArea(area);
             f->setFlag(flag);
-            f->setOuterHalfEdge(tmp.getHalfEdge(ohe));
+            f->setOuterHalfEdge(tmp.halfEdge(ohe));
             for (int j = 0; j < nihe; j++){
                 int idhe;
                 cg3::deserialize(idhe, binaryFile);
-                f->addInnerHalfEdge(tmp.getHalfEdge(idhe));
+                f->addInnerHalfEdge(tmp.halfEdge(idhe));
             }
         }
 
         for (VertexIterator vit = tmp.vertexBegin(); vit != tmp.vertexEnd(); ++vit){
             Dcel::Vertex* v = *vit;
-            v->setIncidentHalfEdge(tmp.getHalfEdge(vert[v->getId()]));
+            v->setIncidentHalfEdge(tmp.halfEdge(vert[v->getId()]));
         }
         for (HalfEdgeIterator heit = tmp.halfEdgeBegin(); heit != tmp.halfEdgeEnd(); ++heit){
             Dcel::HalfEdge* he = *heit;
             std::array<int, 6> a = edges[he->getId()];
-            he->setFromVertex(tmp.getVertex(a[0]));
-            he->setToVertex(tmp.getVertex(a[1]));
-            he->setTwin(tmp.getHalfEdge(a[2]));
-            he->setPrev(tmp.getHalfEdge(a[3]));
-            he->setNext(tmp.getHalfEdge(a[4]));
-            he->setFace(tmp.getFace(a[5]));
+            he->setFromVertex(tmp.vertex(a[0]));
+            he->setToVertex(tmp.vertex(a[1]));
+            he->setTwin(tmp.halfEdge(a[2]));
+            he->setPrev(tmp.halfEdge(a[3]));
+            he->setNext(tmp.halfEdge(a[4]));
+            he->setFace(tmp.face(a[5]));
         }
 
         *this = std::move(tmp);
@@ -1541,11 +1541,11 @@ std::vector<const Dcel::Vertex*> Dcel::makeSingleBorder(const Face* f) const
 void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& verticesNormals, std::vector<int>& faces, std::vector<unsigned int>& faceSizes, std::vector<float>& faceColors) const
 {
     std::map<int, int> mapVertices;
-    vertices.reserve(getNumberVertices()*3);
-    verticesNormals.reserve(getNumberVertices()*3);
-    faces.reserve(getNumberFaces()*3);
-    faceSizes.reserve(getNumberFaces());
-    faceColors.reserve(getNumberFaces()*3);
+    vertices.reserve(numberVertices()*3);
+    verticesNormals.reserve(numberVertices()*3);
+    faces.reserve(numberFaces()*3);
+    faceSizes.reserve(numberFaces());
+    faceColors.reserve(numberFaces()*3);
 
     int iv = 0;
     for (const Dcel::Vertex* v : vertexIterator()){
@@ -1604,12 +1604,12 @@ void Dcel::afterLoadFile(
         double x = *(it++), y = *(it++), z = *(it++);
         Pointd coord(x,y,z);
         if (first) {
-            boundingBox.setMin(coord);
-            boundingBox.setMax(coord);
+            bBox.setMin(coord);
+            bBox.setMax(coord);
             first = false;
         }
-        boundingBox.min() = boundingBox.min().min(coord);
-        boundingBox.max() = boundingBox.max().max(coord);
+        bBox.min() = bBox.min().min(coord);
+        bBox.max() = bBox.max().max(coord);
 
         Vertex* vid = addVertex(coord);
 
@@ -1712,18 +1712,18 @@ void Dcel::copyFrom(const SimpleEigenMesh& eigenMesh)
         Pointd coord = eigenMesh.getVertex(i);
 
         if (first) {
-            boundingBox.setMin(coord);
-            boundingBox.setMax(coord);
+            bBox.setMin(coord);
+            bBox.setMax(coord);
             first = false;
         }
 
-        if (coord.x() < boundingBox.getMinX()) boundingBox.setMinX(coord.x());
-        if (coord.y() < boundingBox.getMinY()) boundingBox.setMinY(coord.y());
-        if (coord.z() < boundingBox.getMinZ()) boundingBox.setMinZ(coord.z());
+        if (coord.x() < bBox.getMinX()) bBox.setMinX(coord.x());
+        if (coord.y() < bBox.getMinY()) bBox.setMinY(coord.y());
+        if (coord.z() < bBox.getMinZ()) bBox.setMinZ(coord.z());
 
-        if (coord.x() > boundingBox.getMaxX()) boundingBox.setMaxX(coord.x());
-        if (coord.y() > boundingBox.getMaxY()) boundingBox.setMaxY(coord.y());
-        if (coord.z() > boundingBox.getMaxZ()) boundingBox.setMaxZ(coord.z());
+        if (coord.x() > bBox.getMaxX()) bBox.setMaxX(coord.x());
+        if (coord.y() > bBox.getMaxY()) bBox.setMaxY(coord.y());
+        if (coord.z() > bBox.getMaxZ()) bBox.setMaxZ(coord.z());
 
         Vertex* vid = addVertex(coord);
 
@@ -1817,18 +1817,18 @@ void Dcel::copyFrom(const cinolib::Trimesh<> &trimesh)
         Pointd coord(trimesh.vert(i));
 
         if (first) {
-            boundingBox.setMin(coord);
-            boundingBox.setMax(coord);
+            bBox.setMin(coord);
+            bBox.setMax(coord);
             first = false;
         }
 
-        if (coord.x() < boundingBox.getMinX()) boundingBox.setMinX(coord.x());
-        if (coord.y() < boundingBox.getMinY()) boundingBox.setMinY(coord.y());
-        if (coord.z() < boundingBox.getMinZ()) boundingBox.setMinZ(coord.z());
+        if (coord.x() < bBox.getMinX()) bBox.setMinX(coord.x());
+        if (coord.y() < bBox.getMinY()) bBox.setMinY(coord.y());
+        if (coord.z() < bBox.getMinZ()) bBox.setMinZ(coord.z());
 
-        if (coord.x() > boundingBox.getMaxX()) boundingBox.setMaxX(coord.x());
-        if (coord.y() > boundingBox.getMaxY()) boundingBox.setMaxY(coord.y());
-        if (coord.z() > boundingBox.getMaxZ()) boundingBox.setMaxZ(coord.z());
+        if (coord.x() > bBox.getMaxX()) bBox.setMaxX(coord.x());
+        if (coord.y() > bBox.getMaxY()) bBox.setMaxY(coord.y());
+        if (coord.z() > bBox.getMaxZ()) bBox.setMaxZ(coord.z());
 
         Vertex* vid = addVertex(coord);
 

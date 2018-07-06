@@ -64,7 +64,7 @@ void DrawableDcel::clear()
 
 void DrawableDcel::draw() const
 {
-    DrawableMesh::draw((unsigned int)vertexCoordinates.size()/3, (unsigned int)triangles.size()/3, vertexCoordinates.data(), triangles.data(), vertexNormals.data(), vertexColors.data(), triangleNormals.data(), triangleColors.data(), boundingBox.min(), boundingBox.max());
+    DrawableMesh::draw((unsigned int)vertexCoordinates.size()/3, (unsigned int)triangles.size()/3, vertexCoordinates.data(), triangles.data(), vertexNormals.data(), vertexColors.data(), triangleNormals.data(), triangleColors.data(), bBox.min(), bBox.max());
 }
 
 /**
@@ -74,8 +74,8 @@ void DrawableDcel::draw() const
  */
 Pointd DrawableDcel::sceneCenter() const
 {
-    if (boundingBox.isValid())
-        return boundingBox.center();
+    if (bBox.isValid())
+        return bBox.center();
     else
         return Pointd();
 }
@@ -87,8 +87,8 @@ Pointd DrawableDcel::sceneCenter() const
  */
 double DrawableDcel::sceneRadius() const
 {
-    if (boundingBox.isValid())
-        return boundingBox.diag() / 2;
+    if (bBox.isValid())
+        return bBox.diag() / 2;
     else
         return -1;
 }
@@ -112,14 +112,14 @@ void DrawableDcel::update()
     facesWireframe.clear();
     trianglesFacesMap.clear();
     facesTrianglesMap.clear();
-    vertexCoordinates.reserve(getNumberVertices()*3);
-    vertexNormals.reserve(getNumberVertices()*3);
-    triangles.reserve(getNumberFaces()*3);
-    triangleColors.reserve(getNumberFaces()*3);
-    triangleNormals.reserve(getNumberFaces()*3);
-    vertexColors.resize(getNumberVertices()*3,0.5);
-    facesWireframe.reserve(getNumberHalfEdges());
-    trianglesFacesMap.reserve(getNumberFaces());
+    vertexCoordinates.reserve(numberVertices()*3);
+    vertexNormals.reserve(numberVertices()*3);
+    triangles.reserve(numberFaces()*3);
+    triangleColors.reserve(numberFaces()*3);
+    triangleNormals.reserve(numberFaces()*3);
+    vertexColors.resize(numberVertices()*3,0.5);
+    facesWireframe.reserve(numberHalfEdges());
+    trianglesFacesMap.reserve(numberFaces());
     std::map<int, int> v_ids;
     int vi = 0;
 

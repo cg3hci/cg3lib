@@ -203,7 +203,7 @@ inline Pointi SimpleEigenMesh::getFace(unsigned int i) const
 inline double SimpleEigenMesh::getFaceArea(unsigned int f) const
 {
     Pointd v1 = getVertex(F(f,0));
-    return ((getVertex(F(f,2)) - v1).cross(getVertex(F(f,1)) - v1)).getLength() / 2;
+    return ((getVertex(F(f,2)) - v1).cross(getVertex(F(f,1)) - v1)).length() / 2;
 }
 
 inline void SimpleEigenMesh::getBoundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVector3d& BBmax) const

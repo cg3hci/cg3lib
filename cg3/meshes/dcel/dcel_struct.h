@@ -114,13 +114,13 @@ public:
     * Public Inline Methods *
     *************************/
 
-    const Vertex* getVertex(unsigned int idVertex)          const;
-    const HalfEdge* getHalfEdge(unsigned int idHalfEdge)    const;
-    const Face* getFace(unsigned int idFace)                const;
-    BoundingBox getBoundingBox()                            const;
-    inline unsigned int getNumberVertices()        const;
-    inline unsigned int getNumberHalfEdges()       const;
-    inline unsigned int getNumberFaces()           const;
+    const Vertex* vertex(unsigned int idVertex)          const;
+    const HalfEdge* halfEdge(unsigned int idHalfEdge)    const;
+    const Face* face(unsigned int idFace)                const;
+    BoundingBox boundingBox()                            const;
+    inline unsigned int numberVertices()        const;
+    inline unsigned int numberHalfEdges()       const;
+    inline unsigned int numberFaces()           const;
     inline ConstVertexIterator vertexBegin()       const;
     inline ConstVertexIterator vertexEnd()         const;
     inline ConstHalfEdgeIterator halfEdgeBegin()   const;
@@ -131,9 +131,9 @@ public:
     inline const ConstHalfEdgeRangeBasedIterator halfEdgeIterator() const;
     inline const ConstFaceRangeBasedIterator faceIterator() const;
 
-    Vertex* getVertex(unsigned int idVertex);
-    HalfEdge* getHalfEdge(unsigned int idHalfEdge);
-    Face* getFace(unsigned int idFace);
+    Vertex* vertex(unsigned int idVertex);
+    HalfEdge* halfEdge(unsigned int idHalfEdge);
+    Face* face(unsigned int idFace);
     VertexIterator deleteVertex(const VertexIterator& vit);
     HalfEdgeIterator deleteHalfEdge(const HalfEdgeIterator& heit);
 
@@ -157,9 +157,9 @@ public:
     bool halfEdgeBelongsToThis(const HalfEdge* he)          const;
     bool faceBelongsToThis(const Face* f)                   const;
     bool isTriangleMesh()                                   const;
-    double getSurfaceArea()                                 const;
-    Pointd getBarycenter()                                  const;
-    double getAverageHalfEdgesLength()                      const;
+    double surfaceArea()                                 const;
+    Pointd barycenter()                                  const;
+    double averageHalfEdgesLength()                      const;
     bool saveOnObj(const std::string& fileNameObj)             const;
     bool saveOnPly(const std::string& fileNamePly)             const;
     void saveOnDcelFile(const std::string& fileNameDcel)           const;
@@ -202,6 +202,22 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline const Vertex* getVertex(unsigned int v) const {return vertex(v);}
+    inline Vertex* getVertex(unsigned int v) {return vertex(v);}
+    inline const HalfEdge* getHalfEdge(unsigned int h) const {return halfEdge(h);}
+    inline HalfEdge* getHalfEdge(unsigned int h) {return halfEdge(h);}
+    inline const Face* getFace(unsigned int f) const {return face(f);}
+    inline Face* getFace(unsigned int f) {return face(f);}
+    inline BoundingBox getBoundingBox() const {return boundingBox();}
+    inline unsigned int getNumberVertices() const {return numberVertices();}
+    inline unsigned int getNumberHalfEdges() const {return numberHalfEdges();}
+    inline unsigned int getNumberFaces() const {return numberFaces();}
+    inline double getSurfaceArea() const {return surfaceArea();}
+    Pointd getBarycenter() const {return barycenter();}
+    double getAverageHalfEdgesLength() const {return averageHalfEdgesLength();}
+    #endif
+
 protected:
 
     /*************
@@ -217,7 +233,7 @@ protected:
     unsigned int            nVertices;      /**< \~Italian @brief Prossimo id del vertice. */
     unsigned int            nHalfEdges;     /**< \~Italian @brief Prossimo id dell'half edge. */
     unsigned int            nFaces;         /**< \~Italian @brief Prossimo id della faccia. */
-    BoundingBox             boundingBox;    /**< \~Italian @brief Bounding box della mesh. */
+    BoundingBox             bBox;    /**< \~Italian @brief Bounding box della mesh. */
 
     //Data
     #ifdef NDEBUG

@@ -62,7 +62,7 @@ cgal::Polyhedron getPolyhedronFromDcel(
 
             // Postcondition: hds is a valid polyhedral surface.
             CGAL::Polyhedron_incremental_builder_3<internal::HalfedgeDS> B( hds, true);
-            B.begin_surface(mesh->getNumberVertices(), mesh->getNumberFaces(), mesh->getNumberHalfEdges());
+            B.begin_surface(mesh->numberVertices(), mesh->numberFaces(), mesh->numberHalfEdges());
 
             typedef typename internal::HalfedgeDS::Vertex   PolyhedronVertex;
             typedef typename PolyhedronVertex::Point        PolyhedronPoint;

@@ -22,23 +22,23 @@ inline Segment<T>::Segment()
 
 template <class T>
 inline Segment<T>::Segment(const T& p1, const T& p2) :
-    p1(p1),
-    p2(p2)
+    _p1(p1),
+    _p2(p2)
 {
 }
 
 /* ----- Getters ----- */
 
 template <class T>
-inline const T& Segment<T>::getP1() const
+inline const T& Segment<T>::p1() const
 {
-    return p1;
+    return _p1;
 }
 
 template <class T>
-inline const T& Segment<T>::getP2() const
+inline const T& Segment<T>::p2() const
 {
-    return p2;
+    return _p2;
 }
 
 /* ----- Setters ----- */
@@ -46,13 +46,13 @@ inline const T& Segment<T>::getP2() const
 template <class T>
 inline void Segment<T>::setP1(const T& p1)
 {
-    this->p1 = p1;
+    this->_p1 = p1;
 }
 
 template <class T>
 inline void Segment<T>::setP2(const T& p2)
 {
-    this->p2 = p2;
+    this->_p2 = p2;
 }
 
 
@@ -68,7 +68,7 @@ inline void Segment<T>::set(const T& p1, const T& p2)
 template<class T>
 inline double Segment<T>::length() const
 {
-    return p1.dist(p2);
+    return _p1.dist(_p2);
 }
 
 /* ----- Operator override ----- */
@@ -76,34 +76,34 @@ inline double Segment<T>::length() const
 template <class T>
 inline bool Segment<T>::operator == (const Segment& otherSegment) const
 {
-    if (otherSegment.p1 != p1)	return false;
-    if (otherSegment.p2 != p2)	return false;
+    if (otherSegment._p1 != _p1)	return false;
+    if (otherSegment._p2 != _p2)	return false;
     return true;
 }
 
 template <class T>
 inline bool Segment<T>::operator != (const Segment& otherSegment) const
 {
-    if (otherSegment.p1 != p1)	return true;
-    if (otherSegment.p2 != p2)	return true;
+    if (otherSegment._p1 != _p1)	return true;
+    if (otherSegment._p2 != _p2)	return true;
     return false;
 }
 
 template <class T>
 inline bool Segment<T>::operator < (const Segment& otherSegment) const
 {
-    if (this->p1 < otherSegment.p1) return true;
-    if (this->p1 > otherSegment.p1) return false;
-    if (this->p2 < otherSegment.p2) return true;
+    if (this->_p1 < otherSegment._p1) return true;
+    if (this->_p1 > otherSegment._p1) return false;
+    if (this->_p2 < otherSegment._p2) return true;
     return false;
 }
 
 template <class T>
 inline bool Segment<T>::operator > (const Segment& otherSegment) const
 {
-    if (this->p1 < otherSegment.p1) return false;
-    if (this->p1 > otherSegment.p1) return true;
-    if (this->p2 > otherSegment.p2) return true;
+    if (this->_p1 < otherSegment._p1) return false;
+    if (this->_p1 > otherSegment._p1) return true;
+    if (this->_p2 > otherSegment._p2) return true;
     return false;
 }
 
@@ -124,13 +124,13 @@ inline bool Segment<T>::operator >= (const Segment& otherSegment) const
 template<class T>
 inline void Segment<T>::serialize(std::ofstream& binaryFile) const
 {
-    serializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
+    serializeObjectAttributes("cg3Segment", binaryFile, _p1, _p2);
 }
 
 template<class T>
 inline void Segment<T>::deserialize(std::ifstream& binaryFile)
 {
-    deserializeObjectAttributes("cg3Segment", binaryFile, p1, p2);
+    deserializeObjectAttributes("cg3Segment", binaryFile, _p1, _p2);
 }
 
 /* ------ Utilities ------ */
@@ -138,7 +138,7 @@ inline void Segment<T>::deserialize(std::ifstream& binaryFile)
 template <class T>
 std::ostream& operator<<(std::ostream& o, const Segment<T>& seg)
 {
-    o << "{" << seg.getP1() << ", " << seg.getP2() << "}";
+    o << "{" << seg.p1() << ", " << seg.p2() << "}";
     return o;
 }
 
@@ -149,6 +149,6 @@ template<typename T>
 inline std::size_t std::hash<cg3::Segment<T> >::operator()(const cg3::Segment<T> &k) const
 {
     std::size_t h=0;
-    cg3::hashCombine(h, k.getP1(), k.getP2());
+    cg3::hashCombine(h, k.p1(), k.p2());
     return h;
 }

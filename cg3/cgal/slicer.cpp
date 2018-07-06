@@ -94,7 +94,7 @@ std::vector<std::vector<Pointd> > getPolylines(
         const Dcel &mesh,
         const Plane &p)
 {
-    return getPolylines(mesh, p.getNormal(), p.getD());
+    return getPolylines(mesh, p.normal(), p.d());
 }
 
 /**

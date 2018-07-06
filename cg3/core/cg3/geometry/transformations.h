@@ -13,12 +13,29 @@
 namespace cg3 {
 
 #ifdef CG3_WITH_EIGEN
-void getRotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m);
+void rotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m);
 
-Eigen::Matrix3d getRotationMatrix(Vec3 axis, double angle);
+Eigen::Matrix3d rotationMatrix(Vec3 axis, double angle);
 #endif
 
-void getRotationMatrix(Vec3 axis, double angle, double m[][3]);
+void rotationMatrix(Vec3 axis, double angle, double m[][3]);
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+#ifdef CG3_WITH_EIGEN
+inline void getRotationMatrix(Vec3 axis, double angle, Eigen::Matrix3d &m)
+{
+    rotationMatrix(axis, angle, m);
+}
+inline Eigen::Matrix3d getRotationMatrix(Vec3 axis, double angle)
+{
+    return rotationMatrix(axis, angle);
+}
+#endif
+inline void getRotationMatrix(Vec3 axis, double angle, double m[][3])
+{
+    return rotationMatrix(axis, angle, m);
+}
+#endif
 
 }
 

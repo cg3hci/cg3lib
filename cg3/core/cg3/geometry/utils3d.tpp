@@ -66,8 +66,8 @@ inline Pointd orthogonalProjectionOnAPlane(
 {
     //TO BE TESTED
 
-    const Vec3& planeNormal = plane.getNormal();
-    const double d = plane.getD();
+    const Vec3& planeNormal = plane.normal();
+    const double d = plane.d();
 
     cg3::Pointd planePoint = planeNormal*d;
 

@@ -129,7 +129,7 @@ inline Point<T> Point<T>::cross(const Point<T>& otherVector) const
  * @return The length of the vector
  */
 template <class T>
-inline double Point<T>::getLength() const
+inline double Point<T>::length() const
 {
     return sqrt( xCoord*xCoord + yCoord*yCoord + zCoord*zCoord );
 }
@@ -140,7 +140,7 @@ inline double Point<T>::getLength() const
  * @return La lunghezza al quadrato del vettore this
  */
 template <class T>
-inline double Point<T>::getLengthSquared() const
+inline double Point<T>::lengthSquared() const
 {
     return xCoord * xCoord + yCoord * yCoord + zCoord * zCoord;
 }
@@ -454,7 +454,7 @@ inline void Point<T>::set(const T& x, const T& y, const T& z)
 template <class T>
 inline double Point<T>::normalize()
 {
-    double len = getLength();
+    double len = length();
     xCoord /= len;
     yCoord /= len;
     zCoord /= len;

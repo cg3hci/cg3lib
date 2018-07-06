@@ -27,7 +27,7 @@ public:
     const T& v1() const;
     const T& v2() const;
     const T& v3() const;
-    std::vector<T> getVertices() const;
+    std::vector<T> vertices() const;
 
     T& v1();
     T& v2();
@@ -51,6 +51,10 @@ public:
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
+
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline std::vector<T> getVertices() const {return vertices;}
+    #endif
 
 protected:
     T _v1, _v2, _v3;

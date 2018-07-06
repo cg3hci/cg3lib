@@ -19,14 +19,14 @@ RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool
     bb(bb),
     unit(unit)
 {
-    mresX = bb.getLengthX() / unit;
-    if (outsideBB || std::fmod(bb.getLengthX(), unit) == 0)
+    mresX = bb.lengthX() / unit;
+    if (outsideBB || std::fmod(bb.lengthX(), unit) == 0)
         mresX++;
-    mresY = bb.getLengthY() / unit;
-    if (outsideBB || std::fmod(bb.getLengthY(), unit) == 0)
+    mresY = bb.lengthY() / unit;
+    if (outsideBB || std::fmod(bb.lengthY(), unit) == 0)
         mresY++;
-    mresZ = bb.getLengthZ() / unit;
-    if (outsideBB || std::fmod(bb.getLengthZ(), unit) == 0)
+    mresZ = bb.lengthZ() / unit;
+    if (outsideBB || std::fmod(bb.lengthZ(), unit) == 0)
         mresZ++;
     this->bb.max() = Pointd(bb.minX() + unit * (mresX-1), bb.minY() + unit * (mresY-1), bb.minZ() + unit * (mresZ-1));
     vertexProperties.resize(mresX,mresY,mresZ);
@@ -131,21 +131,21 @@ template<class VT>
 int RegularLattice<VT>::getIndexOfCoordinateX(double x) const
 {
     double deltax = x - bb.getMinX();
-    return (deltax * (mresX-1)) / bb.getLengthX();
+    return (deltax * (mresX-1)) / bb.lengthX();
 }
 
 template<class VT>
 int RegularLattice<VT>::getIndexOfCoordinateY(double y) const
 {
     double deltay = y - bb.getMinY();
-    return (deltay * (mresY-1)) / bb.getLengthY();
+    return (deltay * (mresY-1)) / bb.lengthY();
 }
 
 template<class VT>
 int RegularLattice<VT>::getIndexOfCoordinateZ(double z) const
 {
     double deltaz = z - bb.getMinZ();
-    return (deltaz * (mresZ-1)) / bb.getLengthZ();
+    return (deltaz * (mresZ-1)) / bb.lengthZ();
 }
 
 }

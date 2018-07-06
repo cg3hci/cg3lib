@@ -92,10 +92,10 @@ void checkSegmentIntersection2D(
     double  s, t;       /* The two parameters of the parametric eqns. */
     double num, denom;  /* Numerator and denoninator of equations. */
 
-    Point2Dd a = seg1.getP1();
-    Point2Dd b = seg1.getP2();
-    Point2Dd c = seg2.getP1();
-    Point2Dd d = seg2.getP2();
+    Point2Dd a = seg1.p1();
+    Point2Dd b = seg1.p2();
+    Point2Dd c = seg2.p1();
+    Point2Dd d = seg2.p2();
 
     //Same segment
     if ((cg3::epsilonEqual(a, c, eps) && cg3::epsilonEqual(b, d, eps)) ||

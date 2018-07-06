@@ -34,10 +34,10 @@ bool checkSegmentIntersection2D(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
         const bool& ignoreEndPoints)
 {
-    Point2Dd p1From = seg1.getP1();
-    Point2Dd p1To = seg1.getP2();
-    Point2Dd p2From = seg2.getP1();
-    Point2Dd p2To = seg2.getP2();
+    Point2Dd p1From = seg1.p1();
+    Point2Dd p1To = seg1.p2();
+    Point2Dd p2From = seg2.p1();
+    Point2Dd p2To = seg2.p2();
     double eps = 0.001;
 
     //Exclude endpoints
@@ -74,10 +74,10 @@ std::vector<Segment2Dd> getSegmentIntersection2D(
         const bool& ignoreEndPoints)
 {
     std::vector<Segment2Dd> resultVec;
-    Point2Dd p1From = seg1.getP1();
-    Point2Dd p1To = seg1.getP2();
-    Point2Dd p2From = seg2.getP1();
-    Point2Dd p2To = seg2.getP2();
+    Point2Dd p1From = seg1.p1();
+    Point2Dd p1To = seg1.p2();
+    Point2Dd p2From = seg2.p1();
+    Point2Dd p2To = seg2.p2();
     double eps = 0.001;
 
     //Exclude endpoints

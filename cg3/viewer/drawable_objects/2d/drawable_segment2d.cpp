@@ -31,18 +31,18 @@ DrawableSegment2D::DrawableSegment2D(const Point2Dd &p1, const Point2Dd &p2) :
 
 void DrawableSegment2D::draw() const
 {
-    cg3::opengl::drawLine2D(p1, p2, color, width);
+    cg3::opengl::drawLine2D(_p1, _p2, color, width);
 }
 
 Pointd DrawableSegment2D::sceneCenter() const
 {
-    Point2Dd p = (p1 + p2)/2;
+    Point2Dd p = (_p1 + _p2)/2;
     return Pointd(p.x(), p.y(), 0);
 }
 
 double DrawableSegment2D::sceneRadius() const
 {
-    return p1.dist(p2) / 2;
+    return _p1.dist(_p2) / 2;
 }
 
 void DrawableSegment2D::setColor(const QColor& c)

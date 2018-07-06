@@ -65,8 +65,8 @@ public:
     double dist(const Point<T>& otherPoint)             const;
     double dot(const Point<T>& otherVector)             const;
     Point<T> cross(const Point<T>& otherVector)         const;
-    double getLength()                                  const;
-    double getLengthSquared()                           const;
+    double length()                                     const;
+    double lengthSquared()                              const;
     Point<T> min(const Point<T>& otherPoint)            const;
     Point<T> max(const Point<T>& otherPoint)            const;
 
@@ -113,6 +113,11 @@ public:
     Point<T> operator *= (const Point<T>& otherPoint);
     Point<T> operator /= (const T& scalar );
     Point<T> operator /= (const Point<T>& otherPoint);
+
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline double getLength() const {return length();}
+    inline double getLengthSquared() const {return lengthSquared();}
+    #endif
 
 protected:
     T xCoord;

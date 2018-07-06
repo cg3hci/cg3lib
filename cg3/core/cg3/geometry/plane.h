@@ -28,17 +28,17 @@ public:
     Plane(double a, double b, double c, double d);
     Plane(const Pointd &p1, const Pointd &p2, const Pointd &p3);
 
-    double getA() const;
-    double getB() const;
-    double getC() const;
-    double getD() const;
-    Vec3 getNormal() const;
+    double a() const;
+    double b() const;
+    double c() const;
+    double d() const;
+    Vec3 normal() const;
 
     void normalize();
 
     bool pointLiesOnPlane(const Pointd& p, double epsilon = cg3::CG3_EPSILON) const;
     #ifdef CG3_WITH_EIGEN
-    bool getIntersection(Pointd&intersection, const Line &l) const;
+    bool intersection(Pointd& inters, const Line &l) const;
     #endif
     double pointDistance(const Pointd& p) const;
 
@@ -46,9 +46,20 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline double getA() const {return a();}
+    inline double getB() const {return b();}
+    inline double getC() const {return c();}
+    inline double getD() const {return d();}
+    inline Vec3 getNormal() const {return normal();}
+    #ifdef CG3_WITH_EIGEN
+    inline bool getIntersection(Pointd& i, const Line &l) const {return intersection(i, l);}
+    #endif
+    #endif
+
 protected:
-    Vec3 normal;
-    double d;
+    Vec3 _normal;
+    double _d;
 };
 
 } //namespace cg3

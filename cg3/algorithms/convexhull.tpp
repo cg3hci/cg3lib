@@ -39,7 +39,7 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*>& horizonEdge
 inline Dcel convexHull(const Dcel& inputDcel)
 {
     std::vector<Pointd> points;
-    points.reserve(inputDcel.getNumberVertices());
+    points.reserve(inputDcel.numberVertices());
     for (const Dcel::Vertex* v : inputDcel.vertexIterator()){
         points.push_back(v->getCoordinate());
     }
@@ -110,7 +110,7 @@ Dcel convexHull(InputIterator first, InputIterator end)
                  */
                 std::set<Dcel::Face*> visibleFaces;
                 for (const unsigned int& f : cg.adjacentLeftNodeIterator(p)){
-                    visibleFaces.insert(convexHull.getFace(f));
+                    visibleFaces.insert(convexHull.face(f));
                 }
 
                 std::set<Dcel::Vertex*> horizonVertex;

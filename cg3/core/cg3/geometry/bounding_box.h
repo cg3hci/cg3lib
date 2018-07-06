@@ -30,25 +30,17 @@ public:
     BoundingBox();
     BoundingBox(const Pointd& min, const Pointd& max);
 
-    const Pointd& getMin()     const;
     const Pointd& min()        const;
-    const Pointd& getMax()     const;
     const Pointd& max()        const;
-    const double& getMinX()    const;
     const double& minX()       const;
-    const double& getMinY()    const;
     const double& minY()       const;
-    const double& getMinZ()    const;
     const double& minZ()       const;
-    const double& getMaxX()    const;
     const double& maxX()       const;
-    const double& getMaxY()    const;
     const double& maxY()       const;
-    const double& getMaxZ()    const;
     const double& maxZ()       const;
-    double getLengthX()        const;
-    double getLengthY()        const;
-    double getLengthZ()        const;
+    double lengthX()        const;
+    double lengthY()        const;
+    double lengthZ()        const;
 
     Pointd  center()    const;
     double diag()       const;
@@ -66,8 +58,8 @@ public:
     bool isEpsilonIntern(double px, double py, double pz, double epsilon = 1e-6)     const;
     bool isEpsilonInside(double px, double py, double pz, double epsilon = 1e-6)     const;
     bool intersect(const BoundingBox& otherBox);
-    void getExtremes(std::vector<Pointd> &extremes) const;
-    std::vector<Pointd> getExtremes() const;
+    void extremes(std::vector<Pointd> &extremes) const;
+    std::vector<Pointd> extremes() const;
 
     //Operators
     const double &operator ()(unsigned int i) const;
@@ -102,9 +94,25 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline const Pointd& getMin() const {return min();}
+    inline const Pointd& getMax() const {return max();}
+    inline const double& getMinX() const {return minX();}
+    inline const double& getMinY() const {return minY();}
+    inline const double& getMinZ() const {return minZ();}
+    inline const double& getMaxX() const {return maxX();}
+    inline const double& getMaxY() const {return maxY();}
+    inline const double& getMaxZ() const {return maxZ();}
+    inline double getLengthX() const {return lengthX();}
+    inline double getLengthY() const {return lengthY();}
+    inline double getLengthZ() const {return lengthZ();}
+    inline void getExtremes(std::vector<Pointd> &v) const {extremes(v);}
+    inline std::vector<Pointd> getExtremes() const {return extremes();}
+    #endif
+
 protected:
-    Pointd minCoord;
-    Pointd maxCoord;
+    Pointd _min;
+    Pointd _max;
 };
 
 typedef BoundingBox Box;

@@ -55,14 +55,14 @@ EigenMesh::EigenMesh(
 EigenMesh::EigenMesh(const Dcel& dcel)
 {
     clear();
-    V.resize(dcel.getNumberVertices(), 3);
-    F.resize(dcel.getNumberFaces(), 3);
+    V.resize(dcel.numberVertices(), 3);
+    F.resize(dcel.numberFaces(), 3);
     CF.resize(F.rows(), 3);
     updateVertexColorsSize();
     NV.resize(V.rows(), 3);
     NF.resize(F.rows(), 3);
     std::map<int, int> vids;
-    bb = dcel.getBoundingBox();
+    bb = dcel.boundingBox();
     unsigned int i = 0;
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
@@ -367,14 +367,14 @@ EigenMesh EigenMesh::merge(const EigenMesh& m1, const EigenMesh& m2)
 EigenMesh& EigenMesh::operator=(const Dcel& dcel)
 {
     clear();
-    V.resize(dcel.getNumberVertices(), 3);
-    F.resize(dcel.getNumberFaces(), 3);
+    V.resize(dcel.numberVertices(), 3);
+    F.resize(dcel.numberFaces(), 3);
     CF.resize(F.rows(), 3);
     CV = Eigen::MatrixXf::Constant(V.rows(), 3, 0.5);
     NV.resize(V.rows(), 3);
     NF.resize(F.rows(), 3);
     std::map<int, int> vids;
-    bb = dcel.getBoundingBox();
+    bb = dcel.boundingBox();
     unsigned int i = 0;
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;

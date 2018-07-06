@@ -7,7 +7,10 @@
 #
 
 CONFIG += c++11
-#CONFIG += object_parallel_to_source #allows the compilation of files with same name inside the project
+
+CG3_OLD_NAMES_COMPATIBILITY {
+    DEFINES += CG3_OLD_NAMES_COMPATIBILITY
+}
 
 CG3_ALL {
     CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_MESHES CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VIEWER

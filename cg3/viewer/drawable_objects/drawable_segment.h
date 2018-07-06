@@ -19,8 +19,8 @@ class DrawableSegment : public Segment3Dd, public DrawableObject
 public:
     DrawableSegment();
     DrawableSegment(
-            const Pointd& p1,
-            const Pointd& p2,
+            const Pointd& _p1,
+            const Pointd& _p2,
             Color c = Color(),
             int width = 3);
 

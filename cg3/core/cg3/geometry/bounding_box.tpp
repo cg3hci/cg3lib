@@ -24,8 +24,8 @@ inline BoundingBox::BoundingBox()
  * @param[in] max: point setted as maximum point of the bounding box
  */
 inline BoundingBox::BoundingBox(const Pointd& min, const Pointd& max) :
-    minCoord(min),
-    maxCoord(max)
+    _min(min),
+    _max(max)
 {
 }
 
@@ -37,127 +37,87 @@ inline BoundingBox::BoundingBox(const Pointd& min, const Pointd& max) :
  * @brief Returns the minimum point of the bounding box
  * @return The minimum point
  */
-inline const Pointd& BoundingBox::getMin() const
-{
-    return minCoord;
-}
-
 inline const Pointd& BoundingBox::min() const
 {
-    return minCoord;
+    return _min;
 }
 
 /**
  * @brief Returns the maximum point of the bounding box
  * @return The maximum point
  */
-inline const Pointd& BoundingBox::getMax() const
-{
-    return maxCoord;
-}
-
 inline const Pointd& BoundingBox::max() const
 {
-    return maxCoord;
+    return _max;
 }
 
 /**
  * @brief Returns the x component of the minimum point of the bounding box
  * @return X component of the minimum point
  */
-inline const double& BoundingBox::getMinX() const
-{
-    return minCoord.x();
-}
-
 inline const double& BoundingBox::minX() const
 {
-    return minCoord.x();
+    return _min.x();
 }
 
 /**
  * @brief Returns the y component of the minimum point of the bounding box
  * @return Y component of the minimum point
  */
-inline const double& BoundingBox::getMinY() const
-{
-    return minCoord.y();
-}
-
 inline const double& BoundingBox::minY() const
 {
-    return minCoord.y();
+    return _min.y();
 }
 
 /**
  * @brief Returns the z component of the minimum point of the bounding box
  * @return Z component of the minimum point
  */
-inline const double& BoundingBox::getMinZ() const
-{
-    return minCoord.z();
-}
-
 inline const double& BoundingBox::minZ() const
 {
-    return minCoord.z();
+    return _min.z();
 }
 
 /**
  * @brief Returns the x component of the maximum point of the bounding box
  * @return X component of the maximum point
  */
-inline const double& BoundingBox::getMaxX() const
-{
-    return maxCoord.x();
-}
-
 inline const double& BoundingBox::maxX() const
 {
-    return maxCoord.x();
+    return _max.x();
 }
 
 /**
  * @brief Returns the y component of the maximum point of the bounding box
  * @return Y component of the maximum point
  */
-inline const double& BoundingBox::getMaxY() const
-{
-    return maxCoord.y();
-}
-
 inline const double& BoundingBox::maxY() const
 {
-    return maxCoord.y();
+    return _max.y();
 }
 
 /**
  * @brief Returns the Z component of the maximum point of the bounding box
  * @return Z component of the maximum point
  */
-inline const double& BoundingBox::getMaxZ() const
-{
-    return maxCoord.z();
-}
-
 inline const double& BoundingBox::maxZ() const
 {
-    return maxCoord.z();
+    return _max.z();
 }
 
-inline double BoundingBox::getLengthX() const
+inline double BoundingBox::lengthX() const
 {
-    return maxCoord.x() - minCoord.x();
+    return _max.x() - _min.x();
 }
 
-inline double BoundingBox::getLengthY() const
+inline double BoundingBox::lengthY() const
 {
-    return maxCoord.y() - minCoord.y();
+    return _max.y() - _min.y();
 }
 
-inline double BoundingBox::getLengthZ() const
+inline double BoundingBox::lengthZ() const
 {
-    return maxCoord.z() - minCoord.z();
+    return _max.z() - _min.z();
 }
 
 /**
@@ -166,7 +126,7 @@ inline double BoundingBox::getLengthZ() const
  */
 inline Pointd BoundingBox::center() const
 {
-    return (minCoord + maxCoord) * 0.5;
+    return (_min + _max) * 0.5;
 }
 
 /**
@@ -175,18 +135,18 @@ inline Pointd BoundingBox::center() const
  */
 inline double BoundingBox::diag() const
 {
-    return (minCoord - maxCoord).getLength();
+    return (_min - _max).length();
 }
 
 inline bool BoundingBox::isValid() const
 {
-    return minCoord.x() <= maxCoord.x() && minCoord.y() <= maxCoord.y() && minCoord.z() <= maxCoord.z();
+    return _min.x() <= _max.x() && _min.y() <= _max.y() && _min.z() <= _max.z();
 }
 
 inline bool BoundingBox::isStrictlyIntern(const Pointd &p) const
 {
-    return (p.x() > minCoord.x() && p.y() > minCoord.y() && p.z() > minCoord.z() &&
-            p.x() < maxCoord.x() && p.y() < maxCoord.y() && p.z() < maxCoord.z());
+    return (p.x() > _min.x() && p.y() > _min.y() && p.z() > _min.z() &&
+            p.x() < _max.x() && p.y() < _max.y() && p.z() < _max.z());
 }
 
 inline bool BoundingBox::isStrictlyInside(const Pointd& p) const
@@ -196,8 +156,8 @@ inline bool BoundingBox::isStrictlyInside(const Pointd& p) const
 
 inline bool BoundingBox::isStrictlyIntern(double px, double py, double pz) const
 {
-    return (px > minCoord.x() && py > minCoord.y() && pz > minCoord.z() &&
-            px < maxCoord.x() && py < maxCoord.y() && pz < maxCoord.z());
+    return (px > _min.x() && py > _min.y() && pz > _min.z() &&
+            px < _max.x() && py < _max.y() && pz < _max.z());
 }
 
 inline bool BoundingBox::isStrictlyInside(double px, double py, double pz) const
@@ -207,8 +167,8 @@ inline bool BoundingBox::isStrictlyInside(double px, double py, double pz) const
 
 inline bool BoundingBox::isIntern(const Pointd &p) const
 {
-    return (p.x() >= minCoord.x() && p.y() >= minCoord.y() && p.z() >= minCoord.z() &&
-            p.x() <= maxCoord.x() && p.y() <= maxCoord.y() && p.z() <= maxCoord.z());
+    return (p.x() >= _min.x() && p.y() >= _min.y() && p.z() >= _min.z() &&
+            p.x() <= _max.x() && p.y() <= _max.y() && p.z() <= _max.z());
 }
 
 inline bool BoundingBox::isInside(const Pointd& p) const
@@ -218,8 +178,8 @@ inline bool BoundingBox::isInside(const Pointd& p) const
 
 inline bool BoundingBox::isIntern(double px, double py, double pz) const
 {
-    return (px >= minCoord.x() && py >= minCoord.y() && pz >= minCoord.z() &&
-            px <= maxCoord.x() && py <= maxCoord.y() && pz <= maxCoord.z());
+    return (px >= _min.x() && py >= _min.y() && pz >= _min.z() &&
+            px <= _max.x() && py <= _max.y() && pz <= _max.z());
 }
 
 inline bool BoundingBox::isInside(double px, double py, double pz) const
@@ -229,8 +189,8 @@ inline bool BoundingBox::isInside(double px, double py, double pz) const
 
 inline bool BoundingBox::isEpsilonIntern(const Pointd& p, double epsilon) const
 {
-    return (p.x() >= minCoord.x()-epsilon && p.y() >= minCoord.y()-epsilon && p.z() >= minCoord.z()-epsilon &&
-            p.x() <= maxCoord.x()+epsilon && p.y() <= maxCoord.y()+epsilon && p.z() <= maxCoord.z()+epsilon);
+    return (p.x() >= _min.x()-epsilon && p.y() >= _min.y()-epsilon && p.z() >= _min.z()-epsilon &&
+            p.x() <= _max.x()+epsilon && p.y() <= _max.y()+epsilon && p.z() <= _max.z()+epsilon);
 }
 
 inline bool BoundingBox::isEpsilonInside(const Pointd& p, double epsilon) const
@@ -240,8 +200,8 @@ inline bool BoundingBox::isEpsilonInside(const Pointd& p, double epsilon) const
 
 inline bool BoundingBox::isEpsilonIntern(double px, double py, double pz, double epsilon) const
 {
-    return (px >= minCoord.x()-epsilon && py >= minCoord.y()-epsilon && pz >= minCoord.z()-epsilon &&
-            px <= maxCoord.x()+epsilon && py <= maxCoord.y()+epsilon && pz <= maxCoord.z()+epsilon);
+    return (px >= _min.x()-epsilon && py >= _min.y()-epsilon && pz >= _min.z()-epsilon &&
+            px <= _max.x()+epsilon && py <= _max.y()+epsilon && pz <= _max.z()+epsilon);
 }
 
 inline bool BoundingBox::isEpsilonInside(double px, double py, double pz, double epsilon) const
@@ -270,28 +230,28 @@ inline bool BoundingBox::intersect(const BoundingBox& otherBox)
  * @brief BoundingBox::getExtremes
  * @param[out] extremes: a vector of 8 Pointd which are the extremes of the bounding box
  */
-inline void BoundingBox::getExtremes(std::vector<Pointd>& extremes) const
+inline void BoundingBox::extremes(std::vector<Pointd>& extremes) const
 {
     extremes.resize(8);
-    extremes[0] = minCoord;
-    extremes[1].set(maxCoord.x(), minCoord.y(), minCoord.z());
-    extremes[2].set(maxCoord.x(), minCoord.y(), maxCoord.z());
-    extremes[3].set(minCoord.x(), minCoord.y(), maxCoord.z());
-    extremes[4].set(minCoord.x(), maxCoord.y(), minCoord.z());
-    extremes[5].set(maxCoord.x(), maxCoord.y(), minCoord.z());
-    extremes[6] = maxCoord;
-    extremes[7].set(minCoord.x(), maxCoord.y(), maxCoord.z());
+    extremes[0] = _min;
+    extremes[1].set(_max.x(), _min.y(), _min.z());
+    extremes[2].set(_max.x(), _min.y(), _max.z());
+    extremes[3].set(_min.x(), _min.y(), _max.z());
+    extremes[4].set(_min.x(), _max.y(), _min.z());
+    extremes[5].set(_max.x(), _max.y(), _min.z());
+    extremes[6] = _max;
+    extremes[7].set(_min.x(), _max.y(), _max.z());
 }
 
 /**
  * @brief BoundingBox::getExtremes
  * @return a vector of 8 Pointd which are the extremes of the bounding box
  */
-inline std::vector<Pointd> BoundingBox::getExtremes() const
+inline std::vector<Pointd> BoundingBox::extremes() const
 {
-    std::vector<Pointd> extremes;
-    getExtremes(extremes);
-    return extremes;
+    std::vector<Pointd> ext;
+    extremes(ext);
+    return ext;
 }
 
 /**
@@ -303,14 +263,14 @@ inline const double& BoundingBox::operator ()(unsigned int i) const
 {
     assert(i < 6);
     switch (i%6){
-        case 0: return minCoord.x();
-        case 1: return minCoord.y();
-        case 2: return minCoord.z();
-        case 3: return maxCoord.x();
-        case 4: return maxCoord.y();
-        case 5: return maxCoord.z();
+        case 0: return _min.x();
+        case 1: return _min.y();
+        case 2: return _min.z();
+        case 3: return _max.x();
+        case 4: return _max.y();
+        case 5: return _max.z();
     }
-    return minCoord.x();
+    return _min.x();
 }
 
 /**
@@ -322,16 +282,16 @@ inline Pointd BoundingBox::operator[](unsigned int i) const
 {
     assert(i < 8);
     switch (i%8){
-        case 0: return minCoord;
-        case 1: return Pointd(maxCoord.x(), minCoord.y(), minCoord.z());
-        case 2: return Pointd(maxCoord.x(), minCoord.y(), maxCoord.z());
-        case 3: return Pointd(minCoord.x(), minCoord.y(), maxCoord.z());
-        case 4: return Pointd(minCoord.x(), maxCoord.y(), minCoord.z());
-        case 5: return Pointd(maxCoord.x(), maxCoord.y(), minCoord.z());
-        case 6: return maxCoord;
-        case 7: return Pointd(minCoord.x(), maxCoord.y(), maxCoord.z());
+        case 0: return _min;
+        case 1: return Pointd(_max.x(), _min.y(), _min.z());
+        case 2: return Pointd(_max.x(), _min.y(), _max.z());
+        case 3: return Pointd(_min.x(), _min.y(), _max.z());
+        case 4: return Pointd(_min.x(), _max.y(), _min.z());
+        case 5: return Pointd(_max.x(), _max.y(), _min.z());
+        case 6: return _max;
+        case 7: return Pointd(_min.x(), _max.y(), _max.z());
     }
-    return minCoord.x();
+    return _min.x();
 }
 
 /**
@@ -345,14 +305,14 @@ inline Pointd BoundingBox::operator[](unsigned int i) const
 inline void BoundingBox::saveOnObj(const std::string& filename, const Color &c) const
 {
     std::vector<double> v {
-        minCoord.x(), minCoord.y(), minCoord.z(),
-        maxCoord.x(), minCoord.y(), minCoord.z(),
-        maxCoord.x(), minCoord.y(), maxCoord.z(),
-        minCoord.x(), minCoord.y(), maxCoord.z(),
-        minCoord.x(), maxCoord.y(), minCoord.z(),
-        maxCoord.x(), maxCoord.y(), minCoord.z(),
-        maxCoord.x(), maxCoord.y(), maxCoord.z(),
-        minCoord.x(), maxCoord.y(), maxCoord.z()
+        _min.x(), _min.y(), _min.z(),
+        _max.x(), _min.y(), _min.z(),
+        _max.x(), _min.y(), _max.z(),
+        _min.x(), _min.y(), _max.z(),
+        _min.x(), _max.y(), _min.z(),
+        _max.x(), _max.y(), _min.z(),
+        _max.x(), _max.y(), _max.z(),
+        _min.x(), _max.y(), _max.z()
     };
     std::vector<int> f {
         0, 1, 2, 3,
@@ -382,7 +342,7 @@ inline void BoundingBox::saveOnObj(const std::string& filename, const Color &c) 
  */
 inline void BoundingBox::setMin(const Pointd& min)
 {
-    this->minCoord = min;
+    this->_min = min;
 }
 
 /**
@@ -391,7 +351,7 @@ inline void BoundingBox::setMin(const Pointd& min)
  */
 inline Pointd&BoundingBox::min()
 {
-    return minCoord;
+    return _min;
 }
 
 /**
@@ -400,7 +360,7 @@ inline Pointd&BoundingBox::min()
  */
 inline void BoundingBox::setMax(const Pointd& max)
 {
-    this->maxCoord = max;
+    this->_max = max;
 }
 
 /**
@@ -409,7 +369,7 @@ inline void BoundingBox::setMax(const Pointd& max)
  */
 inline Pointd& BoundingBox::max()
 {
-    return maxCoord;
+    return _max;
 }
 
 /**
@@ -420,7 +380,7 @@ inline Pointd& BoundingBox::max()
  */
 inline void BoundingBox::setMin(double x, double y, double z)
 {
-    minCoord.set(x, y, z);
+    _min.set(x, y, z);
 }
 
 /**
@@ -431,7 +391,7 @@ inline void BoundingBox::setMin(double x, double y, double z)
  */
 inline void BoundingBox::setMax(double x, double y, double z)
 {
-    maxCoord.set(x, y, z);
+    _max.set(x, y, z);
 }
 
 /**
@@ -440,12 +400,12 @@ inline void BoundingBox::setMax(double x, double y, double z)
  */
 inline void BoundingBox::setMinX(double x)
 {
-    minCoord.setX(x);
+    _min.setX(x);
 }
 
 inline double& BoundingBox::minX()
 {
-    return minCoord.x();
+    return _min.x();
 }
 
 /**
@@ -454,12 +414,12 @@ inline double& BoundingBox::minX()
  */
 inline void BoundingBox::setMinY(double y)
 {
-    minCoord.setY(y);
+    _min.setY(y);
 }
 
 inline double& BoundingBox::minY()
 {
-    return minCoord.y();
+    return _min.y();
 }
 
 /**
@@ -468,12 +428,12 @@ inline double& BoundingBox::minY()
  */
 inline void BoundingBox::setMinZ(double z)
 {
-    minCoord.setZ(z);
+    _min.setZ(z);
 }
 
 inline double& BoundingBox::minZ()
 {
-    return minCoord.z();
+    return _min.z();
 }
 
 /**
@@ -482,12 +442,12 @@ inline double& BoundingBox::minZ()
  */
 inline void BoundingBox::setMaxX(double x)
 {
-    maxCoord.setX(x);
+    _max.setX(x);
 }
 
 inline double&BoundingBox::maxX()
 {
-    return maxCoord.x();
+    return _max.x();
 }
 
 /**
@@ -496,12 +456,12 @@ inline double&BoundingBox::maxX()
  */
 inline void BoundingBox::setMaxY(double y)
 {
-    maxCoord.setY(y);
+    _max.setY(y);
 }
 
 inline double&BoundingBox::maxY()
 {
-    return maxCoord.y();
+    return _max.y();
 }
 
 /**
@@ -510,12 +470,12 @@ inline double&BoundingBox::maxY()
  */
 inline void BoundingBox::setMaxZ(double z)
 {
-    maxCoord.setZ(z);
+    _max.setZ(z);
 }
 
 inline double& BoundingBox::maxZ()
 {
-    return maxCoord.z();
+    return _max.z();
 }
 
 /**
@@ -527,32 +487,32 @@ inline double& BoundingBox::maxZ()
  */
 inline void BoundingBox::reset()
 {
-    minCoord = Pointd( std::numeric_limits<double>::max(),  std::numeric_limits<double>::max(),  std::numeric_limits<double>::max());
-    maxCoord = Pointd(-std::numeric_limits<double>::max(), -std::numeric_limits<double>::max(), -std::numeric_limits<double>::max());
+    _min = Pointd( std::numeric_limits<double>::max(),  std::numeric_limits<double>::max(),  std::numeric_limits<double>::max());
+    _max = Pointd(-std::numeric_limits<double>::max(), -std::numeric_limits<double>::max(), -std::numeric_limits<double>::max());
 }
 
 inline double& BoundingBox::operator()(unsigned int i)
 {
     assert(i < 6);
     switch (i%6){
-        case 0: return minCoord.x();
-        case 1: return minCoord.y();
-        case 2: return minCoord.z();
-        case 3: return maxCoord.x();
-        case 4: return maxCoord.y();
-        case 5: return maxCoord.z();
+        case 0: return _min.x();
+        case 1: return _min.y();
+        case 2: return _min.z();
+        case 3: return _max.x();
+        case 4: return _max.y();
+        case 5: return _max.z();
     }
-    return minCoord.x();
+    return _min.x();
 }
 
 inline void BoundingBox::serialize(std::ofstream& binaryFile) const
 {
-    serializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
+    serializeObjectAttributes("cg3BoundingBox", binaryFile, _min, _max);
 }
 
 inline void BoundingBox::deserialize(std::ifstream& binaryFile)
 {
-    deserializeObjectAttributes("cg3BoundingBox", binaryFile, minCoord, maxCoord);
+    deserializeObjectAttributes("cg3BoundingBox", binaryFile, _min, _max);
 }
 
 } //namespace cg3

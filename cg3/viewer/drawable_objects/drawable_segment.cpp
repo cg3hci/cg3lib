@@ -30,12 +30,12 @@ DrawableSegment::DrawableSegment(
 
 void DrawableSegment::draw() const
 {
-    cg3::opengl::drawLine(p1, p2, color, width);
+    cg3::opengl::drawLine(_p1, _p2, color, width);
 }
 
 Pointd DrawableSegment::sceneCenter() const
 {
-    return (p1 + p2)/2;
+    return (_p1 + _p2)/2;
 }
 
 double DrawableSegment::sceneRadius() const

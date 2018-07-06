@@ -66,7 +66,7 @@ void GLCanvas::postSelection(const QPoint& point)
             Line line(Pointd(orig.x, orig.y, orig.z), Vec3(dir.x, dir.y, dir.z));
             Plane plane(Vec3(0,0,1),0);
             Pointd inters;
-            bool b = plane.getIntersection(inters, line);
+            bool b = plane.intersection(inters, line);
             if (b) {
                 emit point2DClicked(Point2Dd(inters.x(), inters.y()));
             }

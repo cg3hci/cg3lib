@@ -24,16 +24,16 @@ class Segment : public SerializableObject
 public:
     /* Constructors/destructor */
     Segment();
-    Segment(const T& getP1, const T& getP2);
+    Segment(const T& p1, const T& p2);
 
     /* Getters */
-    inline const T& getP1() const;
-    inline const T& getP2() const;
+    inline const T& p1() const;
+    inline const T& p2() const;
 
     /* Setters */
-    inline void setP1(const T& getP1);
-    inline void setP2(const T& getP2);
-    inline void set(const T& getP1, const T& getP2);
+    inline void setP1(const T& p1);
+    inline void setP2(const T& p2);
+    inline void set(const T& p1, const T& p2);
 
     /* Operators */
     inline double length() const;
@@ -53,10 +53,15 @@ public:
     /* Utilities */
     std::string toString() const;
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline const T& getP1() const {return p1();}
+    inline const T& getP2() const {return p2();}
+    #endif
+
 protected:
     /* Fields */
-    T p1;
-    T p2;
+    T _p1;
+    T _p2;
 };
 
 template<class T>

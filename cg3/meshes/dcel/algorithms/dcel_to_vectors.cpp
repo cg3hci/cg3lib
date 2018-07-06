@@ -16,7 +16,7 @@ namespace cg3 {
 void dcelAlgorithms::getVectorFaces(std::vector<const Dcel::Face*>& vector, const Dcel& d)
 {
     int i = 0;
-    vector.resize(d.getNumberFaces());
+    vector.resize(d.numberFaces());
     for (const Dcel::Face* f : d.faceIterator()){
         vector[i++] = f;
     }
@@ -25,7 +25,7 @@ void dcelAlgorithms::getVectorFaces(std::vector<const Dcel::Face*>& vector, cons
 void dcelAlgorithms::getVectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
 {
     int i = 0;
-    vector.resize(d.getNumberFaces());
+    vector.resize(d.numberFaces());
     for (Dcel::Face* f : d.faceIterator()){
         vector[i++] = f;
     }
@@ -40,10 +40,10 @@ void dcelAlgorithms::getVectorMesh(
 {
     std::map<const Dcel::Vertex*, int> vertices;
     int nv = 0, nf = 0;
-    coords.resize(d.getNumberVertices());
-    mappingVertices.resize(d.getNumberVertices());
-    faces.resize(d.getNumberFaces());
-    mappingFaces.resize(d.getNumberFaces());
+    coords.resize(d.numberVertices());
+    mappingVertices.resize(d.numberVertices());
+    faces.resize(d.numberFaces());
+    mappingFaces.resize(d.numberFaces());
 
     for (const Dcel::Vertex* v : d.vertexIterator()) {
         coords[nv] = v->getCoordinate();

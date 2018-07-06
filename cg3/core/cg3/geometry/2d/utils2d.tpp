@@ -66,7 +66,7 @@ inline bool isPointAtLeft(
         const Segment<Point2D<T>>& segment,
         const Point2D<T>& point)
 {
-    return isPointAtLeft<T>(segment.getP1(), segment.getP2(), point);
+    return isPointAtLeft<T>(segment.p1(), segment.p2(), point);
 }
 
 /**
@@ -105,7 +105,7 @@ inline bool isPointAtRight(
         const Segment<Point2D<T>>& segment,
         const Point2D<T>& point)
 {
-    return isPointAtRight<T>(segment.getP1(), segment.getP2(), point);
+    return isPointAtRight<T>(segment.p1(), segment.p2(), point);
 }
 
 
@@ -146,7 +146,7 @@ inline bool areCollinear(
         const Segment<Point2D<T>>& segment,
         const Point2D<T>& point)
 {
-    return areCollinear<T>(segment.getP1(), segment.getP2(), point);
+    return areCollinear<T>(segment.p1(), segment.p2(), point);
 }
 
 

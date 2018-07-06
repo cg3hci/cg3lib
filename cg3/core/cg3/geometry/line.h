@@ -22,8 +22,8 @@ class Line : public SerializableObject
 public:
     Line();
     Line(const Pointd& p0, const Vec3& dir);
-    const Vec3& getDir() const;
-    const Pointd& getStartingPoint() const;
+    const Vec3& dir() const;
+    const Pointd& startingPoint() const;
 
     bool pointLiesOnLine(const Pointd &p) const;
 
@@ -31,9 +31,14 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline const Vec3& getDir() const {return dir();}
+    inline const Pointd& getStartingPoint() const {return startingPoint();}
+    #endif
+
 protected:
     Pointd p0;
-    Vec3 dir;
+    Vec3 _dir;
 };
 
 } //namespace cg3

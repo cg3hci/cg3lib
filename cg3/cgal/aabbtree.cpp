@@ -175,7 +175,7 @@ AABBTree::AABBTree(const Dcel& d, bool forDistanceQueries) :
     if (forDistanceQueries)
         tree.accelerate_distance_queries();
 
-    bb = d.getBoundingBox();
+    bb = d.boundingBox();
 }
 #endif
 

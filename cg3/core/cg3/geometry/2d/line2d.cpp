@@ -37,7 +37,7 @@ Line2D::Line2D(const Point2Dd& p1, const Point2Dd& p2)
 }
 
 Line2D::Line2D(const Segment2Dd& s) :
-    Line2D(s.getP1(), s.getP2())
+    Line2D(s.p1(), s.p2())
 {
 }
 

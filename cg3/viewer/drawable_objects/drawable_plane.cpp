@@ -53,18 +53,18 @@ void DrawablePlane::deserialize(std::ifstream &binaryFile)
 void DrawablePlane::calculatePoints()
 {
     cg3::Vec3 u,v;
-    if( normal ==  AXIS[2] || normal == AXIS[5]){ // similar -> you are lucky!!!
+    if( _normal ==  AXIS[2] || _normal == AXIS[5]){ // similar -> you are lucky!!!
        u = AXIS[0]; // x
        v = AXIS[1]; // y
     }
     else{
-       u = normal.cross(AXIS[2]); // cross product -> note that u lies on the plane
-       v = normal.cross(u); // v is orthogonal to both N and u (again is in the plane)
+       u = _normal.cross(AXIS[2]); // cross product -> note that u lies on the plane
+       v = _normal.cross(u); // v is orthogonal to both N and u (again is in the plane)
     }
 
     // now simply draw a quad centered in a arbitrary point of the plane
     // and large enough to seems a plane
-    cg3::Pointd p0 = - normal * d;        // "arbitrary" point
+    cg3::Pointd p0 = - _normal * _d;        // "arbitrary" point
     float  f  = 10000;  // large enough
     cg3::Vec3 fu =  u * f;
     cg3::Vec3 fv =  v * f;

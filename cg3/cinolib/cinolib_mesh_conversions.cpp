@@ -49,8 +49,8 @@ void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEige
 #ifdef CG3_DCEL_DEFINED
 void dcelToTrimesh(cinolib::Trimesh<>& m, const Dcel& d)
 {
-    unsigned int nVertices=d.getNumberVertices();
-    unsigned int nFaces=d.getNumberFaces();
+    unsigned int nVertices=d.numberVertices();
+    unsigned int nFaces=d.numberFaces();
 
     std::vector<double> coords;
     std::vector<unsigned int> tris;

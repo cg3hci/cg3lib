@@ -99,7 +99,7 @@ inline void drawCylinder(
     GLUquadric *cylinder = gluNewQuadric();
     gluQuadricNormals(cylinder, GLU_SMOOTH);
     gluQuadricOrientation(cylinder, GLU_OUTSIDE);
-    gluCylinder(cylinder, top_radius, bottom_radius, (a-b).getLength(), slices, stacks);
+    gluCylinder(cylinder, top_radius, bottom_radius, (a-b).length(), slices, stacks);
     glPopMatrix();
     glDisable(GL_CULL_FACE);
 }
