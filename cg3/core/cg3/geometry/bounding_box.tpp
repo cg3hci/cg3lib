@@ -217,12 +217,12 @@ inline bool BoundingBox::isEpsilonInside(double px, double py, double pz, double
  */
 inline bool BoundingBox::intersect(const BoundingBox& otherBox)
 {
-    if (getMaxX() <= otherBox.getMinX()) return false; // a is left of b
-    if (getMinX() >= otherBox.getMaxX()) return false; // a is right of b
-    if (getMaxY() <= otherBox.getMinY()) return false; // a is above b
-    if (getMinY() >= otherBox.getMaxY()) return false; // a is below b
-    if (getMaxZ() <= otherBox.getMinZ()) return false; // a is behind b
-    if (getMinZ() >= otherBox.getMaxZ()) return false; // a is in front b
+    if (maxX() <= otherBox.minX()) return false; // a is left of b
+    if (minX() >= otherBox.maxX()) return false; // a is right of b
+    if (maxY() <= otherBox.minY()) return false; // a is above b
+    if (minY() >= otherBox.maxY()) return false; // a is below b
+    if (maxZ() <= otherBox.minZ()) return false; // a is behind b
+    if (minZ() >= otherBox.maxZ()) return false; // a is in front b
     return true; //boxes overlap
 }
 

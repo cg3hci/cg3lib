@@ -50,10 +50,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         unsigned int i, j , k;
 
         // fix z - k = 0;
-        k = 0; z = bb.getMinZ();
-        x = bb.getMinX();
+        k = 0; z = bb.minZ();
+        x = bb.minX();
         for (i = 0; i <= nSubdX; i++){
-            y = bb.getMinY();
+            y = bb.minY();
             for (j = 0; j <= nSubdY; j++){
                 Pointi pi(i,j,k);
                 Pointd pd(x,y,z);
@@ -63,10 +63,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
             x+=edgeLengthX;
         }
         // fix z - k = nSubdZ;
-        k = nSubdZ; z = bb.getMaxZ();
-        x = bb.getMinX();
+        k = nSubdZ; z = bb.maxZ();
+        x = bb.minX();
         for (i = 0; i <= nSubdX; i++){
-            y = bb.getMinY();
+            y = bb.minY();
             for (j = 0; j <= nSubdY; j++){
                 Pointi pi(i,j,k);
                 Pointd pd(x,y,z);
@@ -76,10 +76,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
             x+=edgeLengthX;
         }
         // fix y - j = 0;
-        j = 0; y = bb.getMinY();
-        x = bb.getMinX();
+        j = 0; y = bb.minY();
+        x = bb.minX();
         for (i = 0; i <= nSubdX; i++){
-            z = bb.getMinZ();
+            z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
                 Pointi pi(i,j,k);
                 Pointd pd(x,y,z);
@@ -89,10 +89,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
             x+=edgeLengthX;
         }
         // fix y - j = nSubdY;
-        j = nSubdY; y = bb.getMaxY();
-        x = bb.getMinX();
+        j = nSubdY; y = bb.maxY();
+        x = bb.minX();
         for (i = 0; i <= nSubdX; i++){
-            z = bb.getMinZ();
+            z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
                 Pointi pi(i,j,k);
                 Pointd pd(x,y,z);
@@ -102,10 +102,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
             x+=edgeLengthX;
         }
         // fix x - i = 0;
-        i = 0; x = bb.getMinX();
-        y = bb.getMinY();
+        i = 0; x = bb.minX();
+        y = bb.minY();
         for (j = 0; j <= nSubdY; j++){
-            z = bb.getMinZ();
+            z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
                 Pointi pi(i,j,k);
                 Pointd pd(x,y,z);
@@ -115,10 +115,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
             y+=edgeLengthY;
         }
         // fix x - i = nSubdX;
-        i = nSubdX; x = bb.getMaxX();
-        y = bb.getMinY();
+        i = nSubdX; x = bb.maxX();
+        y = bb.minY();
         for (j = 0; j <= nSubdY; j++){
-            z = bb.getMinZ();
+            z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
                 Pointi pi(i,j,k);
                 Pointd pd(x,y,z);

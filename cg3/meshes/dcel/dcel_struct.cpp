@@ -666,13 +666,13 @@ BoundingBox Dcel::updateBoundingBox()
     for (ConstVertexIterator vit = vertexBegin(); vit!=vertexEnd(); ++vit){
         Pointd coord = (*vit)->getCoordinate();
 
-        bBox.setMinX(std::min(bBox.getMinX(), coord.x()));
-        bBox.setMinY(std::min(bBox.getMinY(), coord.y()));
-        bBox.setMinZ(std::min(bBox.getMinZ(), coord.z()));
+        bBox.setMinX(std::min(bBox.minX(), coord.x()));
+        bBox.setMinY(std::min(bBox.minY(), coord.y()));
+        bBox.setMinZ(std::min(bBox.minZ(), coord.z()));
 
-        bBox.setMaxX(std::max(bBox.getMaxX(), coord.x()));
-        bBox.setMaxY(std::max(bBox.getMaxY(), coord.y()));
-        bBox.setMaxZ(std::max(bBox.getMaxZ(), coord.z()));
+        bBox.setMaxX(std::max(bBox.maxX(), coord.x()));
+        bBox.setMaxY(std::max(bBox.maxY(), coord.y()));
+        bBox.setMaxZ(std::max(bBox.maxZ(), coord.z()));
     }
     return bBox;
 }
@@ -702,8 +702,8 @@ void Dcel::scale(const BoundingBox& newBoundingBox)
 {
     Pointd oldCenter = bBox.center();
     Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = bBox.getMax() - bBox.getMin();
-    Pointd deltaNew = newBoundingBox.getMax() - newBoundingBox.getMin();
+    Pointd deltaOld = bBox.max() - bBox.min();
+    Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (Dcel::VertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit) {
         Dcel::Vertex* v = *vit;
         v->setCoordinate(v->getCoordinate() - oldCenter);
@@ -1717,13 +1717,13 @@ void Dcel::copyFrom(const SimpleEigenMesh& eigenMesh)
             first = false;
         }
 
-        if (coord.x() < bBox.getMinX()) bBox.setMinX(coord.x());
-        if (coord.y() < bBox.getMinY()) bBox.setMinY(coord.y());
-        if (coord.z() < bBox.getMinZ()) bBox.setMinZ(coord.z());
+        if (coord.x() < bBox.minX()) bBox.setMinX(coord.x());
+        if (coord.y() < bBox.minY()) bBox.setMinY(coord.y());
+        if (coord.z() < bBox.minZ()) bBox.setMinZ(coord.z());
 
-        if (coord.x() > bBox.getMaxX()) bBox.setMaxX(coord.x());
-        if (coord.y() > bBox.getMaxY()) bBox.setMaxY(coord.y());
-        if (coord.z() > bBox.getMaxZ()) bBox.setMaxZ(coord.z());
+        if (coord.x() > bBox.maxX()) bBox.setMaxX(coord.x());
+        if (coord.y() > bBox.maxY()) bBox.setMaxY(coord.y());
+        if (coord.z() > bBox.maxZ()) bBox.setMaxZ(coord.z());
 
         Vertex* vid = addVertex(coord);
 

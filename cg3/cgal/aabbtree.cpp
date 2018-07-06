@@ -229,7 +229,7 @@ int AABBTree::getNumberIntersectedPrimitives(const Pointd& p1, const Pointd& p2)
  */
 int AABBTree::getNumberIntersectedPrimitives(const BoundingBox& b) const
 {
-    CGALBoundingBox bb(b.getMinX(), b.getMinY(), b.getMinZ(), b.getMaxX(), b.getMaxY(), b.getMaxZ());
+    CGALBoundingBox bb(b.minX(), b.minY(), b.minZ(), b.maxX(), b.maxY(), b.maxZ());
     return (int) tree.number_of_intersected_primitives(bb);
 }
 
@@ -269,9 +269,9 @@ bool AABBTree::isInside(const Pointd& p, int numberOfChecks) const
     assert(numberOfChecks % 2 == 1);
     int inside = 0, outside = 0;
     std::uniform_real_distribution<> dist(0, 6);
-    std::uniform_real_distribution<> distx(bb.getMinX(), bb.getMaxX());
-    std::uniform_real_distribution<> disty(bb.getMinY(), bb.getMaxY());
-    std::uniform_real_distribution<> distz(bb.getMinZ(), bb.getMaxZ());
+    std::uniform_real_distribution<> distx(bb.minX(), bb.maxX());
+    std::uniform_real_distribution<> disty(bb.minY(), bb.maxY());
+    std::uniform_real_distribution<> distz(bb.minZ(), bb.maxZ());
     for (int i = 0; i < numberOfChecks; i++) {
         Pointd boundingPoint;
         double n1, n2;
@@ -283,9 +283,9 @@ bool AABBTree::isInside(const Pointd& p, int numberOfChecks) const
                 boundingPoint.setY(n1);
                 boundingPoint.setZ(n2);
                 if (side == 0)
-                    boundingPoint.setX(bb.getMinX());
+                    boundingPoint.setX(bb.minX());
                 else
-                    boundingPoint.setX(bb.getMaxX());
+                    boundingPoint.setX(bb.maxX());
                 break;
             case 1: // y
                 n1 = distx(e2);
@@ -293,9 +293,9 @@ bool AABBTree::isInside(const Pointd& p, int numberOfChecks) const
                 boundingPoint.setX(n1);
                 boundingPoint.setZ(n2);
                 if (side == 1)
-                    boundingPoint.setY(bb.getMinY());
+                    boundingPoint.setY(bb.minY());
                 else
-                    boundingPoint.setY(bb.getMaxY());
+                    boundingPoint.setY(bb.maxY());
                 break;
             case 2: // z
                 n1 = distx(e2);
@@ -303,9 +303,9 @@ bool AABBTree::isInside(const Pointd& p, int numberOfChecks) const
                 boundingPoint.setX(n1);
                 boundingPoint.setY(n2);
                 if (side == 2)
-                    boundingPoint.setZ(bb.getMinZ());
+                    boundingPoint.setZ(bb.minZ());
                 else
-                    boundingPoint.setZ(bb.getMaxZ());
+                    boundingPoint.setZ(bb.maxZ());
                 break;
         }
 
@@ -328,49 +328,49 @@ bool AABBTree::isInsidePseudoRandom(const Pointd& p, int numberOfChecks) const
 {
     assert(numberOfChecks % 2 == 1);
     int inside = 0, outside = 0;
-    double distx = bb.getMaxX() - bb.getMinX();
-    double disty = bb.getMaxY() - bb.getMinY();
-    double distz = bb.getMaxZ() - bb.getMinZ();
+    double distx = bb.maxX() - bb.minX();
+    double disty = bb.maxY() - bb.minY();
+    double distz = bb.maxZ() - bb.minZ();
     for (int i = 0; i < numberOfChecks; i++) {
         Pointd boundingPoint;
         double n1, n2;
         int side = rand()%6;
         switch(side % 3){
             case 0: // x
-                n1 = (double)rand()/((double)RAND_MAX/disty) + bb.getMinY();
+                n1 = (double)rand()/((double)RAND_MAX/disty) + bb.minY();
                 //n1 = disty(e2);
-                n2 = (double)rand()/((double)RAND_MAX/distz) + bb.getMinZ();
+                n2 = (double)rand()/((double)RAND_MAX/distz) + bb.minZ();
                 //n2 = distz(e2);
                 boundingPoint.setY(n1);
                 boundingPoint.setZ(n2);
                 if (side == 0)
-                    boundingPoint.setX(bb.getMinX());
+                    boundingPoint.setX(bb.minX());
                 else
-                    boundingPoint.setX(bb.getMaxX());
+                    boundingPoint.setX(bb.maxX());
                 break;
             case 1: // y
-                n1 = (double)rand()/((double)RAND_MAX/distx) + bb.getMinX();
+                n1 = (double)rand()/((double)RAND_MAX/distx) + bb.minX();
                 //n1 = distx(e2);
-                n2 = (double)rand()/((double)RAND_MAX/distz) + bb.getMinZ();
+                n2 = (double)rand()/((double)RAND_MAX/distz) + bb.minZ();
                 //n2 = distz(e2);
                 boundingPoint.setX(n1);
                 boundingPoint.setZ(n2);
                 if (side == 1)
-                    boundingPoint.setY(bb.getMinY());
+                    boundingPoint.setY(bb.minY());
                 else
-                    boundingPoint.setY(bb.getMaxY());
+                    boundingPoint.setY(bb.maxY());
                 break;
             case 2: // z
-                n1 = (double)rand()/((double)RAND_MAX/distx) + bb.getMinX();
+                n1 = (double)rand()/((double)RAND_MAX/distx) + bb.minX();
                 //n1 = distx(e2);
-                n2 = (double)rand()/((double)RAND_MAX/disty) + bb.getMinY();
+                n2 = (double)rand()/((double)RAND_MAX/disty) + bb.minY();
                 //n2 = disty(e2);
                 boundingPoint.setX(n1);
                 boundingPoint.setY(n2);
                 if (side == 2)
-                    boundingPoint.setZ(bb.getMinZ());
+                    boundingPoint.setZ(bb.minZ());
                 else
-                    boundingPoint.setZ(bb.getMaxZ());
+                    boundingPoint.setZ(bb.maxZ());
                 break;
         }
 
@@ -394,7 +394,7 @@ void AABBTree::getContainedDcelFaces(
         const BoundingBox& b) const
 {
     assert(treeType == DCEL);
-    CGALBoundingBox bb(b.getMinX(), b.getMinY(), b.getMinZ(), b.getMaxX(), b.getMaxY(), b.getMaxZ());
+    CGALBoundingBox bb(b.minX(), b.minY(), b.minZ(), b.maxX(), b.maxY(), b.maxZ());
     std::list< Tree::Primitive_id > trianglesIds;
     tree.all_intersected_primitives(bb, std::back_inserter(trianglesIds));
     for (std::list< Tree::Primitive_id >::const_iterator it = trianglesIds.begin(); it != trianglesIds.end(); ++it){

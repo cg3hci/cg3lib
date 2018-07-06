@@ -141,8 +141,8 @@ void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox)
     BoundingBox boundingBox = getBoundingBox();
     Pointd oldCenter = boundingBox.center();
     Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = boundingBox.getMax() - boundingBox.getMin();
-    Pointd deltaNew = newBoundingBox.getMax() - newBoundingBox.getMin();
+    Pointd deltaOld = boundingBox.max() - boundingBox.min();
+    Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (int i = 0; i < V.rows(); i++){
         Pointd coord = getVertex(i);
         coord -= oldCenter;
@@ -156,8 +156,8 @@ void SimpleEigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox
 {
     Pointd oldCenter = oldBoundingBox.center();
     Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = oldBoundingBox.getMax() - oldBoundingBox.getMin();
-    Pointd deltaNew = newBoundingBox.getMax() - newBoundingBox.getMin();
+    Pointd deltaOld = oldBoundingBox.max() - oldBoundingBox.min();
+    Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (int i = 0; i < V.rows(); i++){
         Pointd coord = getVertex(i);
         coord -= oldCenter;
