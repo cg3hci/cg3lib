@@ -1822,13 +1822,13 @@ void Dcel::copyFrom(const cinolib::Trimesh<> &trimesh)
             first = false;
         }
 
-        if (coord.x() < bBox.getMinX()) bBox.setMinX(coord.x());
-        if (coord.y() < bBox.getMinY()) bBox.setMinY(coord.y());
-        if (coord.z() < bBox.getMinZ()) bBox.setMinZ(coord.z());
+        if (coord.x() < bBox.minX()) bBox.setMinX(coord.x());
+        if (coord.y() < bBox.minY()) bBox.setMinY(coord.y());
+        if (coord.z() < bBox.minZ()) bBox.setMinZ(coord.z());
 
-        if (coord.x() > bBox.getMaxX()) bBox.setMaxX(coord.x());
-        if (coord.y() > bBox.getMaxY()) bBox.setMaxY(coord.y());
-        if (coord.z() > bBox.getMaxZ()) bBox.setMaxZ(coord.z());
+        if (coord.x() > bBox.maxX()) bBox.setMaxX(coord.x());
+        if (coord.y() > bBox.maxY()) bBox.setMaxY(coord.y());
+        if (coord.z() > bBox.maxZ()) bBox.setMaxZ(coord.z());
 
         Vertex* vid = addVertex(coord);
 
