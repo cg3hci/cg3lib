@@ -97,7 +97,7 @@ inline double Point2D<T>::perpendicularDot(const Point2D<T>& otherVector) const
  * @return the length of this vector.
  */
 template <class T>
-inline double Point2D<T>::getLength() const
+inline double Point2D<T>::length() const
 {
     return std::sqrt( xCoord*xCoord + yCoord*yCoord );
 }
@@ -107,7 +107,7 @@ inline double Point2D<T>::getLength() const
  * @return the squared length of this vector.
  */
 template <class T>
-inline double Point2D<T>::getLengthSquared() const
+inline double Point2D<T>::lengthSquared() const
 {
     return xCoord*xCoord + yCoord*yCoord;
 }
@@ -401,7 +401,7 @@ inline void Point2D<T>::set(const T& x, const T& y)
 template <class T>
 inline double Point2D<T>::normalize()
 {
-    double len = getLength();
+    double len = length();
     xCoord /= len;
     yCoord /= len;
     return len;

@@ -14,9 +14,9 @@
 namespace cg3 {
 
 template <class Vector>
-inline double getAngle(const Vector& v1, const Vector& v2);
+inline double angle(const Vector& v1, const Vector& v2);
 
-inline double getInternalAngle(
+inline double internalAngle(
         const Vec3& v1,
         const Vec3& v2,
         const Vec3& direction);
@@ -29,6 +29,15 @@ inline Pointd orthogonalProjectionOnAPlane(
         const Vec3& planeNormal,
         const Pointd& planePoint,
         const Pointd& point);
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+template <class Vector>
+inline double getAngle(const Vector& v1, const Vector& v2) {return angle(v1, v2);}
+inline double getInternalAngle(
+        const Vec3& v1,
+        const Vec3& v2,
+        const Vec3& direction) {return internalAngle(v1, v2, direction);}
+#endif
 
 } //namespace cg3
 

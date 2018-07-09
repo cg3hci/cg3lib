@@ -104,8 +104,8 @@ bool triangleOverlap(
     //TODO more efficient with left/right turns
 
     //Triangle data
-    std::vector<cg3::Segment2D<T>> sides1 = t1.getSides();
-    std::vector<cg3::Segment2D<T>> sides2 = t2.getSides();
+    std::vector<cg3::Segment2D<T>> sides1 = t1.sides();
+    std::vector<cg3::Segment2D<T>> sides2 = t2.sides();
     std::vector<cg3::Point2D<T>> vertices1 = t1.vertices();
     std::vector<cg3::Point2D<T>> vertices2 = t2.vertices();
 

@@ -40,7 +40,7 @@ public:
     cg3::Segment<T> side1() const;
     cg3::Segment<T> side2() const;
     cg3::Segment<T> side3() const;
-    std::vector<cg3::Segment<T>> getSides() const;
+    std::vector<cg3::Segment<T>> sides() const;
 
     T normal() const;
     double area() const;
@@ -54,6 +54,7 @@ public:
 
     #ifdef CG3_OLD_NAMES_COMPATIBILITY
     inline std::vector<T> getVertices() const {return vertices;}
+    inline std::vector<cg3::Segment<T>> getSides() const {return sides();}
     #endif
 
 protected:

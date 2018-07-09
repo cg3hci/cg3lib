@@ -87,7 +87,7 @@ bool loadMtlFile(
         std::map<std::string, Color> &mapColors);
 
 template <typename T>
-Color getColorFromArray(
+Color colorFromArray(
         size_t baseIndex,
         const T arrayColors[],
         io::ColorMode colorMod);

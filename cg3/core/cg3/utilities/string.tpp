@@ -98,7 +98,7 @@ inline void separateFilenameFromPath(
  * @param fullpath
  * @return
  */
-inline std::string getFilenameWithoutExtension(const std::string& fullpath)
+inline std::string filenameWithoutExtension(const std::string& fullpath)
 {
     std::string filename, path, ext;
     separateFilenameFromPath(fullpath, path, filename);

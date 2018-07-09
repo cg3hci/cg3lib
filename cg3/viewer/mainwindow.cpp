@@ -423,7 +423,7 @@ void MainWindow::on_actionLoad_Mesh_triggered()
 {
     std::string filename = meshLS.loadDialog("Open Mesh");
     if (filename != ""){
-        std::string name = cg3::getFilenameWithoutExtension(filename);
+        std::string name = cg3::filenameWithoutExtension(filename);
         unsigned int i = openedDcels.pushBack(cg3::DrawableDcel(filename), name);
         pushDrawableObject((openedDcels[i]), name, true, true);
         canvas.fitScene();

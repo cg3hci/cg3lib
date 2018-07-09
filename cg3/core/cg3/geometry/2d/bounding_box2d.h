@@ -30,12 +30,11 @@ public:
     BoundingBox2D();
     BoundingBox2D(const Point2Dd& minCoord, const Point2Dd& maxCoord);
 
-    const Point2Dd& getMin() const;
+
     const Point2Dd& min() const;
     Point2Dd& min();
     void setMin(const Point2Dd& value);
 
-    const Point2Dd& getMax() const;
     const Point2Dd& max() const;
     Point2Dd& max();
     void setMax(const Point2Dd& value);
@@ -54,12 +53,22 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline const Point2Dd& getMin() const {return min();}
+    inline const Point2Dd& getMax() const {return max();}
+    #endif
+
 protected:
     Point2Dd minCoord, maxCoord;
 };
 
 template <class InputContainer>
-BoundingBox2D getBoundingBox(const InputContainer& container);
+BoundingBox2D boundingBox(const InputContainer& container);
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+template <class InputContainer>
+inline BoundingBox2D getBoundingBox(const InputContainer& container) {return boundingBox(container);}
+#endif
 
 } //namespace cg3
 

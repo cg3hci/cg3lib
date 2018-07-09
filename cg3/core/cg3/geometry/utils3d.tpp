@@ -19,7 +19,7 @@ namespace cg3 {
  * @return Angle in radians
  */
 template <class Vector>
-inline double getAngle(const Vector& v1, const Vector& v2)
+inline double angle(const Vector& v1, const Vector& v2)
 {
     double dot = v1.dot(v2);
     return acos(dot);
@@ -33,7 +33,7 @@ inline double getAngle(const Vector& v1, const Vector& v2)
  * @param direction Axis
  * @return Angle in radians
  */
-inline double getInternalAngle(
+inline double internalAngle(
         const Vec3& v1, const Vec3& v2,
         const Vec3& direction)
 {

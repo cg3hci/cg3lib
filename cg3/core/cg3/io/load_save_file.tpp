@@ -106,7 +106,7 @@ inline bool loadMtlFile(
 }
 
 template <typename T>
-inline Color getColorFromArray(
+inline Color colorFromArray(
         size_t baseIndex,
         const T arrayColors[],
         io::ColorMode colorMod)
@@ -221,7 +221,7 @@ bool saveMeshOnObj(
         }
         fp << "v " << vertices[i] << " " << vertices[i+1] << " " << vertices[i+2];
         if (modality & io::COLOR_VERTICES){
-            Color c = internal::getColorFromArray(colorMod == io::RGB ? i : (i/3)*4, verticesColors, colorMod);
+            Color c = internal::colorFromArray(colorMod == io::RGB ? i : (i/3)*4, verticesColors, colorMod);
             fp << " " << c.redF() << " " << c.blueF() << " " << c.greenF();
         }
         fp << std::endl;
@@ -230,7 +230,7 @@ bool saveMeshOnObj(
     if (meshType == io::TRIANGLE_MESH) {
         for(size_t i=0; i<nFaces*3; i+=3) {
             if (modality & io::COLOR_FACES){
-                Color c = internal::getColorFromArray(colorMod == io::RGB ? i : (i/3)*4, faceColors, colorMod);
+                Color c = internal::colorFromArray(colorMod == io::RGB ? i : (i/3)*4, faceColors, colorMod);
                 internal::manageObjFileColor(fp, fmtu, c, colorMod, actualColor, colors);
             }
             fp << "f " << faces[i]+1 << " " << faces[i+1]+1 << " " << faces[i+2]+1 << std::endl;
@@ -239,7 +239,7 @@ bool saveMeshOnObj(
     else if (meshType ==  io::QUAD_MESH) {
         for(size_t i=0; i<nFaces*4; i+=4) {
             if (modality & io::COLOR_FACES){
-                Color c = internal::getColorFromArray(colorMod == io::RGB ? (i/4)*3 : i, faceColors, colorMod);
+                Color c = internal::colorFromArray(colorMod == io::RGB ? (i/4)*3 : i, faceColors, colorMod);
                 internal::manageObjFileColor(fp, fmtu, c, colorMod, actualColor, colors);
             }
             fp << "f " << faces[i]+1 <<
@@ -252,7 +252,7 @@ bool saveMeshOnObj(
         size_t j = 0;
         for (size_t i = 0; i < nFaces; i++){
             if (modality & io::COLOR_FACES){
-                Color c = internal::getColorFromArray(colorMod == io::RGB ? i*3 : i*4, faceColors, colorMod);
+                Color c = internal::colorFromArray(colorMod == io::RGB ? i*3 : i*4, faceColors, colorMod);
                 internal::manageObjFileColor(fp, fmtu, c, colorMod, actualColor, colors);
             }
             fp << "f ";
@@ -350,7 +350,7 @@ inline bool saveMeshOnPly(
                   " " << verticesNormals[i+2];
         }
         if (modality & io::COLOR_VERTICES){
-            Color c = internal::getColorFromArray(colorMod == io::RGB ?
+            Color c = internal::colorFromArray(colorMod == io::RGB ?
                                                       i : (i/3)*4, verticesColors, colorMod);
             fp << " " << c.red() << " " << c.green() << " " << c.blue();
             if (colorMod == io::RGBA)
@@ -363,7 +363,7 @@ inline bool saveMeshOnPly(
         for(size_t i=0; i<nFaces*3; i+=3) {
             fp << "3 " << faces[i] << " " << faces[i+1] << " " << faces[i+2];
             if (modality & io::COLOR_FACES){
-                Color c = internal::getColorFromArray(colorMod == io::RGB ?
+                Color c = internal::colorFromArray(colorMod == io::RGB ?
                                                           i : (i/3)*4, faceColors, colorMod);;
                 fp << " " << c.red() << " " << c.green() << " " << c.blue();
                 if (colorMod == io::RGBA)
@@ -377,7 +377,7 @@ inline bool saveMeshOnPly(
         for(size_t i=0; i<nFaces*4; i+=4) {
             fp << "4 " << faces[i] << " " << faces[i+1] << " " << faces[i+2]<< " " << faces[i+3];
             if (modality & io::COLOR_FACES){
-                Color c = internal::getColorFromArray(colorMod == io::RGB ?
+                Color c = internal::colorFromArray(colorMod == io::RGB ?
                                                           (i/4)*3 : i, verticesColors, colorMod);;
                 fp << " " << c.red() << " " << c.green() << " " << c.blue();
                 if (colorMod == io::RGBA)
@@ -396,7 +396,7 @@ inline bool saveMeshOnPly(
                 fp << faces[j+k] << " ";
             j += polygonSizes[i];
             if (modality & io::COLOR_FACES){
-                Color c = internal::getColorFromArray(colorMod == io::RGB ?
+                Color c = internal::colorFromArray(colorMod == io::RGB ?
                                                           i*3 : i*4, faceColors, colorMod);
                 fp << c.red() << " " << c.green() << " " << c.blue();
                 if (colorMod == io::RGBA)

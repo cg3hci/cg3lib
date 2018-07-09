@@ -116,7 +116,7 @@ inline cg3::Segment<T> Triangle<T>::side3() const
 }
 
 template<class T>
-inline std::vector<cg3::Segment<T>> Triangle<T>::getSides() const
+inline std::vector<cg3::Segment<T>> Triangle<T>::sides() const
 {
     std::vector<cg3::Segment<T>> sides(3);    
     sides[0] = side1();

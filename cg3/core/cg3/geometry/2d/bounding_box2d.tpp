@@ -34,16 +34,6 @@ inline BoundingBox2D::BoundingBox2D(const Point2Dd& min, const Point2Dd& max) :
  * @brief Returns the minimum extreme of the bounding box.
  * @return the min coordinate
  */
-inline const Point2Dd& BoundingBox2D::getMin() const
-{
-    return minCoord;
-}
-
-/**
- * @brief Returns the minimum extreme of the bounding box.
- * @see getMin()
- * @return the min coordinate
- */
 inline const Point2Dd& BoundingBox2D::min() const
 {
     return minCoord;
@@ -66,15 +56,6 @@ inline Point2Dd&BoundingBox2D::min()
 inline void BoundingBox2D::setMin(const Point2Dd& value)
 {
     minCoord = value;
-}
-
-/**
- * @brief BoundingBox2D::getMax
- * @return the max coordinate
- */
-inline const Point2Dd& BoundingBox2D::getMax() const
-{
-    return maxCoord;
 }
 
 /**
@@ -196,7 +177,7 @@ inline void BoundingBox2D::deserialize(std::ifstream& binaryFile)
  * @return the bounding box of the points
  */
 template<class InputContainer>
-BoundingBox2D getBoundingBox(const InputContainer& container)
+BoundingBox2D boundingBox(const InputContainer& container)
 {
     BoundingBox2D bb;
     if (container.begin() == container.end())

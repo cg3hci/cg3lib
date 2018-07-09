@@ -50,8 +50,8 @@ public:
     double dist(const Point2D<T> &otherPoint) const;
     double dot(const Point2D<T> &otherVector) const;
     double perpendicularDot(const Point2D<T> &otherVector) const;
-    double getLength() const;
-    double getLengthSquared() const;
+    double length() const;
+    double lengthSquared() const;
     Point2D<T> min(const Point2D<T> &otherPoint) const;
     Point2D<T> max(const Point2D<T> &otherPoint) const;
 
@@ -91,6 +91,11 @@ public:
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
+
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline double getLength() const {return length();}
+    inline double getLengthSquared() const {return lengthSquared();}
+    #endif
 
 private:
     T xCoord, yCoord;
