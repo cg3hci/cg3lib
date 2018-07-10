@@ -85,9 +85,9 @@ void holeFilling(cgal::Polyhedron& poly)
  */
 void holeFilling(Dcel& d)
 {
-    Polyhedron p = cgal::getPolyhedronFromDcel(d);
+    Polyhedron p = cgal::polyhedronFromDcel(d);
     holeFilling(p);
-    d = cgal::getDcelFromPolyhedron(p);
+    d = cgal::dcelFromPolyhedron(p);
 }
 #endif
 

@@ -46,9 +46,14 @@ public:
 
 
     template <class OutputIterator>
-    void getConvexHull(OutputIterator out);
+    void convexHull(OutputIterator out);
 
     void clear();
+
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    template <class OutputIterator>
+    inline void getConvexHull(OutputIterator out) {return convexHull(out);}
+    #endif
 
 private:
 
@@ -66,7 +71,7 @@ inline void addPointToConvexHull(
         const Point2D<T>& point,
         IncrementalConvexHull<Point2D<T>>& incrementalConvexHull2D);
 
-}
+} //namespace cg3
 
 #include "convexhull2d_incremental.tpp"
 

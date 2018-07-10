@@ -30,7 +30,7 @@ inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertic
 
 inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*>& horizonEdges, const Pointd & p, BipartiteGraph<Pointd, unsigned int>& cg, std::vector<std::set<Pointd> > & P);
 
-}
+} //namespace cg3::internal
 
 
 
@@ -606,6 +606,5 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
     old_e3->setTwin(e2);
 }
 
-}
-
-}
+} //namespace cg3::internal
+} //namespace cg3

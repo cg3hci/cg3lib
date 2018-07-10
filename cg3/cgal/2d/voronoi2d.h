@@ -12,13 +12,23 @@
 namespace cg3 {
 namespace cgal {
 
-std::vector<std::vector<cg3::Point2Dd>> computeVoronoiDiagram2d(
+std::vector<std::vector<cg3::Point2Dd>> voronoiDiagram2D(
         const std::vector<cg3::Point2Dd>& sites);
 
-void computeVoronoiDiagram2d(
+void voronoiDiagram2D(
         const std::vector<Point2Dd> &sites,
         std::vector<cg3::Point2Dd>& vl,
         std::vector<std::vector<unsigned int> >&fl);
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+inline std::vector<std::vector<cg3::Point2Dd>> computeVoronoiDiagram2d(
+        const std::vector<cg3::Point2Dd>& sites) {return voronoiDiagram2D(sites);}
+
+inline void computeVoronoiDiagram2d(
+        const std::vector<Point2Dd> &sites,
+        std::vector<cg3::Point2Dd>& vl,
+        std::vector<std::vector<unsigned int> >&fl) {return voronoiDiagram2D(sites, vl, fl);}
+#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

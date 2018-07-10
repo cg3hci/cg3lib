@@ -106,7 +106,7 @@ void IncrementalConvexHull<T>::addPoint(const Point2D<T>& point)
  * @param[out] out Output iterator
  */
 template <class T> template <class OutputIterator>
-void IncrementalConvexHull<T>::getConvexHull(OutputIterator out)
+void IncrementalConvexHull<T>::convexHull(OutputIterator out)
 {
 
     if (this->upper.size() > 1) {
@@ -343,7 +343,5 @@ void processConvexHull(
 
 }
 
-}
-
-
-}
+} //namespace cg3::internal
+} //namespace cg3

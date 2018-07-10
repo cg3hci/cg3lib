@@ -37,15 +37,31 @@ static std::map<const Dcel::Face*, int> dummyFaceMap;
 
 } //namespace cg3::cgal::internal
 
-Polyhedron getPolyhedronFromDcel(const Dcel& dcel,
+Polyhedron polyhedronFromDcel(const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap = internal::dummyVertexMap,
         std::map<const Dcel::Face*, int>& faceMap = internal::dummyFaceMap);
 
-Dcel getDcelFromPolyhedron(const Polyhedron& poly);
+Dcel dcelFromPolyhedron(const Polyhedron& poly);
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
-Polyhedron getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
+Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
+#endif
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+#ifdef  CG3_DCEL_DEFINED
+inline Polyhedron getPolyhedronFromDcel(const Dcel& dcel,
+        std::map<const Dcel::Vertex*, int>& vertexMap = internal::dummyVertexMap,
+        std::map<const Dcel::Face*, int>& faceMap = internal::dummyFaceMap)
+{
+    return polyhedronFromDcel(dcel, vertexMap, faceMap);
+}
+
+inline Dcel getDcelFromPolyhedron(const Polyhedron& poly) {return dcelFromPolyhedron(poly);}
+#endif
+#ifdef  CG3_EIGENMESH_DEFINED
+inline Polyhedron getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh) {return polyhedronFromEigenMesh(mesh);}
+#endif
 #endif
 
 } //namespace cg3::cgal

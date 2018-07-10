@@ -16,12 +16,25 @@ class Dcel;
 namespace cgal {
 
 #ifdef  CG3_DCEL_DEFINED
-std::vector<Point2Dd> getMinRectangle2D(const Dcel* dcel);
+std::vector<Point2Dd> minRectangle2D(const Dcel* dcel);
 #endif
 
-std::vector<Point2Dd> getMinRectangle2D(
+std::vector<Point2Dd> minRectangle2D(
         const std::vector<Point2Dd>& pointVec,
         bool isConvexHull = false);
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+#ifdef  CG3_DCEL_DEFINED
+inline std::vector<Point2Dd> getMinRectangle2D(const Dcel* dcel) {return minRectangle2D(dcel);}
+#endif
+
+inline std::vector<Point2Dd> getMinRectangle2D(
+        const std::vector<Point2Dd>& pointVec,
+        bool isConvexHull = false)
+{
+    return minRectangle2D(pointVec, isConvexHull);
+}
+#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

@@ -44,7 +44,7 @@ typedef VD::Ccb_halfedge_circulator   Ccb_halfedge_circulator;
  * @param sites
  * @return
  */
-std::vector<std::vector<cg3::Point2Dd> > computeVoronoiDiagram2d(
+std::vector<std::vector<cg3::Point2Dd> > voronoiDiagram2D(
         const std::vector<cg3::Point2Dd>& sites)
 {
     std::vector<std::vector<cg3::Point2Dd> > voronoi;
@@ -85,12 +85,12 @@ std::vector<std::vector<cg3::Point2Dd> > computeVoronoiDiagram2d(
  * @param vl
  * @param fl
  */
-void computeVoronoiDiagram2d(
+void voronoiDiagram2D(
         const std::vector<Point2Dd>& sites,
         std::vector<Point2Dd>& vl,
         std::vector<std::vector<unsigned int> >& fl)
 {
-    std::vector<std::vector<cg3::Point2Dd> > vd = computeVoronoiDiagram2d(sites);
+    std::vector<std::vector<cg3::Point2Dd> > vd = voronoiDiagram2D(sites);
     vl.clear();
     fl.clear();
     std::map<cg3::Point2Dd, unsigned int> vertMap;

@@ -69,7 +69,7 @@ bool checkSegmentIntersection2D(
  * @param ignoreEndPoints
  * @return
  */
-std::vector<Segment2Dd> getSegmentIntersection2D(
+std::vector<Segment2Dd> segmentIntersection2D(
         const Segment2Dd& seg1, const Segment2Dd& seg2,
         const bool& ignoreEndPoints)
 {

@@ -59,22 +59,22 @@ public:
     #endif
     AABBTree& operator=(const AABBTree& other);
 
-    int getNumberIntersectedPrimitives(const Pointd& p1, const Pointd &p2) const;
-    int getNumberIntersectedPrimitives(const BoundingBox& b) const;
-    double getSquaredDistance(const Pointd &p) const;
-    Pointd getNearestPoint(const Pointd &p) const;
+    int numberIntersectedPrimitives(const Pointd& p1, const Pointd &p2) const;
+    int numberIntersectedPrimitives(const BoundingBox& b) const;
+    double squaredDistance(const Pointd &p) const;
+    Pointd nearestPoint(const Pointd &p) const;
     bool isInside(const Pointd &p, int numberOfChecks = 7) const;
     bool isInsidePseudoRandom(const Pointd &p, int numberOfChecks = 7) const;
     #ifdef  CG3_DCEL_DEFINED
-    void getContainedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox &b) const;
-    std::list<const Dcel::Face*> getContainedDcelFaces(const BoundingBox &b) const;
-    void getCompletelyContainedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox &b) const;
-    void getCompletelyContainedDcelFaces(std::list<unsigned int> &outputList, const BoundingBox &b) const;
-    std::list<const Dcel::Face*> getCompletelyContainedDcelFaces(const BoundingBox &b) const;
-    void getIntersectedDcelFaces(const Pointd& p1, const Pointd& p2, std::list<const Dcel::Face*> &outputList) const;
-    std::list<const Dcel::Face*> getIntersectedDcelFaces(const Pointd& p1, const Pointd& p2) const;
-    const Dcel::Face* getNearestDcelFace(const Pointd &p) const;
-    const Dcel::Vertex* getNearestDcelVertex(const Pointd &p) const;
+    void containedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox &b) const;
+    std::list<const Dcel::Face*> containedDcelFaces(const BoundingBox &b) const;
+    void completelyContainedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox &b) const;
+    void completelyContainedDcelFaces(std::list<unsigned int> &outputList, const BoundingBox &b) const;
+    std::list<const Dcel::Face*> completelyContainedDcelFaces(const BoundingBox &b) const;
+    void intersectedDcelFaces(const Pointd& p1, const Pointd& p2, std::list<const Dcel::Face*> &outputList) const;
+    std::list<const Dcel::Face*> intersectedDcelFaces(const Pointd& p1, const Pointd& p2) const;
+    const Dcel::Face* nearestDcelFace(const Pointd &p) const;
+    const Dcel::Vertex* nearestDcelVertex(const Pointd &p) const;
     #endif
 
     #ifdef  CG3_EIGENMESH_DEFINED
@@ -82,8 +82,26 @@ public:
     unsigned int getNearestEigenFace(const Pointd& p) const;
     #endif
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline int getNumberIntersectedPrimitives(const Pointd& p1, const Pointd &p2) const {return numberIntersectedPrimitives(p1, p2);}
+    inline int getNumberIntersectedPrimitives(const BoundingBox& b) const {return numberIntersectedPrimitives(b);}
+    inline double getSquaredDistance(const Pointd &p) const {return squaredDistance(p);}
+    inline Pointd getNearestPoint(const Pointd &p) const {return nearestPoint(p);}
+    #ifdef  CG3_DCEL_DEFINED
+    inline void getContainedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox &b) const {containedDcelFaces(outputList, b);}
+    inline std::list<const Dcel::Face*> getContainedDcelFaces(const BoundingBox &b) const {return containedDcelFaces(b);}
+    inline void getCompletelyContainedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox &b) const {completelyContainedDcelFaces(outputList, b);}
+    inline void getCompletelyContainedDcelFaces(std::list<unsigned int> &outputList, const BoundingBox &b) const {completelyContainedDcelFaces(outputList, b);}
+    inline std::list<const Dcel::Face*> getCompletelyContainedDcelFaces(const BoundingBox &b) const {return completelyContainedDcelFaces(b);}
+    inline void getIntersectedDcelFaces(const Pointd& p1, const Pointd& p2, std::list<const Dcel::Face*> &outputList) const {intersectedDcelFaces(p1, p2, outputList);}
+    inline std::list<const Dcel::Face*> getIntersectedDcelFaces(const Pointd& p1, const Pointd& p2) const {return intersectedDcelFaces(p1, p2);}
+    inline const Dcel::Face* getNearestDcelFace(const Pointd &p) const {return nearestDcelFace(p);}
+    inline const Dcel::Vertex* getNearestDcelVertex(const Pointd &p) const {return nearestDcelVertex(p);}
+    #endif
+    #endif
+
 protected:
-    typedef enum {DCEL, TRIMESH, EIGENMESH} TreeType;
+    typedef enum {DCEL, EIGENMESH} TreeType;
     typedef CGAL::Simple_cartesian<double> K;
     typedef K::FT FT;
     typedef K::Ray_3 CGALRay;

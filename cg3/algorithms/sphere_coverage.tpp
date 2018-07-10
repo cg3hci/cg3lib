@@ -51,4 +51,4 @@ inline std::vector<Pointd> sphereCoverage(
     return points;
 }
 
-}
+} //namespace cg3

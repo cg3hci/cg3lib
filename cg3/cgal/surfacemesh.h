@@ -29,8 +29,8 @@ namespace cgal {
 typedef CGAL::Surface_mesh<CGAL::Exact_predicates_inexact_constructions_kernel::Point_3> SurfaceMesh;
 
 #ifdef  CG3_DCEL_DEFINED
-Dcel getDcelFromSurfaceMesh(const SurfaceMesh& poly);
-SurfaceMesh getSurfaceMeshFromDcel(const Dcel& d);
+Dcel dcelFromSurfaceMesh(const SurfaceMesh& poly);
+SurfaceMesh surfaceMeshFromDcel(const Dcel& d);
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED

@@ -23,7 +23,7 @@ namespace cgal {
  * @param mesh
  * @return
  */
-std::vector<double> getSDFMap(const Polyhedron &mesh)
+std::vector<double> SDFMap(const Polyhedron &mesh)
 {
     typedef std::map<Polyhedron::Facet_const_handle, double> Facet_double_map;
     Facet_double_map internal_map;
@@ -74,11 +74,11 @@ std::vector<double> getSDFMap(const Polyhedron &mesh)
  * @param dcel
  * @return
  */
-std::map<const Dcel::Face*, double> getSDFMap(const Dcel& dcel)
+std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel)
 {
     std::map<const Dcel::Face*, int> faceMap;
     std::map<const Dcel::Vertex*, int> vertexMap;
-    Polyhedron mesh = getPolyhedronFromDcel(dcel, vertexMap, faceMap);
+    Polyhedron mesh = polyhedronFromDcel(dcel, vertexMap, faceMap);
 
     // compute inverse map
     std::map<int, const Dcel::Face*> invFaceMap;
@@ -86,7 +86,7 @@ std::map<const Dcel::Face*, double> getSDFMap(const Dcel& dcel)
          invFaceMap.insert(std::make_pair(faceMap.at(face), face));
     }
 
-    std::vector<double> sdf = getSDFMap(mesh);
+    std::vector<double> sdf = SDFMap(mesh);
 
     // save SDF values
     std::map<const Dcel::Face*, double> sdfMap;
@@ -116,10 +116,10 @@ std::map<const Dcel::Face*, double> getSDFMap(const Dcel& dcel)
  * @param m
  * @return
  */
-std::vector<double> getSDFMap(const SimpleEigenMesh &m)
+std::vector<double> SDFMap(const SimpleEigenMesh &m)
 {
-    Polyhedron mesh = getPolyhedronFromEigenMesh(m);
-    return getSDFMap(mesh);
+    Polyhedron mesh = polyhedronFromEigenMesh(m);
+    return SDFMap(mesh);
 }
 #endif
 

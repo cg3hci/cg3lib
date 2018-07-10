@@ -214,7 +214,7 @@ AABBTree& AABBTree::operator=(const cgal::AABBTree& other)
  * @param[in] p2: ending point of the segment query
  * @return the number of triangles intersected by the segment
  */
-int AABBTree::getNumberIntersectedPrimitives(const Pointd& p1, const Pointd& p2) const
+int AABBTree::numberIntersectedPrimitives(const Pointd& p1, const Pointd& p2) const
 {
     CGALPoint pa(p1.x(), p1.y(), p1.z());
     CGALPoint pb(p2.x(), p2.y(), p2.z());
@@ -227,7 +227,7 @@ int AABBTree::getNumberIntersectedPrimitives(const Pointd& p1, const Pointd& p2)
  * @param b
  * @return
  */
-int AABBTree::getNumberIntersectedPrimitives(const BoundingBox& b) const
+int AABBTree::numberIntersectedPrimitives(const BoundingBox& b) const
 {
     CGALBoundingBox bb(b.minX(), b.minY(), b.minZ(), b.maxX(), b.maxY(), b.maxZ());
     return (int) tree.number_of_intersected_primitives(bb);
@@ -238,7 +238,7 @@ int AABBTree::getNumberIntersectedPrimitives(const BoundingBox& b) const
  * @param p
  * @return
  */
-double AABBTree::getSquaredDistance(const Pointd& p) const
+double AABBTree::squaredDistance(const Pointd& p) const
 {
     CGALPoint query(p.x(), p.y(), p.z());
     return tree.squared_distance(query);
@@ -249,7 +249,7 @@ double AABBTree::getSquaredDistance(const Pointd& p) const
  * @param p
  * @return
  */
-Pointd AABBTree::getNearestPoint(const Pointd& p) const
+Pointd AABBTree::nearestPoint(const Pointd& p) const
 {
     CGALPoint query(p.x(), p.y(), p.z());
     CGALPoint closest = tree.closest_point(query);
@@ -309,7 +309,7 @@ bool AABBTree::isInside(const Pointd& p, int numberOfChecks) const
                 break;
         }
 
-        int numberIntersected = getNumberIntersectedPrimitives(p, boundingPoint);
+        int numberIntersected = numberIntersectedPrimitives(p, boundingPoint);
         if (numberIntersected % 2 == 1)
             inside++;
         else
@@ -374,7 +374,7 @@ bool AABBTree::isInsidePseudoRandom(const Pointd& p, int numberOfChecks) const
                 break;
         }
 
-        int numberIntersected = getNumberIntersectedPrimitives(p, boundingPoint);
+        int numberIntersected = numberIntersectedPrimitives(p, boundingPoint);
         if (numberIntersected % 2 == 1)
             inside++;
         else
@@ -389,7 +389,7 @@ bool AABBTree::isInsidePseudoRandom(const Pointd& p, int numberOfChecks) const
  * @param outputList
  * @param b
  */
-void AABBTree::getContainedDcelFaces(
+void AABBTree::containedDcelFaces(
         std::list<const Dcel::Face*>& outputList,
         const BoundingBox& b) const
 {
@@ -411,10 +411,10 @@ void AABBTree::getContainedDcelFaces(
  * @param b
  * @return
  */
-std::list<const Dcel::Face*> AABBTree::getContainedDcelFaces(const BoundingBox& b) const
+std::list<const Dcel::Face*> AABBTree::containedDcelFaces(const BoundingBox& b) const
 {
     std::list<const Dcel::Face*> outputList;
-    getContainedDcelFaces(outputList, b);
+    containedDcelFaces(outputList, b);
     return outputList;
 }
 
@@ -423,12 +423,12 @@ std::list<const Dcel::Face*> AABBTree::getContainedDcelFaces(const BoundingBox& 
  * @param outputList
  * @param b
  */
-void AABBTree::getCompletelyContainedDcelFaces(
+void AABBTree::completelyContainedDcelFaces(
         std::list<const Dcel::Face*>& outputList,
         const BoundingBox& b) const
 {
     assert(treeType == DCEL);
-    getContainedDcelFaces(outputList, b);
+    containedDcelFaces(outputList, b);
 
     std::list<const Dcel::Face*>::iterator i = outputList.begin();
     while (i != outputList.end()) {
@@ -449,12 +449,12 @@ void AABBTree::getCompletelyContainedDcelFaces(
  * @param outputList
  * @param b
  */
-void AABBTree::getCompletelyContainedDcelFaces(
+void AABBTree::completelyContainedDcelFaces(
         std::list<unsigned int>& outputList,
         const BoundingBox& b) const
 {
     std::list<const Dcel::Face*> output;
-    getCompletelyContainedDcelFaces(output, b);
+    completelyContainedDcelFaces(output, b);
     outputList.clear();
     for (const Dcel::Face* f : output)
         outputList.push_back(f->getId());
@@ -465,15 +465,15 @@ void AABBTree::getCompletelyContainedDcelFaces(
  * @param b
  * @return
  */
-std::list<const Dcel::Face*> AABBTree::getCompletelyContainedDcelFaces(
+std::list<const Dcel::Face*> AABBTree::completelyContainedDcelFaces(
         const BoundingBox& b) const
 {
     std::list<const Dcel::Face*> output;
-    getCompletelyContainedDcelFaces(output, b);
+    completelyContainedDcelFaces(output, b);
     return output;
 }
 
-void AABBTree::getIntersectedDcelFaces(
+void AABBTree::intersectedDcelFaces(
         const Pointd& p1,
         const Pointd& p2,
         std::list<const Dcel::Face*>& outputList) const
@@ -494,12 +494,12 @@ void AABBTree::getIntersectedDcelFaces(
     }
 }
 
-std::list<const Dcel::Face*> AABBTree::getIntersectedDcelFaces(
+std::list<const Dcel::Face*> AABBTree::intersectedDcelFaces(
         const Pointd& p1,
         const Pointd& p2) const
 {
     std::list<const Dcel::Face*> outputList;
-    getIntersectedDcelFaces(p1, p2, outputList);
+    intersectedDcelFaces(p1, p2, outputList);
     return outputList;
 }
 
@@ -508,7 +508,7 @@ std::list<const Dcel::Face*> AABBTree::getIntersectedDcelFaces(
  * @param p
  * @return
  */
-const Dcel::Face* AABBTree::getNearestDcelFace(const Pointd& p) const
+const Dcel::Face* AABBTree::nearestDcelFace(const Pointd& p) const
 {
     assert(treeType == DCEL);
     CGALPoint query(p.x(), p.y(), p.z());
@@ -526,10 +526,10 @@ const Dcel::Face* AABBTree::getNearestDcelFace(const Pointd& p) const
  * @param p
  * @return
  */
-const Dcel::Vertex* AABBTree::getNearestDcelVertex(const Pointd& p) const
+const Dcel::Vertex* AABBTree::nearestDcelVertex(const Pointd& p) const
 {
     assert(treeType == DCEL);
-    const Dcel::Face* closestFace = getNearestDcelFace(p);
+    const Dcel::Face* closestFace = nearestDcelFace(p);
     const Dcel::Vertex* closest = nullptr;
     double dist = std::numeric_limits<double>::max();
     for (const Dcel::Vertex* v : closestFace->incidentVertexIterator()){

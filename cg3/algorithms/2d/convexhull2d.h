@@ -13,12 +13,26 @@ namespace cg3 {
 /* Graham scan */
 
 template <class T = double, class InputContainer, class OutputContainer>
-void getConvexHull2D(const InputContainer& container, OutputContainer& convexHull);
+void convexHull2D(const InputContainer& container, OutputContainer& convexHull);
 
 template <class T = double, class InputIterator, class OutputIterator>
-OutputIterator getConvexHull2D(const InputIterator first, const InputIterator end, OutputIterator outIt);
+OutputIterator convexHull2D(const InputIterator first, const InputIterator end, OutputIterator outIt);
 
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+template <class T = double, class InputContainer, class OutputContainer>
+inline void getConvexHull2D(const InputContainer& container, OutputContainer& convexHull)
+{
+    return convexHull2D(container, convexHull);
 }
+
+template <class T = double, class InputIterator, class OutputIterator>
+inline OutputIterator getConvexHull2D(const InputIterator first, const InputIterator end, OutputIterator outIt)
+{
+    return convexHull2D(first, end, outIt);
+}
+#endif
+
+} //namespace cg3
 
 #include "convexhull2d.tpp"
 

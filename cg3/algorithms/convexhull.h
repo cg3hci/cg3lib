@@ -23,7 +23,7 @@ Dcel convexHull(const InputContainer& points);
 template <class InputIterator>
 Dcel convexHull(InputIterator first, InputIterator end);
 
-}
+} //namespace cg3
 
 #include "convexhull.tpp"
 

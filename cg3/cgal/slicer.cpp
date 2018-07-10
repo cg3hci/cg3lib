@@ -38,7 +38,7 @@ typedef CGAL::AABB_tree<AABB_traits>  AABB_tree;
  * @param d
  * @return
  */
-std::vector<std::vector<Pointd>> getPolylines(
+std::vector<std::vector<Pointd>> polylines(
         const std::string& inputOffFile,
         const Vec3& norm,
         double d)
@@ -49,7 +49,7 @@ std::vector<std::vector<Pointd>> getPolylines(
         std::cerr << "Not a valid off file." << std::endl;
         exit(1);
     }
-    return getPolylines(mesh, norm, d);
+    return polylines(mesh, norm, d);
 }
 
 /**
@@ -60,7 +60,7 @@ std::vector<std::vector<Pointd>> getPolylines(
  * @param d
  * @return
  */
-std::vector<std::vector<Pointd>> getPolylines(
+std::vector<std::vector<Pointd>> polylines(
         const SurfaceMesh &mesh,
         const Vec3& norm,
         double d)
@@ -90,11 +90,11 @@ std::vector<std::vector<Pointd>> getPolylines(
  * @param p
  * @return
  */
-std::vector<std::vector<Pointd> > getPolylines(
+std::vector<std::vector<Pointd> > polylines(
         const Dcel &mesh,
         const Plane &p)
 {
-    return getPolylines(mesh, p.normal(), p.d());
+    return polylines(mesh, p.normal(), p.d());
 }
 
 /**
@@ -105,13 +105,13 @@ std::vector<std::vector<Pointd> > getPolylines(
  * @param d
  * @return
  */
-std::vector<std::vector<Pointd> > getPolylines(
+std::vector<std::vector<Pointd> > polylines(
         const Dcel &mesh,
         const Vec3 &norm,
         double d)
 {
     SurfaceMesh m = cgal::getSurfaceMeshFromDcel(mesh);
-    return getPolylines(m, norm, d);
+    return polylines(m, norm, d);
 }
 #endif
 

@@ -15,7 +15,7 @@ namespace cg3 {
 
 std::vector<Pointd> sphereCoverage(unsigned int nSamples = 1000, bool deterministic = false);
 
-}
+} //namespace cg3
 
 #include "sphere_coverage.tpp"
 

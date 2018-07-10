@@ -22,7 +22,7 @@ namespace cgal {
  * @param tree
  * @return
  */
-std::vector<double> getUnsignedDistances(
+std::vector<double> unsignedDistances(
         const std::vector<Pointd>& points,
         const AABBTree& tree)
 {
@@ -31,7 +31,7 @@ std::vector<double> getUnsignedDistances(
 
     #pragma omp parallel for
     for (unsigned int i = 0; i < size; i++){
-        distances[i] = tree.getSquaredDistance(points[i]);
+        distances[i] = tree.squaredDistance(points[i]);
     }
 
     return distances;

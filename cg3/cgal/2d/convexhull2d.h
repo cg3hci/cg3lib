@@ -15,15 +15,34 @@ namespace cg3 {
 namespace cgal {
 
 template <class T = double, class InputContainer, class OutputContainer>
-void getCGALConvexHull2D(
+void convexHull2D(
         const InputContainer& points,
         OutputContainer& outputContainer);
 
 template <class T = double, class InputIterator, class OutputIterator>
-void getCGALConvexHull2D(
+void convexHull2D(
         InputIterator first,
         InputIterator end,
         OutputIterator outIt);
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+template <class T = double, class InputContainer, class OutputContainer>
+inline void getCGALConvexHull2D(
+        const InputContainer& points,
+        OutputContainer& outputContainer)
+{
+    return convexHull2D(points, outputContainer);
+}
+
+template <class T = double, class InputIterator, class OutputIterator>
+inline void getCGALConvexHull2D(
+        InputIterator first,
+        InputIterator end,
+        OutputIterator outIt)
+{
+    return convexHull2D(first, end, outIT);
+}
+#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

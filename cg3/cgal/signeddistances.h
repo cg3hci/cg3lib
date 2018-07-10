@@ -15,7 +15,7 @@ namespace cgal {
 
 class AABBTree;
 
-std::vector<double> getUnsignedDistances(const std::vector<Pointd> &points, const AABBTree &tree);
+std::vector<double> unsignedDistances(const std::vector<Pointd> &points, const AABBTree &tree);
 
 } //namespace cg3::cgal
 } //namespace cg3

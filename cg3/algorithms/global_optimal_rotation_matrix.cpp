@@ -109,4 +109,4 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
 #endif
 #endif
 
-}
+} //namespace cg3
