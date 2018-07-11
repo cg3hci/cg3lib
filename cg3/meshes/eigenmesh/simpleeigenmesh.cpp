@@ -58,10 +58,10 @@ SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh)
 }
 #endif
 
-Vec3 SimpleEigenMesh::getFaceNormal(unsigned int f) const
+Vec3 SimpleEigenMesh::faceNormal(unsigned int f) const
 {
-    Pointi vertices = getFace(f);
-    Vec3 normal = (getVertex(vertices.y()) - getVertex(vertices.x())).cross(getVertex(vertices.z()) - getVertex(vertices.x()));
+    Pointi vertices = face(f);
+    Vec3 normal = (vertex(vertices.y()) - vertex(vertices.x())).cross(vertex(vertices.z()) - vertex(vertices.x()));
     normal.normalize();
     return normal;
 }
@@ -69,7 +69,7 @@ Vec3 SimpleEigenMesh::getFaceNormal(unsigned int f) const
 bool SimpleEigenMesh::isDegenerateTriangle(unsigned int f, double epsilon) const
 {
     assert(f < F.rows());
-    return getFaceArea(f) <= epsilon;
+    return faceArea(f) <= epsilon;
 }
 
 void SimpleEigenMesh::removeDegenerateTriangles(double epsilon)
@@ -138,13 +138,13 @@ void SimpleEigenMesh::rotate(const Eigen::Matrix3d& m, const Eigen::Vector3d& ce
 
 void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox)
 {
-    BoundingBox boundingBox = getBoundingBox();
-    Pointd oldCenter = boundingBox.center();
+    BoundingBox bb = boundingBox();
+    Pointd oldCenter = bb.center();
     Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = boundingBox.max() - boundingBox.min();
+    Pointd deltaOld = bb.max() - bb.min();
     Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (int i = 0; i < V.rows(); i++){
-        Pointd coord = getVertex(i);
+        Pointd coord = vertex(i);
         coord -= oldCenter;
         coord *= deltaNew / deltaOld;
         coord += newCenter;
@@ -159,7 +159,7 @@ void SimpleEigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox
     Pointd deltaOld = oldBoundingBox.max() - oldBoundingBox.min();
     Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (int i = 0; i < V.rows(); i++){
-        Pointd coord = getVertex(i);
+        Pointd coord = vertex(i);
         coord -= oldCenter;
         coord *= deltaNew / deltaOld;
         coord += newCenter;
@@ -189,9 +189,9 @@ void SimpleEigenMesh::merge(SimpleEigenMesh &result, const SimpleEigenMesh& m1, 
     result.V << m1.V,
             m2.V;
     result.F = m1.F;
-    int start = m1.getNumberVertices();
-    for (unsigned int i = 0; i < m2.getNumberFaces(); i++){
-        Pointi fi =m2.getFace(i);
+    int start = m1.numberVertices();
+    for (unsigned int i = 0; i < m2.numberFaces(); i++){
+        Pointi fi =m2.face(i);
         result.addFace(fi.x()+start, fi.y()+start, fi.z()+start);
     }
 }
@@ -203,9 +203,9 @@ SimpleEigenMesh SimpleEigenMesh::merge(const SimpleEigenMesh& m1, const SimpleEi
     result.V << m1.V,
             m2.V;
     result.F = m1.F;
-    int start = m1.getNumberVertices();
-    for (unsigned int i = 0; i < m2.getNumberFaces(); i++){
-        Pointi fi =m2.getFace(i);
+    int start = m1.numberVertices();
+    for (unsigned int i = 0; i < m2.numberFaces(); i++){
+        Pointi fi =m2.face(i);
         result.addFace(fi.x()+start, fi.y()+start, fi.z()+start);
     }
     return result;

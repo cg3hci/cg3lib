@@ -192,19 +192,19 @@ void reassociateDataAfterOperation(
         const EigenMesh& m2,
         const CSGTree::VectorJ& birthFaces)
 {
-    unsigned int nFaces = resultingMesh.getNumberFaces();
-    unsigned int nA = m1.getNumberFaces();
+    unsigned int nFaces = resultingMesh.numberFaces();
+    unsigned int nA = m1.numberFaces();
 
     for (unsigned int i = 0; i < nFaces; i++) {
         unsigned int birthFace = birthFaces[i];
 
         //If the birth face is in the first mesh
         if (birthFace < nA) {
-            resultingMesh.setFaceColor(m1.getFaceColor(birthFace), i);
+            resultingMesh.setFaceColor(m1.faceColor(birthFace), i);
         }
         //If the birth face is in the second mesh
         else {
-            resultingMesh.setFaceColor(m2.getFaceColor(birthFace - nA), i);
+            resultingMesh.setFaceColor(m2.faceColor(birthFace - nA), i);
         }
     }
 }

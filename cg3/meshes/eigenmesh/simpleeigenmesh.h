@@ -69,15 +69,15 @@ public:
     const Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor>& getVerticesMatrix() const;
     const Eigen::Matrix<int, Eigen::Dynamic, 3, Eigen::RowMajor>& getFacesMatrix() const;
 
-    unsigned int getNumberVertices() const;
-    unsigned int getNumberFaces() const;
-    Pointd getVertex(unsigned int i) const;
-    Pointi getFace(unsigned int i) const;
-    double getFaceArea(unsigned int f) const;
-    virtual Vec3 getFaceNormal(unsigned int f) const;
-    virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
-    virtual BoundingBox getBoundingBox() const;
-    Pointd getBarycenter() const;
+    unsigned int numberVertices() const;
+    unsigned int numberFaces() const;
+    Pointd vertex(unsigned int i) const;
+    Pointi face(unsigned int i) const;
+    double faceArea(unsigned int f) const;
+    virtual Vec3 faceNormal(unsigned int f) const;
+    virtual void boundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
+    virtual BoundingBox boundingBox() const;
+    Pointd barycenter() const;
 
     virtual void clear();
     virtual void resizeVertices(unsigned int nv);
@@ -119,6 +119,17 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline unsigned int getNumberVertices() const {return numberVertices();}
+    inline unsigned int getNumberFaces() const {return numberFaces();}
+    inline Pointd getVertex(unsigned int i) const {return vertex(i);}
+    inline Pointi getFace(unsigned int i) const {return face(i);}
+    inline double getFaceArea(unsigned int f) const {return faceArea(f);}
+    inline virtual Vec3 getFaceNormal(unsigned int f) const {return faceNormal(f);}
+    inline virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const {boundingBox(BBmin, BBmax);}
+    inline virtual BoundingBox getBoundingBox() const {return boundingBox();}
+    inline Pointd getBarycenter() const {return barycenter();}
+    #endif
 
 protected:
     Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> V;
@@ -178,35 +189,35 @@ inline const Eigen::Matrix<int, Eigen::Dynamic, 3, Eigen::RowMajor>& SimpleEigen
     return F;
 }
 
-inline unsigned int SimpleEigenMesh::getNumberVertices() const
+inline unsigned int SimpleEigenMesh::numberVertices() const
 {
     return V.rows();
 }
 
-inline unsigned int SimpleEigenMesh::getNumberFaces() const
+inline unsigned int SimpleEigenMesh::numberFaces() const
 {
     return F.rows();
 }
 
-inline Pointd SimpleEigenMesh::getVertex(unsigned int i) const
+inline Pointd SimpleEigenMesh::vertex(unsigned int i) const
 {
     assert(i < (unsigned int)V.rows());
     return Pointd(V(i,0), V(i,1), V(i,2));
 }
 
-inline Pointi SimpleEigenMesh::getFace(unsigned int i) const
+inline Pointi SimpleEigenMesh::face(unsigned int i) const
 {
     assert (i < (unsigned int)F.rows());
     return Pointi(F(i,0), F(i,1), F(i,2));
 }
 
-inline double SimpleEigenMesh::getFaceArea(unsigned int f) const
+inline double SimpleEigenMesh::faceArea(unsigned int f) const
 {
-    Pointd v1 = getVertex(F(f,0));
-    return ((getVertex(F(f,2)) - v1).cross(getVertex(F(f,1)) - v1)).length() / 2;
+    Pointd v1 = vertex(F(f,0));
+    return ((vertex(F(f,2)) - v1).cross(vertex(F(f,1)) - v1)).length() / 2;
 }
 
-inline void SimpleEigenMesh::getBoundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVector3d& BBmax) const
+inline void SimpleEigenMesh::boundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVector3d& BBmax) const
 {
     if (V.rows() > 0){
         BBmin = V.colwise().minCoeff();
@@ -218,7 +229,7 @@ inline void SimpleEigenMesh::getBoundingBox(Eigen::RowVector3d& BBmin, Eigen::Ro
     }
 }
 
-inline BoundingBox SimpleEigenMesh::getBoundingBox() const
+inline BoundingBox SimpleEigenMesh::boundingBox() const
 {
     BoundingBox  bb;
     if (V.rows() > 0){
@@ -231,7 +242,7 @@ inline BoundingBox SimpleEigenMesh::getBoundingBox() const
     return bb;
 }
 
-inline Pointd SimpleEigenMesh::getBarycenter() const
+inline Pointd SimpleEigenMesh::barycenter() const
 {
     Pointd bc(V.col(0).mean(), V.col(1).mean(), V.col(2).mean());
     return bc;

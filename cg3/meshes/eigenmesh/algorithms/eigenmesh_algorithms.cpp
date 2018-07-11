@@ -367,19 +367,19 @@ bool EigenMeshAlgorithms::isABox(const SimpleEigenMesh& mesh)
     std::array<double, 6> coords;
     std::array<bool, 6> init = {false};
     bool isABox = true;
-    for (unsigned int i = 0; i < mesh.getNumberFaces() && isABox; i++){
-        Vec3 n = mesh.getFaceNormal(i);
+    for (unsigned int i = 0; i < mesh.numberFaces() && isABox; i++){
+        Vec3 n = mesh.faceNormal(i);
         bool found = false;
         for (unsigned int a = 0; a < cg3::AXIS.size() && !found; a++){
             if (epsilonEqual(n, cg3::AXIS[a])){
                 found = true;
                 if (init[a]){
-                    if (! epsilonEqual(coords[a], mesh.getVertex(mesh.getFace(i).x())[a%3]))
+                    if (! epsilonEqual(coords[a], mesh.vertex(mesh.face(i).x())[a%3]))
                         isABox = false;
                 }
                 else {
                     init[a] = true;
-                    coords[a] = mesh.getVertex(mesh.getFace(i).x())[a%3];
+                    coords[a] = mesh.vertex(mesh.face(i).x())[a%3];
                 }
 
             }

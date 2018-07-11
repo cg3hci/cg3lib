@@ -141,19 +141,19 @@ cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
         {
             // Postcondition: hds is a valid polyhedral surface.
             CGAL::Polyhedron_incremental_builder_3<internal::HalfedgeDS> B( hds, true);
-            B.begin_surface(mesh->getNumberVertices(), mesh->getNumberFaces());
+            B.begin_surface(mesh->numberVertices(), mesh->numberFaces());
 
             typedef typename internal::HalfedgeDS::Vertex   PolyhedronVertex;
             typedef typename PolyhedronVertex::Point        PolyhedronPoint;
 
-            for (unsigned int vIndex = 0; vIndex < mesh->getNumberVertices(); vIndex++){
-                Pointd coordinate = mesh->getVertex(vIndex);
+            for (unsigned int vIndex = 0; vIndex < mesh->numberVertices(); vIndex++){
+                Pointd coordinate = mesh->vertex(vIndex);
                 B.add_vertex(PolyhedronPoint(coordinate.x(), coordinate.y(), coordinate.z()));
             }
 
-            for (unsigned int fIndex = 0; fIndex < mesh->getNumberFaces(); fIndex++){
+            for (unsigned int fIndex = 0; fIndex < mesh->numberFaces(); fIndex++){
                 B.begin_facet();
-                Pointi face = mesh->getFace(fIndex);
+                Pointi face = mesh->face(fIndex);
                 for (unsigned int vi = 0; vi < 3; vi++) {
                     B.add_vertex_to_facet(face[vi]);
                 }

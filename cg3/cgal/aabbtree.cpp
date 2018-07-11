@@ -118,14 +118,14 @@ AABBTree::AABBTree(const Trimesh<double>& t, bool forDistanceQueries)
 AABBTree::AABBTree(const SimpleEigenMesh& m, bool forDistanceQueries)
 {
     treeType = EIGENMESH;
-    for (unsigned int i = 0; i < m.getNumberVertices(); i++){
-        Pointd p = m.getVertex(i);
+    for (unsigned int i = 0; i < m.numberVertices(); i++){
+        Pointd p = m.vertex(i);
         CGALPoint pp(p.x(), p.y(), p.z());
         mapIdVerticesToCgalPoints[i] = pp;
     }
-    for (unsigned int i = 0; i < m.getNumberFaces(); ++i){
+    for (unsigned int i = 0; i < m.numberFaces(); ++i){
         if (! m.isDegenerateTriangle(i)){
-            Pointi f = m.getFace(i);
+            Pointi f = m.face(i);
             int i1 = f(0), i2 = f(1), i3 = f(2);
             assert(mapIdVerticesToCgalPoints.find(i1) != mapIdVerticesToCgalPoints.end());
             assert(mapIdVerticesToCgalPoints.find(i2) != mapIdVerticesToCgalPoints.end());
@@ -140,7 +140,7 @@ AABBTree::AABBTree(const SimpleEigenMesh& m, bool forDistanceQueries)
     if (forDistanceQueries)
         tree.accelerate_distance_queries();
 
-    bb  = m.getBoundingBox();
+    bb  = m.boundingBox();
 }
 #endif
 

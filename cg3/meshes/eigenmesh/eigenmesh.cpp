@@ -189,7 +189,7 @@ void EigenMesh::setVertexNormal(const Vec3 &n, unsigned int v)
     NV.row(v) << n.x(), n.y(), n.z();
 }
 
-BoundingBox EigenMesh::getBoundingBox() const
+BoundingBox EigenMesh::boundingBox() const
 {
     return bb;
 }
@@ -236,9 +236,14 @@ void EigenMesh::scale(const Vec3& scaleFactor)
     updateBoundingBox();
 }
 
-Eigen::MatrixXf EigenMesh::getVerticesColorMatrix() const
+Eigen::MatrixXf EigenMesh::verticesColorMatrix() const
 {
     return CV;
+}
+
+Eigen::MatrixXf EigenMesh::facesColorMatrix() const
+{
+    return CF;
 }
 
 void EigenMesh::updateFaceNormals()
@@ -286,7 +291,7 @@ void EigenMesh::removeDegenerateTriangles(double epsilon) {
     }
 }
 
-std::pair<int, int> EigenMesh::getCommonVertices(unsigned int f1, unsigned int f2) const
+std::pair<int, int> EigenMesh::commonVertices(unsigned int f1, unsigned int f2) const
 {
     for (unsigned int i = 0; i < 3; i++){
         for (unsigned int j = 0; j < 3; j++){

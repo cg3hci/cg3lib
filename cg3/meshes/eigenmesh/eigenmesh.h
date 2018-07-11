@@ -69,30 +69,31 @@ public:
     void setFaceColor(const Color &c, int f = -1);
     void setFaceColor(int red, int green, int blue, int f = -1);
     void setFaceColor(double red, double green, double blue, int f = -1);
-    Vec3 getFaceNormal(unsigned int f) const;
+    Vec3 faceNormal(unsigned int f) const;
     void setVertexColor(const Color& c, int v = -1);
     void setVertexColor(int red, int green, int blue, int v = -1);
     void setVertexColor(double red, double green, double blue, int v = -1);
-    Vec3 getVertexNormal(unsigned int v) const;
+    Vec3 vertexNormal(unsigned int v) const;
     void setVertexNormal(const Vec3& n, unsigned int v);
-    Color getFaceColor(unsigned int f) const;
-    Color getVertexColor(unsigned int v) const;
-    virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
-    virtual BoundingBox getBoundingBox() const;
+    Color faceColor(unsigned int f) const;
+    Color vertexColor(unsigned int v) const;
+    virtual void boundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
+    virtual BoundingBox boundingBox() const;
     virtual void translate(const Pointd &p);
     virtual void translate(const Eigen::Vector3d &p);
     virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
     virtual void scale(const BoundingBox& newBoundingBox);
     virtual void scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox);
     virtual void scale(const Vec3 &scaleFactor);
-    Eigen::MatrixXf getVerticesColorMatrix() const;
+    Eigen::MatrixXf verticesColorMatrix() const;
+    Eigen::MatrixXf facesColorMatrix() const;
     void updateFaceNormals();
     void updateVerticesNormals();
     void updateFacesAndVerticesNormals();
 
     virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
 
-    std::pair<int, int> getCommonVertices(unsigned int f1, unsigned int f2) const;
+    std::pair<int, int> commonVertices(unsigned int f1, unsigned int f2) const;
 
     virtual bool saveOnPly(const std::string &filename) const;
     virtual bool saveOnObj(const std::string &filename) const;
@@ -106,6 +107,17 @@ public:
 
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
+
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline Vec3 getFaceNormal(unsigned int f) const {return faceNormal(f);}
+    inline Vec3 getVertexNormal(unsigned int v) const {return vertexNormal(v);}
+    inline Color getFaceColor(unsigned int f) const {return faceColor(f);}
+    inline Color getVertexColor(unsigned int v) const {return vertexColor(v);}
+    inline virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const {boundingBox(BBmin, BBmax);}
+    inline virtual BoundingBox getBoundingBox() const {return boundingBox();}
+    inline Eigen::MatrixXf getVerticesColorMatrix() const {return verticesColorMatrix();}
+    inline std::pair<int, int> getCommonVertices(unsigned int f1, unsigned int f2) const {return commonVertices(f1, f2);}
+    #endif
 
 protected:
 
@@ -201,7 +213,7 @@ inline unsigned int EigenMesh::addFace(const Eigen::VectorXi& f)
 {
     SimpleEigenMesh::addFace(f);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
-    Vec3 n = SimpleEigenMesh::getFaceNormal(F.rows()-1);
+    Vec3 n = SimpleEigenMesh::faceNormal(F.rows()-1);
     for (unsigned int i = 0; i < 3; i++)
         NF(F.rows()-1, i) = n(i);
     CF.conservativeResize(F.rows(), Eigen::NoChange);
@@ -214,7 +226,7 @@ inline unsigned int EigenMesh::addFace(int t1, int t2, int t3)
 {
     SimpleEigenMesh::addFace(t1, t2, t3);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
-    Vec3 n = SimpleEigenMesh::getFaceNormal(F.rows()-1);
+    Vec3 n = SimpleEigenMesh::faceNormal(F.rows()-1);
     for (unsigned int i = 0; i < 3; i++)
         NF(F.rows()-1, i) = n(i);
     CF.conservativeResize(F.rows(), Eigen::NoChange);
@@ -266,19 +278,19 @@ inline void EigenMesh::removeFace(unsigned int f)
     cg3::removeRowFromEigenMatrix(CF, f);
 }
 
-inline Vec3 EigenMesh::getFaceNormal(unsigned int f) const
+inline Vec3 EigenMesh::faceNormal(unsigned int f) const
 {
     assert (f < (unsigned int)F.rows());
     return Vec3(NF(f,0), NF(f,1), NF(f,2));
 }
 
-inline Vec3 EigenMesh::getVertexNormal(unsigned int v) const
+inline Vec3 EigenMesh::vertexNormal(unsigned int v) const
 {
     assert (v < (unsigned int)V.rows());
     return Vec3(NV(v,0), NV(v,1), NV(v,2));
 }
 
-inline Color EigenMesh::getFaceColor(unsigned int f) const
+inline Color EigenMesh::faceColor(unsigned int f) const
 {
     assert (f < (unsigned int)F.rows());
     Color c;
@@ -288,7 +300,7 @@ inline Color EigenMesh::getFaceColor(unsigned int f) const
     return c;
 }
 
-inline Color EigenMesh::getVertexColor(unsigned int v) const
+inline Color EigenMesh::vertexColor(unsigned int v) const
 {
     assert (v < (unsigned int)V.rows());
     Color c;
@@ -298,7 +310,7 @@ inline Color EigenMesh::getVertexColor(unsigned int v) const
     return c;
 }
 
-inline void EigenMesh::getBoundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVector3d& BBmax) const
+inline void EigenMesh::boundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVector3d& BBmax) const
 {
     BBmin(0) = bb.minX(); BBmin(1) = bb.minY(); BBmin(2) = bb.minZ();
     BBmax(0) = bb.maxX(); BBmax(1) = bb.maxY(); BBmax(2) = bb.maxZ();

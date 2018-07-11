@@ -1707,9 +1707,9 @@ void Dcel::copyFrom(const SimpleEigenMesh& eigenMesh)
     bool first = true;
 
 
-    for (unsigned int i = 0; i < eigenMesh.getNumberVertices(); i++) {
+    for (unsigned int i = 0; i < eigenMesh.numberVertices(); i++) {
 
-        Pointd coord = eigenMesh.getVertex(i);
+        Pointd coord = eigenMesh.vertex(i);
 
         if (first) {
             bBox.setMin(coord);
@@ -1730,10 +1730,10 @@ void Dcel::copyFrom(const SimpleEigenMesh& eigenMesh)
         vertices.push_back(vid);
     }
 
-    for (unsigned int i = 0; i < eigenMesh.getNumberFaces(); i++) {
+    for (unsigned int i = 0; i < eigenMesh.numberFaces(); i++) {
 
         std::vector<int> nid;
-        Pointi ff = eigenMesh.getFace(i);
+        Pointi ff = eigenMesh.face(i);
         nid.push_back(ff.x());
         nid.push_back(ff.y());
         nid.push_back(ff.z());
@@ -1789,12 +1789,12 @@ void Dcel::copyFrom(const EigenMesh& eigenMesh)
 {
     copyFrom((SimpleEigenMesh)eigenMesh);
     for (Dcel::Face* f : faceIterator()){
-        f->setColor(eigenMesh.getFaceColor(f->id()));
-        f->setNormal(eigenMesh.getFaceNormal(f->id()));
+        f->setColor(eigenMesh.faceColor(f->id()));
+        f->setNormal(eigenMesh.faceNormal(f->id()));
     }
     for (Dcel::Vertex* v : vertexIterator()){
-        v->setNormal(eigenMesh.getVertexNormal(v->id()));
-        v->setColor(eigenMesh.getVertexColor(v->id()));
+        v->setNormal(eigenMesh.vertexNormal(v->id()));
+        v->setColor(eigenMesh.vertexColor(v->id()));
     }
 }
 #endif // CG3_EIGENMESH_DEFINED
