@@ -264,7 +264,7 @@ inline void drawQuad(
  * @ingroup cg3viewer
  */
 inline void drawBox(
-        const Pointd &min,
+        const Pointd& min,
         const Pointd& max,
         const Color& c,
         int width)

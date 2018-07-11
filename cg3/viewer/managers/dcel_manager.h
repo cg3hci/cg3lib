@@ -32,7 +32,7 @@ public:
     explicit DcelManager(QWidget* parent = 0);
     ~DcelManager();
 
-    cg3::DrawableDcel& getDcel();
+    cg3::DrawableDcel& dcel();
     void setDcel(const cg3::Dcel& dcel, const std::string& name = "Dcel");
     void cleanDcel();
     void updateDcel();

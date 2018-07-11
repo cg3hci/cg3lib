@@ -29,6 +29,7 @@
 #include <cg3/geometry/2d/point2d.h>
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
+#include "drawable_objects/drawable_bounding_box.h"
 #include <qmessagebox.h>
 
 namespace cg3 {
@@ -69,6 +70,7 @@ public:
     void fitScene();
     void fitScene(const cg3::Pointd &center, double radius);
     void fitScene2d(const cg3::Point2Dd& center, double radius);
+    void toggleUnitBox();
     void setBackgroundColor(const QColor & color);
     void set2DMode();
     void set3DMode();
@@ -124,6 +126,9 @@ private:
     std::vector<const cg3::PickableObject*> pickList;
     std::set<unsigned int> unusedPickableObjectsIds;
     Mode mode;
+
+    const DrawableBoundingBox unitBox;
+    bool unitBoxEnabled;
 };
 
 } //namespace cg3::viewer

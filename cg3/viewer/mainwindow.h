@@ -76,7 +76,7 @@ public:
     ~MainWindow();
 
     //Canvas:
-    cg3::Point2Di getCanvasSize() const;
+    cg3::Point2Di canvasSize() const;
 
     //DrawableObjects for the Canvas
     void pushDrawableObject(
@@ -96,6 +96,7 @@ public:
     void enableDebugObjects();
     void disableDebugObjects();
     void toggleDebugObjects();
+    void toggleUnitBox();
 
     //Window Options:
     void setFullScreen(bool);
@@ -144,6 +145,7 @@ private slots:
     void on_action3D_Mode_triggered();
     void on_actionReset_Point_of_View_triggered();
     void on_actionPerspective_Orthographic_Camera_Mode_triggered();
+    void on_actionShow_Unit_Box_triggered();
     #ifdef CG3_DCEL_DEFINED
     void on_actionLoad_Mesh_triggered();
     #endif

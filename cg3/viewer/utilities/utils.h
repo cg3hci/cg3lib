@@ -18,6 +18,12 @@ BoundingBox getFullBoundingBoxDrawableObjects(
         const std::vector<const DrawableObject*>& drawlist,
         bool onlyVisible = true);
 
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+inline BoundingBox getFullBoundingBoxDrawableObjects(
+        const std::vector<const DrawableObject*>& drawlist,
+        bool onlyVisible = true) {return fullBoundingBoxDrawableObjects(drawlist, onlyVisible);}
+#endif
+
 }
 
 #endif // CG3_VIEWER_UTILS_H

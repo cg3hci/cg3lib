@@ -43,7 +43,7 @@ DcelManager::~DcelManager()
  * @brief Returns a reference to the Dcel of contained in the Manager
  * @return
  */
-DrawableDcel &DcelManager::getDcel()
+DrawableDcel &DcelManager::dcel()
 {
     return drawableDcel;
 }

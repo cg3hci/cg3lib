@@ -20,7 +20,9 @@ namespace viewer {
 GLCanvas::GLCanvas(QWidget * parent) :
     zoomSceneFactor(3),
     backgroundColor(Qt::white),
-    mode(_3D)
+    mode(_3D),
+    unitBox(Pointd(-1,-1,-1), Pointd(1,1,1)),
+    unitBoxEnabled(false)
 {
     setParent(parent);
     setSnapshotQuality(100);
@@ -42,6 +44,8 @@ void GLCanvas::draw()
         if (drawlist[i]->isVisible())
             drawlist[i]->draw();
     }
+    if (unitBoxEnabled)
+        unitBox.draw();
 }
 
 void GLCanvas::drawWithNames()
@@ -116,6 +120,12 @@ void GLCanvas::fitScene2d(const Point2Dd &center, double radius)
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), 0));
     setSceneRadius(radius);
     showEntireScene();
+}
+
+void GLCanvas::toggleUnitBox()
+{
+    unitBoxEnabled = !unitBoxEnabled;
+    update();
 }
 
 void GLCanvas::setBackgroundColor(const QColor &color)

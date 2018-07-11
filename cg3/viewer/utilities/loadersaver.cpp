@@ -21,7 +21,7 @@ namespace viewer {
  * @param initialPath: default: "."
  */
 LoaderSaver::LoaderSaver(const std::string &initialPath) :
-    actualPath(initialPath)
+    _actualPath(initialPath)
 {
 }
 
@@ -61,16 +61,16 @@ void LoaderSaver::resetSupportedExtension()
  */
 void LoaderSaver::setActualPath(const std::string& path)
 {
-    actualPath = path;
+    _actualPath = path;
 }
 
 /**
  * @brief LoaderSaver::getActualPath
  * @return the actual path.
  */
-const std::string&LoaderSaver::getActualPath() const
+const std::string&LoaderSaver::actualPath() const
 {
-    return actualPath;
+    return _actualPath;
 }
 
 /**
@@ -86,13 +86,13 @@ std::string LoaderSaver::loadDialog(const std::string& windowName)
     QString selectedFilter;
     QString filename = QFileDialog::getOpenFileName(nullptr,
                        QString::fromStdString(windowName),
-                       QString::fromStdString(actualPath),
+                       QString::fromStdString(_actualPath),
                        QString::fromStdString(listToExtensions(true)), &selectedFilter);
 
     if (!filename.isEmpty()){
         std::string path, name;
         separateFilenameFromPath(filename.toStdString(), path, name);
-        actualPath = path;
+        _actualPath = path;
     }
     return filename.toStdString();
 }
@@ -115,7 +115,7 @@ std::string LoaderSaver::saveDialog(
     selectedExtension = "";
     QString filename = QFileDialog::getSaveFileName(nullptr,
                                                     QString::fromStdString(windowName),
-                                                    QString::fromStdString(actualPath),
+                                                    QString::fromStdString(_actualPath),
                                                     QString::fromStdString(listToExtensions(false)), &selectedFilter);
     if (!filename.isEmpty()){
         std::string s = selectedFilter.toStdString();
@@ -128,7 +128,7 @@ std::string LoaderSaver::saveDialog(
 
         std::string path, name;
         separateFilenameFromPath(filename.toStdString(), path, name);
-        actualPath = path;
+        _actualPath = path;
 
     }
 
@@ -149,10 +149,10 @@ std::string LoaderSaver::directoryDialog(const std::string &windowName)
     std::string folder = "";
     QString foldername = QFileDialog::getExistingDirectory(nullptr,
                                                            QString::fromStdString(windowName),
-                                                           QString::fromStdString(actualPath));
+                                                           QString::fromStdString(_actualPath));
     if (!foldername.isEmpty()){
         folder = foldername.toStdString();
-        actualPath = folder;
+        _actualPath = folder;
     }
     return folder;
 }

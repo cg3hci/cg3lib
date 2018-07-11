@@ -37,14 +37,14 @@ public:
     void resetSupportedExtension();
 
     void setActualPath(const std::string& path);
-    const std::string& getActualPath() const;
+    const std::string& actualPath() const;
 
     std::string loadDialog(const std::string &windowName = "Load File");
     std::string saveDialog(const std::string& windowName = "Save File", std::string &selectedExtension = * std::unique_ptr<std::string>(new std::string("")) );
     std::string directoryDialog(const std::string& windowName = "Choose Directory");
 
 private:
-    std::string actualPath;
+    std::string _actualPath;
     std::list<std::string> supportedExtensions;
 
     std::string listToExtensions(bool allFormats);

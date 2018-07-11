@@ -88,7 +88,7 @@ MainWindow::~MainWindow()
 /**
  * @brief Returns the sizes of the Canvas as number of pixels.
  */
-Point2Di MainWindow::getCanvasSize() const
+Point2Di MainWindow::canvasSize() const
 {
     return Point2Di(canvas.width(), canvas.height());
 }
@@ -415,6 +415,12 @@ void MainWindow::on_actionReset_Point_of_View_triggered()
 void MainWindow::on_actionPerspective_Orthographic_Camera_Mode_triggered()
 {
     canvas.toggleCameraType();
+    canvas.update();
+}
+
+void MainWindow::on_actionShow_Unit_Box_triggered()
+{
+    canvas.toggleUnitBox();
     canvas.update();
 }
 
