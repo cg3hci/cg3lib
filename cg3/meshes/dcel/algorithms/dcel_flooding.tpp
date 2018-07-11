@@ -62,10 +62,10 @@ std::set<unsigned int> dcelAlgorithms::floodDFS(const Dcel& d, unsigned int seed
     while (stack_faces.size() > 0) {
         const Dcel::Face* fi = stack_faces[stack_faces.size()-1];
         stack_faces.pop_back(); //pop
-        faces.insert(fi->getId());
+        faces.insert(fi->id());
         for (const Dcel::Face* adjacent : fi->adjacentFaceIterator()) {
             if (c(adjacent)) {
-                if (faces.find(adjacent->getId()) == faces.end())
+                if (faces.find(adjacent->id()) == faces.end())
                     stack_faces.push_back(adjacent);
             }
         }
@@ -127,11 +127,11 @@ std::set<unsigned int> dcelAlgorithms::floodBFS(const Dcel& d, unsigned int seed
     while (queue_faces.size() > 0) {
         const cg3::Dcel::Face* fi = queue_faces.front();
         queue_faces.pop_front(); //pop
-        if (set.find(fi->getId()) == set.end()){
-            set.insert(fi->getId());
+        if (set.find(fi->id()) == set.end()){
+            set.insert(fi->id());
             for (const cg3::Dcel::Face* adjacent : fi->adjacentFaceIterator()) {
                 if (c(adjacent) &&
-                        set.find(adjacent->getId()) == set.end()) {
+                        set.find(adjacent->id()) == set.end()) {
                     queue_faces.push_back(adjacent);
                 }
             }

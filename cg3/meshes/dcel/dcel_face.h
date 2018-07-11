@@ -135,30 +135,30 @@ public:
     * Public Inline Methods *
     *************************/
 
-    unsigned int getId()                            const;
-    const Dcel::Vertex* getVertex1()                const;
-    const Dcel::Vertex* getVertex2()                const;
-    const Dcel::Vertex* getVertex3()                const;
-    int getFlag()                                   const;
-    Vec3 getNormal()                                const;
-    double getArea()                                const;
-    Color getColor()                                const;
-    const Dcel::HalfEdge* getOuterHalfEdge()        const;
-    unsigned int getNumberInnerHalfEdges()          const;
+    unsigned int id()                            const;
+    const Dcel::Vertex* vertex1()                const;
+    const Dcel::Vertex* vertex2()                const;
+    const Dcel::Vertex* vertex3()                const;
+    int flag()                                   const;
+    Vec3 normal()                                const;
+    double area()                                const;
+    Color color()                                const;
+    const Dcel::HalfEdge* outerHalfEdge()        const;
+    unsigned int numberInnerHalfEdges()          const;
     bool hasHoles()                                 const;
     bool checkOuterHalfEdge()                       const;
 
 
-    Dcel::Vertex* getVertex1();
-    Dcel::Vertex* getVertex2();
-    Dcel::Vertex* getVertex3();
+    Dcel::Vertex* vertex1();
+    Dcel::Vertex* vertex2();
+    Dcel::Vertex* vertex3();
     void setFlag();
     void setFlag(int newFlag);
     void resetFlag();
     void setNormal(const Vec3& newNormal);
     void setArea(double newArea);
     void setColor(const Color& newColor);
-    Dcel::HalfEdge* getOuterHalfEdge();
+    Dcel::HalfEdge* outerHalfEdge();
     void setOuterHalfEdge(Dcel::HalfEdge* newOuterHalfEdge);
     void addInnerHalfEdge(Dcel::HalfEdge* newInnerHalfEdge);
 
@@ -170,11 +170,11 @@ public:
     bool isTriangle()                                                               const;
     bool isAdjacentTo(const Dcel::Face* ad)                                         const;
     bool isIncidentTo(const Dcel::Vertex* v)                                        const;
-    int getNumberIncidentVertices()                                                 const;
-    int getNumberIncidentHalfEdges()                                                const;
-    Pointd getBarycentre()                                                          const;
+    int numberIncidentVertices()                                                 const;
+    int numberIncidentHalfEdges()                                                const;
+    Pointd barycenter()                                                          const;
     #ifdef CG3_CGAL_DEFINED
-    void getTriangulation(
+    void triangulation(
             std::vector<std::array<const Dcel::Vertex*, 3> >& triangles)            const;
     #endif
     std::string toString()                                                          const;
@@ -228,6 +228,29 @@ public:
     IncidentHalfEdgeRangeBasedIterator incidentHalfEdgeIterator();
     IncidentVertexRangeBasedIterator incidentVertexIterator();
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline unsigned int getId() const {return id();}
+    inline const Dcel::Vertex* getVertex1() const {return vertex1();}
+    inline const Dcel::Vertex* getVertex2() const {return vertex2();}
+    inline const Dcel::Vertex* getVertex3() const {return vertex3();}
+    inline Dcel::Vertex* getVertex1() {return vertex1();}
+    inline Dcel::Vertex* getVertex2() {return vertex2();}
+    inline Dcel::Vertex* getVertex3() {return vertex3();}
+    inline int getFlag() const {return flag();}
+    inline Vec3 getNormal() const {return normal();}
+    inline double getArea() const {return area();}
+    inline Color getColor() const {return color();}
+    inline const Dcel::HalfEdge* getOuterHalfEdge() const {return outerHalfEdge();}
+    inline Dcel::HalfEdge* getOuterHalfEdge() {return outerHalfEdge();}
+    inline unsigned int getNumberInnerHalfEdges() const {return numberInnerHalfEdges();}
+    inline int getNumberIncidentVertices() const {return numberIncidentVertices();}
+    inline int getNumberIncidentHalfEdges() const {return numberIncidentHalfEdges();}
+    inline Pointd getBarycenter() const {return barycenter();}
+    #ifdef CG3_CGAL_DEFINED
+    inline void getTriangulation(std::vector<std::array<const Dcel::Vertex*, 3> >& t) const {return triangulation(t);}
+    #endif
+    #endif
+
 protected:
 
     class GenericIterator;
@@ -251,14 +274,14 @@ protected:
     #ifdef NDEBUG
     Dcel *parent;
     #else
-    Vec3                            normal;
-    Color                           color;
+    Vec3                            _normal;
+    Color                           _color;
     #endif
-    Dcel::HalfEdge*                 outerHalfEdge;
-    std::vector<Dcel::HalfEdge*>    innerHalfEdges;
-    double                          area;
-    unsigned int                    id;
-    int                             flag;
+    Dcel::HalfEdge*                 _outerHalfEdge;
+    std::vector<Dcel::HalfEdge*>    _innerHalfEdges;
+    double                          _area;
+    unsigned int                    _id;
+    int                             _flag;
 
     /***************************
     * Protected Inline Methods *

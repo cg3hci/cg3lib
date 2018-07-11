@@ -156,16 +156,16 @@ AABBTree::AABBTree(const Dcel& d, bool forDistanceQueries) :
     treeType = DCEL;
     for (Dcel::ConstVertexIterator vit = d.vertexBegin(); vit != d.vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
-        CGALPoint pp(v->getCoordinate().x(), v->getCoordinate().y(), v->getCoordinate().z());
+        CGALPoint pp(v->coordinate().x(), v->coordinate().y(), v->coordinate().z());
         mapDcelVerticesToCgalPoints[v] = pp;
         mapCgalPointsToDcelVertices[pp] = v;
     }
     for (Dcel::ConstFaceIterator fit = d.faceBegin(); fit != d.faceEnd(); ++fit){
         const Dcel::Face* f = *fit;
-        const Dcel::HalfEdge* he = f->getOuterHalfEdge();
-        const Dcel::Vertex* v1 = he->getFromVertex();
-        const Dcel::Vertex* v2 = he->getToVertex();
-        const Dcel::Vertex* v3 = he->getNext()->getToVertex();
+        const Dcel::HalfEdge* he = f->outerHalfEdge();
+        const Dcel::Vertex* v1 = he->fromVertex();
+        const Dcel::Vertex* v2 = he->toVertex();
+        const Dcel::Vertex* v3 = he->next()->toVertex();
         CGALTriangle t(mapDcelVerticesToCgalPoints.at(v1), mapDcelVerticesToCgalPoints.at(v2), mapDcelVerticesToCgalPoints.at(v3));
         mapCgalTrianglesToDcelFaces[t] = f;
         triangles.push_back(t);
@@ -433,9 +433,9 @@ void AABBTree::completelyContainedDcelFaces(
     std::list<const Dcel::Face*>::iterator i = outputList.begin();
     while (i != outputList.end()) {
         const Dcel::Face* f = *i;
-        Pointd p1 = f->getVertex1()->getCoordinate(),
-               p2 = f->getVertex2()->getCoordinate(),
-               p3 = f->getVertex3()->getCoordinate();
+        Pointd p1 = f->vertex1()->coordinate(),
+               p2 = f->vertex2()->coordinate(),
+               p3 = f->vertex3()->coordinate();
 
         if (!b.isIntern(p1) || !b.isIntern(p2) || !b.isIntern(p3)) {
             i =outputList.erase(i);
@@ -457,7 +457,7 @@ void AABBTree::completelyContainedDcelFaces(
     completelyContainedDcelFaces(output, b);
     outputList.clear();
     for (const Dcel::Face* f : output)
-        outputList.push_back(f->getId());
+        outputList.push_back(f->id());
 }
 
 /**
@@ -533,9 +533,9 @@ const Dcel::Vertex* AABBTree::nearestDcelVertex(const Pointd& p) const
     const Dcel::Vertex* closest = nullptr;
     double dist = std::numeric_limits<double>::max();
     for (const Dcel::Vertex* v : closestFace->incidentVertexIterator()){
-        if (dist > p.dist(v->getCoordinate())){
+        if (dist > p.dist(v->coordinate())){
             closest = v;
-            dist = p.dist(v->getCoordinate());
+            dist = p.dist(v->coordinate());
         }
     }
     assert(closest != nullptr);

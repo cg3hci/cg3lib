@@ -69,7 +69,7 @@ cgal::Polyhedron polyhedronFromDcel(
 
             int vIndex = 0;
             for (const Dcel::Vertex* v : mesh->vertexIterator()) {
-                Pointd coordinate = v->getCoordinate();
+                Pointd coordinate = v->coordinate();
 
                 B.add_vertex(PolyhedronPoint(coordinate.x(), coordinate.y(), coordinate.z()));
                 vertexMap->insert(std::make_pair(v,vIndex));

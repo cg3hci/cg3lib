@@ -32,16 +32,16 @@ namespace cg3 {
 #ifdef NDEBUG
 Dcel::Face::Face(Dcel& parent) :
     parent(&parent),
-    outerHalfEdge(nullptr),
-    area(0),
-    id(0),
-    flag(0)
+    _outerHalfEdge(nullptr),
+    _area(0),
+    _id(0),
+    _flag(0)
 {
-    innerHalfEdges.clear();
+    _innerHalfEdges.clear();
 }
 #else
-Dcel::Face::Face() : outerHalfEdge(nullptr), area(0), id(0), flag(0){
-    innerHalfEdges.clear();
+Dcel::Face::Face() : _outerHalfEdge(nullptr), _area(0), _id(0), _flag(0){
+    _innerHalfEdges.clear();
 }
 #endif
 
@@ -67,24 +67,24 @@ Dcel::Face::~Face(void)
  */
 bool Dcel::Face::isTriangle() const
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    assert(outerHalfEdge->getNext() != nullptr && "HalfEdge's Next is null.");
-    assert(outerHalfEdge->getNext()->getNext() != nullptr && "HalfEdge's Next is null.");
-    return (outerHalfEdge == outerHalfEdge->getNext()->getNext()->getNext());
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    assert(_outerHalfEdge->next() != nullptr && "HalfEdge's Next is null.");
+    assert(_outerHalfEdge->next()->next() != nullptr && "HalfEdge's Next is null.");
+    return (_outerHalfEdge == _outerHalfEdge->next()->next()->next());
 }
 
 bool Dcel::Face::isAdjacentTo(const Dcel::Face* ad) const
 {
     for (const Dcel::HalfEdge* he : incidentHalfEdgeIterator()){
         assert(he != nullptr && "Next component of Previous HalfEdge is null.");
-        assert(he->getTwin() != nullptr && "HalfEdge's Twin is null.");
-        if (he->getTwin()->getFace() == ad) return true;
+        assert(he->twin() != nullptr && "HalfEdge's Twin is null.");
+        if (he->twin()->face() == ad) return true;
     }
     for (ConstInnerHalfEdgeIterator ihe = innerHalfEdgeBegin(); ihe != innerHalfEdgeEnd(); ++ihe){
         for (ConstIncidentHalfEdgeIterator heit = incidentHalfEdgeBegin(*ihe), hend = incidentHalfEdgeEnd(); heit != hend; ++heit){
             assert(*(heit) != nullptr && "Next component of Previous HalfEdge is null.");
-            assert((*heit)->getTwin() != nullptr && "HalfEdge's Twin is null.");
-            if ((*heit)->getTwin()->getFace() == ad) return true;
+            assert((*heit)->twin() != nullptr && "HalfEdge's Twin is null.");
+            if ((*heit)->twin()->face() == ad) return true;
         }
     }
     return false;
@@ -94,7 +94,7 @@ bool Dcel::Face::isIncidentTo(const Dcel::Vertex* v) const
 {
     for (const Dcel::HalfEdge* he : v->outgoingHalfEdgeIterator()) {
         assert(he != nullptr && "Twin component of an HalfEdge is null.");
-        if (he->getFace() == this) return true;
+        if (he->face() == this) return true;
     }
     return false;
 }
@@ -105,7 +105,7 @@ bool Dcel::Face::isIncidentTo(const Dcel::Vertex* v) const
  * @warning Utilizza Dcel::Face::ConstIncidentVertexIterator
  * @return Il numero di vertici incidenti alla faccia
  */
-int Dcel::Face::getNumberIncidentVertices() const
+int Dcel::Face::numberIncidentVertices() const
 {
     int n = 0;
     for (ConstIncidentVertexIterator vi = incidentVertexBegin(), vend = incidentVertexEnd(); vi != vend; ++vi) n++;
@@ -118,7 +118,7 @@ int Dcel::Face::getNumberIncidentVertices() const
  * @warning Utilizza Dcel::Face::ConstIncidentHalfEdgeIterator
  * @return Il numero di half edge incidenti alla faccia
  */
-int Dcel::Face::getNumberIncidentHalfEdges() const
+int Dcel::Face::numberIncidentHalfEdges() const
 {
     int n = 0;
     for (ConstIncidentHalfEdgeIterator hei = incidentHalfEdgeBegin(), hend = incidentHalfEdgeEnd(); hei != hend; ++hei) n++;
@@ -134,13 +134,13 @@ int Dcel::Face::getNumberIncidentHalfEdges() const
  * @warning Utilizza Dcel::Face::ConstIncidentVertexIterator
  * @return Il baricentro della faccia.
  */
-Pointd Dcel::Face::getBarycentre() const
+Pointd Dcel::Face::barycenter() const
 {
     int n = 0;
     Pointd p;
     for (const Dcel::Vertex* v : incidentVertexIterator()){
         assert (v != nullptr && "HalfEdge's to vertex is null.");
-        p += v->getCoordinate();
+        p += v->coordinate();
         n++;
     }
     p /= n;
@@ -153,7 +153,7 @@ Pointd Dcel::Face::getBarycentre() const
  * @brief Dcel::Face::getTriangulation
  * @param triangles
  */
-void Dcel::Face::getTriangulation(std::vector<std::array<const Dcel::Vertex*, 3> > &triangles) const
+void Dcel::Face::triangulation(std::vector<std::array<const Dcel::Vertex*, 3> > &triangles) const
 {
     // Taking all the coordinates on vectors
     std::vector<Pointd> borderCoordinates;
@@ -161,37 +161,37 @@ void Dcel::Face::getTriangulation(std::vector<std::array<const Dcel::Vertex*, 3>
     std::map<Pointd, const Dcel::Vertex*> pointsVerticesMap;
     for (const Dcel::HalfEdge* he : incidentHalfEdgeIterator()){
         assert(he != nullptr && "Next component of Previous HalfEdge is null.");
-        assert(he->getFromVertex() != nullptr && "HalfEdge's from vertex is null.");
-        borderCoordinates.push_back(he->getFromVertex()->getCoordinate());
+        assert(he->fromVertex() != nullptr && "HalfEdge's from vertex is null.");
+        borderCoordinates.push_back(he->fromVertex()->coordinate());
         std::pair<const Dcel::Vertex*, const Dcel::Vertex*> pp;
-        pp.first = he->getFromVertex();
-        pp.second = he->getToVertex();
-        pointsVerticesMap[he->getFromVertex()->getCoordinate()] = he->getFromVertex();
+        pp.first = he->fromVertex();
+        pp.second = he->toVertex();
+        pointsVerticesMap[he->fromVertex()->coordinate()] = he->fromVertex();
     }
 
     if (hasHoles()){
-        innerBorderCoordinates.reserve(getNumberInnerHalfEdges());
+        innerBorderCoordinates.reserve(numberInnerHalfEdges());
         int i = 0;
         for (Dcel::Face::ConstInnerHalfEdgeIterator ihe = innerHalfEdgeBegin(), ihend = innerHalfEdgeEnd(); ihe != ihend; ++ihe, ++i){
             const Dcel::HalfEdge* he = *ihe;
             std::vector<Pointd> inner;
             for (Dcel::Face::ConstIncidentHalfEdgeIterator heit = incidentHalfEdgeBegin(he), hend = incidentHalfEdgeEnd(); heit != hend; ++heit) {
                 assert(*(heit) != nullptr && "Next component of Previous HalfEdge is null.");
-                assert((*heit)->getFromVertex() != nullptr && "HalfEdge's from vertex is null.");
-                inner.push_back((*heit)->getFromVertex()->getCoordinate());
+                assert((*heit)->fromVertex() != nullptr && "HalfEdge's from vertex is null.");
+                inner.push_back((*heit)->fromVertex()->coordinate());
                 std::pair<const Dcel::Vertex*, const Dcel::Vertex*> pp;
-                pp.first = (*heit)->getFromVertex();
-                pp.second = (*heit)->getToVertex();
-                pointsVerticesMap[(*heit)->getFromVertex()->getCoordinate()] = (*heit)->getFromVertex();
+                pp.first = (*heit)->fromVertex();
+                pp.second = (*heit)->toVertex();
+                pointsVerticesMap[(*heit)->fromVertex()->coordinate()] = (*heit)->fromVertex();
             }
             innerBorderCoordinates.push_back(inner);
         }
     }
 
     #ifdef NDEBUG
-    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulate(parent->faceNormals[id], borderCoordinates, innerBorderCoordinates);
+    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulate(parent->faceNormals[_id], borderCoordinates, innerBorderCoordinates);
     #else
-    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulate(normal, borderCoordinates, innerBorderCoordinates);
+    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulate(_normal, borderCoordinates, innerBorderCoordinates);
     #endif
 
     triangles.clear();
@@ -223,13 +223,13 @@ std::string Dcel::Face::toString() const
     std::stringstream ss;
 
     #ifdef NDEBUG
-    ss << "ID: " << id << "; Normal: " << parent->faceNormals[id] << "; Outer Component: ";
+    ss << "ID: " << _id << "; Normal: " << parent->faceNormals[_id] << "; Outer Component: ";
     #else
-    ss << "ID: " << id << "; Normal: " << normal << "; Outer Component: ";
+    ss << "ID: " << _id << "; Normal: " << _normal << "; Outer Component: ";
     #endif
-    if (outerHalfEdge != nullptr) ss << outerHalfEdge->getId();
+    if (_outerHalfEdge != nullptr) ss << _outerHalfEdge->id();
     else ss << "nullptr";
-    ss << "; N Inner Components: " << innerHalfEdges.size() << "; Inner Components: "
+    ss << "; N Inner Components: " << _innerHalfEdges.size() << "; Inner Components: "
        << innerComponentsToString() << ".";
     std::string s1 = ss.str();
     return s1;
@@ -253,7 +253,7 @@ Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dc
     for (const Dcel::HalfEdge* he : start->incomingHalfEdgeIterator()) {
     //for (Dcel::Vertex::ConstIncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd(); heit!= hend; ++heit) {
         assert(he != nullptr && "Half Edge is null.");
-        if (he->getFace() == this) return ConstIncidentVertexIterator(he, he, this);
+        if (he->face() == this) return ConstIncidentVertexIterator(he, he, this);
     }
     assert(0 && "Start vertex is not incident to iterated face.");
     return ConstIncidentVertexIterator();
@@ -276,15 +276,15 @@ Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dc
 Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dcel::Vertex* start, const Dcel::Vertex* end) const
 {
     Vertex::ConstIncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd();
-    while (heit!= hend && ((*heit)->getFace() != this)) {
+    while (heit!= hend && ((*heit)->face() != this)) {
         ++heit;
         assert((heit == hend || (*heit) != nullptr) && "Half Edge is null.");
     }
-    assert((*heit)->getFace() == this && "Start vertex is not incident to iterated face.");
+    assert((*heit)->face() == this && "Start vertex is not incident to iterated face.");
     const Dcel::HalfEdge* s = *heit;
     for (heit= end->incomingHalfEdgeBegin(), hend = end->incomingHalfEdgeEnd(); heit!= hend; ++heit){
         assert((*heit) != nullptr && "Half Edge is null.");
-        if ((*heit)->getFace() == this) return ConstIncidentVertexIterator(s, *heit, this);
+        if ((*heit)->face() == this) return ConstIncidentVertexIterator(s, *heit, this);
     }
     assert(0 && "End vertex is not incident to iterated face.");
     return ConstIncidentVertexIterator();
@@ -299,16 +299,16 @@ Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dc
  */
 Vec3 Dcel::Face::updateNormal()
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    Vertex* a = outerHalfEdge->getFromVertex();
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    Vertex* a = _outerHalfEdge->fromVertex();
     assert(a != nullptr && "HalfEdge's From Vertex is null.");
-    Vertex* b = outerHalfEdge->getToVertex();
+    Vertex* b = _outerHalfEdge->toVertex();
     assert(b != nullptr && "HalfEdge's To Vertex is null.");
-    Vertex* c = outerHalfEdge->getNext()->getToVertex();
+    Vertex* c = _outerHalfEdge->next()->toVertex();
     assert(c != nullptr && "HalfEdge's To Vertex is null.");
-    Vec3 normal = (b->getCoordinate() - a->getCoordinate()).cross(c->getCoordinate() - a->getCoordinate());
+    Vec3 normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
     normal.normalize();
-    if (outerHalfEdge->getNext()->getNext()->getToVertex() != a){
+    if (_outerHalfEdge->next()->next()->toVertex() != a){
         Vec3 zAxis(0,0,1);
         Vec3 v = -(normal.cross(zAxis));
         v.normalize();
@@ -329,7 +329,7 @@ Vec3 Dcel::Face::updateNormal()
         std::vector<Pointd> points;
         for (const Dcel::Vertex* v : incidentVertexIterator()){
             assert(v != nullptr && "Vertex is null.");
-            Pointd p = v->getCoordinate();
+            Pointd p = v->coordinate();
             Pointd pr(p.x() * r[0][0] + p.y() * r[1][0] +p.z() * r[2][0], p.x() * r[0][1] + p.y() * r[1][1] +p.z() * r[2][1], p.x() * r[0][2] + p.y() * r[1][2] +p.z() * r[2][2]);
             points.push_back(pr);
         }
@@ -343,9 +343,9 @@ Vec3 Dcel::Face::updateNormal()
             normal = -normal;
     }
     #ifdef NDEBUG
-    parent->faceNormals[id] = normal;
+    parent->faceNormals[_id] = normal;
     #else
-    this->normal = normal;
+    this->_normal = normal;
     #endif
     return normal;
 }
@@ -361,35 +361,35 @@ double Dcel::Face::updateArea()
 {
     updateNormal();
     if (isTriangle()) {
-        assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-        assert(outerHalfEdge->getFromVertex() != nullptr && "HalfEdge's From Vertex is null.");
-        assert(outerHalfEdge->getToVertex() != nullptr && "HalfEdge's To Vertex is null.");
-        assert(outerHalfEdge->getPrev() != nullptr && "HalfEdge's prev is null.");
-        assert(outerHalfEdge->getPrev()->getFromVertex() != nullptr && "HalfEdge's From Vertex is null.");
-        Pointd v1 = outerHalfEdge->getFromVertex()->getCoordinate();
-        Pointd v2 = outerHalfEdge->getToVertex()->getCoordinate();
-        Pointd v3 = outerHalfEdge->getPrev()->getFromVertex()->getCoordinate();
-        area = (((v3 - v1).cross(v2 - v1)).length() / 2);
+        assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+        assert(_outerHalfEdge->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
+        assert(_outerHalfEdge->toVertex() != nullptr && "HalfEdge's To Vertex is null.");
+        assert(_outerHalfEdge->prev() != nullptr && "HalfEdge's prev is null.");
+        assert(_outerHalfEdge->prev()->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
+        Pointd v1 = _outerHalfEdge->fromVertex()->coordinate();
+        Pointd v2 = _outerHalfEdge->toVertex()->coordinate();
+        Pointd v3 = _outerHalfEdge->prev()->fromVertex()->coordinate();
+        _area = (((v3 - v1).cross(v2 - v1)).length() / 2);
     }
     #ifdef CG3_CGAL_DEFINED
     else {
-        area = 0;
+        _area = 0;
         std::vector<std::array<const Dcel::Vertex*, 3> > t;
 
-        getTriangulation(t);
+        triangulation(t);
         for (unsigned int i = 0; i <t.size(); ++i){
             std::array<const Dcel::Vertex*, 3> tr =  t[i];
             assert(tr[0] != nullptr && "Vertex is null.");
             assert(tr[1] != nullptr && "Vertex is null.");
             assert(tr[2] != nullptr && "Vertex is null.");
-            Pointd v1 = tr[0]->getCoordinate();
-            Pointd v2 = tr[1]->getCoordinate();
-            Pointd v3 = tr[2]->getCoordinate();
-            area += (((v3 - v1).cross(v2 - v1)).length() / 2);
+            Pointd v1 = tr[0]->coordinate();
+            Pointd v2 = tr[1]->coordinate();
+            Pointd v3 = tr[2]->coordinate();
+            _area += (((v3 - v1).cross(v2 - v1)).length() / 2);
         }
     }
     #endif
-    return area;
+    return _area;
 }
 
 /**
@@ -399,7 +399,7 @@ double Dcel::Face::updateArea()
  */
 void Dcel::Face::removeInnerHalfEdge(const Face::InnerHalfEdgeIterator& iterator)
 {
-    innerHalfEdges.erase(iterator);
+    _innerHalfEdges.erase(iterator);
 }
 
 /**
@@ -413,16 +413,16 @@ void Dcel::Face::removeInnerHalfEdge(const Face::InnerHalfEdgeIterator& iterator
  */
 bool Dcel::Face::removeInnerHalfEdge(const Dcel::HalfEdge* halfEdge)
 {
-    InnerHalfEdgeIterator i = std::find(innerHalfEdges.begin(), innerHalfEdges.end(), halfEdge);
-    if (i != innerHalfEdges.end()){
-        innerHalfEdges.erase(i);
+    InnerHalfEdgeIterator i = std::find(_innerHalfEdges.begin(), _innerHalfEdges.end(), halfEdge);
+    if (i != _innerHalfEdges.end()){
+        _innerHalfEdges.erase(i);
         return true;
     }
     return false;
 }
 
 void Dcel::Face::removeAllInnerHalfEdges() {
-    innerHalfEdges.clear();
+    _innerHalfEdges.clear();
 }
 
 /**
@@ -443,7 +443,7 @@ Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex*
     for (Dcel::HalfEdge* he : start->incomingHalfEdgeIterator()) {
     //for (Dcel::Vertex::ConstIncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd(); heit!= hend; ++heit) {
         assert(he != nullptr && "Half Edge is null.");
-        if (he->getFace() == this) return IncidentVertexIterator(he, he, this);
+        if (he->face() == this) return IncidentVertexIterator(he, he, this);
     }
     assert(0 && "Start vertex is not incident to iterated face.");
     return IncidentVertexIterator();
@@ -466,15 +466,15 @@ Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex*
 Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex* start, Dcel::Vertex* end)
 {
     Vertex::IncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd();
-    while (heit!= hend && ((*heit)->getFace() != this)) {
+    while (heit!= hend && ((*heit)->face() != this)) {
         ++heit;
         assert((heit == hend || (*heit) != nullptr) && "Half Edge is null.");
     }
-    assert((*heit)->getFace() == this && "Start vertex is not incident to iterated face.");
+    assert((*heit)->face() == this && "Start vertex is not incident to iterated face.");
     Dcel::HalfEdge* s = *heit;
     for (heit= end->incomingHalfEdgeBegin(), hend = end->incomingHalfEdgeEnd(); heit!= hend; ++heit){
         assert((*heit) != nullptr && "Half Edge is null.");
-        if ((*heit)->getFace() == this) return IncidentVertexIterator(s, *heit, this);
+        if ((*heit)->face() == this) return IncidentVertexIterator(s, *heit, this);
     }
     assert(0 && "End vertex is not incident to iterated face.");
     return IncidentVertexIterator();
@@ -494,10 +494,10 @@ std::string Dcel::Face::innerComponentsToString() const
 {
     std::stringstream ss;
     ss << "(";
-    for (unsigned int i=0; i<innerHalfEdges.size(); i++){
-        if (innerHalfEdges[i] != nullptr) {
+    for (unsigned int i=0; i<_innerHalfEdges.size(); i++){
+        if (_innerHalfEdges[i] != nullptr) {
             if (i != 0) ss << "; ";
-            ss << innerHalfEdges[i]->getId();
+            ss << _innerHalfEdges[i]->id();
         }
         else ss << "nullptr";
     }

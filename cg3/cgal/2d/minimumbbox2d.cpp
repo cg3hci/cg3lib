@@ -36,7 +36,7 @@ std::vector<Point2Dd> minRectangle2D(const Dcel* dcel)
     std::vector<Point2Dd> points;
 
     for (const Dcel::Vertex* v : dcel->vertexIterator())
-        points.push_back(Point2Dd(v->getCoordinate().x(),v->getCoordinate().y()));
+        points.push_back(Point2Dd(v->coordinate().x(),v->coordinate().y()));
 
     return minRectangle2D(points);
 }

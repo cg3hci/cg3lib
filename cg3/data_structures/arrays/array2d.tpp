@@ -54,7 +54,7 @@ inline Array2D<T>::Array2D(cg3::NestedInitializerLists<T, 2> values)
  * @return number of rows
  */
 template <class T>
-inline unsigned long int Array2D<T>::getSizeX() const
+inline unsigned long int Array2D<T>::sizeX() const
 {
     return Array<T, 2>::sizes[0];
 }
@@ -66,7 +66,7 @@ inline unsigned long int Array2D<T>::getSizeX() const
  * @return number of columns
  */
 template <class T>
-inline unsigned long int Array2D<T>::getSizeY() const
+inline unsigned long int Array2D<T>::sizeY() const
 {
     return Array<T, 2>::sizes[1];
 }
@@ -99,8 +99,8 @@ inline unsigned long Array2D<T>::cols() const
 template <class T>
 std::ostream& operator<< (std::ostream& inputStream, const Array2D<T>& a)
 {
-    for (unsigned int i = 0; i < a.getSizeX(); i++){
-        for (unsigned int j = 0; j < a.getSizeY(); j++){
+    for (unsigned int i = 0; i < a.sizeX(); i++){
+        for (unsigned int j = 0; j < a.sizeY(); j++){
             inputStream << std::setw(4) <<a(i,j) << " ";
         }
         inputStream << "\n";

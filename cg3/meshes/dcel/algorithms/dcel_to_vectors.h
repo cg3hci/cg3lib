@@ -18,16 +18,27 @@ static std::vector<const Dcel::Face*> dummymf;
 
 } //namespace cg3::dcelAlgorithms::internal
 
-void getVectorFaces(std::vector<const Dcel::Face*> &vector, const Dcel& d);
-void getVectorFaces(std::vector<Dcel::Face*> &vector, Dcel& d);
+void vectorFaces(std::vector<const Dcel::Face*> &vector, const Dcel& d);
+void vectorFaces(std::vector<Dcel::Face*> &vector, Dcel& d);
 
 
-void getVectorMesh(
+void vectorMesh(
         std::vector< Pointd > &coords,
         std::vector< std::vector<int>> &faces,
         const Dcel &d,
         std::vector<const Dcel::Vertex*> &mappingVertices = internal::dummymv,
         std::vector<const Dcel::Face*> &mappingFaces = internal::dummymf);
+
+#ifdef CG3_OLD_NAMES_COMPATIBILITY
+inline void getVectorFaces(std::vector<const Dcel::Face*> &vector, const Dcel& d) {return vectorFaces(vector, d);}
+inline void getVectorFaces(std::vector<Dcel::Face*> &vector, Dcel& d) {return vectorFaces(vector, d);}
+inline void getVectorMesh(
+        std::vector< Pointd > &coords,
+        std::vector< std::vector<int>> &faces,
+        const Dcel &d,
+        std::vector<const Dcel::Vertex*> &mappingVertices = internal::dummymv,
+        std::vector<const Dcel::Face*> &mappingFaces = internal::dummymf) {return vectorMesh(coords, faces, d, mappingVertices, mappingFaces);}
+#endif
 
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3

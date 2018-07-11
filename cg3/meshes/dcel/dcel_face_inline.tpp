@@ -19,28 +19,28 @@ namespace cg3 {
  * @brief Restituisce l'id identificativo nella Dcel della faccia
  * @return L'id della faccia
  */
-inline unsigned int Dcel::Face::getId() const
+inline unsigned int Dcel::Face::id() const
 {
-    return id;
+    return _id;
 }
 
-inline const Dcel::Vertex*Dcel::Face::getVertex1() const
+inline const Dcel::Vertex*Dcel::Face::vertex1() const
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    return outerHalfEdge->getFromVertex();
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    return _outerHalfEdge->fromVertex();
 }
 
-inline const Dcel::Vertex*Dcel::Face::getVertex2() const
+inline const Dcel::Vertex*Dcel::Face::vertex2() const
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    return outerHalfEdge->getToVertex();
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    return _outerHalfEdge->toVertex();
 }
 
-inline const Dcel::Vertex*Dcel::Face::getVertex3() const
+inline const Dcel::Vertex*Dcel::Face::vertex3() const
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    assert(outerHalfEdge->getNext() != nullptr && "Outer HalfEdge's next is null.");
-    return outerHalfEdge->getNext()->getToVertex();
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    assert(_outerHalfEdge->next() != nullptr && "Outer HalfEdge's next is null.");
+    return _outerHalfEdge->next()->toVertex();
 }
 
 /**
@@ -48,9 +48,9 @@ inline const Dcel::Vertex*Dcel::Face::getVertex3() const
  * @brief Restituisce il flag associato alla faccia
  * @return Il flag della faccia
  */
-inline int Dcel::Face::getFlag() const
+inline int Dcel::Face::flag() const
 {
-    return flag;
+    return _flag;
 }
 
 /**
@@ -59,12 +59,12 @@ inline int Dcel::Face::getFlag() const
  * @note Non ricalcola la normale, restituisce solo l'ultima normale calcolata o settata
  * @return La normale della faccia
  */
-inline Vec3 Dcel::Face::getNormal() const
+inline Vec3 Dcel::Face::normal() const
 {
     #ifdef NDEBUG
-    return parent->faceNormals[id];
+    return parent->faceNormals[_id];
     #else
-    return normal;
+    return _normal;
     #endif
 }
 
@@ -74,9 +74,9 @@ inline Vec3 Dcel::Face::getNormal() const
  * @note Non ricalcola l'area, restituisce solo l'ultima area calcolata o settata
  * @return L'area della faccia
  */
-inline double Dcel::Face::getArea() const
+inline double Dcel::Face::area() const
 {
-    return area;
+    return _area;
 }
 
 /**
@@ -84,12 +84,12 @@ inline double Dcel::Face::getArea() const
  * @brief Restituisce il colore associato alla faccia
  * @return Il colore della faccia
  */
-inline Color Dcel::Face::getColor() const
+inline Color Dcel::Face::color() const
 {
     #ifdef NDEBUG
-    return parent->faceColors[id];
+    return parent->faceColors[_id];
     #else
-    return color;
+    return _color;
     #endif
 }
 
@@ -98,9 +98,9 @@ inline Color Dcel::Face::getColor() const
  * @brief Restituisce il puntatore all'half edge costante di bordo esterno della faccia
  * @return L'HalfEdge di bordo della faccia
  */
-inline const Dcel::HalfEdge* Dcel::Face::getOuterHalfEdge() const
+inline const Dcel::HalfEdge* Dcel::Face::outerHalfEdge() const
 {
-    return outerHalfEdge;
+    return _outerHalfEdge;
 }
 
 /**
@@ -108,9 +108,9 @@ inline const Dcel::HalfEdge* Dcel::Face::getOuterHalfEdge() const
  * @brief Restituisce il numero di inner half edges contenuti nella faccia, ossia il numero di buchi
  * @return Il numero di HalfEdge interni della faccia
  */
-inline unsigned int Dcel::Face::getNumberInnerHalfEdges() const
+inline unsigned int Dcel::Face::numberInnerHalfEdges() const
 {
-    return (unsigned int)innerHalfEdges.size();
+    return (unsigned int)_innerHalfEdges.size();
 }
 
 /**
@@ -120,7 +120,7 @@ inline unsigned int Dcel::Face::getNumberInnerHalfEdges() const
  */
 inline bool Dcel::Face::hasHoles() const
 {
-    return (innerHalfEdges.size() != 0);
+    return (_innerHalfEdges.size() != 0);
 }
 
 /**
@@ -129,26 +129,26 @@ inline bool Dcel::Face::hasHoles() const
  */
 inline bool Dcel::Face::checkOuterHalfEdge() const
 {
-    return outerHalfEdge != nullptr;
+    return _outerHalfEdge != nullptr;
 }
 
-inline Dcel::Vertex*Dcel::Face::getVertex1()
+inline Dcel::Vertex*Dcel::Face::vertex1()
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    return outerHalfEdge->getFromVertex();
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    return _outerHalfEdge->fromVertex();
 }
 
-inline Dcel::Vertex*Dcel::Face::getVertex2()
+inline Dcel::Vertex*Dcel::Face::vertex2()
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    return outerHalfEdge->getToVertex();
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    return _outerHalfEdge->toVertex();
 }
 
-inline Dcel::Vertex*Dcel::Face::getVertex3()
+inline Dcel::Vertex*Dcel::Face::vertex3()
 {
-    assert(outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-    assert(outerHalfEdge->getNext() != nullptr && "Outer HalfEdge's next is null.");
-    return outerHalfEdge->getNext()->getToVertex();
+    assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+    assert(_outerHalfEdge->next() != nullptr && "Outer HalfEdge's next is null.");
+    return _outerHalfEdge->next()->toVertex();
 }
 
 /**
@@ -157,7 +157,7 @@ inline Dcel::Vertex*Dcel::Face::getVertex3()
  */
 inline void Dcel::Face::setFlag()
 {
-    flag = 1;
+    _flag = 1;
 }
 
 /**
@@ -167,7 +167,7 @@ inline void Dcel::Face::setFlag()
  */
 inline void Dcel::Face::setFlag(int newFlag)
 {
-    flag = newFlag;
+    _flag = newFlag;
 }
 
 /**
@@ -176,7 +176,7 @@ inline void Dcel::Face::setFlag(int newFlag)
  */
 inline void Dcel::Face::resetFlag()
 {
-    flag = 0;
+    _flag = 0;
 }
 
 /**
@@ -187,9 +187,9 @@ inline void Dcel::Face::resetFlag()
 inline void Dcel::Face::setNormal(const Vec3& newNormal)
 {
     #ifdef NDEBUG
-    parent->faceNormals[id] = newNormal;
+    parent->faceNormals[_id] = newNormal;
     #else
-    normal = newNormal;
+    _normal = newNormal;
     #endif
 }
 
@@ -200,7 +200,7 @@ inline void Dcel::Face::setNormal(const Vec3& newNormal)
  */
 inline void Dcel::Face::setArea(double newArea)
 {
-    area = newArea;
+    _area = newArea;
 }
 
 /**
@@ -211,9 +211,9 @@ inline void Dcel::Face::setArea(double newArea)
 inline void Dcel::Face::setColor(const Color& newColor)
 {
     #ifdef NDEBUG
-    parent->faceColors[id] = newColor;
+    parent->faceColors[_id] = newColor;
     #else
-    color = newColor;
+    _color = newColor;
     #endif
 }
 
@@ -222,9 +222,9 @@ inline void Dcel::Face::setColor(const Color& newColor)
  * @brief Restituisce il puntatore all'half edge di bordo esterno della faccia
  * @return L'HalfEdge di bordo della faccia
  */
-inline Dcel::HalfEdge* Dcel::Face::getOuterHalfEdge()
+inline Dcel::HalfEdge* Dcel::Face::outerHalfEdge()
 {
-    return outerHalfEdge;
+    return _outerHalfEdge;
 }
 
 /**
@@ -234,7 +234,7 @@ inline Dcel::HalfEdge* Dcel::Face::getOuterHalfEdge()
  */
 inline void Dcel::Face::setOuterHalfEdge(Dcel::HalfEdge* newOuterHalfEdge)
 {
-    outerHalfEdge = newOuterHalfEdge;
+    _outerHalfEdge = newOuterHalfEdge;
 }
 
 /**
@@ -244,7 +244,7 @@ inline void Dcel::Face::setOuterHalfEdge(Dcel::HalfEdge* newOuterHalfEdge)
  */
 inline void Dcel::Face::addInnerHalfEdge(Dcel::HalfEdge* newInnerHalfEdge)
 {
-    innerHalfEdges.push_back(newInnerHalfEdge);
+    _innerHalfEdges.push_back(newInnerHalfEdge);
 }
 
 /**************************
@@ -261,7 +261,7 @@ inline void Dcel::Face::addInnerHalfEdge(Dcel::HalfEdge* newInnerHalfEdge)
  */
 inline void Dcel::Face::setId(unsigned int id)
 {
-    this->id = id;
+    this->_id = id;
 }
 
 } //namespace cg3

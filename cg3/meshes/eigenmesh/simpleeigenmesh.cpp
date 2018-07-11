@@ -29,15 +29,15 @@ SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel)
     unsigned int i = 0;
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
-        vids[v->getId()] = i;
-        Pointd p = v->getCoordinate();
+        vids[v->id()] = i;
+        Pointd p = v->coordinate();
         V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
         i++;
     }
     i = 0;
     for (Dcel::ConstFaceIterator fit = dcel.faceBegin(); fit != dcel.faceEnd(); ++fit){
         const Dcel::Face* f = *fit;
-        F(i, 0) = vids[f->getVertex1()->getId()]; F(i, 1) = vids[f->getVertex2()->getId()]; F(i, 2) = vids[f->getVertex3()->getId()];
+        F(i, 0) = vids[f->vertex1()->id()]; F(i, 1) = vids[f->vertex2()->id()]; F(i, 2) = vids[f->vertex3()->id()];
         i++;
     }
 }

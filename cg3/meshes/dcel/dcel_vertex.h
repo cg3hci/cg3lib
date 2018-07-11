@@ -77,17 +77,15 @@ public:
     * Public Inline Methods *
     *************************/
 
-    unsigned int getId()                                const;
-    int getFlag()                                       const;
-    Vec3 getNormal()                                    const;
-    const Pointd& getCoordinate()                       const;
-    Color getColor()                                    const;
-    int getCardinality()                                const;
-    const Dcel::HalfEdge* getIncidentHalfEdge()         const;
-    double dist(const Dcel::Vertex* otherVertex)        const;
-    bool operator == (const Dcel::Vertex& otherVertex)  const;
-    bool operator != (const Dcel::Vertex& othervertex)  const;
-    bool checkIncidentHalfEdge()                        const;
+    unsigned int id()                                const;
+    int flag()                                       const;
+    Vec3 normal()                                    const;
+    const Pointd& coordinate()                       const;
+    Color color()                                    const;
+    int cardinality()                                const;
+    const Dcel::HalfEdge* incidentHalfEdge()         const;
+    double dist(const Dcel::Vertex* otherVertex)     const;
+    bool checkIncidentHalfEdge()                     const;
 
     void setFlag();
     void setFlag(int newFlag);
@@ -98,16 +96,16 @@ public:
     void setColor(const Color &c);
     int decrementCardinality();
     int incrementCardinality();
-    Dcel::HalfEdge* getIncidentHalfEdge();
+    Dcel::HalfEdge* incidentHalfEdge();
     void setIncidentHalfEdge(Dcel::HalfEdge* newIncidentHalfEdge);
 
     /*****************
     * Public Methods *
     ******************/
 
-    int getNumberIncidentHalfEdges()                                                                            const;
-    int getNumberIncidentFaces()                                                                                const;
-    int getNumberAdjacentVertices()                                                                             const;
+    int numberIncidentHalfEdges()                                                                            const;
+    int numberIncidentFaces()                                                                                const;
+    int numberAdjacentVertices()                                                                             const;
     const Dcel::HalfEdge* findSharedHalfEdge(const Dcel::Vertex* vertex)                                        const;
     std::string toString()                                                                                      const;
     ConstAdjacentVertexIterator adjacentVertexBegin()                                                           const;
@@ -170,6 +168,20 @@ public:
     const ConstIncidentFaceRangeBasedIterator incidentFaceIterator() const;
     IncidentFaceRangeBasedIterator incidentFaceIterator();
 
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline unsigned int getId() const {return id();}
+    inline int getFlag() const {return flag();}
+    inline Vec3 getNormal() const {return normal();}
+    inline const Pointd& getCoordinate() const {return coordinate();}
+    inline Color getColor() const {return color();}
+    inline int getCardinality() const {return cardinality();}
+    inline const Dcel::HalfEdge* getIncidentHalfEdge() const {return incidentHalfEdge();}
+    inline Dcel::HalfEdge* getIncidentHalfEdge() {return incidentHalfEdge();}
+    inline int getNumberIncidentHalfEdges() const {return numberIncidentHalfEdges();}
+    inline int getNumberIncidentFaces() const {return numberIncidentFaces();}
+    inline int getNumberAdjacentVertices() const {return numberAdjacentVertices();}
+    #endif
+
 protected:
 
     class GenericIterator;
@@ -196,20 +208,20 @@ protected:
     #ifdef NDEBUG
     Dcel* parent;
     #else
-    Pointd          coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
-    Vec3            normal;             /**< \~Italian @brief Vettore normale al vertice */
-    Color           color;              /**< \~Italian @brief Colore associato al vertice */
+    Pointd          _coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
+    Vec3            _normal;             /**< \~Italian @brief Vettore normale al vertice */
+    Color           _color;              /**< \~Italian @brief Colore associato al vertice */
     #endif
-    Dcel::HalfEdge* incidentHalfEdge;   /**< \~Italian @brief Uno degli half edge uscenti incidenti sul vertice */
-    unsigned int    cardinality;        /**< \~Italian @brief Numero di edge (metà degli half edge) incidenti sul vertice */
-    unsigned int    id;                 /**< \~Italian @brief Id univoco, all'interno della Dcel, associato al vertice */
-    int             flag;               /**< \~Italian @brief Flag personalizzabile, associato al vertice */
+    Dcel::HalfEdge* _incidentHalfEdge;   /**< \~Italian @brief Uno degli half edge uscenti incidenti sul vertice */
+    unsigned int    _cardinality;        /**< \~Italian @brief Numero di edge (metà degli half edge) incidenti sul vertice */
+    unsigned int    _id;                 /**< \~Italian @brief Id univoco, all'interno della Dcel, associato al vertice */
+    int             _flag;               /**< \~Italian @brief Flag personalizzabile, associato al vertice */
 
     /***************************
     * Protected Inline Methods *
     ****************************/
 
-    void setId(unsigned int id);
+    void setId(unsigned int _id);
 };
 
 } //namespace cg3

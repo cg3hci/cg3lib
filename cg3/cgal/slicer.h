@@ -18,22 +18,22 @@ class Plane;
 
 namespace cgal {
 
-std::vector<std::vector<Pointd> > getPolylines(
+std::vector<std::vector<Pointd> > polylines(
         const std::string& inputOffFile,
         const Vec3& norm,
         double d);
 
-std::vector<std::vector<Pointd> > getPolylines(
+std::vector<std::vector<Pointd> > polylines(
         const SurfaceMesh& mesh,
         const Vec3& norm,
         double d);
 
 #ifdef CG3_DCEL_DEFINED
-std::vector<std::vector<Pointd> > getPolylines(
+std::vector<std::vector<Pointd> > polylines(
         const Dcel& mesh,
         const cg3::Plane& p);
 
-std::vector<std::vector<Pointd> > getPolylines(
+std::vector<std::vector<Pointd> > polylines(
         const Dcel& mesh,
         const Vec3& norm,
         double d);

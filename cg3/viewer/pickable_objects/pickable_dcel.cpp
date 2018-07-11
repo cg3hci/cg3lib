@@ -43,7 +43,7 @@ void PickableDcel::drawWithNames() const
 
     //Per ogni faccia si effettua il push dell'id associato e quindi la si disegna
     for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit) {
-        glPushName((*fit)->getId());
+        glPushName((*fit)->id());
         drawFace((*fit));
         glPopName();
     }
@@ -64,8 +64,8 @@ void PickableDcel::draw() const
         glLineWidth(selectionWidth);
         glColor3ub(selectionColor.red(),selectionColor.green(),selectionColor.blue());
         glBegin(GL_LINES);
-        Pointd p1 = he->getFromVertex()->getCoordinate();
-        Pointd p2 = he->getToVertex()->getCoordinate();
+        Pointd p1 = he->fromVertex()->coordinate();
+        Pointd p2 = he->toVertex()->coordinate();
         glVertex3d(p1.x(), p1.y(), p1.z());
         glVertex3d(p2.x(), p2.y(), p2.z());
         glEnd();
@@ -89,8 +89,8 @@ void PickableDcel::setSelectionWidth(int value)
  */
 void PickableDcel::drawFace(const Face* f) const
 {
-    unsigned int firstIndex = facesTrianglesMap.at(f->getId());
-    std::map<unsigned int, unsigned int>::const_iterator it = facesTrianglesMap.find(f->getId());
+    unsigned int firstIndex = facesTrianglesMap.at(f->id());
+    std::map<unsigned int, unsigned int>::const_iterator it = facesTrianglesMap.find(f->id());
     ++it;
     unsigned int lastIndex;
     if (it == facesTrianglesMap.end())

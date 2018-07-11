@@ -73,24 +73,24 @@ Dcel::Dcel(const Dcel& dcel)
     #endif
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit) {
         const Dcel::Vertex* ov = *vit;
-        Dcel::Vertex* v = this->addVertex(ov->getId());
-        v->setId(ov->getId());
-        v->setCoordinate(ov->getCoordinate());
-        v->setFlag(ov->getFlag());
-        v->setCardinality(ov->getCardinality());
-        v->setNormal(ov->getNormal());
-        v->setColor(ov->getColor());
+        Dcel::Vertex* v = this->addVertex(ov->id());
+        v->setId(ov->id());
+        v->setCoordinate(ov->coordinate());
+        v->setFlag(ov->flag());
+        v->setCardinality(ov->cardinality());
+        v->setNormal(ov->normal());
+        v->setColor(ov->color());
         mapVertices[ov] = v;
     }
 
     this->halfEdges.resize(dcel.halfEdges.size(), nullptr);
     for (Dcel::ConstHalfEdgeIterator heit = dcel.halfEdgeBegin(); heit != dcel.halfEdgeEnd(); ++heit) {
         const Dcel::HalfEdge* ohe = *heit;
-        Dcel::HalfEdge* he = this->addHalfEdge(ohe->getId());
-        he->setId(ohe->getId());
-        he->setFlag(ohe->getFlag());
-        he->setFromVertex(mapVertices[ohe->getFromVertex()]);
-        he->setToVertex(mapVertices[ohe->getToVertex()]);
+        Dcel::HalfEdge* he = this->addHalfEdge(ohe->id());
+        he->setId(ohe->id());
+        he->setFlag(ohe->flag());
+        he->setFromVertex(mapVertices[ohe->fromVertex()]);
+        he->setToVertex(mapVertices[ohe->toVertex()]);
         mapHalfEdges[ohe] = he;
     }
 
@@ -101,13 +101,13 @@ Dcel::Dcel(const Dcel& dcel)
     #endif
     for (Dcel::ConstFaceIterator fit = dcel.faceBegin(); fit != dcel.faceEnd(); ++fit){
         const Dcel::Face* of = *fit;
-        Dcel::Face* f = this->addFace(of->getId());
-        f->setId(of->getId());
-        f->setColor(of->getColor());
-        f->setFlag(of->getFlag());
-        f->setNormal(of->getNormal());
-        f->setArea(of->getArea());
-        f->setOuterHalfEdge(mapHalfEdges[of->getOuterHalfEdge()]);
+        Dcel::Face* f = this->addFace(of->id());
+        f->setId(of->id());
+        f->setColor(of->color());
+        f->setFlag(of->flag());
+        f->setNormal(of->normal());
+        f->setArea(of->area());
+        f->setOuterHalfEdge(mapHalfEdges[of->outerHalfEdge()]);
         for (Dcel::Face::ConstInnerHalfEdgeIterator heit = of->innerHalfEdgeBegin(); heit != of->innerHalfEdgeEnd(); ++heit){
             f->addInnerHalfEdge(mapHalfEdges[*heit]);
         }
@@ -117,15 +117,15 @@ Dcel::Dcel(const Dcel& dcel)
     for (Dcel::ConstHalfEdgeIterator heit = dcel.halfEdgeBegin(); heit != dcel.halfEdgeEnd(); ++heit) {
         const Dcel::HalfEdge* ohe = *heit;
         Dcel::HalfEdge* he = mapHalfEdges[ohe];
-        he->setNext(mapHalfEdges[ohe->getNext()]);
-        he->setPrev(mapHalfEdges[ohe->getPrev()]);
-        he->setTwin(mapHalfEdges[ohe->getTwin()]);
-        he->setFace(mapFaces[ohe->getFace()]);
+        he->setNext(mapHalfEdges[ohe->next()]);
+        he->setPrev(mapHalfEdges[ohe->prev()]);
+        he->setTwin(mapHalfEdges[ohe->twin()]);
+        he->setFace(mapFaces[ohe->face()]);
     }
 
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit) {
         Dcel::Vertex * v = mapVertices[*vit];
-        v->setIncidentHalfEdge(mapHalfEdges[(*vit)->getIncidentHalfEdge()]);
+        v->setIncidentHalfEdge(mapHalfEdges[(*vit)->incidentHalfEdge()]);
     }
 }
 
@@ -233,7 +233,7 @@ double Dcel::surfaceArea() const
 {
     double area = 0;
     for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit){
-        area += (*fit)->getArea();
+        area += (*fit)->area();
     }
     return area;
 }
@@ -242,7 +242,7 @@ Pointd Dcel::barycenter() const
 {
     Pointd bc;
     for (const Dcel::Vertex* v : vertexIterator()){
-        bc += v->getCoordinate();
+        bc += v->coordinate();
     }
     bc /= numberVertices();
     return bc;
@@ -252,7 +252,7 @@ double Dcel::averageHalfEdgesLength() const
 {
     double average = 0;
     for (const HalfEdge* he : halfEdgeIterator()){
-        average += he->getLength();
+        average += he->length();
     }
     average /= nHalfEdges;
     return average;
@@ -480,23 +480,23 @@ Dcel::Face* Dcel::addFace(const Vec3& n, const Color& c)
  */
 bool Dcel::deleteVertex(Dcel::Vertex* v)
 {
-    if (v->incidentHalfEdge != nullptr){
-        Dcel::HalfEdge* he = v->incidentHalfEdge;
+    if (v->_incidentHalfEdge != nullptr){
+        Dcel::HalfEdge* he = v->_incidentHalfEdge;
         do {
             if (he != nullptr){
-                if (he->fromVertex == v) he->fromVertex = nullptr;
-                if (he->twin != nullptr) {
-                    he = he->twin;
-                    if (he->toVertex == v) he->toVertex = nullptr;
-                    he = he->next;
+                if (he->_fromVertex == v) he->_fromVertex = nullptr;
+                if (he->_twin != nullptr) {
+                    he = he->_twin;
+                    if (he->_toVertex == v) he->_toVertex = nullptr;
+                    he = he->_next;
                 }
-                else he = v->incidentHalfEdge;
+                else he = v->_incidentHalfEdge;
             }
-            else he = v->incidentHalfEdge;
-        } while (he != v->incidentHalfEdge);
+            else he = v->_incidentHalfEdge;
+        } while (he != v->_incidentHalfEdge);
     }
-    vertices[v->id]=nullptr;
-    unusedVids.insert(v->id);
+    vertices[v->_id]=nullptr;
+    unusedVids.insert(v->_id);
     nVertices--;
 
     delete v;
@@ -552,25 +552,25 @@ bool Dcel::faceBelongsToThis(const Dcel::Face* f) const
  */
 bool Dcel::deleteHalfEdge(HalfEdge* he)
 {
-    if (he->twin != nullptr)
-        if (he->twin->twin == he) he->twin->twin = nullptr;
-    if (he->next != nullptr)
-        if (he->next->prev == he) he->next->prev = nullptr;
-    if (he->prev != nullptr)
-        if(he->prev->next == he) he->prev->next = nullptr;
-    if (he->face != nullptr){
-        if (he->face->outerHalfEdge == he) he->face->outerHalfEdge = nullptr;
-        else if (he->face->hasHoles()) {
-            for (unsigned int i = 0; i < he->face->innerHalfEdges.size(); i++){
-                if (he->face->innerHalfEdges[i] == he)
-                    he->face->innerHalfEdges.erase(he->face->innerHalfEdges.begin() + i--);
+    if (he->_twin != nullptr)
+        if (he->_twin->_twin == he) he->_twin->_twin = nullptr;
+    if (he->_next != nullptr)
+        if (he->_next->_prev == he) he->_next->_prev = nullptr;
+    if (he->_prev != nullptr)
+        if(he->_prev->_next == he) he->_prev->_next = nullptr;
+    if (he->_face != nullptr){
+        if (he->_face->_outerHalfEdge == he) he->_face->_outerHalfEdge = nullptr;
+        else if (he->_face->hasHoles()) {
+            for (unsigned int i = 0; i < he->_face->_innerHalfEdges.size(); i++){
+                if (he->_face->_innerHalfEdges[i] == he)
+                    he->_face->_innerHalfEdges.erase(he->_face->_innerHalfEdges.begin() + i--);
             }
         }
     }
-    if (he->fromVertex != nullptr)
-        if (he->fromVertex->incidentHalfEdge == he) he->fromVertex->incidentHalfEdge = nullptr;
-    halfEdges[he->id] = nullptr;
-    unusedHeids.insert(he->id);
+    if (he->_fromVertex != nullptr)
+        if (he->_fromVertex->_incidentHalfEdge == he) he->_fromVertex->_incidentHalfEdge = nullptr;
+    halfEdges[he->_id] = nullptr;
+    unusedHeids.insert(he->_id);
     nHalfEdges--;
 
     delete he;
@@ -595,22 +595,22 @@ bool Dcel::deleteHalfEdge(HalfEdge* he)
  */
 bool Dcel::deleteFace(Face* f)
 {
-    if (f->outerHalfEdge != nullptr){
-        Dcel::HalfEdge* he = f->outerHalfEdge;
+    if (f->_outerHalfEdge != nullptr){
+        Dcel::HalfEdge* he = f->_outerHalfEdge;
         do {
-            if (he->face == f) he->face = nullptr;
-            he = he->next;
-        } while (he != f->outerHalfEdge);
+            if (he->_face == f) he->_face = nullptr;
+            he = he->_next;
+        } while (he != f->_outerHalfEdge);
     }
-    for (unsigned int i = 0; i < f->innerHalfEdges.size(); i++){
-        Dcel::HalfEdge* he = f->innerHalfEdges[i];
+    for (unsigned int i = 0; i < f->_innerHalfEdges.size(); i++){
+        Dcel::HalfEdge* he = f->_innerHalfEdges[i];
         do {
-            if (he->face == f) he->face = nullptr;
-            he = he->next;
-        } while (he != f->innerHalfEdges[i]);
+            if (he->_face == f) he->_face = nullptr;
+            he = he->_next;
+        } while (he != f->_innerHalfEdges[i]);
     }
-    faces[f->getId()]=nullptr;
-    unusedFids.insert(f->getId());
+    faces[f->id()]=nullptr;
+    unusedFids.insert(f->id());
     nFaces--;
     delete f;
     return true;
@@ -664,7 +664,7 @@ BoundingBox Dcel::updateBoundingBox()
 {
     bBox.reset();
     for (ConstVertexIterator vit = vertexBegin(); vit!=vertexEnd(); ++vit){
-        Pointd coord = (*vit)->getCoordinate();
+        Pointd coord = (*vit)->coordinate();
 
         bBox.setMinX(std::min(bBox.minX(), coord.x()));
         bBox.setMinY(std::min(bBox.minY(), coord.y()));
@@ -691,7 +691,7 @@ void Dcel::scale(double scaleFactor)
 void Dcel::scale(const Vec3& scaleVector)
 {
     for (Dcel::Vertex* v : vertexIterator()){
-        cg3::Pointd p = v->getCoordinate();
+        cg3::Pointd p = v->coordinate();
         p *= scaleVector;
         v->setCoordinate(p);
     }
@@ -706,9 +706,9 @@ void Dcel::scale(const BoundingBox& newBoundingBox)
     Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (Dcel::VertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit) {
         Dcel::Vertex* v = *vit;
-        v->setCoordinate(v->getCoordinate() - oldCenter);
-        v->setCoordinate(v->getCoordinate() * (deltaNew / deltaOld));
-        v->setCoordinate(v->getCoordinate() + newCenter);
+        v->setCoordinate(v->coordinate() - oldCenter);
+        v->setCoordinate(v->coordinate() * (deltaNew / deltaOld));
+        v->setCoordinate(v->coordinate() + newCenter);
     }
     bBox = newBoundingBox;
 }
@@ -724,7 +724,7 @@ void Dcel::rotate(const Eigen::Matrix3d &matrix, const Pointd& centroid)
 {
     for (Dcel::VertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit){
         Dcel::Vertex* v = *vit;
-        Pointd r = v->getCoordinate();
+        Pointd r = v->coordinate();
         r.rotate(matrix, centroid);
         v->setCoordinate(r);
     }
@@ -738,7 +738,7 @@ void Dcel::rotate(double matrix[3][3], const Pointd& centroid)
 {
     for (Dcel::VertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit){
         Dcel::Vertex* v = *vit;
-        Pointd r = v->getCoordinate();
+        Pointd r = v->coordinate();
         r.rotate(matrix, centroid);
         v->setCoordinate(r);
     }
@@ -750,7 +750,7 @@ void Dcel::rotate(double matrix[3][3], const Pointd& centroid)
 void Dcel::translate(const Pointd& c)
 {
     for (Dcel::Vertex* v : vertexIterator()){
-        v->setCoordinate(v->getCoordinate() + c);
+        v->setCoordinate(v->coordinate() + c);
     }
     updateBoundingBox();
 }
@@ -876,25 +876,25 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f)
         std::map<std::pair<Dcel::Vertex*, Dcel::Vertex*> , Dcel::HalfEdge*> twinsEdgeMap;
         std::map<Pointd, Dcel::Vertex*> pointsVerticesMap;
         for (Dcel::Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(); heit != f->incidentHalfEdgeEnd(); ++heit){
-            borderCoordinates.push_back((*heit)->getFromVertex()->getCoordinate());
+            borderCoordinates.push_back((*heit)->fromVertex()->coordinate());
             std::pair<Dcel::Vertex*, Dcel::Vertex*> pp;
-            pp.first = (*heit)->getFromVertex();
-            pp.second = (*heit)->getToVertex();
+            pp.first = (*heit)->fromVertex();
+            pp.second = (*heit)->toVertex();
             verticesEdgeMap[pp] = *heit;
-            pointsVerticesMap[(*heit)->getFromVertex()->getCoordinate()] = (*heit)->getFromVertex();
+            pointsVerticesMap[(*heit)->fromVertex()->coordinate()] = (*heit)->fromVertex();
         }
 
         if (f->hasHoles()){
-            innerBorderCoordinates.reserve(f->getNumberInnerHalfEdges());
+            innerBorderCoordinates.reserve(f->numberInnerHalfEdges());
             int i = 0;
             for (Dcel::Face::InnerHalfEdgeIterator ihe = f->innerHalfEdgeBegin(); ihe != f->innerHalfEdgeEnd(); ++ihe, ++i){
                 Dcel::HalfEdge* he = *ihe;
                 std::vector<Pointd> inner;
                 for (Dcel::Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(he); heit != f->incidentHalfEdgeEnd(); ++heit){
-                    inner.push_back((*heit)->getFromVertex()->getCoordinate());
+                    inner.push_back((*heit)->fromVertex()->coordinate());
                     std::pair<Dcel::Vertex*, Dcel::Vertex*> pp;
-                    pp.first = (*heit)->getFromVertex();
-                    pp.second = (*heit)->getToVertex();
+                    pp.first = (*heit)->fromVertex();
+                    pp.second = (*heit)->toVertex();
                     verticesEdgeMap[pp] = *heit;
                 }
                 innerBorderCoordinates.push_back(inner);
@@ -903,7 +903,7 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f)
 
         ///TRIANGULATION
 
-        std::vector<std::array<Pointd, 3> > triangulation = cgal::triangulate(f->getNormal(), borderCoordinates, innerBorderCoordinates);
+        std::vector<std::array<Pointd, 3> > triangulation = cgal::triangulate(f->normal(), borderCoordinates, innerBorderCoordinates);
         ///
 
 
@@ -992,7 +992,7 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f)
                 if (!b)
                     f = addFace();
                 else
-                    f = firstHalfEdge->getFace();
+                    f = firstHalfEdge->face();
 
                 e1->setNext(e2);
                 e2->setNext(e3);
@@ -1004,8 +1004,8 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f)
                 e2->setFace(f);
                 e3->setFace(f);
                 f->setOuterHalfEdge(e1);
-                f->setNormal(firstHalfEdge->getFace()->getNormal());
-                f->setColor(firstHalfEdge->getFace()->getColor());
+                f->setNormal(firstHalfEdge->face()->normal());
+                f->setColor(firstHalfEdge->face()->color());
 
                 ++count;
         }
@@ -1188,50 +1188,50 @@ void Dcel::serialize(std::ofstream& binaryFile) const
     for (ConstVertexIterator vit = vertexBegin(); vit != vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
         int heid = -1;
-        if (v->getIncidentHalfEdge() != nullptr) heid = v->getIncidentHalfEdge()->getId();
+        if (v->incidentHalfEdge() != nullptr) heid = v->incidentHalfEdge()->id();
 
-        cg3::serialize(v->getId(), binaryFile);
-        v->getCoordinate().serialize(binaryFile);
-        v->getNormal().serialize(binaryFile);
-        cg3::serialize(v->getColor(), binaryFile);
+        cg3::serialize(v->id(), binaryFile);
+        v->coordinate().serialize(binaryFile);
+        v->normal().serialize(binaryFile);
+        cg3::serialize(v->color(), binaryFile);
         cg3::serialize(heid, binaryFile);
-        cg3::serialize(v->getCardinality(), binaryFile);
-        cg3::serialize(v->getFlag(), binaryFile);
+        cg3::serialize(v->cardinality(), binaryFile);
+        cg3::serialize(v->flag(), binaryFile);
     }
     //HalfEdges
     for (ConstHalfEdgeIterator heit = halfEdgeBegin(); heit != halfEdgeEnd(); ++heit){
         const Dcel::HalfEdge* he = *heit;
-        int fv = -1; if (he->getFromVertex() != nullptr) fv = he->getFromVertex()->getId();
-        int tv = -1; if (he->getToVertex() != nullptr) tv = he->getToVertex()->getId();
-        int tw = -1; if (he->getTwin() != nullptr) tw = he->getTwin()->getId();
-        int prev = -1; if (he->getPrev() != nullptr) prev = he->getPrev()->getId();
-        int next = -1; if (he->getNext() != nullptr) next = he->getNext()->getId();
-        int face = -1; if (he->getFace() != nullptr) face = he->getFace()->getId();
+        int fv = -1; if (he->fromVertex() != nullptr) fv = he->fromVertex()->id();
+        int tv = -1; if (he->toVertex() != nullptr) tv = he->toVertex()->id();
+        int tw = -1; if (he->twin() != nullptr) tw = he->twin()->id();
+        int prev = -1; if (he->prev() != nullptr) prev = he->prev()->id();
+        int next = -1; if (he->next() != nullptr) next = he->next()->id();
+        int face = -1; if (he->face() != nullptr) face = he->face()->id();
 
-        cg3::serialize(he->getId(), binaryFile);
+        cg3::serialize(he->id(), binaryFile);
         cg3::serialize(fv, binaryFile);
         cg3::serialize(tv, binaryFile);
         cg3::serialize(tw, binaryFile);
         cg3::serialize(prev, binaryFile);
         cg3::serialize(next, binaryFile);
         cg3::serialize(face, binaryFile);
-        cg3::serialize(he->getFlag(), binaryFile);
+        cg3::serialize(he->flag(), binaryFile);
     }
     //Faces
     for (ConstFaceIterator fit = faceBegin(); fit != faceEnd(); ++fit){
         const Dcel::Face* f = *fit;
-        int ohe = -1; if (f->getOuterHalfEdge() != nullptr) ohe = f->getOuterHalfEdge()->getId();
-        cg3::serialize(f->getId(), binaryFile);
+        int ohe = -1; if (f->outerHalfEdge() != nullptr) ohe = f->outerHalfEdge()->id();
+        cg3::serialize(f->id(), binaryFile);
         cg3::serialize(ohe, binaryFile);
-        f->getNormal().serialize(binaryFile);
-        cg3::serialize(f->getColor(), binaryFile);
-        cg3::serialize(f->getArea(), binaryFile);
-        cg3::serialize(f->getFlag(), binaryFile);
-        cg3::serialize(f->getNumberInnerHalfEdges(), binaryFile);
+        f->normal().serialize(binaryFile);
+        cg3::serialize(f->color(), binaryFile);
+        cg3::serialize(f->area(), binaryFile);
+        cg3::serialize(f->flag(), binaryFile);
+        cg3::serialize(f->numberInnerHalfEdges(), binaryFile);
 
         for (Dcel::Face::ConstInnerHalfEdgeIterator heit = f->innerHalfEdgeBegin(); heit != f->innerHalfEdgeEnd(); ++heit){
             const Dcel::HalfEdge* he = *heit;
-            int idhe = -1; if (he != nullptr) idhe = he->getId();
+            int idhe = -1; if (he != nullptr) idhe = he->id();
             cg3::serialize(idhe, binaryFile);
         }
 
@@ -1340,11 +1340,11 @@ void Dcel::deserialize(std::ifstream& binaryFile)
 
         for (VertexIterator vit = tmp.vertexBegin(); vit != tmp.vertexEnd(); ++vit){
             Dcel::Vertex* v = *vit;
-            v->setIncidentHalfEdge(tmp.halfEdge(vert[v->getId()]));
+            v->setIncidentHalfEdge(tmp.halfEdge(vert[v->id()]));
         }
         for (HalfEdgeIterator heit = tmp.halfEdgeBegin(); heit != tmp.halfEdgeEnd(); ++heit){
             Dcel::HalfEdge* he = *heit;
-            std::array<int, 6> a = edges[he->getId()];
+            std::array<int, 6> a = edges[he->id()];
             he->setFromVertex(tmp.vertex(a[0]));
             he->setToVertex(tmp.vertex(a[1]));
             he->setTwin(tmp.halfEdge(a[2]));
@@ -1467,7 +1467,7 @@ std::vector<const Dcel::Vertex*> Dcel::makeSingleBorder(const Face* f) const
         #ifdef DEBUG
         (*heit)->checkFromVertex();
         #endif
-        tmp.push_back((*heit)->getFromVertex());
+        tmp.push_back((*heit)->fromVertex());
     }
     visited.push_back(tmp);
     for (Face::ConstInnerHalfEdgeIterator iheit = f->innerHalfEdgeBegin(); iheit != f->innerHalfEdgeEnd(); ++iheit){
@@ -1476,7 +1476,7 @@ std::vector<const Dcel::Vertex*> Dcel::makeSingleBorder(const Face* f) const
             #ifdef DEBUG
             (*heit)->checkFromVertex();
             #endif
-            tmp.push_back((*heit)->getFromVertex());
+            tmp.push_back((*heit)->fromVertex());
         }
         notVisited.push_back(tmp);
     }
@@ -1549,20 +1549,20 @@ void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& vert
 
     int iv = 0;
     for (const Dcel::Vertex* v : vertexIterator()){
-        vertices.push_back(v->getCoordinate().x());
-        vertices.push_back(v->getCoordinate().y());
-        vertices.push_back(v->getCoordinate().z());
-        verticesNormals.push_back(v->getNormal().x());
-        verticesNormals.push_back(v->getNormal().y());
-        verticesNormals.push_back(v->getNormal().z());
-        mapVertices[v->getId()] = iv++;
+        vertices.push_back(v->coordinate().x());
+        vertices.push_back(v->coordinate().y());
+        vertices.push_back(v->coordinate().z());
+        verticesNormals.push_back(v->normal().x());
+        verticesNormals.push_back(v->normal().y());
+        verticesNormals.push_back(v->normal().z());
+        mapVertices[v->id()] = iv++;
     }
     for (const Dcel::Face* f : faceIterator()){
         unsigned int size = 0;
-        if (f->getNumberInnerHalfEdges() == 0) {
+        if (f->numberInnerHalfEdges() == 0) {
             for (const Dcel::Vertex* v : f->incidentVertexIterator()){
-                assert(mapVertices.find(v->getId()) != mapVertices.end());
-                faces.push_back(mapVertices[v->getId()]);
+                assert(mapVertices.find(v->id()) != mapVertices.end());
+                faces.push_back(mapVertices[v->id()]);
                 size++;
             }
 
@@ -1570,15 +1570,15 @@ void Dcel::toStdVectors(std::vector<double>& vertices, std::vector<double>& vert
         else { // holes
             std::vector<const Vertex*> v = makeSingleBorder(f);
             for (unsigned int i = 0; i<v.size(); ++i) {
-                assert(mapVertices.find(v[i]->getId()) != mapVertices.end());
-                faces.push_back(mapVertices[v[i]->getId()]);
+                assert(mapVertices.find(v[i]->id()) != mapVertices.end());
+                faces.push_back(mapVertices[v[i]->id()]);
             }
             size = (unsigned int)v.size();
         }
         faceSizes.push_back(size);
-        faceColors.push_back(f->getColor().redF());
-        faceColors.push_back(f->getColor().greenF());
-        faceColors.push_back(f->getColor().blueF());
+        faceColors.push_back(f->color().redF());
+        faceColors.push_back(f->color().greenF());
+        faceColors.push_back(f->color().blueF());
     }
 }
 
@@ -1789,12 +1789,12 @@ void Dcel::copyFrom(const EigenMesh& eigenMesh)
 {
     copyFrom((SimpleEigenMesh)eigenMesh);
     for (Dcel::Face* f : faceIterator()){
-        f->setColor(eigenMesh.getFaceColor(f->getId()));
-        f->setNormal(eigenMesh.getFaceNormal(f->getId()));
+        f->setColor(eigenMesh.getFaceColor(f->id()));
+        f->setNormal(eigenMesh.getFaceNormal(f->id()));
     }
     for (Dcel::Vertex* v : vertexIterator()){
-        v->setNormal(eigenMesh.getVertexNormal(v->getId()));
-        v->setColor(eigenMesh.getVertexColor(v->getId()));
+        v->setNormal(eigenMesh.getVertexNormal(v->id()));
+        v->setColor(eigenMesh.getVertexColor(v->id()));
     }
 }
 #endif // CG3_EIGENMESH_DEFINED

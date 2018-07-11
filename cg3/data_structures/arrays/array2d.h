@@ -28,10 +28,15 @@ public:
     Array2D(unsigned long int sizeX, unsigned long int sizeY, const T& value);
     Array2D(cg3::NestedInitializerLists<T, 2> values);
 
-    unsigned long int getSizeX() const;
-    unsigned long int getSizeY() const;
+    unsigned long int sizeX() const;
+    unsigned long int sizeY() const;
     unsigned long int rows() const;
     unsigned long int cols() const;
+
+    #ifdef CG3_OLD_NAMES_COMPATIBILITY
+    inline unsigned long int getSizeX() const {return sizeX();}
+    inline unsigned long int getSizeY() const {return sizeY();}
+    #endif
 };
 
 template <class T>

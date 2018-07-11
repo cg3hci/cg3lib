@@ -41,7 +41,7 @@ inline Dcel convexHull(const Dcel& inputDcel)
     std::vector<Pointd> points;
     points.reserve(inputDcel.numberVertices());
     for (const Dcel::Vertex* v : inputDcel.vertexIterator()){
-        points.push_back(v->getCoordinate());
+        points.push_back(v->coordinate());
     }
     return convexHull(points.begin(), points.end());
 }
@@ -84,7 +84,7 @@ Dcel convexHull(InputIterator first, InputIterator end)
         internal::insertTet(convexHull, points[1], points[0], points[2], points[3]);
 
     for (Dcel::Face* f : convexHull.faceIterator()){
-        cg.addRightNode(f->getId());
+        cg.addRightNode(f->id());
     }
 
 
@@ -92,7 +92,7 @@ Dcel convexHull(InputIterator first, InputIterator end)
         cg.addLeftNode(points[i]);
         for (Dcel::Face* f : convexHull.faceIterator()){
             if (internal::isFaceVisible(f, points[i]))
-                cg.addArc(points[i], f->getId());
+                cg.addArc(points[i], f->id());
         }
     }
 
@@ -183,11 +183,11 @@ inline double areCoplanar(const Pointd& p0, const Pointd& p1, const Pointd& p2, 
 inline bool isFaceVisible(const Dcel::Face* f, const Pointd& p)
 {
     Dcel::Face::ConstIncidentVertexIterator vit = f->incidentVertexBegin();
-    Pointd p1 = (*vit)->getCoordinate();
+    Pointd p1 = (*vit)->coordinate();
     vit++;
-    Pointd p2 = (*vit)->getCoordinate();
+    Pointd p2 = (*vit)->coordinate();
     vit++;
-    Pointd p3 = (*vit)->getCoordinate();
+    Pointd p3 = (*vit)->coordinate();
     double determinant = areCoplanar(p1, p2, p3, p);
 
     if (determinant > std::numeric_limits<double>::epsilon()) return false;
@@ -352,8 +352,8 @@ inline void horizonEdgeList(std::vector<Dcel::HalfEdge*>& horizon, const std::se
 
         for (Dcel::Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(); heit != f->incidentHalfEdgeEnd() && !finded; ++heit){
             e0 = *heit;
-            e1 = e0->getTwin();
-            adiacent_face = e1->getFace();
+            e1 = e0->twin();
+            adiacent_face = e1->face();
             sees=isFaceVisible(adiacent_face, next_point);
             if (!sees)
                 finded = true;
@@ -367,24 +367,24 @@ inline void horizonEdgeList(std::vector<Dcel::HalfEdge*>& horizon, const std::se
     // - e1: halfedge esterno alla faccia col bordo nell'orizzonte (incidente a faccia non visibile)
 
     horizon.push_back(e1); // e1 è il primo edge sull'orizzonte
-    horizonVertex.insert(e0->getFromVertex());// inserisco il from vertex di e0 in horizon_vertex
+    horizonVertex.insert(e0->fromVertex());// inserisco il from vertex di e0 in horizon_vertex
 
     first_boundary_edge = e0;
-    e0 = e0->getNext(); // e0 al passo successivo: next di e0
+    e0 = e0->next(); // e0 al passo successivo: next di e0
     do { // finchè non incontro nuovamente first_boundary_edge
-        e1 = e0->getTwin(); // e1: twin di e0
-        adiacent_face = e1->getFace(); // f: faccia incidente a e1
+        e1 = e0->twin(); // e1: twin di e0
+        adiacent_face = e1->face(); // f: faccia incidente a e1
         sees=isFaceVisible(adiacent_face, next_point);
         if (!sees) { // se f è una faccia non visibile
             // Allora e0/e1 sono sull'orizzonte!
             horizon.push_back(e1);
             //he = convex_hull.get_half_edge(e0);
-            horizonVertex.insert(e0->getFromVertex());
-            e0 = e0->getNext(); // e0 al passo successivo: next di e0
+            horizonVertex.insert(e0->fromVertex());
+            e0 = e0->next(); // e0 al passo successivo: next di e0
         }
         else { // altrimenti sono sul triangolo adiacente che non sta sull'orizzonte
             // devo continuare la ricerca stando sul from vertex di e0
-            e0 = e1->getNext(); // e0 al passo successivo: next di e1
+            e0 = e1->next(); // e0 al passo successivo: next di e1
             // in questo caso, e1 è incidente ad una faccia visibile da next_point
             // in questo modo, sto girando sul from vertex di e0
         }
@@ -401,13 +401,13 @@ inline void calculateP(std::vector< std::set<Pointd> > &P, const BipartiteGraph<
     P.resize(horizonEdges.size());
     for (unsigned int i=0; i<horizonEdges.size(); i++){
         he0 = horizonEdges[i];
-        he1 = he0->getTwin();
-        f0 = he0->getFace();
-        f1 = he1->getFace();
+        he1 = he0->twin();
+        f0 = he0->face();
+        f1 = he1->face();
         // viene inserito in P[i] l'array ordinato contente i punti visibili da f0 e f1
-        for (const Pointd& p : cg.adjacentRightNodeIterator(f0->getId()))
+        for (const Pointd& p : cg.adjacentRightNodeIterator(f0->id()))
             P[i].insert(p);
-        for (const Pointd& p : cg.adjacentRightNodeIterator(f1->getId()))
+        for (const Pointd& p : cg.adjacentRightNodeIterator(f1->id()))
             P[i].insert(p);
     }
 }
@@ -425,12 +425,12 @@ inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertic
     for (std::set<Dcel::Face*>::const_iterator it=visibleFaces.begin(); it!=visibleFaces.end(); ++it){
         Dcel::Face* f = *it;
 
-        Dcel::HalfEdge* e1 = f->getOuterHalfEdge();
-        Dcel::HalfEdge* e2 = e1->getNext();
-        Dcel::HalfEdge* e3 = e2->getNext();
-        Dcel::Vertex* v1 = e1->getFromVertex();
-        Dcel::Vertex* v2 = e1->getToVertex();
-        Dcel::Vertex* v3 = e2->getToVertex();
+        Dcel::HalfEdge* e1 = f->outerHalfEdge();
+        Dcel::HalfEdge* e2 = e1->next();
+        Dcel::HalfEdge* e3 = e2->next();
+        Dcel::Vertex* v1 = e1->fromVertex();
+        Dcel::Vertex* v2 = e1->toVertex();
+        Dcel::Vertex* v3 = e2->toVertex();
 
         /**
          * Ogni volta che viene eliminato un elemento dalla DCEL, a tutti gli elementi dello stesso
@@ -448,7 +448,7 @@ inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertic
         ch.deleteHalfEdge(e3);
 
         /** eliminazione della faccia f */
-        cg.deleteRightNode(f->getId());
+        cg.deleteRightNode(f->id());
         ch.deleteFace(f);
         /** Salvo i vertici da eliminare nell'array garbage_vertex */
 
@@ -491,8 +491,8 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
     Dcel::HalfEdge* externHalfEdge = horizonEdges[0]; // edge sull'orizzonte
     /** Half Edge */
     // e1:
-    v2 = externHalfEdge->getFromVertex(); // v2: from di extern_he (to di e1!)
-    v1 = externHalfEdge->getToVertex(); // v1: to di extern_he (from di e1!)
+    v2 = externHalfEdge->fromVertex(); // v2: from di extern_he (to di e1!)
+    v1 = externHalfEdge->toVertex(); // v1: to di extern_he (from di e1!)
     e1 = ch.addHalfEdge(); // e1: id half_edge twin di extern_he
     e1->setFromVertex(v1);
     e1->setToVertex(v2);
@@ -534,12 +534,12 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
     v2->setIncidentHalfEdge(e2);
     v3->setIncidentHalfEdge(e3);
 
-    cg.addRightNode(f->getId()); // aggiungo f al conflict_graph
+    cg.addRightNode(f->id()); // aggiungo f al conflict_graph
 
     /** CHECK VISIBILITà f */
     for (const Pointd& point: P[0]){
         if (isFaceVisible(f, point)){
-            cg.addArc(point, f->getId());
+            cg.addArc(point, f->id());
         }
     }
 
@@ -549,8 +549,8 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
         externHalfEdge = horizonEdges[i]; // edge sull'orizzonte
         /** Half Edge */
         // e1:
-        v2 = externHalfEdge->getFromVertex(); // v2: from di extern_he (to di e1!)
-        v1 = externHalfEdge->getToVertex(); // v1: to di extern_he (from di e1!)
+        v2 = externHalfEdge->fromVertex(); // v2: from di extern_he (to di e1!)
+        v1 = externHalfEdge->toVertex(); // v1: to di extern_he (from di e1!)
         e1 = ch.addHalfEdge(); // e1: id half_edge twin di extern_he
         e1->setFromVertex(v1);
         e1->setToVertex(v2);
@@ -592,12 +592,12 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
         v1->setIncidentHalfEdge(e1);
         v2->setIncidentHalfEdge(e2);
 
-        cg.addRightNode(f->getId());
+        cg.addRightNode(f->id());
 
         /** CHECK VISIBILITà f */
         for (const Pointd& point: P[i]){
             if (isFaceVisible(f, point))
-                cg.addArc(point, f->getId()); // se point vede f, aggiungo il conflitto nel conflict graph
+                cg.addArc(point, f->id()); // se point vede f, aggiungo il conflitto nel conflict graph
         }
 
     }

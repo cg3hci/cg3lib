@@ -46,25 +46,25 @@ inline Array4D<T>::Array4D(cg3::NestedInitializerLists<T, 4> values)
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeX() const
+inline unsigned long int Array4D<T>::sizeX() const
 {
     return Array<T, 4>::sizes[0];
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeY() const
+inline unsigned long int Array4D<T>::sizeY() const
 {
     return Array<T, 4>::sizes[1];
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeZ() const
+inline unsigned long int Array4D<T>::sizeZ() const
 {
     return Array<T, 4>::sizes[2];
 }
 
 template <class T>
-inline unsigned long int Array4D<T>::getSizeW() const
+inline unsigned long int Array4D<T>::sizeW() const
 {
     return Array<T, 4>::sizes[3];
 }

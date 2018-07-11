@@ -110,7 +110,7 @@ std::vector<std::vector<Pointd> > polylines(
         const Vec3 &norm,
         double d)
 {
-    SurfaceMesh m = cgal::getSurfaceMeshFromDcel(mesh);
+    SurfaceMesh m = cgal::surfaceMeshFromDcel(mesh);
     return polylines(m, norm, d);
 }
 #endif

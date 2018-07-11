@@ -32,26 +32,26 @@ namespace cg3 {
 #ifdef NDEBUG
 Dcel::HalfEdge::HalfEdge(Dcel& parent) :
     parent(&parent),
-    fromVertex(nullptr),
-    toVertex(nullptr),
-    twin(nullptr),
-    prev(nullptr),
-    next(nullptr),
-    face(nullptr),
-    id(0),
-    flag(0)
+    _fromVertex(nullptr),
+    _toVertex(nullptr),
+    _twin(nullptr),
+    _prev(nullptr),
+    _next(nullptr),
+    _face(nullptr),
+    _id(0),
+    _flag(0)
 {
 }
 #else
 Dcel::HalfEdge::HalfEdge() :
-    fromVertex(nullptr),
-    toVertex(nullptr),
-    twin(nullptr),
-    prev(nullptr),
-    next(nullptr),
-    face(nullptr),
-    id(0),
-    flag(0)
+    _fromVertex(nullptr),
+    _toVertex(nullptr),
+    _twin(nullptr),
+    _prev(nullptr),
+    _next(nullptr),
+    _face(nullptr),
+    _id(0),
+    _flag(0)
 {
 }
 #endif
@@ -67,11 +67,11 @@ Dcel::HalfEdge::~HalfEdge(void)
 }
 
 bool Dcel::HalfEdge::isConvex() const {
-    if ((getFace()->getNormal()) == (getTwin()->getFace()->getNormal()))
+    if ((face()->normal()) == (twin()->face()->normal()))
         return true;
-    Vec3 dir1 = getFace()->getNormal().cross(getTwin()->getFace()->getNormal());
+    Vec3 dir1 = face()->normal().cross(twin()->face()->normal());
     dir1.normalize();
-    Vec3 dir2 = (getToVertex()->getCoordinate() - getFromVertex()->getCoordinate());
+    Vec3 dir2 = (toVertex()->coordinate() - fromVertex()->coordinate());
     dir2.normalize();
     return (epsilonEqual(dir1, dir2));
 }
@@ -95,9 +95,9 @@ bool Dcel::HalfEdge::isConvex() const {
  */
 bool Dcel::HalfEdge::isOuterComponent() const
 {
-    if (face->getNumberInnerHalfEdges() == 0) return true;
-    for (Dcel::Face::ConstIncidentHalfEdgeIterator heit = face->incidentHalfEdgeBegin(); heit != face->incidentHalfEdgeEnd(); ++heit)
-        if (**heit == *this) return true;
+    if (_face->numberInnerHalfEdges() == 0) return true;
+    for (Dcel::Face::ConstIncidentHalfEdgeIterator heit = _face->incidentHalfEdgeBegin(); heit != _face->incidentHalfEdgeEnd(); ++heit)
+        if (*heit == this) return true;
     return false;
 }
 
@@ -106,9 +106,9 @@ bool Dcel::HalfEdge::isOuterComponent() const
  * @brief Funzione che restituisce la lunghezza dell'half edge
  * @return La distanza tra il from e il to vertex dell'half edge
  */
-float Dcel::HalfEdge::getLength() const
+float Dcel::HalfEdge::length() const
 {
-    return fromVertex->getCoordinate().dist(toVertex->getCoordinate());
+    return _fromVertex->coordinate().dist(_toVertex->coordinate());
 }
 
 /**
@@ -121,24 +121,24 @@ std::string Dcel::HalfEdge::toString() const
 {
     std::stringstream ss;
 
-    ss << "ID: " << id << "; From Vertex: ";
-    if (!fromVertex) ss << "nullptr";
-    else ss << fromVertex->getId();
+    ss << "ID: " << _id << "; From Vertex: ";
+    if (!_fromVertex) ss << "nullptr";
+    else ss << _fromVertex->id();
     ss << "; To Vertex: ";
-    if (!toVertex) ss << "nullptr";
-    else ss << toVertex->getId();
+    if (!_toVertex) ss << "nullptr";
+    else ss << _toVertex->id();
     ss <<"; Twin: ";
-    if (!twin) ss << "nullptr";
-    else ss << twin->getId();
+    if (!_twin) ss << "nullptr";
+    else ss << _twin->id();
     ss << "; Prev: ";
-    if (!prev) ss << "nullptr";
-    else ss << prev->getId();
+    if (!_prev) ss << "nullptr";
+    else ss << _prev->id();
     ss << "; Next: ";
-    if (!next) ss << "nullptr";
-    else ss << next->getId();
+    if (!_next) ss << "nullptr";
+    else ss << _next->id();
     ss << "; Incident Face: ";
-    if (!face) ss << "nullptr";
-    else ss << face->getId();
+    if (!_face) ss << "nullptr";
+    else ss << _face->id();
     ss << ".";
     std::string s1 = ss.str();
     return s1;

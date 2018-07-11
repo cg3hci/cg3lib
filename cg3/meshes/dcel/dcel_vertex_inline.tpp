@@ -19,9 +19,9 @@ namespace cg3 {
  * @brief Restirìtuisce l'id identificativo nella Dcel del vertice
  * @return L'id del vertice
  */
-inline unsigned int Dcel::Vertex::getId() const
+inline unsigned int Dcel::Vertex::id() const
 {
-    return id;
+    return _id;
 }
 
 /**
@@ -29,9 +29,9 @@ inline unsigned int Dcel::Vertex::getId() const
  * @brief Restituisce il flag associato al vertice
  * @return Il flag del vertice
  */
-inline int Dcel::Vertex::getFlag() const
+inline int Dcel::Vertex::flag() const
 {
-    return flag;
+    return _flag;
 }
 
 /**
@@ -40,12 +40,12 @@ inline int Dcel::Vertex::getFlag() const
  * @note Non ricalcola la normale, restituisce solo l'ultima normale calcolata o settata
  * @return La normale al vertice
  */
-inline Vec3 Dcel::Vertex::getNormal() const
+inline Vec3 Dcel::Vertex::normal() const
 {
     #ifdef NDEBUG
-    return parent->vertexNormals[id];
+    return parent->vertexNormals[_id];
     #else
-    return normal;
+    return _normal;
     #endif
 }
 
@@ -54,12 +54,12 @@ inline Vec3 Dcel::Vertex::getNormal() const
  * @brief Restituisce le coordinate del vertice
  * @return Pointd rappresentante la posizione nello spazio del vertice
  */
-inline const Pointd& Dcel::Vertex::getCoordinate() const
+inline const Pointd& Dcel::Vertex::coordinate() const
 {
     #ifdef NDEBUG
-    return parent->vertexCoordinates[id];
+    return parent->vertexCoordinates[_id];
     #else
-    return coordinate;
+    return _coordinate;
     #endif
 }
 
@@ -68,12 +68,12 @@ inline const Pointd& Dcel::Vertex::getCoordinate() const
  * @brief Restituisce il colore del vertice
  * @return Color rappresentante la posizione nello spazio del vertice
  */
-inline Color Dcel::Vertex::getColor() const
+inline Color Dcel::Vertex::color() const
 {
     #ifdef NDEBUG
-    return parent->vertexColors[id];
+    return parent->vertexColors[_id];
     #else
-    return color;
+    return _color;
     #endif
 }
 
@@ -83,9 +83,9 @@ inline Color Dcel::Vertex::getColor() const
  * @note Non ricalcola la cardinalità, restituisce solo l'ultima cardinalità calcolata o settata
  * @return La cardinalità del vertice
  */
-inline int  Dcel::Vertex::getCardinality() const
+inline int  Dcel::Vertex::cardinality() const
 {
-    return cardinality;
+    return _cardinality;
 }
 
 /**
@@ -93,9 +93,9 @@ inline int  Dcel::Vertex::getCardinality() const
  * @brief Restituisce il puntatore l'half edge costante incidente sul vertice
  * @return L'HalfEdge incidente sul vertice
  */
-inline const Dcel::HalfEdge* Dcel::Vertex::getIncidentHalfEdge() const
+inline const Dcel::HalfEdge* Dcel::Vertex::incidentHalfEdge() const
 {
-    return incidentHalfEdge;
+    return _incidentHalfEdge;
 }
 
 /**
@@ -107,43 +107,10 @@ inline const Dcel::HalfEdge* Dcel::Vertex::getIncidentHalfEdge() const
 inline double Dcel::Vertex::dist(const Vertex* otherVertex) const
 {
     #ifdef NDEBUG
-    return parent->vertexCoordinates[id].dist(parent->vertexCoordinates[otherVertex->id]);
+    return parent->vertexCoordinates[_id].dist(parent->vertexCoordinates[otherVertex->_id]);
     #else
-    return this->coordinate.dist(otherVertex->coordinate);
+    return this->_coordinate.dist(otherVertex->_coordinate);
     #endif
-}
-
-/**
- * \~Italian
- * @brief Operatore di uguaglianza tra vertici
- * @param[in] otherVertex: vertice con cui verrà verificata l'uguaglianza con la faccia this
- * @return True se i vertici sono uguali, false altrimenti
- * @todo Da riscrivere
- */
-inline bool Dcel::Vertex::operator == (const Vertex& otherVertex) const
-{
-    #ifdef NDEBUG
-    if (parent->vertexCoordinates[id] == parent->vertexCoordinates[otherVertex.id]) return true;
-    #else
-    if (otherVertex.coordinate == this->coordinate ) return true;
-    #endif
-    return false;
-}
-
-/**
- * \~Italian
- * @brief Operatore di disuguaglianza tra vertici
- * @param[in] otherVertex: vertice con cui verrà verificata la disuguaglianza con la faccia this
- * @return True se i vertici sono diversi, false altrimenti
- */
-inline bool Dcel::Vertex::operator != (const Vertex& otherVertex) const
-{
-    #ifdef NDEBUG
-    if (parent->vertexCoordinates[id] == parent->vertexCoordinates[otherVertex.id]) return false;
-    #else
-    if (otherVertex.coordinate == this->coordinate ) return false;
-    #endif
-    return true;
 }
 
 /**
@@ -152,7 +119,7 @@ inline bool Dcel::Vertex::operator != (const Vertex& otherVertex) const
  */
 inline bool Dcel::Vertex::checkIncidentHalfEdge() const
 {
-    return incidentHalfEdge != nullptr;
+    return _incidentHalfEdge != nullptr;
 }
 
 /**
@@ -161,7 +128,7 @@ inline bool Dcel::Vertex::checkIncidentHalfEdge() const
  */
 inline void Dcel::Vertex::setFlag()
 {
-    flag = 1;
+    _flag = 1;
 }
 
 /**
@@ -172,7 +139,7 @@ inline void Dcel::Vertex::setFlag()
  */
 inline void Dcel::Vertex::setFlag(int newFlag)
 {
-    flag = newFlag;
+    _flag = newFlag;
 }
 
 /**
@@ -181,7 +148,7 @@ inline void Dcel::Vertex::setFlag(int newFlag)
  */
 inline void Dcel::Vertex::resetFlag()
 {
-    flag = 0;
+    _flag = 0;
 }
 
 /**
@@ -192,9 +159,9 @@ inline void Dcel::Vertex::resetFlag()
 inline void Dcel::Vertex::setNormal(const Vec3& newNormal)
 {
     #ifdef NDEBUG
-    parent->vertexNormals[id] = newNormal;
+    parent->vertexNormals[_id] = newNormal;
     #else
-    normal = newNormal;
+    _normal = newNormal;
     #endif
 }
 
@@ -206,9 +173,9 @@ inline void Dcel::Vertex::setNormal(const Vec3& newNormal)
 inline void Dcel::Vertex::setCoordinate(const Pointd& newCoordinate)
 {
     #ifdef NDEBUG
-    parent->vertexCoordinates[id] = newCoordinate;
+    parent->vertexCoordinates[_id] = newCoordinate;
     #else
-    coordinate = newCoordinate;
+    _coordinate = newCoordinate;
     #endif
 }
 
@@ -219,14 +186,14 @@ inline void Dcel::Vertex::setCoordinate(const Pointd& newCoordinate)
  */
 inline void Dcel::Vertex::setCardinality( int newCardinality )
 {
-    cardinality = newCardinality;
+    _cardinality = newCardinality;
 }
 
 inline void Dcel::Vertex::setColor(const Color& c) {
     #ifdef NDEBUG
-    parent->vertexColors[id] = c;
+    parent->vertexColors[_id] = c;
     #else
-    color = c;
+    _color = c;
     #endif
 }
 
@@ -237,8 +204,8 @@ inline void Dcel::Vertex::setColor(const Color& c) {
  */
 inline int Dcel::Vertex::decrementCardinality()
 {
-    if (cardinality > 0) --cardinality;
-    return cardinality;
+    if (_cardinality > 0) --_cardinality;
+    return _cardinality;
 }
 
 /**
@@ -248,7 +215,7 @@ inline int Dcel::Vertex::decrementCardinality()
  */
 inline int Dcel::Vertex::incrementCardinality()
 {
-    return ++cardinality;
+    return ++_cardinality;
 }
 
 /**
@@ -256,9 +223,9 @@ inline int Dcel::Vertex::incrementCardinality()
  * @brief Restituisce il puntatore all'half edge incidente sul vertice
  * @return L'HalfEdge incidente sul vertice
  */
-inline Dcel::HalfEdge* Dcel::Vertex::getIncidentHalfEdge()
+inline Dcel::HalfEdge* Dcel::Vertex::incidentHalfEdge()
 {
-    return incidentHalfEdge;
+    return _incidentHalfEdge;
 }
 
 /**
@@ -268,7 +235,7 @@ inline Dcel::HalfEdge* Dcel::Vertex::getIncidentHalfEdge()
  */
 inline void Dcel::Vertex::setIncidentHalfEdge(HalfEdge* newIncidentHalfEdge )
 {
-    incidentHalfEdge = newIncidentHalfEdge;
+    _incidentHalfEdge = newIncidentHalfEdge;
 }
 
 /****************************
@@ -285,7 +252,7 @@ inline void Dcel::Vertex::setIncidentHalfEdge(HalfEdge* newIncidentHalfEdge )
  */
 inline void Dcel::Vertex::setId(unsigned int id)
 {
-    this->id = id;
+    this->_id = id;
 }
 
 }

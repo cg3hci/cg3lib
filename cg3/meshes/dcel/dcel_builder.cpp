@@ -11,7 +11,7 @@ namespace cg3 {
 DcelBuilder::DcelBuilder(Dcel startingDcel) : d(startingDcel)
 {
     for (cg3::Dcel::Vertex* v : d.vertexIterator()) {
-        mapVertices[v->getCoordinate()] = v->getId();
+        mapVertices[v->coordinate()] = v->id();
     }
     //maybe initializa also edges?
 }
@@ -25,8 +25,8 @@ unsigned int DcelBuilder::addVertex(const Pointd& p, const Vec3& n, const Color 
 {
     if (mapVertices.find(p) == mapVertices.end()){
         cg3::Dcel::Vertex* v = d.addVertex(p, n, c);
-        mapVertices[p] = v->getId();
-        return v->getId();
+        mapVertices[p] = v->id();
+        return v->id();
     }
     else
         return mapVertices[p];
@@ -115,12 +115,12 @@ int DcelBuilder::addFace(
     f->setColor(c);
     f->setOuterHalfEdge(he1);
 
-    mapHalfEdges.insert(std::make_pair(std::make_pair(vid1, vid2), he1->getId()));
-    mapHalfEdges.insert(std::make_pair(std::make_pair(vid2, vid3), he2->getId()));
-    mapHalfEdges.insert(std::make_pair(std::make_pair(vid3, vid1), he3->getId()));
+    mapHalfEdges.insert(std::make_pair(std::make_pair(vid1, vid2), he1->id()));
+    mapHalfEdges.insert(std::make_pair(std::make_pair(vid2, vid3), he2->id()));
+    mapHalfEdges.insert(std::make_pair(std::make_pair(vid3, vid1), he3->id()));
 
     f->updateNormal();
-    return f->getId();
+    return f->id();
 }
 
 int DcelBuilder::addFace(

@@ -66,7 +66,7 @@ inline bool Dcel::Vertex::GenericIterator::operator != (const GenericIterator& r
  */
 inline Dcel::Vertex::GenericIterator Dcel::Vertex::GenericIterator::operator ++ ()
 {
-    pos = pos->getTwin()->getNext();
+    pos = pos->twin()->next();
     if (pos == end) pos = nullptr;
     return *this;
 }
@@ -83,7 +83,7 @@ inline Dcel::Vertex::GenericIterator Dcel::Vertex::GenericIterator::operator ++ 
 inline Dcel::Vertex::GenericIterator Dcel::Vertex::GenericIterator::operator ++ (int)
 {
     GenericIterator old_value = *this;
-    pos = pos->getTwin()->getNext();
+    pos = pos->twin()->next();
     if (pos == end) pos = nullptr;
     return old_value;
 }
@@ -99,7 +99,7 @@ inline Dcel::Vertex::GenericIterator Dcel::Vertex::GenericIterator::operator ++ 
  */
 inline Dcel::Vertex::GenericIterator Dcel::Vertex::GenericIterator::operator -- ()
 {
-    pos = pos->getPrev()->getTwin();
+    pos = pos->prev()->twin();
     if (pos == end) pos = nullptr;
     return *this;
 }
@@ -116,7 +116,7 @@ inline Dcel::Vertex::GenericIterator Dcel::Vertex::GenericIterator::operator -- 
 inline Dcel::Vertex::GenericIterator Dcel::Vertex::GenericIterator::operator -- (int)
 {
     GenericIterator old_value = *this;
-    pos = pos->getPrev()->getTwin();
+    pos = pos->prev()->twin();
     if (pos == end) pos = nullptr;
     return old_value;
 }
@@ -209,7 +209,7 @@ inline bool Dcel::Vertex::ConstGenericIterator::operator !=(const ConstGenericIt
  */
 inline Dcel::Vertex::ConstGenericIterator Dcel::Vertex::ConstGenericIterator::operator ++ ()
 {
-    pos = pos->getPrev()->getTwin();
+    pos = pos->prev()->twin();
     if (pos == end) pos = nullptr;
     return *this;
 }
@@ -226,7 +226,7 @@ inline Dcel::Vertex::ConstGenericIterator Dcel::Vertex::ConstGenericIterator::op
 inline Dcel::Vertex::ConstGenericIterator Dcel::Vertex::ConstGenericIterator::operator ++ (int)
 {
     ConstGenericIterator old_value = *this;
-    pos = pos->getPrev()->getTwin();
+    pos = pos->prev()->twin();
     if (pos == end) pos = nullptr;
     return old_value;
 }
@@ -242,10 +242,10 @@ inline Dcel::Vertex::ConstGenericIterator Dcel::Vertex::ConstGenericIterator::op
  */
 inline Dcel::Vertex::ConstGenericIterator Dcel::Vertex::ConstGenericIterator::operator -- ()
 {
-    if (pos->getTwin() == nullptr)
+    if (pos->twin() == nullptr)
         pos = nullptr;
     else {
-        pos = pos->getTwin()->getNext();
+        pos = pos->twin()->next();
         if (pos == end) pos = nullptr;
     }
     return *this;
@@ -263,10 +263,10 @@ inline Dcel::Vertex::ConstGenericIterator Dcel::Vertex::ConstGenericIterator::op
 inline Dcel::Vertex::ConstGenericIterator Dcel::Vertex::ConstGenericIterator::operator -- (int)
 {
     ConstGenericIterator old_value = *this;
-    if (pos->getTwin() == nullptr)
+    if (pos->twin() == nullptr)
         pos = nullptr;
     else {
-        pos = pos->getTwin()->getNext();
+        pos = pos->twin()->next();
         if (pos == end) pos = nullptr;
     }
     return old_value;
@@ -317,7 +317,7 @@ inline Dcel::Vertex::AdjacentVertexIterator::AdjacentVertexIterator() : GenericI
  */
 inline Dcel::Vertex* Dcel::Vertex::AdjacentVertexIterator::operator * () const
 {
-    return pos->getToVertex();
+    return pos->toVertex();
 }
 
 //Protected Constructor
@@ -376,7 +376,7 @@ inline Dcel::Vertex::ConstAdjacentVertexIterator::ConstAdjacentVertexIterator(co
  */
 inline const Dcel::Vertex* Dcel::Vertex::ConstAdjacentVertexIterator::operator * () const
 {
-    return pos->getToVertex();
+    return pos->toVertex();
 }
 
 //Protected Constructor
@@ -531,7 +531,7 @@ inline Dcel::Vertex::IncomingHalfEdgeIterator::IncomingHalfEdgeIterator() : Gene
  */
 inline Dcel::HalfEdge* Dcel::Vertex::IncomingHalfEdgeIterator::operator * () const
 {
-    return pos->getTwin();
+    return pos->twin();
 }
 
 //Protected Constructor
@@ -590,7 +590,7 @@ inline Dcel::Vertex::ConstIncomingHalfEdgeIterator::ConstIncomingHalfEdgeIterato
  */
 inline const Dcel::HalfEdge* Dcel::Vertex::ConstIncomingHalfEdgeIterator::operator * () const
 {
-    return pos->getTwin();
+    return pos->twin();
 }
 
 //Protected Constructor
@@ -653,8 +653,8 @@ inline Dcel::HalfEdge* Dcel::Vertex::IncidentHalfEdgeIterator::operator * () con
  */
 inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::IncidentHalfEdgeIterator::operator ++ ()
 {
-    if (pos->getFromVertex() == v) pos = pos->getPrev();
-    else pos = pos->getTwin();
+    if (pos->fromVertex() == v) pos = pos->prev();
+    else pos = pos->twin();
     if (pos == end) pos = nullptr;
     return *this;
 }
@@ -672,8 +672,8 @@ inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::IncidentHalfEdgeIter
 inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::IncidentHalfEdgeIterator::operator ++ (int)
 {
     IncidentHalfEdgeIterator old_value = *this;
-    if (pos->getFromVertex() == v) pos = pos->getPrev();
-    else pos = pos->getTwin();
+    if (pos->fromVertex() == v) pos = pos->prev();
+    else pos = pos->twin();
     if (pos == end) pos = nullptr;
     return old_value;
 }
@@ -690,8 +690,8 @@ inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::IncidentHalfEdgeIter
  */
 inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::IncidentHalfEdgeIterator::operator -- ()
 {
-    if (pos->getFromVertex() == v) pos = pos->getTwin();
-    else pos = pos->getNext();
+    if (pos->fromVertex() == v) pos = pos->twin();
+    else pos = pos->next();
     if (pos == end) pos = nullptr;
     return *this;
 }
@@ -709,8 +709,8 @@ inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::IncidentHalfEdgeIter
 inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::IncidentHalfEdgeIterator::operator -- (int)
 {
     IncidentHalfEdgeIterator old_value = *this;
-    if (pos->getFromVertex() == v) pos = pos->getTwin();
-    else pos = pos->getNext();
+    if (pos->fromVertex() == v) pos = pos->twin();
+    else pos = pos->next();
     if (pos == end) pos = nullptr;
     return old_value;
 }
@@ -786,8 +786,8 @@ inline const Dcel::HalfEdge* Dcel::Vertex::ConstIncidentHalfEdgeIterator::operat
  */
 inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::ConstIncidentHalfEdgeIterator::operator ++ ()
 {
-    if (pos->getFromVertex() == v) pos = pos->getTwin();
-    else pos = pos->getNext();
+    if (pos->fromVertex() == v) pos = pos->twin();
+    else pos = pos->next();
     if (pos == end) pos = nullptr;
     return *this;
 }
@@ -805,8 +805,8 @@ inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::ConstIncidentHa
 inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::ConstIncidentHalfEdgeIterator::operator ++ (int)
 {
     ConstIncidentHalfEdgeIterator old_value = *this;
-    if (pos->getFromVertex() == v) pos = pos->getTwin();
-    else pos = pos->getNext();
+    if (pos->fromVertex() == v) pos = pos->twin();
+    else pos = pos->next();
     if (pos == end) pos = nullptr;
     return old_value;
 }
@@ -823,8 +823,8 @@ inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::ConstIncidentHa
  */
 inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::ConstIncidentHalfEdgeIterator::operator -- ()
 {
-    if (pos->getFromVertex() == v) pos = pos->getPrev();
-    else pos = pos->getTwin();
+    if (pos->fromVertex() == v) pos = pos->prev();
+    else pos = pos->twin();
     if (pos == end) pos = nullptr;
     return *this;
 }
@@ -842,8 +842,8 @@ inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::ConstIncidentHa
 inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::ConstIncidentHalfEdgeIterator::operator -- (int)
 {
     ConstIncidentHalfEdgeIterator old_value = *this;
-    if (pos->getFromVertex() == v) pos = pos->getPrev();
-    else pos = pos->getTwin();
+    if (pos->fromVertex() == v) pos = pos->prev();
+    else pos = pos->twin();
     if (pos == end) pos = nullptr;
     return old_value;
 }
@@ -893,7 +893,7 @@ inline Dcel::Vertex::IncidentFaceIterator::IncidentFaceIterator() : GenericItera
  */
 inline Dcel::Face* Dcel::Vertex::IncidentFaceIterator::operator * () const
 {
-    return pos->getFace();
+    return pos->face();
 }
 
 //Protected Constructor
@@ -952,7 +952,7 @@ inline Dcel::Vertex::ConstIncidentFaceIterator::ConstIncidentFaceIterator(const 
  */
 inline const Dcel::Face* Dcel::Vertex::ConstIncidentFaceIterator::operator * () const
 {
-    return pos->getFace();
+    return pos->face();
 }
 
 //Protected Constructor
@@ -1101,7 +1101,7 @@ inline Dcel::Vertex::IncidentFaceIterator Dcel::Vertex::IncidentFaceRangeBasedIt
 inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin() const
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return ConstAdjacentVertexIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return ConstAdjacentVertexIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1129,7 +1129,7 @@ inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexEnd
  */
 inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(const HalfEdge* start) const
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
     return ConstAdjacentVertexIterator(start, start, this);
 }
 
@@ -1146,8 +1146,8 @@ inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBeg
  */
 inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(const HalfEdge* start, const HalfEdge* end) const
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getFromVertex() == this && "End half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->fromVertex() == this && "End half edge is not incident to iterated face.");
     return ConstAdjacentVertexIterator(start, end, this);
 }
 
@@ -1170,7 +1170,7 @@ inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBeg
 {
     Vertex::ConstIncomingHalfEdgeIterator heit;
     for (heit = start->incomingHalfEdgeBegin(); heit != start->incomingHalfEdgeEnd(); ++heit){
-        if ((*heit)->getFromVertex() == this) return ConstAdjacentVertexIterator(*heit, *heit, this);
+        if ((*heit)->fromVertex() == this) return ConstAdjacentVertexIterator(*heit, *heit, this);
     }
     assert (false && "Start vertex is not adjacent to iterated vertex.");
     return ConstAdjacentVertexIterator();
@@ -1195,11 +1195,11 @@ inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBeg
 inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(const Dcel::Vertex* start, const Dcel::Vertex* end) const
 {
     Vertex::ConstIncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin();
-    while (heit != start->incomingHalfEdgeEnd() && ((*heit)->getFromVertex() != this)) ++heit;
-    assert ((*heit)->getFromVertex() == this && "Start vertex is not adjacent to iterated vertex.");
+    while (heit != start->incomingHalfEdgeEnd() && ((*heit)->fromVertex() != this)) ++heit;
+    assert ((*heit)->fromVertex() == this && "Start vertex is not adjacent to iterated vertex.");
     const HalfEdge* s = *heit;
     for (heit = end->incomingHalfEdgeBegin(); heit != end->incomingHalfEdgeEnd(); ++heit){
-        if ((*heit)->getFromVertex() == this) return ConstAdjacentVertexIterator(s, *heit, this);
+        if ((*heit)->fromVertex() == this) return ConstAdjacentVertexIterator(s, *heit, this);
     }
     assert (false && "End vertex is not adjacent to iterated vertex.");
     return ConstAdjacentVertexIterator();
@@ -1216,7 +1216,7 @@ inline Dcel::Vertex::ConstAdjacentVertexIterator Dcel::Vertex::adjacentVertexBeg
 inline Dcel::Vertex::ConstOutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegin() const
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return ConstOutgoingHalfEdgeIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return ConstOutgoingHalfEdgeIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1244,7 +1244,7 @@ inline Dcel::Vertex::ConstOutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdg
  */
 inline Dcel::Vertex::ConstOutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegin(const Dcel::HalfEdge* start) const
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
     return ConstOutgoingHalfEdgeIterator(start, start, this);
 }
 
@@ -1261,8 +1261,8 @@ inline Dcel::Vertex::ConstOutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdg
  */
 inline Dcel::Vertex::ConstOutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegin(const HalfEdge* start, const HalfEdge* end) const
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getFromVertex() == this && "End half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->fromVertex() == this && "End half edge is not incident to iterated face.");
     return ConstOutgoingHalfEdgeIterator(start, end, this);
 }
 
@@ -1277,7 +1277,7 @@ inline Dcel::Vertex::ConstOutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdg
 inline Dcel::Vertex::ConstIncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegin() const
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return ConstIncomingHalfEdgeIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return ConstIncomingHalfEdgeIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1305,8 +1305,8 @@ inline Dcel::Vertex::ConstIncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdg
  */
 inline Dcel::Vertex::ConstIncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegin(const HalfEdge* start) const
 {
-    assert(start->getToVertex() == this && "Start half edge is not incident to iterated face.");
-    return ConstIncomingHalfEdgeIterator(start->getTwin(), start->getTwin(), this);
+    assert(start->toVertex() == this && "Start half edge is not incident to iterated face.");
+    return ConstIncomingHalfEdgeIterator(start->twin(), start->twin(), this);
 }
 
 /**
@@ -1322,9 +1322,9 @@ inline Dcel::Vertex::ConstIncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdg
  */
 inline Dcel::Vertex::ConstIncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegin(const HalfEdge* start, const HalfEdge* end) const
 {
-    assert(start->getToVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getToVertex() == this && "End half edge is not incident to iterated face.");
-    return ConstIncomingHalfEdgeIterator(start->getTwin(), end->getTwin(), this);
+    assert(start->toVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->toVertex() == this && "End half edge is not incident to iterated face.");
+    return ConstIncomingHalfEdgeIterator(start->twin(), end->twin(), this);
 }
 
 /**
@@ -1338,7 +1338,7 @@ inline Dcel::Vertex::ConstIncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdg
 inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegin() const
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return ConstIncidentHalfEdgeIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return ConstIncidentHalfEdgeIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1366,7 +1366,7 @@ inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdg
  */
 inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegin(const HalfEdge *start) const
 {
-    assert((start->getFromVertex() == this || start->getToVertex() == this) && "Start half edge is not incident to iterated face.");
+    assert((start->fromVertex() == this || start->toVertex() == this) && "Start half edge is not incident to iterated face.");
     return ConstIncidentHalfEdgeIterator(start, start, this);
 }
 
@@ -1383,8 +1383,8 @@ inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdg
  */
 inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegin(const HalfEdge *start, const HalfEdge *end) const
 {
-    assert((start->getFromVertex() == this || start->getToVertex() == this) && "Start half edge is not incident to iterated face.");
-    assert((end->getFromVertex() == this || end->getToVertex() == this) && "End half edge is not incident to iterated face.");
+    assert((start->fromVertex() == this || start->toVertex() == this) && "Start half edge is not incident to iterated face.");
+    assert((end->fromVertex() == this || end->toVertex() == this) && "End half edge is not incident to iterated face.");
     return ConstIncidentHalfEdgeIterator(start, end, this);
 }
 
@@ -1399,7 +1399,7 @@ inline Dcel::Vertex::ConstIncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdg
 inline Dcel::Vertex::ConstIncidentFaceIterator Dcel::Vertex::incidentFaceBegin() const
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return ConstIncidentFaceIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return ConstIncidentFaceIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1427,7 +1427,7 @@ inline Dcel::Vertex::ConstIncidentFaceIterator Dcel::Vertex::incidentFaceEnd() c
  */
 inline Dcel::Vertex::ConstIncidentFaceIterator Dcel::Vertex::incidentFaceBegin(const HalfEdge* start) const
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
     return ConstIncidentFaceIterator(start, start, this);
 }
 
@@ -1444,8 +1444,8 @@ inline Dcel::Vertex::ConstIncidentFaceIterator Dcel::Vertex::incidentFaceBegin(c
  */
 inline Dcel::Vertex::ConstIncidentFaceIterator Dcel::Vertex::incidentFaceBegin(const HalfEdge* start, const HalfEdge* end) const
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getFromVertex() == this && "End half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->fromVertex() == this && "End half edge is not incident to iterated face.");
     return ConstIncidentFaceIterator(start, end, this);
 }
 
@@ -1480,7 +1480,7 @@ inline const Dcel::Vertex::ConstIncidentFaceRangeBasedIterator Dcel::Vertex::inc
 inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin()
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return AdjacentVertexIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return AdjacentVertexIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1508,7 +1508,7 @@ inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexEnd()
  */
 inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(HalfEdge* start)
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
     return AdjacentVertexIterator(start, start, this);
 }
 
@@ -1525,8 +1525,8 @@ inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(Ha
  */
 inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(HalfEdge* start, HalfEdge* end)
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getFromVertex() == this && "End half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->fromVertex() == this && "End half edge is not incident to iterated face.");
     return AdjacentVertexIterator(start, end, this);
 }
 
@@ -1549,7 +1549,7 @@ inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(Ve
 {
     Vertex::IncomingHalfEdgeIterator heit;
     for (heit= start->incomingHalfEdgeBegin(); heit!= start->incomingHalfEdgeEnd(); ++heit){
-        if ((*heit)->getFromVertex() == this) return AdjacentVertexIterator(*heit, *heit, this);
+        if ((*heit)->fromVertex() == this) return AdjacentVertexIterator(*heit, *heit, this);
     }
     assert (false && "Start vertex is not adjacent to iterated vertex.");
     return AdjacentVertexIterator();
@@ -1574,11 +1574,11 @@ inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(Ve
 inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(Vertex* start, Vertex* end)
 {
     Vertex::IncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin();
-    while (heit!= start->incomingHalfEdgeEnd() && ((*heit)->getFromVertex() != this)) ++heit;
-    assert ((*heit)->getFromVertex() == this && "Start vertex is not adjacent to iterated vertex.");
+    while (heit!= start->incomingHalfEdgeEnd() && ((*heit)->fromVertex() != this)) ++heit;
+    assert ((*heit)->fromVertex() == this && "Start vertex is not adjacent to iterated vertex.");
     HalfEdge* s = *heit;
     for (heit= end->incomingHalfEdgeBegin(); heit!= end->incomingHalfEdgeEnd(); ++heit){
-        if ((*heit)->getFromVertex() == this) return AdjacentVertexIterator(s, *heit, this);
+        if ((*heit)->fromVertex() == this) return AdjacentVertexIterator(s, *heit, this);
     }
     assert (false && "End vertex is not adjacent to iterated vertex.");
     return AdjacentVertexIterator();
@@ -1595,7 +1595,7 @@ inline Dcel::Vertex::AdjacentVertexIterator Dcel::Vertex::adjacentVertexBegin(Ve
 inline Dcel::Vertex::OutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegin()
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return OutgoingHalfEdgeIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return OutgoingHalfEdgeIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1623,7 +1623,7 @@ inline Dcel::Vertex::OutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeEnd(
  */
 inline Dcel::Vertex::OutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegin(HalfEdge* start)
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
     return OutgoingHalfEdgeIterator(start, start, this);
 }
 
@@ -1640,8 +1640,8 @@ inline Dcel::Vertex::OutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegi
  */
 inline Dcel::Vertex::OutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegin(HalfEdge* start, HalfEdge* end)
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getFromVertex() == this && "End half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->fromVertex() == this && "End half edge is not incident to iterated face.");
     return OutgoingHalfEdgeIterator(start, end, this);
 }
 
@@ -1656,7 +1656,7 @@ inline Dcel::Vertex::OutgoingHalfEdgeIterator Dcel::Vertex::outgoingHalfEdgeBegi
 inline Dcel::Vertex::IncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegin()
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return IncomingHalfEdgeIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return IncomingHalfEdgeIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1684,8 +1684,8 @@ inline Dcel::Vertex::IncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeEnd(
  */
 inline Dcel::Vertex::IncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegin(HalfEdge* start)
 {
-    assert(start->getToVertex() == this && "Start half edge is not incident to iterated face.");
-    return IncomingHalfEdgeIterator(start->getTwin(), start->getTwin(), this);
+    assert(start->toVertex() == this && "Start half edge is not incident to iterated face.");
+    return IncomingHalfEdgeIterator(start->twin(), start->twin(), this);
 }
 
 /**
@@ -1701,9 +1701,9 @@ inline Dcel::Vertex::IncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegi
  */
 inline Dcel::Vertex::IncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegin(HalfEdge* start, HalfEdge* end)
 {
-    assert(start->getToVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getToVertex() == this && "End half edge is not incident to iterated face.");
-    return IncomingHalfEdgeIterator(start->getTwin(), end->getTwin(), this);
+    assert(start->toVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->toVertex() == this && "End half edge is not incident to iterated face.");
+    return IncomingHalfEdgeIterator(start->twin(), end->twin(), this);
 }
 
 /**
@@ -1717,7 +1717,7 @@ inline Dcel::Vertex::IncomingHalfEdgeIterator Dcel::Vertex::incomingHalfEdgeBegi
 inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegin()
 {
     assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return IncidentHalfEdgeIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return IncidentHalfEdgeIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1745,7 +1745,7 @@ inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeEnd(
  */
 inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegin(HalfEdge* start)
 {
-    assert((start->getFromVertex()==this || start->getToVertex() == this) && "Start half edge is not incident to iterated face.");
+    assert((start->fromVertex()==this || start->toVertex() == this) && "Start half edge is not incident to iterated face.");
     return IncidentHalfEdgeIterator(start, start, this);
 }
 
@@ -1762,8 +1762,8 @@ inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegi
  */
 inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegin(HalfEdge* start, HalfEdge* end)
 {
-    assert((start->getFromVertex()==this || start->getToVertex() == this) && "Start half edge is not incident to iterated face.");
-    assert((end->getFromVertex()==this || end->getToVertex() == this) && "End half edge is not incident to iterated face.");
+    assert((start->fromVertex()==this || start->toVertex() == this) && "Start half edge is not incident to iterated face.");
+    assert((end->fromVertex()==this || end->toVertex() == this) && "End half edge is not incident to iterated face.");
     return IncidentHalfEdgeIterator(start, end, this);
 }
 
@@ -1778,7 +1778,7 @@ inline Dcel::Vertex::IncidentHalfEdgeIterator Dcel::Vertex::incidentHalfEdgeBegi
 inline Dcel::Vertex::IncidentFaceIterator Dcel::Vertex::incidentFaceBegin()
 {
     //assert(checkIncidentHalfEdge() && "Incident half edge is nullptr.");
-    return IncidentFaceIterator(incidentHalfEdge, incidentHalfEdge, this);
+    return IncidentFaceIterator(_incidentHalfEdge, _incidentHalfEdge, this);
 }
 
 /**
@@ -1806,7 +1806,7 @@ inline Dcel::Vertex::IncidentFaceIterator Dcel::Vertex::incidentFaceEnd()
  */
 inline Dcel::Vertex::IncidentFaceIterator Dcel::Vertex::incidentFaceBegin(HalfEdge* start)
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
     return IncidentFaceIterator(start, start, this);
 }
 
@@ -1823,8 +1823,8 @@ inline Dcel::Vertex::IncidentFaceIterator Dcel::Vertex::incidentFaceBegin(HalfEd
  */
 inline Dcel::Vertex::IncidentFaceIterator Dcel::Vertex::incidentFaceBegin(HalfEdge* start, HalfEdge* end)
 {
-    assert(start->getFromVertex() == this && "Start half edge is not incident to iterated face.");
-    assert(end->getFromVertex() == this && "End half edge is not incident to iterated face.");
+    assert(start->fromVertex() == this && "Start half edge is not incident to iterated face.");
+    assert(end->fromVertex() == this && "End half edge is not incident to iterated face.");
     return IncidentFaceIterator(start, end, this);
 }
 

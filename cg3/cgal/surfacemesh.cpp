@@ -36,7 +36,7 @@ SurfaceMesh surfaceMeshFromDcel(const Dcel &d)
     SurfaceMesh mesh;
     std::map<const Dcel::Vertex*, internal::VertexDescriptor> mapV;
     for(const Dcel::Vertex* v : d.vertexIterator()){
-        internal::VertexDescriptor vd = mesh.add_vertex((internal::K::Point_3(v->getCoordinate().x(),v->getCoordinate().y(),v->getCoordinate().z())));
+        internal::VertexDescriptor vd = mesh.add_vertex((internal::K::Point_3(v->coordinate().x(),v->coordinate().y(),v->coordinate().z())));
         mapV[v] = vd;
     }
     for (const Dcel::Face* f : d.faceIterator()){

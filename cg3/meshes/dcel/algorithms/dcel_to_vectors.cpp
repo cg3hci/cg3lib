@@ -13,7 +13,7 @@ namespace cg3 {
  * @param vector
  * @param d
  */
-void dcelAlgorithms::getVectorFaces(std::vector<const Dcel::Face*>& vector, const Dcel& d)
+void dcelAlgorithms::vectorFaces(std::vector<const Dcel::Face*>& vector, const Dcel& d)
 {
     int i = 0;
     vector.resize(d.numberFaces());
@@ -22,7 +22,7 @@ void dcelAlgorithms::getVectorFaces(std::vector<const Dcel::Face*>& vector, cons
     }
 }
 
-void dcelAlgorithms::getVectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
+void dcelAlgorithms::vectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
 {
     int i = 0;
     vector.resize(d.numberFaces());
@@ -31,7 +31,7 @@ void dcelAlgorithms::getVectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
     }
 }
 
-void dcelAlgorithms::getVectorMesh(
+void dcelAlgorithms::vectorMesh(
         std::vector<Pointd>& coords,
         std::vector<std::vector<int> >& faces,
         const Dcel& d,
@@ -46,7 +46,7 @@ void dcelAlgorithms::getVectorMesh(
     mappingFaces.resize(d.numberFaces());
 
     for (const Dcel::Vertex* v : d.vertexIterator()) {
-        coords[nv] = v->getCoordinate();
+        coords[nv] = v->coordinate();
         mappingVertices[nv] = v;
         vertices[v] = nv++;
     }
