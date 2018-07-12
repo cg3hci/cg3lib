@@ -100,9 +100,9 @@ inline const Dcel::Face* Dcel::HalfEdge::face() const
  */
 inline void Dcel::HalfEdge::checkFromVertex() const
 {
-    if (fromVertex == nullptr){
-        std::cerr << "ALERT! Half Edge "<< id << ": from_vertex is nullptr";
-        assert(! (fromVertex == nullptr));
+    if (_fromVertex == nullptr){
+        std::cerr << "ALERT! Half Edge "<< _id << ": from_vertex is nullptr";
+        assert(! (_fromVertex == nullptr));
     }
 }
 
@@ -112,9 +112,9 @@ inline void Dcel::HalfEdge::checkFromVertex() const
  */
 inline void Dcel::HalfEdge::checkToVertex() const
 {
-    if (toVertex == nullptr){
-        std::cerr << "ALERT! Half Edge "<< id << ": to_vertex is nullptr";
-        assert(! (toVertex == nullptr));
+    if (_toVertex == nullptr){
+        std::cerr << "ALERT! Half Edge "<< _id << ": to_vertex is nullptr";
+        assert(! (_toVertex == nullptr));
     }
 }
 
@@ -124,9 +124,9 @@ inline void Dcel::HalfEdge::checkToVertex() const
  */
 inline void Dcel::HalfEdge::checkTwin() const
 {
-    if (twin == nullptr){
-        std::cerr << "ALERT! Half Edge "<< id << ": twin is nullptr";
-        assert(! (twin == nullptr));
+    if (_twin == nullptr){
+        std::cerr << "ALERT! Half Edge "<< _id << ": twin is nullptr";
+        assert(! (_twin == nullptr));
     }
 }
 
@@ -136,9 +136,9 @@ inline void Dcel::HalfEdge::checkTwin() const
  */
 inline void Dcel::HalfEdge::checkPrev() const
 {
-    if (prev == nullptr){
-        std::cerr << "ALERT! Half Edge "<< id << ": prev is nullptr";
-        assert(! (prev == nullptr));
+    if (_prev == nullptr){
+        std::cerr << "ALERT! Half Edge "<< _id << ": prev is nullptr";
+        assert(! (_prev == nullptr));
     }
 }
 
@@ -148,9 +148,9 @@ inline void Dcel::HalfEdge::checkPrev() const
  */
 inline void Dcel::HalfEdge::checkNext() const
 {
-    if (next == nullptr){
-        std::cerr << "ALERT! Half Edge "<< id << ": next is nullptr";
-        assert(! (next == nullptr));
+    if (_next == nullptr){
+        std::cerr << "ALERT! Half Edge "<< _id << ": next is nullptr";
+        assert(! (_next == nullptr));
     }
 }
 
@@ -160,9 +160,9 @@ inline void Dcel::HalfEdge::checkNext() const
  */
 inline void Dcel::HalfEdge::checkFace() const
 {
-    if (face == nullptr){
-        std::cerr << "ALERT! Half Edge "<< id << ": face is nullptr";
-        assert(! (face == nullptr));
+    if (_face == nullptr){
+        std::cerr << "ALERT! Half Edge "<< _id << ": face is nullptr";
+        assert(! (_face == nullptr));
     }
 }
 #endif

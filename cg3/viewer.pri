@@ -92,7 +92,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         #$$PWD/viewer/managers/debugobjects_manager.h \
         $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/utilities/loadersaver.h \
-        $$PWD/viewer/utilities/consolestream.h \
+        $$PWD/viewer/utilities/console_stream.h \
         $$PWD/viewer/utilities/utils.h \
         $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.h \
         $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.h \
@@ -120,8 +120,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
+        $$PWD/viewer/utilities/console_stream.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
-        $$PWD/viewer/utilities/consolestream.tpp \
         $$PWD/viewer/utilities/utils.cpp \
         $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp \
         $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.cpp \

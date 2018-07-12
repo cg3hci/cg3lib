@@ -23,7 +23,6 @@
 #include "internal/drawable_mesh_drawlist_manager.h"
 #include "internal/drawable_container_drawlist_manager.h"
 #include "internal/drawable_object_drawlist_manager.h"
-#include "utilities/consolestream.h"
 
 #include <cg3/utilities/cg3config.h>
 #include <cg3/utilities/string.h>
@@ -49,10 +48,11 @@ public:
 MainWindow::MainWindow(QWidget* parent) :
         QMainWindow(parent),
         ui(new internal::UiMainWindowRaiiWrapper(this)),
-        consoleStream(nullptr),
+        consoleEnabled(false),
         first(true),
         debugObjectsEnabled(false),
         canvas(*ui->glCanvas),
+        console(ui->console),
         debugObjects(&canvas)
 {
     ui->toolBox->removeItem(0);
@@ -80,8 +80,6 @@ MainWindow::MainWindow(QWidget* parent) :
 
 MainWindow::~MainWindow()
 {
-    if (consoleStream != nullptr)
-        delete consoleStream;
     delete ui;
 }
 
@@ -240,20 +238,18 @@ void MainWindow::setFullScreen(bool b)
 }
 
 /**
- * @brief Enables/Disables the console stream that allows to show std::out and std::err
+ * @brief Enables/Disables the console stream
  * streams of the application in the MainWindow.
  */
-void MainWindow::toggleConsoleStream()
+void MainWindow::toggleConsole()
 {
-    if (consoleStream == nullptr){
-        ui->console->show();
-        consoleStream =  new ConsoleStream(std::cout, std::cerr, this->ui->console);
-        ConsoleStream::registerConsoleMessageHandler();
+    if (consoleEnabled){
+        consoleEnabled = false;
+        ui->console->hide();
     }
     else {
-        ui->console->hide();
-        delete consoleStream;
-        consoleStream = nullptr;
+        consoleEnabled = true;
+        ui->console->show();
     }
 }
 
@@ -387,9 +383,9 @@ void MainWindow::on_actionSave_Point_Of_View_as_triggered()
     }
 }
 
-void MainWindow::on_actionShow_Hide_Console_Stream_triggered()
+void MainWindow::on_actionShow_Hide_Console_triggered()
 {
-    toggleConsoleStream();
+    toggleConsole();
 }
 
 void MainWindow::on_actionToggle_Debug_Objects_triggered()

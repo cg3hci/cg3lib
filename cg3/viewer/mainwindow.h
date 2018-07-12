@@ -25,7 +25,7 @@
 
 #include "glcanvas.h"
 #include "utilities/loadersaver.h"
-#include "utilities/consolestream.h"
+#include "utilities/console_stream.h"
 #include "drawable_objects/drawable_mixed_objects.h"
 
 #ifdef CG3_DCEL_DEFINED
@@ -100,7 +100,7 @@ public:
 
     //Window Options:
     void setFullScreen(bool);
-    void toggleConsoleStream(); //work in progress...
+    void toggleConsole(); //work in progress...
     void keyPressEvent(QKeyEvent * event); //event options for keys pressed
 
     //Managers:
@@ -139,7 +139,7 @@ private slots:
     void on_actionShow_Hide_Dock_Widget_triggered();
     void on_actionLoad_Point_Of_View_from_triggered();
     void on_actionSave_Point_Of_View_as_triggered();
-    void on_actionShow_Hide_Console_Stream_triggered();
+    void on_actionShow_Hide_Console_triggered();
     void on_actionToggle_Debug_Objects_triggered();
     void on_action2D_Mode_triggered();
     void on_action3D_Mode_triggered();
@@ -162,7 +162,7 @@ private:
     //Ui::MainWindow* ui;
     internal::UiMainWindowRaiiWrapper* ui;
     std::vector<QFrame*> managers;
-    ConsoleStream* consoleStream;
+    bool consoleEnabled;
     QVBoxLayout* scrollAreaLayout;
     cg3::viewer::LoaderSaver povLS;
     QSpacerItem* m_spacer;
@@ -182,6 +182,9 @@ public:
 
     GLCanvas& canvas; /** @brief Public member of type cg3::viewer::GLCanvas that allows
                           to manage the canvas contained in the MainWindow. */
+
+    ConsoleStream console;
+
     cg3::DrawableMixedObjects debugObjects; /** @brief Public member of type
                                                 cg3::DrawableMixedObjects that allows to
                                                 manage the debug objects that can be shown

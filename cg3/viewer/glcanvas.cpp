@@ -103,6 +103,10 @@ void GLCanvas::fitScene()
     Pointd sceneCenter = bb.center();
     double sceneRadius = bb.diag() / zoomSceneFactor;
 
+    if (unitBoxEnabled)
+        if (sceneRadius < unitBox.diag()/2)
+            sceneRadius = unitBox.diag()/2;
+
     setSceneCenter(qglviewer::Vec(sceneCenter.x(), sceneCenter.y(), sceneCenter.z()));
     setSceneRadius(sceneRadius);
     showEntireScene();

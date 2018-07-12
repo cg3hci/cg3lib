@@ -27,17 +27,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="1">
-     <widget class="QTextEdit" name="console">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
+    <item row="0" column="0">
      <widget class="cg3::viewer::GLCanvas" name="glCanvas" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -46,6 +36,9 @@
        </sizepolicy>
       </property>
      </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QTextEdit" name="console"/>
     </item>
    </layout>
   </widget>
@@ -79,7 +72,7 @@
     </property>
     <addaction name="actionFull_Screen"/>
     <addaction name="actionShow_Hide_Dock_Widget"/>
-    <addaction name="actionShow_Hide_Console_Stream"/>
+    <addaction name="actionShow_Hide_Console"/>
    </widget>
    <widget class="QMenu" name="menuFile_2">
     <property name="title">
@@ -308,9 +301,9 @@
     <string>Save Point Of View as...</string>
    </property>
   </action>
-  <action name="actionShow_Hide_Console_Stream">
+  <action name="actionShow_Hide_Console">
    <property name="text">
-    <string>Show/Hide Console Stream</string>
+    <string>Show/Hide Console</string>
    </property>
    <property name="shortcut">
     <string>C</string>
