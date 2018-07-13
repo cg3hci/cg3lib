@@ -10,7 +10,7 @@ namespace cg3 {
 namespace viewer {
 namespace internal {
 
-CLogBuf::CLogBuf(QTextEdit* t)  : textEdit(t)
+CLogBuf::CLogBuf(QTextEdit* t)  : textEdit(t), coutOutPut(true)
 {
 }
 
@@ -24,7 +24,8 @@ std::basic_stringbuf<char>::int_type CLogBuf::overflow(
 {
     if (v == '\n') {
         textEdit->append(mString.c_str());
-        std::cout << mString << "\n";
+        if (coutOutPut)
+            std::cout << mString << "\n";
         mString.erase(mString.begin(), mString.end());
     }
     else
@@ -43,11 +44,17 @@ std::streamsize CLogBuf::xsputn(const char* p, std::streamsize n)
         if (pos != std::string::npos) {
             std::string tmp(mString.begin(), mString.begin() + pos);
             textEdit->append(tmp.c_str());
-            std::cout << tmp << "\n";
+            if (coutOutPut)
+                std::cout << tmp << "\n";
             mString.erase(mString.begin(), mString.begin() + pos + 1);
         }
     }
     return n;
+}
+
+void CLogBuf::setCoutOutput(bool b)
+{
+    coutOutPut = b;
 }
 
 } //namespace cg3::viewer::internal
@@ -55,11 +62,17 @@ std::streamsize CLogBuf::xsputn(const char* p, std::streamsize n)
 ConsoleStream::ConsoleStream(QTextEdit* text_edit) :
     std::ostream(new internal::CLogBuf(text_edit))
 {
+    buf = (internal::CLogBuf*) rdbuf();
 }
 
 ConsoleStream::~ConsoleStream()
 {
     delete rdbuf();
+}
+
+void ConsoleStream::setCoutOutput(bool b)
+{
+    buf->setCoutOutput(b);
 }
 
 } //namespace cg3::viewer

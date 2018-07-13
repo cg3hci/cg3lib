@@ -113,7 +113,6 @@ void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
 
 void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)
 {
-
     mw.canvas.setDrawableObjectVisibility(object, state == Qt::Checked);
     mw.canvas.update();
 }

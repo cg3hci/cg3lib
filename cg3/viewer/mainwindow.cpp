@@ -26,6 +26,7 @@
 
 #include <cg3/utilities/cg3config.h>
 #include <cg3/utilities/string.h>
+#include <cg3/utilities/timer.h>
 
 namespace cg3 {
 namespace viewer {
@@ -427,9 +428,17 @@ void MainWindow::on_actionLoad_Mesh_triggered()
     std::string filename = meshLS.loadDialog("Open Mesh");
     if (filename != ""){
         std::string name = cg3::filenameWithoutExtension(filename);
+        cg3::Timer t("Load " + name);
         unsigned int i = openedDcels.pushBack(cg3::DrawableDcel(filename), name);
+        t.stop();
         pushDrawableObject((openedDcels[i]), name, true, true);
         canvas.fitScene();
+        console.setCoutOutput(false);
+        console << filename << "\n";
+        console << "N. Vertices: " << openedDcels.at(i).numberVertices()
+                << "; N. Faces: " << openedDcels.at(i).numberFaces() << "\n";
+        console << "Loaded in " << t.delay() << " seconds.\n";
+        console.setCoutOutput(true);
     }
 }
 #endif

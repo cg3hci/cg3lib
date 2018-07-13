@@ -68,13 +68,16 @@ void DrawableObjectsContainer<T>::erase(unsigned int i)
 template<typename T>
 const T& DrawableObjectsContainer<T>::at(unsigned int i) const
 {
-    return (T&)*((*this)[i]);
+    const T* obj = dynamic_cast<const T*> ((*this)[i]);
+    return *obj;
 }
 
 template<typename T>
 T& DrawableObjectsContainer<T>::at(unsigned int i)
 {
-    return (T&)*((*this)[i]);
+    typename std::list<T>::iterator it = list.begin();
+    std::advance(it, i);
+    return *it;
 }
 
 template <typename T>

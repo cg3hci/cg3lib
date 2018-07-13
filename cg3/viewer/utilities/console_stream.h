@@ -22,12 +22,14 @@ private:
     // or whatever you need for your application
     QTextEdit* textEdit;
     std::string mString;
+    bool coutOutPut;
 public:
     CLogBuf(QTextEdit* t);
     ~CLogBuf();
 
     virtual int_type overflow(int_type v);
     virtual std::streamsize xsputn(const char *p, std::streamsize n);
+    void setCoutOutput(bool b);
 };
 
 } //namespace cg3::viewer::internal
@@ -42,6 +44,9 @@ class ConsoleStream : public std::ostream
 public:
     ConsoleStream(QTextEdit* text_edit);
     ~ConsoleStream();
+    void setCoutOutput(bool b);
+private:
+    internal::CLogBuf* buf;
 };
 
 } //namespace cg3::viewer
