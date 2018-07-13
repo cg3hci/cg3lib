@@ -110,6 +110,7 @@ void MainWindow::pushDrawableObject(
         DrawableObjectDrawListManager* manager =
                 new DrawableObjectDrawListManager(this, obj, checkBoxName, checkBoxChecked, closeButtonVisible);
         mapDrawListManagers[obj] = manager;
+
         scrollAreaLayout->addWidget(manager);
 
         scrollAreaLayout->removeItem(m_spacer);

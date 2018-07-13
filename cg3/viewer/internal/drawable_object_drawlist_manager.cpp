@@ -35,19 +35,20 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         ui->closePushButton->setVisible(false);
     const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
     const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(object);
-
+    ui->checkBox->setChecked(visible);
     if (mesh){
         DrawableMeshDrawListManager* submanager =
                 new DrawableMeshDrawListManager(&mw, mesh);
-        setSubFrame(submanager, visible);
+        setSubFrame(submanager, false);
     }
     else if (cont) {
         DrawableContainerDrawListManager* subManager =
                 new DrawableContainerDrawListManager(&mw, cont/*, visible*/);
-        setSubFrame(subManager, visible);
+        setSubFrame(subManager, false);
     }
-    else
-        ui->checkBox->setChecked(visible);
+    else{
+        ui->subFrameCheckBox->setVisible(false);
+    }
 }
 
 DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
@@ -93,7 +94,6 @@ void DrawableObjectDrawListManager::setSubFrame(SubManager* frame, bool vis)
 {
     subframe = frame;
     subframe->setParent(this);
-    ui->checkBox->setTristate();
     layout()->addWidget(frame);
     setSubFrameVisibility(vis);
 }
@@ -102,42 +102,33 @@ void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
 {
     if (subframe){
         if (vis){
-            ui->checkBox->setCheckState(Qt::PartiallyChecked);
-            subframe->setVisible(false);
+            ui->subFrameCheckBox->setCheckState(Qt::Checked);
         }
         else {
-            ui->checkBox->setCheckState(Qt::Unchecked);
-            subframe->setVisible(false);
+            ui->subFrameCheckBox->setCheckState(Qt::Unchecked);
         }
+        subframe->setVisible(vis);
     }
 }
 
 void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)
 {
-    if (!(ui->checkBox->isTristate())){
-        mw.canvas.setDrawableObjectVisibility(object, state == Qt::Checked);
-    }
-    else {
-        if (state == Qt::Unchecked){
-            mw.canvas.setDrawableObjectVisibility(object, false);
-            subframe->setVisible(false);
-        }
-        else if (state == Qt::PartiallyChecked){
-            mw.canvas.setDrawableObjectVisibility(object, true);
-            subframe->setVisible(false);
-        }
-        else {
-            mw.canvas.setDrawableObjectVisibility(object, true);
-            subframe->setVisible(true);
-        }
-    }
+
+    mw.canvas.setDrawableObjectVisibility(object, state == Qt::Checked);
     mw.canvas.update();
+}
+
+void DrawableObjectDrawListManager::on_closePushButton_clicked()
+{
+    mw.deleteDrawableObject(object);
+}
+
+void DrawableObjectDrawListManager::on_subFrameCheckBox_stateChanged(int state)
+{
+    subframe->setVisible(state == Qt::Checked);
 }
 
 } //namespace cg3::viewer
 } //namespace cg3
 
-void cg3::viewer::DrawableObjectDrawListManager::on_closePushButton_clicked()
-{
-    mw.deleteDrawableObject(object);
-}
+

@@ -9,5 +9,7 @@
         <file>vcolor.png</file>
         <file>save.png</file>
         <file>close.png</file>
+        <file>triangle_closed.png</file>
+        <file>triangle_opened.png</file>
     </qresource>
 </RCC>

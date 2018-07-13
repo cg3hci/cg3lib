@@ -341,7 +341,7 @@
     <string>Perspective/Orthographic Camera Mode</string>
    </property>
    <property name="shortcut">
-    <string>T</string>
+    <string>O, P</string>
    </property>
   </action>
   <action name="actionLoad_Mesh">

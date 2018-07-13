@@ -46,6 +46,8 @@ private slots:
 
     void on_closePushButton_clicked();
 
+    void on_subFrameCheckBox_stateChanged(int state);
+
 private:
     Ui::DrawableObjectDrawListManager *ui;
     MainWindow& mw;

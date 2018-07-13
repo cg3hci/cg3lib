@@ -8,6 +8,7 @@
 #include "simpleeigenmesh.h"
 
 #include <cg3/io/load_save_file.h>
+#include <cg3/geometry/transformations.h>
 
 #ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
@@ -66,6 +67,30 @@ Vec3 SimpleEigenMesh::faceNormal(unsigned int f) const
     return normal;
 }
 
+/**
+ * @brief Returns the normal of the given vertex id
+ * @note for cg3::SimpleEigenMesh, the normal is computed every time the
+ * function is called, and the complexity is O(number of faces).
+ * @param v: vertex id
+ */
+Vec3 SimpleEigenMesh::vertexNormal(unsigned int v) const
+{
+    unsigned int n = 0;
+    Vec3 normal;
+    for (unsigned int f = 0; f < F.rows(); f++){
+        for (unsigned int i = 0; i < 3; i++){
+            if ((unsigned int)F(f,i) == v){
+                n++;
+                normal += faceNormal(f);
+            }
+        }
+    }
+    if (n != 0){
+        normal /= n;
+    }
+    return normal;
+}
+
 bool SimpleEigenMesh::isDegenerateTriangle(unsigned int f, double epsilon) const
 {
     assert(f < F.rows());
@@ -115,7 +140,7 @@ bool SimpleEigenMesh::saveOnObj(const std::string& filename) const
     return saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
-void SimpleEigenMesh::translate(const Pointd& p)
+void SimpleEigenMesh::translate(const Vec3& p)
 {
     Eigen::RowVector3d v;
     v << p.x(), p.y(), p.z();
@@ -134,6 +159,13 @@ void SimpleEigenMesh::rotate(const Eigen::Matrix3d& m, const Eigen::Vector3d& ce
         V.row(i) =  m * V.row(i).transpose();
     }
     V.rowwise() += centroid.transpose();
+}
+
+void SimpleEigenMesh::rotate(const Vec3& axis, double angle, const Pointd& centroid)
+{
+    Eigen::Vector3d c;
+    c << centroid.x(), centroid.y(), centroid.z();
+    rotate(cg3::rotationMatrix(axis, angle), c);
 }
 
 void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox)

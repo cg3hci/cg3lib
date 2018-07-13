@@ -75,6 +75,7 @@ public:
     Pointi face(unsigned int i) const;
     double faceArea(unsigned int f) const;
     virtual Vec3 faceNormal(unsigned int f) const;
+    virtual Vec3 vertexNormal(unsigned int v) const;
     virtual void boundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
     virtual BoundingBox boundingBox() const;
     Pointd barycenter() const;
@@ -105,9 +106,10 @@ public:
     virtual bool saveOnPly(const std::string &filename) const;
     virtual bool saveOnObj(const std::string &filename) const;
 
-    virtual void translate(const Pointd &p);
+    virtual void translate(const Vec3 &p);
     virtual void translate(const Eigen::Vector3d &p);
     virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
+    virtual void rotate(const Vec3& axis, double angle, const Pointd& centroid = Pointd());
     virtual void scale(const BoundingBox& newBoundingBox);
     virtual void scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox);
     virtual void scale(const Vec3 &scaleFactor);

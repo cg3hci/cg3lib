@@ -180,8 +180,9 @@ public:
     void rotate(const Eigen::Matrix3d& matrix);
     void rotate(const Eigen::Matrix3d& matrix, const Pointd& centroid);
     #endif
+    void rotate(const Vec3& axis, double angle, const Pointd& centroid = Pointd());
     void rotate(double matrix[3][3], const Pointd& centroid = Pointd());
-    void translate(const Pointd &c);
+    void translate(const Vec3 &c);
     void recalculateIds();
     void resetFaceColors();
     void clear();
