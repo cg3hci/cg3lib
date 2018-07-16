@@ -173,7 +173,7 @@ Vec3 Dcel::Vertex::updateNormal()
     ConstIncidentFaceIterator f;
     for (f = incidentFaceBegin(); f != incidentFaceEnd(); ++f) {
         #ifdef NDEBUG
-        parent->vertexNormals[_id] += (*f)->getNormal();
+        parent->vertexNormals[_id] += (*f)->normal();
         #else
         _normal += (*f)->normal();
         #endif

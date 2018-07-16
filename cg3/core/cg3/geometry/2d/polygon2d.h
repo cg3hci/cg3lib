@@ -22,7 +22,7 @@ public:
     const cg3::Point2Dd& operator [](unsigned int i) const;
     void updateBoundingBox();
     void pushBack(const cg3::Point2Dd& p);
-    bool isCunterClockWise() const;
+    bool isCounterClockWise() const;
     const std::vector<cg3::Point2Dd>& vectorPoints() const;
     void clear();
 

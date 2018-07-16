@@ -42,14 +42,14 @@ inline double internalAngle(
     if (cg3::epsilonEqual(v1,-v2))
         return M_PI;
 
-    double angle = getAngle(v1,v2);
+    double ang = angle(v1,v2);
 
     Vec3 cross = v1.cross(v2);
     cross.normalize();
 
     int sign = cross.dot(direction) >= 0 ? 1 : -1;
 
-    return sign*angle;
+    return sign*ang;
 }
 
 

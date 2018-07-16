@@ -20,8 +20,8 @@ namespace cg3 {
 #ifdef CG3_EIGENMESH_DEFINED
 void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEigenMesh)
 {
-    unsigned int nVertices=simpleEigenMesh.getNumberVertices();
-    unsigned int nFaces=simpleEigenMesh.getNumberFaces();
+    unsigned int nVertices=simpleEigenMesh.numberVertices();
+    unsigned int nFaces=simpleEigenMesh.numberFaces();
 
     std::vector<double> coords;
     std::vector<unsigned int> tris;
@@ -31,16 +31,16 @@ void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEige
 
     for(unsigned int i=0;i<nVertices;++i) {
         unsigned int j=i*3;
-        coords[j]=simpleEigenMesh.getVertex(i).x();
-        coords[j+1]=simpleEigenMesh.getVertex(i).y();
-        coords[j+2]=simpleEigenMesh.getVertex(i).z();
+        coords[j]=simpleEigenMesh.vertex(i).x();
+        coords[j+1]=simpleEigenMesh.vertex(i).y();
+        coords[j+2]=simpleEigenMesh.vertex(i).z();
 
     }
     for(unsigned int i=0;i<nFaces;++i) {
         unsigned int j=i*3;
-        tris[j]=simpleEigenMesh.getFace(i).x();
-        tris[j+1]=simpleEigenMesh.getFace(i).y();
-        tris[j+2]=simpleEigenMesh.getFace(i).z();
+        tris[j]=simpleEigenMesh.face(i).x();
+        tris[j+1]=simpleEigenMesh.face(i).y();
+        tris[j+2]=simpleEigenMesh.face(i).z();
     }
     m = cinolib::Trimesh<>(coords, tris);
 }

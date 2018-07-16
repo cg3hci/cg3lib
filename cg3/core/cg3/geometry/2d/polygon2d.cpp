@@ -57,7 +57,7 @@ void Polygon2D::pushBack(const Point2Dd& p)
     }
 }
 
-bool Polygon2D::isCunterClockWise() const
+bool Polygon2D::isCounterClockWise() const
 {
     return cg3::isPolygonCounterClockwise(pol);
 }

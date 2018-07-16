@@ -14,7 +14,7 @@ unix:!macx{
     DEFINES += CG3_CGAL_DEFINED
     MODULES += CG3_CGAL
 
-    LIBS += -lmpfr -lgmp -lCGAL -frounding-math
+    LIBS += -lmpfr -lgmp -lCGAL -frounding-math -lCGAL_Core
     LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
 }
 
@@ -28,7 +28,7 @@ macx{
 
         LIBS += -frounding-math
         LIBS += -L/libs/lib/gmp -lgmp
-        LIBS += -L/libs/lib/CGAL -lCGAL
+        LIBS += -L/libs/lib/CGAL -lCGAL -lCGAL_Core
         LIBS += -L/libs/lib/boost -lboost_system-mt -DBOOST_LOG_DYN_LINK -lboost_log-mt -lboost_thread-mt -lpthread
         LIBS += -L/libs/lib/mpfr -lmpfr
     }
@@ -121,6 +121,7 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/booleans2d.h \
         $$PWD/cgal/2d/convexhull2d.h \
         $$PWD/cgal/2d/minimumbbox2d.h \
+        $$PWD/cgal/2d/polygonoffset2d.h \
         $$PWD/cgal/2d/segmentintersections2d.h \
         $$PWD/cgal/2d/triangulation2d.h \
         $$PWD/cgal/2d/voronoi2d.h \
@@ -137,6 +138,7 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/booleans2d.cpp \
         $$PWD/cgal/2d/convexhull2d.tpp \
         $$PWD/cgal/2d/minimumbbox2d.cpp \
+        $$PWD/cgal/2d/polygonoffset2d.cpp \
         $$PWD/cgal/2d/segmentintersections2d.cpp \
         $$PWD/cgal/2d/triangulation2d.cpp \
         $$PWD/cgal/2d/voronoi2d.cpp \

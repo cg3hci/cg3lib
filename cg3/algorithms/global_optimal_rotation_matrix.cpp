@@ -52,7 +52,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
 
         double L1_extent = 0.0;
         for(const Dcel::Face* f : inputMesh.faceIterator()) {
-            Vec3 n = f->getNormal();
+            Vec3 n = f->normal();
             n.rotate(mr);
             L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
         }
@@ -88,8 +88,8 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
         Eigen::Matrix3d mr = rotationMatrix(axis, angle);
 
         double L1_extent = 0.0;
-        for(unsigned int f = 0; f < inputMesh.getNumberFaces(); f++) {
-            Vec3 n = inputMesh.getFaceNormal(f);
+        for(unsigned int f = 0; f < inputMesh.numberFaces(); f++) {
+            Vec3 n = inputMesh.faceNormal(f);
             n.rotate(mr);
             L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
         }
