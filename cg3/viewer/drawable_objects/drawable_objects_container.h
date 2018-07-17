@@ -32,7 +32,7 @@ public:
 
     DrawableObjectsContainer();
     ~DrawableObjectsContainer();
-    unsigned int pushBack(const T& d, const std::string& name);
+    unsigned int pushBack(const T& d, const std::string& name, bool vis = true);
     void pushList(const std::list<T>& list);
     const std::list<T>& getList() const;
     void clear();

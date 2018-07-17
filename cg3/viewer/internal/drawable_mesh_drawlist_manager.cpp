@@ -35,6 +35,8 @@ DrawableMeshDrawListManager::DrawableMeshDrawListManager(
     else
         ui->vColorRadioButton->toggle();
 
+    ui->nVerticesLabel->setText(QString("N. Vertices: ") + QString::number(mesh->numberVertices()));
+    ui->nFacesLabel->setText(QString("N. Faces: ") + QString::number(mesh->numberFaces()));
     ls.addSupportedExtension("obj", "ply");
 }
 

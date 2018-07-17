@@ -82,6 +82,9 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_segment.h \
         $$PWD/viewer/drawable_objects/drawable_triangle.h \
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.h \
+        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.h \
+        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.h \
+        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h \
         $$PWD/viewer/interfaces/drawable_container.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
@@ -91,13 +94,11 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_object_drawlist_manager.h \
         #$$PWD/viewer/managers/debugobjects_manager.h \
         $$PWD/viewer/opengl_objects/opengl_objects.h \
+        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
         $$PWD/viewer/utilities/loadersaver.h \
         $$PWD/viewer/utilities/console_stream.h \
         $$PWD/viewer/utilities/utils.h \
-        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.h \
-        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.h \
-        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h \
-        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h
+        $$PWD/viewer/widgets/qclickablelabel.h
 
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
@@ -111,6 +112,9 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_segment.cpp \
         $$PWD/viewer/drawable_objects/drawable_triangle.cpp \
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.cpp \
+        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp \
+        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.cpp \
+        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.cpp \
         $$PWD/viewer/interfaces/drawable_container.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/interfaces/pickable_object.cpp \
@@ -120,13 +124,12 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
+        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp \
         $$PWD/viewer/utilities/console_stream.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
         $$PWD/viewer/utilities/utils.cpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.cpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.cpp \
-        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp
+        $$PWD/viewer/widgets/qclickablelabel.cpp
+
 
     FORMS += \
         $$PWD/viewer/mainwindow.ui \
@@ -184,3 +187,4 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
+

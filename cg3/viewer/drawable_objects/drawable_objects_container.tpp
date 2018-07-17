@@ -21,10 +21,10 @@ DrawableObjectsContainer<T>::~DrawableObjectsContainer()
 }
 
 template <typename T>
-unsigned int DrawableObjectsContainer<T>::pushBack(const T& d, const std::string& name)
+unsigned int DrawableObjectsContainer<T>::pushBack(const T& d, const std::string& name, bool vis)
 {
     list.push_back(d);
-    cg3::DrawableContainer::pushBack(&(list.back()), name);
+    cg3::DrawableContainer::pushBack(&(list.back()), name, vis);
     return list.size()-1;
 }
 

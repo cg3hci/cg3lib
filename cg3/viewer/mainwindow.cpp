@@ -187,7 +187,7 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
 bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::string& newName)
 {
     if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
-        mapDrawListManagers[obj]->setNameCheckBox(newName);
+        mapDrawListManagers[obj]->setDrawableObjectName(newName);
         return true;
     }
     return false;

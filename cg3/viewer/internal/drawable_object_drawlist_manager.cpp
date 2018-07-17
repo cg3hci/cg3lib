@@ -26,10 +26,12 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
     ui(new Ui::DrawableObjectDrawListManager),
     mw((MainWindow&)*parent),
     object(object),
-    subframe(nullptr)
+    subframe(nullptr),
+    selected(false),
+    container(false)
 {
     ui->setupUi(this);
-    ui->checkBox->setText(QString::fromStdString(name));
+    ui->objectName->setText(QString::fromStdString(name));
 
     if (!closeButtonVisible)
         ui->closePushButton->setVisible(false);
@@ -40,14 +42,18 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         DrawableMeshDrawListManager* submanager =
                 new DrawableMeshDrawListManager(&mw, mesh);
         setSubFrame(submanager, false);
+        ui->objectType->setText("Mesh");
     }
     else if (cont) {
         DrawableContainerDrawListManager* subManager =
                 new DrawableContainerDrawListManager(&mw, cont/*, visible*/);
         setSubFrame(subManager, false);
+        container = true;
+        ui->objectType->setText("Container");
     }
     else{
         ui->subFrameCheckBox->setVisible(false);
+        ui->objectType->setText("Object");
     }
 }
 
@@ -62,9 +68,14 @@ void DrawableObjectDrawListManager::setDrawableObjectVisibility(bool vis)
     setSubFrameVisibility(vis);
 }
 
-void DrawableObjectDrawListManager::setNameCheckBox(const std::string& newName)
+void DrawableObjectDrawListManager::setDrawableObjectName(const std::string& newName)
 {
-    ui->checkBox->setText(QString::fromStdString(newName));
+    ui->objectName->setText(QString::fromStdString(newName));
+}
+
+bool DrawableObjectDrawListManager::isContainer() const
+{
+    return container;
 }
 
 /**
@@ -88,6 +99,30 @@ void DrawableObjectDrawListManager::updateManagerProperties()
         setDrawableObjectVisibility(object->isVisible());
     if (subframe)
         subframe->updateManagerProperties();
+}
+
+void DrawableObjectDrawListManager::toggleSelection()
+{
+    if (selected){
+        selected = false;
+        ui->frame->setStyleSheet("");
+    }
+    else {
+        selected = true;
+        ui->frame->setStyleSheet("background-color:yellow;");
+    }
+}
+
+void DrawableObjectDrawListManager::setSelection(bool b)
+{
+    if (b){
+        selected = true;
+        ui->frame->setStyleSheet("background-color:yellow;");
+    }
+    else {
+        selected = false;
+        ui->frame->setStyleSheet("");
+    }
 }
 
 void DrawableObjectDrawListManager::setSubFrame(SubManager* frame, bool vis)
@@ -127,7 +162,15 @@ void DrawableObjectDrawListManager::on_subFrameCheckBox_stateChanged(int state)
     subframe->setVisible(state == Qt::Checked);
 }
 
+void DrawableObjectDrawListManager::on_objectName_clicked()
+{
+    toggleSelection();
+}
+
+void DrawableObjectDrawListManager::on_objectType_clicked()
+{
+    toggleSelection();
+}
+
 } //namespace cg3::viewer
 } //namespace cg3
-
-

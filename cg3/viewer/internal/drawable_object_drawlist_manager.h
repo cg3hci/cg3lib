@@ -35,9 +35,13 @@ public:
     ~DrawableObjectDrawListManager();
 
     void setDrawableObjectVisibility(bool vis);
-    void setNameCheckBox(const std::string& newName);
+    void setDrawableObjectName(const std::string& newName);
+    bool isContainer() const;
     void updateObjectProperties();
     void updateManagerProperties();
+    void toggleSelection();
+    void setSelection(bool b = true);
+    bool isSelected() const;
 
 private slots:
     void setSubFrame(SubManager* frame, bool vis = true);
@@ -48,11 +52,17 @@ private slots:
 
     void on_subFrameCheckBox_stateChanged(int state);
 
+    void on_objectName_clicked();
+
+    void on_objectType_clicked();
+
 private:
     Ui::DrawableObjectDrawListManager *ui;
     MainWindow& mw;
     const DrawableObject* object;
     SubManager* subframe;
+    bool selected;
+    bool container;
 };
 
 } //namespace cg3::viewer
