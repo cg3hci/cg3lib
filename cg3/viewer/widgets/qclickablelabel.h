@@ -11,6 +11,15 @@
 #include <QWidget>
 #include <Qt>
 
+/**
+ * @brief The QClickableLabel class
+ *
+ * A QLabel class which can be clicked (clicked event).
+ *
+ * Usage: just Promote a QLabel to a QClickableLabel
+ *
+ * @link https://wiki.qt.io/Clickable_QLabel
+ */
 class QClickableLabel : public QLabel
 {
     Q_OBJECT
