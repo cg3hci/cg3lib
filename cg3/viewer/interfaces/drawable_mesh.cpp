@@ -185,6 +185,8 @@ void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* co
         glEnableClientState(GL_COLOR_ARRAY);
         glColorPointer (3, GL_FLOAT, 0, vertexColors);
 
+        glPointSize(3);
+
         glDrawArrays(GL_POINTS, 0, nv);
 
         glDisableClientState(GL_COLOR_ARRAY);

@@ -121,7 +121,6 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/booleans2d.h \
         $$PWD/cgal/2d/convexhull2d.h \
         $$PWD/cgal/2d/minimumbbox2d.h \
-        $$PWD/cgal/2d/polygonoffset2d.h \
         $$PWD/cgal/2d/segmentintersections2d.h \
         $$PWD/cgal/2d/triangulation2d.h \
         $$PWD/cgal/2d/voronoi2d.h \
@@ -138,7 +137,6 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/2d/booleans2d.cpp \
         $$PWD/cgal/2d/convexhull2d.tpp \
         $$PWD/cgal/2d/minimumbbox2d.cpp \
-        $$PWD/cgal/2d/polygonoffset2d.cpp \
         $$PWD/cgal/2d/segmentintersections2d.cpp \
         $$PWD/cgal/2d/triangulation2d.cpp \
         $$PWD/cgal/2d/voronoi2d.cpp \
