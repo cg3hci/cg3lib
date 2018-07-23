@@ -35,6 +35,8 @@ public:
             bool closeButtonVisible = false);
     ~DrawableContainerDrawListManager();
 
+    std::vector<const DrawableObject*> selectedDrawableObjects() const;
+
     // SubManager interface
     void updateObjectProperties();
     void updateManagerProperties();

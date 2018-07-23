@@ -65,6 +65,21 @@ DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
     delete ui;
 }
 
+std::vector<const DrawableObject*> DrawableContainerDrawListManager::selectedDrawableObjects() const
+{
+    std::vector<const DrawableObject*> vec;
+    for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter){
+        if (iter->second->isSelected()){
+            vec.push_back(iter->first);
+        }
+        if (iter->second->isContainer()){
+            std::vector<const DrawableObject*> tmp = iter->second->containedSelectedObjects();
+            vec.insert(vec.end(), tmp.begin(), tmp.end());
+        }
+    }
+    return vec;
+}
+
 void DrawableContainerDrawListManager::updateObjectProperties()
 {
     for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter)

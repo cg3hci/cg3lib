@@ -42,6 +42,7 @@ public:
     void toggleSelection();
     void setSelection(bool b = true);
     bool isSelected() const;
+    std::vector<const cg3::DrawableObject*> containedSelectedObjects() const;
 
 private slots:
     void setSubFrame(SubManager* frame, bool vis = true);

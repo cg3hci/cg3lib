@@ -8,7 +8,7 @@
 #ifndef CG3_CONST_H
 #define CG3_CONST_H
 
-#include "../geometry/point.h"
+#include "../geometry/bounding_box.h"
 #include "../utilities/color.h"
 
 namespace cg3 {
@@ -32,6 +32,10 @@ static const std::array<Vec3, 6> AXIS
     Vec3( 0,-1, 0),
     Vec3( 0, 0,-1),
 };
+
+static const cg3::BoundingBox unitBoundingBox(
+        cg3::Pointd(-1,-1,-1),
+        cg3::Pointd( 1, 1, 1));
 
 static const cg3::Vec3 X_AXIS(1, 0, 0);
 static const cg3::Vec3 Y_AXIS(0, 1, 0);

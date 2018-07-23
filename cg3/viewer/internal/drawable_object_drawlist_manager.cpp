@@ -125,6 +125,21 @@ void DrawableObjectDrawListManager::setSelection(bool b)
     }
 }
 
+bool DrawableObjectDrawListManager::isSelected() const
+{
+    return selected;
+}
+
+std::vector<const DrawableObject*> DrawableObjectDrawListManager::containedSelectedObjects() const
+{
+    std::vector<const DrawableObject*> vec;
+    if (!container)
+        return vec;
+    DrawableContainerDrawListManager* contFrame = (DrawableContainerDrawListManager*)subframe;
+    return contFrame->selectedDrawableObjects();
+
+}
+
 void DrawableObjectDrawListManager::setSubFrame(SubManager* frame, bool vis)
 {
     subframe = frame;

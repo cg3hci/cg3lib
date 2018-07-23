@@ -194,6 +194,59 @@ bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::str
 }
 
 /**
+ * @brief Returns a vector of all the selected DrawableObjects of the DrawList.
+ * @return the vector of selected objects.
+ */
+std::vector<const DrawableObject*> MainWindow::selectedDrawableObjects() const
+{
+    std::vector<const DrawableObject*> vec;
+    for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p :
+         mapDrawListManagers){
+        if (p.second->isSelected()){
+            vec.push_back(p.first);
+        }
+        if (p.second->isContainer()){
+            std::vector<const DrawableObject*> tmp = p.second->containedSelectedObjects();
+            vec.insert(vec.end(), tmp.begin(), tmp.end());
+        }
+    }
+    return vec;
+}
+
+/**
+ * @brief Returns the only DrawableObject which is selected, nullptr if none or more than
+ * one object is selected.
+ * @return the selected DrawableObject (if and ONLY if there is one selected DrawableObject)
+ */
+const DrawableObject* MainWindow::selectedDrawableObject() const
+{
+    const DrawableObject* obj = nullptr;
+    for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p :
+         mapDrawListManagers){
+        if (p.second->isSelected()){
+            if (obj == nullptr){
+                obj = p.first;
+            }
+            else {
+                return nullptr;
+            }
+        }
+        if (p.second->isContainer()){
+            std::vector<const DrawableObject*> tmp = p.second->containedSelectedObjects();
+            if (tmp.size() > 0){
+                if (obj == nullptr && tmp.size() == 1){
+                    obj = tmp[0];
+                }
+                else {
+                    return nullptr;
+                }
+            }
+        }
+    }
+    return obj;
+}
+
+/**
  * @brief Enables the Debug Objects, they will be drawn in the canvas and their
  * checkbox in the scroll area will be shown.
  */
