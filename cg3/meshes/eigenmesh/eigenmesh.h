@@ -59,7 +59,7 @@ public:
     void updateBoundingBox();
     virtual void clear();
     virtual unsigned int addFace(const Eigen::VectorXi &f);
-    virtual unsigned int addFace(int t1, int t2, int t3);
+    virtual unsigned int addFace(unsigned int t1, unsigned int t2, unsigned int t3);
     virtual unsigned int addVertex(const Eigen::VectorXd &p);
     virtual unsigned int addVertex(const Pointd &p);
     virtual unsigned int addVertex(double x, double y, double z);
@@ -222,7 +222,7 @@ inline unsigned int EigenMesh::addFace(const Eigen::VectorXi& f)
     return (unsigned int)F.rows()-1;
 }
 
-inline unsigned int EigenMesh::addFace(int t1, int t2, int t3)
+inline unsigned int EigenMesh::addFace(unsigned int t1, unsigned int t2, unsigned int t3)
 {
     SimpleEigenMesh::addFace(t1, t2, t3);
     NF.conservativeResize(F.rows(), Eigen::NoChange);

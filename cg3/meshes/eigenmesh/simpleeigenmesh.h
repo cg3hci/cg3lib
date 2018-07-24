@@ -90,9 +90,9 @@ public:
     virtual unsigned int addVertex(double x, double y, double z);
     virtual void resizeFaces(unsigned int nf);
     void setFace(unsigned int i, const Eigen::VectorXi &f);
-    void setFace(unsigned int i, int t1, int t2, int t3);
+    void setFace(unsigned int i, unsigned int t1, unsigned int t2, unsigned int t3);
     virtual unsigned int addFace(const Eigen::VectorXi &f);
-    virtual unsigned int addFace(int t1, int t2, int t3);
+    virtual unsigned int addFace(unsigned int t1, unsigned int t2, unsigned int t3);
     virtual void removeFace(unsigned int f);
     bool isDegenerateTriangle(unsigned int f, double epsilon = CG3_EPSILON) const;
     virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
@@ -314,7 +314,7 @@ inline void SimpleEigenMesh::setFace(unsigned int i, const Eigen::VectorXi& f)
     F.row(i) =  f;
 }
 
-inline void SimpleEigenMesh::setFace(unsigned int i, int t1, int t2, int t3)
+inline void SimpleEigenMesh::setFace(unsigned int i, unsigned int t1, unsigned int t2, unsigned int t3)
 {
     assert (i < (unsigned int)F.rows());
     F(i, 0) = t1; F(i, 1) = t2; F(i, 2) = t3;
@@ -328,7 +328,7 @@ inline unsigned int SimpleEigenMesh::addFace(const Eigen::VectorXi& f)
     return (unsigned int)F.rows()-1;
 }
 
-inline unsigned int SimpleEigenMesh::addFace(int t1, int t2, int t3)
+inline unsigned int SimpleEigenMesh::addFace(unsigned int t1, unsigned int t2, unsigned int t3)
 {
     F.conservativeResize(F.rows()+1, Eigen::NoChange);
     F(F.rows()-1, 0) = t1; F(F.rows()-1, 1) = t2; F(F.rows()-1, 2) = t3;

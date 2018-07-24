@@ -41,6 +41,7 @@ void convexHull2D(const InputContainer& container, OutputContainer& convexHull)
  * @param[in] first First iterator of the input container
  * @param[in] end End iterator of the input container
  * @param[out] outIt Output iterator for the container containing the convex hull
+ * @return New output iterator
  */
 template <class T, class InputIterator, class OutputIterator>
 OutputIterator convexHull2D(InputIterator first, InputIterator end, OutputIterator outIt)
