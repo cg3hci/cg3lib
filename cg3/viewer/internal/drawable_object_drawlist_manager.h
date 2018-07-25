@@ -36,6 +36,7 @@ public:
 
     void setDrawableObjectVisibility(bool vis);
     void setDrawableObjectName(const std::string& newName);
+    std::string drawableObjectName() const;
     bool isContainer() const;
     void updateObjectProperties();
     void updateManagerProperties();

@@ -73,6 +73,11 @@ void DrawableObjectDrawListManager::setDrawableObjectName(const std::string& new
     ui->objectName->setText(QString::fromStdString(newName));
 }
 
+std::string DrawableObjectDrawListManager::drawableObjectName() const
+{
+    return  ui->objectName->text().toStdString();
+}
+
 bool DrawableObjectDrawListManager::isContainer() const
 {
     return container;

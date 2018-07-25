@@ -91,6 +91,7 @@ public:
     bool setDrawableObjectName(
             const cg3::DrawableObject* obj,
             const std::string& newName);
+    std::string nameOfDrawableObject(const cg3::DrawableObject* obj) const;
     std::vector<const cg3::DrawableObject*> selectedDrawableObjects() const;
     const DrawableObject* selectedDrawableObject() const;
 

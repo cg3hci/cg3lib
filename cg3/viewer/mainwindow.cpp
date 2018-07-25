@@ -193,6 +193,16 @@ bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::str
     return false;
 }
 
+std::string MainWindow::nameOfDrawableObject(const DrawableObject* obj) const
+{
+    auto it = mapDrawListManagers.find(obj);
+    if (it != mapDrawListManagers.end()){
+        return it->second->drawableObjectName();
+    }
+    else
+        return "";
+}
+
 /**
  * @brief Returns a vector of all the selected DrawableObjects of the DrawList.
  * @return the vector of selected objects.
