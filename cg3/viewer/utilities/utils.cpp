@@ -6,16 +6,15 @@
  */
 #include "utils.h"
 
-#include <cg3/geometry/bounding_box.h>
 #include <cg3/viewer/interfaces/drawable_object.h>
 
 namespace cg3 {
 
-BoundingBox getFullBoundingBoxDrawableObjects(
+BoundingBox fullBoundingBoxDrawableObjects(
         const std::vector<const cg3::DrawableObject*>& drawlist,
         bool onlyVisible)
 {
-    cg3::BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
+    BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
     if (drawlist.size() > 0) {
         unsigned int i = 0;
         if (onlyVisible) {

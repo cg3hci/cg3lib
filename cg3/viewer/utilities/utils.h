@@ -8,22 +8,25 @@
 #define CG3_VIEWER_UTILS_H
 
 #include <vector>
+#include <cg3/geometry/bounding_box.h>
 
 namespace cg3 {
 
-class BoundingBox;
 class DrawableObject;
 
-BoundingBox getFullBoundingBoxDrawableObjects(
+BoundingBox fullBoundingBoxDrawableObjects(
         const std::vector<const DrawableObject*>& drawlist,
         bool onlyVisible = true);
 
 #ifdef CG3_OLD_NAMES_COMPATIBILITY
 inline BoundingBox getFullBoundingBoxDrawableObjects(
         const std::vector<const DrawableObject*>& drawlist,
-        bool onlyVisible = true) {return fullBoundingBoxDrawableObjects(drawlist, onlyVisible);}
+        bool onlyVisible = true)
+{
+    return fullBoundingBoxDrawableObjects(drawlist, onlyVisible);
+}
 #endif
 
-}
+} //namespace cg3
 
 #endif // CG3_VIEWER_UTILS_H
