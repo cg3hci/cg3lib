@@ -111,7 +111,7 @@ double DrawableContainer::sceneRadius() const
 
 BoundingBox DrawableContainer::totalBoundingBox() const
 {
-    return cg3::getFullBoundingBoxDrawableObjects(objects, true);
+    return cg3::fullBoundingBoxDrawableObjects(objects, true);
 }
 
 } //namespace cg3

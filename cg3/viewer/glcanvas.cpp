@@ -98,7 +98,7 @@ void GLCanvas::fitScene()
     bool onlyVisible = true;
     if (sizeVisibleDrawableObjects() == 0 && drawlist.size() > 0)
         onlyVisible = false;
-    BoundingBox bb = getFullBoundingBoxDrawableObjects(onlyVisible);
+    BoundingBox bb = fullBoundingBoxDrawableObjects(onlyVisible);
 
     Pointd sceneCenter = bb.center();
     double sceneRadius = bb.diag() / zoomSceneFactor;
@@ -313,9 +313,9 @@ unsigned int GLCanvas::sizeDrawableObjectsList() const
     return (unsigned int)drawlist.size();
 }
 
-BoundingBox GLCanvas::getFullBoundingBoxDrawableObjects(bool onlyVisible) const
+BoundingBox GLCanvas::fullBoundingBoxDrawableObjects(bool onlyVisible) const
 {
-    return cg3::getFullBoundingBoxDrawableObjects(drawlist, onlyVisible);
+    return cg3::fullBoundingBoxDrawableObjects(drawlist, onlyVisible);
 }
 
 void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool vis)
