@@ -53,7 +53,7 @@ void GLCanvas::drawWithNames()
     QGLViewer::setBackgroundColor(backgroundColor);
 
     for(unsigned int i=0; i<pickList.size(); ++i){
-        if (pickList[i]->isVisible()){
+        if (pickList[i] && pickList[i]->isVisible()){
             pickList[i]->drawWithNames();
         }
     }
@@ -61,9 +61,9 @@ void GLCanvas::drawWithNames()
 
 void GLCanvas::postSelection(const QPoint& point)
 {
-    unsigned int idName = selectedName();
+    int idName = selectedName();
 
-    if ((int) idName == -1){
+    if (idName == -1){
         if (mode == _2D){
             qglviewer::Vec orig, dir;
             camera()->convertClickToLine(point, orig, dir);
@@ -83,9 +83,9 @@ void GLCanvas::postSelection(const QPoint& point)
     }
     else {
         unsigned int idObject, idElement;
-        PickableObject::getIdsFromIdName(idName, idObject, idElement);
+        PickableObject::getIdsFromIdName((unsigned int)idName, idObject, idElement);
         for (const PickableObject* pobj : pickList){ //find idObject in PickList
-            if (pobj->id == idObject) {
+            if (pobj && pobj->id == idObject) {
                 emit objectPicked(pobj, idElement);
                 return;
             }
@@ -365,9 +365,10 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
 
         if (pobj) {
             unusedPickableObjectsIds.insert(pobj->id);
-            std::vector<const PickableObject *>::iterator it =
-                    std::find(pickList.begin(), pickList.end(), pobj);
-            pickList.erase(it);
+            //std::vector<const PickableObject *>::iterator it =
+            //        std::find(pickList.begin(), pickList.end(), pobj);
+            //pickList.erase(it);
+            pickList[pobj->id] = nullptr;
         }
 
         return true;
