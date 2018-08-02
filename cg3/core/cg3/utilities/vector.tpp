@@ -6,6 +6,8 @@
  */
 
 #include "vector.h"
+#include <algorithm>
+#include <numeric>
 
 namespace cg3 {
 

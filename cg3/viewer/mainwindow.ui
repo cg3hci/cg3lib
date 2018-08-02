@@ -48,7 +48,7 @@
      <x>0</x>
      <y>0</y>
      <width>929</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -152,8 +152,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>280</width>
-          <height>508</height>
+          <width>286</width>
+          <height>528</height>
          </rect>
         </property>
         <attribute name="label">
@@ -209,7 +209,7 @@
           <x>0</x>
           <y>0</y>
           <width>250</width>
-          <height>541</height>
+          <height>554</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -222,9 +222,6 @@
   <action name="actionSave_Snapshot">
    <property name="text">
     <string>Save Snapshot</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionShow_Axis">
