@@ -12,6 +12,16 @@
 namespace cg3 {
 namespace dcelAlgorithms {
 
+/**
+ * @brief Executes a flooding using a Depth First Search algorithm with the given comparator.
+ *
+ * A face f will be added to the returned set if exists a path from the seed to f where
+ * every face fi that belongs to the path gives c(fi) = true.
+ *
+ * @param seed: the radix face of the DFS
+ * @param c: the compatator that allows to check if a face can be added to the flooding.
+ * @return
+ */
 template <typename Comp>
 std::set<const Dcel::Face*> floodDFS(const Dcel::Face* seed, Comp c);
 

@@ -22,6 +22,8 @@ std::set<const Dcel::Face*> dcelAlgorithms::floodDFS(const Dcel::Face* seed, Com
     std::set<const Dcel::Face*> faces;
     std::vector<const Dcel::Face *> stack_faces; // only triangles with same label of
                                                  //the patch will stay on the stack
+    if (!c(seed))
+        return  faces;
 
     faces.insert(seed);
 
@@ -51,6 +53,9 @@ std::set<unsigned int> dcelAlgorithms::floodDFS(const Dcel& d, unsigned int seed
     std::set<unsigned int> faces;
     std::vector<const Dcel::Face *> stack_faces; // only triangles with same label of
                                                  //the patch will stay on the stack
+    if (!c(seed))
+        return  faces;
+
     faces.insert(seed);
 
     for (const Dcel::Face* adjacent : d.face(seed)->adjacentFaceIterator()){
@@ -85,6 +90,10 @@ template <typename Comp>
 std::set<const Dcel::Face*> dcelAlgorithms::floodBFS(const Dcel::Face* seed, Comp c)
 {
     std::set<const cg3::Dcel::Face*> set;
+
+    if (!c(seed))
+        return  set;
+
     set.insert(seed);
     std::list<const cg3::Dcel::Face *> queue_faces; // only triangles with same label of
                                                      //the patch will stay on the queue
@@ -114,6 +123,10 @@ template<typename Comp>
 std::set<unsigned int> dcelAlgorithms::floodBFS(const Dcel& d, unsigned int seed, Comp c)
 {
     std::set<unsigned int> set;
+
+    if (!c(seed))
+        return  set;
+
     set.insert(seed);
     const cg3::Dcel::Face* fseed = d.face(seed);
     std::list<const cg3::Dcel::Face *> queue_faces; // only triangles with same label of
