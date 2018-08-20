@@ -21,11 +21,9 @@ inline Dcel::Dcel(const std::string& filename) : nVertices(0), nHalfEdges(0), nF
 }
 
 /**
- * \~Italian
- * @brief Funzione che restituisce il puntatore al vertice avente l'id passato in input
- * @param[in] idVertex: id del vertice che verrà restituito
- * @return Il puntatore al vertice costante se l'id esiste all'interno della Dcel, nullptr altrimenti
- * @par Complessità:
+ * @param[in] idVertex: id of the vertex that will be returned
+ * @return The const pointer to the vertex if the id exists, nullptr otherwise
+ * @par Complexity:
  *      \e O(1)
  */
 inline const Dcel::Vertex* Dcel::vertex(unsigned int idVertex) const
@@ -35,11 +33,9 @@ inline const Dcel::Vertex* Dcel::vertex(unsigned int idVertex) const
 }
 
 /**
- * \~Italian
- * @brief Funzione che restituisce il puntatore all'half edge avente l'id passato in input
- * @param[in] idHalfEdge: id dell'half edge che verrà restituito
- * @return Il puntatore all'half edge costante se l'id esiste all'interno della Dcel, nullptr altrimenti
- * @par Complessità:
+ * @param[in] idHalfEdge: id of the half edge that will be returned
+ * @return The const pointer to the half edge if the id exists, nullptr otherwise
+ * @par Complexity:
  *      \e O(1)
  */
 inline const Dcel::HalfEdge* Dcel::halfEdge(unsigned int idHalfEdge) const
@@ -49,11 +45,9 @@ inline const Dcel::HalfEdge* Dcel::halfEdge(unsigned int idHalfEdge) const
 }
 
 /**
- * \~Italian
- * @brief Funzione che restituisce il puntatore alla faccia avente l'id passato in input
- * @param[in] idFace: id della faccia che verrà restituito
- * @return Il puntatore alla faccia costante se l'id esiste all'interno della Dcel, nullptr altrimenti
- * @par Complessità:
+ * @param[in] idFace: id of the face that will be returned
+ * @return The const pointer to the face if the id exists, nullptr otherwise
+ * @par Complexity:
  *      \e O(1)
  */
 inline const Dcel::Face* Dcel::face(unsigned int idFace) const
@@ -63,11 +57,10 @@ inline const Dcel::Face* Dcel::face(unsigned int idFace) const
 }
 
 /**
- * \~Italian
- * @brief Restituisce il bounding box della mesh contenuta nella Dcel
- * @note Non ricalcola il bounding box, restituisce solo l'ultimo bounding box calcolato o settato
- * @return Il bounding box della Dcel
- * @par Complessità:
+ * @note Does not calculate the bounding box, it just return the last computed one.
+ * @see updateBoundingBox()
+ * @return The bounding box of the mesh after its last update
+ * @par Complexity:
  *      \e O(1)
  */
 inline BoundingBox Dcel::boundingBox() const
@@ -76,9 +69,7 @@ inline BoundingBox Dcel::boundingBox() const
 }
 
 /**
- * \~Italian
- * @brief Restituisce il numero di vertici presenti nella Dcel.
- * @return Numero di vertici.
+ * @return The number of vertices contained in the Dcel.
  */
 inline unsigned int Dcel::numberVertices () const
 {
@@ -86,9 +77,7 @@ inline unsigned int Dcel::numberVertices () const
 }
 
 /**
- * \~Italian
- * @brief Restituisce il numero di half edge presenti nella Dcel.
- * @return Numero di half edge.
+ * @return The number of half edges contained in the Dcel.
  */
 inline unsigned int Dcel::numberHalfEdges () const
 {
@@ -96,9 +85,7 @@ inline unsigned int Dcel::numberHalfEdges () const
 }
 
 /**
- * \~Italian
- * @brief Restituisce il numero di facce presenti nella Dcel.
- * @return Numero di facce.
+ * @return The number of faces contained in the Dcel.
  */
 inline unsigned int Dcel::numberFaces () const
 {
@@ -106,9 +93,37 @@ inline unsigned int Dcel::numberFaces () const
 }
 
 /**
- * \~Italian
- * @brief Funzione di inizializzazione di Dcel::ConstVertexIterator
- * @return Un iteratore che punta al primo vertice della Dcel
+ * @param[in] v: a pointer to a Vertex
+ * @return true if the vertex belongs to this Dcel, false otherwise
+ * @see vertexBelongsToThis
+ */
+inline bool Dcel::contains(const Dcel::Vertex* v) const
+{
+    return vertexBelongsToThis(v);
+}
+
+/**
+ * @param[in] he: a pointer to a HalfEdge
+ * @return true if the half edge belongs to this Dcel, false otherwise
+ * @see halfEdgeBelongsToThis
+ */
+inline bool Dcel::contains(const Dcel::HalfEdge* he) const
+{
+    return halfEdgeBelongsToThis(he);
+}
+
+/**
+ * @param[in] he: a pointer to a Face
+ * @return true if the face belongs to this Dcel, false otherwise
+ * @see faceBelongsToThis
+ */
+inline bool Dcel::contains(const Dcel::Face* f) const
+{
+    return  faceBelongsToThis(f);
+}
+
+/**
+ * @return An iterator that points to the first vertex of the Dcel
  */
 inline Dcel::ConstVertexIterator Dcel::vertexBegin() const
 {
@@ -118,9 +133,7 @@ inline Dcel::ConstVertexIterator Dcel::vertexBegin() const
 }
 
 /**
- * \~Italian
- * @brief Funzione di finalizzazione di Dcel::ConstVertexIterator
- * @return Un iteratore che punta all'ultimo vertice della Dcel
+ * @return An iterator that points after the last vertex of the Dcel
  */
 inline Dcel::ConstVertexIterator Dcel::vertexEnd() const
 {
@@ -128,9 +141,7 @@ inline Dcel::ConstVertexIterator Dcel::vertexEnd() const
 }
 
 /**
- * \~Italian
- * @brief Funzione di inizializzazione di Dcel::ConstHalfEdgeIterator
- * @return Un iteratore che punta al primo half edge della Dcel
+ * @return An iterator that points to the first half edge of the Dcel
  */
 inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeBegin() const
 {
@@ -140,9 +151,7 @@ inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeBegin() const
 }
 
 /**
- * \~Italian
- * @brief Funzione di finalizzazione di Dcel::ConstHalfEdgeIterator
- * @return Un iteratore che punta all'ultimo half edge della Dcel
+ * @return An iterator that points after the last half edge of the Dcel
  */
 inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeEnd() const
 {
@@ -150,9 +159,7 @@ inline Dcel::ConstHalfEdgeIterator Dcel::halfEdgeEnd() const
 }
 
 /**
- * \~Italian
- * @brief Funzione di inizializzazione di Dcel::ConstFaceIterator
- * @return Un iteratore che punta alla prima faccia della Dcel
+ * @return An iterator that points to the first face of the Dcel
  */
 inline Dcel::ConstFaceIterator Dcel::faceBegin() const
 {
@@ -162,8 +169,7 @@ inline Dcel::ConstFaceIterator Dcel::faceBegin() const
 }
 
 /**
- * @brief Funzione di finalizzazione di Dcel::ConstFaceIterator
- * @return Un iteratore che punta all'ultima faccia della Dcel
+ * @return An iterator that points after the last face of the Dcel
  */
 inline Dcel::ConstFaceIterator Dcel::faceEnd() const
 {
@@ -171,11 +177,9 @@ inline Dcel::ConstFaceIterator Dcel::faceEnd() const
 }
 
 /**
- * \~Italian
- * @brief Funzione che restituisce il puntatore al vertice avente l'id passato in input
- * @param[in] idVertex: id del vertice che verrà restituito
- * @return Il puntatore al vertice se l'id esiste all'interno della Dcel, nullptr altrimenti
- * @par Complessità:
+ * @param[in] idVertex: id of the vertex that will be returned
+ * @return The pointer to the vertex if the id exists, nullptr otherwise
+ * @par Complexity:
  *      \e O(1)
  */
 inline Dcel::Vertex* Dcel::vertex(unsigned int idVertex)
@@ -185,11 +189,9 @@ inline Dcel::Vertex* Dcel::vertex(unsigned int idVertex)
 }
 
 /**
- * \~Italian
- * @brief Funzione che restituisce il puntatore all'half edge avente l'id passato in input
- * @param[in] idHalfEdge: id dell'half edge che verrà restituito
- * @return Il puntatore all'half edge se l'id esiste all'interno della Dcel, nullptr altrimenti
- * @par Complessità:
+ * @param[in] idHalfEdge: id of the half edge that will be returned
+ * @return The pointer to the half edge if the id exists, nullptr otherwise
+ * @par Complexity:
  *      \e O(1)
  */
 inline Dcel::HalfEdge* Dcel::halfEdge(unsigned int idHalfEdge)
@@ -199,11 +201,9 @@ inline Dcel::HalfEdge* Dcel::halfEdge(unsigned int idHalfEdge)
 }
 
 /**
- * \~Italian
- * @brief Funzione che restituisce il puntatore alla faccia avente l'id passato in input
- * @param[in] idFace: id della faccia che verrà restituito
- * @return Il puntatore alla faccia se l'id esiste all'interno della Dcel, nullptr altrimenti
- * @par Complessità:
+ * @param[in] idFace: id of the face that will be returned
+ * @return The pointer to the face if the id exists, nullptr otherwise
+ * @par Complexity:
  *      \e O(1)
  */
 inline Dcel::Face* Dcel::face(unsigned int idFace)

@@ -505,28 +505,31 @@ bool Dcel::deleteVertex(Dcel::Vertex* v)
 
 bool Dcel::vertexBelongsToThis(const Dcel::Vertex* v) const
 {
+    if (!v) return false;
 #ifdef NDEBUG
     return v->parent == this;
 #else
-    return std::find(vertices.begin(), vertices.end(), v) != vertices.end();
+    return v->id() < vertices.size() && vertices[v->id()] == v;
 #endif
 }
 
 bool Dcel::halfEdgeBelongsToThis(const Dcel::HalfEdge* he) const
 {
+    if (!he) return false;
 #ifdef NDEBUG
     return he->parent == this;
 #else
-    return std::find(halfEdges.begin(), halfEdges.end(), he) != halfEdges.end();
+    return he->id() < halfEdges.size() && halfEdges[he->id()] == he;
 #endif
 }
 
 bool Dcel::faceBelongsToThis(const Dcel::Face* f) const
 {
+    if (!f) return false;
 #ifdef NDEBUG
     return f->parent == this;
 #else
-    return std::find(faces.begin(), faces.end(), f) != faces.end();
+    return f->id() < faces.size() && faces[f->id()] == f;
 #endif
 }
 

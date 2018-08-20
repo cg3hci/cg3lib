@@ -20,7 +20,7 @@ namespace dcelAlgorithms {
  *
  * @param seed: the radix face of the DFS
  * @param c: the compatator that allows to check if a face can be added to the flooding.
- * @return
+ * @return the set of flooded facets
  */
 template <typename Comp>
 std::set<const Dcel::Face*> floodDFS(const Dcel::Face* seed, Comp c);

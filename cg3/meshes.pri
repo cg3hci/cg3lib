@@ -25,6 +25,7 @@ HEADERS += \
     $$PWD/meshes/dcel/algorithms/dcel_algorithms.h  \
     $$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.h \
     $$PWD/meshes/dcel/algorithms/dcel_to_vectors.h \
+    $$PWD/meshes/dcel/algorithms/dcel_changes.h \
     $$PWD/meshes/dcel/algorithms/dcel_flooding.h \
     $$PWD/meshes/dcel/algorithms/dcel_coloring.h \
     $$PWD/meshes/dcel/algorithms/dcel_connected_components.h \
@@ -45,6 +46,7 @@ SOURCES += \
     $$PWD/meshes/dcel/dcel_vertex_iterators_inline.tpp \
     $$PWD/meshes/dcel/dcel_face_inline.tpp \
     $$PWD/meshes/dcel/algorithms/dcel_to_vectors.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_changes.cpp \
     $$PWD/meshes/dcel/algorithms/dcel_flooding.tpp \
     $$PWD/meshes/dcel/algorithms/dcel_coloring.cpp \
     $$PWD/meshes/dcel/algorithms/dcel_connected_components.tpp \

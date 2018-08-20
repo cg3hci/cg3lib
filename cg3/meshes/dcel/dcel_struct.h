@@ -121,6 +121,9 @@ public:
     inline unsigned int numberVertices()        const;
     inline unsigned int numberHalfEdges()       const;
     inline unsigned int numberFaces()           const;
+    inline bool contains(const Vertex* v)               const;
+    inline bool contains(const HalfEdge* he)            const;
+    inline bool contains(const Face* f)                 const;
     inline ConstVertexIterator vertexBegin()       const;
     inline ConstVertexIterator vertexEnd()         const;
     inline ConstHalfEdgeIterator halfEdgeBegin()   const;

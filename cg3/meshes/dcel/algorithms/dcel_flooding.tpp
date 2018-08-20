@@ -53,7 +53,7 @@ std::set<unsigned int> dcelAlgorithms::floodDFS(const Dcel& d, unsigned int seed
     std::set<unsigned int> faces;
     std::vector<const Dcel::Face *> stack_faces; // only triangles with same label of
                                                  //the patch will stay on the stack
-    if (!c(seed))
+    if (!c(d.face(seed)))
         return  faces;
 
     faces.insert(seed);
@@ -124,7 +124,7 @@ std::set<unsigned int> dcelAlgorithms::floodBFS(const Dcel& d, unsigned int seed
 {
     std::set<unsigned int> set;
 
-    if (!c(seed))
+    if (!c(d.face(seed)))
         return  set;
 
     set.insert(seed);
