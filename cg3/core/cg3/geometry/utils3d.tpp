@@ -7,6 +7,8 @@
 
 #include "utils3d.h"
 
+#include <cg3/utilities/utils.h>
+
 namespace cg3 {
 
 /* ----- UTILS IMPLEMENTATION ----- */
@@ -42,7 +44,7 @@ inline double internalAngle(
     if (cg3::epsilonEqual(v1,-v2))
         return M_PI;
 
-    double ang = angle(v1,v2);
+    double ang = cg3::angle(v1,v2);
 
     Vec3 cross = v1.cross(v2);
     cross.normalize();
