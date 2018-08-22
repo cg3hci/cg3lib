@@ -83,15 +83,15 @@
  *
  * \code{.cpp}
  * cg3::Dcel d("mesh.ply");
- * d.loadFromObjFile("mesh.obj");
- * d.loadFromPlyFile("mesh2.ply");
+ * d.loadFromObj("mesh.obj");
+ * d.loadFromPly("mesh2.ply");
  * \endcode
  *
  * A Dcel can be also stored on file, using methods for the supported formats:
  *
  * \code{.cpp}
- * d.saveOnObjFile("mesh.obj");
- * d.saveOnPlyFile("mesh.ply");
+ * d.saveOnObj("mesh.obj");
+ * d.saveOnPly("mesh.ply");
  * \endcode
  *
  * It exists also a specified format "dcel" for cg3::Dcel meshes:
@@ -123,7 +123,7 @@
  * Elements can be also extracted from the Dcel using the ID:
  *
  * \code{.cpp}
- * cg3::Dcel::Vertex* v = d.getVertex(12); // v is a pointer to the vertex with ID = 12
+ * cg3::Dcel::Vertex* v = d.vertex(12); // v is a pointer to the vertex with ID = 12
  * \endcode
  *
  * This ID is unique and valid only in the time when the vertex is stored in the Dcel. If
@@ -140,30 +140,22 @@
  * d.deleteVertex(v);
  * \endcode
  *
- * Nel metodo \c deleteVertex(v) viene eliminato il vertice puntato da \c v dalla Dcel
- * (viene gestita automaticamente l'allocazione dinamica dell'oggetto). Inoltre, il metodo
- * va a sostituire i riferimenti a v con \c nullptr \e dove \e è \e supposto \e che \e ci
- * \e siano. Per esempio, se stiamo eliminando \c v, il metodo controlla se è presente un
- * riferimento a \c v in tutti i suoi half edge uscenti (campo \c fromVertex ) e in tutti
- * i sui half edge entranti (campo \c toVertex). Se questi campi contengono \c v, allora
- * vengono settati a nullptr. Effettuare una qualsiasi operazione su \c v dopo la
- * \c deleteVertex() comporterà un errore di Segmentation Fault e di conseguenza un crash
- * dell'applicazione.\n
+ * In the \c deleteVertex(v) method, the vertex pointed by \c v is deleted from the Dcel.
+ * Furthermore, the method sets the references to \c v to \c nullptr \e where \e they \e are
+ * \e supposed \e to \e be: in all its outgoing half edges and incoming half edges. If these
+ * field where setted to \c v, they will cointain \c nullptr value after \c delteVertex(v).
+ * Doing any operation on \c v after the execution of \c deleteVertex(v) causes an
+ * undefined behavior. The same goes for \c deleteHalfEdge(he) and \c deleteFace(f). \n
  *
- * È possibile inoltre resettare una Dcel:
+ * To reset a Dcel, it is possible to use the following method:
  *
  * \code{.cpp}
  * d.clear();
  * \endcode
  *
- * Il metodo reset si occupa di eliminare tutte le componenti della Dcel. Alla fine di
- * tale metodo, \c d conterrà 0 vertici, 0 half edge e 0 facce.
- *
- *
  * # 4 Iterators
  *
- * È possibile scorrere gli elementi della Dcel utilizzando gli iteratori (di cui vi sono
- * anche i relativi iteratori \c const):\n
+ * It is possible to iterate along the elements of the Dcel using its iterators:
  *
  * \code{.cpp}
  * Dcel::VertexIterator vit;
@@ -174,8 +166,8 @@
  * Dcel::ConstFaceIterator cfit;
  * \endcode
  *
- * Si possono, per esempio, scorrere e modificare tutte le coordinate dei vertici della
- * Dcel nel seguente modo:\n
+ * It is possible, for example, to iterate and modify all the vertex coordinates of the
+ * Dcel \c d in the following way:\n
  *
  * \code{.cpp}
  * for (vit = d.vertexBegin(); vit != d.vertexEnd(); ++vit){
@@ -184,7 +176,7 @@
  * }
  * \endcode
  *
- * oppure utilizzando il for compatto:\n
+ * or using the range for iterator:\n
  *
  * \code{.cpp}
  * for (Dcel::Vertex* v : d.vertexIterator()){
@@ -192,26 +184,34 @@
  * }
  * \endcode
  *
- * L'insieme di vertici (come anche quello degli half edge e delle facce) è gestito
- * mediante un array. L'id di ogni vertice rappresenta la posizione stessa del vertice
- * all'interno dell'array. Non è possibile tuttavia ciclare direttamente su questo array
- * per via della gestione dell'eliminazione degli elementi. Nel momento in cui in vertice
- * viene eliminato, la sua posizione verrà settata nullptr. Gli iteratori permettono di
- * saltare automaticamente queste posizioni.
+ * Vertices, HalfEdges and Faces are stored in the Dcel using an std::vector. Ids of every
+ * element of the Dcel represents their position in the vector. If an element is deleted
+ * from the Dcel, its position in the vector is setted to \c nullptr. No compacting of
+ * the vector is  performed, and iterators will skip automatically these positions.
  *
- * Vi sono inoltre degli iteratori che permettono di navigare la mesh utilizzando le
- * relazioni di adiacenza/incidenza degli elementi.
- * Per esempio, per scorrere e modificare tutti i vertici adiacenti a \c vid :\n
+ * There are also iterators that allows to navigate the mesh using adjacency/incidence
+ * relations between elements. For exaple, it is possible to iterate along the adjacent
+ * vertices of a given vertex \c v:
  *
  * \code{.cpp}
  * Dcel::Vertex::AdjacentVertexIterator avid;
- * for (avid = vid->adjacentVertexBegin(); avid != vid->adjacentVertexEnd(); ++avid)
+ * for (avid = v->adjacentVertexBegin(); avid != v->adjacentVertexEnd(); ++avid)
  *     (*avid)->setCoordinate(Pointd(0.1, 0.2, 0.3));
  * \endcode
  *
- * I vertici verranno visitati ordinatamente, in base al senso degli half edge sulle facce
- * (senso antiorario). Nel caso si voglia scorrere i vertici in senso opposto, è possibile
- * scrivere la seguente porzione di codice:\n
+ * Alternatively, it is possible to use the range for:
+ *
+ * \code{.cpp}
+ * for (Dcel::Vertex* av : v.adjacentVertexIterator())
+ *     av->setCoordinate(Pointd(0.1, 0.2, 0.3));
+ * \endcode
+ *
+ *
+ *
+ * The vertices will be visited in counterclockwise order (next vertex is obtained performing
+ * operations of prev and then twin of the outgoing half edge of the vertex, amd then
+ * toVertex). To iterate in the opposite order, it is possible to use the operator --
+ * (no range for):
  *
  * \code{.cpp}
  * Dcel::Vertex::AdjacentVertexIterator avid;\n
@@ -219,42 +219,31 @@
  *     (*avid)->setCoordinate(Pointd(0.1, 0.2, 0.3));
  * \endcode
  *
- * Questi iteratori necessitano di lavorare su una mesh manifold e chiusa. Infatti, gli
- * iteratori non fanno altro che utilizzare i riferimenti contenuti in Dcel::Vertex,
- * Dcel::HalfEdge e Dcel::Face.
- * In caso di mesh non-manifold o non chiusa, è possibile che molti riferimenti rimangano
- * settati a nullptr. Nel momento in cui vi sono degli errori sui riferimenti
- * (soprattutto nelle relazioni di prev, next e twin degli half edge), o la Dcel non è
- * utilizzata correttamente, è possibile che gli iteratori causino Segmentation Fault o
- * anche loop infiniti. Se, per esempio, si deve lavorare con mesh non chiuse, è
- * consigliabile navigare manualmente la Dcel senza utilizzare gli iteratori (che non sono
- * in grado di gestire tutti i possibili casi che possono verificarsi in mesh di questo
- * tipo).\n
- * Talvolta questi iteratori sono usati anche all'interno di alcuni metodi presenti nella
- * Dcel, in quanto sono dei metodi pensati per lavorare su mesh chiuse e manifold. \n
- * Per Dcel chiusa e manifold, si intende una Dcel che rispetta le seguenti
- * caratteristiche:
- * - Ogni half edge \c e ha un twin \c t, e il suo twin \c t ha come twin l'half edge \c e.
- * - Ogni half edge ha from vertex uguale al to vertex del suo twin, e viceversa.
- * - Partendo da un half edge \c e, una serie di operazioni di next (3 se si ha una Dcel
- * di triangoli) riporta all'half edge \c e, tutti questi half edge hanno la stessa faccia
- * incidente.
- * - Partendo da un half edge \c e, una serie di operazioni di prev (3 se si ha una Dcel
- * di triangoli) riporta all'half edge \c e, tutti questi half edge hanno la stessa
- * faccia incidente.
- * - Il to vertex di un half edge corrisponde al from vertex del suo next;
- * - Il from vertex di un half edge corrisponde al to vertex del suo prev.
- * - Partendo da un half edge \c e, una serie di operazioni di twin e next riporta
- * all'half edge \c e.
- * - Partendo da un half edge \c e, una serie di operazioni di prev e twin riporta
- * all'half edge \c e.
- * - Non esistono due vertici che hanno le stesse coordinate. \n
- * - Ogni vertice \c v ha come half edge uscente un half edge che ha come from vertex \c v.
- * - Ogni faccia \c f ha come outer half edge e inner half edges degli edge che hanno
- * \c f come faccia incidente.
+ * These iterators need to work on manifold and preferably watertight meshes, where
+ * relations between elements make actually sense. If used in meshes where relations are
+ * not correct, it is undefined behavior (segmentation fault, infinite loops). In these
+ * cases, it is recommended to navigate manually the mesh. \n
+ *
+ * Some Dcel methods use these methods because they actually make sense only on manifold
+ * meshes. A manifold and watertight Dcel is a Dcel that satisfies the follwing constraints:
+ * - Every half hadge \c e has a twin \c t, and its twin \c t has, as twin, \c e.
+ * - Every half edge has from vertex equal to the to vertex of its twin, and viceversa.
+ * - Starting from an half edge \c e, a series of next operations (3 for Triangle Dcel)
+ *   goes back to half edge \c e, and all the visited half edges have the same incident
+ *   face. The same goes for prev operations.
+ * - To vertex of an half edge corresponds to the from vertex of its next;
+ * - From vertex of an half edge corresponts to the to vertex of its prev.
+ * - Starting from an half edge \c e, a series of operations of twin and next goes back
+ * to half edge \c e.
+ * - Starting from an half edge \c e, a series of operations of prev and twin goes back
+ * to half edge \c e.
+ * - Two vartices with same coordinates cannot exist inside the same Dcel. \n
+ * - Every vertex \c v has as outgoing half edge an half edge that has as from vertex \c v.
+ * - Every face \c f has as outer half edge and inner half edges some edges that have
+ * \c f as incident face.
  *
  *
- * Per le funzioni avanzate della Dcel, vedere la documentazione relativa alle classi: \n
+ * For advanced operation on the Dcel, please see the documentation of the following classes: \n
  * - Dcel \n
  * - Dcel::Vertex \n
  * - Dcel::HalfEdge \n

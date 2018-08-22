@@ -213,19 +213,19 @@ inline Dcel::Face* Dcel::face(unsigned int idFace)
 }
 
 /**
- * \~Italian
- * @brief Funzione che elimina il vertice puntato dall'iteratore passato in input.
+ * @brief Removes the vertex pointed by the input iterator.
  *
- * Una volta eliminato, il vertice passato in input non è più utilizzabile.
+ * Afther the execution of this function, the input iterator cannot be used anymore.
  *
- * Setta a nullptr tutti i seguenti campi se contengono un riferimento al vertice eliminato v:
- * per ogni half edge uscente he:
+ * Sets to nullptr all the following fields if they contains a reference to the deleted vertex:
+ *
+ * for every outgoing half edge he:
  * - he->fromVertex
  * - he->twin->toVertex
  *
- * @param[in] vit: l'iteratore che punta al vertice da eliminare
- * @return L'iteratore al vertice successivo nella lista dei vertici
- * @par Complessità:
+ * @param[in] vit: the iterator that points to the vertex
+ * @return the iterator that points to the next vertex in the list of vertices
+ * @par Complexity:
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
 inline Dcel::VertexIterator Dcel::deleteVertex(const Dcel::VertexIterator& vit)
@@ -238,22 +238,21 @@ inline Dcel::VertexIterator Dcel::deleteVertex(const Dcel::VertexIterator& vit)
 }
 
 /**
- * \~Italian
- * @brief Funzione che elimina l'half edge puntato dall'iteratore passato in input.
+ * @brief Removes the half edge pointed by the input iterator.
  *
- * Una volta eliminato, il'half edge passato in input non è più utilizzabile.
+ * Afther the execution of this function, the input iterator cannot be used anymore.
  *
- * Setta a nullptr tutti i seguenti campi se contengono un riferimento all'half edge eliminato he:
+ * Sets to nullptr all the following fields if they contains a reference to the deleted half edge:
  * - he->twin->twin
  * - he->next->prev
  * - he->prev->next
  * - he->fromVertex->incidentHalfEdge
  * - he->face->outerHalfEdge
- * eventuali inner half edge di he->face
+ * any inner half edge of he->face
  *
- * @param[in] heit: l'iteratore che punta all'half edge da eliminare
- * @return L'iteratore all'half edge successivo nella lista degli half edge
- * @par Complessità:
+ * @param[in] heit: the iterator that points to the half edge
+ * @return the iterator that points to the next half edge in the list of half edges
+ * @par Complexity:
  *      \e O(1)
  */
 inline Dcel::HalfEdgeIterator Dcel::deleteHalfEdge(const Dcel::HalfEdgeIterator& heit)
@@ -267,18 +266,17 @@ inline Dcel::HalfEdgeIterator Dcel::deleteHalfEdge(const Dcel::HalfEdgeIterator&
 }
 
 /**
- * \~Italian
- * @brief Funzione che elimina la faccia puntata dall'iteratore passato in input.
+ * @brief Removes the face pointed by the input iterator.
  *
- * Una volta eliminata, la faccia passata in input non è più utilizzabile.
+ * Afther the execution of this function, the input iterator cannot be used anymore.
  *
- * Setta a nullptr tutti i seguenti campi se contengono un riferimento alla faccia eliminata f:
- * per ogni half edge incidente he:
- * - he->face
+ * Sets to nullptr all the following fields if they contains a reference to the deleted face:
+ * - he->face (and their nexts)
+ * - inner he->face (and their next)
  *
- * @param[in] fit: l'iteratore che punta alla faccia da eliminare
- * @return L'iteratore alla faccia successiva nella lista delle facce
- * @par Complessità:
+ * @param[in] fit: the iterator that points to the face
+ * @return the iterator that points to the next face in the list of faces
+ * @par Complexity:
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
 inline Dcel::FaceIterator Dcel::deleteFace(const Dcel::FaceIterator& fit)
@@ -290,9 +288,8 @@ inline Dcel::FaceIterator Dcel::deleteFace(const Dcel::FaceIterator& fit)
 }
 
 /**
- * \~Italian
- * @brief Funzione di inizializzazione di Dcel::VertexIterator
- * @return Un iteratore che punta al primo vertice della Dcel
+ * @brief Initialization function of Dcel::VertexIterator
+ * @return An iterator that points to the first vertex of the Dcel
  */
 inline Dcel::VertexIterator Dcel::vertexBegin()
 {
@@ -302,9 +299,8 @@ inline Dcel::VertexIterator Dcel::vertexBegin()
 }
 
 /**
- * \~Italian
- * @brief Funzione di finalizzazione di Dcel::VertexIterator
- * @return Un iteratore che punta all'ultimo vertice della Dcel
+ * @brief Finitialization function of Dcel::VertexIterator
+ * @return An iterator that points after the last vertex of the Dcel
  */
 inline Dcel::VertexIterator Dcel::vertexEnd()
 {
@@ -312,9 +308,8 @@ inline Dcel::VertexIterator Dcel::vertexEnd()
 }
 
 /**
- * \~Italian
- * @brief Funzione di inizializzazione di Dcel::HalfEdgeIterator
- * @return Un iteratore che punta al primo half edge della Dcel
+ * @brief Initialization function of Dcel::HalfEdgeIterator
+ * @return An iterator that points to the first half edge of the Dcel
  */
 inline Dcel::HalfEdgeIterator Dcel::halfEdgeBegin()
 {
@@ -324,9 +319,8 @@ inline Dcel::HalfEdgeIterator Dcel::halfEdgeBegin()
 }
 
 /**
- * \~Italian
- * @brief Funzione di finalizzazione di Dcel::HalfEdgeIterator
- * @return Un iteratore che punta all'ultimo half edge della Dcel
+ * @brief Finitialization function of Dcel::HalfEdgeIterator
+ * @return An iterator that points after the last half edge of the Dcel
  */
 inline Dcel::HalfEdgeIterator Dcel::halfEdgeEnd()
 {
@@ -334,9 +328,8 @@ inline Dcel::HalfEdgeIterator Dcel::halfEdgeEnd()
 }
 
 /**
- * \~Italian
- * @brief Funzione di inizializzazione di Dcel::FaceIterator
- * @return Un iteratore che punta alla prima faccia della Dcel
+ * @brief Initialization function of Dcel::FaceIterator
+ * @return An iterator that points to the first face of the Dcel
  */
 inline Dcel::FaceIterator Dcel::faceBegin()
 {
@@ -346,50 +339,70 @@ inline Dcel::FaceIterator Dcel::faceBegin()
 }
 
 /**
- * \~Italian
- * @brief Funzione di finalizzazione di Dcel::FaceIterator
- * @return Un iteratore che punta all'ultima faccia della Dcel
+ * @brief Finitialization function of Dcel::FaceIterator
+ * @return An iterator that points after the last face of the Dcel
  */
 inline Dcel::FaceIterator Dcel::faceEnd()
 {
     return FaceIterator((unsigned int)faces.size(), faces);
 }
 
+/**
+ * @return a const range based iterator on the vertices of the Dcel
+ */
 inline const Dcel::ConstVertexRangeBasedIterator Dcel::vertexIterator() const
 {
     return ConstVertexRangeBasedIterator(this);
 }
 
+/**
+ * @return a range based iterator on the vertices of the Dcel
+ */
 inline Dcel::VertexRangeBasedIterator Dcel::vertexIterator()
 {
     return VertexRangeBasedIterator(this);
 }
 
+/**
+ * @return a const range based iterator on the half edges of the Dcel
+ */
 inline const Dcel::ConstHalfEdgeRangeBasedIterator Dcel::halfEdgeIterator() const
 {
     return ConstHalfEdgeRangeBasedIterator(this);
 }
 
+/**
+ * @return a range based iterator on the half edges of the Dcel
+ */
 inline Dcel::HalfEdgeRangeBasedIterator Dcel::halfEdgeIterator()
 {
     return HalfEdgeRangeBasedIterator(this);
 }
 
+/**
+ * @return a const range based iterator on the faces of the Dcel
+ */
 inline const Dcel::ConstFaceRangeBasedIterator Dcel::faceIterator() const
 {
     return ConstFaceRangeBasedIterator(this);
 }
 
+/**
+ * @return a range based iterator on the faces of the Dcel
+ */
 inline Dcel::FaceRangeBasedIterator Dcel::faceIterator()
 {
     return FaceRangeBasedIterator(this);
 }
 
+/**
+ * @brief Swap function between Dcel
+ * @param[in/out] d1: first Dcel that will contain the second one
+ * @param[in/out] d2: second Dcel that will contain the first one
+ */
 inline void swap(Dcel& d1, Dcel& d2)
 {
     d1.swap(d2);
 }
 
 } //namespace cg3
-
-//#endif // DCEL_INLINES_H

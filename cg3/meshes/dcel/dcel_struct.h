@@ -228,16 +228,16 @@ protected:
     * Attributes *
     **************/
 
-    std::vector<Vertex* >   vertices;       /**< \~Italian @brief Lista di vertici della Dcel. */
-    std::vector<HalfEdge* > halfEdges;      /**< \~Italian @brief Lista di half edge della Dcel. */
-    std::vector<Face* >     faces;          /**< \~Italian @brief Lista di facce della Dcel. */
-    std::set<int>           unusedVids;     /**< \~Italian @brief Insieme degli id dei vertici non utilizzati (nullptr). */
-    std::set<int>           unusedHeids;    /**< \~Italian @brief Insieme degli id degli half edge non utilizzati (nullptr). */
-    std::set<int>           unusedFids;     /**< \~Italian @brief Insieme degli id delle facce non utilizzati (nullptr). */
-    unsigned int            nVertices;      /**< \~Italian @brief Prossimo id del vertice. */
-    unsigned int            nHalfEdges;     /**< \~Italian @brief Prossimo id dell'half edge. */
-    unsigned int            nFaces;         /**< \~Italian @brief Prossimo id della faccia. */
-    BoundingBox             bBox;    /**< \~Italian @brief Bounding box della mesh. */
+    std::vector<Vertex* >   vertices;
+    std::vector<HalfEdge* > halfEdges;
+    std::vector<Face* >     faces;
+    std::set<int>           unusedVids;
+    std::set<int>           unusedHeids;
+    std::set<int>           unusedFids;
+    unsigned int            nVertices;
+    unsigned int            nHalfEdges;
+    unsigned int            nFaces;
+    BoundingBox             bBox;
 
     //Data
     #ifdef NDEBUG
@@ -257,9 +257,20 @@ protected:
     Face* addFace(int id);
 
     std::vector<const Vertex*> makeSingleBorder(const Face *f)     const;
-    void toStdVectors(std::vector<double> &vertices, std::vector<double> &verticesNormals, std::vector<int> &faces, std::vector<unsigned int> &faceSizes, std::vector<float> &faceColors) const;
+    void toStdVectors(
+            std::vector<double> &vertices,
+            std::vector<double> &verticesNormals,
+            std::vector<int> &faces,
+            std::vector<unsigned int> &faceSizes,
+            std::vector<float> &faceColors) const;
 
-    void afterLoadFile(const std::list<double>& coords, const std::list<unsigned int>& faces, int mode, const std::list<double>& vnorm, const std::list<Color>& vcolor, const std::list<Color>& fcolor, const std::list<unsigned int>& fsizes);
+    void afterLoadFile(
+            const std::list<double>& coords,
+            const std::list<unsigned int>& faces,
+            int mode, const std::list<double>& vnorm,
+            const std::list<Color>& vcolor,
+            const std::list<Color>& fcolor,
+            const std::list<unsigned int>& fsizes);
 
     #ifdef  CG3_EIGENMESH_DEFINED
     void copyFrom(const SimpleEigenMesh &eigenMesh);
