@@ -20,7 +20,7 @@ namespace cg3 {
 
 unsigned int PickableObject::objectBits = 8;
 
-PickableObject::PickableObject()
+PickableObject::PickableObject() : DrawableObject()
 {
 }
 

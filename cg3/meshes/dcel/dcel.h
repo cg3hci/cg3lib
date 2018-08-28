@@ -250,5 +250,4 @@
  * - Dcel::Face \n
  **/
 
-
 #endif // CG3_DCEL_H
