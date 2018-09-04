@@ -55,6 +55,8 @@ private slots:
 
     void on_savePushButton_clicked();
 
+    void on_subFrameAxisCheckBox_stateChanged(int arg1);
+
 private:
     Ui::DrawableMeshDrawListManager *ui;
     MainWindow& mw;

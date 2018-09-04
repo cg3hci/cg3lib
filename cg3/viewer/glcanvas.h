@@ -29,6 +29,7 @@
 #include <cg3/geometry/2d/point2d.h>
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
+#include "interfaces/manipulable_object.h"
 #include "drawable_objects/drawable_bounding_box.h"
 #include <qmessagebox.h>
 

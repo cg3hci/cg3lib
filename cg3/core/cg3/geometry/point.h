@@ -67,6 +67,7 @@ public:
     Point<T> cross(const Point<T>& otherVector)         const;
     double length()                                     const;
     double lengthSquared()                              const;
+    Point<T> orthogonalVector()                         const;
     Point<T> min(const Point<T>& otherPoint)            const;
     Point<T> max(const Point<T>& otherPoint)            const;
 

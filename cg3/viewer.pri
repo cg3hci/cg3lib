@@ -87,11 +87,13 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h \
         $$PWD/viewer/interfaces/drawable_container.h \
         $$PWD/viewer/interfaces/drawable_object.h \
+        $$PWD/viewer/interfaces/manipulable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
         $$PWD/viewer/interfaces/drawable_mesh.h \
         $$PWD/viewer/internal/drawable_mesh_drawlist_manager.h \
         $$PWD/viewer/internal/drawable_container_drawlist_manager.h \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.h \
+        $$PWD/viewer/internal/manipulable_object_drawlist_manager.h \
         #$$PWD/viewer/managers/debugobjects_manager.h \
         $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
@@ -117,11 +119,13 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/2d/drawable_segment2d.cpp \
         $$PWD/viewer/interfaces/drawable_container.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
+        $$PWD/viewer/interfaces/manipulable_object.cpp \
         $$PWD/viewer/interfaces/pickable_object.cpp \
         $$PWD/viewer/internal/submanager.h \
         $$PWD/viewer/internal/drawable_mesh_drawlist_manager.cpp \
         $$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
+        $$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp \
@@ -135,7 +139,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/mainwindow.ui \
         $$PWD/viewer/internal/drawable_mesh_drawlist_manager.ui \
         $$PWD/viewer/internal/drawable_container_drawlist_manager.ui \
-        $$PWD/viewer/internal/drawable_object_drawlist_manager.ui
+        $$PWD/viewer/internal/drawable_object_drawlist_manager.ui \
+        $$PWD/viewer/internal/manipulable_object_drawlist_manager.ui
         #$$PWD/viewer/managers/debugobjects_manager.ui
 
     RESOURCES += \
@@ -187,4 +192,10 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
+
+FORMS +=
+
+HEADERS +=
+
+SOURCES +=
 

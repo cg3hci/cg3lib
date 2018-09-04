@@ -36,6 +36,7 @@ HEADERS += \
     $$PWD/core/cg3/geometry/line.h \
     $$PWD/core/cg3/geometry/plane.h \
     $$PWD/core/cg3/geometry/point.h \
+    $$PWD/core/cg3/geometry/quaternion.h \
     $$PWD/core/cg3/geometry/segment.h \
     $$PWD/core/cg3/geometry/sphere.h \
     $$PWD/core/cg3/geometry/transformations.h \
@@ -57,6 +58,7 @@ SOURCES += \
     $$PWD/core/cg3/geometry/line.cpp \
     $$PWD/core/cg3/geometry/plane.cpp \
     $$PWD/core/cg3/geometry/point.tpp \
+    $$PWD/core/cg3/geometry/quaternion.cpp \
     $$PWD/core/cg3/geometry/segment.tpp \
     $$PWD/core/cg3/geometry/sphere.cpp \
     $$PWD/core/cg3/geometry/transformations.cpp \

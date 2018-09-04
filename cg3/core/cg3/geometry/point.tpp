@@ -145,6 +145,17 @@ inline double Point<T>::lengthSquared() const
     return xCoord * xCoord + yCoord * yCoord + zCoord * zCoord;
 }
 
+template<class T>
+inline Point<T> Point<T>::orthogonalVector() const
+{
+    if ((fabs(yCoord) >= 0.9 * fabs(xCoord)) && (fabs(zCoord) >= 0.9 * fabs(xCoord)))
+        return Point<T>(0.0, -zCoord, yCoord);
+    else if ((fabs(xCoord) >= 0.9 * fabs(yCoord)) && (fabs(zCoord) >= 0.9 * fabs(yCoord)))
+        return Point<T>(-zCoord, 0.0, xCoord);
+    else
+        return Point<T>(-yCoord, xCoord, 0.0);
+}
+
 /**
  * \~Italian
  * @brief Funzione di minimo tra punti/vettori.

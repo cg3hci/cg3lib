@@ -10,8 +10,10 @@
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/interfaces/drawable_mesh.h>
 #include <cg3/viewer/interfaces/drawable_container.h>
+#include <cg3/viewer/interfaces/manipulable_object.h>
 #include <cg3/viewer/internal/drawable_container_drawlist_manager.h>
 #include <cg3/viewer/internal/drawable_mesh_drawlist_manager.h>
+#include <cg3/viewer/internal/manipulable_object_drawlist_manager.h>
 
 namespace cg3 {
 namespace viewer {
@@ -37,6 +39,7 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         ui->closePushButton->setVisible(false);
     const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
     const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(object);
+    const ManipulableObject* mobj = dynamic_cast<const ManipulableObject*>(object);
     ui->checkBox->setChecked(visible);
     if (mesh){
         DrawableMeshDrawListManager* submanager =
@@ -50,6 +53,12 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         setSubFrame(subManager, false);
         container = true;
         ui->objectType->setText("Container");
+    }
+    else if (mobj){
+        ManipulableFormDrawlistManager* subManager =
+                new ManipulableFormDrawlistManager(&mw, mobj);
+        setSubFrame(subManager, false);
+        ui->objectType->setText("Manipulable Object");
     }
     else{
         ui->subFrameCheckBox->setVisible(false);

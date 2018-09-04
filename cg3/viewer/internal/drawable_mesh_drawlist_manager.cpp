@@ -37,6 +37,12 @@ DrawableMeshDrawListManager::DrawableMeshDrawListManager(
 
     ui->nVerticesLabel->setText(QString("N. Vertices: ") + QString::number(mesh->numberVertices()));
     ui->nFacesLabel->setText(QString("N. Faces: ") + QString::number(mesh->numberFaces()));
+
+    const ManipulableObject* mobj = dynamic_cast<const ManipulableObject*>(mesh);
+
+    if (!mobj)
+        ui->subFrameAxisCheckBox->setVisible(false);
+
     ls.addSupportedExtension("obj", "ply");
 }
 
@@ -139,6 +145,10 @@ void DrawableMeshDrawListManager::on_savePushButton_clicked()
     }
 }
 
+void DrawableMeshDrawListManager::on_subFrameAxisCheckBox_stateChanged(int arg1)
+{
+    ((ManipulableObject*)mesh)->setDrawRelativeAxis(arg1 == Qt::Checked);
+}
 
 } //namespace cg3::viewer
 } //namespace cg3

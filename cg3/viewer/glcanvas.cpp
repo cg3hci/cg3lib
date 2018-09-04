@@ -33,6 +33,7 @@ GLCanvas::GLCanvas(QWidget * parent) :
 void GLCanvas::init()
 {
     setFPSIsDisplayed(false);
+    setMouseTracking(true);
     camera()->frame()->setSpinningSensitivity(100.0);
 }
 
@@ -41,8 +42,29 @@ void GLCanvas::draw()
     QGLViewer::setBackgroundColor(backgroundColor);
 
     for(unsigned int i=0; i<drawlist.size(); ++i) {
-        if (drawlist[i]->isVisible())
-            drawlist[i]->draw();
+        if (drawlist[i]->isVisible()){
+            const ManipulableObject* mobj = dynamic_cast<const ManipulableObject*>(drawlist[i]);
+            if (!mobj)
+                drawlist[i]->draw();
+            else {
+                // Save the current model view matrix (not needed here in fact)
+                glPushMatrix();
+
+                // Multiply matrix to get in the frame coordinate system.
+                glMultMatrixd(mobj->matrix());
+
+                if (mobj->grabsMouse())
+                    mobj->drawHighlighted();
+                else
+                    mobj->draw();
+
+                if (mobj->drawRelativeAxis())
+                    drawAxis();
+
+                // Restore the original (world) coordinate system
+                glPopMatrix();
+            }
+        }
     }
     if (unitBoxEnabled)
         unitBox.draw();
