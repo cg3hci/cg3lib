@@ -140,6 +140,7 @@ Eigen::Matrix3d Quaternion::rotationMatrix() const
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j)
             m(i,j) = mat[j][i];
+    return m;
 }
 #endif
 
