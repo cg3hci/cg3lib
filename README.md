@@ -14,4 +14,15 @@ It is composed of different modules:
 All these modules are optional (except of the core module) and the project can be compiled on Windows, MacOS and Linux.
 The documentation can be found at the following link: https://cg3hci.github.io/index.html.
 
+If you use cg3lib in your research projects, please cite the our library using this BibTeX entry:
+
+```
+@misc{cg3lib,
+	title  = {{CG3Lib}: A structured {C++} geometry processing library.},
+	author = {Alessandro Muntoni and Stefano Nuvoli and others},
+	note   = {https://github.com/cg3hci/cg3lib},
+	year   = {2018},
+}
+```
+
 [ToDo list](TODO.md)
