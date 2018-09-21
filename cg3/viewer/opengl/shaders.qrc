@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>basicShader.frag</file>
+        <file>basicShader.vert</file>
+        <file>texture2D.frag</file>
+        <file>texture2D.vert</file>
+    </qresource>
+</RCC>

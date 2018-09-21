@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget* parent) :
 
     canvas.setSnapshotQuality(100);
     canvas.setSnapshotFormat("PNG");
+
+    show();
+    glewInit();
 }
 
 MainWindow::~MainWindow()

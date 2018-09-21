@@ -95,6 +95,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_object_drawlist_manager.h \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.h \
         #$$PWD/viewer/managers/debugobjects_manager.h \
+        $$PWD/viewer/opengl/shader.h \
+        $$PWD/viewer/opengl/texture.h \
         $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
         $$PWD/viewer/utilities/loadersaver.h \
@@ -127,13 +129,14 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp \
         #$$PWD/viewer/managers/debugobjects_manager.cpp \
+        $$PWD/viewer/opengl/shader.cpp \
+        $$PWD/viewer/opengl/texture.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp \
         $$PWD/viewer/utilities/console_stream.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
         $$PWD/viewer/utilities/utils.cpp \
         $$PWD/viewer/widgets/qclickablelabel.cpp
-
 
     FORMS += \
         $$PWD/viewer/mainwindow.ui \
@@ -144,6 +147,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         #$$PWD/viewer/managers/debugobjects_manager.ui
 
     RESOURCES += \
+        $$PWD/viewer/opengl/shaders.qrc \
         $$PWD/viewer/internal/icons/icons.qrc
 
     contains(DEFINES, CG3_DCEL_DEFINED) {
@@ -192,10 +196,4 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 else {
     message(libQGLViewer not installed properly!)
 }
-
-FORMS +=
-
-HEADERS +=
-
-SOURCES +=
 
