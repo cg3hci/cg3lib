@@ -77,6 +77,34 @@ void holeFilling(cgal::Polyhedron& poly)
     std::cout << nb_holes << " holes have been filled" << std::endl;
 }
 
+/**
+ * @ingroup cg3cgal
+ * @brief cgal::holeFilling::holeFilling
+ * @param poly
+ */
+void holeFillingTriangulation(cgal::Polyhedron& poly)
+{
+    // Incrementally fill the holes
+    unsigned int nb_holes = 0;
+    for(internal::Halfedge_handle h : halfedges(poly)) {
+        if(h->is_border()) {
+            std::vector<internal::Facet_handle> patch_facets;
+
+            CGAL::Polygon_mesh_processing::triangulate_hole(
+                poly,
+                h,
+                std::back_inserter(patch_facets),
+                CGAL::Polygon_mesh_processing::parameters::vertex_point_map(get(CGAL::vertex_point, poly)).
+                geom_traits(internal::Kernel()));
+
+            std::cout << "Number of facets in constructed patch: " << patch_facets.size() << std::endl;
+
+            ++nb_holes;
+        }
+    }
+    std::cout << nb_holes << " holes have been filled" << std::endl;
+}
+
 #ifdef CG3_DCEL_DEFINED
 /**
  * @ingroup cg3cgal
@@ -88,6 +116,22 @@ void holeFilling(Dcel& d)
     Polyhedron p = cgal::polyhedronFromDcel(d);
     holeFilling(p);
     d = cgal::dcelFromPolyhedron(p);
+}
+#endif
+
+#ifdef CG3_EIGENMESH_DEFINED
+SimpleEigenMesh holeFilling(const SimpleEigenMesh& d)
+{
+    Polyhedron p = cgal::polyhedronFromEigenMesh(d);
+    holeFilling(p);
+    return cgal::eigenMeshFromPolyhedron(p);
+}
+
+SimpleEigenMesh holeFillingTriangulation(const SimpleEigenMesh& d)
+{
+    Polyhedron p = cgal::polyhedronFromEigenMesh(d);
+    holeFillingTriangulation(p);
+    return cgal::eigenMeshFromPolyhedron(p);
 }
 #endif
 

@@ -15,10 +15,6 @@
 #include <string>
 #include <algorithm>
 
-#ifdef  CG3_EIGENMESH_DEFINED
-#include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
-
 namespace cg3 {
 namespace cgal {
 namespace internal {
@@ -169,6 +165,40 @@ cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 
     return pmesh;
 }
+
+
+SimpleEigenMesh eigenMeshFromPolyhedron(const cgal::Polyhedron& poly)
+{
+    typedef typename internal::HalfedgeDS::Vertex  PolyhedronVertex;
+    typedef typename PolyhedronVertex::Point       PolyhedronPoint;
+    typedef typename Polyhedron::Halfedge_around_facet_const_circulator Halfedge_facet_circulator;
+
+    SimpleEigenMesh d;
+
+    std::map<PolyhedronPoint, unsigned int> map;
+
+    for (Polyhedron::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit) {
+        PolyhedronPoint p = (*vit).point();
+        Pointd point(p.x(), p.y(), p.z());
+        map.insert(std::make_pair(p, d.addVertex(point)));
+    }
+
+    for (Polyhedron::Facet_const_iterator fit = poly.facets_begin(); fit != poly.facets_end(); ++fit) {
+        Halfedge_facet_circulator circulator = fit->facet_begin();
+
+        unsigned int v[3];
+        int i = 0;
+        do {
+            v[i] = map.at(circulator->vertex()->point());
+            i++;
+        } while (++circulator != fit->facet_begin());
+
+        d.addFace(v[0], v[1], v[2]);
+    }
+
+    return d;
+}
+
 #endif
 
 } //namespace cg3::cgal

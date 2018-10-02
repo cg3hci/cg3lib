@@ -17,9 +17,15 @@ namespace cgal {
 void holeFillingFileOff(const std::string& input, const std::string& output);
 
 void holeFilling(Polyhedron& poly);
+void holeFillingTriangulation(cgal::Polyhedron& poly);
 
 #ifdef CG3_DCEL_DEFINED
 void holeFilling(Dcel & d);
+#endif
+
+#ifdef CG3_EIGENMESH_DEFINED
+SimpleEigenMesh holeFilling(const SimpleEigenMesh& d);
+SimpleEigenMesh holeFillingTriangulation(const SimpleEigenMesh& poly);
 #endif
 
 } //namespace cg3::cgal

@@ -12,9 +12,14 @@
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polyhedron_3.h>
 
-#ifdef  CG3_DCEL_DEFINED
+#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
 #endif
+
+#ifdef CG3_EIGENMESH_DEFINED
+#include <cg3/meshes/eigenmesh/eigenmesh.h>
+#endif
+
 
 namespace cg3 {
 #ifdef  CG3_EIGENMESH_DEFINED
@@ -46,6 +51,7 @@ Dcel dcelFromPolyhedron(const Polyhedron& poly);
 
 #ifdef  CG3_EIGENMESH_DEFINED
 Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
+SimpleEigenMesh eigenMeshFromPolyhedron(const Polyhedron& poly);
 #endif
 
 #ifdef CG3_OLD_NAMES_COMPATIBILITY
