@@ -6,6 +6,9 @@
  */
 
 #include "utils3d.h"
+#include <cg3/utilities/utils.h>
+#include "2d/utils2d.h"
+#include "transformations.h"
 
 #include <cg3/utilities/utils.h>
 
@@ -96,6 +99,61 @@ inline Pointd orthogonalProjectionOnAPlane(
     Pointd projectedPoint = point + (planeNormal * t);
 
     return projectedPoint;
+}
+
+/**
+ * @ingroup cg3core
+ * @brief Checks if three 3D points are collinear
+ * @param p1
+ * @param p2
+ * @param p3
+ * @return
+ */
+template<typename T>
+inline bool areCollinear(
+        const cg3::Point<T>& p1,
+        const cg3::Point<T>& p2,
+        const cg3::Point<T>& p3,
+        double epsilon)
+{
+    return epsilonEqual((p3 - p1).cross(p2 - p1).length(), 0.0, epsilon);
+}
+
+
+/**
+ * @ingroup cg3core
+ * @brief isPolygonCounterClockwise
+ * @param polygon: a container of Pointd representing a regular 3D polygon
+ * @param normal: the normal of the 3D polygon
+ * @return true if the points of the polygon are stored in counterclockwise order w.r the
+ *         given normal
+ */
+template <template < class ... > class Container, class T, class ... Args>
+bool isPolygonCounterClockwise(const Container<Point<T> >& polygon, const Vec3& normal)
+{
+    Vec3 zAxis(0,0,1);
+    Vec3 v = -(normal.cross(zAxis));
+    v.normalize();
+    double dot = normal.dot(zAxis);
+    double angle = acos(dot);
+
+    double r[3][3] = {{0}};
+    if (normal != zAxis){
+        if (normal == -zAxis){
+            v = Vec3(1,0,0);
+        }
+        rotationMatrix(v, angle, r);
+    }
+    else {
+        r[0][0] = r[1][1] = r[2][2] = 1;
+    }
+
+    std::vector<Point2D<T>> points;
+    for (const Point<T>& p : polygon){
+        Pointd pr(p.x() * r[0][0] + p.y() * r[1][0] +p.z() * r[2][0], p.x() * r[0][1] + p.y() * r[1][1] +p.z() * r[2][1], p.x() * r[0][2] + p.y() * r[1][2] +p.z() * r[2][2]);
+        points.push_back(Point2D<T>(pr.x(), pr.y()));
+    }
+    return isPolygonCounterClockwise(points);
 }
 
 } //namespace cg3

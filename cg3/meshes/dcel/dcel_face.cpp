@@ -8,6 +8,7 @@
 #include "dcel_face_iterators.h"
 #include "dcel_vertex_iterators.h"
 #include <cg3/geometry/transformations.h>
+#include <cg3/geometry/utils3d.h>
 #ifdef CG3_CGAL_DEFINED
 #include <cg3/cgal/triangulation.h>
 #endif
@@ -306,41 +307,42 @@ Vec3 Dcel::Face::updateNormal()
     assert(b != nullptr && "HalfEdge's To Vertex is null.");
     Vertex* c = _outerHalfEdge->next()->toVertex();
     assert(c != nullptr && "HalfEdge's To Vertex is null.");
-    Vec3 normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
-    normal.normalize();
-    if (_outerHalfEdge->next()->next()->toVertex() != a){
-        Vec3 zAxis(0,0,1);
-        Vec3 v = -(normal.cross(zAxis));
-        v.normalize();
-        double dot = normal.dot(zAxis);
-        double angle = acos(dot);
 
-        double r[3][3] = {{0}};
-        if (normal != zAxis){
-            if (normal == -zAxis){
-                v = Vec3(1,0,0);
-            }
-            rotationMatrix(v, angle, r);
+    Vec3 normal;
+    if (isTriangle()){
+        normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
+        if (normal == Vec3())
+            std::cerr << "Warning: degenerate triangle; ID: " << id() << "\n";
+        else
+            normal.normalize();
+    }
+    else {
+        bool end = false;
+        HalfEdge* edge = _outerHalfEdge->next()->next();
+        Vertex* first = a;
+        while (areCollinear(a->coordinate(), b->coordinate(), c->coordinate()) && !end){
+            a = b;
+            b = c;
+            c = edge->toVertex();
+            edge = edge->next();
+            if (a == first)
+                end = true;
+        }
+        if (end) {
+            normal = Vec3(0,0,0);
+            std::cerr << "Warning: degenerate polygon; ID: " << id() << "\n";
         }
         else {
-            r[0][0] = r[1][1] = r[2][2] = 1;
-        }
+            normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
+            assert(normal != Vec3(0,0,0));
+            normal.normalize();
 
-        std::vector<Pointd> points;
-        for (const Dcel::Vertex* v : incidentVertexIterator()){
-            assert(v != nullptr && "Vertex is null.");
-            Pointd p = v->coordinate();
-            Pointd pr(p.x() * r[0][0] + p.y() * r[1][0] +p.z() * r[2][0], p.x() * r[0][1] + p.y() * r[1][1] +p.z() * r[2][1], p.x() * r[0][2] + p.y() * r[1][2] +p.z() * r[2][2]);
-            points.push_back(pr);
+            std::vector<Pointd> pol;
+            for (const Vertex* v : incidentVertexIterator())
+                pol.push_back(v->coordinate());
+            if (! isPolygonCounterClockwise(pol, normal))
+                normal = -normal;
         }
-        double sum = 0;
-        for (unsigned int i = 0; i < points.size(); i++){
-            Pointd p1 = points[i];
-            Pointd p2 = points[(i+1)%points.size()];
-            sum += (p2.x() - p1.x()) * (p2.y()+p1.y());
-        }
-        if (sum > 0)
-            normal = -normal;
     }
     #ifdef NDEBUG
     parent->faceNormals[_id] = normal;

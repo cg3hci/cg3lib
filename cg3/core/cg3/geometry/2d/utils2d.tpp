@@ -189,20 +189,20 @@ inline bool isPointLyingInCircle(
 /**
  * @ingroup cg3core
  * @brief isPolygonCounterClockwise
- * @param polygon: a container of Point2D representing a regular polygon
+ * @param polygon: a container of Point2D representing a regular 2D polygon
  * @return true if the points of the polygon are stored in counterclockwise order
  */
-template <typename Container>
-inline bool isPolygonCounterClockwise(const Container& polygon)
+template <template < class ... > class Container, class T, class ... Args>
+inline bool isPolygonCounterClockwise(const Container<Point2D<T>>& polygon)
 {
     double sum = 0;
-    for (typename Container::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
-        typename Container::const_iterator next = it;
+    for (typename Container<Point2D<T>>::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
+        typename Container<Point2D<T>>::const_iterator next = it;
         next++;
         if (next == polygon.end())
             next = polygon.begin();
-        const Point2Dd& p1 = *it;
-        const Point2Dd& p2 = *next;
+        const Point2D<T>& p1 = *it;
+        const Point2D<T>& p2 = *next;
         sum += (p2.x() - p1.x()) * (p2.y()+p1.y());
     }
     if (sum > 0)
@@ -210,7 +210,6 @@ inline bool isPolygonCounterClockwise(const Container& polygon)
     else
         return true;
 }
-
 
 /* ----- INTERNAL FUNCTION DEFINITION ----- */
 

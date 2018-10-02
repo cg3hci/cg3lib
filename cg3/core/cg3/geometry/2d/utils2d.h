@@ -57,8 +57,8 @@ inline bool isPointLyingInCircle(
         const Point2D<T>& p,
         const bool includeBorders);
 
-template <typename Container>
-inline bool isPolygonCounterClockwise(const Container& polygon);
+template <template < class ... > class Container, class T, class ... Args>
+inline bool isPolygonCounterClockwise(const Container<Point2D<T>>& polygon);
 
 } //namespace cg3
 
