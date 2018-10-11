@@ -150,5 +150,18 @@ void DrawableMeshDrawListManager::on_subFrameAxisCheckBox_stateChanged(int arg1)
     ((ManipulableObject*)mesh)->setDrawRelativeAxis(arg1 == Qt::Checked);
 }
 
+void DrawableMeshDrawListManager::on_wireframeWidthSlider_valueChanged(int value)
+{
+    mesh->setWireframeWidth(value);
+    mw.canvas.update();
+}
+
+void DrawableMeshDrawListManager::on_pointWidthSlider_valueChanged(int value)
+{
+    mesh->setPointWidth(value);
+    mw.canvas.update();
+}
+
+
 } //namespace cg3::viewer
 } //namespace cg3

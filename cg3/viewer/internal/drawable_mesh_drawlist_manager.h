@@ -57,6 +57,10 @@ private slots:
 
     void on_subFrameAxisCheckBox_stateChanged(int arg1);
 
+    void on_wireframeWidthSlider_valueChanged(int value);
+
+    void on_pointWidthSlider_valueChanged(int value);
+
 private:
     Ui::DrawableMeshDrawListManager *ui;
     MainWindow& mw;

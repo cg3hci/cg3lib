@@ -68,7 +68,8 @@ public:
     void setSmoothShading() const;
     void setPointsShading() const;
     void setWireframeColor(float r, float g, float b) const;
-    void setWireframeWidth(float width) const;
+    void setWireframeWidth(int width) const;
+    void setPointWidth(int width) const;
     void setEnableVertexColor() const;
     void setEnableTriangleColor() const;
     void setVisibleBoundingBox(bool b) const;
@@ -92,6 +93,7 @@ protected:
     mutable int   drawMode;
     mutable int   wireframeWidth;
     mutable float wireframeColor[3];
+    mutable int   pointWidth;
 };
 
 } //namespace cg3

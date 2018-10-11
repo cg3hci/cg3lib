@@ -104,6 +104,9 @@ QCheckBox::indicator:checked {
         <property name="text">
          <string/>
         </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
        </widget>
       </item>
       <item>

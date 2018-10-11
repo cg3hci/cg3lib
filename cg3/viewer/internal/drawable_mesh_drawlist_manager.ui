@@ -29,31 +29,6 @@
    <property name="horizontalSpacing">
     <number>0</number>
    </property>
-   <item row="1" column="0">
-    <widget class="QRadioButton" name="vColorRadioButton">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="icons/icons.qrc">
-       <normaloff>:/tcolor.png</normaloff>:/tcolor.png</iconset>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup_2</string>
-     </attribute>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QCheckBox" name="wireframeCheckBox">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="icons/icons.qrc">
-       <normaloff>:/wire.png</normaloff>:/wire.png</iconset>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="1">
     <widget class="QRadioButton" name="tColorRadioButton">
      <property name="text">
@@ -66,38 +41,6 @@
      <attribute name="buttonGroup">
       <string notr="true">buttonGroup_2</string>
      </attribute>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="4">
-    <widget class="QLabel" name="nVerticesLabel">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QRadioButton" name="flatRadioButton">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="icons/icons.qrc">
-       <normaloff>:/flat.png</normaloff>:/flat.png</iconset>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QCheckBox" name="bboxCheckBox">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="icons/icons.qrc">
-       <normaloff>:/bbox.png</normaloff>:/bbox.png</iconset>
-     </property>
     </widget>
    </item>
    <item row="0" column="2">
@@ -114,10 +57,35 @@
      </attribute>
     </widget>
    </item>
-   <item row="4" column="0" colspan="4">
+   <item row="1" column="0">
+    <widget class="QRadioButton" name="vColorRadioButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/tcolor.png</normaloff>:/tcolor.png</iconset>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup_2</string>
+     </attribute>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="4">
     <widget class="QLabel" name="nFacesLabel">
      <property name="text">
       <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="wireframeCheckBox">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/wire.png</normaloff>:/wire.png</iconset>
      </property>
     </widget>
    </item>
@@ -149,10 +117,82 @@
      </attribute>
     </widget>
    </item>
-   <item row="2" column="0" colspan="4">
+   <item row="0" column="1">
+    <widget class="QRadioButton" name="flatRadioButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/flat.png</normaloff>:/flat.png</iconset>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QSlider" name="wireframeWidthSlider">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>5</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="4">
+    <widget class="QLabel" name="nVerticesLabel">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="4">
     <widget class="QCheckBox" name="subFrameAxisCheckBox">
      <property name="text">
       <string>Draw SubFrame Axis</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QCheckBox" name="bboxCheckBox">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons/icons.qrc">
+       <normaloff>:/bbox.png</normaloff>:/bbox.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Wireframe Width:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Point Width:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="2">
+    <widget class="QSlider" name="pointWidthSlider">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>5</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>

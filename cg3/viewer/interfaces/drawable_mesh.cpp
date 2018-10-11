@@ -16,6 +16,7 @@ void DrawableMesh::init()
     wireframeColor[0] = (float)0.1;
     wireframeColor[1] = (float)0.1;
     wireframeColor[2] = (float)0.1;
+    pointWidth = 3;
 }
 
 bool DrawableMesh::isWireframeEnabled() const
@@ -87,9 +88,14 @@ void DrawableMesh::setWireframeColor(float r, float g, float b) const
     wireframeColor[2] = b;
 }
 
-void DrawableMesh::setWireframeWidth(float width) const
+void DrawableMesh::setWireframeWidth(int width) const
 {
     wireframeWidth = width;
+}
+
+void DrawableMesh::setPointWidth(int width) const
+{
+    pointWidth = width;
 }
 
 void DrawableMesh::setEnableVertexColor() const
@@ -185,7 +191,7 @@ void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* co
         glEnableClientState(GL_COLOR_ARRAY);
         glColorPointer (3, GL_FLOAT, 0, vertexColors);
 
-        glPointSize(3);
+        glPointSize(pointWidth);
 
         glDrawArrays(GL_POINTS, 0, nv);
 
