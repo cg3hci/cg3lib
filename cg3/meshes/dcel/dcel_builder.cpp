@@ -21,11 +21,12 @@ Dcel& DcelBuilder::dcel()
     return d;
 }
 
-unsigned int DcelBuilder::addVertex(const Pointd& p, const Vec3& n, const Color &c)
+unsigned int DcelBuilder::addVertex(const Pointd& p, const Vec3& n, const Color &c, int flag)
 {
     if (mapVertices.find(p) == mapVertices.end()){
         cg3::Dcel::Vertex* v = d.addVertex(p, n, c);
         mapVertices[p] = v->id();
+        v->setFlag(flag);
         return v->id();
     }
     else
@@ -36,7 +37,8 @@ int DcelBuilder::addFace(
         unsigned int vid1,
         unsigned int vid2,
         unsigned int vid3,
-        const Color& c)
+        const Color& c,
+        int flag)
 {
     //one of the three ids does not exist in the dcel
     if (d.vertex(vid1) == nullptr ||
@@ -114,6 +116,7 @@ int DcelBuilder::addFace(
     he3->setFace(f);
     f->setColor(c);
     f->setOuterHalfEdge(he1);
+    f->setFlag(flag);
 
     mapHalfEdges.insert(std::make_pair(std::make_pair(vid1, vid2), he1->id()));
     mapHalfEdges.insert(std::make_pair(std::make_pair(vid2, vid3), he2->id()));
@@ -127,7 +130,8 @@ int DcelBuilder::addFace(
         const Pointd& p1,
         const Pointd& p2,
         const Pointd& p3,
-        const Color& c)
+        const Color& c,
+        int flag)
 {
     unsigned int vid1, vid2, vid3;
 
@@ -151,7 +155,7 @@ int DcelBuilder::addFace(
     else
         vid3 = it->second;
 
-    return addFace(vid1, vid2, vid3, c);
+    return addFace(vid1, vid2, vid3, c, flag);
 }
 
 void DcelBuilder::finalize()

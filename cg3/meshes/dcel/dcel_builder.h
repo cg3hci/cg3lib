@@ -27,19 +27,21 @@ public:
     unsigned int addVertex(
             const cg3::Pointd& p,
             const Vec3& n = Vec3(),
-            const Color &c = Color(128, 128, 128));
+            const Color &c = Color(128, 128, 128),
+            int flag = 0);
 
-    int addFace(
-            unsigned int vid1,
+    int addFace(unsigned int vid1,
             unsigned int vid2,
             unsigned int vid3,
-            const Color &c = Color(128, 128, 128));
+            const Color &c = Color(128, 128, 128),
+            int flag = 0);
 
     int addFace(
             const cg3::Pointd& p1,
             const cg3::Pointd& p2,
             const cg3::Pointd& p3,
-            const Color &c = Color(128, 128, 128));
+            const Color &c = Color(128, 128, 128),
+            int flag = 0);
 
     void finalize();
 
