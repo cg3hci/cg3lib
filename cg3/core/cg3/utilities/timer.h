@@ -22,6 +22,8 @@ namespace cg3 {
 class Timer
 {
 public:
+    Timer(bool _start = true);
+
     Timer (const std::string& caption, bool _start = true);
 
     void start();

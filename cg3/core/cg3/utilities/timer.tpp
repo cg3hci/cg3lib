@@ -9,6 +9,14 @@
 
 namespace cg3 {
 
+inline Timer::Timer(bool _start) :
+    caption("Timer"),
+    isStopped(false)
+{
+    if (_start)
+        start();
+}
+
 /**
  * @brief Timer::Timer
  * @param caption
