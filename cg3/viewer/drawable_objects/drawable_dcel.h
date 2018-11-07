@@ -43,6 +43,7 @@ public:
     void setFacesWireframe(bool b);
     void setFacesWireframeWidth(int w);
     void setFacesWireframeColor(float r, float g, float b);
+    void setFlaggedEdgesWireframe(bool b, int flag = 1, int w = 4, cg3::Color color = cg3::BLACK);
 
     // SerializableObject interface
     void deserialize(std::ifstream& binaryFile);
@@ -61,7 +62,8 @@ protected:
     void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
 
     enum {
-        DRAW_FACES_WIREFRAME = 0b100000000
+        DRAW_FACES_WIREFRAME = 0b0100000000,
+        DRAW_FLAGGED_EDGES = 0b1000000000
     };
 
     std::vector<double> vertexCoordinates; /** \~Italian @brief vettore di coordinate usate per la visualizzazione: per aggiornare utilizzare metodo update() */
@@ -75,8 +77,14 @@ protected:
     std::vector<unsigned int> trianglesFacesMap; /** \~Italian @brief vettore di mappatura triangoli->facce (ogni entrata ha posizione corrispondente a un terzo della posizione della tripla in tris e presenta l'identificativo di una faccia */
     std::vector<std::pair<unsigned int, unsigned int> > facesWireframe; /** \~Italian @brief vettore di coppie usate per renderizzare degli edge: per aggiornare utilizzare metodo update() */
 
+    std::vector<cg3::Pointd> flaggedEdges;
+
     int facesWireframeWidth = 1;
     float facesWireframeColor[3];
+
+    int flag = 1;
+    int flaggedEdgesWireframeWidth = 5;
+    cg3::Color flaggedEdgesColor = cg3::BLACK;
 };
 
 } //namespace cg3

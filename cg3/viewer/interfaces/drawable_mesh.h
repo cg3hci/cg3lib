@@ -76,6 +76,7 @@ public:
 
 protected:
     DrawableMesh();
+    virtual void draw() const = 0;
     virtual void draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const;
     virtual void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
 

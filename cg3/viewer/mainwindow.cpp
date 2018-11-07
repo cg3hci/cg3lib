@@ -453,6 +453,14 @@ void MainWindow::on_actionShow_Hide_Console_triggered()
     toggleConsole();
 }
 
+void MainWindow::on_actionShow_Hide_DrawList_triggered()
+{
+    if (ui->dockDrawList->isHidden())
+        ui->dockDrawList->show();
+    else
+        ui->dockDrawList->hide();
+}
+
 void MainWindow::on_actionToggle_Debug_Objects_triggered()
 {
     toggleDebugObjects();

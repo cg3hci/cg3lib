@@ -65,6 +65,21 @@ void DrawableDcel::clear()
 void DrawableDcel::draw() const
 {
     DrawableMesh::draw((unsigned int)vertexCoordinates.size()/3, (unsigned int)triangles.size()/3, vertexCoordinates.data(), triangles.data(), vertexNormals.data(), vertexColors.data(), triangleNormals.data(), triangleColors.data(), bBox.min(), bBox.max());
+    if(drawMode & DRAW_FACES_WIREFRAME){
+        for(unsigned int i=0; i<facesWireframe.size(); i++){
+            glLineWidth(facesWireframeWidth);
+            glColor3f(facesWireframeColor[0], facesWireframeColor[1], facesWireframeColor[2]);
+            glBegin(GL_LINES);
+            glVertex3dv(&(vertexCoordinates[3*(facesWireframe[i].first)]));
+            glVertex3dv(&(vertexCoordinates[3*(facesWireframe[i].second)]));
+            glEnd();
+        }
+    }
+    if (drawMode & DRAW_FLAGGED_EDGES){
+        for (uint i = 0; i < flaggedEdges.size(); i+=2){
+            cg3::opengl::drawLine(flaggedEdges[i], flaggedEdges[i+1], flaggedEdgesColor, flaggedEdgesWireframeWidth);
+        }
+    }
 }
 
 /**
@@ -112,6 +127,7 @@ void DrawableDcel::update()
     facesWireframe.clear();
     trianglesFacesMap.clear();
     facesTrianglesMap.clear();
+    flaggedEdges.clear();
     vertexCoordinates.reserve(numberVertices()*3);
     vertexNormals.reserve(numberVertices()*3);
     triangles.reserve(numberFaces()*3);
@@ -219,6 +235,15 @@ void DrawableDcel::update()
         facesTrianglesMap[f->id()] = actualTriangle++;
     }
     #endif
+    for (cg3::Dcel::HalfEdge* he : halfEdgeIterator()){
+        if (he->id() < he->twin()->id()){
+            if (he->flag() == flag || he->twin()->flag() == flag){
+                Vec3 ff = (he->face()->normal() + he->twin()->face()->normal())/2;
+                flaggedEdges.push_back(he->fromVertex()->coordinate() + ff*cg3::CG3_EPSILON);
+                flaggedEdges.push_back(he->toVertex()->coordinate() + ff*cg3::CG3_EPSILON);
+            }
+        }
+    }
 }
 
 /**
@@ -228,16 +253,6 @@ void DrawableDcel::update()
 void DrawableDcel::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const
 {
     DrawableMesh::renderPass(nv, nt, coords, triangles, vertexNormals, vertexColors, triangleNormals, triangleColors);
-    if(drawMode & DRAW_FACES_WIREFRAME){
-        for(unsigned int i=0; i<facesWireframe.size(); i++){
-            glLineWidth(facesWireframeWidth);
-            glColor3f(facesWireframeColor[0], facesWireframeColor[1], facesWireframeColor[2]);
-            glBegin(GL_LINES);
-            glVertex3dv(&(vertexCoordinates[3*(facesWireframe[i].first)]));
-            glVertex3dv(&(vertexCoordinates[3*(facesWireframe[i].second)]));
-            glEnd();
-        }
-    }
 }
 
 /**
@@ -268,6 +283,26 @@ void DrawableDcel::setFacesWireframeColor(float r, float g, float b)
     wireframeColor[0] = r;
     wireframeColor[1] = g;
     wireframeColor[2] = b;
+}
+
+/**
+ * @brief DrawableDcel::setFlaggedEdgesWireframe
+ * @param b
+ * @param flag
+ * @param w
+ * @param color
+ */
+void DrawableDcel::setFlaggedEdgesWireframe(
+        bool b,
+        int flag,
+        int w,
+        Color color)
+{
+    if (b) drawMode |=  DRAW_FLAGGED_EDGES;
+    else   drawMode &= ~DRAW_FLAGGED_EDGES;
+    this->flag = flag;
+    flaggedEdgesWireframeWidth = w;
+    flaggedEdgesColor = color;
 }
 
 void DrawableDcel::deserialize(std::ifstream& binaryFile)

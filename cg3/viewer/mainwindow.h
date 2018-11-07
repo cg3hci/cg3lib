@@ -143,6 +143,7 @@ private slots:
     void on_actionLoad_Point_Of_View_from_triggered();
     void on_actionSave_Point_Of_View_as_triggered();
     void on_actionShow_Hide_Console_triggered();
+    void on_actionShow_Hide_DrawList_triggered();
     void on_actionToggle_Debug_Objects_triggered();
     void on_action2D_Mode_triggered();
     void on_action3D_Mode_triggered();

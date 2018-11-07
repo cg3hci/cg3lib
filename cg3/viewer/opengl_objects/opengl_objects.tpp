@@ -143,9 +143,9 @@ inline void drawLine(
         const Color &c,
         int width)
 {
-    glBegin(GL_LINES);
-    glColor3f(c.redF(), c.greenF(), c.blueF());
     glLineWidth(width);
+    glColor3f(c.redF(), c.greenF(), c.blueF());
+    glBegin(GL_LINES);
     glVertex3f(a.x(), a.y(), a.z());
     glVertex3f(b.x(), b.y(), b.z());
     glEnd();

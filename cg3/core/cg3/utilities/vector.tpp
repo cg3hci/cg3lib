@@ -53,4 +53,10 @@ inline std::vector<size_t> sortIndexes(const std::vector<T> &v)
     return idx;
 }
 
+template<typename T>
+inline bool contains(const std::vector<T>& v, const T& value)
+{
+    return std::find(v.begin(), v.end(), value) != v.end();
+}
+
 } //namespace cg3

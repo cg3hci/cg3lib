@@ -108,7 +108,35 @@ inline double Point<T>::dot(const Point<T>& otherVector) const
 {
     return xCoord * otherVector.xCoord +
            yCoord * otherVector.yCoord +
-           zCoord * otherVector.zCoord;
+            zCoord * otherVector.zCoord;
+}
+
+/**
+ * @brief Function that calculates the angle in radians between the two vectors
+ * @param[in] otherVector: vector on which is calculated the angle
+ * @return The angle in radians between this and \c otherVector
+ */
+template<class T>
+inline double Point<T>::angleRAD(const Point<T>& otherVector) const
+{
+    Point<T> u = *this; u.normalize();
+    Point<T> v = otherVector;    v.normalize();
+    double dot   = std::min( 1.0, u.dot(v));
+           dot   = std::max(-1.0, dot);
+    double angle = acos(dot);
+    assert(!std::isnan(angle));
+    return angle;
+}
+
+/**
+ * @brief Function that calculates the angle in degrees between the two vectors
+ * @param[in] otherVector: vector on which is calculated the angle
+ * @return The angle in degrees between this and \c otherVector
+ */
+template<class T>
+inline double Point<T>::angleDEG(const Point<T>& otherVector) const
+{
+    return angleRAD(otherVector)*180.0/M_PI;
 }
 
 /**

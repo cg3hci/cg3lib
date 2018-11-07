@@ -48,7 +48,7 @@
      <x>0</x>
      <y>0</y>
      <width>929</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -73,6 +73,7 @@
     <addaction name="actionFull_Screen"/>
     <addaction name="actionShow_Hide_Dock_Widget"/>
     <addaction name="actionShow_Hide_Console"/>
+    <addaction name="actionShow_Hide_DrawList"/>
    </widget>
    <widget class="QMenu" name="menuFile_2">
     <property name="title">
@@ -152,8 +153,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>286</width>
-          <height>528</height>
+          <width>280</width>
+          <height>508</height>
          </rect>
         </property>
         <attribute name="label">
@@ -209,7 +210,7 @@
           <x>0</x>
           <y>0</y>
           <width>250</width>
-          <height>554</height>
+          <height>541</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -366,6 +367,14 @@
    </property>
    <property name="shortcut">
     <string>B</string>
+   </property>
+  </action>
+  <action name="actionShow_Hide_DrawList">
+   <property name="text">
+    <string>Show/Hide DrawList</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

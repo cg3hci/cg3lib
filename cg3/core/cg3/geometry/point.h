@@ -64,6 +64,8 @@ public:
     const T& z()                                        const;
     double dist(const Point<T>& otherPoint)             const;
     double dot(const Point<T>& otherVector)             const;
+    double angleRAD(const Point<T>& otherVector)        const;
+    double angleDEG(const Point<T>& otherVector)        const;
     Point<T> cross(const Point<T>& otherVector)         const;
     double length()                                     const;
     double lengthSquared()                              const;
