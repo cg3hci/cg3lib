@@ -34,7 +34,7 @@ public:
             bool closeButtonVisible = false);
     ~DrawableObjectDrawListManager();
 
-    void setDrawableObjectVisibility(bool vis);
+    void setDrawableObjectVisibility(bool vis, bool alsoSubframe = false);
     void setDrawableObjectName(const std::string& newName);
     std::string drawableObjectName() const;
     bool isContainer() const;

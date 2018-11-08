@@ -124,5 +124,23 @@ void DrawableContainerDrawListManager::changeVisibilityObject(
     mw.canvas.update();
 }
 
+void DrawableContainerDrawListManager::on_visibleButton_clicked()
+{
+    for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p : mapSubManagers){
+        mw.canvas.setDrawableObjectVisibility(p.first, true);
+        p.second->setDrawableObjectVisibility(true);
+    }
+    mw.canvas.update();
+}
+
+void DrawableContainerDrawListManager::on_hiddenButton_clicked()
+{
+    for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p : mapSubManagers){
+        mw.canvas.setDrawableObjectVisibility(p.first, false);
+        p.second->setDrawableObjectVisibility(false);
+    }
+    mw.canvas.update();
+}
+
 } //namespace cg3::viewer
 } //namespace cg3

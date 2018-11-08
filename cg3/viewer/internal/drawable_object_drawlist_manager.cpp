@@ -71,10 +71,11 @@ DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
     delete ui;
 }
 
-void DrawableObjectDrawListManager::setDrawableObjectVisibility(bool vis)
+void DrawableObjectDrawListManager::setDrawableObjectVisibility(bool vis, bool alsoSubframe)
 {
     ui->checkBox->setChecked(vis);
-    setSubFrameVisibility(vis);
+    if (alsoSubframe)
+        setSubFrameVisibility(vis);
 }
 
 void DrawableObjectDrawListManager::setDrawableObjectName(const std::string& newName)

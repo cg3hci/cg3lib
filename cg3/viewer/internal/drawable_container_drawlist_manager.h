@@ -48,6 +48,10 @@ private slots:
     void removeCheckBoxOfDrawableContainer(const DrawableObject* obj);
     void changeVisibilityObject(const DrawableObject* obj, bool vis);
 
+    void on_visibleButton_clicked();
+
+    void on_hiddenButton_clicked();
+
 private:
     Ui::DrawableContainerDrawListManager *ui;
     MainWindow& mw;
