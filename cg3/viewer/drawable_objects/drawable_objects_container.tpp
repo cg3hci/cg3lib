@@ -20,6 +20,21 @@ DrawableObjectsContainer<T>::~DrawableObjectsContainer()
 
 }
 
+template<typename T>
+DrawableObjectsContainer<T>::DrawableObjectsContainer(
+        const DrawableObjectsContainer<T>& other) :
+    visibleObject(other.visibleObject)
+{
+    uint i = 0;
+    for (const T& obj : other){
+        bool visibility = visibleObject < 0 ? true : i == (uint)visibleObject;
+
+        list.push_back(obj);
+        cg3::DrawableContainer::pushBack(&(list.back()), other.objectName(i), visibility);
+        ++i;
+    }
+}
+
 template <typename T>
 unsigned int DrawableObjectsContainer<T>::pushBack(const T& d, const std::string& name, bool vis)
 {
@@ -87,10 +102,8 @@ void DrawableObjectsContainer<T>::setVisibleObject(int objectId)
         if (objectId >= 0) {
             for (unsigned int i = 0; i < size(); i++){
                 setObjectVisibility(i, false);
-                //mw.setDrawableObjectVisibility((*this)[i], false);
             }
             setObjectVisibility(objectId, true);
-            //mw.setDrawableObjectVisibility((*this)[objectId], true);
             visibleObject = objectId;
         }
     }
@@ -98,18 +111,56 @@ void DrawableObjectsContainer<T>::setVisibleObject(int objectId)
         if (objectId < 0) {
             for (unsigned int i = 0; i < size(); i++){
                 setObjectVisibility(i, true);
-                //mw.setDrawableObjectVisibility((*this)[i], true);
             }
             visibleObject = objectId;
         }
         else {
             setObjectVisibility(visibleObject, false);
-            //mw.setDrawableObjectVisibility((*this)[visibleObject], false);
             setObjectVisibility(objectId, true);
-            //mw.setDrawableObjectVisibility((*this)[objectId], true);
             visibleObject = objectId;
         }
     }
+}
+
+template<typename T>
+DrawableObjectsContainer<T>& DrawableObjectsContainer<T>::operator=(
+        const DrawableObjectsContainer<T>& other)
+{
+    if (this != &other){
+        clear();
+        visibleObject = other.visibleObject;
+        uint i = 0;
+        for (const T& obj : other){
+            bool visibility = visibleObject < 0 ? true : i == (uint)visibleObject;
+            list.push_back(obj);
+            cg3::DrawableContainer::pushBack(&(list.back()), other.objectName(i), visibility);
+            ++i;
+        }
+    }
+    return *this;
+}
+
+template<typename T>
+void DrawableObjectsContainer<T>::serialize(std::ofstream& binaryFile) const
+{
+    cg3::serializeObjectAttributes("cg3DrawableObjectsContainer", binaryFile, list, visibleObject);
+    for (unsigned int i = 0; i < size(); i++)
+        cg3::serialize(this->objectName(i), binaryFile);
+}
+
+template<typename T>
+void DrawableObjectsContainer<T>::deserialize(std::ifstream& binaryFile)
+{
+    cg3::deserializeObjectAttributes("cg3DrawableObjectsContainer", binaryFile, list, visibleObject);
+    uint i = 0;
+    for (const T& obj : list){
+        bool visibility = visibleObject < 0 ? true : i == (uint)visibleObject;
+        std::string objectName;
+        cg3::deserialize(objectName, binaryFile);
+        cg3::DrawableContainer::pushBack(&obj, objectName, visibility);
+        ++i;
+    }
+
 }
 
 template <typename T>

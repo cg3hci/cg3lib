@@ -6,6 +6,7 @@
  */
 
 #include "set.h"
+#include <algorithm>
 
 namespace cg3 {
 
@@ -76,6 +77,19 @@ inline bool isSubset(
         const std::set<T> &b)
 {
     return std::includes(b.begin(), b.end(), a.begin(), a.end());
+}
+
+/**
+ * @ingroup cg3core
+ * @brief contains
+ * @param s
+ * @param obj
+ * @return
+ */
+template<typename T>
+bool contains(const std::set<T>& s, const T& obj)
+{
+    return s.find(obj) != s.end();
 }
 
 } //namespace cg3

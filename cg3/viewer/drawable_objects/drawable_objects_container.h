@@ -23,7 +23,7 @@ namespace cg3 {
  * constructor.
  */
 template <typename T>
-class DrawableObjectsContainer : public cg3::DrawableContainer
+class DrawableObjectsContainer : public cg3::DrawableContainer, public SerializableObject
 {
 public:
 
@@ -32,6 +32,7 @@ public:
 
     DrawableObjectsContainer();
     ~DrawableObjectsContainer();
+    DrawableObjectsContainer(const DrawableObjectsContainer<T>& other);
     unsigned int pushBack(const T& d, const std::string& name, bool vis = true);
     void pushList(const std::list<T>& list);
     const std::list<T>& getList() const;
@@ -42,6 +43,12 @@ public:
     T& at(unsigned int i);
 
     void setVisibleObject(int objectId);
+
+    DrawableObjectsContainer & operator=(const DrawableObjectsContainer<T>& other);
+
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
     iterator begin();
     iterator end();

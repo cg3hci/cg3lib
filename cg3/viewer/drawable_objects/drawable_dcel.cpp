@@ -236,9 +236,17 @@ void DrawableDcel::update()
     }
     #endif
     for (cg3::Dcel::HalfEdge* he : halfEdgeIterator()){
-        if (he->id() < he->twin()->id()){
-            if (he->flag() == flag || he->twin()->flag() == flag){
-                Vec3 ff = (he->face()->normal() + he->twin()->face()->normal())/2;
+        if (he->twin() != nullptr) {
+            if (he->id() < he->twin()->id()){
+                if (he->flag() == flag || he->twin()->flag() == flag){
+                    Vec3 ff = (he->face()->normal() + he->twin()->face()->normal())/2;
+                    flaggedEdges.push_back(he->fromVertex()->coordinate() + ff*cg3::CG3_EPSILON);
+                    flaggedEdges.push_back(he->toVertex()->coordinate() + ff*cg3::CG3_EPSILON);
+                }
+            }
+        } else {
+            if (he->flag() == flag){
+                Vec3 ff = he->face()->normal();
                 flaggedEdges.push_back(he->fromVertex()->coordinate() + ff*cg3::CG3_EPSILON);
                 flaggedEdges.push_back(he->toVertex()->coordinate() + ff*cg3::CG3_EPSILON);
             }

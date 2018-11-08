@@ -32,6 +32,11 @@ bool isSubset(
         const std::set<T> &a,
         const std::set<T> &b);
 
+template<typename T>
+bool contains(
+        const std::set<T> &s,
+        const T& obj);
+
 } //namespace cg3
 
 #include "set.tpp"
