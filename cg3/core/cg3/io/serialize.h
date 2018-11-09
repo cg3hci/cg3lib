@@ -25,6 +25,18 @@ void deserializeObjectAttributes(
         std::ifstream& binaryFile,
         Args&... args);
 
+template <typename... Args>
+void serializeObjectAttributes(
+        const std::string& s,
+        const std::string& fileName,
+        const Args&... args);
+
+template <typename... Args>
+void deserializeObjectAttributes(
+        const std::string& s,
+        const std::string& fileName,
+        Args&... args);
+
 // Manage File functions
 std::streampos getFilePosition(std::ifstream& binaryFile);
 

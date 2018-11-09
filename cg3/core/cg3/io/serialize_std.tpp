@@ -144,18 +144,22 @@ inline void deserialize(std::unordered_set<T, A...> &s, std::ifstream& binaryFil
  * @brief serialize
  * @param[in] v: std::vector of booleans
  * @param binaryFile
+ * @link https://stackoverflow.com/questions/29623605/how-to-dump-stdvectorbool-in-a-binary-file
  */
 template <typename ...A>
 inline void serialize(const std::vector<bool, A...> &v, std::ofstream& binaryFile)
 {
-    bool tmp;
+    //bool tmp;
     unsigned long long int size = v.size();
     serialize("stdvectorBool", binaryFile);
     serialize(size, binaryFile);
-    for (typename std::vector<bool, A...>::const_iterator it = v.begin(); it != v.end(); ++it){
-        if (*it) tmp = 1;
-        else tmp = 0;
-        serialize(tmp, binaryFile);
+
+    for(typename std::vector<bool, A...>::size_type i = 0; i < size;) {
+        unsigned char aggr = 0;
+        for(unsigned char mask = 1; mask > 0 && i < size; ++i, mask <<= 1)
+            if(v.at(i))
+                aggr |= mask;
+        binaryFile.write((const char*)&aggr, sizeof(unsigned char));
     }
 }
 
@@ -180,6 +184,7 @@ inline void serialize(const std::vector<T, A...> &v, std::ofstream& binaryFile)
  * @brief deserialize
  * @param[out] v: std::vector
  * @param binaryFile
+ * @link https://stackoverflow.com/questions/29623605/how-to-dump-stdvectorbool-in-a-binary-file
  */
 template <typename ...A>
 inline void deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile)
@@ -194,10 +199,12 @@ inline void deserialize(std::vector<bool, A...> &v, std::ifstream& binaryFile)
             throw std::ios_base::failure("Mismatching String: " + s + " != stdvectorBool");
         deserialize(size, binaryFile);
         tmpv.resize(size);
-        bool tmp;
-        for (unsigned int it = 0; it < size; ++it){
-            deserialize(tmp, binaryFile);
-            tmpv[it] = tmp;
+
+        for(typename std::vector<bool, A...>::size_type i = 0; i < size;) {
+            unsigned char aggr;
+            binaryFile.read((char*)&aggr, sizeof(unsigned char));
+            for(unsigned char mask = 1; mask > 0 && i < size; ++i, mask <<= 1)
+                tmpv.at(i) = aggr & mask;
         }
         v = std::move(tmpv);
     }

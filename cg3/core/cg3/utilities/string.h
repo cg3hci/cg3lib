@@ -27,7 +27,11 @@ void separateFilenameFromPath(
         std::string& path,
         std::string& filename);
 
+std::string pathWithoutFilename(const std::string& fullpath);
+
 std::string filenameWithoutExtension(const std::string& fullpath);
+
+std::string filenameWithExtension(const std::string& fullpath);
 
 } //namespace cg3
 

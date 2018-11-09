@@ -79,6 +79,65 @@ inline void deserializeObjectAttributes(
 
 /**
  * @ingroup cg3core
+ * @brief Allows an easy serialization of a series of arguments in a binary file.
+ * The arguments will be serialized in the order they are passed, after the first input string,
+ * which is used as id.
+ *
+ * @param[in] s: a string which discriminates the set of arguments which are going to be serialized.
+ * @param[in] binaryFile: the file in which the arguments are going to be serialized
+ * @param[in] args: a variable number of arguments of different types
+ */
+template<typename... Args>
+inline void serializeObjectAttributes(
+        const std::string& s,
+        const std::string& fileName,
+        const Args&... args)
+{
+    std::ofstream file;
+
+    file.open (fileName, std::ios::out | std::ios::binary);
+    if (file.is_open()){
+        cg3::serializeObjectAttributes(s, file, args...);
+        file.close();
+    }
+    else
+        throw std::ios_base::failure("Cannot create file " + fileName);
+}
+
+/**
+ * @ingroup cg3core
+ * @brief Allows an easy deserialization of a series of arguments from a binary file.
+ * The arguments will be deserialized in the order they are passed, after the first input string,
+ * which is deserialized and checked as id.
+ * If the data deserialized doesn't match with the arguments passed, an exception is thrown
+ * and the initial position of the binary file restored as it was when the function was called.
+ * The position of the binary file will change only if all arguments will deserialized correctly.
+ *
+ * @param[in] s: a string which should match with the first deserialized string on the file.
+ * @param[in] binaryFile: the file from which the arguments are going to be deserialized
+ * @param[out] args: a variable number of arguments of different types
+ * @throws std::ios_base::failure exception if the arguments don't match with the data
+ * deserialized from the binary file.
+ */
+template<typename... Args>
+inline void deserializeObjectAttributes(
+        const std::string& s,
+        const std::string& fileName,
+        Args&... args)
+{
+    std::ifstream file;
+
+    file.open (fileName, std::ios::in | std::ios::binary);
+    if (file.is_open()){
+        cg3::deserializeObjectAttributes(s, file, args...);
+        file.close();
+    }
+    else
+        throw std::ios_base::failure("Cannot open file " + fileName);
+}
+
+/**
+ * @ingroup cg3core
  * @brief getPosition
  * @param[in] binaryFile
  * @return the position of the stream
@@ -123,7 +182,7 @@ inline void serialize(
         typename std::enable_if<!std::is_pointer<T>::value >::type*)
 {
     #ifndef CG3_IGNORE_TYPESAFE_SERIALIZATION_CHECK
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value,
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value || std::is_enum<T>::value,
                   "Please provide cg3::serialize specialization for this type!");
     #endif
     if (std::is_base_of<SerializableObject, T>::value){
@@ -190,7 +249,7 @@ inline void deserialize(
         typename std::enable_if<!std::is_pointer<T>::value >::type*)
 {
     #ifndef CG3_IGNORE_TYPESAFE_SERIALIZATION_CHECK
-    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value,
+    static_assert(std::is_base_of<SerializableObject, T>::value || std::is_fundamental<T>::value || std::is_enum<T>::value,
                   "Please provide cg3::deserialize specialization for this type!");
     #endif
     std::streampos begin = binaryFile.tellg();
