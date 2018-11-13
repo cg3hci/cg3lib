@@ -106,7 +106,7 @@ void MainWindow::pushDrawableObject(
         bool checkBoxChecked,
         bool closeButtonVisible)
 {
-    if (obj != nullptr){
+    if (obj != nullptr && !canvas.containsDrawableObject(obj)) {
         canvas.pushDrawableObject(obj, checkBoxChecked);
         DrawableObjectDrawListManager* manager =
                 new DrawableObjectDrawListManager(this, obj, checkBoxName, checkBoxChecked, closeButtonVisible);
