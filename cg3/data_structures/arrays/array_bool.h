@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#ifndef ARRAY_BOOL_H
-#define ARRAY_BOOL_H
+#ifndef CG3_ARRAY_BOOL_H
+#define CG3_ARRAY_BOOL_H
 
 #include "array.h"
 
@@ -119,4 +119,4 @@ protected:
 
 #include "array_bool.tpp"
 
-#endif // ARRAY_BOOL_H
+#endif // CG3_ARRAY_BOOL_H
