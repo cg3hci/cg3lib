@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <iomanip>
 #include "array.h"
+#include "array_bool.h"
 
 namespace cg3 {
 

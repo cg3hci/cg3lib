@@ -21,13 +21,15 @@ HEADERS += \
     $$PWD/data_structures/arrays/array2d.h \
     $$PWD/data_structures/arrays/array3d.h \
     $$PWD/data_structures/arrays/array4d.h \
-    $$PWD/data_structures/arrays/array.h
+    $$PWD/data_structures/arrays/array.h \
+    $$PWD/data_structures/arrays/array_bool.h
 
 SOURCES += \
     $$PWD/data_structures/arrays/array2d.tpp \
     $$PWD/data_structures/arrays/array3d.tpp \
     $$PWD/data_structures/arrays/array4d.tpp \
-    $$PWD/data_structures/arrays/array.tpp
+    $$PWD/data_structures/arrays/array.tpp \
+    $$PWD/data_structures/arrays/array_bool.tpp
 
 
 # ----- Graphs -----
