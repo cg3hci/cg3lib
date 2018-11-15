@@ -53,10 +53,36 @@ inline std::vector<size_t> sortIndexes(const std::vector<T> &v)
     return idx;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief Returns true if the element exists in the vector.
+ *
+ * @param v
+ * @param value
+ * @return
+ */
 template<typename T>
 inline bool contains(const std::vector<T>& v, const T& value)
 {
     return std::find(v.begin(), v.end(), value) != v.end();
+}
+
+/**
+ * @ingroup cg3core
+ * @brief Returns the position index of the element if it exists in the vector,
+ * -1 otherwise.
+ *
+ * @param v
+ * @param value
+ * @return
+ */
+template<typename T>
+int positionOfElement(const std::vector<T>& v, const T& value)
+{
+    typename std::vector<T>::const_iterator it = std::find(v.begin(), v.end(), value);
+    if (it == v.end())
+        return -1;
+    return std::distance(v.begin(), it);
 }
 
 } //namespace cg3
