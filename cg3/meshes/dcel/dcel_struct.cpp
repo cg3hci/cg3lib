@@ -779,7 +779,10 @@ void Dcel::recalculateIds()
     nVertices = 0;
     for (unsigned int i = 0; i < vertices.size(); i++){
         vertices[nVertices] = vertices[i];
-        if (vertices[i] != nullptr) nVertices++;
+        if (vertices[i] != nullptr) {
+            vertices[i]->setId(nVertices);
+            nVertices++;
+        }
     }
     unusedVids.clear();
     vertices.resize(nVertices);
@@ -787,7 +790,10 @@ void Dcel::recalculateIds()
     nHalfEdges = 0;
     for (unsigned int i = 0; i < halfEdges.size(); i++){
         halfEdges[nHalfEdges] = halfEdges[i];
-        if (halfEdges[i] != nullptr) nHalfEdges++;
+        if (halfEdges[i] != nullptr) {
+            halfEdges[i]->setId(nHalfEdges);
+            nHalfEdges++;
+        }
     }
     unusedHeids.clear();
     halfEdges.resize(nHalfEdges);
@@ -795,11 +801,13 @@ void Dcel::recalculateIds()
     nFaces = 0;
     for (unsigned int i = 0; i < faces.size(); i++){
         faces[nFaces] = faces[i];
-        if (faces[i] != nullptr) nFaces++;
+        if (faces[i] != nullptr) {
+            faces[i]->setId(nFaces);
+            nFaces++;
+        }
     }
     unusedFids.clear();
     faces.resize(nFaces);
-
 }
 
 /**
