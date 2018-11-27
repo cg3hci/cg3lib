@@ -176,6 +176,7 @@ public:
     bool deleteFace (Face* f);
     bool deleteFace(unsigned int fid);
     void deleteUnreferencedVertices();
+    void deleteDuplicatedVertices();
     void updateFaceNormals();
     void updateVertexNormals();
     BoundingBox updateBoundingBox();

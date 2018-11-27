@@ -660,6 +660,55 @@ void Dcel::deleteUnreferencedVertices()
     }
 }
 
+void Dcel::deleteDuplicatedVertices()
+{
+    std::vector<std::pair<uint, uint>> duplicated;
+    for (uint i = 0; i < vertices.size(); ++i){
+        for (uint j = i+1; j < vertices.size(); ++j) {
+            if (vertices[i] && vertices[j] && vertices[i]->coordinate() == vertices[j]->coordinate()){
+                duplicated.push_back(std::make_pair(i, j));
+            }
+        }
+    }
+
+    for (uint i = 0; i < duplicated.size(); ++i){
+        //duplicated[i].second becomes duplicated[i].first
+        for (HalfEdge* he : halfEdgeIterator()){
+            if (he->fromVertex()->id() == duplicated[i].second){
+                he->setFromVertex(vertices[duplicated[i].first]);
+            }
+            if (he->toVertex()->id() == duplicated[i].second){
+                he->setToVertex(vertices[duplicated[i].first]);
+            }
+        }
+        vertices[duplicated[i].second]->setIncidentHalfEdge(nullptr);
+        deleteVertex(duplicated[i].second);
+
+        //adjusting next duplicates: duplicated[i].second should not exists also in the next duplicated pairs!
+        for (uint j = i+1; j < duplicated.size(); ++j){
+            if (duplicated[j].first == duplicated[i].second){
+                duplicated[j].first = duplicated[i].first;
+            }
+        }
+    }
+
+    //removing edges with from == to
+    for (HalfEdge* he : halfEdgeIterator()){
+        if (he->fromVertex() == he->toVertex()){
+            he->prev()->setNext(he->next());
+            he->next()->setPrev(he->prev());
+            if (he->fromVertex()->incidentHalfEdge() == he)
+                he->fromVertex()->setIncidentHalfEdge(he->next());
+            if (he->face()->outerHalfEdge() == he)
+                he->face()->setOuterHalfEdge(he->next());
+            for (HalfEdge*& ihe : he->face()->innerHalfEdgeIterator()){
+                if (ihe == he)
+                    ihe = he->next();
+            }
+        }
+    }
+}
+
 /**
  * \~Italian
  * @brief Funzione che ricalcola e aggiorna le normali delle facce presenti nella Dcel.

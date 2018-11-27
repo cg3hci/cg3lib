@@ -124,9 +124,12 @@ public:
     class ConstIncidentHalfEdgeIterator;
     class IncidentVertexIterator;
     class ConstIncidentVertexIterator;
+
+    class ConstInnerHalfEdgeRangeBasedIterator;
     class ConstAdjacentFaceRangeBasedIterator;
     class ConstIncidentHalfEdgeRangeBasedIterator;
     class ConstIncidentVertexRangeBasedIterator;
+    class InnerHalfEdgeRangeBasedIterator;
     class AdjacentFaceRangeBasedIterator;
     class IncidentHalfEdgeRangeBasedIterator;
     class IncidentVertexRangeBasedIterator;
@@ -199,6 +202,7 @@ public:
     ConstIncidentVertexIterator incidentVertexBegin(
             const Dcel::Vertex* start,
             const Dcel::Vertex* end)                                                const;
+    ConstInnerHalfEdgeRangeBasedIterator innerHalfEdgeIterator()                    const;
     ConstAdjacentFaceRangeBasedIterator adjacentFaceIterator()                      const;
     ConstIncidentHalfEdgeRangeBasedIterator incidentHalfEdgeIterator()              const;
     ConstIncidentVertexRangeBasedIterator incidentVertexIterator()                  const;
@@ -224,6 +228,7 @@ public:
     IncidentVertexIterator incidentVertexBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end);
     IncidentVertexIterator incidentVertexBegin(Dcel::Vertex* start);
     IncidentVertexIterator incidentVertexBegin(Dcel::Vertex* start, Dcel::Vertex* end);
+    InnerHalfEdgeRangeBasedIterator innerHalfEdgeIterator();
     AdjacentFaceRangeBasedIterator adjacentFaceIterator();
     IncidentHalfEdgeRangeBasedIterator incidentHalfEdgeIterator();
     IncidentVertexRangeBasedIterator incidentVertexIterator();

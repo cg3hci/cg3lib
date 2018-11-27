@@ -775,6 +775,15 @@ inline Dcel::Face::ConstIncidentVertexIterator::ConstIncidentVertexIterator(cons
 {
 }
 
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeRangeBasedIterator::begin() const
+{
+    return f->innerHalfEdgeBegin();
+}
+
+inline Dcel::Face::ConstInnerHalfEdgeIterator Dcel::Face::ConstInnerHalfEdgeRangeBasedIterator::end() const
+{
+    return f->innerHalfEdgeEnd();
+}
 
 inline Dcel::Face::ConstAdjacentFaceIterator Dcel::Face::ConstAdjacentFaceRangeBasedIterator::begin() const
 {
@@ -804,6 +813,16 @@ inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::ConstIncidentVertexRa
 inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::ConstIncidentVertexRangeBasedIterator::end() const
 {
     return f->incidentVertexEnd();
+}
+
+inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::InnerHalfEdgeRangeBasedIterator::begin()
+{
+    return f->innerHalfEdgeBegin();
+}
+
+inline Dcel::Face::InnerHalfEdgeIterator Dcel::Face::InnerHalfEdgeRangeBasedIterator::end()
+{
+    return f->innerHalfEdgeEnd();
 }
 
 inline Dcel::Face::AdjacentFaceIterator Dcel::Face::AdjacentFaceRangeBasedIterator::begin()
@@ -990,6 +1009,11 @@ inline Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(c
     return ConstIncidentVertexIterator(start, end, this);
 }
 
+inline Dcel::Face::ConstInnerHalfEdgeRangeBasedIterator Dcel::Face::innerHalfEdgeIterator() const
+{
+    return ConstInnerHalfEdgeRangeBasedIterator(this);
+}
+
 inline Dcel::Face::ConstAdjacentFaceRangeBasedIterator Dcel::Face::adjacentFaceIterator() const
 {
     return ConstAdjacentFaceRangeBasedIterator(this);
@@ -1153,6 +1177,11 @@ inline Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::
     assert(start->face() == this && "Start half edge is not incident to iterated face.");
     assert(end->face() == this && "End half edge is not incident to iterated face.");
     return IncidentVertexIterator(start, end, this);
+}
+
+inline Dcel::Face::InnerHalfEdgeRangeBasedIterator Dcel::Face::innerHalfEdgeIterator()
+{
+    return InnerHalfEdgeRangeBasedIterator(this);
 }
 
 inline Dcel::Face::AdjacentFaceRangeBasedIterator Dcel::Face::adjacentFaceIterator()

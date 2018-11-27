@@ -472,6 +472,17 @@ protected:
     ConstIncidentVertexIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Face* f);
 };
 
+class Dcel::Face::ConstInnerHalfEdgeRangeBasedIterator
+{
+        friend class Face;
+    public:
+        Dcel::Face::ConstInnerHalfEdgeIterator begin() const;
+        Dcel::Face::ConstInnerHalfEdgeIterator end() const;
+    private:
+        ConstInnerHalfEdgeRangeBasedIterator(const Face *f) : f(f) {}
+        const Face *f;
+};
+
 class Dcel::Face::ConstAdjacentFaceRangeBasedIterator
 {
         friend class Face;
@@ -503,6 +514,17 @@ class Dcel::Face::ConstIncidentVertexRangeBasedIterator
     private:
         ConstIncidentVertexRangeBasedIterator(const Face *f) : f(f) {}
         const Face *f;
+};
+
+class Dcel::Face::InnerHalfEdgeRangeBasedIterator
+{
+        friend class Face;
+    public:
+        Dcel::Face::InnerHalfEdgeIterator begin();
+        Dcel::Face::InnerHalfEdgeIterator end();
+    private:
+        InnerHalfEdgeRangeBasedIterator(Face *f) : f(f) {}
+        Face *f;
 };
 
 class Dcel::Face::AdjacentFaceRangeBasedIterator
