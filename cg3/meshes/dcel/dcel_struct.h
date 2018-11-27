@@ -156,6 +156,7 @@ public:
     ******************/
 
     bool deleteVertex (Vertex* v);
+    bool deleteVertex (unsigned int vid);
     bool vertexBelongsToThis(const Vertex* v)               const;
     bool halfEdgeBelongsToThis(const HalfEdge* he)          const;
     bool faceBelongsToThis(const Face* f)                   const;
@@ -171,7 +172,10 @@ public:
     HalfEdge* addHalfEdge();
     Face* addFace(const Vec3& n = Vec3(), const Color& c = Color(128,128,128));
     bool deleteHalfEdge (HalfEdge* he);
+    bool deleteHalfEdge (unsigned int heid);
     bool deleteFace (Face* f);
+    bool deleteFace(unsigned int fid);
+    void deleteUnreferencedVertices();
     void updateFaceNormals();
     void updateVertexNormals();
     BoundingBox updateBoundingBox();

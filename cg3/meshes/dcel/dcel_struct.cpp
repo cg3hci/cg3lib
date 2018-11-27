@@ -480,27 +480,36 @@ Dcel::Face* Dcel::addFace(const Vec3& n, const Color& c)
  */
 bool Dcel::deleteVertex(Dcel::Vertex* v)
 {
-    if (v->_incidentHalfEdge != nullptr){
-        Dcel::HalfEdge* he = v->_incidentHalfEdge;
-        do {
-            if (he != nullptr){
-                if (he->_fromVertex == v) he->_fromVertex = nullptr;
-                if (he->_twin != nullptr) {
-                    he = he->_twin;
-                    if (he->_toVertex == v) he->_toVertex = nullptr;
-                    he = he->_next;
+    if (v != nullptr){
+        if (v->_incidentHalfEdge != nullptr){
+            Dcel::HalfEdge* he = v->_incidentHalfEdge;
+            do {
+                if (he != nullptr){
+                    if (he->_fromVertex == v) he->_fromVertex = nullptr;
+                    if (he->_twin != nullptr) {
+                        he = he->_twin;
+                        if (he->_toVertex == v) he->_toVertex = nullptr;
+                        he = he->_next;
+                    }
+                    else he = v->_incidentHalfEdge;
                 }
                 else he = v->_incidentHalfEdge;
-            }
-            else he = v->_incidentHalfEdge;
-        } while (he != v->_incidentHalfEdge);
-    }
-    vertices[v->_id]=nullptr;
-    unusedVids.insert(v->_id);
-    nVertices--;
+            } while (he != v->_incidentHalfEdge);
+        }
+        vertices[v->_id]=nullptr;
+        unusedVids.insert(v->_id);
+        nVertices--;
 
-    delete v;
-    return true;
+        delete v;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Dcel::deleteVertex(unsigned int vid)
+{
+    return deleteVertex(vertex((vid)));
 }
 
 bool Dcel::vertexBelongsToThis(const Dcel::Vertex* v) const
@@ -555,29 +564,38 @@ bool Dcel::faceBelongsToThis(const Dcel::Face* f) const
  */
 bool Dcel::deleteHalfEdge(HalfEdge* he)
 {
-    if (he->_twin != nullptr)
-        if (he->_twin->_twin == he) he->_twin->_twin = nullptr;
-    if (he->_next != nullptr)
-        if (he->_next->_prev == he) he->_next->_prev = nullptr;
-    if (he->_prev != nullptr)
-        if(he->_prev->_next == he) he->_prev->_next = nullptr;
-    if (he->_face != nullptr){
-        if (he->_face->_outerHalfEdge == he) he->_face->_outerHalfEdge = nullptr;
-        else if (he->_face->hasHoles()) {
-            for (unsigned int i = 0; i < he->_face->_innerHalfEdges.size(); i++){
-                if (he->_face->_innerHalfEdges[i] == he)
-                    he->_face->_innerHalfEdges.erase(he->_face->_innerHalfEdges.begin() + i--);
+    if (he != nullptr) {
+        if (he->_twin != nullptr)
+            if (he->_twin->_twin == he) he->_twin->_twin = nullptr;
+        if (he->_next != nullptr)
+            if (he->_next->_prev == he) he->_next->_prev = nullptr;
+        if (he->_prev != nullptr)
+            if(he->_prev->_next == he) he->_prev->_next = nullptr;
+        if (he->_face != nullptr){
+            if (he->_face->_outerHalfEdge == he) he->_face->_outerHalfEdge = nullptr;
+            else if (he->_face->hasHoles()) {
+                for (unsigned int i = 0; i < he->_face->_innerHalfEdges.size(); i++){
+                    if (he->_face->_innerHalfEdges[i] == he)
+                        he->_face->_innerHalfEdges.erase(he->_face->_innerHalfEdges.begin() + i--);
+                }
             }
         }
-    }
-    if (he->_fromVertex != nullptr)
-        if (he->_fromVertex->_incidentHalfEdge == he) he->_fromVertex->_incidentHalfEdge = nullptr;
-    halfEdges[he->_id] = nullptr;
-    unusedHeids.insert(he->_id);
-    nHalfEdges--;
+        if (he->_fromVertex != nullptr)
+            if (he->_fromVertex->_incidentHalfEdge == he) he->_fromVertex->_incidentHalfEdge = nullptr;
+        halfEdges[he->_id] = nullptr;
+        unusedHeids.insert(he->_id);
+        nHalfEdges--;
 
-    delete he;
-    return true;
+        delete he;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Dcel::deleteHalfEdge(unsigned int heid)
+{
+    return deleteHalfEdge(halfEdge(heid));
 }
 
 /**
@@ -598,25 +616,48 @@ bool Dcel::deleteHalfEdge(HalfEdge* he)
  */
 bool Dcel::deleteFace(Face* f)
 {
-    if (f->_outerHalfEdge != nullptr){
-        Dcel::HalfEdge* he = f->_outerHalfEdge;
-        do {
-            if (he->_face == f) he->_face = nullptr;
-            he = he->_next;
-        } while (he != f->_outerHalfEdge);
+    if (f != nullptr) {
+        if (f->_outerHalfEdge != nullptr){
+            Dcel::HalfEdge* he = f->_outerHalfEdge;
+            do {
+                if (he->_face == f) he->_face = nullptr;
+                he = he->_next;
+            } while (he != f->_outerHalfEdge);
+        }
+        for (unsigned int i = 0; i < f->_innerHalfEdges.size(); i++){
+            Dcel::HalfEdge* he = f->_innerHalfEdges[i];
+            do {
+                if (he->_face == f) he->_face = nullptr;
+                he = he->_next;
+            } while (he != f->_innerHalfEdges[i]);
+        }
+        faces[f->id()]=nullptr;
+        unusedFids.insert(f->id());
+        nFaces--;
+        delete f;
+        return true;
     }
-    for (unsigned int i = 0; i < f->_innerHalfEdges.size(); i++){
-        Dcel::HalfEdge* he = f->_innerHalfEdges[i];
-        do {
-            if (he->_face == f) he->_face = nullptr;
-            he = he->_next;
-        } while (he != f->_innerHalfEdges[i]);
+    else
+        return false;
+}
+
+bool Dcel::deleteFace(unsigned int fid)
+{
+    return deleteFace(face(fid));
+}
+
+void Dcel::deleteUnreferencedVertices()
+{
+    std::vector<bool> ref(vertices.size(), false);
+    for (Face* f : faceIterator()){
+        for (Vertex* v : f->incidentVertexIterator()){
+            ref[v->id()] = true;
+        }
     }
-    faces[f->id()]=nullptr;
-    unusedFids.insert(f->id());
-    nFaces--;
-    delete f;
-    return true;
+    for (uint i = 0; i < ref.size(); i++){
+        if (!ref[i] && vertices[i] != nullptr)
+            deleteVertex(i);
+    }
 }
 
 /**

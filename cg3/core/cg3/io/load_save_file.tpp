@@ -571,8 +571,11 @@ bool loadMeshFromObj(
             }
             else if (header == "usemtl" && usemtu){
                 std::string color = *(++token);
-                assert(mapColors.find(color) != mapColors.end());
-                actualColor = mapColors[color];
+                if (mapColors.find(color) == mapColors.end()) {
+                    actualColor = cg3::Color(128,128,128);
+                }
+                else
+                    actualColor = mapColors[color];
             }
         }
     }
