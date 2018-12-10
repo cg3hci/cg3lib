@@ -175,6 +175,7 @@ public:
     bool deleteHalfEdge (unsigned int heid);
     bool deleteFace (Face* f);
     bool deleteFace(unsigned int fid);
+    void invertFaceOrientations();
     void deleteUnreferencedVertices();
     void deleteDuplicatedVertices();
     void updateFaceNormals();

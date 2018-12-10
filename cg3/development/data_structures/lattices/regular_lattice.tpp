@@ -10,15 +10,16 @@
 namespace cg3 {
 
 template <class VT>
-RegularLattice<VT>::RegularLattice()
+RegularLattice3D<VT>::RegularLattice3D()
 {
 }
 
 template<class VT>
-RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool outsideBB) :
+RegularLattice3D<VT>::RegularLattice3D(const cg3::BoundingBox &bb, double unit, bool outsideBB) :
     bb(bb),
     unit(unit)
 {
+    unsigned int mresX, mresY, mresZ;
     mresX = bb.lengthX() / unit;
     if (outsideBB || std::fmod(bb.lengthX(), unit) == 0)
         mresX++;
@@ -33,119 +34,219 @@ RegularLattice<VT>::RegularLattice(const cg3::BoundingBox &bb, double unit, bool
 }
 
 template<class VT>
-unsigned int RegularLattice<VT>::resX() const
+unsigned int RegularLattice3D<VT>::resX() const
 {
-    return mresX;
+    return vertexProperties.sizeX();
 }
 
 template<class VT>
-unsigned int RegularLattice<VT>::resY() const
+unsigned int RegularLattice3D<VT>::resY() const
 {
-    return mresY;
+    return vertexProperties.sizeY();
 }
 
 template<class VT>
-unsigned int RegularLattice<VT>::resZ() const
+unsigned int RegularLattice3D<VT>::resZ() const
 {
-    return mresZ;
+    return vertexProperties.sizeZ();
 }
 
 template<class VT>
-const BoundingBox &RegularLattice<VT>::boundingBox() const
+const BoundingBox &RegularLattice3D<VT>::boundingBox() const
 {
     return bb;
 }
 
 template<class VT>
-Pointd RegularLattice<VT>::nearestVertex(const Pointd &p) const
+Pointd RegularLattice3D<VT>::nearestVertex(const Pointd &p) const
 {
-    return cg3::Pointd(bb.getMinX() + getIndexOfCoordinateX(p.x())*unit,
-                       bb.getMinY() + getIndexOfCoordinateY(p.y())*unit,
-                       bb.getMinZ() + getIndexOfCoordinateZ(p.z())*unit);
+    return cg3::Pointd(bb.getMinX() + indexOfCoordinateX(p.x())*unit,
+                       bb.getMinY() + indexOfCoordinateY(p.y())*unit,
+                       bb.getMinZ() + indexOfCoordinateZ(p.z())*unit);
 }
 
 template<class VT>
-const VT &RegularLattice<VT>::vertexProperty(const Pointd &p) const
+const VT &RegularLattice3D<VT>::vertexProperty(const Pointd &p) const
 {
-    assert(getIndexOfCoordinateX(p.x()) < mresX);
-    assert(getIndexOfCoordinateY(p.y()) < mresY);
-    assert(getIndexOfCoordinateZ(p.z()) < mresZ);
-    return vertexProperties[
-            getIndexOfCoordinateX(p.x()),
-            getIndexOfCoordinateY(p.y()),
-            getIndexOfCoordinateZ(p.z())];
+    assert(indexOfCoordinateX(p.x()) < vertexProperties.sizeX());
+    assert(indexOfCoordinateY(p.y()) < vertexProperties.sizeY());
+    assert(indexOfCoordinateZ(p.z()) < vertexProperties.sizeZ());
+    return vertexProperties(
+            indexOfCoordinateX(p.x()),
+            indexOfCoordinateY(p.y()),
+            indexOfCoordinateZ(p.z()));
 }
 
 template<class VT>
-void RegularLattice<VT>::setVertexProperty(const Pointd &p, const VT &property)
+VT& RegularLattice3D<VT>::vertexProperty(const Pointd& p)
 {
-    assert(getIndexOfCoordinateX(p.x()) < mresX);
-    assert(getIndexOfCoordinateY(p.y()) < mresY);
-    assert(getIndexOfCoordinateZ(p.z()) < mresZ);
-    vertexProperties[
-            getIndexOfCoordinateX(p.x()),
-            getIndexOfCoordinateY(p.y()),
-            getIndexOfCoordinateZ(p.z())] = property;
+    assert(indexOfCoordinateX(p.x()) < vertexProperties.sizeX());
+    assert(indexOfCoordinateY(p.y()) < vertexProperties.sizeY());
+    assert(indexOfCoordinateZ(p.z()) < vertexProperties.sizeZ());
+    return vertexProperties(
+            indexOfCoordinateX(p.x()),
+            indexOfCoordinateY(p.y()),
+            indexOfCoordinateZ(p.z()));
 }
 
 template<class VT>
-void RegularLattice<VT>::serialize(std::ofstream &binaryFile) const
+void RegularLattice3D<VT>::setVertexProperty(const Pointd &p, const VT &property)
+{
+    assert(indexOfCoordinateX(p.x()) < vertexProperties.sizeX());
+    assert(indexOfCoordinateY(p.y()) < vertexProperties.sizeY());
+    assert(indexOfCoordinateZ(p.z()) < vertexProperties.sizeZ());
+    vertexProperties(
+            indexOfCoordinateX(p.x()),
+            indexOfCoordinateY(p.y()),
+            indexOfCoordinateZ(p.z())) = property;
+}
+
+template<class VT>
+void RegularLattice3D<VT>::serialize(std::ofstream &binaryFile) const
 {
     cg3::serializeObjectAttributes(
-                "cg3RegularLattice",
+                "cg3RegularLattice3D",
                 binaryFile,
                 bb,
                 unit,
-                mresX,
-                mresY,
-                mresZ,
                 vertexProperties);
 }
 
 template<class VT>
-void RegularLattice<VT>::deserialize(std::ifstream &binaryFile)
+void RegularLattice3D<VT>::deserialize(std::ifstream &binaryFile)
 {
     cg3::deserializeObjectAttributes(
-                "cg3RegularLattice",
+                "cg3RegularLattice3D",
                 binaryFile,
                 bb,
                 unit,
-                mresX,
-                mresY,
-                mresZ,
                 vertexProperties);
 }
 
 template<class VT>
-Pointd RegularLattice<VT>::getPoint(
+typename RegularLattice3D<VT>::VertexIterator RegularLattice3D<VT>::vertexBegin() const
+{
+    return VertexIterator(0, *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::VertexIterator RegularLattice3D<VT>::vertexEnd() const
+{
+    return VertexIterator(vertexProperties.sizeX()*vertexProperties.sizeY()*vertexProperties.sizeZ(), *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::PropertyIterator RegularLattice3D<VT>::propertyBegin()
+{
+    return PropertyIterator(0, *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::PropertyIterator RegularLattice3D<VT>::propertyEnd()
+{
+    return PropertyIterator(vertexProperties.sizeX()*vertexProperties.sizeY()*vertexProperties.sizeZ(), *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::ConstPropertyIterator RegularLattice3D<VT>::propertyBegin() const
+{
+    return ConstPropertyIterator(0, *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::ConstPropertyIterator RegularLattice3D<VT>::propertyEnd() const
+{
+    return ConstPropertyIterator(vertexProperties.sizeX()*vertexProperties.sizeY()*vertexProperties.sizeZ(), *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::Iterator RegularLattice3D<VT>::begin()
+{
+    return Iterator(0, *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::Iterator RegularLattice3D<VT>::end()
+{
+    return Iterator(vertexProperties.sizeX()*vertexProperties.sizeY()*vertexProperties.sizeZ(), *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::ConstIterator RegularLattice3D<VT>::begin() const
+{
+    return ConstIterator(0, *this);
+}
+
+template<class VT>
+typename RegularLattice3D<VT>::ConstIterator RegularLattice3D<VT>::end() const
+{
+    return ConstIterator(vertexProperties.sizeX()*vertexProperties.sizeY()*vertexProperties.sizeZ(), *this);
+}
+
+template<class VT>
+Pointd RegularLattice3D<VT>::vertex(
         unsigned int i,
         unsigned int j,
         unsigned int k) const
 {
-    return cg3::Pointd(bb.getMinX() + i*unit,
-                       bb.getMinY() + j*unit,
-                       bb.getMinZ() + k*unit);
+    return cg3::Pointd(bb.minX() + i*unit,
+                       bb.minY() + j*unit,
+                       bb.minZ() + k*unit);
 }
 
 template<class VT>
-int RegularLattice<VT>::getIndexOfCoordinateX(double x) const
+Pointd RegularLattice3D<VT>::vertex(unsigned int id) const
 {
-    double deltax = x - bb.getMinX();
-    return (deltax * (mresX-1)) / bb.lengthX();
+    Pointi ids = reverseIndex(id);
+    return vertex(ids.x(),ids.y(),ids.z());
 }
 
 template<class VT>
-int RegularLattice<VT>::getIndexOfCoordinateY(double y) const
+VT& RegularLattice3D<VT>::property(unsigned int id)
 {
-    double deltay = y - bb.getMinY();
-    return (deltay * (mresY-1)) / bb.lengthY();
+    Pointi ids = reverseIndex(id);
+    return vertexProperties(ids.x(), ids.y(), ids.z());
 }
 
 template<class VT>
-int RegularLattice<VT>::getIndexOfCoordinateZ(double z) const
+const VT& RegularLattice3D<VT>::property(unsigned int id) const
 {
-    double deltaz = z - bb.getMinZ();
-    return (deltaz * (mresZ-1)) / bb.lengthZ();
+    Pointi ids = reverseIndex(id);
+    return vertexProperties(ids.x(), ids.y(), ids.z());
+}
+
+template<class VT>
+uint RegularLattice3D<VT>::indexOfCoordinateX(double x) const
+{
+    double deltax = x - bb.minX();
+    return (deltax * (vertexProperties.sizeX()-1)) / bb.lengthX();
+}
+
+template<class VT>
+uint RegularLattice3D<VT>::indexOfCoordinateY(double y) const
+{
+    double deltay = y - bb.minY();
+    return (deltay * (vertexProperties.sizeY()-1)) / bb.lengthY();
+}
+
+template<class VT>
+uint RegularLattice3D<VT>::indexOfCoordinateZ(double z) const
+{
+    double deltaz = z - bb.minZ();
+    return (deltaz * (vertexProperties.sizeZ()-1)) / bb.lengthZ();
+}
+
+template<class VT>
+Pointi RegularLattice3D<VT>::reverseIndex(unsigned int id) const
+{
+    Pointi ids;
+    assert(id < vertexProperties.sizeX()*vertexProperties.sizeY()*vertexProperties.sizeZ());
+    ids.z() = id % vertexProperties.sizeZ();
+    id/= vertexProperties.sizeZ();
+    ids.y() = id % vertexProperties.sizeY();
+    id/= vertexProperties.sizeY();
+    ids.x() = id % vertexProperties.sizeX();
+    return ids;
 }
 
 }

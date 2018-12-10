@@ -427,6 +427,53 @@ void Dcel::Face::removeAllInnerHalfEdges() {
     _innerHalfEdges.clear();
 }
 
+void Dcel::Face::invertOrientation()
+{
+    HalfEdge* first = _outerHalfEdge;
+    HalfEdge* actual = first;
+    HalfEdge* next;
+    do{
+        next = actual->next();
+
+        Vertex* from = actual->fromVertex();
+        if (from->incidentHalfEdge() == actual)
+            from->setIncidentHalfEdge(actual->prev());
+        actual->setFromVertex(actual->toVertex());
+        actual->setToVertex(from);
+
+        HalfEdge* prev = actual->prev();
+        actual->setPrev(actual->next());
+        actual->setNext(prev);
+
+        actual = next;
+
+    } while (actual != first);
+
+    for (HalfEdge* inner : _innerHalfEdges){
+        HalfEdge* first = inner;
+        HalfEdge* actual = first;
+        HalfEdge* next;
+        do{
+            next = actual->next();
+
+            Vertex* from = actual->fromVertex();
+            if (from->incidentHalfEdge() == actual)
+                from->setIncidentHalfEdge(actual->prev());
+            actual->setFromVertex(actual->toVertex());
+            actual->setToVertex(from);
+
+            HalfEdge* prev = actual->prev();
+            actual->setPrev(actual->next());
+            actual->setNext(prev);
+
+            actual = next;
+
+        } while (actual != first);
+    }
+
+    updateNormal();
+}
+
 /**
  * \~Italian
  * @brief Funzione di inizializzazione di Dcel::Face::IncidentVertexIterator.

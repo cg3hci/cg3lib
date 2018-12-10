@@ -15,7 +15,8 @@ HEADERS += \
     $$PWD/development/algorithms/marching_cubes.h
 
 SOURCES += \
-    $$PWD/development/algorithms/marching_cubes.cpp
+    $$PWD/development/algorithms/marching_cubes.cpp \
+    $$PWD/development/data_structures/lattices/regular_lattice_iterators.tpp
 
 # ----- Lattices -----
 

@@ -646,6 +646,13 @@ bool Dcel::deleteFace(unsigned int fid)
     return deleteFace(face(fid));
 }
 
+void Dcel::invertFaceOrientations()
+{
+    for (cg3::Dcel::Face* f : faceIterator())
+        f->invertOrientation();
+    updateVertexNormals();
+}
+
 void Dcel::deleteUnreferencedVertices()
 {
     std::vector<bool> ref(vertices.size(), false);

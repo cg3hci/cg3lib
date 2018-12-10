@@ -212,6 +212,7 @@ public:
     void removeInnerHalfEdge(const InnerHalfEdgeIterator& iterator);
     bool removeInnerHalfEdge(const Dcel::HalfEdge* halfEdge);
     void removeAllInnerHalfEdges();
+    void invertOrientation();
     AdjacentFaceIterator adjacentFaceBegin();
     AdjacentFaceIterator adjacentFaceEnd();
     InnerHalfEdgeIterator innerHalfEdgeBegin();
