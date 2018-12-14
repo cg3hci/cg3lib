@@ -15,6 +15,11 @@
 #include <cg3/viewer/internal/drawable_mesh_drawlist_manager.h>
 #include <cg3/viewer/internal/manipulable_object_drawlist_manager.h>
 
+#ifdef CG3_CINOLIB_DEFINED
+#include <cg3/viewer/drawable_objects/drawable_tetmesh.h>
+#include <cg3/viewer/internal/drawable_tetmesh_drawlist_manager.h>
+#endif
+
 namespace cg3 {
 namespace viewer {
 
@@ -37,15 +42,28 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
 
     if (!closeButtonVisible)
         ui->closePushButton->setVisible(false);
+
+    //casts
     const DrawableContainer* cont = dynamic_cast<const DrawableContainer*>(object);
     const DrawableMesh* mesh = dynamic_cast<const DrawableMesh*>(object);
     const ManipulableObject* mobj = dynamic_cast<const ManipulableObject*>(object);
+    #ifdef CG3_CINOLIB_DEFINED
+    const cino::DrawableTetMesh* tetmesh = dynamic_cast<const cino::DrawableTetMesh*>(object);
+    #endif
+
     ui->checkBox->setChecked(visible);
     if (mesh){
         DrawableMeshDrawListManager* submanager =
                 new DrawableMeshDrawListManager(&mw, mesh);
         setSubFrame(submanager, false);
         ui->objectType->setText("Mesh");
+    }
+    else if (tetmesh) {
+        cino::DrawableTetMesh* mesh = const_cast<cino::DrawableTetMesh*>(tetmesh);
+        DrawableTetMeshDrawListManager* subManager =
+                new DrawableTetMeshDrawListManager(&mw, mesh);
+        setSubFrame(subManager, false);
+        ui->objectType->setText("TetMesh");
     }
     else if (cont) {
         DrawableContainerDrawListManager* subManager =

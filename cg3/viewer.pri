@@ -141,6 +141,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_container_drawlist_manager.ui \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.ui \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.ui
+
         #$$PWD/viewer/managers/debugobjects_manager.ui
 
     RESOURCES += \
@@ -188,14 +189,31 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
             }
         }
     }
+
+    CG3_CINOLIB {
+        DEFINES        += CINOLIB_USES_OPENGL
+        DEFINES        += CINOLIB_USES_QT
+
+        unix:!macx {
+            DEFINES += GL_GLEXT_PROTOTYPES
+            LIBS    += -lGLU
+        }
+
+        HEADERS += \
+            $$PWD/viewer/drawable_objects/drawable_tetmesh.h \
+            $$PWD/viewer/internal/drawable_tetmesh_drawlist_manager.h \
+            $$PWD/viewer/widgets/drawable_tetmesh_control_panel.h
+
+        SOURCES += \
+            $$PWD/viewer/drawable_objects/drawable_tetmesh.cpp \
+            $$PWD/viewer/internal/drawable_tetmesh_drawlist_manager.cpp \
+            $$PWD/viewer/widgets/drawable_tetmesh_control_panel.cpp
+
+        FORMS += \
+            $$PWD/viewer/internal/drawable_tetmesh_drawlist_manager.ui \
+        $$PWD/viewer/widgets/drawable_tetmesh_control_panel.ui
+    }
 }
 else {
     message(libQGLViewer not installed properly!)
 }
-
-FORMS +=
-
-HEADERS +=
-
-SOURCES +=
-

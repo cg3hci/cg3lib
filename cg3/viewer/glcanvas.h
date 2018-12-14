@@ -25,7 +25,6 @@
 #include <QKeyEvent>
 #include <vector>
 
-#include <cg3/geometry/bounding_box.h>
 #include <cg3/geometry/2d/point2d.h>
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"

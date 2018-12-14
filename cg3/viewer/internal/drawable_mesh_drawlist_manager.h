@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#ifndef CG3_MESH_MANAGER_H
-#define CG3_MESH_MANAGER_H
+#ifndef CG3_DRAWABLE_MESH_DRAWLIST_MANAGER_H
+#define CG3_DRAWABLE_MESH_DRAWLIST_MANAGER_H
 
 #include "submanager.h"
 
@@ -71,4 +71,4 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
-#endif // CG3_MESH_MANAGER_H
+#endif // CG3_DRAWABLE_MESH_DRAWLIST_MANAGER_H

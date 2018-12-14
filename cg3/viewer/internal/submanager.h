@@ -1,5 +1,5 @@
-#ifndef SUBFRAME_H
-#define SUBFRAME_H
+#ifndef CG3_SUBFRAME_H
+#define CG3_SUBFRAME_H
 
 #include <QFrame>
 
@@ -34,4 +34,4 @@ public:
 }
 }
 
-#endif // SUBFRAME_H
+#endif // CG3_SUBFRAME_H
