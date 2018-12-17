@@ -9,9 +9,28 @@
 #include "dcel_flooding.h"
 
 #include <cg3/utilities/set.h>
+#include "../dcel_builder.h"
 
 namespace cg3 {
 namespace dcelAlgorithms {
+
+inline std::vector<Dcel> connectedComponents(const Dcel &inputMesh)
+{
+    std::vector<Dcel> cc;
+
+    std::vector< std::set<const Dcel::Face*> > cci = connectedComponents(inputMesh.faceBegin(), inputMesh.faceEnd());
+
+    for (const std::set<const Dcel::Face*> &s : cci){
+        DcelBuilder builder;
+        for (const Dcel::Face* f : s){
+            builder.addFace(f->vertex1()->coordinate(), f->vertex2()->coordinate(), f->vertex3()->coordinate(), f->color(), f->id());
+        }
+        builder.finalize();
+        cc.push_back(builder.dcel());
+    }
+
+    return cc;
+}
 
 template <typename InputIterator>
 std::vector< std::set<const Dcel::Face*> > connectedComponents(

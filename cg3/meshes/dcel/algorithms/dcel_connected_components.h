@@ -12,6 +12,8 @@
 namespace cg3 {
 namespace dcelAlgorithms {
 
+std::vector<cg3::Dcel> connectedComponents(const cg3::Dcel& inputMesh);
+
 template <typename InputIterator>
 std::vector< std::set<const Dcel::Face*> > connectedComponents(
         InputIterator first,
