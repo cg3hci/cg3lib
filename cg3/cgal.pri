@@ -56,28 +56,28 @@ win32{
 #               Library names could change when using different
 #               version of MSVC/Boost/CGAL
 
-                CONFIG(debug, debug|release){
-                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-gd-4.*
-                }
-                CONFIG(release, debug|release){
-                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-4.*
-                }
+#                CONFIG(debug, debug|release){
+#                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-gd-4.*
+#                }
+#                CONFIG(release, debug|release){
+#                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-4.*
+#                }
 
-                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibgmp-10
-                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibmpfr-4
+#                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibgmp-10
+#                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibmpfr-4
 
-                CONFIG(debug, debug|release){
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-gd-x64*
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-gd-x64*
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-gd-x64*
-                }
-                CONFIG(release, debug|release){
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-x64*
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-x64*
-                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-x64*
-                }
+#                CONFIG(debug, debug|release){
+#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-gd-x64*
+#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-gd-x64*
+#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-gd-x64*
+#                }
+#                CONFIG(release, debug|release){
+#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-x64*
+#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-x64*
+#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-x64*
+#                }
 
-                LIBS += -DBOOST_LOG_DYN_LINK
+#                LIBS += -DBOOST_LOG_DYN_LINK
 #               Cannot find the following libraries in MSVC. TODO: check if they
 #               are required by Windows/MSVC environment
 #                LIBS += -frounding-math
@@ -90,16 +90,16 @@ win32{
 #               Library names could change when using different version
 #               of MinGW/Boost/CGAL
 
-#                LIBS += -L$$quote($$CGALPATH/bin) -lCGAL
-#                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -lgmp-10
-#                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -lmpfr-4
-#                LIBS += -frounding-math
+                LIBS += -L$$quote($$CGALPATH/bin) -lCGAL
+                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -lgmp-10
+                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -lmpfr-4
+                LIBS += -frounding-math
 
-#                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_system-mgw53-mt-1_55
-#                LIBS += -DBOOST_LOG_DYN_LINK
-#                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_log-mgw53-mt-1_55
-#                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_thread-mgw53-mt-1_55
-#                LIBS += -lpthread
+                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_system
+                LIBS += -DBOOST_LOG_DYN_LINK
+                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_log
+                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_thread
+                LIBS += -lpthread
             }
         }
     }

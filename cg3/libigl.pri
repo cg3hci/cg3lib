@@ -38,6 +38,8 @@ exists($$(LIBIGL_HOME)){
     }
 
     win32{
+        CONFIG += LIBIGL_STATIC
+
         LIBIGLPATH = C:/libs/libigl
         exists($$(LIBIGL_HOME)){
             LIBIGLPATH = $$(LIBIGL_HOME)
