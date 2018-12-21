@@ -85,7 +85,6 @@ VoronoiDiagram::VoronoiDiagram(Iterator begin, Iterator end) :
         addSite(i, *it);
     }
     finalize();
-
 }
 
 }

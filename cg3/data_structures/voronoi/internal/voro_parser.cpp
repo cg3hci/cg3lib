@@ -20,6 +20,19 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
     std::vector<std::vector<cg3::Pointd>> vertices;
 
     uint SIZE = 100000;
+
+    std::vector<uint> ids;
+    char bufferSitesIDs[SIZE];
+    memset(bufferSitesIDs, '\0', SIZE);
+    FILE *fsids = fopen("/dev/null", "w");
+    setbuffer(fsids, bufferSitesIDs, 100000);
+    container.print_custom("%i", fsids); //all the stdout goes in buffer
+    std::string sitesIds(bufferSitesIDs);
+    uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
+    cg3::Tokenizer tids(sitesIds, '\n');
+    for (const std::string& s : tids)
+        ids.push_back(std::stoi(s));
+
     char bufferVCoord[SIZE];
     memset(bufferVCoord, '\0', SIZE);
     FILE *fv = fopen("/dev/null", "w");
@@ -30,7 +43,6 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
 
     //std::cerr << v_coords << "\n";
 
-    uint nCells = std::count(v_coords.begin(), v_coords.end(), '\n');
     vertices.resize(nCells);
 
     for (uint i = 0; i < nCells; i++) {
@@ -47,7 +59,7 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
                         std::stod(t[1]),
                         std::stod(t[2]));
 
-            vertices[i].push_back(p);
+            vertices[ids[i]].push_back(p);
         }
     }
 
@@ -65,6 +77,19 @@ std::vector<std::vector<std::vector<uint> > > cg3::internal::parseAllFaces(
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::vector<std::vector<std::vector<uint> > > cells;
     uint SIZE = 100000;
+    std::vector<uint> ids;
+    char bufferSitesIDs[SIZE];
+    memset(bufferSitesIDs, '\0', SIZE);
+    FILE *fsids = fopen("/dev/null", "w");
+    setbuffer(fsids, bufferSitesIDs, 100000);
+    container.print_custom("%i", fsids); //all the stdout goes in buffer
+    std::string sitesIds(bufferSitesIDs);
+    uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
+    cg3::Tokenizer tids(sitesIds, '\n');
+    for (const std::string& s : tids)
+        ids.push_back(std::stoi(s));
+
+
     char bufferFIds[SIZE];
     memset(bufferFIds, '\0', SIZE);
     FILE *ff = fopen("/dev/null", "w");
@@ -72,8 +97,7 @@ std::vector<std::vector<std::vector<uint> > > cg3::internal::parseAllFaces(
     container.print_custom("%t", ff); //all the stdout goes in buffer
     std::string f_ids(bufferFIds);
 
-    uint nCells = std::count(f_ids.begin(), f_ids.end(), '\n');
-
+    cells.resize(nCells);
     for (uint i = 0; i < nCells; i++) {
         uint pos = f_ids.find("\n");
         std::string line(f_ids.begin(), f_ids.begin()+pos);
@@ -96,7 +120,7 @@ std::vector<std::vector<std::vector<uint> > > cg3::internal::parseAllFaces(
             cell.push_back(face);
         }
 
-        cells.push_back(cell);
+        cells[ids[i]] = cell;
     }
 
     return cells;
@@ -114,6 +138,18 @@ std::vector<std::vector<int> > cg3::internal::parseAdjacences(
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::vector<std::vector<int> > adjs;
     uint SIZE = 100000;
+    std::vector<uint> ids;
+    char bufferSitesIDs[SIZE];
+    memset(bufferSitesIDs, '\0', SIZE);
+    FILE *fsids = fopen("/dev/null", "w");
+    setbuffer(fsids, bufferSitesIDs, 100000);
+    container.print_custom("%i", fsids); //all the stdout goes in buffer
+    std::string sitesIds(bufferSitesIDs);
+    uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
+    cg3::Tokenizer tids(sitesIds, '\n');
+    for (const std::string& s : tids)
+        ids.push_back(std::stoi(s));
+
     char bufferFIds[SIZE];
     memset(bufferFIds, '\0', SIZE);
     FILE *ff = fopen("/dev/null", "w");
@@ -122,8 +158,7 @@ std::vector<std::vector<int> > cg3::internal::parseAdjacences(
 
     std::string fadjs(bufferFIds);
 
-    uint nCells = std::count(fadjs.begin(), fadjs.end(), '\n');
-
+    adjs.resize(nCells);
     for (uint i = 0; i < nCells; i++) {
         uint pos = fadjs.find("\n");
         std::string line(fadjs.begin(), fadjs.begin()+pos);
@@ -133,7 +168,7 @@ std::vector<std::vector<int> > cg3::internal::parseAdjacences(
         for (const std::string& f : tok) {
             fadj.push_back(std::stoi(f));
         }
-        adjs.push_back(fadj);
+        adjs[ids[i]] = fadj;
     }
 
     return adjs;
