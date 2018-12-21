@@ -36,12 +36,20 @@ public:
             const Color &c = Color(128, 128, 128),
             int flag = 0);
 
+    int addFace(const std::vector<uint> &vids,
+                const Color &c = Color(128, 128, 128),
+                int flag = 0);
+
     int addFace(
             const cg3::Pointd& p1,
             const cg3::Pointd& p2,
             const cg3::Pointd& p3,
             const Color &c = Color(128, 128, 128),
             int flag = 0);
+
+    int addFace(const std::vector<cg3::Pointd> &ps,
+                const Color &c = Color(128, 128, 128),
+                int flag = 0);
 
     void finalize();
 

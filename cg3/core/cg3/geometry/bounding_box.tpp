@@ -29,6 +29,35 @@ inline BoundingBox::BoundingBox(const Pointd& min, const Pointd& max) :
 {
 }
 
+
+/**
+ * @brief Constructor, creates a bounding box that contains all the Pointd iterated
+ * from begin to end.
+ * @param begin: start iterator on a container of Pointd
+ * @param end: end iterator on a container of Pointd
+ */
+template<class Iterator>
+inline BoundingBox::BoundingBox(Iterator begin, Iterator end)
+{
+    _min = *begin;
+    _max = *begin;
+    for (Iterator i = begin; i != end; ++i){
+        _min = _min.min(*i);
+        _max = _max.max(*i);
+    }
+}
+
+/**
+ * @brief Constructor, creates a bounding box that contains all the Pointd contained
+ * in the input container.
+ * @param c: a container of Pointd
+ */
+template<class Container>
+inline BoundingBox::BoundingBox(const Container& c) :
+    BoundingBox(c.begin(), c.end())
+{
+}
+
 /*************************
 * Public Inline Methods *
 *************************/

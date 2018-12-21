@@ -152,3 +152,9 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
 else {
     message(CGAL not installed properly!)
 }
+
+HEADERS += \
+    $$PWD/cgal/delaunaytriangulation.h
+
+SOURCES += \
+    $$PWD/cgal/delaunaytriangulation.cpp

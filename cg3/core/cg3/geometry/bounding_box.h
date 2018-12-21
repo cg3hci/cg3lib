@@ -29,6 +29,10 @@ public:
 
     BoundingBox();
     BoundingBox(const Pointd& min, const Pointd& max);
+    template<class Iterator>
+    BoundingBox(Iterator begin, Iterator end);
+    template<class Container>
+    BoundingBox(const Container& c);
 
     const Pointd& min()        const;
     const Pointd& max()        const;

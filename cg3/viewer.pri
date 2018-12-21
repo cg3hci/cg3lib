@@ -94,7 +94,6 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_container_drawlist_manager.h \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.h \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.h \
-        #$$PWD/viewer/managers/debugobjects_manager.h \
         $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
         $$PWD/viewer/utilities/loadersaver.h \
@@ -126,7 +125,6 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp \
-        #$$PWD/viewer/managers/debugobjects_manager.cpp \
         $$PWD/viewer/opengl_objects/opengl_objects.tpp \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp \
         $$PWD/viewer/utilities/console_stream.cpp \
@@ -142,10 +140,16 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_object_drawlist_manager.ui \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.ui
 
-        #$$PWD/viewer/managers/debugobjects_manager.ui
-
     RESOURCES += \
         $$PWD/viewer/internal/icons/icons.qrc
+
+    contains(DEFINES, CG3_VORO_DEFINED) {
+        HEADERS += \
+            $$PWD/viewer/drawable_objects/drawable_voronoi_diagram.h
+
+        SOURCES += \
+            $$PWD/viewer/drawable_objects/drawable_voronoi_diagram.cpp
+    }
 
     contains(DEFINES, CG3_DCEL_DEFINED) {
         HEADERS += \

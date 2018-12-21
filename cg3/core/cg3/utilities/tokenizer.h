@@ -30,6 +30,7 @@ public:
     iterator end();
 
     unsigned long int size()const ;
+    const std::string& operator[](uint i) const;
 
 private:
     void split();

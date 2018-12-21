@@ -69,6 +69,7 @@ inline bool loadMtlFile(
         const std::string &mtuFile,
         std::map<std::string, Color> &mapColors)
 {
+    std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::ifstream mtufile(mtuFile.c_str());
     std::string line;
     if (mtufile.is_open()){

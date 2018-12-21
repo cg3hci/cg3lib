@@ -44,6 +44,11 @@ inline unsigned long Tokenizer::size() const
     return (unsigned long) splitted.size();
 }
 
+inline const std::string& Tokenizer::operator[](uint i) const
+{
+    return splitted[i];
+}
+
 /**
  * @brief Tokenizer::split
  * @link https://stackoverflow.com/questions/53849/how-do-i-tokenize-a-string-in-c

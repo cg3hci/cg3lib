@@ -136,3 +136,22 @@ HEADERS += \
 SOURCES += \
     $$PWD/data_structures/trees/aabbtree.tpp \
     $$PWD/data_structures/trees/includes/nodes/aabb_node.tpp
+
+# --- Voronoi ---
+exists($$(VOROPLUSPLUS_HOME)){ #voro++ library is required
+
+    #voro++
+    INCLUDEPATH += $$(VOROPLUSPLUS_HOME)/
+    LIBS += -L$$(VOROPLUSPLUS_HOME)/ -lvoro++
+    DEFINES += CG3_VORO_DEFINED
+
+    HEADERS += \
+        $$PWD/data_structures/voronoi/voronoi_cell.h \
+        $$PWD/data_structures/voronoi/voronoi_diagram.h \
+        $$PWD/data_structures/voronoi/internal/voro_parser.h
+
+    SOURCES += \
+        $$PWD/data_structures/voronoi/voronoi_cell.cpp \
+        $$PWD/data_structures/voronoi/voronoi_diagram.cpp \
+        $$PWD/data_structures/voronoi/internal/voro_parser.cpp
+}

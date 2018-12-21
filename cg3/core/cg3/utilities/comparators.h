@@ -17,20 +17,16 @@ struct cmpStdPair
 {
     bool operator()(const std::pair<T,T>& a, const std::pair<T,T>& b) const
     {
-        if (a.first < a.second) {
+        if (a.first < b.first) {
             return true;
         }
         else {
-            if (a.first == a.second){
-                if (b.first < b.second)
+            if (a.first == b.first){
+                if (a.second < b.second)
                     return true;
-                else
-                    return false;
-            }
-            else {
-                return false;
             }
         }
+        return false;
     }
 };
 
