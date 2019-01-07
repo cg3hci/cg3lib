@@ -19,6 +19,7 @@
 namespace cg3 {
 namespace libigl {
 namespace internal {
+extern std::vector<uint> dummyVector;
 
 /* CSGTree typedefs */
 typedef igl::copyleft::cgal::CSGTree CSGTree;

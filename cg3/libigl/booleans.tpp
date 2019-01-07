@@ -7,9 +7,7 @@
 
 #include "booleans.h"
 
-#ifdef CG3_CGAL_DEFINED
 #include "internal/eigenmesh_libigl_algorithms.h"
-#include "internal/booleans_algorithms.h"
 
 namespace cg3 {
 namespace libigl {
@@ -58,11 +56,15 @@ inline CSGTree intersection(const CSGTree& c1, const CSGTree& c2)
  * @brief Intersection of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh intersection(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+inline SimpleEigenMesh intersection(
+        const SimpleEigenMesh& m1,
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    return internal::EigenMeshLibIglAlgorithms::intersection(m1, m2);
+    return internal::EigenMeshLibIglAlgorithms::intersection(m1, m2, birthFaces);
 }
 
 /**
@@ -70,11 +72,15 @@ inline SimpleEigenMesh intersection(const SimpleEigenMesh& m1, const SimpleEigen
  * @brief Intersection of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline EigenMesh intersection(const EigenMesh& m1, const EigenMesh& m2)
+inline EigenMesh intersection(
+        const EigenMesh& m1,
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    return internal::EigenMeshLibIglAlgorithms::intersection(m1, m2);
+    return internal::EigenMeshLibIglAlgorithms::intersection(m1, m2, birthFaces);
 }
 
 /**
@@ -95,13 +101,15 @@ inline void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
 inline void intersection(
         SimpleEigenMesh& result,
         const SimpleEigenMesh& m1,
-        const SimpleEigenMesh& m2)
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    result = intersection(m1, m2);
+    result = intersection(m1, m2, birthFaces);
 }
 
 /**
@@ -110,9 +118,14 @@ inline void intersection(
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void intersection(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2) {
-    result = intersection(m1, m2);
+inline void intersection(
+        EigenMesh& result,
+        const EigenMesh& m1,
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces) {
+    result = intersection(m1, m2, birthFaces);
 }
 
 
@@ -135,13 +148,15 @@ inline CSGTree difference(const CSGTree& c1, const CSGTree& c2)
  * @brief Difference of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
 inline SimpleEigenMesh difference(
         const SimpleEigenMesh& m1,
-        const SimpleEigenMesh& m2)
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    return internal::EigenMeshLibIglAlgorithms::difference(m1, m2);
+    return internal::EigenMeshLibIglAlgorithms::difference(m1, m2, birthFaces);
 }
 
 /**
@@ -149,11 +164,15 @@ inline SimpleEigenMesh difference(
  * @brief Difference of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline EigenMesh difference(const EigenMesh& m1, const EigenMesh& m2)
+inline EigenMesh difference(
+        const EigenMesh& m1,
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    return internal::EigenMeshLibIglAlgorithms::difference(m1, m2);
+    return internal::EigenMeshLibIglAlgorithms::difference(m1, m2, birthFaces);
 }
 
 /**
@@ -174,13 +193,15 @@ inline void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
 inline void difference(
         SimpleEigenMesh& result,
         const SimpleEigenMesh& m1,
-        const SimpleEigenMesh& m2)
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    result = difference(m1, m2);
+    result = difference(m1, m2, birthFaces);
 }
 
 /**
@@ -189,10 +210,15 @@ inline void difference(
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void difference(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2)
+inline void difference(
+        EigenMesh& result,
+        const EigenMesh& m1,
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    result = difference(m1, m2);
+    result = difference(m1, m2, birthFaces);
 }
 
 
@@ -215,11 +241,15 @@ inline CSGTree union_(const CSGTree& c1, const CSGTree& c2)
  * @brief Union of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh union_(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+inline SimpleEigenMesh union_(
+        const SimpleEigenMesh& m1,
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    return internal::EigenMeshLibIglAlgorithms::union_(m1, m2);
+    return internal::EigenMeshLibIglAlgorithms::union_(m1, m2, birthFaces);
 }
 
 /**
@@ -227,11 +257,15 @@ inline SimpleEigenMesh union_(const SimpleEigenMesh& m1, const SimpleEigenMesh& 
  * @brief Union of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline EigenMesh union_(const EigenMesh& m1, const EigenMesh& m2)
+inline EigenMesh union_(
+        const EigenMesh& m1,
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    return internal::EigenMeshLibIglAlgorithms::union_(m1, m2);
+    return internal::EigenMeshLibIglAlgorithms::union_(m1, m2, birthFaces);
 }
 
 /**
@@ -252,13 +286,15 @@ inline void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
 inline void union_(
         SimpleEigenMesh& result,
         const SimpleEigenMesh& m1,
-        const SimpleEigenMesh& m2)
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    result = union_(m1, m2);
+    result = union_(m1, m2, birthFaces);
 }
 
 /**
@@ -267,13 +303,17 @@ inline void union_(
  * @param[out] Resulting mesh
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void union_(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2)
+inline void union_(
+        EigenMesh& result,
+        const EigenMesh& m1,
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
-    result = union_(m1, m2);
+    result = union_(m1, m2, birthFaces);
 }
 
 
 } //namespace cg3::libigl
 } //namespace cg3
-#endif

@@ -55,22 +55,26 @@ public:
     static SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree);
 
     /* Mesh intersections */
-    static SimpleEigenMesh intersection(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
-    static EigenMesh intersection(const EigenMesh &m1, const EigenMesh &m2);
+    static SimpleEigenMesh intersection(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2, std::vector<uint>& birthFaces = dummyVector);
+    static EigenMesh intersection(const EigenMesh &m1, const EigenMesh &m2, std::vector<uint>& birthFaces = dummyVector);
 
     /* Mesh differences */
-    static SimpleEigenMesh difference(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
-    static EigenMesh difference(const EigenMesh &m1, const EigenMesh &m2);
+    static SimpleEigenMesh difference(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2, std::vector<uint>& birthFaces = dummyVector);
+    static EigenMesh difference(const EigenMesh &m1, const EigenMesh &m2, std::vector<uint>& birthFaces = dummyVector);
 
     /* Mesh unions */
-    static SimpleEigenMesh union_(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);
-    static EigenMesh union_(const EigenMesh &m1, const EigenMesh &m2);
+    static SimpleEigenMesh union_(const SimpleEigenMesh &m1, const SimpleEigenMesh &m2, std::vector<uint>& birthFaces = dummyVector);
+    static EigenMesh union_(const EigenMesh &m1, const EigenMesh &m2, std::vector<uint>& birthFaces = dummyVector);
 
     #endif
 
 private:
 
-    EigenMeshLibIglAlgorithms() {}
+    static std::vector<uint> dummyVector;
+
+    EigenMeshLibIglAlgorithms() {};
+
+
 };
 
 } //namespace cg3::libigl::internal

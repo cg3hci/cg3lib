@@ -454,3 +454,18 @@ inline std::size_t std::hash<cg3::Color>::operator()(const cg3::Color &k) const
     cg3::hashCombine(seed, k.red(), k.green(), k.blue(), k.alpha());
     return seed;
 }
+
+inline cg3::HSVScaleColor::HSVScaleColor(uint numberColors, uint saturation, uint value, uint alpha) :
+    numberColors(numberColors), s(saturation/255.0), v(value/255.0), alpha(alpha/255.0)
+{
+    step = 0.941176471 / numberColors;
+}
+
+inline cg3::Color cg3::HSVScaleColor::operator[](uint i) const
+{
+    if (i >= numberColors)
+        return cg3::Color(0,0,0);
+    cg3::Color c;
+    c.setHsvF(step * i, s, v, alpha);
+    return c;
+}

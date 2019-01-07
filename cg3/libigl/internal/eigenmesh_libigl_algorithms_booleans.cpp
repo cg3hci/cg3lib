@@ -13,6 +13,8 @@ namespace cg3 {
 namespace libigl {
 namespace internal {
 
+std::vector<uint> EigenMeshLibIglAlgorithms::dummyVector = std::vector<uint>();
+
 /* Data reassociation declaration */
 
 void reassociateDataAfterOperation(
@@ -20,6 +22,10 @@ void reassociateDataAfterOperation(
         const EigenMesh& m1,
         const EigenMesh& m2,
         const CSGTree::VectorJ& birthFaces);
+
+/* Birth face vector conversion */
+
+std::vector<uint> birthFaceVectorConversion(const CSGTree::VectorJ& birthFaces);
 
 
 /* ----- CSG CONVERSIONS ----- */
@@ -56,16 +62,20 @@ SimpleEigenMesh EigenMeshLibIglAlgorithms::CSGTreeToEigenMesh(const CSGTree& c)
  * @brief Intersection of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
 SimpleEigenMesh EigenMeshLibIglAlgorithms::intersection(
         const SimpleEigenMesh& m1,
-        const SimpleEigenMesh& m2)
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
     CSGTree csgResult =
             internal::intersection(
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
+
+    birthFaces = birthFaceVectorConversion(csgResult.J());
 
     return (SimpleEigenMesh) CSGTreeToEigenMesh(csgResult);
 }
@@ -74,14 +84,20 @@ SimpleEigenMesh EigenMeshLibIglAlgorithms::intersection(
  * @brief Intersection of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-EigenMesh EigenMeshLibIglAlgorithms::intersection(const EigenMesh& m1, const EigenMesh& m2)
+EigenMesh EigenMeshLibIglAlgorithms::intersection(
+        const EigenMesh& m1,
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
     CSGTree csgResult =
             internal::intersection(
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
+
+    birthFaces = birthFaceVectorConversion(csgResult.J());
 
     EigenMesh eigenMesh(CSGTreeToEigenMesh(csgResult));
 
@@ -97,16 +113,20 @@ EigenMesh EigenMeshLibIglAlgorithms::intersection(const EigenMesh& m1, const Eig
  * @brief Difference of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
 SimpleEigenMesh EigenMeshLibIglAlgorithms::difference(
         const SimpleEigenMesh& m1,
-        const SimpleEigenMesh& m2)
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
     CSGTree csgResult =
             internal::difference(
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
+
+    birthFaces = birthFaceVectorConversion(csgResult.J());
 
     return (SimpleEigenMesh) CSGTreeToEigenMesh(csgResult);
 }
@@ -115,16 +135,20 @@ SimpleEigenMesh EigenMeshLibIglAlgorithms::difference(
  * @brief Difference of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
 EigenMesh EigenMeshLibIglAlgorithms::difference(
         const EigenMesh& m1,
-        const EigenMesh& m2)
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
     CSGTree csgResult =
             internal::difference(
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
+
+    birthFaces = birthFaceVectorConversion(csgResult.J());
 
     EigenMesh eigenMesh(CSGTreeToEigenMesh(csgResult));
 
@@ -140,16 +164,20 @@ EigenMesh EigenMeshLibIglAlgorithms::difference(
  * @brief Union of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
 SimpleEigenMesh EigenMeshLibIglAlgorithms::union_(
         const SimpleEigenMesh& m1,
-        const SimpleEigenMesh& m2)
+        const SimpleEigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
     CSGTree csgResult =
             internal::union_(
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
+
+    birthFaces = birthFaceVectorConversion(csgResult.J());
 
     return (SimpleEigenMesh) CSGTreeToEigenMesh(csgResult);
 }
@@ -158,16 +186,20 @@ SimpleEigenMesh EigenMeshLibIglAlgorithms::union_(
  * @brief Union of two meshes
  * @param[in] m1 First mesh
  * @param[in] m2 Second mesh
+ * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
 EigenMesh EigenMeshLibIglAlgorithms::union_(
         const EigenMesh& m1,
-        const EigenMesh& m2)
+        const EigenMesh& m2,
+        std::vector<uint>& birthFaces)
 {
     CSGTree csgResult =
             internal::union_(
                 eigenMeshToCSGTree(m1),
                 eigenMeshToCSGTree(m2));
+
+    birthFaces = birthFaceVectorConversion(csgResult.J());
 
     EigenMesh eigenMesh(CSGTreeToEigenMesh(csgResult));
 
@@ -175,7 +207,6 @@ EigenMesh EigenMeshLibIglAlgorithms::union_(
 
     return eigenMesh;
 }
-
 
 /* ----- DATA REASSOCIATION ----- */
 
@@ -207,6 +238,16 @@ void reassociateDataAfterOperation(
             resultingMesh.setFaceColor(m2.faceColor(birthFace - nA), i);
         }
     }
+}
+
+/* ----- BIRT FACE VECTOR CONVERSION ----- */
+
+std::vector<uint> birthFaceVectorConversion(const CSGTree::VectorJ& birthFaces)
+{
+    std::vector<uint> res(birthFaces.size());
+    for (uint i = 0; i < birthFaces.size(); i++)
+        res[i] = birthFaces(i);
+    return res;
 }
 
 } //namespace cg3::libigl::internal

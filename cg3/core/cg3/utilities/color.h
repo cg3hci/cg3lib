@@ -89,6 +89,26 @@ struct hash<cg3::Color>
 
 } //namespace std
 
+namespace cg3 {
+
+/**
+ * @brief The HSVScaleColor class allows to create a scale of colors in the HSV
+ * spectrum, to 0 (RED) to 240 (BLUE).
+ */
+class HSVScaleColor {
+public:
+    HSVScaleColor(uint numberColors = 10, uint saturation = 255, uint value = 255, uint alpha = 255);
+    cg3::Color operator[](uint i) const;
+private:
+    uint numberColors;
+    float step;
+    float s;
+    float v;
+    float alpha;
+};
+
+}
+
 #include "color.tpp"
 
 #endif // CG3_COLOR_H

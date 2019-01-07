@@ -6,6 +6,7 @@
 namespace cg3 {
 namespace libigl {
 namespace internal {
+std::vector<uint> dummyVector;
 
 /**
  * @brief Intersection of two CSG Trees

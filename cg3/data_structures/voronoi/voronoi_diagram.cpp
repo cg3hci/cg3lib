@@ -26,6 +26,12 @@ const VoronoiCell &VoronoiDiagram::cell(const Pointd &site)
     return cells[mapCells[site]];
 }
 
+void VoronoiDiagram::addSite(const Pointd &p)
+{
+    addSite(cells.size(), p);
+    finalize();
+}
+
 std::vector<VoronoiCell>::const_iterator VoronoiDiagram::begin() const
 {
     return cells.begin();

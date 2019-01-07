@@ -40,6 +40,12 @@ public:
     const VoronoiCell& cell(uint i);
     const VoronoiCell& cell(const cg3::Pointd& site);
 
+    void addSite(const cg3::Pointd& p);
+    template<class Container>
+    void addSites(const Container& c);
+    template<class Iterator>
+    void addSites(Iterator begin, Iterator end);
+
     std::vector<VoronoiCell>::const_iterator begin() const;
     std::vector<VoronoiCell>::const_iterator end() const;
 
@@ -81,6 +87,22 @@ VoronoiDiagram::VoronoiDiagram(Iterator begin, Iterator end) :
     VoronoiDiagram(BoundingBox(begin, end), std::distance(begin, end))
 {
     uint i = 0;
+    for (Iterator it = begin; it != end; ++it, ++i){
+        addSite(i, *it);
+    }
+    finalize();
+}
+
+template<class Container>
+void VoronoiDiagram::addSites(const Container &c)
+{
+    addSites(c.begin(), c.end());
+}
+
+template<class Iterator>
+void VoronoiDiagram::addSites(Iterator begin, Iterator end)
+{
+    uint i = cells.size();
     for (Iterator it = begin; it != end; ++it, ++i){
         addSite(i, *it);
     }
