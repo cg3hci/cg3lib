@@ -18,6 +18,10 @@ std::string executeCommand(const std::string& cmd);
 
 std::string executeCommand(const char* cmd);
 
+bool executeCommand(const std::string& cmd, std::string& output);
+
+bool executeCommand(const char* cmd, std::string& output);
+
 } //namespace cg3
 
 #include "system.tpp"

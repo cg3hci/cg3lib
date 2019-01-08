@@ -196,7 +196,7 @@ public:
     void resetFaceColors();
     void clear();
     #ifdef  CG3_CGAL_DEFINED
-    unsigned int triangulateFace(Dcel::Face* f);
+    unsigned int triangulateFace(uint idf);
     void triangulate();
     #endif
     bool loadFromFile(const std::string& filename);

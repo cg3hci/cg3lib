@@ -975,9 +975,12 @@ void Dcel::clear()
  * @param[in] f: la faccia che verrà triangolata
  * @return Il numero di triangoli che compone la faccia appena triangolata.
  */
-unsigned int Dcel::triangulateFace(Dcel::Face* f)
+unsigned int Dcel::triangulateFace(uint idf)
 {
     int count=0;
+    cg3::Dcel::Face* f = face(idf);
+    if (f == nullptr)
+        return 0;
     if (f->isTriangle())
         return 1;
     else {
@@ -988,20 +991,18 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f)
         std::map<std::pair<Dcel::Vertex*, Dcel::Vertex*> , Dcel::HalfEdge*> verticesEdgeMap;
         std::map<std::pair<Dcel::Vertex*, Dcel::Vertex*> , Dcel::HalfEdge*> twinsEdgeMap;
         std::map<Pointd, Dcel::Vertex*> pointsVerticesMap;
-        for (Dcel::Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(); heit != f->incidentHalfEdgeEnd(); ++heit){
-            borderCoordinates.push_back((*heit)->fromVertex()->coordinate());
+        for (Dcel::HalfEdge* he : f->incidentHalfEdgeIterator()){
+            borderCoordinates.push_back(he->fromVertex()->coordinate());
             std::pair<Dcel::Vertex*, Dcel::Vertex*> pp;
-            pp.first = (*heit)->fromVertex();
-            pp.second = (*heit)->toVertex();
-            verticesEdgeMap[pp] = *heit;
-            pointsVerticesMap[(*heit)->fromVertex()->coordinate()] = (*heit)->fromVertex();
+            pp.first = he->fromVertex();
+            pp.second = he->toVertex();
+            verticesEdgeMap[pp] = he;
+            pointsVerticesMap[he->fromVertex()->coordinate()] = he->fromVertex();
         }
 
         if (f->hasHoles()){
             innerBorderCoordinates.reserve(f->numberInnerHalfEdges());
-            int i = 0;
-            for (Dcel::Face::InnerHalfEdgeIterator ihe = f->innerHalfEdgeBegin(); ihe != f->innerHalfEdgeEnd(); ++ihe, ++i){
-                Dcel::HalfEdge* he = *ihe;
+            for (Dcel::HalfEdge* he : f->innerHalfEdgeIterator()){
                 std::vector<Pointd> inner;
                 for (Dcel::Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(he); heit != f->incidentHalfEdgeEnd(); ++heit){
                     inner.push_back((*heit)->fromVertex()->coordinate());
@@ -1024,103 +1025,103 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f)
         for (unsigned int i = 0; i < triangulation.size(); i++) {
             std::array<Pointd, 3> triangle = triangulation[i];
 
-                Pointd p1 = triangle[0];
-                Pointd p2 = triangle[1];
-                Pointd p3 = triangle[2];
+            Pointd p1 = triangle[0];
+            Pointd p2 = triangle[1];
+            Pointd p3 = triangle[2];
 
-                Dcel::HalfEdge* e1, *e2, *e3;
-                std::pair<Dcel::Vertex*, Dcel::Vertex*> pp;
-                bool b = false;
-                pp.first = pointsVerticesMap[p1];
-                pp.second = pointsVerticesMap[p2];
-                if (verticesEdgeMap.find(pp) != verticesEdgeMap.end()){
-                    e1 = verticesEdgeMap[pp];
-                    if (e1 == firstHalfEdge) b = true;
+            Dcel::HalfEdge* e1, *e2, *e3;
+            std::pair<Dcel::Vertex*, Dcel::Vertex*> pp;
+            bool b = false;
+            pp.first = pointsVerticesMap[p1];
+            pp.second = pointsVerticesMap[p2];
+            if (verticesEdgeMap.find(pp) != verticesEdgeMap.end()){
+                e1 = verticesEdgeMap[pp];
+                if (e1 == firstHalfEdge) b = true;
+            }
+            else {
+                e1 = addHalfEdge();
+                e1->setFromVertex(pp.first);
+                e1->setToVertex(pp.second);
+                if (twinsEdgeMap.find(pp) == twinsEdgeMap.end()){
+                    Dcel::Vertex* tmp = pp.first;
+                    pp.first = pp.second;
+                    pp.second = tmp;
+                    twinsEdgeMap[pp] = e1;
                 }
                 else {
-                    e1 = addHalfEdge();
-                    e1->setFromVertex(pp.first);
-                    e1->setToVertex(pp.second);
-                    if (twinsEdgeMap.find(pp) == twinsEdgeMap.end()){
-                        Dcel::Vertex* tmp = pp.first;
-                        pp.first = pp.second;
-                        pp.second = tmp;
-                        twinsEdgeMap[pp] = e1;
-                    }
-                    else {
-                        Dcel::HalfEdge* twin = twinsEdgeMap[pp];
-                        twin->setTwin(e1);
-                        e1->setTwin(twin);
-                        twinsEdgeMap.erase(pp);
-                    }
+                    Dcel::HalfEdge* twin = twinsEdgeMap[pp];
+                    twin->setTwin(e1);
+                    e1->setTwin(twin);
+                    twinsEdgeMap.erase(pp);
                 }
-                pp.first = pointsVerticesMap[p2];
-                pp.second = pointsVerticesMap[p3];
-                if (verticesEdgeMap.find(pp) != verticesEdgeMap.end()){
-                    e2 = verticesEdgeMap[pp];
-                    if (e2 == firstHalfEdge) b = true;
-                }
-                else {
-                    e2 = addHalfEdge();
-                    e2->setFromVertex(pp.first);
-                    e2->setToVertex(pp.second);
-                    if (twinsEdgeMap.find(pp) == twinsEdgeMap.end()){
-                        Dcel::Vertex* tmp = pp.first;
-                        pp.first = pp.second;
-                        pp.second = tmp;
-                        twinsEdgeMap[pp] = e2;
-                    }
-                    else {
-                        Dcel::HalfEdge* twin = twinsEdgeMap[pp];
-                        twin->setTwin(e2);
-                        e2->setTwin(twin);
-                        twinsEdgeMap.erase(pp);
-                    }
-                }
-                pp.first = pointsVerticesMap[p3];
-                pp.second = pointsVerticesMap[p1];
-                if (verticesEdgeMap.find(pp) != verticesEdgeMap.end()){
-                    e3 = verticesEdgeMap[pp];
-                    if (e3 == firstHalfEdge) b = true;
+            }
+            pp.first = pointsVerticesMap[p2];
+            pp.second = pointsVerticesMap[p3];
+            if (verticesEdgeMap.find(pp) != verticesEdgeMap.end()){
+                e2 = verticesEdgeMap[pp];
+                if (e2 == firstHalfEdge) b = true;
+            }
+            else {
+                e2 = addHalfEdge();
+                e2->setFromVertex(pp.first);
+                e2->setToVertex(pp.second);
+                if (twinsEdgeMap.find(pp) == twinsEdgeMap.end()){
+                    Dcel::Vertex* tmp = pp.first;
+                    pp.first = pp.second;
+                    pp.second = tmp;
+                    twinsEdgeMap[pp] = e2;
                 }
                 else {
-                    e3 = addHalfEdge();
-                    e3->setFromVertex(pp.first);
-                    e3->setToVertex(pp.second);
-                    if (twinsEdgeMap.find(pp) == twinsEdgeMap.end()){
-                        Dcel::Vertex* tmp = pp.first;
-                        pp.first = pp.second;
-                        pp.second = tmp;
-                        twinsEdgeMap[pp] = e3;
-                    }
-                    else {
-                        Dcel::HalfEdge* twin = twinsEdgeMap[pp];
-                        twin->setTwin(e3);
-                        e3->setTwin(twin);
-                        twinsEdgeMap.erase(pp);
-                    }
+                    Dcel::HalfEdge* twin = twinsEdgeMap[pp];
+                    twin->setTwin(e2);
+                    e2->setTwin(twin);
+                    twinsEdgeMap.erase(pp);
                 }
+            }
+            pp.first = pointsVerticesMap[p3];
+            pp.second = pointsVerticesMap[p1];
+            if (verticesEdgeMap.find(pp) != verticesEdgeMap.end()){
+                e3 = verticesEdgeMap[pp];
+                if (e3 == firstHalfEdge) b = true;
+            }
+            else {
+                e3 = addHalfEdge();
+                e3->setFromVertex(pp.first);
+                e3->setToVertex(pp.second);
+                if (twinsEdgeMap.find(pp) == twinsEdgeMap.end()){
+                    Dcel::Vertex* tmp = pp.first;
+                    pp.first = pp.second;
+                    pp.second = tmp;
+                    twinsEdgeMap[pp] = e3;
+                }
+                else {
+                    Dcel::HalfEdge* twin = twinsEdgeMap[pp];
+                    twin->setTwin(e3);
+                    e3->setTwin(twin);
+                    twinsEdgeMap.erase(pp);
+                }
+            }
 
-                Dcel::Face* f;
-                if (!b)
-                    f = addFace();
-                else
-                    f = firstHalfEdge->face();
+            Dcel::Face* f;
+            if (!b)
+                f = addFace();
+            else
+                f = firstHalfEdge->face();
 
-                e1->setNext(e2);
-                e2->setNext(e3);
-                e3->setNext(e1);
-                e1->setPrev(e3);
-                e2->setPrev(e1);
-                e3->setPrev(e2);
-                e1->setFace(f);
-                e2->setFace(f);
-                e3->setFace(f);
-                f->setOuterHalfEdge(e1);
-                f->setNormal(firstHalfEdge->face()->normal());
-                f->setColor(firstHalfEdge->face()->color());
+            e1->setNext(e2);
+            e2->setNext(e3);
+            e3->setNext(e1);
+            e1->setPrev(e3);
+            e2->setPrev(e1);
+            e3->setPrev(e2);
+            e1->setFace(f);
+            e2->setFace(f);
+            e3->setFace(f);
+            f->setOuterHalfEdge(e1);
+            f->setNormal(firstHalfEdge->face()->normal());
+            f->setColor(firstHalfEdge->face()->color());
 
-                ++count;
+            ++count;
         }
 
     }
@@ -1141,7 +1142,7 @@ unsigned int Dcel::triangulateFace(Dcel::Face* f)
 void Dcel::triangulate()
 {
     for (Dcel::Face* f : faceIterator()) {
-        triangulateFace(f);
+        triangulateFace(f->id());
     }
     updateVertexNormals();
 }

@@ -67,7 +67,7 @@ double DrawableVoronoiDiagram::sceneRadius() const
 void DrawableVoronoiDiagram::finalize()
 {
     VoronoiDiagram::finalize();
-    double sphereRadius = bb.diag() / 100;
+    double sphereRadius = bb.diag() / 1000;
     for (const VoronoiCell& cell : *this){
         pushBack(DrawableVoronoiCell(cell, sphereRadius), "Cell " + std::to_string(cell.id()));
     }

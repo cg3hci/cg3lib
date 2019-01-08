@@ -8,6 +8,8 @@
 
 #include <cg3/utilities/tokenizer.h>
 
+const uint SIZE = 4000000; //buffer sizes
+
 /**
  * @brief cg3::internal::parseAllVertices
  * @param container
@@ -19,13 +21,11 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::vector<std::vector<cg3::Pointd>> vertices;
 
-    uint SIZE = 100000;
-
     std::vector<uint> ids;
     char bufferSitesIDs[SIZE];
     memset(bufferSitesIDs, '\0', SIZE);
     FILE *fsids = fopen("/dev/null", "w");
-    setbuffer(fsids, bufferSitesIDs, 100000);
+    setbuffer(fsids, bufferSitesIDs, SIZE);
     container.print_custom("%i", fsids); //all the stdout goes in buffer
     std::string sitesIds(bufferSitesIDs);
     uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
@@ -36,12 +36,10 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
     char bufferVCoord[SIZE];
     memset(bufferVCoord, '\0', SIZE);
     FILE *fv = fopen("/dev/null", "w");
-    setbuffer(fv, bufferVCoord, 100000);
+    setbuffer(fv, bufferVCoord, SIZE);
     container.print_custom("%P", fv); //all the stdout goes in buffer
 
     std::string v_coords(bufferVCoord);
-
-    //std::cerr << v_coords << "\n";
 
     vertices.resize(nCells);
 
@@ -54,6 +52,7 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
         for (const std::string& v : tok) {
 
             cg3::Tokenizer t(v, ',');
+            assert(t.size() == 3); //if this assert fails, voro++ didn't give a good output string
             cg3::Pointd p(
                         std::stod(std::string(t[0].begin()+1, t[0].end())),
                         std::stod(t[1]),
@@ -76,12 +75,11 @@ std::vector<std::vector<std::vector<uint> > > cg3::internal::parseAllFaces(
 {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::vector<std::vector<std::vector<uint> > > cells;
-    uint SIZE = 100000;
     std::vector<uint> ids;
     char bufferSitesIDs[SIZE];
     memset(bufferSitesIDs, '\0', SIZE);
     FILE *fsids = fopen("/dev/null", "w");
-    setbuffer(fsids, bufferSitesIDs, 100000);
+    setbuffer(fsids, bufferSitesIDs, SIZE);
     container.print_custom("%i", fsids); //all the stdout goes in buffer
     std::string sitesIds(bufferSitesIDs);
     uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
@@ -93,7 +91,7 @@ std::vector<std::vector<std::vector<uint> > > cg3::internal::parseAllFaces(
     char bufferFIds[SIZE];
     memset(bufferFIds, '\0', SIZE);
     FILE *ff = fopen("/dev/null", "w");
-    setbuffer(ff, bufferFIds, 100000);
+    setbuffer(ff, bufferFIds, SIZE);
     container.print_custom("%t", ff); //all the stdout goes in buffer
     std::string f_ids(bufferFIds);
 
@@ -137,12 +135,11 @@ std::vector<std::vector<int> > cg3::internal::parseAdjacences(
 {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
     std::vector<std::vector<int> > adjs;
-    uint SIZE = 100000;
     std::vector<uint> ids;
     char bufferSitesIDs[SIZE];
     memset(bufferSitesIDs, '\0', SIZE);
     FILE *fsids = fopen("/dev/null", "w");
-    setbuffer(fsids, bufferSitesIDs, 100000);
+    setbuffer(fsids, bufferSitesIDs, SIZE);
     container.print_custom("%i", fsids); //all the stdout goes in buffer
     std::string sitesIds(bufferSitesIDs);
     uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
@@ -153,7 +150,7 @@ std::vector<std::vector<int> > cg3::internal::parseAdjacences(
     char bufferFIds[SIZE];
     memset(bufferFIds, '\0', SIZE);
     FILE *ff = fopen("/dev/null", "w");
-    setbuffer(ff, bufferFIds, 100000);
+    setbuffer(ff, bufferFIds, SIZE);
     container.print_custom("%n", ff); //all the stdout goes in buffer
 
     std::string fadjs(bufferFIds);

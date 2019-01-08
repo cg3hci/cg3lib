@@ -37,15 +37,45 @@ inline std::string executeCommand(const std::string& cmd)
  */
 inline std::string executeCommand(const char* cmd)
 {
-    std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
-    if (!pipe) return "ERROR";
-    char buffer[128];
-    std::string result = "";
-    while (!feof(pipe.get())) {
-        if (fgets(buffer, 128, pipe.get()) != NULL)
-            result += buffer;
-    }
+    std::string result;
+    executeCommand(cmd, result);
     return result;
+}
+
+/**
+ * @ingroup cg3core
+ * @brief this function executes a command on the shell
+ * @param[in] cmd: string containing the command
+ * @param[out] output: the output of the executed command
+ * @return true if the command exited successfully, false otherwise
+ * @link https://stackoverflow.com/questions/52164723/how-to-execute-a-command-and-get-return-code-stdout-and-stderr-of-command-in-c
+ */
+inline bool executeCommand(const std::string& cmd, std::string& output)
+{
+    return executeCommand(cmd.c_str(), output);
+}
+
+/**
+ * @ingroup cg3core
+ * @brief this function executes a command on the shell
+ * @param[in] cmd: string containing the command
+ * @param[out] output: the output of the executed command
+ * @return true if the command exited successfully, false otherwise
+ * @link https://stackoverflow.com/questions/52164723/how-to-execute-a-command-and-get-return-code-stdout-and-stderr-of-command-in-c
+ */
+inline bool executeCommand(const char* cmd, std::string& output)
+{
+    auto pipe = popen(cmd, "r");
+    if (!pipe) return false;
+    char buffer[128];
+    output = "";
+    while (!feof(pipe)) {
+        if (fgets(buffer, 128, pipe) != nullptr)
+            output += buffer;
+    }
+    auto rc = pclose(pipe);
+
+    return rc == EXIT_SUCCESS;
 }
 
 } //namespace cg3

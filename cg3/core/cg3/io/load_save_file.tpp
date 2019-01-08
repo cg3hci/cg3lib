@@ -614,7 +614,7 @@ bool loadTriangleMeshFromObj(
     std::list<Color> dummycv;
     std::list<Color> dummyct;
     bool r = loadMeshFromObj(filename, dummyc, dummyt, meshType, modality, dummyvn, dummycv, dummyct);
-    if (r == true && meshType != io::TRIANGLE_MESH){
+    if (r == true && dummyt.size() > 0 && meshType != io::TRIANGLE_MESH){
         std::cerr << "Error: mesh contained on " << filename << " is not a triangle mesh\n";
         r = false;
     }
