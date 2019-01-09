@@ -30,7 +30,6 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
     for (unsigned int i = 0; i < cont->size(); i++) {
         DrawableObjectDrawListManager* manager =
                 new DrawableObjectDrawListManager(&mw, (*cont)[i], cont->objectName(i), visible, closeButtonVisible);
-
         ui->verticalLayout->addWidget(manager);
         mapSubManagers[(*cont)[i]] = manager;
     }

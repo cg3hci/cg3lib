@@ -94,6 +94,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/internal/drawable_container_drawlist_manager.h \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.h \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.h \
+        $$PWD/viewer/internal/submanager.h \
         $$PWD/viewer/opengl_objects/opengl_objects.h \
         $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
         $$PWD/viewer/utilities/loadersaver.h \
@@ -120,7 +121,6 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/interfaces/manipulable_object.cpp \
         $$PWD/viewer/interfaces/pickable_object.cpp \
-        $$PWD/viewer/internal/submanager.h \
         $$PWD/viewer/internal/drawable_mesh_drawlist_manager.cpp \
         $$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
