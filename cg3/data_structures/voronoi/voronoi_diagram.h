@@ -46,6 +46,8 @@ public:
     template<class Iterator>
     void addSites(Iterator begin, Iterator end);
 
+    void clear();
+
     std::vector<VoronoiCell>::const_iterator begin() const;
     std::vector<VoronoiCell>::const_iterator end() const;
 

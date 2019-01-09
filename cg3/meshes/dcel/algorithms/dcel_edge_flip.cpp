@@ -4,7 +4,7 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#include "dcel_changes.h"
+#include "dcel_edge_flip.h"
 
 namespace cg3 {
 namespace dcelAlgorithms {

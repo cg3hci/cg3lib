@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#ifndef CG3_DCEL_CHANGES_H
-#define CG3_DCEL_CHANGES_H
+#ifndef CG3_DCEL_EDGE_FLIP_H
+#define CG3_DCEL_EDGE_FLIP_H
 
 #include <cg3/meshes/dcel/dcel.h>
 
@@ -17,4 +17,4 @@ bool edgeFlip(Dcel& d, const cg3::Dcel::HalfEdge* he);
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 
-#endif // CG3_DCEL_CHANGES_H
+#endif // CG3_DCEL_EDGE_FLIP_H

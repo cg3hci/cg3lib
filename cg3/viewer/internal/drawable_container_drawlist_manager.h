@@ -9,6 +9,8 @@
 
 #include "submanager.h"
 
+class QSpacerItem;
+
 namespace cg3 {
 
 class DrawableObject;
@@ -57,6 +59,7 @@ private:
     MainWindow& mw;
     const DrawableContainer* cont;
     std::map<const DrawableObject*, DrawableObjectDrawListManager*> mapSubManagers;
+    QSpacerItem* m_spacer;
 };
 
 } //namespace cg3::viewer

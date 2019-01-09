@@ -16,6 +16,6 @@
 #include "dcel_flooding.h"
 #include "dcel_connected_components.h"
 #include "dcel_bounding_boxes.h"
-#include "dcel_changes.h"
+#include "dcel_edge_flip.h"
 
 #endif // CG3_DCEL_ALGORITHMS_H

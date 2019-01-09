@@ -46,6 +46,7 @@ public:
 
     using VoronoiDiagram::begin;
     using VoronoiDiagram::end;
+    using VoronoiDiagram::clear;
 
 protected:
     virtual void finalize();

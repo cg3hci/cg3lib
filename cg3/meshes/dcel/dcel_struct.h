@@ -205,6 +205,8 @@ public:
     bool loadFromDcelFile(const std::string& filename);
 
     void swap(Dcel& d);
+    void merge(const Dcel& d);
+    void merge(Dcel&& d);
 
     Dcel& operator= (Dcel dcel);
 
@@ -288,6 +290,8 @@ protected:
 };
 
 void swap(Dcel& d1, Dcel& d2);
+
+Dcel merge(const Dcel& d1, const Dcel& d2);
 
 } //namespace cg3
 

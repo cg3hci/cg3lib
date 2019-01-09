@@ -1279,7 +1279,123 @@ void Dcel::swap(Dcel& d)
         he->parent = &d;
     for (Dcel::Face* f: d.faceIterator())
         f->parent = &d;
-    #endif
+#endif
+}
+
+/**
+ * @brief Merges the input Dcel with this Dcel.
+ * @param d: a Dcel
+ */
+void Dcel::merge(const Dcel& d)
+{
+    std::vector<int> mapV(d.vertices.size(), -1); //map from d vertex to this vertex
+    std::vector<int> mapHE(d.halfEdges.size(), -1); //map from d halfEdge to this halfEdge
+    std::vector<int> mapF(d.faces.size(), -1); //map from d face to this face
+
+    for (const cg3::Dcel::Vertex* v : d.vertexIterator()) {
+        Dcel::Vertex* nv = addVertex(v->coordinate(), v->normal(), v->color());
+        nv->setFlag(v->flag());
+        nv->setCardinality(v->cardinality());
+        mapV[v->id()] = nv->id();
+    }
+
+    for (const cg3::Dcel::HalfEdge* he : d.halfEdgeIterator()) {
+        Dcel::HalfEdge* nhe = addHalfEdge();
+        nhe->setFlag(he->flag());
+        mapHE[he->id()] = nhe->id();
+    }
+
+    for (const cg3::Dcel::Face* f : d.faceIterator()) {
+        Dcel::Face* nf = addFace(f->normal(), f->color());
+        nf->setFlag(f->flag());
+        nf->setArea(f->area());
+        mapF[f->id()] = nf->id();
+    }
+
+    for (uint vid = 0; vid < mapV.size(); ++vid) {
+        int nvid = mapV[vid];
+        if (nvid >= 0) {
+            const HalfEdge* he = d.vertex(vid)->incidentHalfEdge();
+            vertices[nvid]->setIncidentHalfEdge(halfEdges[mapHE[he->id()]]);
+        }
+    }
+
+    for (uint heid = 0; heid < mapHE.size(); ++heid){
+        int nheid = mapHE[heid];
+        if (nheid >= 0) {
+            const HalfEdge* the = d.halfEdge(heid)->twin();
+            halfEdges[nheid]->setTwin(halfEdges[mapHE[the->id()]]);
+
+            const HalfEdge* nhe = d.halfEdge(heid)->next();
+            halfEdges[nheid]->setNext(halfEdges[mapHE[nhe->id()]]);
+
+            const HalfEdge* phe = d.halfEdge(heid)->prev();
+            halfEdges[nheid]->setPrev(halfEdges[mapHE[phe->id()]]);
+
+            const Vertex* fv = d.halfEdge(heid)->fromVertex();
+            halfEdges[nheid]->setFromVertex(vertices[mapV[fv->id()]]);
+
+            const Vertex* pv = d.halfEdge(heid)->toVertex();
+            halfEdges[nheid]->setToVertex(vertices[mapV[pv->id()]]);
+        }
+    }
+
+    for (uint fid = 0; fid < mapF.size(); ++fid){
+        int nfid = mapF[fid];
+        if (nfid >= 0) {
+            const HalfEdge* he = d.face(fid)->outerHalfEdge();
+            faces[nfid]->setOuterHalfEdge(halfEdges[mapHE[he->id()]]);
+
+            for (const HalfEdge* ihe : d.face(fid)->innerHalfEdgeIterator()){
+                faces[nfid]->addInnerHalfEdge(halfEdges[mapHE[ihe->id()]]);
+            }
+        }
+    }
+}
+
+/**
+ * @brief Merges the input Dcel with this Dcel. At the end, the input Dcel d will be empty.
+ * @param d: a rvalue reference of a Dcel
+ */
+void Dcel::merge(Dcel&& d)
+{
+    uint nv = vertices.size();
+    uint nhe = halfEdges.size();
+    uint nf = faces.size();
+    vertices.insert(vertices.end(), d.vertices.begin(), d.vertices.end());
+    halfEdges.insert(halfEdges.end(), d.halfEdges.begin(), d.halfEdges.end());
+    faces.insert(faces.end(), d.faces.begin(), d.faces.end());
+    for (uint v = nv;  v < vertices.size(); ++nv){
+        if (vertices[v])
+            vertices[v]->setId(v);
+        else
+            unusedVids.insert(v);
+    }
+    for (uint he = nhe;  he < halfEdges.size(); ++nv){
+        if (halfEdges[he])
+            halfEdges[he]->setId(he);
+        else
+            unusedHeids.insert(he);
+    }
+    for (uint f = nf;  f < faces.size(); ++nv){
+        if (faces[f])
+            faces[f]->setId(f);
+        else
+            unusedFids.insert(f);
+    }
+    nVertices += d.nVertices;
+    nHalfEdges += d.nHalfEdges;
+    nFaces += d.nFaces;
+
+    d.vertices.clear();
+    d.halfEdges.clear();
+    d.faces.clear();
+    d.unusedVids.clear();
+    d.unusedHeids.clear();
+    d.unusedFids.clear();
+    d.nVertices = 0;
+    d.nHalfEdges = 0;
+    d.nFaces = 0;
 }
 
 void Dcel::serialize(std::ofstream& binaryFile) const
@@ -1994,6 +2110,13 @@ void Dcel::copyFrom(const cinolib::Trimesh<> &trimesh)
         fid->updateNormal();
         fid->updateArea();
     }
+}
+
+Dcel merge(const Dcel& d1, const Dcel& d2)
+{
+    Dcel res = d1;
+    res.merge(d2);
+    return res;
 }
 
 #endif //CG3_CINOLIB_DEFINED

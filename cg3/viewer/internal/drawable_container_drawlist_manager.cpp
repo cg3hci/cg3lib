@@ -10,6 +10,7 @@
 #include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/internal/drawable_object_drawlist_manager.h>
 #include <cg3/viewer/interfaces/drawable_container.h>
+#include <QSpacerItem>
 
 namespace cg3 {
 namespace viewer {
@@ -33,6 +34,11 @@ DrawableContainerDrawListManager::DrawableContainerDrawListManager(
         ui->verticalLayout->addWidget(manager);
         mapSubManagers[(*cont)[i]] = manager;
     }
+
+    //
+    m_spacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    ui->verticalLayout->addItem(m_spacer);
+    //
 
     connect(cont,
             SIGNAL(drawableContainerPushedObject(
@@ -100,6 +106,8 @@ void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(
             new DrawableObjectDrawListManager(&mw, (*cont)[elem], name, visible);
 
     ui->verticalLayout->addWidget(manager);
+    ui->verticalLayout->removeItem(m_spacer);
+    ui->verticalLayout->addItem(m_spacer);
     mapSubManagers[(*cont)[elem]] = manager;
 }
 

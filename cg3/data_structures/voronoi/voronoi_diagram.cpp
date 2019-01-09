@@ -32,6 +32,13 @@ void VoronoiDiagram::addSite(const Pointd &p)
     finalize();
 }
 
+void VoronoiDiagram::clear()
+{
+    container.clear();
+    cells.clear();
+    mapCells.clear();
+}
+
 std::vector<VoronoiCell>::const_iterator VoronoiDiagram::begin() const
 {
     return cells.begin();

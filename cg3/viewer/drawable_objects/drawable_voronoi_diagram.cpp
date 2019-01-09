@@ -68,6 +68,7 @@ void DrawableVoronoiDiagram::finalize()
 {
     VoronoiDiagram::finalize();
     double sphereRadius = bb.diag() / 1000;
+    DrawableObjectsContainer<cg3::DrawableVoronoiCell>::clear();
     for (const VoronoiCell& cell : *this){
         pushBack(DrawableVoronoiCell(cell, sphereRadius), "Cell " + std::to_string(cell.id()));
     }
