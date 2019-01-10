@@ -487,7 +487,20 @@ void Graph<T>::recompact()
     this->nDeletedNodes = 0;
 }
 
+/* ----- SERIALIZATION ----- */
 
+
+template<class T>
+void Graph<T>::serialize(std::ofstream& binaryFile) const
+{
+    cg3::serializeObjectAttributes("cg3Graph", binaryFile, type, nodes, map, isDeleted, nDeletedNodes);
+}
+
+template<class T>
+void Graph<T>::deserialize(std::ifstream& binaryFile)
+{
+    cg3::deserializeObjectAttributes("cg3Graph", binaryFile, type, nodes, map, isDeleted, nDeletedNodes);
+}
 
 /* ----- ITERATORS ----- */
 

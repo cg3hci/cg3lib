@@ -14,10 +14,32 @@ namespace cg3 {
  * @param[in] id If of the node in the current graph
  */
 template <class T>
-Graph<T>::Node::Node(const T& value, const size_t id)
+Graph<T>::Node::Node() :
+    id(0), value()
 {
-    this->value = value;
-    this->id = id;
+}
+
+/**
+ * @brief Default constructor
+ * @param[in] value Value of the node
+ * @param[in] id If of the node in the current graph
+ */
+template <class T>
+Graph<T>::Node::Node(const T& value, const size_t id) :
+    id(id), value(value)
+{
+}
+
+template<class T>
+void Graph<T>::Node::serialize(std::ofstream& binaryFile) const
+{
+    cg3::serializeObjectAttributes("cg3GraphNode", binaryFile, id, value, adjacentNodes);
+}
+
+template<class T>
+void Graph<T>::Node::deserialize(std::ifstream& binaryFile)
+{
+    cg3::deserializeObjectAttributes("cg3GraphNode", binaryFile, id, value, adjacentNodes);
 }
 
 

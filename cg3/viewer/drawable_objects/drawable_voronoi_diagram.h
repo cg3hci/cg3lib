@@ -30,7 +30,7 @@ protected:
     double sphereRadius;
 };
 
-class DrawableVoronoiDiagram : public VoronoiDiagram, public DrawableObjectsContainer<cg3::DrawableVoronoiCell>
+class DrawableVoronoiDiagram : virtual public VoronoiDiagram, virtual public DrawableObjectsContainer<cg3::DrawableVoronoiCell>
 {
 public:
     DrawableVoronoiDiagram(const BoundingBox& bb, uint nPoints = 100);
@@ -44,12 +44,17 @@ public:
     Pointd sceneCenter() const;
     double sceneRadius() const;
 
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
+
     using VoronoiDiagram::begin;
     using VoronoiDiagram::end;
     using VoronoiDiagram::clear;
 
 protected:
     virtual void finalize();
+
 
 };
 

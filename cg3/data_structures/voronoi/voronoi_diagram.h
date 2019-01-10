@@ -7,6 +7,8 @@
 #ifndef CG3_VORONOI_DIAGRAM_H
 #define CG3_VORONOI_DIAGRAM_H
 
+#include <limits>
+
 #include "voronoi_cell.h"
 #include <cg3/geometry/bounding_box.h>
 
@@ -21,7 +23,7 @@
 
 namespace cg3 {
 
-class VoronoiDiagram
+class VoronoiDiagram : virtual public SerializableObject
 {
 public:
     //ids for the external walls of the voronoi diagram
@@ -29,7 +31,7 @@ public:
     static const int MIN_Y = -3, MAX_Y = -4;
     static const int MIN_Z = -5, MAX_Z = -6;
 
-
+    VoronoiDiagram();
     VoronoiDiagram(const BoundingBox& bb, uint nPoints = 100);
     template<class Container>
     VoronoiDiagram(const Container& c);
@@ -51,9 +53,12 @@ public:
     std::vector<VoronoiCell>::const_iterator begin() const;
     std::vector<VoronoiCell>::const_iterator end() const;
 
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
 protected:
-
+    const int DEFAULT_N_POINTS = 1000;
     static BoundingBox bbInitializer(BoundingBox bb){
         bb.min() -= cg3::Pointd(1,1,1);
         bb.max() += cg3::Pointd(1,1,1);
@@ -66,15 +71,40 @@ protected:
     voro::container container;
     std::vector<VoronoiCell> cells;
     std::map<cg3::Pointd, uint> mapCells;
+    uint nPoints;
 };
 
+/**
+ * @brief Default constructor Voronoi Diagram
+ * Creates a Voronoi Diagram having as bounding box the double numeric limits,
+ * zero sites and a maximum numer of sites od 1000.
+ */
+inline VoronoiDiagram::VoronoiDiagram() :
+    bb(cg3::Pointd(std::numeric_limits<double>::lowest(), std::numeric_limits<double>::lowest(),std::numeric_limits<double>::lowest()),
+       cg3::Pointd(std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), std::numeric_limits<double>::max())),
+    container(this->bb.minX(), this->bb.maxX(),
+              this->bb.minY(), this->bb.maxY(),
+              this->bb.minZ(), this->bb.maxZ(),
+              6, 6, 6, false, false, false,
+              DEFAULT_N_POINTS),
+    nPoints(DEFAULT_N_POINTS)
+{
+}
+
+/**
+ * @brief Constructor of a Voronoi Diagram. Creates a Voronoi Diagram with the given
+ * Bounding Box and the given maximum number of sites.
+ * @param bb
+ * @param nPoints
+ */
 inline VoronoiDiagram::VoronoiDiagram(const BoundingBox& bb, uint nPoints) :
     bb(bbInitializer(bb)),
     container(this->bb.minX(), this->bb.maxX(),
               this->bb.minY(), this->bb.maxY(),
               this->bb.minZ(), this->bb.maxZ(),
               6, 6, 6, false, false, false,
-              nPoints + 2)
+              nPoints + 2),
+    nPoints(nPoints+2)
 {
 }
 

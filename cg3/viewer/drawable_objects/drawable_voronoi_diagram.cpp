@@ -15,7 +15,7 @@ DrawableVoronoiCell::DrawableVoronoiCell(double sphereRadius) :
 }
 
 DrawableVoronoiCell::DrawableVoronoiCell(const VoronoiCell &v, double sphereRadius) :
-    VoronoiCell(v), sphereRadius(sphereRadius)
+    VoronoiCell(v), drawSite(true), drawLines(true), sphereRadius(sphereRadius)
 {
 }
 
@@ -64,12 +64,24 @@ double DrawableVoronoiDiagram::sceneRadius() const
     return bb.diag() / 2;
 }
 
+void DrawableVoronoiDiagram::serialize(std::ofstream& binaryFile) const
+{
+    VoronoiDiagram::serialize(binaryFile);
+}
+
+void DrawableVoronoiDiagram::deserialize(std::ifstream& binaryFile)
+{
+    VoronoiDiagram::deserialize(binaryFile);
+    finalize();
+}
+
 void DrawableVoronoiDiagram::finalize()
 {
     VoronoiDiagram::finalize();
     double sphereRadius = bb.diag() / 1000;
     DrawableObjectsContainer<cg3::DrawableVoronoiCell>::clear();
-    for (const VoronoiCell& cell : *this){
+    for (auto it = VoronoiDiagram::begin(); it != VoronoiDiagram::end(); ++it){
+        const VoronoiCell& cell = *it;
         pushBack(DrawableVoronoiCell(cell, sphereRadius), "Cell " + std::to_string(cell.id()));
     }
 }

@@ -23,7 +23,7 @@ namespace cg3 {
  * constructor.
  */
 template <typename T>
-class DrawableObjectsContainer : public cg3::DrawableContainer, public SerializableObject
+class DrawableObjectsContainer : public cg3::DrawableContainer, virtual public SerializableObject
 {
 public:
 

@@ -3,16 +3,25 @@
 
 #include <unordered_map>
 
+#include <cg3/io/serialize.h>
+
 namespace cg3 {
 
 /**
  * @brief The node of a graph
  */
 template <class T>
-class Graph<T>::Node
+class Graph<T>::Node : public SerializableObject
 {
+public:
     friend class Graph<T>;
     friend class Graph<T>::NodeIterator;
+
+    inline Node();
+
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
 private:
 
@@ -28,7 +37,6 @@ private:
     T value;
 
     std::unordered_map<size_t, double> adjacentNodes;
-
 };
 
 }

@@ -14,6 +14,8 @@
 
 #include <limits>
 
+#include <cg3/io/serialize.h>
+
 #define NUMBER_DELETE_FOR_RECOMPACT 10000
 
 namespace cg3 {
@@ -45,7 +47,7 @@ enum GraphType { DIRECTED, UNDIRECTED };
  *
  */
 template <class T>
-class Graph
+class Graph : public SerializableObject
 {
 
 protected:
@@ -124,6 +126,10 @@ public:
     void clear();
     void recompact();
 
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
+
 
     /* Iterators */
 
@@ -189,7 +195,6 @@ protected:
 
     std::vector<bool> isDeleted; //Delete flag
     int nDeletedNodes; //Number of deleted nodes
-
 };
 
 

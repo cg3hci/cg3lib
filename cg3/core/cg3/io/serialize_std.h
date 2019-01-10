@@ -10,6 +10,7 @@
 #include <string>
 #include <set>
 #include <unordered_set>
+#include <unordered_map>
 #include <vector>
 #include <list>
 #include <map>
@@ -62,6 +63,12 @@ void serialize(const std::map<T1, T2, A...> &m, std::ofstream& binaryFile);
 
 template <typename T1, typename T2, typename ...A>
 void deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile);
+
+template <typename T1, typename T2, typename ...A>
+void serialize(const std::unordered_map<T1, T2, A...> &m, std::ofstream& binaryFile);
+
+template <typename T1, typename T2, typename ...A>
+void deserialize(std::unordered_map<T1, T2, A...> &m, std::ifstream& binaryFile);
 
 template <typename T, unsigned long int ...A>
 void serialize(const std::array<T, A...> &a, std::ofstream& binaryFile);

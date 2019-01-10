@@ -366,6 +366,64 @@ inline void deserialize(std::map<T1, T2, A...> &m, std::ifstream& binaryFile)
 /**
  * \~English
  * @brief serialize
+ * @param[out] m: std::map
+ * @param binaryFile
+ */
+template <typename T1, typename T2, typename ...A>
+inline void serialize(const std::unordered_map<T1, T2, A...> &m, std::ofstream& binaryFile)
+{
+    unsigned long long int size = m.size();
+    serialize("stdunorderedmap", binaryFile);
+    serialize(size, binaryFile);
+    for (typename std::unordered_map<T1, T2, A...>::const_iterator it = m.begin(); it != m.end(); ++it){
+        serialize((it->first), binaryFile);
+        serialize((it->second), binaryFile);
+    }
+}
+
+/**
+ * \~English
+ * @brief deserialize
+ * @param[in] m: std::map
+ * @param binaryFile
+ */
+template <typename T1, typename T2, typename ...A>
+inline void deserialize(std::unordered_map<T1, T2, A...> &m, std::ifstream& binaryFile)
+{
+    unsigned long long int size;
+    std::string s;
+    std::unordered_map<T1, T2, A...> tmp;
+
+    std::streampos begin = binaryFile.tellg();
+    try {
+        deserialize(s, binaryFile);
+        if (s != "stdunorderedmap")
+            throw std::ios_base::failure("Mismatching String: " + s + " != stdunorderedmap");
+        deserialize(size, binaryFile);
+
+        for (unsigned int it = 0; it < size; ++it){
+            T1 o1;
+            T2 o2;
+
+            deserialize(o1, binaryFile);
+            deserialize(o2, binaryFile);
+            tmp[std::move(o1)] = std::move(o2);
+        }
+        m = std::move(tmp);
+    }
+    catch(std::ios_base::failure& e){
+        restoreFilePosition(binaryFile, begin);
+        throw std::ios_base::failure(e.what() + std::string("\nFrom std::map"));
+    }
+    catch(...){
+        restoreFilePosition(binaryFile, begin);
+        throw std::ios_base::failure("Deserialization failed of std::map");
+    }
+}
+
+/**
+ * \~English
+ * @brief serialize
  * @param[in] m: std::array
  * @param binaryFile
  */

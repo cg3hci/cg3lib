@@ -49,6 +49,26 @@ std::vector<VoronoiCell>::const_iterator VoronoiDiagram::end() const
     return cells.end();
 }
 
+void VoronoiDiagram::serialize(std::ofstream& binaryFile) const
+{
+    cg3::serializeObjectAttributes("cg3VoronoiDiagram", binaryFile, bb, cells, mapCells, nPoints);
+}
+
+void VoronoiDiagram::deserialize(std::ifstream& binaryFile)
+{
+    cg3::deserializeObjectAttributes("cg3VoronoiDiagram", binaryFile, bb, cells, mapCells, nPoints);
+    (&container)->~container();
+    new (&container) voro::container(this->bb.minX(), this->bb.maxX(),
+                                     this->bb.minY(), this->bb.maxY(),
+                                     this->bb.minZ(), this->bb.maxZ(),
+                                     6, 6, 6, false, false, false,
+                                     nPoints);
+    for (uint i = 0; i < cells.size(); ++i){
+        container.put(i, cells[i].site().x(), cells[i].site().y(), cells[i].site().z());
+    }
+    finalize();
+}
+
 void VoronoiDiagram::addSite(uint i, const Pointd &site)
 {
     if (bb.isInside(site) && mapCells.find(site) == mapCells.end()) {
