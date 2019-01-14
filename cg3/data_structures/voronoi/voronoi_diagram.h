@@ -37,6 +37,7 @@ public:
     VoronoiDiagram(const Container& c);
     template<class Iterator>
     VoronoiDiagram(Iterator begin, Iterator end);
+    VoronoiDiagram(const VoronoiDiagram& vd);
 
     uint numSites() const;
     const VoronoiCell& cell(uint i);
@@ -49,6 +50,8 @@ public:
     void addSites(Iterator begin, Iterator end);
 
     void clear();
+
+    VoronoiDiagram& operator=(const VoronoiDiagram& vd);
 
     std::vector<VoronoiCell>::const_iterator begin() const;
     std::vector<VoronoiCell>::const_iterator end() const;

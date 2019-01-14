@@ -30,7 +30,7 @@ protected:
     double sphereRadius;
 };
 
-class DrawableVoronoiDiagram : virtual public VoronoiDiagram, virtual public DrawableObjectsContainer<cg3::DrawableVoronoiCell>
+class DrawableVoronoiDiagram : public VoronoiDiagram, virtual public DrawableObjectsContainer<cg3::DrawableVoronoiCell>
 {
 public:
     DrawableVoronoiDiagram(const BoundingBox& bb, uint nPoints = 100);

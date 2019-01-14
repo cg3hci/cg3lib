@@ -10,6 +10,24 @@
 
 namespace cg3 {
 
+VoronoiDiagram::VoronoiDiagram(const VoronoiDiagram& vd) :
+    bb(vd.bb),
+    container(this->bb.minX(), this->bb.maxX(),
+              this->bb.minY(), this->bb.maxY(),
+              this->bb.minZ(), this->bb.maxZ(),
+              6, 6, 6, false, false, false,
+              vd.nPoints),
+    cells(vd.cells),
+    mapCells(vd.mapCells),
+    nPoints(vd.nPoints)
+{
+
+    for (uint i = 0; i < cells.size(); ++i){
+        container.put(i, cells[i].site().x(), cells[i].site().y(), cells[i].site().z());
+    }
+    finalize();
+}
+
 uint VoronoiDiagram::numSites() const
 {
     return cells.size();
@@ -37,6 +55,27 @@ void VoronoiDiagram::clear()
     container.clear();
     cells.clear();
     mapCells.clear();
+}
+
+VoronoiDiagram& VoronoiDiagram::operator=(const VoronoiDiagram& vd)
+{
+    if (this != &vd){
+        bb = vd.bb;
+        cells = vd.cells;
+        mapCells = vd.mapCells;
+        nPoints = vd.nPoints;
+        (&container)->~container();
+        new (&container) voro::container(this->bb.minX(), this->bb.maxX(),
+                                         this->bb.minY(), this->bb.maxY(),
+                                         this->bb.minZ(), this->bb.maxZ(),
+                                         6, 6, 6, false, false, false,
+                                         nPoints);
+        for (uint i = 0; i < cells.size(); ++i){
+            container.put(i, cells[i].site().x(), cells[i].site().y(), cells[i].site().z());
+        }
+        finalize();
+    }
+    return *this;
 }
 
 std::vector<VoronoiCell>::const_iterator VoronoiDiagram::begin() const
