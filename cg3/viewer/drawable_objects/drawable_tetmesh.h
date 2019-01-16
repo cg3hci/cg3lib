@@ -8,7 +8,11 @@
 #define CG3_CINOLIB_DRAWABLETETMESH_H
 
 #include <cg3/viewer/interfaces/drawable_object.h>
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
 #include <cinolib/meshes/drawable_tetmesh.h>
+#pragma GCC diagnostic pop
 
 namespace cg3 {
 namespace cino {

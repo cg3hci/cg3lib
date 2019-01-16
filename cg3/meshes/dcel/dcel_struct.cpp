@@ -1337,10 +1337,13 @@ void Dcel::merge(const Dcel& d)
 
             const Vertex* pv = d.halfEdge(heid)->toVertex();
             halfEdges[nheid]->setToVertex(vertices[mapV[pv->id()]]);
+
+            const Face* f = d.halfEdge(heid)->face();
+            halfEdges[nheid]->setFace(faces[mapF[f->id()]]);
         }
     }
 
-    for (uint fid = 0; fid < mapF.size(); ++fid){
+    for (uint fid = 0; fid < mapF.size(); ++fid) {
         int nfid = mapF[fid];
         if (nfid >= 0) {
             const HalfEdge* he = d.face(fid)->outerHalfEdge();
