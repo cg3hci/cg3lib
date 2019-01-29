@@ -54,4 +54,32 @@ inline std::vector<Pointd> sphereCoverage(
     return points;
 }
 
+/**
+ * @brief sphereCoverageFibonacci
+ *
+ * Implementation of the Spherical Fibonacci Point Sets
+ * according to the description of
+ * Spherical Fibonacci Mapping
+ * Benjamin Keinert, Matthias Innmann, Michael Sanger, Marc Stamminger
+ * TOG 2015
+ *
+ * Implementation of VCGLib:
+ * (https://github.com/cnr-isti-vclab/vcglib/blob/master/vcg/math/gen_normal.h)
+ */
+inline std::vector<Pointd> sphereCoverageFibonacci(unsigned int nSamples)
+{
+    std::vector<Pointd> points;
+
+    for (uint i = 0; i < nSamples; i++){
+        double Phi =  std::sqrt(5*0.5 + 0.5);
+        double phi = 2.0*M_PI* (i/Phi - std::floor(i/Phi));
+        double cosTheta = 1.0 - (2*i + 1.0)/double(nSamples);
+        double sinTheta = 1 - cosTheta*cosTheta;
+        sinTheta = std::sqrt(std::min(1.0,std::max(0.0,sinTheta)));
+        points.push_back(cg3::Pointd(cos(phi)*sinTheta,sin(phi)*sinTheta,cosTheta));
+    }
+
+    return points;
+}
+
 } //namespace cg3

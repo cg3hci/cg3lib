@@ -14,20 +14,47 @@
 namespace cg3 {
 namespace dcelAlgorithms {
 
+inline bool isAConnectedComponent(const cg3::Dcel& inputMesh) {
+    return isAConnectedComponent(inputMesh.faceBegin(), inputMesh.faceEnd());
+}
+
+template <typename InputIterator>
+bool isAConnectedComponent(InputIterator first,
+                           InputIterator last)
+{
+    struct Comp{
+        const std::set<const Dcel::Face*> &cf;
+        Comp(const std::set<const Dcel::Face*> &cf) : cf(cf) {}
+        bool operator()(const Dcel::Face* f) {
+            return cf.find(f) != cf.end();
+        }
+    };
+
+    std::set<const Dcel::Face*> containedFaces(first, last);
+    Comp comp(containedFaces);
+    const Dcel::Face* f = *(containedFaces.begin());
+    std::set<const Dcel::Face*> cc = floodBFS(f, comp);
+
+    return cc.size() == containedFaces.size();
+}
+
 inline std::vector<Dcel> connectedComponents(const Dcel &inputMesh)
 {
     std::vector<Dcel> cc;
 
     std::vector< std::set<const Dcel::Face*> > cci = connectedComponents(inputMesh.faceBegin(), inputMesh.faceEnd());
 
-    for (const std::set<const Dcel::Face*> &s : cci){
-        DcelBuilder builder;
-        for (const Dcel::Face* f : s){
-            builder.addFace(f->vertex1()->coordinate(), f->vertex2()->coordinate(), f->vertex3()->coordinate(), f->color(), f->id());
+    if (cci.size() > 1) {
+        for (const std::set<const Dcel::Face*> &s : cci){
+            DcelBuilder builder;
+            for (const Dcel::Face* f : s){
+                builder.addFace(f->vertex1()->coordinate(), f->vertex2()->coordinate(), f->vertex3()->coordinate(), f->color(), f->id());
+            }
+            builder.finalize();
+            cc.push_back(builder.dcel());
         }
-        builder.finalize();
-        cc.push_back(builder.dcel());
     }
+    else cc.push_back(inputMesh);
 
     return cc;
 }

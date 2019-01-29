@@ -32,7 +32,7 @@ public:
     static const int MIN_Z = -5, MAX_Z = -6;
 
     VoronoiDiagram();
-    VoronoiDiagram(const BoundingBox& bb, uint nPoints = 100);
+    VoronoiDiagram(const BoundingBox& bb, uint nPoints = 500);
     template<class Container>
     VoronoiDiagram(const Container& c);
     template<class Iterator>

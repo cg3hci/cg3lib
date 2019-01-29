@@ -13,7 +13,9 @@
 
 namespace cg3 {
 
-std::vector<Pointd> sphereCoverage(unsigned int nSamples = 1000, bool deterministic = false);
+std::vector<Pointd> sphereCoverage(unsigned int nSamples = 1000, bool deterministic = true);
+
+std::vector<Pointd> sphereCoverageFibonacci(unsigned int nSamples = 1000);
 
 } //namespace cg3
 

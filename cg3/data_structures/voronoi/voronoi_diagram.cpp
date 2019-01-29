@@ -35,6 +35,7 @@ uint VoronoiDiagram::numSites() const
 
 const VoronoiCell& VoronoiDiagram::cell(uint i)
 {
+    assert(i < cells.size());
     return cells[i];
 }
 

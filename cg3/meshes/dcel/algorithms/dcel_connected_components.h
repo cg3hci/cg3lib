@@ -12,6 +12,12 @@
 namespace cg3 {
 namespace dcelAlgorithms {
 
+bool isAConnectedComponent(const cg3::Dcel& inputMesh);
+
+template <typename InputIterator>
+bool isAConnectedComponent(InputIterator first,
+                           InputIterator last);
+
 std::vector<cg3::Dcel> connectedComponents(const cg3::Dcel& inputMesh);
 
 template <typename InputIterator>
