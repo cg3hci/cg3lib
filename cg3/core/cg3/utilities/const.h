@@ -18,6 +18,7 @@ namespace cg3 {
  * @brief CG3_EPSILON
  */
 static const double CG3_EPSILON = 1e-6;
+static const double EPSILON = 1e-6;
 
 /**
  * @ingroup cg3core
