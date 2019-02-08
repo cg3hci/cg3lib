@@ -10,6 +10,7 @@
 
 #include <string>
 #include <ostream>
+#include <cmath>
 
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>

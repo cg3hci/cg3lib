@@ -9,6 +9,7 @@
 
 #include <assert.h>
 #include <iostream>
+#include <cmath>
 
 /****************
  * Constructors *

@@ -11,7 +11,9 @@
 #include <cg3/utilities/utils.h>
 
 #include <numeric>
+#ifdef CG3_WITH_EIGEN
 #include <Eigen/Dense>
+#endif
 
 namespace cg3 {
 
@@ -152,6 +154,7 @@ inline bool areCollinear(
 
 /* ----- OTHERS ----- */
 
+#ifdef CG3_WITH_EIGEN
 /**
  * @ingroup cg3core
  * @brief Check if a point lies inside a circle passing for three points
@@ -185,6 +188,7 @@ inline bool isPointLyingInCircle(
         return (A.determinant() > 0);
     }
 }
+#endif
 
 /**
  * @ingroup cg3core

@@ -49,6 +49,7 @@ inline bool areCollinear(
         const Point2D<T>& point);
 
 /* Others */
+#ifdef CG3_WITH_EIGEN
 template<class T>
 inline bool isPointLyingInCircle(
         const Point2D<T>& a,
@@ -56,6 +57,7 @@ inline bool isPointLyingInCircle(
         const Point2D<T>& c,
         const Point2D<T>& p,
         const bool includeBorders);
+#endif
 
 template <template < class ... > class Container, class T, class ... Args>
 inline bool isPolygonCounterClockwise(const Container<Point2D<T>>& polygon);

@@ -10,8 +10,6 @@
 #include "2d/utils2d.h"
 #include "transformations.h"
 
-#include <cg3/utilities/utils.h>
-
 namespace cg3 {
 
 /* ----- UTILS IMPLEMENTATION ----- */
