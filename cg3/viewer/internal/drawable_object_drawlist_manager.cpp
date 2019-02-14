@@ -58,6 +58,7 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         setSubFrame(submanager, false);
         ui->objectType->setText("Mesh");
     }
+    #ifdef CG3_CINOLIB_DEFINED
     else if (tetmesh) {
         cino::DrawableTetMesh* mesh = const_cast<cino::DrawableTetMesh*>(tetmesh);
         DrawableTetMeshDrawListManager* subManager =
@@ -65,6 +66,7 @@ DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         setSubFrame(subManager, false);
         ui->objectType->setText("TetMesh");
     }
+    #endif
     else if (cont) {
         DrawableContainerDrawListManager* subManager =
                 new DrawableContainerDrawListManager(&mw, cont/*, visible*/);

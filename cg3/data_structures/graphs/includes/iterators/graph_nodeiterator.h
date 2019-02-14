@@ -18,9 +18,13 @@ class Graph<T>::NodeIterator :
 
     friend class Graph<T>;
 
-private:
+public:
 
     /* Constructors */
+
+    inline NodeIterator();
+
+private:
 
     inline NodeIterator(
             const Graph<T>* graph);

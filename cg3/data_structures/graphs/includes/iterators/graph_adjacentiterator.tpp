@@ -11,6 +11,16 @@ namespace cg3 {
 /* ----- CONSTRUCTORS ----- */
 
 template <class T>
+Graph<T>::AdjacentIterator::AdjacentIterator() :
+    Graph<T>::GenericNodeIterator(),
+    targetNodeIt(NodeIterator()),
+    it(std::unordered_map<size_t, double>::const_iterator())
+{
+
+}
+
+
+template <class T>
 Graph<T>::AdjacentIterator::AdjacentIterator(
         const Graph<T>* graph) :
     Graph<T>::GenericNodeIterator(graph),

@@ -24,7 +24,7 @@ void convexHull2D(
         const InputContainer& points,
         OutputContainer& convexHull)
 {
-    convexHull2D<T>(points.begin(), points.end(), std::back_inserter(convexHull));
+    cg3::cgal::convexHull2D<T>(points.begin(), points.end(), std::back_inserter(convexHull));
 }
 
 /**

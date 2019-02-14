@@ -11,11 +11,11 @@ namespace cg3 {
 /**
  * @brief Default constructor
  * @param[in] value Value of the node
- * @param[in] id If of the node in the current graph
+ * @param[in] id ID of the node in the current graph
  */
 template <class T>
 Graph<T>::Node::Node() :
-    id(0), value()
+    id(-1), value()
 {
 }
 

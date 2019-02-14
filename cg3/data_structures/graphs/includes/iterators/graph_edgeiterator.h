@@ -22,9 +22,13 @@ class Graph<T>::EdgeIterator :
 
     friend class Graph<T>;
 
-private:
+public:
 
     /* Constructors */
+
+    inline EdgeIterator();
+
+private:
 
     inline EdgeIterator(
             const Graph<T>* graph);

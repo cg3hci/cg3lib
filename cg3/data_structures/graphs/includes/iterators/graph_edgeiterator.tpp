@@ -12,6 +12,15 @@ namespace cg3 {
 /* ----- CONSTRUCTORS ----- */
 
 template <class T>
+Graph<T>::EdgeIterator::EdgeIterator() :
+    graph(nullptr),
+    nodeIt(NodeIterator()),
+    adjIt(AdjacentIterator())
+{
+
+}
+
+template <class T>
 Graph<T>::EdgeIterator::EdgeIterator(
         const Graph<T>* graph) :
     graph(graph),

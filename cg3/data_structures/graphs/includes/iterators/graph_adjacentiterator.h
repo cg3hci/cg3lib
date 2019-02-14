@@ -16,9 +16,13 @@ class Graph<T>::AdjacentIterator :
 
     friend class Graph<T>;
 
-private:
+public:
 
     /* Constructors */
+
+    inline AdjacentIterator();
+
+private:
 
     inline AdjacentIterator(
             const Graph<T>* graph);
