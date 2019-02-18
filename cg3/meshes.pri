@@ -29,10 +29,9 @@ HEADERS += \
     $$PWD/meshes/dcel/algorithms/dcel_flooding.h \
     $$PWD/meshes/dcel/algorithms/dcel_coloring.h \
     $$PWD/meshes/dcel/algorithms/dcel_connected_components.h \
+    $$PWD/meshes/dcel/algorithms/dcel_robustness.h \
     $$PWD/meshes/dcel/dcel_builder.h \
     $$PWD/meshes/mesh.h
-
-
 
 SOURCES += \
     $$PWD/meshes/dcel/dcel_face.cpp \
@@ -52,7 +51,8 @@ SOURCES += \
     $$PWD/meshes/dcel/algorithms/dcel_flooding.tpp \
     $$PWD/meshes/dcel/algorithms/dcel_coloring.cpp \
     $$PWD/meshes/dcel/algorithms/dcel_connected_components.tpp \
-    $$PWD/meshes/dcel/dcel_builder.cpp
+    $$PWD/meshes/dcel/algorithms/dcel_robustness.cpp \
+    $$PWD/meshes/dcel/dcel_builder.cpp \
 
 
 contains(DEFINES, CG3_WITH_EIGEN) {

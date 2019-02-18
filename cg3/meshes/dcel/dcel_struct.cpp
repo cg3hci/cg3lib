@@ -272,6 +272,11 @@ double Dcel::averageHalfEdgesLength() const
  */
 bool Dcel::saveOnObj(const std::string& fileNameObj) const
 {
+    return saveOnObj(fileNameObj, true);
+}
+
+bool Dcel::saveOnObj(const std::string& fileNameObj, bool saveProperties) const
+{
     std::vector<double> vertices;
     std::vector<double> verticesNormals;
     std::vector<int> faces;
@@ -281,10 +286,19 @@ bool Dcel::saveOnObj(const std::string& fileNameObj) const
     toStdVectors(vertices, verticesNormals, faces, faceSizes, faceColors);
 
     io::MeshType meshType = io::POLYGON_MESH;
-    int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
-    return saveMeshOnObj(fileNameObj, numberVertices(), numberFaces(), vertices.data(),
+    int mode = 0;
+    if (saveProperties) {
+         mode = io::NORMAL_VERTICES | io::COLOR_FACES;
+        return saveMeshOnObj(fileNameObj, numberVertices(), numberFaces(), vertices.data(),
                          faces.data(), meshType, mode, verticesNormals.data(), io::RGB,
                          internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    }
+    else {
+        return saveMeshOnObj(fileNameObj, numberVertices(), numberFaces(), vertices.data(),
+                         faces.data(), meshType, mode, verticesNormals.data(), io::RGB,
+                             internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+    }
+
 }
 
 /**

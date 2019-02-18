@@ -164,7 +164,8 @@ public:
     double surfaceArea()                                 const;
     Pointd barycenter()                                  const;
     double averageHalfEdgesLength()                      const;
-    bool saveOnObj(const std::string& fileNameObj)             const;
+    bool saveOnObj(const std::string& fileNameObj) const;
+    bool saveOnObj(const std::string& fileNameObj, bool saveProperties)             const;
     bool saveOnPly(const std::string& fileNamePly)             const;
     void saveOnDcelFile(const std::string& fileNameDcel)           const;
 

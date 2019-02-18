@@ -25,6 +25,10 @@
 
 namespace cg3 {
 
+namespace internal {
+    static BoundingBox dummyBB(cg3::Pointd(), cg3::Pointd(1,1,1));
+}
+
 template <typename T>
 bool epsilonEqual(T x, T v, double epsilon = CG3_EPSILON);
 
@@ -33,6 +37,8 @@ bool epsilonEqual(const Point<T> &x, const Point<T> &v, double epsilon = CG3_EPS
 
 template <typename T>
 bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilon = CG3_EPSILON);
+
+Pointd randomPoint(const BoundingBox& bb = internal::dummyBB);
 
 double truncate(double d, unsigned int numberOfDecimalDigitsToKeep);
 
