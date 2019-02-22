@@ -31,14 +31,10 @@ inline std::vector<Pointd> sphereCoverage(
         static std::mt19937 mt(r());
         std::uniform_real_distribution<> dist(0, 1);
 
-        double rnd;
-        if (deterministic)
-            rnd = 0;
-        else {
-            rnd = dist(mt);
-        }
-        rnd*=nSamples;
-        double offset   = 2.0/double(nSamples);
+        double rnd = 1;
+        if (!deterministic)
+            rnd = dist(mt) * nSamples;
+        double offset   = 2.0/nSamples;
         double increment = M_PI * (3.0 - sqrt(5.0));
 
         for(unsigned int i=0; i<nSamples; ++i) {

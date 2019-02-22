@@ -77,6 +77,30 @@ inline Pointd randomPoint(const BoundingBox& bb)
     return Pointd(distx(e2), disty(e2), distz(e2));
 }
 
+/**
+ * @ingroup cg3core
+ * @brief randomDirection
+ * @link https://stackoverflow.com/questions/5408276/sampling-uniformly-distributed-random-points-inside-a-spherical-volume
+ * @return
+ */
+inline Vec3 randomDirection()
+{
+    static std::random_device rd;
+    std::mt19937 e2(rd());
+    std::uniform_real_distribution<> distphi(0,2*M_PI);
+    std::uniform_real_distribution<> disttheta(-1,1);
+
+    double phi = distphi(e2);
+    double costheta = disttheta(e2);
+
+    double theta = std::acos(costheta);
+
+    double x = sin(theta) * cos(phi);
+    double y = sin(theta) * sin(phi);
+    double z = cos(theta);
+    return Vec3(x,y,z);
+}
+
 
 /**
  * @ingroup cg3core

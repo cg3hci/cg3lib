@@ -40,6 +40,8 @@ bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilon = CG3
 
 Pointd randomPoint(const BoundingBox& bb = internal::dummyBB);
 
+Vec3 randomDirection();
+
 double truncate(double d, unsigned int numberOfDecimalDigitsToKeep);
 
 template <typename T>

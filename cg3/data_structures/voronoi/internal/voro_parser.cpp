@@ -28,6 +28,7 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
     setbuffer(fsids, bufferSitesIDs, SIZE);
     container.print_custom("%i", fsids); //all the stdout goes in buffer
     std::string sitesIds(bufferSitesIDs);
+    fclose(fsids);
     uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
     cg3::Tokenizer tids(sitesIds, '\n');
     for (const std::string& s : tids)
@@ -40,6 +41,7 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
     container.print_custom("%P", fv); //all the stdout goes in buffer
 
     std::string v_coords(bufferVCoord);
+    fclose(fv);
 
     vertices.resize(nCells);
 
@@ -82,6 +84,7 @@ std::vector<std::vector<std::vector<uint> > > cg3::internal::parseAllFaces(
     setbuffer(fsids, bufferSitesIDs, SIZE);
     container.print_custom("%i", fsids); //all the stdout goes in buffer
     std::string sitesIds(bufferSitesIDs);
+    fclose(fsids);
     uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
     cg3::Tokenizer tids(sitesIds, '\n');
     for (const std::string& s : tids)
@@ -94,6 +97,7 @@ std::vector<std::vector<std::vector<uint> > > cg3::internal::parseAllFaces(
     setbuffer(ff, bufferFIds, SIZE);
     container.print_custom("%t", ff); //all the stdout goes in buffer
     std::string f_ids(bufferFIds);
+    fclose(ff);
 
     cells.resize(nCells);
     for (uint i = 0; i < nCells; i++) {
@@ -142,6 +146,7 @@ std::vector<std::vector<int> > cg3::internal::parseAdjacences(
     setbuffer(fsids, bufferSitesIDs, SIZE);
     container.print_custom("%i", fsids); //all the stdout goes in buffer
     std::string sitesIds(bufferSitesIDs);
+    fclose(fsids);
     uint nCells = std::count(sitesIds.begin(), sitesIds.end(), '\n');
     cg3::Tokenizer tids(sitesIds, '\n');
     for (const std::string& s : tids)
@@ -154,6 +159,7 @@ std::vector<std::vector<int> > cg3::internal::parseAdjacences(
     container.print_custom("%n", ff); //all the stdout goes in buffer
 
     std::string fadjs(bufferFIds);
+    fclose(ff);
 
     adjs.resize(nCells);
     for (uint i = 0; i < nCells; i++) {
