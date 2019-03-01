@@ -99,13 +99,6 @@ void dijkstra(
 
 namespace internal {
 
-template <class T>
-void fillIndexedData(
-        const Graph<T>& graph,
-        std::vector<size_t>& nodes,
-        std::vector<std::vector<size_t>>& nodeAdjacencies,
-        std::unordered_map<size_t, size_t>& idMap);
-
 
 template <class T>
 GraphPath<T> getShortestPath(
@@ -145,12 +138,44 @@ inline DijkstraResult<T> dijkstra(const Graph<T>& graph, const T& source)
     return dijkstra(graph, sourceIt);
 }
 
+/**
+ * @brief Execute Dijkstra algorithm given a cg3 graph and the source. It
+ * computes the shortest path between the source and all the nodes of the graph.
+ * @param[in] graph Input cg3 graph.
+ * @param[in] source Source node value
+ * @return A map that associates all the graph nodes to the shortest path from the source
+ * to that node. It contains structs which contain the path (a list of nodes) and a double
+ * value which represents the cost of the path. The map is implemented using the std::map,
+ * hence the informations can be after retrieved in O(log |V|) complexity time.
+ */
+template <class T>
+DijkstraResult<T> dijkstra(
+        const Graph<T>& graph,
+        const T& source,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap)
+{
+    typedef typename Graph<T>::iterator NodeIterator;
+
+    //Search source in the graph
+    NodeIterator sourceIt = graph.findNode(source);
+    if (sourceIt == graph.end())
+        throw std::runtime_error("Source has not been found in the graph.");
+
+    return dijkstra(graph, sourceIt, nodes, nodeAdjacencies, idMap);
+}
 
 /**
  * @brief Execute Dijkstra algorithm given a cg3 graph and the source. It
  * computes the shortest path between the source and all the nodes of the graph.
  * @param[in] graph Input cg3 graph.
  * @param[in] sourceIt Source node iterator
+ * @param[in] nodes List of ids of the nodes of the graph
+ * @param[in] nodeAdjacencies Indexed adjacencies of each graph node (referring to the
+ * indices of the vector "nodes")
+ * @param[in] idMap Map to get the index of a node (referring to the indices of the vector
+ * "nodes") given the id on the input cg3 graph
  * @return A map that associates all the graph nodes to the shortest path from the source
  * to that node. It contains structs which contain the path (a list of nodes) and a double
  * value which represents the cost of the path. The map is implemented using the std::map,
@@ -161,21 +186,45 @@ DijkstraResult<T> dijkstra(
         const Graph<T>& graph,
         const typename Graph<T>::iterator& sourceIt)
 {
-    typedef typename Graph<T>::iterator NodeIterator;
-
     //Vector of nodes and adjacencies
     std::vector<size_t> nodes;
     std::vector<std::vector<size_t>> nodeAdjacencies;
     std::unordered_map<size_t, size_t> idMap;
 
+    //Fill indexed data needed to execute general purpose Dijkstra algorithm
+    fillIndexedData(graph, nodes, nodeAdjacencies, idMap);
+
+    return dijkstra(graph, sourceIt, nodes, nodeAdjacencies, idMap);
+}
+
+/**
+ * @brief Execute Dijkstra algorithm given a cg3 graph and the source. It
+ * computes the shortest path between the source and all the nodes of the graph.
+ * @param[in] graph Input cg3 graph.
+ * @param[in] sourceIt Source node iterator
+ * @param[in] nodes List of ids of the nodes of the graph
+ * @param[in] nodeAdjacencies Indexed adjacencies of each graph node (referring to the
+ * indices of the vector "nodes")
+ * @param[in] idMap Map to get the index of a node (referring to the indices of the vector
+ * "nodes") given the id on the input cg3 graph
+ * @return A map that associates all the graph nodes to the shortest path from the source
+ * to that node. It contains structs which contain the path (a list of nodes) and a double
+ * value which represents the cost of the path. The map is implemented using the std::map,
+ * hence the informations can be after retrieved in O(log |V|) complexity time.
+ */
+template <class T>
+DijkstraResult<T> dijkstra(
+        const Graph<T>& graph,
+        const typename Graph<T>::iterator& sourceIt,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap)
+{
+    typedef typename Graph<T>::iterator NodeIterator;
+
     //Vector of distances and predecessor of the shortest path from the source
     std::vector<double> dist;
     std::vector<long long int> pred;
-
-
-    //Fill indexed data needed to execute general purpose Dijkstra algorithm
-    internal::fillIndexedData(graph, nodes, nodeAdjacencies, idMap);
-
 
     //Id of the source
     size_t sourceId = idMap.find(graph.getId(sourceIt))->second;
@@ -209,6 +258,11 @@ DijkstraResult<T> dijkstra(
     return resultMap;
 }
 
+
+
+
+
+
 /**
  * @brief Execute Dijkstra algorithm to get the shortest path from the source
  * to the destination, given a cg3 graph.
@@ -220,7 +274,10 @@ DijkstraResult<T> dijkstra(
  * The data can be retrieved in constant time.
  */
 template <class T>
-inline GraphPath<T> dijkstra(const Graph<T>& graph, const T& source, const T& destination)
+inline GraphPath<T> dijkstra(
+        const Graph<T>& graph,
+        const T& source,
+        const T& destination)
 {
     typedef typename Graph<T>::iterator NodeIterator;
 
@@ -235,6 +292,45 @@ inline GraphPath<T> dijkstra(const Graph<T>& graph, const T& source, const T& de
         throw std::runtime_error("Destination has not been found in the graph.");
 
     return dijkstra(graph, sourceIt, destinationIt);
+}
+
+/**
+ * @brief Execute Dijkstra algorithm to get the shortest path from the source
+ * to the destination, given a cg3 graph.
+ * @param[in] graph Input cg3 graph.
+ * @param[in] source Source node value
+ * @param[in] destination Destination node value
+ * @param[in] nodes List of ids of the nodes of the graph
+ * @param[in] nodeAdjacencies Indexed adjacencies of each graph node (referring to the
+ * indices of the vector "nodes")
+ * @param[in] idMap Map to get the index of a node (referring to the indices of the vector
+ * "nodes") given the id on the input cg3 graph
+ * @return A struct which contains the shortest path and its cost.
+ * If no path exists, then an empty path of MAX_WEIGHT cost is returned.
+ * The data can be retrieved in constant time.
+ */
+template <class T>
+GraphPath<T> dijkstra(
+        const Graph<T>& graph,
+        const T& source,
+        const T& destination,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap)
+{
+    typedef typename Graph<T>::iterator NodeIterator;
+
+    //Search source in the graph
+    NodeIterator sourceIt = graph.findNode(source);
+    if (sourceIt == graph.end())
+        throw std::runtime_error("Source has not been found in the graph.");
+
+    //Search destination in the graph
+    NodeIterator destinationIt = graph.findNode(destination);
+    if (destinationIt == graph.end())
+        throw std::runtime_error("Destination has not been found in the graph.");
+
+    return dijkstra(graph, sourceIt, destinationIt, nodes, nodeAdjacencies, idMap);
 }
 
 /**
@@ -258,38 +354,58 @@ GraphPath<T> dijkstra(
     std::vector<std::vector<size_t>> nodeAdjacencies;
     std::unordered_map<size_t, size_t> idMap;
 
+
+    //Fill indexed data needed by general purpose Dijkstra algorithm
+    fillIndexedData(graph, nodes, nodeAdjacencies, idMap);
+
+    return dijkstra(graph, sourceIt, destinationIt, nodes, nodeAdjacencies, idMap);
+}
+
+/**
+ * @brief Execute Dijkstra algorithm to get the shortest path from the source
+ * to the destination, given a cg3 graph.
+ * @param[in] graph Input cg3 graph.
+ * @param[in] sourceIt Source node iterator
+ * @param[in] destinationIt Destination node iterator
+ * @param[in] nodes List of ids of the nodes of the graph
+ * @param[in] nodeAdjacencies Indexed adjacencies of each graph node (referring to the
+ * indices of the vector "nodes")
+ * @param[in] idMap Map to get the index of a node (referring to the indices of the vector
+ * "nodes") given the id on the input cg3 graph
+ * @return A struct which contains the shortest path and its cost.
+ * If no path exists, then an empty path of MAX_WEIGHT cost is returned.
+ * The data can be retrieved in constant time.
+ */
+template <class T>
+GraphPath<T> dijkstra(
+        const Graph<T>& graph,
+        const typename Graph<T>::iterator& sourceIt,
+        const typename Graph<T>::iterator& destinationIt,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap)
+{
     //Vector of distances and predecessor of the shortest path from the source
     std::vector<double> dist;
     std::vector<long long int> pred;
-
-
-    //Fill indexed data needed by general purpose Dijkstra algorithm
-    internal::fillIndexedData(graph, nodes, nodeAdjacencies, idMap);
-
 
     //Id of the source and destination
     size_t sourceId = idMap.find(graph.getId(sourceIt))->second;
     size_t destinationId = idMap.find(graph.getId(destinationIt))->second;
 
-
     //Execute Dijkstra
     dijkstra(graph, nodes, nodeAdjacencies, sourceId, dist, pred);
-
 
     return internal::getShortestPath(graph, sourceIt, nodes, sourceId, destinationId, dist, pred);
 }
 
 
 
-
-
-namespace internal {
-
 /**
  * @brief Fill indexed data structure needed by the Dijkstra algorithm for a cg3 graph.
  * @param[in] graph Input cg3 graph
  * @param[out] nodes List of ids of the nodes of the graph
- * @param[in] nodeAdjacencies Indexed adjacencies of each graph node (referring to the
+ * @param[out] nodeAdjacencies Indexed adjacencies of each graph node (referring to the
  * indices of the vector "nodes")
  * @param[out] idMap Map to get the index of a node (referring to the indices of the vector
  * "nodes") given the id on the input cg3 graph
@@ -340,6 +456,9 @@ inline void fillIndexedData(
         id++;
     }
 }
+
+
+namespace internal {
 
 /**
  * @brief Get the resulting shortest path in the cg3 graph, given the raw Dijkstra data,

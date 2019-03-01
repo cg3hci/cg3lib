@@ -22,13 +22,10 @@ template <class G, class I>
 void dijkstra(
         const G& graph,
         const std::vector<I>& nodes,
-        const std::vector<std::list<size_t>>& nodeAdjacencies,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
         const size_t sourceId,
         std::vector<double>& dist,
         std::vector<long long int>& pred);
-
-
-
 
 /* Implementation for cg3::Graph */
 
@@ -51,20 +48,70 @@ using DijkstraResult = std::map<T, GraphPath<T>>;
 template <class T>
 DijkstraResult<T> dijkstra(
         const Graph<T>& graph,
+        const T& source);
+
+template <class T>
+DijkstraResult<T> dijkstra(
+        const Graph<T>& graph,
+        const T& source,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap);
+
+
+template <class T>
+DijkstraResult<T> dijkstra(
+        const Graph<T>& graph,
         const typename Graph<T>::iterator& sourceIt);
+
+
+template <class T>
+DijkstraResult<T> dijkstra(
+        const Graph<T>& graph,
+        const typename Graph<T>::iterator& sourceIt,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap);
+
+
+
+template <class T>
+GraphPath<T> dijkstra(
+        const Graph<T>& graph,
+        const T& source,
+        const T& destination);
+
+template <class T>
+GraphPath<T> dijkstra(
+        const Graph<T>& graph,
+        const T& source,
+        const T& destination,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap);
+
 template <class T>
 GraphPath<T> dijkstra(
         const Graph<T>& graph,
         const typename Graph<T>::iterator& sourceIt,
         const typename Graph<T>::iterator& destinationIt);
 
+template <class T>
+GraphPath<T> dijkstra(
+        const Graph<T>& graph,
+        const typename Graph<T>::iterator& sourceIt,
+        const typename Graph<T>::iterator& destinationIt,
+        const std::vector<size_t>& nodes,
+        const std::vector<std::vector<size_t>>& nodeAdjacencies,
+        const std::unordered_map<size_t, size_t>& idMap);
+
 
 template <class T>
-DijkstraResult<T> dijkstra(const Graph<T>& graph, const T& source);
-template <class T>
-GraphPath<T> dijkstra(const Graph<T>& graph, const T& source, const T& destination);
-
-
+void fillIndexedData(
+        const Graph<T>& graph,
+        std::vector<size_t>& nodes,
+        std::vector<std::vector<size_t>>& nodeAdjacencies,
+        std::unordered_map<size_t, size_t>& idMap);
 
 } //namespace cg3
 

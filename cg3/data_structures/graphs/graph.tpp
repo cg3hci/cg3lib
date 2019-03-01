@@ -22,8 +22,9 @@ constexpr double Graph<T>::MAX_WEIGHT;
  * @brief Default constructor
  */
 template <class T>
-Graph<T>::Graph(const GraphType& type) :
+Graph<T>::Graph(const GraphType& type, const GraphMapping& mapping) :
     type(type),
+    mapping(mapping),
     nDeletedNodes(0)
 {
 
@@ -42,17 +43,18 @@ Graph<T>::Graph(const GraphType& type) :
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o)
 {
-    //If node does exists, return end of node iterator
-    typename std::map<T, size_t>::iterator mapIt = map.find(o);
-    if (mapIt != map.end())
-        return this->nodeEnd();
-
     //Create new node
     size_t newId = nodes.size();
-
     Node newNode(o, newId);
 
-    map[o] = newId;
+    if (this->mapping == MAPPED) {
+        //If node does exists, return end of node iterator
+        typename std::map<T, size_t>::iterator mapIt = map.find(o);
+        if (mapIt != map.end())
+            return this->nodeEnd();
+
+        map[o] = newId;
+    }
 
     nodes.push_back(newNode);
     isDeleted.push_back(false);
@@ -69,6 +71,9 @@ typename Graph<T>::NodeIterator Graph<T>::addNode(const T& o)
 template <class T>
 bool Graph<T>::deleteNode(const T& o)
 {
+    if (this->mapping != MAPPED)
+        throw std::runtime_error("The graph is not mapped. Please use iterators or change mapping type.");
+
     //If node does not exists, return false
     typename std::map<T, size_t>::iterator mapIt = map.find(o);
     if (mapIt == map.end())
@@ -99,6 +104,9 @@ bool Graph<T>::deleteNode(const T& o)
 template <class T>
 typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) const
 {
+    if (this->mapping != MAPPED)
+        throw std::runtime_error("The graph is not mapped. Please use iterators or change mapping type.");
+
     long long int id = findNodeHelper(o);
     if (id < 0)
         return this->nodeEnd();
@@ -119,6 +127,9 @@ typename Graph<T>::NodeIterator Graph<T>::findNode(const T& o) const
 template <class T>
 bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight)
 {
+    if (this->mapping != MAPPED)
+        throw std::runtime_error("The graph is not mapped. Please use iterators or change mapping type.");
+
     //If one of the nodes does not exists, return false
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -145,6 +156,9 @@ bool Graph<T>::addEdge(const T& o1, const T& o2, const double weight)
 template <class T>
 bool Graph<T>::deleteEdge(const T& o1, const T& o2)
 {
+    if (this->mapping != MAPPED)
+        throw std::runtime_error("The graph is not mapped. Please use iterators or change mapping type.");
+
     //If one of the nodes does not exists, return false
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -170,6 +184,9 @@ bool Graph<T>::deleteEdge(const T& o1, const T& o2)
 template <class T>
 bool Graph<T>::isAdjacent(const T& o1, const T& o2) const
 {
+    if (this->mapping != MAPPED)
+        throw std::runtime_error("The graph is not mapped. Please use iterators or change mapping type.");
+
     //If node does not exists, return false
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -195,6 +212,9 @@ bool Graph<T>::isAdjacent(const T& o1, const T& o2) const
 template <class T>
 double Graph<T>::getWeight(const T& o1, const T& o2) const
 {
+    if (this->mapping != MAPPED)
+        throw std::runtime_error("The graph is not mapped. Please use iterators or change mapping type.");
+
     //If one of the nodes does not exists, return max weight
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -216,6 +236,9 @@ double Graph<T>::getWeight(const T& o1, const T& o2) const
 template <class T>
 void Graph<T>::setWeight(const T& o1, const T& o2, const double weight)
 {
+    if (this->mapping != MAPPED)
+        throw std::runtime_error("The graph is not mapped. Please use iterators or change mapping type.");
+
     //If one of the nodes does not exists, return
     long long int id1 = findNodeHelper(o1);
     if (id1 < 0)
@@ -247,7 +270,27 @@ void Graph<T>::setWeight(const T& o1, const T& o2, const double weight)
 template <class T>
 bool Graph<T>::deleteNode(GenericNodeIterator it)
 {
-    return deleteNode(nodes.at(it.id).value);
+    size_t nodeId = it.id;
+    if (this->mapping == MAPPED) {
+        return deleteNode(nodes.at(nodeId).value);
+    }
+    else {
+        if (!isDeleted[nodeId]) {
+            //Setting node as deleted
+            isDeleted[nodeId] = true;
+
+            //Recompact after a defined number of delete operations
+            nDeletedNodes++;
+            if (nDeletedNodes >= NUMBER_DELETE_FOR_RECOMPACT) {
+                this->recompact();
+            }
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 /**
@@ -442,7 +485,9 @@ void Graph<T>::recompact()
             newNodes.push_back(newNode);
             newIsDeleted.push_back(false);
 
-            newMap[newNode.value] = newIndex;
+            if (this->mapping == MAPPED) {
+                newMap[newNode.value] = newIndex;
+            }
 
             //Setting references
             indexMap[i] = (long long int) newIndex;

@@ -20,8 +20,6 @@
 
 namespace cg3 {
 
-enum GraphType { DIRECTED, UNDIRECTED };
-
 /**
  * @brief Class representing a weighted graph (directed or undirected)
  *
@@ -49,7 +47,6 @@ enum GraphType { DIRECTED, UNDIRECTED };
 template <class T>
 class Graph : public SerializableObject
 {
-
 protected:
 
     /* Node class */
@@ -58,6 +55,9 @@ protected:
 
 
 public:
+
+    enum GraphType { DIRECTED, UNDIRECTED };
+    enum GraphMapping { MAPPED, INDEXED };
 
     /* Public const */
 
@@ -86,7 +86,7 @@ public:
 
     /* Constructors / destructor */
 
-    explicit Graph(const GraphType& type = GraphType::DIRECTED);
+    explicit Graph(const GraphType& type = GraphType::DIRECTED, const GraphMapping& mapping = GraphMapping::MAPPED);
 
 
     /* Public methods with values */
@@ -189,6 +189,7 @@ protected:
     /* Protected fields */
 
     GraphType type; //Type of the graph (directed or undirected)
+    GraphMapping mapping; //Type of mapping of the graph (mapped or indexed)
 
     std::vector<Node> nodes; //Vector of nodes
     std::map<T, size_t> map; //Map to find a node with a value
