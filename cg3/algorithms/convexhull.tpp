@@ -20,7 +20,8 @@ inline double areCoplanar(const Pointd &p0, const Pointd &p1, const Pointd &p2, 
 
 inline bool isFaceVisible(const Dcel::Face* f, const Pointd &p);
 
-inline void insertTet(Dcel &dcel, const Pointd &p0, const Pointd &p1, const Pointd &p2, const Pointd &p3);
+inline void insertTet(Dcel &dcel, const Pointd &p0, const Pointd &p1, const Pointd &p2, const Pointd &p3,
+                      int flag0 = 0, int flag1 = 0, int flag2 = 0, int flag3 = 0);
 
 inline void horizonEdgeList(std::vector<Dcel::HalfEdge*> &horizon, const std::set<Dcel::Face*>& visibleFaces, std::set<Dcel::Vertex*>& horizonVertex, const Pointd &next_point);
 
@@ -28,7 +29,7 @@ inline void calculateP(std::vector<std::set<Pointd> >& P, const BipartiteGraph<P
 
 inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertices, const std::set<Dcel::Face*>& visibleFaces, BipartiteGraph<Pointd, unsigned int>& cg);
 
-inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*>& horizonEdges, const Pointd & p, BipartiteGraph<Pointd, unsigned int>& cg, std::vector<std::set<Pointd> > & P);
+inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*>& horizonEdges, const Pointd & p, BipartiteGraph<Pointd, unsigned int>& cg, std::vector<std::set<Pointd> > & P, int flagV = 0);
 
 } //namespace cg3::internal
 
@@ -60,44 +61,52 @@ Dcel convexHull(InputIterator first, InputIterator end)
     BipartiteGraph<Pointd, unsigned int> cg;
 
     std::vector<Pointd> points(first, end);
-    std::random_shuffle(points.begin(), points.end());
+    std::vector<uint> ids(points.size());
+    for (uint i = 0; i < points.size(); ++i)
+        ids[i] = i;
 
-    double determinant = 0;
-    unsigned int nPoints = (unsigned int)points.size();
-    int a, b, c, d;
-    do {
-        a = rand()%nPoints;
-        b = rand()%nPoints;
-        c = rand()%nPoints;
-        d = rand()%nPoints;
+    if (points.size() > 3) {
 
-        determinant = internal::areCoplanar(points[a], points[b], points[c], points[d]);
-    } while (determinant == 0);
-    std::swap(points[0], points[a]);
-    std::swap(points[1], points[b]);
-    std::swap(points[2], points[c]);
-    std::swap(points[3], points[d]);
+        //std::random_shuffle(points.begin(), points.end());
+        std::random_shuffle(ids.begin(), ids.end());
 
-    if (determinant > 0)
-        internal::insertTet(convexHull, points[0], points[1], points[2], points[3]);
-    else
-        internal::insertTet(convexHull, points[1], points[0], points[2], points[3]);
+        double determinant = 0;
+        unsigned int nPoints = (unsigned int)points.size();
+        uint a, b, c, d;
+        do {
+            a = rand()%nPoints;
+            b = rand()%nPoints;
+            c = rand()%nPoints;
+            d = rand()%nPoints;
 
-    for (Dcel::Face* f : convexHull.faceIterator()){
-        cg.addRightNode(f->id());
-    }
+            determinant = internal::areCoplanar(points[ids[a]], points[ids[b]], points[ids[c]], points[ids[d]]);
+        } while (determinant == 0);
+        std::swap(ids[0], ids[a]);
+        std::swap(ids[1], ids[b]);
+        std::swap(ids[2], ids[c]);
+        std::swap(ids[3], ids[d]);
 
+        if (determinant > 0)
+            internal::insertTet(convexHull, points[ids[0]], points[ids[1]], points[ids[2]], points[ids[3]],
+                    ids[0], ids[1], ids[2], ids[3]);
+        else
+            internal::insertTet(convexHull, points[ids[1]], points[ids[0]], points[ids[2]], points[ids[3]],
+                    ids[1], ids[0], ids[2], ids[3]);
 
-    for (unsigned int i = 4; i < points.size(); i++){
-        cg.addLeftNode(points[i]);
         for (Dcel::Face* f : convexHull.faceIterator()){
-            if (internal::isFaceVisible(f, points[i]))
-                cg.addArc(points[i], f->id());
+            cg.addRightNode(f->id());
         }
-    }
 
-    unsigned int iterations = 0;
-    while (cg.sizeLeftNodes() > 0){
+
+        for (unsigned int i = 4; i < points.size(); i++){
+            cg.addLeftNode(points[ids[i]]);
+            for (Dcel::Face* f : convexHull.faceIterator()){
+                if (internal::isFaceVisible(f, points[ids[i]]))
+                    cg.addArc(points[ids[i]], f->id());
+            }
+        }
+
+        unsigned int iterations = 0;
         for (const Pointd& p : cg.leftNodeIterator()){ //For every point that is not inserted in the convex hull yet
             /**
              * Se il punto è interno al convex hull, nel conflict graph il nodo associato al punto non
@@ -150,17 +159,17 @@ Dcel convexHull(InputIterator first, InputIterator end)
                  * next_point. Sempre in questa funzione vengono anche calcolati e aggiunti i nuovi conflitti
                  * tra le nuove facce e i punti presenti nel conflict graph.
                  */
-                internal::insertNewFaces(convexHull, horizonEdges, p, cg, P);
+                internal::insertNewFaces(convexHull, horizonEdges, p, cg, P, ids[iterations+4]);
             }
             else
                 cg.deleteLeftNode(p);
-        }
 
-        iterations++;
+            iterations++;
+        }
+        convexHull.updateFaceNormals();
+        convexHull.updateVertexNormals();
+        convexHull.updateBoundingBox();
     }
-    convexHull.updateFaceNormals();
-    convexHull.updateVertexNormals();
-    convexHull.updateBoundingBox();
     return convexHull;
 }
 
@@ -195,12 +204,18 @@ inline bool isFaceVisible(const Dcel::Face* f, const Pointd& p)
 
 }
 
-inline void insertTet(Dcel& dcel, const Pointd& p0, const Pointd& p1, const Pointd& p2, const Pointd& p3)
+inline void insertTet(Dcel& dcel, const Pointd& p0, const Pointd& p1, const Pointd& p2, const Pointd& p3,
+                      int flag0, int flag1, int flag2, int flag3)
 {
     Dcel::Vertex* v0 = dcel.addVertex(p0);
     Dcel::Vertex* v1 = dcel.addVertex(p1);
     Dcel::Vertex* v2 = dcel.addVertex(p2);
     Dcel::Vertex* v3 = dcel.addVertex(p3);
+
+    v0->setFlag(flag0);
+    v1->setFlag(flag1);
+    v2->setFlag(flag2);
+    v3->setFlag(flag3);
 
     Dcel::HalfEdge* e01 = dcel.addHalfEdge();
     e01->setFromVertex(v0);
@@ -466,7 +481,7 @@ inline void deleteVisibleFaces(Dcel & ch, std::set<Dcel::Vertex*>& horizonVertic
     }
 }
 
-inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdges, const Pointd & p, BipartiteGraph<Pointd, unsigned int>& cg, std::vector<std::set<Pointd> >& P)
+inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdges, const Pointd & p, BipartiteGraph<Pointd, unsigned int>& cg, std::vector<std::set<Pointd> >& P, int flagV)
 {
     Dcel::Vertex* v3, *v1, *v2;                   // id di vertici della faccia inserita: v3 è SEMPRE l'id del nuovo punto inserito nel ch.
     Dcel::HalfEdge* e1, *e2, *e3;                     // id degli half edge della faccia inserita: e1 è il twin dell'edge sull'orizzonte
@@ -486,6 +501,7 @@ inline void insertNewFaces (Dcel & ch, std::vector<Dcel::HalfEdge*> & horizonEdg
 
     /** Inserisco il nuovo punto (v3) */
     v3 = ch.addVertex(p); // inserisco il nuovo punto
+    v3->setFlag(flagV);
 
     /** Costruisco il primo  triangolo: */
     Dcel::HalfEdge* externHalfEdge = horizonEdges[0]; // edge sull'orizzonte

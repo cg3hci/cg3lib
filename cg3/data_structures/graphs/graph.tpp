@@ -534,17 +534,34 @@ void Graph<T>::recompact()
 
 /* ----- SERIALIZATION ----- */
 
-
+/**
+ * @brief Serialization of a Graph of nodes of type T (serialization of objects of type T must be provided) in
+ * a binary file.
+ *
+ * @param binaryFile: the binary file on which the graph will be stored.
+ */
 template<class T>
 void Graph<T>::serialize(std::ofstream& binaryFile) const
 {
     cg3::serializeObjectAttributes("cg3Graph", binaryFile, type, nodes, map, isDeleted, nDeletedNodes);
+    cg3::serialize(mapping, binaryFile);
 }
 
+/**
+ * @brief Deerialization of a Graph of nodes of type T (serialization of objects of type T must be provided)
+ * from a binary file.
+ *
+ * @param binaryFile: the binary file from which the graph will be loaded.
+ */
 template<class T>
 void Graph<T>::deserialize(std::ifstream& binaryFile)
 {
     cg3::deserializeObjectAttributes("cg3Graph", binaryFile, type, nodes, map, isDeleted, nDeletedNodes);
+    try {
+        cg3::deserialize(mapping, binaryFile);
+    } catch (...) { // old version without "mapping" member, default was MAPPED
+        mapping = MAPPED;
+    }
 }
 
 /* ----- ITERATORS ----- */
