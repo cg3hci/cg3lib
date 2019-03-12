@@ -127,10 +127,11 @@ template<typename T>
 inline bool areCollinear(
         const Point2D<T>& s1,
         const Point2D<T>& s2,
-        const Point2D<T>& p)
+        const Point2D<T>& p,
+        double epsilon)
 {
     double det = internal::positionOfPointWithRespectToSegment(s1, s2, p);
-    return cg3::epsilonEqual(det, 0.0);
+    return cg3::epsilonEqual(det, 0.0, epsilon);
 }
 
 /**
@@ -146,9 +147,10 @@ inline bool areCollinear(
 template<typename T>
 inline bool areCollinear(
         const Segment<Point2D<T>>& segment,
-        const Point2D<T>& point)
+        const Point2D<T>& point,
+        double epsilon)
 {
-    return areCollinear<T>(segment.p1(), segment.p2(), point);
+    return areCollinear<T>(segment.p1(), segment.p2(), point, epsilon);
 }
 
 

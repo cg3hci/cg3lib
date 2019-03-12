@@ -155,7 +155,6 @@ int DcelBuilder::addFace(const std::vector<uint>& vids, const Color& c, int flag
     f->setColor(c);
     f->setFlag(flag);
 
-    f->updateNormal();
     f->updateArea();
     return f->id();
 }

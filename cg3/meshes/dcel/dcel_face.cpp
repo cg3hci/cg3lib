@@ -320,7 +320,7 @@ Vec3 Dcel::Face::updateNormal()
         bool end = false;
         HalfEdge* edge = _outerHalfEdge->next()->next();
         Vertex* first = a;
-        while (areCollinear(a->coordinate(), b->coordinate(), c->coordinate()) && !end){
+        while (areCollinear(a->coordinate(), b->coordinate(), c->coordinate(), 1E-10) && !end){
             a = b;
             b = c;
             c = edge->toVertex();
@@ -362,6 +362,7 @@ Vec3 Dcel::Face::updateNormal()
 double Dcel::Face::updateArea()
 {
     updateNormal();
+    assert(normal() != Vec3());
     if (isTriangle()) {
         assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
         assert(_outerHalfEdge->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");

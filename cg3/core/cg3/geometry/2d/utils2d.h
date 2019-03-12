@@ -11,6 +11,7 @@
 
 #include <cg3/geometry/2d/point2d.h>
 #include <cg3/geometry/2d/segment2d.h>
+#include <cg3/utilities/const.h>
 
 namespace cg3 {
 
@@ -40,13 +41,15 @@ inline bool isPointAtRight(
 template<typename T>
 inline bool areCollinear(
         const Segment<Point2D<T>>& segment,
-        const Point2D<T>& point);
+        const Point2D<T>& point,
+        double epsilon = CG3_EPSILON);
 
 template<typename T>
 inline bool areCollinear(
         const Point2D<T>& s1,
         const Point2D<T>& s2,
-        const Point2D<T>& point);
+        const Point2D<T>& point,
+        double epsilon = CG3_EPSILON);
 
 /* Others */
 #ifdef CG3_WITH_EIGEN
