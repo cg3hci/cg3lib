@@ -49,6 +49,22 @@ int DcelBuilder::addFace(
     return addFace(vids, c, flag);
 }
 
+int DcelBuilder::addFace(
+        unsigned int vid1,
+        unsigned int vid2,
+        unsigned int vid3,
+        unsigned int vid4,
+        const Color& c,
+        int flag)
+{
+    std::vector<uint> vids(4);
+    vids[0] = vid1;
+    vids[1] = vid2;
+    vids[2] = vid3;
+    vids[3] = vid4;
+    return addFace(vids, c, flag);
+}
+
 int DcelBuilder::addFace(const std::vector<uint>& vids, const Color& c, int flag)
 {
     //one of the ids does not exist in the dcel
@@ -174,6 +190,45 @@ int DcelBuilder::addFace(
         vid3 = it->second;
 
     return addFace(vid1, vid2, vid3, c, flag);
+}
+
+int DcelBuilder::addFace(
+        const Pointd& p1,
+        const Pointd& p2,
+        const Pointd& p3,
+        const Pointd& p4,
+        const Color& c,
+        int flag)
+{
+    unsigned int vid1, vid2, vid3, vid4;
+
+    //setting vids
+    std::map<cg3::Pointd, unsigned int>::iterator it;
+    it = mapVertices.find(p1);
+    if (it == mapVertices.end())
+        vid1 = addVertex(p1);
+    else
+        vid1 = it->second;
+
+    it = mapVertices.find(p2);
+    if (it == mapVertices.end())
+        vid2 = addVertex(p2);
+    else
+        vid2 = it->second;
+
+    it = mapVertices.find(p3);
+    if (it == mapVertices.end())
+        vid3 = addVertex(p3);
+    else
+        vid3 = it->second;
+
+    it = mapVertices.find(p4);
+    if (it == mapVertices.end())
+        vid4 = addVertex(p4);
+    else
+        vid4 = it->second;
+
+    return addFace(vid1, vid2, vid3, vid4, c, flag);
 }
 
 int DcelBuilder::addFace(const std::vector<Pointd>& ps, const Color& c, int flag)

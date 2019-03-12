@@ -36,6 +36,13 @@ public:
             const Color &c = Color(128, 128, 128),
             int flag = 0);
 
+    int addFace(unsigned int vid1,
+            unsigned int vid2,
+            unsigned int vid3,
+            unsigned int vid4,
+            const Color &c = Color(128, 128, 128),
+            int flag = 0);
+
     int addFace(const std::vector<uint> &vids,
                 const Color &c = Color(128, 128, 128),
                 int flag = 0);
@@ -44,6 +51,14 @@ public:
             const cg3::Pointd& p1,
             const cg3::Pointd& p2,
             const cg3::Pointd& p3,
+            const Color &c = Color(128, 128, 128),
+            int flag = 0);
+
+    int addFace(
+            const cg3::Pointd& p1,
+            const cg3::Pointd& p2,
+            const cg3::Pointd& p3,
+            const cg3::Pointd& p4,
             const Color &c = Color(128, 128, 128),
             int flag = 0);
 

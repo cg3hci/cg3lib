@@ -99,6 +99,7 @@ public:
     void set(const T& x, const T& y, const T& z);
     double normalize();
     #ifdef CG3_WITH_EIGEN
+    Eigen::Vector3d toEigenVector() const;
     void rotate(const Eigen::Matrix3d &matrix, const Point<T>& centroid = Point<T>());
     #endif //CG3_WITH_EIGEN
     void rotate(double matrix[3][3], const Point<T>& centroid = Point<T>());

@@ -503,6 +503,13 @@ inline double Point<T>::normalize()
 
 #ifdef CG3_WITH_EIGEN
 template <class T>
+Eigen::Vector3d Point<T>::toEigenVector() const
+{
+    return Eigen::Vector3d(xCoord, yCoord, zCoord);
+}
+
+
+template <class T>
 void Point<T>::rotate(const Eigen::Matrix3d& matrix, const Point<T>& centroid)
 {
     *this -= centroid;

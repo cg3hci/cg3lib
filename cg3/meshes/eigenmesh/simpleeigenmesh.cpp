@@ -215,6 +215,20 @@ void SimpleEigenMesh::scale(double scaleFactor)
     scale(cg3::Vec3(scaleFactor, scaleFactor, scaleFactor));
 }
 
+void SimpleEigenMesh::merge(const SimpleEigenMesh& m2)
+{
+    uint start = V.rows();
+    V.conservativeResize(start+m2.V.rows(), 3);
+    for (uint i = 0; i < m2.V.rows(); ++i){
+        V.row(start + i) = m2.V.row(i);
+    }
+    uint startf = F.rows();
+    F.conservativeResize(startf + m2.F.rows(), 3);
+    for (uint i = 0; i < m2.numberFaces(); i++){
+        F.row(startf+i) = Eigen::RowVector3i(m2.F(i,0)+start, m2.F(i,1)+start, m2.F(i,2)+start);
+    }
+}
+
 void SimpleEigenMesh::merge(SimpleEigenMesh &result, const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
 {
     result.V.resize(m1.V.rows()+m2.V.rows(), 3);

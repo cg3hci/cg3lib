@@ -1382,19 +1382,19 @@ void Dcel::merge(Dcel&& d)
     vertices.insert(vertices.end(), d.vertices.begin(), d.vertices.end());
     halfEdges.insert(halfEdges.end(), d.halfEdges.begin(), d.halfEdges.end());
     faces.insert(faces.end(), d.faces.begin(), d.faces.end());
-    for (uint v = nv;  v < vertices.size(); ++nv){
+    for (uint v = nv;  v < vertices.size(); ++v){
         if (vertices[v])
             vertices[v]->setId(v);
         else
             unusedVids.insert(v);
     }
-    for (uint he = nhe;  he < halfEdges.size(); ++nv){
+    for (uint he = nhe;  he < halfEdges.size(); ++he){
         if (halfEdges[he])
             halfEdges[he]->setId(he);
         else
             unusedHeids.insert(he);
     }
-    for (uint f = nf;  f < faces.size(); ++nv){
+    for (uint f = nf;  f < faces.size(); ++f){
         if (faces[f])
             faces[f]->setId(f);
         else
