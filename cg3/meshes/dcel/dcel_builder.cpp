@@ -8,7 +8,7 @@
 
 namespace cg3 {
 
-DcelBuilder::DcelBuilder(Dcel startingDcel) : d(startingDcel)
+DcelBuilder::DcelBuilder(Dcel startingDcel) : d(startingDcel), updateNormalOnInsertion(true)
 {
     for (cg3::Dcel::Vertex* v : d.vertexIterator()) {
         mapVertices[v->coordinate()] = v->id();
@@ -155,7 +155,7 @@ int DcelBuilder::addFace(const std::vector<uint>& vids, const Color& c, int flag
     f->setColor(c);
     f->setFlag(flag);
 
-    f->updateArea();
+    if (updateNormalOnInsertion) f->updateArea();
     return f->id();
 }
 
@@ -247,7 +247,13 @@ int DcelBuilder::addFace(const std::vector<Pointd>& ps, const Color& c, int flag
 void DcelBuilder::finalize()
 {
     d.updateBoundingBox();
-    d.updateVertexNormals();
+    if (updateNormalOnInsertion)
+        d.updateVertexNormals();
+}
+
+void DcelBuilder::setUpdateNormalOnInsertion(bool b)
+{
+    updateNormalOnInsertion = b;
 }
 
 }

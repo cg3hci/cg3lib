@@ -311,9 +311,7 @@ Vec3 Dcel::Face::updateNormal()
     Vec3 normal;
     if (isTriangle()){
         normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
-        if (normal == Vec3())
-            std::cerr << "Warning: degenerate triangle; ID: " << id() << "\n";
-        else
+        if (normal != Vec3())
             normal.normalize();
     }
     else {
@@ -330,20 +328,22 @@ Vec3 Dcel::Face::updateNormal()
         }
         if (end) {
             normal = Vec3(0,0,0);
-            std::cerr << "Warning: degenerate polygon; ID: " << id() << "\n";
         }
         else {
             normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
-            assert(normal != Vec3(0,0,0));
-            normal.normalize();
+            if (normal != Vec3()){
+                normal.normalize();
 
-            std::vector<Pointd> pol;
-            for (const Vertex* v : incidentVertexIterator())
-                pol.push_back(v->coordinate());
-            if (! isPolygonCounterClockwise(pol, normal))
-                normal = -normal;
+                std::vector<Pointd> pol;
+                for (const Vertex* v : incidentVertexIterator())
+                    pol.push_back(v->coordinate());
+                if (! isPolygonCounterClockwise(pol, normal))
+                    normal = -normal;
+            }
         }
     }
+    if (normal == Vec3())
+        std::cerr << "Warning: degenerate triangle/polygon; ID: " << id() << "\n";
     #ifdef NDEBUG
     parent->faceNormals[_id] = normal;
     #else
@@ -362,36 +362,37 @@ Vec3 Dcel::Face::updateNormal()
 double Dcel::Face::updateArea()
 {
     updateNormal();
-    assert(normal() != Vec3());
-    if (isTriangle()) {
-        assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
-        assert(_outerHalfEdge->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
-        assert(_outerHalfEdge->toVertex() != nullptr && "HalfEdge's To Vertex is null.");
-        assert(_outerHalfEdge->prev() != nullptr && "HalfEdge's prev is null.");
-        assert(_outerHalfEdge->prev()->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
-        Pointd v1 = _outerHalfEdge->fromVertex()->coordinate();
-        Pointd v2 = _outerHalfEdge->toVertex()->coordinate();
-        Pointd v3 = _outerHalfEdge->prev()->fromVertex()->coordinate();
-        _area = (((v3 - v1).cross(v2 - v1)).length() / 2);
-    }
-    #ifdef CG3_CGAL_DEFINED
-    else {
-        _area = 0;
-        std::vector<std::array<const Dcel::Vertex*, 3> > t;
-
-        triangulation(t);
-        for (unsigned int i = 0; i <t.size(); ++i){
-            std::array<const Dcel::Vertex*, 3> tr =  t[i];
-            assert(tr[0] != nullptr && "Vertex is null.");
-            assert(tr[1] != nullptr && "Vertex is null.");
-            assert(tr[2] != nullptr && "Vertex is null.");
-            Pointd v1 = tr[0]->coordinate();
-            Pointd v2 = tr[1]->coordinate();
-            Pointd v3 = tr[2]->coordinate();
-            _area += (((v3 - v1).cross(v2 - v1)).length() / 2);
+    if (_normal != Vec3()) {
+        if (isTriangle()) {
+            assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
+            assert(_outerHalfEdge->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
+            assert(_outerHalfEdge->toVertex() != nullptr && "HalfEdge's To Vertex is null.");
+            assert(_outerHalfEdge->prev() != nullptr && "HalfEdge's prev is null.");
+            assert(_outerHalfEdge->prev()->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
+            Pointd v1 = _outerHalfEdge->fromVertex()->coordinate();
+            Pointd v2 = _outerHalfEdge->toVertex()->coordinate();
+            Pointd v3 = _outerHalfEdge->prev()->fromVertex()->coordinate();
+            _area = (((v3 - v1).cross(v2 - v1)).length() / 2);
         }
+        #ifdef CG3_CGAL_DEFINED
+        else {
+            _area = 0;
+            std::vector<std::array<const Dcel::Vertex*, 3> > t;
+
+            triangulation(t);
+            for (unsigned int i = 0; i <t.size(); ++i){
+                std::array<const Dcel::Vertex*, 3> tr =  t[i];
+                assert(tr[0] != nullptr && "Vertex is null.");
+                assert(tr[1] != nullptr && "Vertex is null.");
+                assert(tr[2] != nullptr && "Vertex is null.");
+                Pointd v1 = tr[0]->coordinate();
+                Pointd v2 = tr[1]->coordinate();
+                Pointd v3 = tr[2]->coordinate();
+                _area += (((v3 - v1).cross(v2 - v1)).length() / 2);
+            }
+        }
+        #endif
     }
-    #endif
     return _area;
 }
 

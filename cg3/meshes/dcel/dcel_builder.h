@@ -68,11 +68,14 @@ public:
 
     void finalize();
 
+    void setUpdateNormalOnInsertion(bool b = true);
+
 protected:
 
     cg3::Dcel d;
     std::map<cg3::Pointd, unsigned int> mapVertices;
     std::map<std::pair<unsigned int, unsigned int>, unsigned int> mapHalfEdges;
+    bool updateNormalOnInsertion;
 };
 
 } //namespace cg3

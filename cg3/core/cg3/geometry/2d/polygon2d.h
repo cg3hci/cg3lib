@@ -23,6 +23,7 @@ public:
     void updateBoundingBox();
     void pushBack(const cg3::Point2Dd& p);
     bool isCounterClockWise() const;
+    double area() const;
     const std::vector<cg3::Point2Dd>& vectorPoints() const;
     void clear();
 

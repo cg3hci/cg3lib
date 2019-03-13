@@ -62,6 +62,11 @@ bool Polygon2D::isCounterClockWise() const
     return cg3::isPolygonCounterClockwise(pol);
 }
 
+double Polygon2D::area() const
+{
+    return cg3::polygonArea(pol);
+}
+
 const std::vector<Point2Dd>& Polygon2D::vectorPoints() const
 {
     return pol;

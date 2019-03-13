@@ -217,6 +217,30 @@ inline bool isPolygonCounterClockwise(const Container<Point2D<T>>& polygon)
         return true;
 }
 
+/**
+ * @ingroup cg3core
+ * @brief polygonArea
+ * @param polygon: a container of Point2D representing a regular 2D polygon
+ * @return the area of the polygon (negative if it is not counterclockwise)
+ * @link https://www.mathopenref.com/coordpolygonarea2.html
+ */
+template <template < class ... > class Container, class T, class ... Args>
+inline double polygonArea(const Container<Point2D<T>>& polygon)
+{
+    double area = 0;
+    for (typename Container<Point2D<T>>::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
+        typename Container<Point2D<T>>::const_iterator next = it;
+        next++;
+        if (next == polygon.end())
+            next = polygon.begin();
+        const Point2D<T>& p1 = *it;
+        const Point2D<T>& p2 = *next;
+        area += (p2.x() - p1.x()) * (p2.y()+p1.y());
+    }
+    return area / 2;
+
+}
+
 /* ----- INTERNAL FUNCTION DEFINITION ----- */
 
 namespace internal {
