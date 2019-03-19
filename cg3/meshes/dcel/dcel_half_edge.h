@@ -128,7 +128,7 @@ protected:
     #else
     HalfEdge();
     #endif
-    ~HalfEdge();
+    virtual ~HalfEdge();
 
     /**************
     * Attributes *

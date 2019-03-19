@@ -199,7 +199,7 @@ protected:
     //Vertex(Dcel& parent, const Pointd& p);
     //Vertex(Dcel& parent, const Pointd& p, Dcel::HalfEdge* halfEdge);
     //Vertex(Dcel& parent, const Pointd& p, Dcel::HalfEdge* halfEdge, int cardinality);
-    ~Vertex();
+    virtual ~Vertex();
 
     /*************
     * Attributes *

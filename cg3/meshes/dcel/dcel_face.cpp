@@ -19,16 +19,15 @@ namespace cg3 {
  * Constructors *
  ****************/
 /**
- * \~Italian
- * @brief Costruttore di default.
+ * @brief Default constructor.
  *
- * Crea una faccia con:
- * - outer half edge settato a nullptr;
- * - nessun inner half edge;
- * - normale pari a (0, 0, 0);
- * - area pari a 0;
- * - id pari a 0;
- * - flag pari a 0.
+ * Creates a face with:
+ * - outer half edge setted to nullptr;
+ * - no inner half edges;
+ * - normal setted to (0, 0, 0);
+ * - area setted a 0;
+ * - id setted to 0;
+ * - flag setted to 0.
  */
 #ifdef NDEBUG
 Dcel::Face::Face(Dcel& parent) :
@@ -555,6 +554,19 @@ std::string Dcel::Face::innerComponentsToString() const
     ss << ")";
     std::string s1 = ss.str();
     return s1;
+}
+
+/**
+ * @brief Computes the signed tethraedron volume composed of the tirangle and the origin. Useful for
+ * the computation of the volume of the mesh
+ * @link https://stackoverflow.com/questions/1406029/how-to-calculate-the-volume-of-a-3d-mesh-object-the-surface-of-which-is-made-up
+ * @return signed volume of the tet between the triangle and the origin.
+ *
+ * @todo generalize to polygons!
+ */
+double Dcel::Face::signedVolume() const
+{
+    return vertex1()->coordinate().dot(vertex2()->coordinate().cross(vertex3()->coordinate())) / 6.0f;
 }
 
 

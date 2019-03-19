@@ -271,7 +271,7 @@ protected:
     #else
     Face();
     #endif
-    ~Face();
+    virtual ~Face();
 
     /*************
     * Attributes *
@@ -300,6 +300,7 @@ protected:
     *********************/
 
     std::string innerComponentsToString() const;
+    double signedVolume() const;
 };
 
 std::ostream& operator<< (std::ostream& inputStream, const Dcel::Face* f);

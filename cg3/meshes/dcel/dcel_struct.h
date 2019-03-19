@@ -162,6 +162,7 @@ public:
     bool faceBelongsToThis(const Face* f)                   const;
     bool isTriangleMesh()                                   const;
     double surfaceArea()                                 const;
+    double volume()                                         const;
     Pointd barycenter()                                  const;
     double averageHalfEdgesLength()                      const;
     bool saveOnObj(const std::string& fileNameObj) const;

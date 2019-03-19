@@ -234,6 +234,19 @@ double Dcel::surfaceArea() const
     return area;
 }
 
+/**
+ * @brief Dcel::volume
+ * @link https://stackoverflow.com/questions/1406029/how-to-calculate-the-volume-of-a-3d-mesh-object-the-surface-of-which-is-made-up
+ * @return
+ */
+double Dcel::volume() const
+{
+    double sum = 0;
+    for (const cg3::Dcel::Face* f : faceIterator())
+        sum += f->signedVolume();
+    return std::abs(sum);
+}
+
 Pointd Dcel::barycenter() const
 {
     Pointd bc;
