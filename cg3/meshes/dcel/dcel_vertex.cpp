@@ -5,10 +5,11 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#include "dcel_vertex_iterators.h"
+#include "dcel_vertex.h"
 #include "dcel_face.h"
 
 namespace cg3 {
+namespace internal {
 
 /****************
  * Constructors *
@@ -27,7 +28,7 @@ namespace cg3 {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-Dcel::Vertex::Vertex(Dcel& parent) :
+Vertex::Vertex(Dcel& parent) :
     parent(&parent),
     _incidentHalfEdge(nullptr),
     _cardinality(0),
@@ -36,7 +37,7 @@ Dcel::Vertex::Vertex(Dcel& parent) :
 {
 }
 #else
-Dcel::Vertex::Vertex() :
+Vertex::Vertex() :
     _incidentHalfEdge(nullptr),
     _cardinality(0),
     _id(0),
@@ -49,9 +50,9 @@ Dcel::Vertex::Vertex() :
  * \~Italian
  * @brief Distruttore vuoto.
  *
- * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe Dcel::Vertex).
+ * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe Vertex).
  */
-Dcel::Vertex::~Vertex(void)
+Vertex::~Vertex(void)
 {
 }
 
@@ -61,12 +62,12 @@ Dcel::Vertex::~Vertex(void)
 /**
  * \~Italian
  * @brief Calcola e restituisce il numero di half edge (non di edge) incidenti sul vertice
- * @warning Utilizza Dcel::Vertex::ConstIncidentHalfEdgeIterator
+ * @warning Utilizza Vertex::ConstIncidentHalfEdgeIterator
  * @return Il numero di edge incidenti sul vertice
  * @par Complessità:
  *      \e O(Cardinality)
  */
-int Dcel::Vertex::numberIncidentHalfEdges() const
+int Vertex::numberIncidentHalfEdges() const
 {
     int n = 0;
     ConstIncidentHalfEdgeIterator it;
@@ -78,12 +79,12 @@ int Dcel::Vertex::numberIncidentHalfEdges() const
  * \~Italian
  * @brief Calcola e restituisce il numero di facce incidenti sul vertice
  * @note Se un'unica faccia incide sul vertice due volte, questa verrà contata due volte
- * @warning Utilizza Dcel::Vertex::ConstIncidentFaceIterator
+ * @warning Utilizza Vertex::ConstIncidentFaceIterator
  * @return Il numero di facce incidenti sul vertice
  * @par Complessità:
  *      \e O(Cardinality)
  */
-int Dcel::Vertex::numberIncidentFaces() const
+int Vertex::numberIncidentFaces() const
 {
     int n = 0;
     ConstIncidentFaceIterator it;
@@ -94,12 +95,12 @@ int Dcel::Vertex::numberIncidentFaces() const
 /**
  * \~Italian
  * @brief Calcola e restituisce il numero di vertici adiacenti al vertice
- * @warning Utilizza Dcel::Vertex::ConstAdjacentVertexIterator
+ * @warning Utilizza Vertex::ConstAdjacentVertexIterator
  * @return Il numero di vertici adiacenti al vertice
  * @par Complessità:
  *      \e O(Cardinality)
  */
-int Dcel::Vertex::numberAdjacentVertices() const
+int Vertex::numberAdjacentVertices() const
 {
     int n = 0;
     ConstAdjacentVertexIterator it;
@@ -115,13 +116,13 @@ int Dcel::Vertex::numberAdjacentVertices() const
  * come destinazione il vertice in input vertex. Se l'half edge non viene trovato (non esiste
  * un half edge condiviso dai due vertici) viene restituito nullptr;
  *
- * @warning Utilizza Dcel::Vertex::ConstOutgoingHalfEdgeIterator
+ * @warning Utilizza Vertex::ConstOutgoingHalfEdgeIterator
  * @param[in] vertex: vertice con cui viene cercato l'half edge condiviso
  * @return l'half edge condiviso se esiste, nullptr altrimenti
  * @par Complessità:
  *      \e O(Cardinality)
  */
-const Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Dcel::Vertex* vertex) const
+const HalfEdge* Vertex::findSharedHalfEdge(const Vertex* vertex) const
 {
     ConstOutgoingHalfEdgeIterator he;
     for (he = outgoingHalfEdgeBegin(); he != outgoingHalfEdgeEnd(); ++he){
@@ -136,7 +137,7 @@ const Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Dcel::Vertex* verte
  * @return Una stringa rappresentativa del vertice
  * @todo Da aggiornare
  */
-std::string Dcel::Vertex::toString() const
+std::string Vertex::toString() const
 {
     std::stringstream ss;
 
@@ -157,12 +158,12 @@ std::string Dcel::Vertex::toString() const
 /**
  * \~Italian
  * @brief Ricalcola e restituisce la normale al vertice, e aggiorna la cardinalità del vertice
- * @warning Utilizza Dcel::Vertex::ConstIncidentFaceIterator
+ * @warning Utilizza Vertex::ConstIncidentFaceIterator
  * @return La normale al vertice appena calcolata
  * @par Complessità:
  *      \e O(Cardinality)
  */
-Vec3 Dcel::Vertex::updateNormal()
+Vec3 Vertex::updateNormal()
 {
     #ifdef NDEBUG
     parent->vertexNormals[_id].set(0,0,0);
@@ -195,12 +196,12 @@ Vec3 Dcel::Vertex::updateNormal()
 /**
  * \~Italian
  * @brief Ricalcola e restituisce la cardinalità del vertice, ossia il numero di \b edge (non half edge!) incidenti
- * @warning Utilizza Dcel::Vertex::ConstOutgoingHalfEdgeIterator
+ * @warning Utilizza Vertex::ConstOutgoingHalfEdgeIterator
  * @return La cardinalità del vertice appena calcolata
  * @par Complessità:
  *      \e O(Cardinality)
  */
-unsigned int Dcel::Vertex::updateCardinality()
+unsigned int Vertex::updateCardinality()
 {
     unsigned int c = 0;
     ConstOutgoingHalfEdgeIterator heit;
@@ -217,13 +218,13 @@ unsigned int Dcel::Vertex::updateCardinality()
  * come destinazione il vertice in input vertex. Se l'half edge non viene trovato (non esiste
  * un half edge condiviso dai due vertici) viene restituito nullptr;
  *
- * @warning Utilizza Dcel::Vertex::OutgoingHalfEdgeIterator
+ * @warning Utilizza Vertex::OutgoingHalfEdgeIterator
  * @param[in] vertex: vertice con cui viene cercato l'half edge condiviso
  * @return l'half edge condiviso se esiste, nullptr altrimenti
  * @par Complessità:
  *      \e O(Cardinality)
  */
-Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Vertex* vertex)
+HalfEdge* Vertex::findSharedHalfEdge(const Vertex* vertex)
 {
     OutgoingHalfEdgeIterator he;
     for (he = this->outgoingHalfEdgeBegin(); he != this->outgoingHalfEdgeEnd(); ++he){
@@ -232,4 +233,5 @@ Dcel::HalfEdge* Dcel::Vertex::findSharedHalfEdge(const Vertex* vertex)
     return nullptr;
 }
 
+}
 }

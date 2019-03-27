@@ -8,13 +8,16 @@
 #ifndef CG3_DCEL_VERTEX_H
 #define CG3_DCEL_VERTEX_H
 
-#include "dcel_struct.h"
+#include <cg3/geometry/point.h>
+#include <cg3/utilities/color.h>
+#include "dcel_half_edge.h"
 
 namespace cg3 {
+namespace internal {
 
 /**
  * \~Italian
- * @class Dcel::Vertex
+ * @class Vertex
  * @brief Classe rappresentante un vertice della DCEL.
  *
  * All'interno della Dcel, le sue componenti fondamentali sono:
@@ -23,7 +26,7 @@ namespace cg3 {
  *   half edge che ha come from vertex il vertice stesso. \n
  *
  *
- * Per una corretta gestione della Dcel, ogni Dcel::Vertex \c v deve avere un \c incidentHalfEdge.
+ * Per una corretta gestione della Dcel, ogni Vertex \c v deve avere un \c incidentHalfEdge.
  * Tale halfEdge deve avere come fromVertex il vertice \c v, e il suo twin deve avere \c v come toVertex.
  * Devono poi essere rispettate le regole degli halfEdge e dei loro vertici incidenti sulle relazioni di
  * prev e next.
@@ -42,9 +45,10 @@ namespace cg3 {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Vertex
+class Vertex
 {
-    friend class Dcel;
+    template <class V, class HE, class F>
+    friend class cg3::TemplatedDcel;
 
 public:
 
@@ -79,12 +83,12 @@ public:
 
     unsigned int id()                                const;
     int flag()                                       const;
-    Vec3 normal()                                    const;
+    cg3::Vec3 normal()                                    const;
     const Pointd& coordinate()                       const;
     Color color()                                    const;
     int cardinality()                                const;
-    const Dcel::HalfEdge* incidentHalfEdge()         const;
-    double dist(const Dcel::Vertex* otherVertex)     const;
+    const HalfEdge* incidentHalfEdge()         const;
+    double dist(const Vertex* otherVertex)     const;
     bool checkIncidentHalfEdge()                     const;
 
     void setFlag();
@@ -96,8 +100,8 @@ public:
     void setColor(const Color &c);
     int decrementCardinality();
     int incrementCardinality();
-    Dcel::HalfEdge* incidentHalfEdge();
-    void setIncidentHalfEdge(Dcel::HalfEdge* newIncidentHalfEdge);
+    HalfEdge* incidentHalfEdge();
+    void setIncidentHalfEdge(HalfEdge* newIncidentHalfEdge);
 
     /*****************
     * Public Methods *
@@ -106,56 +110,56 @@ public:
     int numberIncidentHalfEdges()                                                                            const;
     int numberIncidentFaces()                                                                                const;
     int numberAdjacentVertices()                                                                             const;
-    const Dcel::HalfEdge* findSharedHalfEdge(const Dcel::Vertex* vertex)                                        const;
+    const HalfEdge* findSharedHalfEdge(const Vertex* vertex)                                        const;
     std::string toString()                                                                                      const;
     ConstAdjacentVertexIterator adjacentVertexBegin()                                                           const;
     ConstAdjacentVertexIterator adjacentVertexEnd()                                                             const;
-    ConstAdjacentVertexIterator adjacentVertexBegin(const Dcel::HalfEdge* start)                                const;
-    ConstAdjacentVertexIterator adjacentVertexBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end)     const;
-    ConstAdjacentVertexIterator adjacentVertexBegin(const Dcel::Vertex* start)                                  const;
-    ConstAdjacentVertexIterator adjacentVertexBegin(const Dcel::Vertex* start, const Dcel::Vertex* end)         const;
+    ConstAdjacentVertexIterator adjacentVertexBegin(const HalfEdge* start)                                const;
+    ConstAdjacentVertexIterator adjacentVertexBegin(const HalfEdge* start, const HalfEdge* end)     const;
+    ConstAdjacentVertexIterator adjacentVertexBegin(const Vertex* start)                                  const;
+    ConstAdjacentVertexIterator adjacentVertexBegin(const Vertex* start, const Vertex* end)         const;
     ConstOutgoingHalfEdgeIterator outgoingHalfEdgeBegin()                                                       const;
     ConstOutgoingHalfEdgeIterator outgoingHalfEdgeEnd()                                                         const;
-    ConstOutgoingHalfEdgeIterator outgoingHalfEdgeBegin(const Dcel::HalfEdge* start)                            const;
-    ConstOutgoingHalfEdgeIterator outgoingHalfEdgeBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end) const;
+    ConstOutgoingHalfEdgeIterator outgoingHalfEdgeBegin(const HalfEdge* start)                            const;
+    ConstOutgoingHalfEdgeIterator outgoingHalfEdgeBegin(const HalfEdge* start, const HalfEdge* end) const;
     ConstIncomingHalfEdgeIterator incomingHalfEdgeBegin()                                                       const;
     ConstIncomingHalfEdgeIterator incomingHalfEdgeEnd()                                                         const;
-    ConstIncomingHalfEdgeIterator incomingHalfEdgeBegin(const Dcel::HalfEdge* start)                            const;
-    ConstIncomingHalfEdgeIterator incomingHalfEdgeBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end) const;
+    ConstIncomingHalfEdgeIterator incomingHalfEdgeBegin(const HalfEdge* start)                            const;
+    ConstIncomingHalfEdgeIterator incomingHalfEdgeBegin(const HalfEdge* start, const HalfEdge* end) const;
     ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin()                                                       const;
     ConstIncidentHalfEdgeIterator incidentHalfEdgeEnd()                                                         const;
-    ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin(const Dcel::HalfEdge* start)                            const;
-    ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end) const;
+    ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin(const HalfEdge* start)                            const;
+    ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin(const HalfEdge* start, const HalfEdge* end) const;
     ConstIncidentFaceIterator incidentFaceBegin()                                                               const;
     ConstIncidentFaceIterator incidentFaceEnd()                                                                 const;
-    ConstIncidentFaceIterator incidentFaceBegin(const Dcel::HalfEdge* start)                                    const;
-    ConstIncidentFaceIterator incidentFaceBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end)         const;
+    ConstIncidentFaceIterator incidentFaceBegin(const HalfEdge* start)                                    const;
+    ConstIncidentFaceIterator incidentFaceBegin(const HalfEdge* start, const HalfEdge* end)         const;
 
     Vec3 updateNormal();
     unsigned int updateCardinality();
-    Dcel::HalfEdge* findSharedHalfEdge(const Dcel::Vertex* vertex);
+    HalfEdge* findSharedHalfEdge(const Vertex* vertex);
     AdjacentVertexIterator adjacentVertexBegin();
     AdjacentVertexIterator adjacentVertexEnd();
-    AdjacentVertexIterator adjacentVertexBegin(Dcel::HalfEdge* start);
-    AdjacentVertexIterator adjacentVertexBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end);
-    AdjacentVertexIterator adjacentVertexBegin(Dcel::Vertex* start);
-    AdjacentVertexIterator adjacentVertexBegin(Dcel::Vertex* start, Dcel::Vertex* end);
+    AdjacentVertexIterator adjacentVertexBegin(HalfEdge* start);
+    AdjacentVertexIterator adjacentVertexBegin(HalfEdge* start, HalfEdge* end);
+    AdjacentVertexIterator adjacentVertexBegin(Vertex* start);
+    AdjacentVertexIterator adjacentVertexBegin(Vertex* start, Vertex* end);
     OutgoingHalfEdgeIterator outgoingHalfEdgeBegin();
     OutgoingHalfEdgeIterator outgoingHalfEdgeEnd();
-    OutgoingHalfEdgeIterator outgoingHalfEdgeBegin(Dcel::HalfEdge* start);
-    OutgoingHalfEdgeIterator outgoingHalfEdgeBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end);
+    OutgoingHalfEdgeIterator outgoingHalfEdgeBegin(HalfEdge* start);
+    OutgoingHalfEdgeIterator outgoingHalfEdgeBegin(HalfEdge* start, HalfEdge* end);
     IncomingHalfEdgeIterator incomingHalfEdgeBegin();
     IncomingHalfEdgeIterator incomingHalfEdgeEnd();
-    IncomingHalfEdgeIterator incomingHalfEdgeBegin(Dcel::HalfEdge* start);
-    IncomingHalfEdgeIterator incomingHalfEdgeBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end);
+    IncomingHalfEdgeIterator incomingHalfEdgeBegin(HalfEdge* start);
+    IncomingHalfEdgeIterator incomingHalfEdgeBegin(HalfEdge* start, HalfEdge* end);
     IncidentHalfEdgeIterator incidentHalfEdgeBegin();
     IncidentHalfEdgeIterator incidentHalfEdgeEnd();
-    IncidentHalfEdgeIterator incidentHalfEdgeBegin(Dcel::HalfEdge* start);
-    IncidentHalfEdgeIterator incidentHalfEdgeBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end);
+    IncidentHalfEdgeIterator incidentHalfEdgeBegin(HalfEdge* start);
+    IncidentHalfEdgeIterator incidentHalfEdgeBegin(HalfEdge* start, HalfEdge* end);
     IncidentFaceIterator incidentFaceBegin();
     IncidentFaceIterator incidentFaceEnd();
-    IncidentFaceIterator incidentFaceBegin(Dcel::HalfEdge* start);
-    IncidentFaceIterator incidentFaceBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end);
+    IncidentFaceIterator incidentFaceBegin(HalfEdge* start);
+    IncidentFaceIterator incidentFaceBegin(HalfEdge* start, HalfEdge* end);
 
     const ConstAdjacentVertexRangeBasedIterator adjacentVertexIterator() const;
     AdjacentVertexRangeBasedIterator adjacentVertexIterator();
@@ -175,8 +179,8 @@ public:
     inline const Pointd& getCoordinate() const {return coordinate();}
     inline Color getColor() const {return color();}
     inline int getCardinality() const {return cardinality();}
-    inline const Dcel::HalfEdge* getIncidentHalfEdge() const {return incidentHalfEdge();}
-    inline Dcel::HalfEdge* getIncidentHalfEdge() {return incidentHalfEdge();}
+    inline const HalfEdge* getIncidentHalfEdge() const {return incidentHalfEdge();}
+    inline HalfEdge* getIncidentHalfEdge() {return incidentHalfEdge();}
     inline int getNumberIncidentHalfEdges() const {return numberIncidentHalfEdges();}
     inline int getNumberIncidentFaces() const {return numberIncidentFaces();}
     inline int getNumberAdjacentVertices() const {return numberAdjacentVertices();}
@@ -197,8 +201,8 @@ protected:
     Vertex();
     #endif
     //Vertex(Dcel& parent, const Pointd& p);
-    //Vertex(Dcel& parent, const Pointd& p, Dcel::HalfEdge* halfEdge);
-    //Vertex(Dcel& parent, const Pointd& p, Dcel::HalfEdge* halfEdge, int cardinality);
+    //Vertex(Dcel& parent, const Pointd& p, HalfEdge* halfEdge);
+    //Vertex(Dcel& parent, const Pointd& p, HalfEdge* halfEdge, int cardinality);
     virtual ~Vertex();
 
     /*************
@@ -212,7 +216,7 @@ protected:
     Vec3            _normal;             /**< \~Italian @brief Vettore normale al vertice */
     Color           _color;              /**< \~Italian @brief Colore associato al vertice */
     #endif
-    Dcel::HalfEdge* _incidentHalfEdge;   /**< \~Italian @brief Uno degli half edge uscenti incidenti sul vertice */
+    HalfEdge* _incidentHalfEdge;   /**< \~Italian @brief Uno degli half edge uscenti incidenti sul vertice */
     unsigned int    _cardinality;        /**< \~Italian @brief Numero di edge (metà degli half edge) incidenti sul vertice */
     unsigned int    _id;                 /**< \~Italian @brief Id univoco, all'interno della Dcel, associato al vertice */
     int             _flag;               /**< \~Italian @brief Flag personalizzabile, associato al vertice */
@@ -224,8 +228,10 @@ protected:
     void setId(unsigned int _id);
 };
 
+} //namespace cg3::internal
 } //namespace cg3
 
+#include "dcel_vertex_iterators.h"
 #include "dcel_vertex_inline.tpp"
 
 #endif // CG3_DCEL_VERTEX_H

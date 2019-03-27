@@ -8,14 +8,16 @@
 #ifndef CG3_DCEL_FACE_H
 #define CG3_DCEL_FACE_H
 
-#include "dcel_struct.h"
+#include "dcel_half_edge.h"
+#include <cg3/geometry/point.h>
 #include <cg3/utilities/color.h>
 
 namespace cg3 {
+namespace internal {
 
 /**
  * \~Italian
- * @class Dcel::Face
+ * @class Face
  * @brief Classe rappresentante una faccia della Dcel.
  *
  * All'interno della Dcel, le sue componenti fondamentali sono:
@@ -45,28 +47,28 @@ namespace cg3 {
  *
  * Sono messi a disposizione i seguenti iteratori per navigare sugli inner half edge
  * (uno per ogni buco):
- * - Dcel::Face::InnerHalfEdgeIterator
- * - Dcel::Face::ConstInnerHalfEdgeIterator
+ * - Face::InnerHalfEdgeIterator
+ * - Face::ConstInnerHalfEdgeIterator
  *
  *
  * Sono messi a disposizione anche i seguenti iteratori per navigare sulle componenti
  * incidenti alla faccia:
- * - Dcel::Face::IncidentHalfEdgeIterator
- * - Dcel::Face::IncidentVertexIterator
- * - Dcel::Face::ConstIncidentHalfEdgeIterator
- * - Dcel::Face::ConstIncidentVertexIterator
+ * - Face::IncidentHalfEdgeIterator
+ * - Face::IncidentVertexIterator
+ * - Face::ConstIncidentHalfEdgeIterator
+ * - Face::ConstIncidentVertexIterator
  *
  * Per navigare su tutti gli half edge di un buco adiacenti alla faccia, è possibile usare
  * l'iteratore sugli half edge incidenti:
  *
  * \code{.cpp}
- * Dcel::HalfEdge* firstInnerHalfEdge;
+ * HalfEdge* firstInnerHalfEdge;
  * if (f->getNumberInnerHalfEdges() > 0){
  *     firstInnerHalfEdge = *(f->innerHalfEdgeBegin()); //primo inner half edge della faccia
- *     for (Dcel::Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(firstInnerHalfEdge);
+ *     for (Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(firstInnerHalfEdge);
  *          heit!=f->incidentHalfEdgeEnd();
  *          ++heit) {
- *         Dcel::HalfEdge* inner = *heit;
+ *         HalfEdge* inner = *heit;
  *         // operazioni su inner
  *     }
  * }
@@ -79,9 +81,10 @@ namespace cg3 {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face {
+class Face {
 
-    friend class Dcel;
+    template <class V, class HE, class F>
+    friend class cg3::TemplatedDcel;
 
 public:
 
@@ -101,22 +104,23 @@ public:
      * inizializzato.
      *
      * È possibile utilizzare l'iteratore esattamente come si utilizza un iteratore su un
-     * std::vector. Per esempio, data una faccia Dcel::Face* f:
+     * std::vector. Per esempio, data una faccia Face* f:
      *
      * \code{.cpp}
-     * for (Dcel::Face::InnerHalfEdgeIterator heit = f->innerHalfEgeBegin();
+     * for (Face::InnerHalfEdgeIterator heit = f->innerHalfEgeBegin();
      *      heit != f->innerHalfEdgeEnd();
      *      ++heit) {
-     *     Dcel::HalfEdge* he = *heit;
+     *     HalfEdge* he = *heit;
      *     // operazioni su he
      * }
      * \endcode
      *
      * Questo iteratore non garantisce l'immutabilità della faccia e quindi della Dcel a
-     * cui appartiene, e quindi non è possibile utilizzarlo su const Dcel::Face. Per
-     * const Dcel::Face, vedere Dcel::Face::ConstInnerHalfEdgeIterator.
+     * cui appartiene, e quindi non è possibile utilizzarlo su const Face. Per
+     * const Face, vedere Face::ConstInnerHalfEdgeIterator.
      */
-    typedef std::vector<Dcel::HalfEdge*>::iterator InnerHalfEdgeIterator;
+
+    typedef std::vector<HalfEdge*>::iterator InnerHalfEdgeIterator;
     class ConstInnerHalfEdgeIterator;
     class AdjacentFaceIterator;
     class ConstAdjacentFaceIterator;
@@ -139,31 +143,31 @@ public:
     *************************/
 
     unsigned int id()                            const;
-    const Dcel::Vertex* vertex1()                const;
-    const Dcel::Vertex* vertex2()                const;
-    const Dcel::Vertex* vertex3()                const;
+    const Vertex* vertex1()                const;
+    const Vertex* vertex2()                const;
+    const Vertex* vertex3()                const;
     int flag()                                   const;
-    Vec3 normal()                                const;
+    cg3::Vec3 normal()                                const;
     double area()                                const;
     Color color()                                const;
-    const Dcel::HalfEdge* outerHalfEdge()        const;
+    const HalfEdge* outerHalfEdge()        const;
     unsigned int numberInnerHalfEdges()          const;
     bool hasHoles()                                 const;
     bool checkOuterHalfEdge()                       const;
 
 
-    Dcel::Vertex* vertex1();
-    Dcel::Vertex* vertex2();
-    Dcel::Vertex* vertex3();
+    Vertex* vertex1();
+    Vertex* vertex2();
+    Vertex* vertex3();
     void setFlag();
     void setFlag(int newFlag);
     void resetFlag();
     void setNormal(const Vec3& newNormal);
     void setArea(double newArea);
     void setColor(const Color& newColor);
-    Dcel::HalfEdge* outerHalfEdge();
-    void setOuterHalfEdge(Dcel::HalfEdge* newOuterHalfEdge);
-    void addInnerHalfEdge(Dcel::HalfEdge* newInnerHalfEdge);
+    HalfEdge* outerHalfEdge();
+    void setOuterHalfEdge(HalfEdge* newOuterHalfEdge);
+    void addInnerHalfEdge(HalfEdge* newInnerHalfEdge);
 
 
     /*****************
@@ -171,14 +175,14 @@ public:
     ******************/
 
     bool isTriangle()                                                               const;
-    bool isAdjacentTo(const Dcel::Face* ad)                                         const;
-    bool isIncidentTo(const Dcel::Vertex* v)                                        const;
+    bool isAdjacentTo(const Face* ad)                                         const;
+    bool isIncidentTo(const Vertex* v)                                        const;
     int numberIncidentVertices()                                                 const;
     int numberIncidentHalfEdges()                                                const;
     Pointd barycenter()                                                          const;
     #ifdef CG3_CGAL_DEFINED
     void triangulation(
-            std::vector<std::array<const Dcel::Vertex*, 3> >& triangles)            const;
+            std::vector<std::array<const Vertex*, 3> >& triangles)            const;
     #endif
     std::string toString()                                                          const;
     ConstAdjacentFaceIterator adjacentFaceBegin()                                   const;
@@ -188,20 +192,20 @@ public:
     ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin()                           const;
     ConstIncidentHalfEdgeIterator incidentHalfEdgeEnd()                             const;
     ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin(
-            const Dcel::HalfEdge* start)                                            const;
+            const HalfEdge* start)                                            const;
     ConstIncidentHalfEdgeIterator incidentHalfEdgeBegin(
-            const Dcel::HalfEdge* start,
-            const Dcel::HalfEdge* end)                                              const;
+            const HalfEdge* start,
+            const HalfEdge* end)                                              const;
     ConstIncidentVertexIterator incidentVertexBegin()                               const;
     ConstIncidentVertexIterator incidentVertexEnd()                                 const;
-    ConstIncidentVertexIterator incidentVertexBegin(const Dcel::HalfEdge* start)    const;
+    ConstIncidentVertexIterator incidentVertexBegin(const HalfEdge* start)    const;
     ConstIncidentVertexIterator incidentVertexBegin(
-            const Dcel::HalfEdge* start,
-            const Dcel::HalfEdge* end)                                              const;
-    ConstIncidentVertexIterator incidentVertexBegin(const Dcel::Vertex* start)      const;
+            const HalfEdge* start,
+            const HalfEdge* end)                                              const;
+    ConstIncidentVertexIterator incidentVertexBegin(const Vertex* start)      const;
     ConstIncidentVertexIterator incidentVertexBegin(
-            const Dcel::Vertex* start,
-            const Dcel::Vertex* end)                                                const;
+            const Vertex* start,
+            const Vertex* end)                                                const;
     ConstInnerHalfEdgeRangeBasedIterator innerHalfEdgeIterator()                    const;
     ConstAdjacentFaceRangeBasedIterator adjacentFaceIterator()                      const;
     ConstIncidentHalfEdgeRangeBasedIterator incidentHalfEdgeIterator()              const;
@@ -210,7 +214,7 @@ public:
     Vec3 updateNormal();
     double updateArea();
     void removeInnerHalfEdge(const InnerHalfEdgeIterator& iterator);
-    bool removeInnerHalfEdge(const Dcel::HalfEdge* halfEdge);
+    bool removeInnerHalfEdge(const HalfEdge* halfEdge);
     void removeAllInnerHalfEdges();
     void invertOrientation();
     AdjacentFaceIterator adjacentFaceBegin();
@@ -219,16 +223,16 @@ public:
     InnerHalfEdgeIterator innerHalfEdgeEnd();
     IncidentHalfEdgeIterator incidentHalfEdgeBegin();
     IncidentHalfEdgeIterator incidentHalfEdgeEnd();
-    IncidentHalfEdgeIterator incidentHalfEdgeBegin(Dcel::HalfEdge* start);
+    IncidentHalfEdgeIterator incidentHalfEdgeBegin(HalfEdge* start);
     IncidentHalfEdgeIterator incidentHalfEdgeBegin(
-            Dcel::HalfEdge* start,
-            Dcel::HalfEdge* end);
+            HalfEdge* start,
+            HalfEdge* end);
     IncidentVertexIterator incidentVertexBegin();
     IncidentVertexIterator incidentVertexEnd();
-    IncidentVertexIterator incidentVertexBegin(Dcel::HalfEdge* start);
-    IncidentVertexIterator incidentVertexBegin(Dcel::HalfEdge* start, Dcel::HalfEdge* end);
-    IncidentVertexIterator incidentVertexBegin(Dcel::Vertex* start);
-    IncidentVertexIterator incidentVertexBegin(Dcel::Vertex* start, Dcel::Vertex* end);
+    IncidentVertexIterator incidentVertexBegin(HalfEdge* start);
+    IncidentVertexIterator incidentVertexBegin(HalfEdge* start, HalfEdge* end);
+    IncidentVertexIterator incidentVertexBegin(Vertex* start);
+    IncidentVertexIterator incidentVertexBegin(Vertex* start, Vertex* end);
     InnerHalfEdgeRangeBasedIterator innerHalfEdgeIterator();
     AdjacentFaceRangeBasedIterator adjacentFaceIterator();
     IncidentHalfEdgeRangeBasedIterator incidentHalfEdgeIterator();
@@ -236,24 +240,24 @@ public:
 
     #ifdef CG3_OLD_NAMES_COMPATIBILITY
     inline unsigned int getId() const {return id();}
-    inline const Dcel::Vertex* getVertex1() const {return vertex1();}
-    inline const Dcel::Vertex* getVertex2() const {return vertex2();}
-    inline const Dcel::Vertex* getVertex3() const {return vertex3();}
-    inline Dcel::Vertex* getVertex1() {return vertex1();}
-    inline Dcel::Vertex* getVertex2() {return vertex2();}
-    inline Dcel::Vertex* getVertex3() {return vertex3();}
+    inline const Vertex* getVertex1() const {return vertex1();}
+    inline const Vertex* getVertex2() const {return vertex2();}
+    inline const Vertex* getVertex3() const {return vertex3();}
+    inline Vertex* getVertex1() {return vertex1();}
+    inline Vertex* getVertex2() {return vertex2();}
+    inline Vertex* getVertex3() {return vertex3();}
     inline int getFlag() const {return flag();}
     inline Vec3 getNormal() const {return normal();}
     inline double getArea() const {return area();}
     inline Color getColor() const {return color();}
-    inline const Dcel::HalfEdge* getOuterHalfEdge() const {return outerHalfEdge();}
-    inline Dcel::HalfEdge* getOuterHalfEdge() {return outerHalfEdge();}
+    inline const HalfEdge* getOuterHalfEdge() const {return outerHalfEdge();}
+    inline HalfEdge* getOuterHalfEdge() {return outerHalfEdge();}
     inline unsigned int getNumberInnerHalfEdges() const {return numberInnerHalfEdges();}
     inline int getNumberIncidentVertices() const {return numberIncidentVertices();}
     inline int getNumberIncidentHalfEdges() const {return numberIncidentHalfEdges();}
     inline Pointd getBarycenter() const {return barycenter();}
     #ifdef CG3_CGAL_DEFINED
-    inline void getTriangulation(std::vector<std::array<const Dcel::Vertex*, 3> >& t) const {return triangulation(t);}
+    inline void getTriangulation(std::vector<std::array<const Vertex*, 3> >& t) const {return triangulation(t);}
     #endif
     #endif
 
@@ -283,8 +287,8 @@ protected:
     Vec3                            _normal;
     Color                           _color;
     #endif
-    Dcel::HalfEdge*                 _outerHalfEdge;
-    std::vector<Dcel::HalfEdge*>    _innerHalfEdges;
+    HalfEdge*                 _outerHalfEdge;
+    std::vector<HalfEdge*>    _innerHalfEdges;
     double                          _area;
     unsigned int                    _id;
     int                             _flag;
@@ -303,10 +307,12 @@ protected:
     double signedVolume() const;
 };
 
-std::ostream& operator<< (std::ostream& inputStream, const Dcel::Face* f);
+std::ostream& operator<< (std::ostream& inputStream, const Face* f);
 
+} //namespace cg3::internal
 } //namespace cg3
 
+#include "dcel_face_iterators.h"
 #include "dcel_face_inline.tpp"
 
 #endif // CG3_DCEL_FACE_H

@@ -25,7 +25,7 @@ void dcelAlgorithms::smartColoring(Dcel& d)
 
     std::vector<Dcel::Face*> vectorF;
     vectorFaces(vectorF, d);
-    std::map<Dcel::Face*, Color> mapColors = smartColoring(vectorF, adjComp());
+    std::map<Dcel::Face*, Color> mapColors = cg3::smartColoring(vectorF, adjComp());
 
     for (std::pair<Dcel::Face*, Color> p : mapColors){
         (p.first)->setColor(p.second);

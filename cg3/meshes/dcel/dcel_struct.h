@@ -11,6 +11,9 @@
 #include <cg3/geometry/bounding_box.h>
 #include <cg3/utilities/color.h>
 #include <cg3/meshes/mesh.h>
+#include "dcel_vertex.h"
+#include "dcel_face.h"
+#include "dcel_iterators.h"
 
 #ifdef  CG3_EIGENMESH_DEFINED
 namespace cg3 {
@@ -62,8 +65,8 @@ namespace cg3 {
  * Dcel::Vertex and Dcel::Face classes have also other type of iterators (which are mostly circular iterators)
  * that allows to access to incident/adjacent elements. See the documentation for all the specific iterators.
  */
-
-class Dcel : public SerializableObject, public virtual Mesh
+template <class V = internal::Vertex, class HE = internal::HalfEdge, class F = internal::Face>
+class TemplatedDcel : public SerializableObject, public virtual Mesh
 {
 public:
 
@@ -71,20 +74,23 @@ public:
     * Associated Classes *
     **********************/
 
-    class Vertex;
+    /*class Vertex;
     class Face;
-    class HalfEdge;
+    class HalfEdge;*/
+    using Vertex = V;
+    using HalfEdge = HE;
+    using Face = F;
 
     /************
     * Iterators *
     *************/
 
-    class VertexIterator;
-    class ConstVertexIterator;
-    class HalfEdgeIterator;
-    class ConstHalfEdgeIterator;
-    class FaceIterator;
-    class ConstFaceIterator;
+    using VertexIterator = internal::DcelIterator<Vertex>;
+    using ConstVertexIterator = internal::ConstDcelIterator<Vertex>;
+    using HalfEdgeIterator = internal::DcelIterator<HalfEdge>;
+    using ConstHalfEdgeIterator = internal::ConstDcelIterator<HalfEdge>;
+    using FaceIterator = internal::DcelIterator<Face>;
+    using ConstFaceIterator = internal::ConstDcelIterator<Face>;
     class ConstVertexRangeBasedIterator;
     class ConstHalfEdgeRangeBasedIterator;
     class ConstFaceRangeBasedIterator;
@@ -96,19 +102,19 @@ public:
     * Constructors *
     ****************/
 
-    Dcel();
-    Dcel(const char* filename);
-    Dcel(const std::string& filename);
-    Dcel(const Dcel& dcel);
-    Dcel(Dcel&& dcel);
+    TemplatedDcel();
+    TemplatedDcel(const char* filename);
+    TemplatedDcel(const std::string& filename);
+    TemplatedDcel(const TemplatedDcel& dcel);
+    TemplatedDcel(TemplatedDcel&& dcel);
     #ifdef  CG3_EIGENMESH_DEFINED
-    Dcel(const cg3::SimpleEigenMesh &eigenMesh);
-    Dcel(const cg3::EigenMesh &eigenMesh);
+    TemplatedDcel(const cg3::SimpleEigenMesh &eigenMesh);
+    TemplatedDcel(const cg3::EigenMesh &eigenMesh);
     #endif // CG3_EIGENMESH_DEFINED
     #ifdef CG3_CINOLIB_DEFINED
-    Dcel(const cinolib::Trimesh<> &trimesh);
+    TemplatedDcel(const cinolib::Trimesh<> &trimesh);
     #endif //CG3_CINOLIB_DEFINED
-    ~Dcel();
+    ~TemplatedDcel();
 
     /************************
     * Public Inline Methods *
@@ -155,8 +161,7 @@ public:
     * Public Methods *
     ******************/
 
-    bool deleteVertex (Vertex* v);
-    bool deleteVertex (unsigned int vid);
+
     bool vertexBelongsToThis(const Vertex* v)               const;
     bool halfEdgeBelongsToThis(const HalfEdge* he)          const;
     bool faceBelongsToThis(const Face* f)                   const;
@@ -173,6 +178,8 @@ public:
     Vertex* addVertex(const Pointd& p = Pointd(), const Vec3& n = Vec3(), const Color &c = Color(128, 128, 128));
     HalfEdge* addHalfEdge();
     Face* addFace(const Vec3& n = Vec3(), const Color& c = Color(128,128,128));
+    bool deleteVertex (Vertex* v);
+    bool deleteVertex (unsigned int vid);
     bool deleteHalfEdge (HalfEdge* he);
     bool deleteHalfEdge (unsigned int heid);
     bool deleteFace (Face* f);
@@ -180,6 +187,7 @@ public:
     void invertFaceOrientations();
     void deleteUnreferencedVertices();
     void deleteDuplicatedVertices();
+    void updateFaceAreas();
     void updateFaceNormals();
     void updateVertexNormals();
     BoundingBox updateBoundingBox();
@@ -206,11 +214,11 @@ public:
     bool loadFromPly(const std::string& filename);
     bool loadFromDcelFile(const std::string& filename);
 
-    void swap(Dcel& d);
-    void merge(const Dcel& d);
-    void merge(Dcel&& d);
+    void swap(TemplatedDcel& d);
+    void merge(const TemplatedDcel& d);
+    void merge(TemplatedDcel&& d);
 
-    Dcel& operator= (Dcel dcel);
+    TemplatedDcel& operator= (TemplatedDcel dcel);
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
@@ -288,15 +296,17 @@ protected:
     #endif // CG3_EIGENMESH_DEFINED
     #ifdef CG3_CINOLIB_DEFINED
     void copyFrom(const cinolib::Trimesh<> &trimesh);
-    #endif //CG3_CINOLIB_DEFINED
+#endif //CG3_CINOLIB_DEFINED
 };
 
-void swap(Dcel& d1, Dcel& d2);
+template <class Vertex, class HalfEdge, class Face>
+void swap(TemplatedDcel<Vertex, HalfEdge, Face>& d1, TemplatedDcel<Vertex, HalfEdge, Face>& d2);
 
-Dcel merge(const Dcel& d1, const Dcel& d2);
+template <class Vertex, class HalfEdge, class Face>
+TemplatedDcel<Vertex, HalfEdge, Face> merge(const TemplatedDcel<Vertex, HalfEdge, Face>& d1, const TemplatedDcel<Vertex, HalfEdge, Face>& d2);
 
 } //namespace cg3
 
-#include "dcel_inline.tpp"
+#include "dcel_struct.tpp"
 
 #endif // CG3_DCEL_STRUCT_H

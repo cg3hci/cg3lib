@@ -9,9 +9,22 @@
 #ifndef CG3_DCEL_H
 #define CG3_DCEL_H
 
-#include "dcel_face_iterators.h"
-#include "dcel_vertex_iterators.h"
-#include "dcel_iterators.h"
+#include "dcel_struct.h"
+
+namespace cg3 {
+
+class Dcel : public TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>
+{
+public:
+    Dcel(const TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>& t) : TemplatedDcel(t) {};
+    Dcel(TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>&& t) : TemplatedDcel(t) {};
+    using TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>::TemplatedDcel; //inherits constructors
+    using TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>::operator=; //inherits assignment operators
+};
+
+}
+
+
 
 /**
  * @page DcelPage The cg3::Dcel Data Structure

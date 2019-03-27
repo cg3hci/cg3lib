@@ -5,8 +5,8 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#include "dcel_face_iterators.h"
-#include "dcel_vertex_iterators.h"
+#include "dcel_face.h"
+#include "dcel_vertex.h"
 #include <cg3/geometry/transformations.h>
 #include <cg3/geometry/utils3d.h>
 #ifdef CG3_CGAL_DEFINED
@@ -14,6 +14,7 @@
 #endif
 
 namespace cg3 {
+namespace internal {
 
 /****************
  * Constructors *
@@ -30,7 +31,7 @@ namespace cg3 {
  * - flag setted to 0.
  */
 #ifdef NDEBUG
-Dcel::Face::Face(Dcel& parent) :
+Face::Face(Dcel& parent) :
     parent(&parent),
     _outerHalfEdge(nullptr),
     _area(0),
@@ -40,7 +41,7 @@ Dcel::Face::Face(Dcel& parent) :
     _innerHalfEdges.clear();
 }
 #else
-Dcel::Face::Face() : _outerHalfEdge(nullptr), _area(0), _id(0), _flag(0){
+Face::Face() : _outerHalfEdge(nullptr), _area(0), _id(0), _flag(0){
     _innerHalfEdges.clear();
 }
 #endif
@@ -49,9 +50,9 @@ Dcel::Face::Face() : _outerHalfEdge(nullptr), _area(0), _id(0), _flag(0){
  * \~Italian
  * @brief Distruttore vuoto.
  *
- * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe Dcel::Face).
+ * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe Face).
  */
-Dcel::Face::~Face(void)
+Face::~Face(void)
 {
 }
 
@@ -65,7 +66,7 @@ Dcel::Face::~Face(void)
  * @brief Funzione che verifica se la faccia è un triangolo
  * @return True se la faccia è un triangolo, false altrimenti
  */
-bool Dcel::Face::isTriangle() const
+bool Face::isTriangle() const
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     assert(_outerHalfEdge->next() != nullptr && "HalfEdge's Next is null.");
@@ -73,9 +74,9 @@ bool Dcel::Face::isTriangle() const
     return (_outerHalfEdge == _outerHalfEdge->next()->next()->next());
 }
 
-bool Dcel::Face::isAdjacentTo(const Dcel::Face* ad) const
+bool Face::isAdjacentTo(const Face* ad) const
 {
-    for (const Dcel::HalfEdge* he : incidentHalfEdgeIterator()){
+    for (const HalfEdge* he : incidentHalfEdgeIterator()){
         assert(he != nullptr && "Next component of Previous HalfEdge is null.");
         assert(he->twin() != nullptr && "HalfEdge's Twin is null.");
         if (he->twin()->face() == ad) return true;
@@ -90,9 +91,9 @@ bool Dcel::Face::isAdjacentTo(const Dcel::Face* ad) const
     return false;
 }
 
-bool Dcel::Face::isIncidentTo(const Dcel::Vertex* v) const
+bool Face::isIncidentTo(const Vertex* v) const
 {
-    for (const Dcel::HalfEdge* he : v->outgoingHalfEdgeIterator()) {
+    for (const HalfEdge* he : v->outgoingHalfEdgeIterator()) {
         assert(he != nullptr && "Twin component of an HalfEdge is null.");
         if (he->face() == this) return true;
     }
@@ -102,26 +103,26 @@ bool Dcel::Face::isIncidentTo(const Dcel::Vertex* v) const
 /**
  * \~Italian
  * @brief Restituisce il numero di vertici incidenti alla faccia
- * @warning Utilizza Dcel::Face::ConstIncidentVertexIterator
+ * @warning Utilizza Face::ConstIncidentVertexIterator
  * @return Il numero di vertici incidenti alla faccia
  */
-int Dcel::Face::numberIncidentVertices() const
+int Face::numberIncidentVertices() const
 {
     int n = 0;
-    for (ConstIncidentVertexIterator vi = incidentVertexBegin(), vend = incidentVertexEnd(); vi != vend; ++vi) n++;
+    for (ConstIncidentVertexIterator vi = incidentVertexBegin(); vi != incidentVertexEnd(); ++vi) n++;
     return n;
 }
 
 /**
  * \~Italian
  * @brief Restituisce il numero di half edge incidenti alla faccia
- * @warning Utilizza Dcel::Face::ConstIncidentHalfEdgeIterator
+ * @warning Utilizza Face::ConstIncidentHalfEdgeIterator
  * @return Il numero di half edge incidenti alla faccia
  */
-int Dcel::Face::numberIncidentHalfEdges() const
+int Face::numberIncidentHalfEdges() const
 {
     int n = 0;
-    for (ConstIncidentHalfEdgeIterator hei = incidentHalfEdgeBegin(), hend = incidentHalfEdgeEnd(); hei != hend; ++hei) n++;
+    for (ConstIncidentHalfEdgeIterator hei = incidentHalfEdgeBegin(); hei !=incidentHalfEdgeEnd(); ++hei) n++;
     return n;
 }
 
@@ -131,14 +132,14 @@ int Dcel::Face::numberIncidentHalfEdges() const
  *
  * Il baricentro è calcolato come media dei vertici incidenti alla faccia.
  *
- * @warning Utilizza Dcel::Face::ConstIncidentVertexIterator
+ * @warning Utilizza Face::ConstIncidentVertexIterator
  * @return Il baricentro della faccia.
  */
-Pointd Dcel::Face::barycenter() const
+Pointd Face::barycenter() const
 {
-    int n = 0;
     Pointd p;
-    for (const Dcel::Vertex* v : incidentVertexIterator()){
+    int n = 0;
+    for (const Vertex* v : incidentVertexIterator()){
         assert (v != nullptr && "HalfEdge's to vertex is null.");
         p += v->coordinate();
         n++;
@@ -150,20 +151,20 @@ Pointd Dcel::Face::barycenter() const
 #ifdef CG3_CGAL_DEFINED
 /**
  * \~Italian
- * @brief Dcel::Face::getTriangulation
+ * @brief Face::getTriangulation
  * @param triangles
  */
-void Dcel::Face::triangulation(std::vector<std::array<const Dcel::Vertex*, 3> > &triangles) const
+void Face::triangulation(std::vector<std::array<const Vertex*, 3> > &triangles) const
 {
     // Taking all the coordinates on vectors
     std::vector<Pointd> borderCoordinates;
     std::vector< std::vector<Pointd> > innerBorderCoordinates;
-    std::map<Pointd, const Dcel::Vertex*> pointsVerticesMap;
-    for (const Dcel::HalfEdge* he : incidentHalfEdgeIterator()){
+    std::map<Pointd, const Vertex*> pointsVerticesMap;
+    for (const HalfEdge* he : incidentHalfEdgeIterator()){
         assert(he != nullptr && "Next component of Previous HalfEdge is null.");
         assert(he->fromVertex() != nullptr && "HalfEdge's from vertex is null.");
         borderCoordinates.push_back(he->fromVertex()->coordinate());
-        std::pair<const Dcel::Vertex*, const Dcel::Vertex*> pp;
+        std::pair<const Vertex*, const Vertex*> pp;
         pp.first = he->fromVertex();
         pp.second = he->toVertex();
         pointsVerticesMap[he->fromVertex()->coordinate()] = he->fromVertex();
@@ -172,14 +173,14 @@ void Dcel::Face::triangulation(std::vector<std::array<const Dcel::Vertex*, 3> > 
     if (hasHoles()){
         innerBorderCoordinates.reserve(numberInnerHalfEdges());
         int i = 0;
-        for (Dcel::Face::ConstInnerHalfEdgeIterator ihe = innerHalfEdgeBegin(), ihend = innerHalfEdgeEnd(); ihe != ihend; ++ihe, ++i){
-            const Dcel::HalfEdge* he = *ihe;
+        for (Face::ConstInnerHalfEdgeIterator ihe = innerHalfEdgeBegin(), ihend = innerHalfEdgeEnd(); ihe != ihend; ++ihe, ++i){
+            const HalfEdge* he = *ihe;
             std::vector<Pointd> inner;
-            for (Dcel::Face::ConstIncidentHalfEdgeIterator heit = incidentHalfEdgeBegin(he), hend = incidentHalfEdgeEnd(); heit != hend; ++heit) {
+            for (Face::ConstIncidentHalfEdgeIterator heit = incidentHalfEdgeBegin(he), hend = incidentHalfEdgeEnd(); heit != hend; ++heit) {
                 assert(*(heit) != nullptr && "Next component of Previous HalfEdge is null.");
                 assert((*heit)->fromVertex() != nullptr && "HalfEdge's from vertex is null.");
                 inner.push_back((*heit)->fromVertex()->coordinate());
-                std::pair<const Dcel::Vertex*, const Dcel::Vertex*> pp;
+                std::pair<const Vertex*, const Vertex*> pp;
                 pp.first = (*heit)->fromVertex();
                 pp.second = (*heit)->toVertex();
                 pointsVerticesMap[(*heit)->fromVertex()->coordinate()] = (*heit)->fromVertex();
@@ -203,10 +204,10 @@ void Dcel::Face::triangulation(std::vector<std::array<const Dcel::Vertex*, 3> > 
             assert(pointsVerticesMap.find(p1) != pointsVerticesMap.end() && "Triangulation vertex not founded on original face.");
             assert(pointsVerticesMap.find(p2) != pointsVerticesMap.end() && "Triangulation vertex not founded on original face.");
             assert(pointsVerticesMap.find(p3) != pointsVerticesMap.end() && "Triangulation vertex not founded on original face.");
-            const Dcel::Vertex* a = pointsVerticesMap[p1];
-            const Dcel::Vertex* b = pointsVerticesMap[p2];
-            const Dcel::Vertex* c = pointsVerticesMap[p3];
-            std::array<const Dcel::Vertex*, 3> tuple = {a, b, c};
+            const Vertex* a = pointsVerticesMap[p1];
+            const Vertex* b = pointsVerticesMap[p2];
+            const Vertex* c = pointsVerticesMap[p3];
+            std::array<const Vertex*, 3> tuple = {a, b, c};
             triangles.push_back(tuple);
     }
 }
@@ -218,7 +219,7 @@ void Dcel::Face::triangulation(std::vector<std::array<const Dcel::Vertex*, 3> > 
  * @return Una stringa rappresentativa della faccia
  * @todo Da aggiornare
  */
-std::string Dcel::Face::toString() const
+std::string Face::toString() const
 {
     std::stringstream ss;
 
@@ -237,21 +238,20 @@ std::string Dcel::Face::toString() const
 
 /**
  * \~Italian
- * @brief Funzione di inizializzazione di Dcel::Face::ConstIncidentVertexIterator.
+ * @brief Funzione di inizializzazione di Face::ConstIncidentVertexIterator.
  *
  * Permette di ciclare sui vertici incidenti alla faccia, partendo dal vertice start. \n
- * È meno efficiente rispetto a Dcel::Face::constIncidentVertexBegin(const Dcel::HalfEdge* start).
+ * È meno efficiente rispetto a Face::constIncidentVertexBegin(const HalfEdge* start).
  *
  * @param[in] start: vertice di partenza
  * @warning Se start non risulta essere incidente alla faccia (ossia non possiede un half edge incidente alla faccia),
  *          viene lanciata un'asserzione e il programma termina
- * @warning Utilizza Dcel::Vertex::ConstIncomingHalfEdgeIterator
+ * @warning Utilizza Vertex::ConstIncomingHalfEdgeIterator
  * @return Un iteratore che punta al vertice start
  */
-Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dcel::Vertex* start) const
+Face::ConstIncidentVertexIterator Face::incidentVertexBegin(const Vertex* start) const
 {
-    for (const Dcel::HalfEdge* he : start->incomingHalfEdgeIterator()) {
-    //for (Dcel::Vertex::ConstIncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd(); heit!= hend; ++heit) {
+    for (const HalfEdge* he : start->incomingHalfEdgeIterator()) {
         assert(he != nullptr && "Half Edge is null.");
         if (he->face() == this) return ConstIncidentVertexIterator(he, he, this);
     }
@@ -261,19 +261,19 @@ Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dc
 
 /**
  * \~Italian
- * @brief Funzione di inizializzazione di Dcel::Face::ConstIncidentVertexIterator.
+ * @brief Funzione di inizializzazione di Face::ConstIncidentVertexIterator.
  *
  * Permette di ciclare sui vertici incidenti alla faccia, partendo dal vertice start e fino al vertice end. \n
- * È meno efficiente rispetto a Dcel::Face::constIncidentVertexBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end).
+ * È meno efficiente rispetto a Face::constIncidentVertexBegin(const HalfEdge* start, const HalfEdge* end).
  *
  * @param[in] start: vertice di partenza
  * @param[in] end: vertice di arrivo, \b non \b compreso
  * @warning Se start e end non risultano essere incidenti alla faccia (ossia non possiedono un half edge incidente alla faccia),
  *          viene lanciata un'asserzione e il programma termina
- * @warning Utilizza Dcel::Vertex::ConstIncomingHalfEdgeIterator
+ * @warning Utilizza Vertex::ConstIncomingHalfEdgeIterator
  * @return Un iteratore che punta al vertice start
  */
-Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dcel::Vertex* start, const Dcel::Vertex* end) const
+Face::ConstIncidentVertexIterator Face::incidentVertexBegin(const Vertex* start, const Vertex* end) const
 {
     Vertex::ConstIncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd();
     while (heit!= hend && ((*heit)->face() != this)) {
@@ -281,7 +281,7 @@ Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dc
         assert((heit == hend || (*heit) != nullptr) && "Half Edge is null.");
     }
     assert((*heit)->face() == this && "Start vertex is not incident to iterated face.");
-    const Dcel::HalfEdge* s = *heit;
+    const HalfEdge* s = *heit;
     for (heit= end->incomingHalfEdgeBegin(), hend = end->incomingHalfEdgeEnd(); heit!= hend; ++heit){
         assert((*heit) != nullptr && "Half Edge is null.");
         if ((*heit)->face() == this) return ConstIncidentVertexIterator(s, *heit, this);
@@ -294,10 +294,10 @@ Dcel::Face::ConstIncidentVertexIterator Dcel::Face::incidentVertexBegin(const Dc
  * \~Italian
  * @brief Funzione che aggiorna la normale alla faccia
  * @warning Funziona se e solo se la faccia è un triangolo
- * @warning Utilizza Dcel::Face::ConstIncidentVertexIterator
+ * @warning Utilizza Face::ConstIncidentVertexIterator
  * @return La normale alla faccia aggiornata
  */
-Vec3 Dcel::Face::updateNormal()
+Vec3 Face::updateNormal()
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     Vertex* a = _outerHalfEdge->fromVertex();
@@ -355,10 +355,10 @@ Vec3 Dcel::Face::updateNormal()
  * \~Italian
  * @brief Funzione che aggiorna l'area della faccia
  * @warning Funziona se e solo se la faccia è un triangolo
- * @warning Utilizza Dcel::Face::ConstIncidentVertexIterator
+ * @warning Utilizza Face::ConstIncidentVertexIterator
  * @return L'area della faccia aggiornata
  */
-double Dcel::Face::updateArea()
+double Face::updateArea()
 {
     updateNormal();
     if (_normal != Vec3()) {
@@ -376,11 +376,11 @@ double Dcel::Face::updateArea()
         #ifdef CG3_CGAL_DEFINED
         else {
             _area = 0;
-            std::vector<std::array<const Dcel::Vertex*, 3> > t;
+            std::vector<std::array<const Vertex*, 3> > t;
 
             triangulation(t);
             for (unsigned int i = 0; i <t.size(); ++i){
-                std::array<const Dcel::Vertex*, 3> tr =  t[i];
+                std::array<const Vertex*, 3> tr =  t[i];
                 assert(tr[0] != nullptr && "Vertex is null.");
                 assert(tr[1] != nullptr && "Vertex is null.");
                 assert(tr[2] != nullptr && "Vertex is null.");
@@ -400,7 +400,7 @@ double Dcel::Face::updateArea()
  * @brief Funzione che rimuove un inner half edge dalla faccia
  * @param[in] iterator: iteratore che punta all'inner half edge da eliminare
  */
-void Dcel::Face::removeInnerHalfEdge(const Face::InnerHalfEdgeIterator& iterator)
+void Face::removeInnerHalfEdge(const Face::InnerHalfEdgeIterator& iterator)
 {
     _innerHalfEdges.erase(iterator);
 }
@@ -409,12 +409,12 @@ void Dcel::Face::removeInnerHalfEdge(const Face::InnerHalfEdgeIterator& iterator
  * \~Italian
  * @brief Funzione che rimuove un inner half edge dalla faccia
  *
- * È meno efficiente rispetto a Dcel::Face::removeInnerHalfEdge(const Face::innerHalfEdgeIterator &ihe).
+ * È meno efficiente rispetto a Face::removeInnerHalfEdge(const Face::innerHalfEdgeIterator &ihe).
  *
  * @param[in] halfEdge: inner half edge da eliminare
  * @return True se la rimozione è andata a buon fine, false altrimenti.
  */
-bool Dcel::Face::removeInnerHalfEdge(const Dcel::HalfEdge* halfEdge)
+bool Face::removeInnerHalfEdge(const HalfEdge* halfEdge)
 {
     InnerHalfEdgeIterator i = std::find(_innerHalfEdges.begin(), _innerHalfEdges.end(), halfEdge);
     if (i != _innerHalfEdges.end()){
@@ -424,11 +424,11 @@ bool Dcel::Face::removeInnerHalfEdge(const Dcel::HalfEdge* halfEdge)
     return false;
 }
 
-void Dcel::Face::removeAllInnerHalfEdges() {
+void Face::removeAllInnerHalfEdges() {
     _innerHalfEdges.clear();
 }
 
-void Dcel::Face::invertOrientation()
+void Face::invertOrientation()
 {
     HalfEdge* first = _outerHalfEdge;
     HalfEdge* actual = first;
@@ -477,21 +477,20 @@ void Dcel::Face::invertOrientation()
 
 /**
  * \~Italian
- * @brief Funzione di inizializzazione di Dcel::Face::IncidentVertexIterator.
+ * @brief Funzione di inizializzazione di Face::IncidentVertexIterator.
  *
  * Permette di ciclare sui vertici incidenti alla faccia, partendo dal vertice start. \n
- * È meno efficiente rispetto a Dcel::Face::incidentVertexBegin(const Dcel::HalfEdge* start).
+ * È meno efficiente rispetto a Face::incidentVertexBegin(const HalfEdge* start).
  *
  * @param[in] start: vertice di partenza
  * @warning Se start non risulta essere incidente alla faccia (ossia non possiede un half edge incidente alla faccia),
  *          viene lanciata un'asserzione e il programma termina
- * @warning Utilizza Dcel::Vertex::ConstIncomingHalfEdgeIterator
+ * @warning Utilizza Vertex::ConstIncomingHalfEdgeIterator
  * @return Un iteratore che punta al vertice start
  */
-Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex* start)
+Face::IncidentVertexIterator Face::incidentVertexBegin(Vertex* start)
 {
-    for (Dcel::HalfEdge* he : start->incomingHalfEdgeIterator()) {
-    //for (Dcel::Vertex::ConstIncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd(); heit!= hend; ++heit) {
+    for (HalfEdge* he : start->incomingHalfEdgeIterator()) {
         assert(he != nullptr && "Half Edge is null.");
         if (he->face() == this) return IncidentVertexIterator(he, he, this);
     }
@@ -501,19 +500,19 @@ Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex*
 
 /**
  * \~Italian
- * @brief Funzione di inizializzazione di Dcel::Face::IncidentVertexIterator.
+ * @brief Funzione di inizializzazione di Face::IncidentVertexIterator.
  *
  * Permette di ciclare sui vertici incidenti alla faccia, partendo dal vertice start e fino al vertice end. \n
- * È meno efficiente rispetto a Dcel::Face::incidentVertexBegin(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end).
+ * È meno efficiente rispetto a Face::incidentVertexBegin(const HalfEdge* start, const HalfEdge* end).
  *
  * @param[in] start: vertice di partenza
  * @param[in] end: vertice di arrivo, \b non \b compreso
  * @warning Se start e end non risultano essere incidenti alla faccia (ossia non possiedono un half edge incidente alla faccia),
  *          viene lanciata un'asserzione e il programma termina
- * @warning Utilizza Dcel::Vertex::ConstIncomingHalfEdgeIterator
+ * @warning Utilizza Vertex::ConstIncomingHalfEdgeIterator
  * @return Un iteratore che punta al vertice start
  */
-Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex* start, Dcel::Vertex* end)
+Face::IncidentVertexIterator Face::incidentVertexBegin(Vertex* start, Vertex* end)
 {
     Vertex::IncomingHalfEdgeIterator heit = start->incomingHalfEdgeBegin(), hend = start->incomingHalfEdgeEnd();
     while (heit!= hend && ((*heit)->face() != this)) {
@@ -521,7 +520,7 @@ Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex*
         assert((heit == hend || (*heit) != nullptr) && "Half Edge is null.");
     }
     assert((*heit)->face() == this && "Start vertex is not incident to iterated face.");
-    Dcel::HalfEdge* s = *heit;
+    HalfEdge* s = *heit;
     for (heit= end->incomingHalfEdgeBegin(), hend = end->incomingHalfEdgeEnd(); heit!= hend; ++heit){
         assert((*heit) != nullptr && "Half Edge is null.");
         if ((*heit)->face() == this) return IncidentVertexIterator(s, *heit, this);
@@ -540,7 +539,7 @@ Dcel::Face::IncidentVertexIterator Dcel::Face::incidentVertexBegin(Dcel::Vertex*
  * @brief Funzione che restituisce una stringa degli inner half edge
  * @return Una stringa rappresentativa degli inner half edge della faccia
  */
-std::string Dcel::Face::innerComponentsToString() const
+std::string Face::innerComponentsToString() const
 {
     std::stringstream ss;
     ss << "(";
@@ -564,13 +563,13 @@ std::string Dcel::Face::innerComponentsToString() const
  *
  * @todo generalize to polygons!
  */
-double Dcel::Face::signedVolume() const
+double Face::signedVolume() const
 {
     return vertex1()->coordinate().dot(vertex2()->coordinate().cross(vertex3()->coordinate())) / 6.0f;
 }
 
 
-std::ostream&operator<<(std::ostream& inputStream, const Dcel::Face* f)
+std::ostream&operator<<(std::ostream& inputStream, const Face* f)
 {
     if (f == nullptr)
         inputStream << "null; ";
@@ -579,4 +578,5 @@ std::ostream&operator<<(std::ostream& inputStream, const Dcel::Face* f)
     return inputStream;
 }
 
+}
 } //namespace cg3

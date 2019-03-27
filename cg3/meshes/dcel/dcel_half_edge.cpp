@@ -5,11 +5,13 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#include "dcel_face_iterators.h"
-#include "dcel_vertex_iterators.h"
+#include "dcel_half_edge.h"
+#include "dcel_face.h"
+#include "dcel_vertex.h"
 #include <cg3/utilities/utils.h>
 
 namespace cg3 {
+namespace internal {
 
 /****************
  * Constructors *
@@ -30,7 +32,7 @@ namespace cg3 {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-Dcel::HalfEdge::HalfEdge(Dcel& parent) :
+HalfEdge::HalfEdge(Dcel& parent) :
     parent(&parent),
     _fromVertex(nullptr),
     _toVertex(nullptr),
@@ -43,7 +45,7 @@ Dcel::HalfEdge::HalfEdge(Dcel& parent) :
 {
 }
 #else
-Dcel::HalfEdge::HalfEdge() :
+HalfEdge::HalfEdge() :
     _fromVertex(nullptr),
     _toVertex(nullptr),
     _twin(nullptr),
@@ -60,13 +62,13 @@ Dcel::HalfEdge::HalfEdge() :
  * \~Italian
  * @brief Distruttore vuoto.
  *
- * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe Dcel::HalfEdge).
+ * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe HalfEdge).
  */
-Dcel::HalfEdge::~HalfEdge(void)
+HalfEdge::~HalfEdge(void)
 {
 }
 
-bool Dcel::HalfEdge::isConvex() const {
+bool HalfEdge::isConvex() const {
     if ((face()->normal()) == (twin()->face()->normal()))
         return true;
     Vec3 dir1 = face()->normal().cross(twin()->face()->normal());
@@ -90,14 +92,14 @@ bool Dcel::HalfEdge::isConvex() const {
  * @note Non verifica effettivamente che l'half edge sia raggiungibile ciclando sugli inner half edge della
  *       faccia incidente.
  *
- * @warning Utilizza Dcel::Face::constIncidentHalfEdgeIterator
+ * @warning Utilizza Face::constIncidentHalfEdgeIterator
  * @return True se l'half edge è un outer component della sua faccia incidente.
  */
-bool Dcel::HalfEdge::isOuterComponent() const
+bool HalfEdge::isOuterComponent() const
 {
     if (_face->numberInnerHalfEdges() == 0) return true;
-    for (Dcel::Face::ConstIncidentHalfEdgeIterator heit = _face->incidentHalfEdgeBegin(); heit != _face->incidentHalfEdgeEnd(); ++heit)
-        if (*heit == this) return true;
+//    for (Face::ConstIncidentHalfEdgeIterator heit = _face->incidentHalfEdgeBegin(); heit != _face->incidentHalfEdgeEnd(); ++heit)
+//        if (*heit == this) return true;
     return false;
 }
 
@@ -106,7 +108,7 @@ bool Dcel::HalfEdge::isOuterComponent() const
  * @brief Funzione che restituisce la lunghezza dell'half edge
  * @return La distanza tra il from e il to vertex dell'half edge
  */
-float Dcel::HalfEdge::length() const
+float HalfEdge::length() const
 {
     return _fromVertex->coordinate().dist(_toVertex->coordinate());
 }
@@ -117,7 +119,7 @@ float Dcel::HalfEdge::length() const
  * @return Una stringa rappresentativa dell'half edge
  * @todo Da aggiornare
  */
-std::string Dcel::HalfEdge::toString() const
+std::string HalfEdge::toString() const
 {
     std::stringstream ss;
 
@@ -144,4 +146,5 @@ std::string Dcel::HalfEdge::toString() const
     return s1;
 }
 
+} //namespace cg3::internal
 } //namespace cg3

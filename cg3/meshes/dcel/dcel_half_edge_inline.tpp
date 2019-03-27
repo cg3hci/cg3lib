@@ -8,6 +8,7 @@
 #include "dcel_half_edge.h"
 
 namespace cg3 {
+namespace internal {
 
 /*************************
  * Public Inline Methods *
@@ -18,7 +19,7 @@ namespace cg3 {
  * @brief Restituisce l'id identificativo nella Dcel dell'half edge
  * @return L'id dell'a faccia'half edge
  */
-inline unsigned int Dcel::HalfEdge::id() const
+inline unsigned int HalfEdge::id() const
 {
     return _id;
 }
@@ -28,7 +29,7 @@ inline unsigned int Dcel::HalfEdge::id() const
  * @brief Restituisce il flag associato all'a faccia'half edge
  * @return Il flag dell'half edge
  */
-inline int Dcel::HalfEdge::flag() const
+inline int HalfEdge::flag() const
 {
     return _flag;
 }
@@ -38,7 +39,7 @@ inline int Dcel::HalfEdge::flag() const
  * @brief Restituisce il puntatore al vertice costante di origine dell'half edge
  * @return Il from vertex dell'half edge
  */
-inline const Dcel::Vertex* Dcel::HalfEdge::fromVertex() const
+inline const Vertex* HalfEdge::fromVertex() const
 {
     return _fromVertex;
 }
@@ -48,7 +49,7 @@ inline const Dcel::Vertex* Dcel::HalfEdge::fromVertex() const
  * @brief Restituisce il puntatore al vertice costante di destinazione dell'half edge
  * @return Il to vertex dell'half edge
  */
-inline const Dcel::Vertex* Dcel::HalfEdge::toVertex() const
+inline const Vertex* HalfEdge::toVertex() const
 {
     return _toVertex;
 }
@@ -58,7 +59,7 @@ inline const Dcel::Vertex* Dcel::HalfEdge::toVertex() const
  * @brief Restituisce puntatore all'half edge costante gemello dell'half edge
  * @return Il twin dell'half edge
  */
-inline const Dcel::HalfEdge* Dcel::HalfEdge::twin() const
+inline const HalfEdge* HalfEdge::twin() const
 {
     return _twin;
 }
@@ -68,7 +69,7 @@ inline const Dcel::HalfEdge* Dcel::HalfEdge::twin() const
  * @brief Restituisce puntatore all'half edge costante precedente dell'half edge
  * @return Il prev dell'half edge
  */
-inline const Dcel::HalfEdge* Dcel::HalfEdge::prev() const
+inline const HalfEdge* HalfEdge::prev() const
 {
     return _prev;
 }
@@ -78,7 +79,7 @@ inline const Dcel::HalfEdge* Dcel::HalfEdge::prev() const
  * @brief Restituisce puntatore all'half edge costante successivo dell'half edge
  * @return Il next dell'half edge
  */
-inline const Dcel::HalfEdge* Dcel::HalfEdge::next() const
+inline const HalfEdge* HalfEdge::next() const
 {
     return _next;
 }
@@ -88,7 +89,7 @@ inline const Dcel::HalfEdge* Dcel::HalfEdge::next() const
  * @brief Restituisce puntatore alla faccia costante incidente all'half edge
  * @return La faccia incidente all'half edge
  */
-inline const Dcel::Face* Dcel::HalfEdge::face() const
+inline const Face* HalfEdge::face() const
 {
     return _face;
 }
@@ -98,7 +99,7 @@ inline const Dcel::Face* Dcel::HalfEdge::face() const
  * \~Italian
  * @brief Lancia un'asserzione se il vertice di origine è nullptr
  */
-inline void Dcel::HalfEdge::checkFromVertex() const
+inline void HalfEdge::checkFromVertex() const
 {
     if (_fromVertex == nullptr){
         std::cerr << "ALERT! Half Edge "<< _id << ": from_vertex is nullptr";
@@ -110,7 +111,7 @@ inline void Dcel::HalfEdge::checkFromVertex() const
  * \~Italian
  * @brief Lancia un'asserzione se il vertice di destinazione è nullptr
  */
-inline void Dcel::HalfEdge::checkToVertex() const
+inline void HalfEdge::checkToVertex() const
 {
     if (_toVertex == nullptr){
         std::cerr << "ALERT! Half Edge "<< _id << ": to_vertex is nullptr";
@@ -122,7 +123,7 @@ inline void Dcel::HalfEdge::checkToVertex() const
  * \~Italian
  * @brief Lancia un'asserzione se l'half edge gemello è nullptr
  */
-inline void Dcel::HalfEdge::checkTwin() const
+inline void HalfEdge::checkTwin() const
 {
     if (_twin == nullptr){
         std::cerr << "ALERT! Half Edge "<< _id << ": twin is nullptr";
@@ -134,7 +135,7 @@ inline void Dcel::HalfEdge::checkTwin() const
  * \~Italian
  * @brief Lancia un'asserzione se l'half edge precedente è nullptr
  */
-inline void Dcel::HalfEdge::checkPrev() const
+inline void HalfEdge::checkPrev() const
 {
     if (_prev == nullptr){
         std::cerr << "ALERT! Half Edge "<< _id << ": prev is nullptr";
@@ -146,7 +147,7 @@ inline void Dcel::HalfEdge::checkPrev() const
  * \~Italian
  * @brief Lancia un'asserzione se l'half edge successivo è nullptr
  */
-inline void Dcel::HalfEdge::checkNext() const
+inline void HalfEdge::checkNext() const
 {
     if (_next == nullptr){
         std::cerr << "ALERT! Half Edge "<< _id << ": next is nullptr";
@@ -158,7 +159,7 @@ inline void Dcel::HalfEdge::checkNext() const
  * \~Italian
  * @brief Lancia un'asserzione se la faccia incidente è nullptr
  */
-inline void Dcel::HalfEdge::checkFace() const
+inline void HalfEdge::checkFace() const
 {
     if (_face == nullptr){
         std::cerr << "ALERT! Half Edge "<< _id << ": face is nullptr";
@@ -171,7 +172,7 @@ inline void Dcel::HalfEdge::checkFace() const
  * \~Italian
  * @brief Setta il flag dell'half edge a 1
  */
-inline void Dcel::HalfEdge::setFlag()
+inline void HalfEdge::setFlag()
 {
     _flag = 1;
 }
@@ -181,7 +182,7 @@ inline void Dcel::HalfEdge::setFlag()
  * @brief Setta il flag dell'half edge
  * @param[in] new_flag: il valore del flag che verrà settato
  */
-inline void Dcel::HalfEdge::setFlag(int new_flag)
+inline void HalfEdge::setFlag(int new_flag)
 {
     _flag = new_flag;
 }
@@ -190,7 +191,7 @@ inline void Dcel::HalfEdge::setFlag(int new_flag)
  * \~Italian
  * @brief Setta il flag dell'half edge a 0
  */
-inline void Dcel::HalfEdge::resetFlag()
+inline void HalfEdge::resetFlag()
 {
     _flag = 0;
 }
@@ -200,7 +201,7 @@ inline void Dcel::HalfEdge::resetFlag()
  * @brief Restituisce il puntatore al vertice di origine dell'half edge
  * @return Il from vertex dell'half edge
  */
-inline Dcel::Vertex* Dcel::HalfEdge::fromVertex()
+inline Vertex* HalfEdge::fromVertex()
 {
     return _fromVertex;
 }
@@ -210,7 +211,7 @@ inline Dcel::Vertex* Dcel::HalfEdge::fromVertex()
  * @brief Restituisce il puntatore al vertice di destinazione dell'half edge
  * @return Il to vertex dell'half edge
  */
-inline Dcel::Vertex* Dcel::HalfEdge::toVertex()
+inline Vertex* HalfEdge::toVertex()
 {
     return _toVertex;
 }
@@ -220,7 +221,7 @@ inline Dcel::Vertex* Dcel::HalfEdge::toVertex()
  * @brief Restituisce puntatore all'half edge gemello dell'half edge
  * @return Il twin dell'half edge
  */
-inline Dcel::HalfEdge* Dcel::HalfEdge::twin()
+inline HalfEdge* HalfEdge::twin()
 {
     return _twin;
 }
@@ -230,7 +231,7 @@ inline Dcel::HalfEdge* Dcel::HalfEdge::twin()
  * @brief Restituisce puntatore all'half edge precedente dell'half edge
  * @return Il prev dell'half edge
  */
-inline Dcel::HalfEdge* Dcel::HalfEdge::prev()
+inline HalfEdge* HalfEdge::prev()
 {
     return _prev;
 }
@@ -240,7 +241,7 @@ inline Dcel::HalfEdge* Dcel::HalfEdge::prev()
  * @brief Restituisce puntatore all'half edge successivo dell'half edge
  * @return Il next dell'half edge
  */
-inline Dcel::HalfEdge* Dcel::HalfEdge::next()
+inline HalfEdge* HalfEdge::next()
 {
     return _next;
 }
@@ -250,7 +251,7 @@ inline Dcel::HalfEdge* Dcel::HalfEdge::next()
  * @brief Restituisce puntatore alla faccia incidente all'half edge
  * @return La faccia incidente all'half edge
  */
-inline Dcel::Face* Dcel::HalfEdge::face()
+inline Face* HalfEdge::face()
 {
     return _face;
 }
@@ -260,7 +261,7 @@ inline Dcel::Face* Dcel::HalfEdge::face()
  * @brief Setta il vertice di origine
  * @param[in] newFromVertex: riferimento al from vertex che verrà assegnato all'half edge
  */
-inline void Dcel::HalfEdge::setFromVertex(Dcel::Vertex* newFromVertex)
+inline void HalfEdge::setFromVertex(Vertex* newFromVertex)
 {
     _fromVertex = newFromVertex;
 }
@@ -270,7 +271,7 @@ inline void Dcel::HalfEdge::setFromVertex(Dcel::Vertex* newFromVertex)
  * @brief Setta il vertice di destinazione
  * @param[in] newToVertex: riferimento al to vertex che verrà assegnato all'half edge
  */
-inline void Dcel::HalfEdge::setToVertex(Dcel::Vertex* newToVertex)
+inline void HalfEdge::setToVertex(Vertex* newToVertex)
 {
     _toVertex = newToVertex;
 }
@@ -280,7 +281,7 @@ inline void Dcel::HalfEdge::setToVertex(Dcel::Vertex* newToVertex)
  * @brief Setta l'half edge gemello
  * @param[in] newTwin: riferimento al twin che verrà assegnato all'half edge
  */
-inline void Dcel::HalfEdge::setTwin(Dcel::HalfEdge* newTwin)
+inline void HalfEdge::setTwin(HalfEdge* newTwin)
 {
     _twin = newTwin;
 }
@@ -290,7 +291,7 @@ inline void Dcel::HalfEdge::setTwin(Dcel::HalfEdge* newTwin)
  * @brief Setta l'half edge precedente
  * @param[in] newPrev: riferimento al prev che verrà assegnato all'half edge
  */
-inline void Dcel::HalfEdge::setPrev(Dcel::HalfEdge* newPrev)
+inline void HalfEdge::setPrev(HalfEdge* newPrev)
 {
     _prev = newPrev;
 }
@@ -300,7 +301,7 @@ inline void Dcel::HalfEdge::setPrev(Dcel::HalfEdge* newPrev)
  * @brief Setta l'half edge successivo
  * @param[in] newNext: riferimento al next che verrà assegnato all'half edge
  */
-inline void Dcel::HalfEdge::setNext(Dcel::HalfEdge* newNext)
+inline void HalfEdge::setNext(HalfEdge* newNext)
 {
     _next = newNext;
 }
@@ -310,7 +311,7 @@ inline void Dcel::HalfEdge::setNext(Dcel::HalfEdge* newNext)
  * @brief Setta la faccia incidente
  * @param[in] newFace:riferimento alla faccia che verrà assegnato all'half edge
  */
-inline void Dcel::HalfEdge::setFace(Dcel::Face* newFace)
+inline void HalfEdge::setFace(Face* newFace)
 {
     _face = newFace;
 }
@@ -327,9 +328,10 @@ inline void Dcel::HalfEdge::setFace(Dcel::Face* newFace)
  *
  * @param[in] id: nuovo id che verrà assegnato all'half edge
  */
-inline void Dcel::HalfEdge::setId(unsigned int id)
+inline void HalfEdge::setId(unsigned int id)
 {
     this->_id = id;
 }
 
-}
+} //namespace cg3::internal
+} //namespace cg3
