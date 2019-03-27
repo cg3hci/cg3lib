@@ -529,6 +529,16 @@ Face::IncidentVertexIterator Face::incidentVertexBegin(Vertex* start, Vertex* en
     return IncidentVertexIterator();
 }
 
+void Face::serialize(std::ofstream& binaryFile) const
+{
+    CG3_SUPPRESS_WARNING(binaryFile);
+}
+
+void Face::deserialize(std::ifstream& binaryFile)
+{
+    CG3_SUPPRESS_WARNING(binaryFile);
+}
+
 
 /*********************
  * Protected Methods *

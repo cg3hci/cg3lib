@@ -233,5 +233,15 @@ HalfEdge* Vertex::findSharedHalfEdge(const Vertex* vertex)
     return nullptr;
 }
 
+void Vertex::serialize(std::ofstream& binaryFile) const
+{
+    CG3_SUPPRESS_WARNING(binaryFile);
+}
+
+void Vertex::deserialize(std::ifstream& binaryFile)
+{
+    CG3_SUPPRESS_WARNING(binaryFile);
+}
+
 }
 }

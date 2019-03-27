@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <cg3/meshes/mesh.h>
+#include <cg3/io/serializable_object.h>
 
 #ifdef NDEBUG
 #include <cg3/geometry/point.h>
@@ -78,7 +79,7 @@ protected:
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class HalfEdge
+class HalfEdge : public cg3::SerializableObject
 {
     template <class V, class HE, class F>
     friend class cg3::TemplatedDcel;
@@ -130,6 +131,10 @@ public:
     bool isOuterComponent() const;
     float length()       const;
     std::string toString()  const;
+
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
     #ifdef CG3_OLD_NAMES_COMPATIBILITY
     inline unsigned int getId() const {return id();}

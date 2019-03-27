@@ -146,5 +146,25 @@ std::string HalfEdge::toString() const
     return s1;
 }
 
+/**
+ * @brief The serialize method does nothing because everything is done by the
+ * cg3::TemplatedDcel class. Must be implemented if the half edge is inherited.
+ * @param binaryFile
+ */
+void HalfEdge::serialize(std::ofstream& binaryFile) const
+{
+    CG3_SUPPRESS_WARNING(binaryFile);
+}
+
+/**
+ * @brief The deserialize method does nothing because everything is done by the
+ * cg3::TemplatedDcel class. Must be implemented if the half edge is inherited.
+ * @param binaryFile
+ */
+void HalfEdge::deserialize(std::ifstream& binaryFile)
+{
+    CG3_SUPPRESS_WARNING(binaryFile);
+}
+
 } //namespace cg3::internal
 } //namespace cg3

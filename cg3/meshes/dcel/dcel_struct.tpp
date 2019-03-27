@@ -2055,6 +2055,14 @@ void TemplatedDcel<V, HE, F>::serialize(std::ofstream& binaryFile) const
             cg3::serialize(idhe, binaryFile);
         }
     }
+
+    //serialization of other infos contained in Vertices, Half Edges and Faces
+    for (const Vertex* v: vertexIterator())
+        v->serialize(binaryFile);
+    for (const HalfEdge* he: halfEdgeIterator())
+        he->serialize(binaryFile);
+    for (const Face* f: faceIterator())
+        f->serialize(binaryFile);
 }
 
 template <class V, class HE, class F>
@@ -2170,6 +2178,14 @@ void TemplatedDcel<V, HE, F>::deserialize(std::ifstream& binaryFile)
             he->setNext(tmp.halfEdge(a[4]));
             he->setFace(tmp.face(a[5]));
         }
+
+        //deserialization of other infos contained in Vertices, Half Edges and Faces
+        for (Vertex* v: tmp.vertexIterator())
+            v->deserialize(binaryFile);
+        for (HalfEdge* he: tmp.halfEdgeIterator())
+            he->deserialize(binaryFile);
+        for (Face* f: tmp.faceIterator())
+            f->deserialize(binaryFile);
 
         *this = std::move(tmp);
     }

@@ -81,7 +81,7 @@ namespace internal {
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Face {
+class Face : public cg3::SerializableObject {
 
     template <class V, class HE, class F>
     friend class cg3::TemplatedDcel;
@@ -237,6 +237,10 @@ public:
     AdjacentFaceRangeBasedIterator adjacentFaceIterator();
     IncidentHalfEdgeRangeBasedIterator incidentHalfEdgeIterator();
     IncidentVertexRangeBasedIterator incidentVertexIterator();
+
+    // SerializableObject interface
+    void serialize(std::ofstream& binaryFile) const;
+    void deserialize(std::ifstream& binaryFile);
 
     #ifdef CG3_OLD_NAMES_COMPATIBILITY
     inline unsigned int getId() const {return id();}
