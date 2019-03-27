@@ -13,7 +13,6 @@
 #include <cg3/utilities/color.h>
 
 namespace cg3 {
-namespace internal {
 
 /**
  * \~Italian
@@ -275,7 +274,7 @@ protected:
     ****************/
 
     #ifdef NDEBUG
-    Face(DcelData &parent);
+    Face(internal::DcelData &parent);
     #else
     Face();
     #endif
@@ -286,7 +285,7 @@ protected:
     **************/
 
     #ifdef NDEBUG
-    DcelData *parent;
+    internal::DcelData *parent;
     #else
     Vec3                            _normal;
     Color                           _color;
@@ -313,7 +312,6 @@ protected:
 
 std::ostream& operator<< (std::ostream& inputStream, const Face* f);
 
-} //namespace cg3::internal
 } //namespace cg3
 
 #include "dcel_face_iterators.h"

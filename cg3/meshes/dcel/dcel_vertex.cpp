@@ -9,7 +9,6 @@
 #include "dcel_face.h"
 
 namespace cg3 {
-namespace internal {
 
 /****************
  * Constructors *
@@ -28,7 +27,7 @@ namespace internal {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-Vertex::Vertex(DcelData& parent) :
+Vertex::Vertex(internal::DcelData& parent) :
     parent(&parent),
     _incidentHalfEdge(nullptr),
     _cardinality(0),
@@ -243,5 +242,4 @@ void Vertex::deserialize(std::ifstream& binaryFile)
     CG3_SUPPRESS_WARNING(binaryFile);
 }
 
-}
 }

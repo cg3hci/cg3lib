@@ -13,13 +13,13 @@
 
 namespace cg3 {
 
-class Dcel : public TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>
+class Dcel : public TemplatedDcel<Vertex, HalfEdge, Face>
 {
 public:
-    Dcel(const TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>& t) : TemplatedDcel(t) {};
-    Dcel(TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>&& t) : TemplatedDcel(t) {};
-    using TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>::TemplatedDcel; //inherits constructors
-    using TemplatedDcel<internal::Vertex, internal::HalfEdge, internal::Face>::operator=; //inherits assignment operators
+    Dcel(const TemplatedDcel<Vertex, HalfEdge, Face>& t) : TemplatedDcel(t) {};
+    Dcel(TemplatedDcel<Vertex, HalfEdge, Face>&& t) : TemplatedDcel(t) {};
+    using TemplatedDcel<Vertex, HalfEdge, Face>::TemplatedDcel; //inherits constructors
+    using TemplatedDcel<Vertex, HalfEdge, Face>::operator=; //inherits assignment operators
 };
 
 }

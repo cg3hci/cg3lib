@@ -8,7 +8,6 @@
 #include "dcel_vertex.h"
 
 namespace cg3 {
-namespace internal {
 
 class Vertex::GenericIterator
 {
@@ -796,5 +795,4 @@ private:
     Vertex *v;
 };
 
-}
 } //namespace cg3

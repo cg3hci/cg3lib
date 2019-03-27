@@ -23,16 +23,16 @@ namespace cg3 {
 template <class V, class HE, class F>
 class TemplatedDcel;
 
-namespace internal {
-
 class HalfEdge;
 class Vertex;
 class Face;
+
+namespace internal {
 class DcelData : public virtual cg3::Mesh
 {
-    friend class Vertex;
-    friend class HalfEdge;
-    friend class Face;
+    friend class cg3::Vertex;
+    friend class cg3::HalfEdge;
+    friend class cg3::Face;
 protected:
     //Data
     #ifdef NDEBUG
@@ -43,6 +43,7 @@ protected:
     std::vector<Color> faceColors;
     #endif
 };
+}
 
 /**
  * \~Italian
@@ -161,7 +162,7 @@ protected:
     ****************/
 
     #ifdef NDEBUG
-    HalfEdge(DcelData &parent);
+    HalfEdge(internal::DcelData &parent);
     #else
     HalfEdge();
     #endif
@@ -172,7 +173,7 @@ protected:
     **************/
 
     #ifdef NDEBUG
-    DcelData* parent;
+    internal::DcelData* parent;
     #endif
     Vertex* 	_fromVertex; /**< \~Italian @brief Vertice di origine dell'half edge */
     Vertex* 	_toVertex;   /**< \~Italian @brief Vertice di destinazione dell'half edge */
@@ -190,7 +191,6 @@ protected:
     void setId(unsigned int _id);
 };
 
-} //namespace cg3::internal
 } //namespace cg3
 
 #include "dcel_half_edge_inline.tpp"

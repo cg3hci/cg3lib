@@ -13,7 +13,6 @@
 #include "dcel_half_edge.h"
 
 namespace cg3 {
-namespace internal {
 
 /**
  * \~Italian
@@ -200,7 +199,7 @@ protected:
     ****************/
 
     #ifdef NDEBUG
-    Vertex(DcelData& parent);
+    Vertex(internal::DcelData& parent);
     #else
     Vertex();
     #endif
@@ -214,7 +213,7 @@ protected:
     **************/
 
     #ifdef NDEBUG
-    DcelData* parent;
+    internal::DcelData* parent;
     #else
     Pointd          _coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
     Vec3            _normal;             /**< \~Italian @brief Vettore normale al vertice */
@@ -232,7 +231,6 @@ protected:
     void setId(unsigned int _id);
 };
 
-} //namespace cg3::internal
 } //namespace cg3
 
 #include "dcel_vertex_iterators.h"

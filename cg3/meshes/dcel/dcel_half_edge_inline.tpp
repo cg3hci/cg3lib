@@ -8,7 +8,6 @@
 #include "dcel_half_edge.h"
 
 namespace cg3 {
-namespace internal {
 
 /*************************
  * Public Inline Methods *
@@ -333,5 +332,4 @@ inline void HalfEdge::setId(unsigned int id)
     this->_id = id;
 }
 
-} //namespace cg3::internal
 } //namespace cg3

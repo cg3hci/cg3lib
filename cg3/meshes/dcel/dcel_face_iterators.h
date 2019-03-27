@@ -7,7 +7,6 @@
 #include "dcel_face.h"
 
 namespace cg3 {
-namespace internal {
 
 /**
  * \~Italian
@@ -557,5 +556,4 @@ class Face::IncidentVertexRangeBasedIterator
         Face *f;
 };
 
-} //namespace cg3::internal
 } //namespace cg3

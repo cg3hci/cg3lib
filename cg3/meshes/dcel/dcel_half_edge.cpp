@@ -11,7 +11,6 @@
 #include <cg3/utilities/utils.h>
 
 namespace cg3 {
-namespace internal {
 
 /****************
  * Constructors *
@@ -32,7 +31,7 @@ namespace internal {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-HalfEdge::HalfEdge(DcelData& parent) :
+HalfEdge::HalfEdge(internal::DcelData& parent) :
     parent(&parent),
     _fromVertex(nullptr),
     _toVertex(nullptr),
@@ -166,5 +165,4 @@ void HalfEdge::deserialize(std::ifstream& binaryFile)
     CG3_SUPPRESS_WARNING(binaryFile);
 }
 
-} //namespace cg3::internal
 } //namespace cg3

@@ -8,7 +8,6 @@
 #include "dcel_vertex.h"
 
 namespace cg3 {
-namespace internal {
 
 /*************************
  * Public Inline Methods *
@@ -1035,5 +1034,4 @@ inline Vertex::IncidentFaceRangeBasedIterator Vertex::incidentFaceIterator()
     return IncidentFaceRangeBasedIterator(this);
 }
 
-}
 }

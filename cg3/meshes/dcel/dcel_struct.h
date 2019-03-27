@@ -65,7 +65,7 @@ namespace cg3 {
  * Dcel::Vertex and Dcel::Face classes have also other type of iterators (which are mostly circular iterators)
  * that allows to access to incident/adjacent elements. See the documentation for all the specific iterators.
  */
-template <class V = internal::Vertex, class HE = internal::HalfEdge, class F = internal::Face>
+template <class V = Vertex, class HE = HalfEdge, class F = Face>
 class TemplatedDcel : public SerializableObject, public internal::DcelData
 {
 public:

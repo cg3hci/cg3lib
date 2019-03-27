@@ -14,7 +14,6 @@
 #endif
 
 namespace cg3 {
-namespace internal {
 
 /****************
  * Constructors *
@@ -588,5 +587,4 @@ std::ostream&operator<<(std::ostream& inputStream, const Face* f)
     return inputStream;
 }
 
-}
 } //namespace cg3
