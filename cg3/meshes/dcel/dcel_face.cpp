@@ -31,7 +31,7 @@ namespace internal {
  * - flag setted to 0.
  */
 #ifdef NDEBUG
-Face::Face(Dcel& parent) :
+Face::Face(DcelData& parent) :
     parent(&parent),
     _outerHalfEdge(nullptr),
     _area(0),
@@ -361,7 +361,7 @@ Vec3 Face::updateNormal()
 double Face::updateArea()
 {
     updateNormal();
-    if (_normal != Vec3()) {
+    if (normal() != Vec3()) {
         if (isTriangle()) {
             assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
             assert(_outerHalfEdge->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");

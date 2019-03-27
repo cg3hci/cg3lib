@@ -32,7 +32,7 @@ namespace internal {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-HalfEdge::HalfEdge(Dcel& parent) :
+HalfEdge::HalfEdge(DcelData& parent) :
     parent(&parent),
     _fromVertex(nullptr),
     _toVertex(nullptr),

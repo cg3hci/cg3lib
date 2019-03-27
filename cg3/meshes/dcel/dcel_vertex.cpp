@@ -28,7 +28,7 @@ namespace internal {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-Vertex::Vertex(Dcel& parent) :
+Vertex::Vertex(DcelData& parent) :
     parent(&parent),
     _incidentHalfEdge(nullptr),
     _cardinality(0),

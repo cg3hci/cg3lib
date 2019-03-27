@@ -24,8 +24,6 @@ public:
 
 }
 
-
-
 /**
  * @page DcelPage The cg3::Dcel Data Structure
  *

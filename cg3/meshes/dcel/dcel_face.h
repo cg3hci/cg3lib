@@ -271,7 +271,7 @@ protected:
     ****************/
 
     #ifdef NDEBUG
-    Face(Dcel &parent);
+    Face(DcelData &parent);
     #else
     Face();
     #endif
@@ -282,7 +282,7 @@ protected:
     **************/
 
     #ifdef NDEBUG
-    Dcel *parent;
+    DcelData *parent;
     #else
     Vec3                            _normal;
     Color                           _color;

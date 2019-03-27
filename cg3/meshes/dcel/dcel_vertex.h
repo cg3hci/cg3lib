@@ -196,7 +196,7 @@ protected:
     ****************/
 
     #ifdef NDEBUG
-    Vertex(Dcel& parent);
+    Vertex(DcelData& parent);
     #else
     Vertex();
     #endif
@@ -210,7 +210,7 @@ protected:
     **************/
 
     #ifdef NDEBUG
-    Dcel* parent;
+    DcelData* parent;
     #else
     Pointd          _coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
     Vec3            _normal;             /**< \~Italian @brief Vettore normale al vertice */

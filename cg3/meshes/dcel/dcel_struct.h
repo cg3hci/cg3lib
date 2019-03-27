@@ -66,7 +66,7 @@ namespace cg3 {
  * that allows to access to incident/adjacent elements. See the documentation for all the specific iterators.
  */
 template <class V = internal::Vertex, class HE = internal::HalfEdge, class F = internal::Face>
-class TemplatedDcel : public SerializableObject, public virtual Mesh
+class TemplatedDcel : public SerializableObject, public internal::DcelData
 {
 public:
 
@@ -256,15 +256,6 @@ protected:
     unsigned int            nHalfEdges;
     unsigned int            nFaces;
     BoundingBox             bBox;
-
-    //Data
-    #ifdef NDEBUG
-    std::vector<Pointd> vertexCoordinates;
-    std::vector<Vec3> vertexNormals;
-    std::vector<Color> vertexColors;
-    std::vector<Vec3> faceNormals;
-    std::vector<Color> faceColors;
-    #endif
 
     /******************
     * Private Methods *

@@ -9,6 +9,13 @@
 #define DCEL_HALF_EDGE_H
 
 #include <string>
+#include <vector>
+#include <cg3/meshes/mesh.h>
+
+#ifdef NDEBUG
+#include <cg3/geometry/point.h>
+#include <cg3/utilities/color.h>
+#endif
 
 namespace cg3 {
 
@@ -17,11 +24,24 @@ class TemplatedDcel;
 
 namespace internal {
 
+class HalfEdge;
 class Vertex;
 class Face;
-#ifdef NDEBUG
-class Dcel;
-#endif
+class DcelData : public virtual cg3::Mesh
+{
+    friend class Vertex;
+    friend class HalfEdge;
+    friend class Face;
+protected:
+    //Data
+    #ifdef NDEBUG
+    std::vector<Pointd> vertexCoordinates;
+    std::vector<Vec3> vertexNormals;
+    std::vector<Color> vertexColors;
+    std::vector<Vec3> faceNormals;
+    std::vector<Color> faceColors;
+    #endif
+};
 
 /**
  * \~Italian
@@ -136,7 +156,7 @@ protected:
     ****************/
 
     #ifdef NDEBUG
-    HalfEdge(Dcel &parent);
+    HalfEdge(DcelData &parent);
     #else
     HalfEdge();
     #endif
@@ -147,7 +167,7 @@ protected:
     **************/
 
     #ifdef NDEBUG
-    Dcel* parent;
+    DcelData* parent;
     #endif
     Vertex* 	_fromVertex; /**< \~Italian @brief Vertice di origine dell'half edge */
     Vertex* 	_toVertex;   /**< \~Italian @brief Vertice di destinazione dell'half edge */

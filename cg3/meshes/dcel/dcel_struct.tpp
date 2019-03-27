@@ -236,13 +236,13 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(TemplatedDcel<V, HE, F>&& dcel)
     vertexColors = std::move(dcel.vertexColors);
     faceNormals = std::move(dcel.faceNormals);
     faceColors = std::move(dcel.faceColors);
-    for (Dcel::Vertex* v : vertexIterator()){
+    for (Vertex* v : vertexIterator()){
         v->parent = this;
     }
-    for (Dcel::HalfEdge* he : halfEdgeIterator()){
+    for (HalfEdge* he : halfEdgeIterator()){
         he->parent = this;
     }
-    for (Dcel::Face* f : faceIterator()){
+    for (Face* f : faceIterator()){
         f->parent = this;
     }
     #endif
@@ -1857,17 +1857,17 @@ void TemplatedDcel<V, HE, F>::swap(TemplatedDcel& d)
     std::swap(vertexColors, d.vertexColors);
     std::swap(faceNormals, d.faceNormals);
     std::swap(faceColors, d.faceColors);
-    for (Dcel::Vertex* v: vertexIterator())
+    for (Vertex* v: vertexIterator())
         v->parent = this;
-    for (Dcel::HalfEdge* he: halfEdgeIterator())
+    for (HalfEdge* he: halfEdgeIterator())
         he->parent = this;
-    for (Dcel::Face* f: faceIterator())
+    for (Face* f: faceIterator())
         f->parent = this;
-    for (Dcel::Vertex* v: d.vertexIterator())
+    for (Vertex* v: d.vertexIterator())
         v->parent = &d;
-    for (Dcel::HalfEdge* he: d.halfEdgeIterator())
+    for (HalfEdge* he: d.halfEdgeIterator())
         he->parent = &d;
-    for (Dcel::Face* f: d.faceIterator())
+    for (Face* f: d.faceIterator())
         f->parent = &d;
     #endif
 }
@@ -2220,7 +2220,7 @@ template <class V, class HE, class F>
 typename TemplatedDcel<V, HE, F>::Vertex* TemplatedDcel<V, HE, F>::addVertex(int id)
 {
     #ifdef NDEBUG
-    Vertex* last= new Vertex(*this);
+    Vertex* last= new Vertex((DcelData&)*this);
     #else
     Vertex* last= new Vertex();
     #endif
