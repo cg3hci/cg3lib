@@ -22,10 +22,40 @@ public:
     bool operator == (const GenericIterator& right) const {return pos == right.pos && v == right.v;};
     bool operator != (const GenericIterator& right) const {return !(*this == right);};
 
-    GenericIterator operator ++ () {pos = pos->twin()->next(); if (pos == end) pos = nullptr; return *this;};
-    GenericIterator operator ++ (int) {GenericIterator old_value = *this; pos = pos->twin()->next(); if (pos == end) pos = nullptr; return old_value;};
-    GenericIterator operator -- () {pos = pos->prev()->twin(); if (pos == end) pos = nullptr; return *this;};
-    GenericIterator operator -- (int) {GenericIterator old_value = *this; pos = pos->prev()->twin(); if (pos == end) pos = nullptr; return old_value;};
+	GenericIterator operator ++ () {
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	GenericIterator operator ++ (int) {
+		GenericIterator old_value = *this;
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
+	GenericIterator operator -- () {
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	GenericIterator operator -- (int) {
+		GenericIterator old_value = *this;
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
 
 protected:
     //Protected Attributes
@@ -52,10 +82,40 @@ public:
     bool operator == (const ConstGenericIterator& right) const {return pos == right.pos && v == right.v;};
     bool operator != (const ConstGenericIterator& right) const {return !(*this == right);};
 
-    ConstGenericIterator operator ++ () {pos = pos->twin()->next(); if (pos == end) pos = nullptr; return *this;};
-    ConstGenericIterator operator ++ (int) {ConstGenericIterator old_value = *this; pos = pos->twin()->next(); if (pos == end) pos = nullptr; return old_value;};
-    ConstGenericIterator operator -- () {pos = pos->prev()->twin(); if (pos == end) pos = nullptr; return *this;};
-    ConstGenericIterator operator -- (int) {ConstGenericIterator old_value = *this; pos = pos->prev()->twin(); if (pos == end) pos = nullptr; return old_value;};
+	ConstGenericIterator operator ++ () {
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	ConstGenericIterator operator ++ (int) {
+		ConstGenericIterator old_value = *this;
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
+	ConstGenericIterator operator -- () {
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	ConstGenericIterator operator -- (int) {
+		ConstGenericIterator old_value = *this;
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
 
 protected:
     //Protected Attributes
