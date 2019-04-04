@@ -104,8 +104,11 @@ public:
     //DrawableObjects List management: these members should be used by cg3::MainWindow
     void clearDrawableObjectsList();
     void pushDrawableObject(const cg3::DrawableObject* obj, bool visible = true);
+    void pushDrawableObject(const std::shared_ptr<const cg3::DrawableObject>& ptr, bool visible = true);
     bool deleteDrawableObject(const cg3::DrawableObject* obj);
+    bool deleteDrawableObject(const std::shared_ptr<const cg3::DrawableObject>& ptr);
     bool containsDrawableObject(const cg3::DrawableObject* obj) const;
+    bool containsDrawableObject(const std::shared_ptr<const cg3::DrawableObject>& ptr) const;
 
     unsigned int zoomSceneFactor;
 
@@ -124,6 +127,7 @@ private:
     QColor backgroundColor;
     std::vector<const cg3::DrawableObject*> drawlist;
     std::vector<const cg3::PickableObject*> pickList;
+    std::set<std::shared_ptr<const cg3::DrawableObject> > sharedDrawableObjects;
     std::set<unsigned int> unusedPickableObjectsIds;
     Mode mode;
 

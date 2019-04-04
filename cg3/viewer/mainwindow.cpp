@@ -120,6 +120,18 @@ void MainWindow::pushDrawableObject(
     }
 }
 
+void MainWindow::pushDrawableObject(
+        const std::shared_ptr<const DrawableObject> &ptr,
+        std::string checkBoxName,
+        bool checkBoxChecked,
+        bool closeButtonVisible)
+{
+    if (!containsDrawableObject(ptr)){
+        sharedDrawableObjects.insert(ptr);
+        pushDrawableObject(ptr.get(), checkBoxName, checkBoxChecked, closeButtonVisible);
+    }
+}
+
 /**
  * @brief Removes the DrawableObject from the canvas and the relative checkbox from the
  * MainWindow.
@@ -140,6 +152,13 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
     return false;
 }
 
+bool MainWindow::deleteDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+{
+    bool b = deleteDrawableObject(ptr.get());
+    sharedDrawableObjects.erase(ptr);
+    return b;
+}
+
 /**
  * @brief Sets the visibility/non visibility of a DrawableObject, checking/unchecking its
  * checkbox accordingly.
@@ -152,12 +171,22 @@ void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool vis
     }
 }
 
+void MainWindow::setDrawableObjectVisibility(const std::shared_ptr<const DrawableObject> &ptr, bool visible)
+{
+    setDrawableObjectVisibility(ptr.get(), visible);
+}
+
 /**
  * @brief Returns true if the input DrawableObject is already drawn in the canvas.
  */
 bool MainWindow::containsDrawableObject(const DrawableObject* obj)
 {
     return (mapDrawListManagers.find(obj) != mapDrawListManagers.end());
+}
+
+bool MainWindow::containsDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+{
+    return sharedDrawableObjects.find(ptr) != sharedDrawableObjects.end();
 }
 
 /**
@@ -184,6 +213,11 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
     }
 }
 
+bool MainWindow::refreshDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+{
+    return refreshDrawableObject(ptr.get());
+}
+
 bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::string& newName)
 {
     if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
@@ -191,6 +225,11 @@ bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::str
         return true;
     }
     return false;
+}
+
+bool MainWindow::setDrawableObjectName(const std::shared_ptr<const DrawableObject> &ptr, const std::string &newName)
+{
+    return setDrawableObjectName(ptr.get(), newName);
 }
 
 std::string MainWindow::nameOfDrawableObject(const DrawableObject* obj) const
@@ -201,6 +240,11 @@ std::string MainWindow::nameOfDrawableObject(const DrawableObject* obj) const
     }
     else
         return "";
+}
+
+std::string MainWindow::nameOfDrawableObject(const std::shared_ptr<const DrawableObject> &ptr) const
+{
+    return nameOfDrawableObject(ptr.get());
 }
 
 /**
