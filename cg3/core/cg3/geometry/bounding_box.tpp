@@ -256,6 +256,23 @@ inline bool BoundingBox::intersect(const BoundingBox& otherBox)
 }
 
 /**
+ * @brief BoundingBox::intersect
+ * @param[in] otherBox
+ * @return true if otherBox overlaps this box
+ * @link http://gamemath.com/2011/09/detecting-whether-two-boxes-overlap/
+ */
+inline bool BoundingBox::overlap(const BoundingBox& otherBox)
+{
+	if (maxX() <= otherBox.minX()) return false; // a is left of b
+	if (minX() >= otherBox.maxX()) return false; // a is right of b
+	if (maxY() <= otherBox.minY()) return false; // a is above b
+	if (minY() >= otherBox.maxY()) return false; // a is below b
+	if (maxZ() <= otherBox.minZ()) return false; // a is behind b
+	if (minZ() >= otherBox.maxZ()) return false; // a is in front b
+	return true; //boxes overlap
+}
+
+/**
  * @brief BoundingBox::getExtremes
  * @param[out] extremes: a vector of 8 Pointd which are the extremes of the bounding box
  */
@@ -378,7 +395,7 @@ inline void BoundingBox::setMin(const Pointd& min)
  * @brief BoundingBox::min
  * @see setMin()
  */
-inline Pointd&BoundingBox::min()
+inline Pointd& BoundingBox::min()
 {
     return _min;
 }

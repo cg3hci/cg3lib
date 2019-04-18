@@ -50,6 +50,9 @@ bool isInBounds(const T& value, const T& low, const T& high);
 template <typename T, typename R, typename Comparator>
 bool isInBounds(const T& value, const R& low, const R& high, Comparator comp);
 
+template<typename T>
+bool intervalOverlap(const T& minA, const T& maxA, const T& minB, const T& maxB);
+
 template <typename T, typename AdjComparator>
 std::map<T, Color> smartColoring(
         const std::vector<T> &elements,
