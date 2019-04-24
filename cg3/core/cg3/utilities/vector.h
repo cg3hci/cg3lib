@@ -12,17 +12,17 @@
 
 namespace cg3 {
 
-template <typename T>
-int binarySearch(const T &n, const std::vector<T> &v);
+template <typename T, typename ...A>
+int binarySearch(const T &n, const std::vector<T, A...> &v);
 
-template <typename T>
-std::vector<size_t> sortIndexes(const std::vector<T> &v);
+template <typename T, typename ...A>
+std::vector<size_t> sortIndexes(const std::vector<T, A...> &v);
 
-template <typename T>
-bool contains(const std::vector<T>& v, const T& value);
+template <typename T, typename ...A>
+bool contains(const std::vector<T, A...>& v, const T& value);
 
-template <typename T>
-int positionOfElement(const std::vector<T>& v, const T& value);
+template <typename T, typename ...A>
+int positionOfElement(const std::vector<T, A...>& v, const T& value);
 
 
 } //namespace cg3

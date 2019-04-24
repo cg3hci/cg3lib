@@ -17,12 +17,12 @@ namespace cg3 {
  * @param b
  * @return
  */
-template<typename T>
-inline std::set<T> intersection(
-        const std::set<T> &a,
-        const std::set<T> &b)
+template<typename T, typename ...A>
+inline std::set<T, A...> intersection(
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b)
 {
-    std::set<T> intersect;
+	std::set<T, A...> intersect;
     std::set_intersection(a.begin(),a.end(),b.begin(),b.end(),
                       std::inserter(intersect,intersect.begin()));
     return intersect;
@@ -35,12 +35,12 @@ inline std::set<T> intersection(
  * @param b
  * @return
  */
-template<typename T>
-inline std::set<T> union_(
-        const std::set<T> &a,
-        const std::set<T> &b)
+template<typename T, typename ...A>
+inline std::set<T, A...> union_(
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b)
 {
-    std::set<T> u;
+	std::set<T, A...> u;
     std::set_union(a.begin(),a.end(),b.begin(),b.end(),
                       std::inserter(u,u.begin()));
     return u;
@@ -53,12 +53,12 @@ inline std::set<T> union_(
  * @param b
  * @return
  */
-template<typename T>
-inline std::set<T> difference(
-        const std::set<T> &a,
-        const std::set<T> &b)
+template<typename T, typename ...A>
+inline std::set<T, A...> difference(
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b)
 {
-    std::set<T> diff;
+	std::set<T, A...> diff;
     std::set_difference(a.begin(),a.end(),b.begin(),b.end(),
                       std::inserter(diff,diff.begin()));
     return diff;
@@ -71,10 +71,10 @@ inline std::set<T> difference(
  * @param b
  * @return
  */
-template<typename T>
+template<typename T, typename ...A>
 inline bool isSubset(
-        const std::set<T> &a,
-        const std::set<T> &b)
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b)
 {
     return std::includes(b.begin(), b.end(), a.begin(), a.end());
 }
@@ -86,8 +86,8 @@ inline bool isSubset(
  * @param obj
  * @return
  */
-template<typename T>
-bool contains(const std::set<T>& s, const T& obj)
+template<typename T, typename ...A>
+bool contains(const std::set<T, A...>& s, const T& obj)
 {
     return s.find(obj) != s.end();
 }

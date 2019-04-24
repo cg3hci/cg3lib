@@ -22,6 +22,19 @@ inline Timer::Timer(bool _start) :
  * @param caption
  * @param _start
  */
+inline Timer::Timer (const char* caption, bool _start) :
+	caption(caption),
+	isStopped(false)
+{
+	if (_start)
+		start();
+}
+
+/**
+ * @brief Timer::Timer
+ * @param caption
+ * @param _start
+ */
 inline Timer::Timer (const std::string& caption, bool _start) :
     caption(caption),
     isStopped(false)

@@ -12,29 +12,29 @@
 
 namespace cg3 {
 
-template<typename T>
-std::set<T> intersection(
-        const std::set<T> &a,
-        const std::set<T> &b);
+template<typename T, typename ...A>
+std::set<T, A...> intersection(
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b);
 
-template<typename T>
-std::set<T> union_(
-        const std::set<T> &a,
-        const std::set<T> &b);
+template<typename T, typename ...A>
+std::set<T, A...> union_(
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b);
 
-template<typename T>
-std::set<T> difference(
-        const std::set<T> &a,
-        const std::set<T> &b);
+template<typename T, typename ...A>
+std::set<T, A...> difference(
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b);
 
-template<typename T>
+template<typename T, typename ...A>
 bool isSubset(
-        const std::set<T> &a,
-        const std::set<T> &b);
+		const std::set<T, A...> &a,
+		const std::set<T, A...> &b);
 
-template<typename T>
+template<typename T, typename ...A>
 bool contains(
-        const std::set<T> &s,
+		const std::set<T, A...> &s,
         const T& obj);
 
 } //namespace cg3
