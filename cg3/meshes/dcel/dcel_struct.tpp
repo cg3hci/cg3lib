@@ -1907,7 +1907,8 @@ void TemplatedDcel<V, HE, F>::merge(const TemplatedDcel<V, HE, F>& d)
         int nvid = mapV[vid];
         if (nvid >= 0) {
             const HalfEdge* he = d.vertex(vid)->incidentHalfEdge();
-            vertices[nvid]->setIncidentHalfEdge(halfEdges[mapHE[he->id()]]);
+			if (he != nullptr)
+				vertices[nvid]->setIncidentHalfEdge(halfEdges[mapHE[he->id()]]);
         }
     }
 
@@ -1915,22 +1916,28 @@ void TemplatedDcel<V, HE, F>::merge(const TemplatedDcel<V, HE, F>& d)
         int nheid = mapHE[heid];
         if (nheid >= 0) {
             const HalfEdge* the = d.halfEdge(heid)->twin();
-            halfEdges[nheid]->setTwin(halfEdges[mapHE[the->id()]]);
+			if (the != nullptr)
+				halfEdges[nheid]->setTwin(halfEdges[mapHE[the->id()]]);
 
             const HalfEdge* nhe = d.halfEdge(heid)->next();
-            halfEdges[nheid]->setNext(halfEdges[mapHE[nhe->id()]]);
+			if (nhe != nullptr)
+				halfEdges[nheid]->setNext(halfEdges[mapHE[nhe->id()]]);
 
             const HalfEdge* phe = d.halfEdge(heid)->prev();
-            halfEdges[nheid]->setPrev(halfEdges[mapHE[phe->id()]]);
+			if (phe != nullptr)
+				halfEdges[nheid]->setPrev(halfEdges[mapHE[phe->id()]]);
 
             const Vertex* fv = d.halfEdge(heid)->fromVertex();
-            halfEdges[nheid]->setFromVertex(vertices[mapV[fv->id()]]);
+			if (fv != nullptr)
+				halfEdges[nheid]->setFromVertex(vertices[mapV[fv->id()]]);
 
             const Vertex* pv = d.halfEdge(heid)->toVertex();
-            halfEdges[nheid]->setToVertex(vertices[mapV[pv->id()]]);
+			if (pv != nullptr)
+				halfEdges[nheid]->setToVertex(vertices[mapV[pv->id()]]);
 
             const Face* f = d.halfEdge(heid)->face();
-            halfEdges[nheid]->setFace(faces[mapF[f->id()]]);
+			if (f != nullptr)
+				halfEdges[nheid]->setFace(faces[mapF[f->id()]]);
         }
     }
 
@@ -1938,10 +1945,12 @@ void TemplatedDcel<V, HE, F>::merge(const TemplatedDcel<V, HE, F>& d)
         int nfid = mapF[fid];
         if (nfid >= 0) {
             const HalfEdge* he = d.face(fid)->outerHalfEdge();
-            faces[nfid]->setOuterHalfEdge(halfEdges[mapHE[he->id()]]);
+			if (he != nullptr)
+				faces[nfid]->setOuterHalfEdge(halfEdges[mapHE[he->id()]]);
 
             for (const HalfEdge* ihe : d.face(fid)->innerHalfEdgeIterator()){
-                faces[nfid]->addInnerHalfEdge(halfEdges[mapHE[ihe->id()]]);
+				if (ihe != nullptr)
+					faces[nfid]->addInnerHalfEdge(halfEdges[mapHE[ihe->id()]]);
             }
         }
     }
