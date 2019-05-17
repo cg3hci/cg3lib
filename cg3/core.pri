@@ -74,7 +74,11 @@ SOURCES += \
 
 #io
 HEADERS += \
+    $$PWD/io/load_save.h \
+    $$PWD/io/load_save_obj.h \
+    $$PWD/io/load_save_ply.h \
     $$PWD/io/load_save_file.h \
+    $$PWD/io/ply_header.h \
     $$PWD/io/serializable_object.h \
     $$PWD/io/serialize.h \
     $$PWD/io/serialize_eigen.h \
@@ -82,7 +86,9 @@ HEADERS += \
     $$PWD/io/serialize_std.h
 
 SOURCES += \
-    $$PWD/io/load_save_file.tpp \
+    $$PWD/io/load_save_obj.tpp \
+    $$PWD/io/load_save_ply.tpp \
+    $$PWD/io/ply_header.cpp \
     $$PWD/io/serialize.tpp \
     $$PWD/io/serialize_eigen.tpp \
     $$PWD/io/serialize_qt.tpp \

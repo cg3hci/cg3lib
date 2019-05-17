@@ -29,12 +29,12 @@ inline Tokenizer::Tokenizer(const std::string& string, char separator) :
     split();
 }
 
-inline Tokenizer::iterator Tokenizer::begin()
+inline Tokenizer::iterator Tokenizer::begin() const
 {
     return splitted.begin();
 }
 
-inline Tokenizer::iterator Tokenizer::end()
+inline Tokenizer::iterator Tokenizer::end() const
 {
     return splitted.end();
 }
