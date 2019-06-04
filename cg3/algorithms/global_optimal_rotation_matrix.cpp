@@ -34,13 +34,20 @@ void defineRotation(const cg3::Vec3& zAxis,
 
 #ifdef CG3_WITH_EIGEN
 #ifdef CG3_DCEL_DEFINED
+/**
+ * @ingroup cg3Algorithms
+ * @brief Computes the rotation matrix that, if applied to the mesh,
+ * minimizes the angle between the face normals and the global axis
+ * @param inputMesh
+ * @param nDirs
+ * @return A rotation matrix for the input mesh
+ */
 Eigen::Matrix3d globalOptimalRotationMatrix(
-        const cg3::Dcel& inputMesh,
-        unsigned int nDirs,
-        bool deterministic)
+		const cg3::Dcel& inputMesh,
+		unsigned int nDirs)
 {
 
-    std::vector<Vec3> dirPool = cg3::sphereCoverage(nDirs, deterministic);
+	std::vector<Vec3> dirPool = cg3::sphereCoverageFibonacci(nDirs);
 
     std::set<std::pair<double,Vec3>> priorizitedOrientations;
     for(Vec3& zAxis : dirPool) {
@@ -67,17 +74,24 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
     bestZ.normalize();
     defineRotation(bestZ, axis, angle);
 
-    return cg3::rotationMatrix(Vec3(axis), angle);
+	return cg3::rotationMatrix(axis, angle);
 }
 #endif
 
 #ifdef CG3_EIGENMESH_DEFINED
+/**
+ * @ingroup cg3Algorithms
+ * @brief Computes the rotation matrix that, if applied to the mesh,
+ * minimizes the angle between the face normals and the global axis
+ * @param inputMesh
+ * @param nDirs
+ * @return
+ */
 Eigen::Matrix3d globalOptimalRotationMatrix(
         const SimpleEigenMesh& inputMesh,
-        unsigned int nDirs,
-        bool deterministic)
+		unsigned int nDirs)
 {
-    std::vector<Vec3> dirPool = cg3::sphereCoverage(nDirs, deterministic);
+	std::vector<Vec3> dirPool = cg3::sphereCoverageFibonacci(nDirs);
 
     std::set<std::pair<double,Vec3>> priorizitedOrientations;
     for(Vec3& zAxis : dirPool) {
@@ -104,7 +118,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
     bestZ.normalize();
     defineRotation(bestZ, axis, angle);
 
-    return cg3::rotationMatrix(Vec3(axis), angle);
+	return cg3::rotationMatrix(axis, angle);
 }
 #endif
 #endif

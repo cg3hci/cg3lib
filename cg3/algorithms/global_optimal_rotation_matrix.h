@@ -17,11 +17,11 @@ namespace cg3 {
 #ifdef CG3_WITH_EIGEN
 #ifdef CG3_DCEL_DEFINED
 class Dcel;
-Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel& inputMesh, unsigned int nDirs = 1000, bool deterministic = false);
+Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel& inputMesh, unsigned int nDirs = 1000);
 #endif // CG3_DCEL_DEFINED
 #ifdef CG3_EIGENMESH_DEFINED
 class SimpleEigenMesh;
-Eigen::Matrix3d globalOptimalRotationMatrix(const SimpleEigenMesh& inputMesh, unsigned int nDirs = 1000, bool deterministic = false);
+Eigen::Matrix3d globalOptimalRotationMatrix(const SimpleEigenMesh& inputMesh, unsigned int nDirs = 1000);
 #endif // CG3_EIGENMESH_DEFINED
 #endif // CG3_WITH_EIGEN
 

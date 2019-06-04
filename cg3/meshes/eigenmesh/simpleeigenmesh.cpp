@@ -130,9 +130,9 @@ bool SimpleEigenMesh::loadFromFile(const std::string& filename)
         return false;
 }
 
-bool SimpleEigenMesh::saveOnPly(const std::string& filename) const
+bool SimpleEigenMesh::saveOnPly(const std::string& filename, bool binary) const
 {
-    return saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data());
+	return saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data(), binary);
 }
 
 bool SimpleEigenMesh::saveOnObj(const std::string& filename) const

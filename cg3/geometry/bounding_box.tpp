@@ -377,7 +377,10 @@ inline void BoundingBox::saveOnObj(const std::string& filename, const Color &c) 
         r, g, b,
         r, g, b
     };
-    cg3::saveMeshOnObj(filename, 8, 6, v.data(), f.data(), io::QUAD_MESH, io::COLOR_FACES,
+	io::FileMeshMode fm;
+	fm.setQuadMesh();
+	fm.setFaceColors();
+	cg3::saveMeshOnObj(filename, 8, 6, v.data(), f.data(), fm,
                        internal::dummyVectorDouble.data(), io::RGB,
                        internal::dummyVectorFloat.data(), cl.data());
 }

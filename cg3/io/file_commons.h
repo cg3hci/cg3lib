@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#ifndef CG3_LOAD_SAVE_H
-#define CG3_LOAD_SAVE_H
+#ifndef CG3_FILE_COMMONS_H
+#define CG3_FILE_COMMONS_H
 
 #include <string>
 #include <list>
@@ -20,25 +20,69 @@ namespace cg3 {
 namespace io {
 
 typedef enum {
+	RGB,
+	RGBA
+} FileColorMode;
+
+typedef enum {
 	TRIANGLE_MESH,
 	QUAD_MESH,
 	POLYGON_MESH
-} MeshType;
-typedef enum {
-	NORMAL_VERTICES =       0b000001,
-	COLOR_VERTICES =        0b000010,
-	COLOR_FACES =           0b000100
-} FileMode;
-typedef enum {
-	RGB,
-	RGBA
-} ColorMode;
+} FileMeshType;
+
+/**
+ * @brief A simple class that allows to store
+ * which properties has been loaded or are going
+ * to be saved on a mesh file (obj, ply, ...)
+ */
+class FileMeshMode {
+public:
+	FileMeshMode() : mode(0), type(TRIANGLE_MESH){};
+	FileMeshMode(FileMeshType ft, bool vn, bool vc, bool fn, bool fc) :
+		mode(0), type(ft)
+	{
+		if (vn) setVertexNormals();
+		if (vc) setVertexColors();
+		if (fn) setFaceNormals();
+		if (fc) setFaceColors();
+	}
+	bool isTriangleMesh()   const {return type == TRIANGLE_MESH;};
+	bool isQuadMesh()       const {return type == QUAD_MESH;};
+	bool isPolygonMesh()    const {return type == POLYGON_MESH;};
+	bool hasVertexNormals() const {return mode & VERTEX_NORMALS;};
+	bool hasVertexColors()  const {return mode & VERTEX_COLORS;};
+	bool hasFaceNormals()   const {return mode & FACE_NORMALS;};
+	bool hasFaceColors()    const {return mode & FACE_COLORS;};
+
+	void setTriangleMesh()  {type = TRIANGLE_MESH;};
+	void setQuadMesh()      {type = QUAD_MESH;};
+	void setPolygonMesh()   {type = POLYGON_MESH;};
+	void setMeshType(FileMeshType t) {type = t;};
+	void setVertexNormals() {mode |= VERTEX_NORMALS;};
+	void setVertexColors()  {mode |= VERTEX_COLORS;};
+	void setFaceNormals()   {mode |= FACE_NORMALS;};
+	void setFaceColors()    {mode |= FACE_COLORS;};
+
+	void reset() {mode = 0; type = TRIANGLE_MESH;};
+
+private:
+	typedef enum {
+		VERTEX_NORMALS =       0b000001,
+		VERTEX_COLORS =        0b000010,
+		FACE_COLORS =          0b000100,
+		FACE_NORMALS =         0b001000
+	} FMM;
+	int mode;
+	FileMeshType type;
+};
 
 } //namespace cg3::io
 
 namespace internal {
 
-static int dummyInt;
+//static int dummyInt;
+static io::FileMeshMode dummyFileMeshMode;
+static const io::FileMeshMode dummyConstFileMeshMode;
 
 static std::vector<double> dummyVectorDouble;
 static std::vector<float> dummyVectorFloat;
@@ -62,7 +106,7 @@ template <typename T>
 Color colorFromArray(
 		size_t baseIndex,
 		const T arrayColors[],
-		io::ColorMode colorMod);
+		io::FileColorMode colorMod);
 
 } //namespace cg3::internal
 } //namespace cg3
@@ -78,13 +122,10 @@ template <typename T>
 inline cg3::Color cg3::internal::colorFromArray(
 		size_t baseIndex,
 		const T arrayColors[],
-		io::ColorMode colorMod)
+		io::FileColorMode colorMod)
 {
 	Color c;
-	if (std::is_same<T, int>::value ||
-			std::is_same<T, unsigned int>::value ||
-			std::is_same<T, char>::value ||
-			std::is_same<T, unsigned char>::value) {
+	if (std::is_integral<T>::value) {
 		if (colorMod == io::RGB){
 			c = Color(arrayColors[baseIndex],
 					  arrayColors[baseIndex+1],
@@ -114,4 +155,4 @@ inline cg3::Color cg3::internal::colorFromArray(
 	return c;
 }
 
-#endif // LOAD_SAVE_H
+#endif // CG3_FILE_COMMONS_H

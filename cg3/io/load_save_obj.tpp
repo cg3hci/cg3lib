@@ -19,7 +19,7 @@ inline void manageObjFileColor(
 		std::ofstream &fp,
 		std::ofstream &fmtu,
 		const Color &c,
-		io::ColorMode colorMod,
+		io::FileColorMode colorMod,
 		Color &actualColor,
 		std::map<Color,
 		std::string> &colors)
@@ -131,8 +131,7 @@ bool loadMeshFromObj(
 		const std::string& filename,
 		std::list<T>& coords,
 		std::list<V>& faces,
-		io::MeshType & meshType,
-		int &modality,
+		io::FileMeshMode& modality,
 		std::list<C> &verticesNormals,
 		std::list<Color> &verticesColors,
 		std::list<Color> &faceColors,
@@ -156,7 +155,7 @@ bool loadMeshFromObj(
 	verticesNormals.clear();
 	verticesColors.clear();
 	faceColors.clear();
-	modality = 0;
+	modality.reset();
 
 	if(!file.is_open()) {
 		return false;
@@ -171,7 +170,7 @@ bool loadMeshFromObj(
 			std::string header = *token;
 
 			if (header == "mtllib"){
-				modality |= io::COLOR_FACES;
+				modality.setFaceColors();
 				usemtu = true;
 				std::string mtufilename = *(++token);
 				size_t lastSlash = filename.find_last_of("/");
@@ -184,7 +183,7 @@ bool loadMeshFromObj(
 			}
 
 			if (header == vertexNormal) {
-				modality |= io::NORMAL_VERTICES;
+				modality.setVertexNormals();
 				std::string x = *(++token);
 				std::string y = *(++token);
 				std::string z = *(++token);
@@ -210,7 +209,7 @@ bool loadMeshFromObj(
 				++token;
 
 				if (token != spaceTokenizer.end()){
-					modality |= io::COLOR_VERTICES;
+					modality.setVertexColors();
 					std::string r = *(token);
 					std::string g = *(++token);
 					std::string b = *(++token);
@@ -242,17 +241,17 @@ bool loadMeshFromObj(
 				if (first == true){
 					first = false;
 					if (nVert == 3)
-						meshType = io::TRIANGLE_MESH;
+						modality.setTriangleMesh();
 					else if (nVert == 4)
-						meshType = io::QUAD_MESH;
+						modality.setQuadMesh();
 					else
-						meshType = io::POLYGON_MESH;
+						modality.setPolygonMesh();
 				}
 				else {
-					if (meshType == io::TRIANGLE_MESH && nVert != 3)
-						meshType = io::POLYGON_MESH;
-					if (meshType == io::QUAD_MESH && nVert != 4)
-						meshType = io::POLYGON_MESH;
+					if (modality.isTriangleMesh() && nVert != 3)
+						modality.setPolygonMesh();
+					if (modality.isQuadMesh() && nVert != 4)
+						modality.setPolygonMesh();
 				}
 
 				std::vector<cg3::Tokenizer> slashTokenizer;
@@ -301,20 +300,19 @@ bool loadTriangleMeshFromObj(
 		const std::string& filename,
 		std::vector<T>& coords,
 		std::vector<V>& triangles,
-		int& modality,
+		io::FileMeshMode& modality,
 		std::vector<C> &verticesNormals,
 		std::vector<Color> &verticesColors,
 		std::vector<Color> &triangleColors)
 {
 	std::list<T> dummyc;
 	std::list<V> dummyt;
-	io::MeshType meshType;
-	modality = 0;
+	modality.reset();
 	std::list<C> dummyvn;
 	std::list<Color> dummycv;
 	std::list<Color> dummyct;
-	bool r = loadMeshFromObj(filename, dummyc, dummyt, meshType, modality, dummyvn, dummycv, dummyct);
-	if (r == true && dummyt.size() > 0 && meshType != io::TRIANGLE_MESH){
+	bool r = loadMeshFromObj(filename, dummyc, dummyt, modality, dummyvn, dummycv, dummyct);
+	if (r == true && dummyt.size() > 0 && !modality.isTriangleMesh()){
 		std::cerr << "Error: mesh contained on " << filename << " is not a triangle mesh\n";
 		r = false;
 	}
@@ -325,27 +323,21 @@ bool loadTriangleMeshFromObj(
 									  std::make_move_iterator(std::end(dummyc)) };
 		triangles = std::vector<V>{ std::make_move_iterator(std::begin(dummyt)),
 										 std::make_move_iterator(std::end(dummyt)) };
-		if (modality & io::NORMAL_VERTICES && dummyc.size() == dummyvn.size()){
+		if (modality.hasVertexNormals() && dummyc.size() == dummyvn.size()){
 			verticesNormals.clear();
 			verticesNormals = std::vector<C>{ std::make_move_iterator(std::begin(dummyvn)),
 										  std::make_move_iterator(std::end(dummyvn)) };
 		}
-		else
-			modality &= ~io::NORMAL_VERTICES;
-		if (modality & io::COLOR_VERTICES && dummyc.size() == dummycv.size()*3){
+		if (modality.hasVertexColors() && dummyc.size() == dummycv.size()*3){
 			verticesColors.clear();
 			verticesColors = std::vector<Color>{ std::make_move_iterator(std::begin(dummycv)),
 													  std::make_move_iterator(std::end(dummycv)) };
 		}
-		else
-			modality &= ~io::COLOR_VERTICES;
-		if (modality & io::COLOR_FACES && dummyt.size() == dummyct.size()*3){
+		if (modality.hasFaceColors() && dummyt.size() == dummyct.size()*3){
 			triangleColors.clear();
 			triangleColors = std::vector<Color>{ std::make_move_iterator(std::begin(dummyct)),
 													  std::make_move_iterator(std::end(dummyct)) };
 		}
-		else
-			modality &= ~io::COLOR_FACES;
 	}
 	return r;
 }
@@ -363,16 +355,16 @@ template <typename T, typename V>
 bool loadTriangleMeshFromObj(
 		const std::string &filename,
 		Eigen::PlainObjectBase<T>& coords,
-		Eigen::PlainObjectBase<V>&triangles)
+		Eigen::PlainObjectBase<V>& triangles)
 {
 	std::list<typename Eigen::PlainObjectBase<T>::Scalar> dummyc;
 	std::list<typename Eigen::PlainObjectBase<V>::Scalar> dummyt;
-	io::MeshType meshType;
+	io::FileMeshMode modality;
 	std::list<unsigned int> faceSizes;
-	bool r = loadMeshFromObj(filename, dummyc, dummyt, meshType,
-							 internal::dummyInt, internal::dummyListDouble,
+	bool r = loadMeshFromObj(filename, dummyc, dummyt, modality,
+							 internal::dummyListDouble,
 							 internal::dummyListColor, internal::dummyListColor, faceSizes);
-	if (r == true && meshType != io::TRIANGLE_MESH){
+	if (r == true && modality.isTriangleMesh()){
 		std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
 	}
 	if (r) {
@@ -417,21 +409,20 @@ bool loadTriangleMeshFromObj(
 		const std::string &filename,
 		Eigen::PlainObjectBase<T>& coords,
 		Eigen::PlainObjectBase<V>&triangles,
-		int &modality,
+		io::FileMeshMode &modality,
 		Eigen::PlainObjectBase<C> &verticesNormals,
 		Eigen::PlainObjectBase<W> &verticesColors,
 		Eigen::PlainObjectBase<X> &triangleColors)
 {
 	std::list<typename Eigen::PlainObjectBase<T>::Scalar> dummyc;
 	std::list<typename Eigen::PlainObjectBase<V>::Scalar> dummyt;
-	modality = 0;
-	io::MeshType meshType;
+	modality.reset();
 	std::list<typename Eigen::PlainObjectBase<C>::Scalar> dummyvn;
 	std::list<Color> dummycv;
 	std::list<Color> dummyct;
 	std::list<unsigned int> faceSizes;
-	bool r = loadMeshFromObj(filename, dummyc, dummyt, meshType, modality, dummyvn, dummycv, dummyct, faceSizes);
-	if (r == true && meshType != io::TRIANGLE_MESH){
+	bool r = loadMeshFromObj(filename, dummyc, dummyt, modality, dummyvn, dummycv, dummyct, faceSizes);
+	if (r == true && modality.isTriangleMesh()){
 		std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
 	}
 	if (r) {
@@ -455,7 +446,7 @@ bool loadTriangleMeshFromObj(
 			t++;
 			fsit++;
 		}
-		if (modality & io::NORMAL_VERTICES
+		if (modality.hasVertexNormals()
 				&& dummyc.size() == dummyvn.size()) {
 			verticesNormals.resize(dummyc.size()/3, 3);
 			int vn = 0;
@@ -466,9 +457,7 @@ bool loadTriangleMeshFromObj(
 				vn++;
 			}
 		}
-		else
-			modality &= ~io::NORMAL_VERTICES;
-		if (modality & io::COLOR_VERTICES && dummyc.size() == dummycv.size()*3){
+		if (modality.hasVertexColors() && dummyc.size() == dummycv.size()*3){
 			verticesColors.resize(dummyc.size()/3, 3);
 			int vc = 0;
 			for (typename std::list<Color>::iterator it = dummycv.begin(); it != dummycv.end(); ++it) {
@@ -487,9 +476,7 @@ bool loadTriangleMeshFromObj(
 				vc++;
 			}
 		}
-		else
-			modality &= ~io::COLOR_VERTICES;
-		if (modality & io::COLOR_FACES && faceSizes.size() == dummyct.size()){
+		if (modality.hasFaceColors() && faceSizes.size() == dummyct.size()){
 			triangleColors.resize(faceSizes.size(), 3);
 			int vc = 0;
 			for (typename std::list<Color>::iterator it = dummyct.begin(); it != dummyct.end(); ++it) {
@@ -508,9 +495,6 @@ bool loadTriangleMeshFromObj(
 				vc++;
 			}
 		}
-		else
-			modality &= ~io::COLOR_FACES;
-
 	}
 	return r;
 }
@@ -519,16 +503,23 @@ bool loadTriangleMeshFromObj(
 /**
  * @ingroup cg3core
  * @brief saveMeshOnObj
- * @param filename
- * @param nVertices
- * @param nFaces
- * @param vertices
- * @param faces
- * @param meshType
- * @param modality
- * @param verticesNormals
- * @param colorMod
- * @param verticesColors
+ * @param filename The name of the file
+ * @param nVertices number of vertices contained in the array vertices
+ * @param nFaces number of faces contained in the array faces
+ * @param vertices A vector of nVertices*3 elements, that are the
+ * coordinates x, y, z of every vertex
+ * @param faces A vector of N (nFaces*3 if it is a triangle mesh,
+ * n*4 if quad mesh, etc.. depends on the modality parameter) elements
+ * that are the vertex indices of every face
+ * @param modality indicates the modality of the mesh
+ * (see cg3::io::FileMeshMode class). Default is a triangle mesh with
+ * just vertex coordinates and face indices
+ * @param verticesNormals A vector of nVertices*3 elements, that are
+ * the normal coordinates x, y, z of every vertex. Can be omitted.
+ * @param colorMod Mode of storing colors in the obj file: RGB or RGBA.
+ * Can be omitted.
+ * @param verticesColors: array of nV*3 or nV*4 (depending on colorMod)
+ * indicating the colors of the vertices
  * @param faceColors
  * @param polygonSizes
  * @return
@@ -540,10 +531,9 @@ bool saveMeshOnObj(
 		size_t nFaces,
 		const A vertices[],
 		const B faces[],
-		io::MeshType meshType,
-		int modality,
+		io::FileMeshMode modality,
 		const C verticesNormals[],
-		io::ColorMode colorMod,
+		io::FileColorMode colorMod,
 		const T verticesColors[],
 		const V faceColors[],
 		const W polygonSizes[])
@@ -561,7 +551,7 @@ bool saveMeshOnObj(
 		objfilename = filename + ".obj";
 
 	//managing mtu filename
-	if (modality & io::COLOR_FACES || modality & io::COLOR_VERTICES){
+	if (modality.hasFaceColors() || modality.hasVertexColors()){
 		color = true;
 		internal::manageObjFileNames(objfilename, mtufilename, mtufilenopath);
 		fmtu.open(mtufilename.c_str());
@@ -583,31 +573,31 @@ bool saveMeshOnObj(
 
 	for(size_t i=0; i<nVertices*3; i+=3) {
 
-		if (modality & io::NORMAL_VERTICES) {
+		if (modality.hasVertexNormals()) {
 			fp << "vn " << verticesNormals[i] <<
 				  " " << verticesNormals[i+1] <<
 				  " " << verticesNormals[i+2] << std::endl;
 		}
 		fp << "v " << vertices[i] << " " << vertices[i+1] << " " << vertices[i+2];
-		if (modality & io::COLOR_VERTICES){
+		if (modality.hasVertexColors()){
 			Color c = internal::colorFromArray(colorMod == io::RGB ? i : (i/3)*4, verticesColors, colorMod);
 			fp << " " << c.redF() << " " << c.blueF() << " " << c.greenF();
 		}
 		fp << std::endl;
 	}
 
-	if (meshType == io::TRIANGLE_MESH) {
+	if (modality.isTriangleMesh()) {
 		for(size_t i=0; i<nFaces*3; i+=3) {
-			if (modality & io::COLOR_FACES){
+			if (modality.hasFaceColors()){
 				Color c = internal::colorFromArray(colorMod == io::RGB ? i : (i/3)*4, faceColors, colorMod);
 				internal::manageObjFileColor(fp, fmtu, c, colorMod, actualColor, colors);
 			}
 			fp << "f " << faces[i]+1 << " " << faces[i+1]+1 << " " << faces[i+2]+1 << std::endl;
 		}
 	}
-	else if (meshType ==  io::QUAD_MESH) {
+	else if (modality.isQuadMesh()) {
 		for(size_t i=0; i<nFaces*4; i+=4) {
-			if (modality & io::COLOR_FACES){
+			if (modality.hasFaceColors()){
 				Color c = internal::colorFromArray(colorMod == io::RGB ? (i/4)*3 : i, faceColors, colorMod);
 				internal::manageObjFileColor(fp, fmtu, c, colorMod, actualColor, colors);
 			}
@@ -617,10 +607,10 @@ bool saveMeshOnObj(
 				  " " << faces[i+3]+1 << std::endl;
 		}
 	}
-	else if (meshType ==  io::POLYGON_MESH) {
+	else if (modality.isPolygonMesh()) {
 		size_t j = 0;
 		for (size_t i = 0; i < nFaces; i++){
-			if (modality & io::COLOR_FACES){
+			if (modality.hasFaceColors()){
 				Color c = internal::colorFromArray(colorMod == io::RGB ? i*3 : i*4, faceColors, colorMod);
 				internal::manageObjFileColor(fp, fmtu, c, colorMod, actualColor, colors);
 			}

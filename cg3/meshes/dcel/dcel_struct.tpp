@@ -48,7 +48,8 @@ class TemplatedDcel<V, HE, F>::ConstHalfEdgeRangeBasedIterator
 {
     friend class TemplatedDcel;
 public:
-    TemplatedDcel::ConstHalfEdgeIterator begin() const {return d->halfEdgeBegin();};
+	TemplatedDcel::ConstHalfEdgeIterator
+	begin() const {return d->halfEdgeBegin();};
     TemplatedDcel::ConstHalfEdgeIterator end() const {return d->halfEdgeEnd();};
 private:
     ConstHalfEdgeRangeBasedIterator(const TemplatedDcel *d) : d(d) {}
@@ -121,13 +122,19 @@ TemplatedDcel<V, HE, F>::TemplatedDcel() :
 }
 
 template <class V, class HE, class F>
-inline TemplatedDcel<V, HE, F>::TemplatedDcel(const char *filename) : nVertices(0), nHalfEdges(0), nFaces(0)
+inline TemplatedDcel<V, HE, F>::TemplatedDcel(const char *filename) :
+	nVertices(0),
+	nHalfEdges(0),
+	nFaces(0)
 {
     loadFromFile(std::string(filename));
 }
 
 template <class V, class HE, class F>
-inline TemplatedDcel<V, HE, F>::TemplatedDcel(const std::string& filename) : nVertices(0), nHalfEdges(0), nFaces(0)
+inline TemplatedDcel<V, HE, F>::TemplatedDcel(const std::string& filename) :
+	nVertices(0),
+	nHalfEdges(0),
+	nFaces(0)
 {
     loadFromFile(filename);
 }
@@ -151,7 +158,8 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(const TemplatedDcel<V, HE, F>& dcel)
     nFaces = dcel.nFaces;
     bBox = dcel.bBox;
     std::map<const TemplatedDcel::Vertex*, TemplatedDcel::Vertex*> mapVertices;
-    std::map<const TemplatedDcel::HalfEdge*, TemplatedDcel::HalfEdge*> mapHalfEdges;
+	std::map<const TemplatedDcel::HalfEdge*, TemplatedDcel::HalfEdge*>
+			mapHalfEdges;
     std::map<const TemplatedDcel::Face*, TemplatedDcel::Face*> mapFaces;
     vertices.resize(dcel.vertices.size(), nullptr);
     #ifdef NDEBUG
@@ -193,7 +201,10 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(const TemplatedDcel<V, HE, F>& dcel)
         f->setNormal(of->normal());
         f->setArea(of->area());
         f->setOuterHalfEdge(mapHalfEdges[of->outerHalfEdge()]);
-        for (typename TemplatedDcel<V, HE, F>::Face::ConstInnerHalfEdgeIterator heit = of->innerHalfEdgeBegin(); heit != of->innerHalfEdgeEnd(); ++heit){
+		for (typename TemplatedDcel<V, HE, F>::Face::ConstInnerHalfEdgeIterator
+			 heit = of->innerHalfEdgeBegin();
+			 heit != of->innerHalfEdgeEnd();
+			 ++heit){
             f->addInnerHalfEdge(mapHalfEdges[*heit]);
         }
         mapFaces[of] = f;
@@ -297,12 +308,13 @@ TemplatedDcel<V, HE, F>::~TemplatedDcel()
 
 /**
  * @param[in] idVertex: id of the vertex that will be returned
- * @return The const pointer to the vertex if the id exists, nullptr otherwise
+ * @return Const pointer to the vertex if the id exists, nullptr otherwise
  * @par Complexity:
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline const typename TemplatedDcel<V, HE, F>::Vertex* TemplatedDcel<V, HE, F>::vertex(unsigned int idVertex) const
+inline const typename TemplatedDcel<V, HE, F>::Vertex*
+TemplatedDcel<V, HE, F>::vertex(unsigned int idVertex) const
 {
     if (idVertex>= vertices.size()) return nullptr;
     return vertices[idVertex];
@@ -310,12 +322,13 @@ inline const typename TemplatedDcel<V, HE, F>::Vertex* TemplatedDcel<V, HE, F>::
 
 /**
  * @param[in] idHalfEdge: id of the half edge that will be returned
- * @return The const pointer to the half edge if the id exists, nullptr otherwise
+ * @return Const pointer to the half edge if the id exists, nullptr otherwise
  * @par Complexity:
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline const typename TemplatedDcel<V, HE, F>::HalfEdge* TemplatedDcel<V, HE, F>::halfEdge(unsigned int idHalfEdge) const
+inline const typename TemplatedDcel<V, HE, F>::HalfEdge*
+TemplatedDcel<V, HE, F>::halfEdge(unsigned int idHalfEdge) const
 {
     if (idHalfEdge>= halfEdges.size()) return nullptr;
     return halfEdges[idHalfEdge];
@@ -323,19 +336,21 @@ inline const typename TemplatedDcel<V, HE, F>::HalfEdge* TemplatedDcel<V, HE, F>
 
 /**
  * @param[in] idFace: id of the face that will be returned
- * @return The const pointer to the face if the id exists, nullptr otherwise
+ * @return Const pointer to the face if the id exists, nullptr otherwise
  * @par Complexity:
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline const typename TemplatedDcel<V, HE, F>::Face* TemplatedDcel<V, HE, F>::face(unsigned int idFace) const
+inline const typename TemplatedDcel<V, HE, F>::Face*
+TemplatedDcel<V, HE, F>::face(unsigned int idFace) const
 {
     if (idFace>= faces.size()) return nullptr;
     return faces[idFace];
 }
 
 /**
- * @note Does not calculate the bounding box, it just return the last computed one.
+ * @note Does not calculate the bounding box,
+ * it just return the last computed one.
  * @see updateBoundingBox()
  * @return The bounding box of the mesh after its last update
  * @par Complexity:
@@ -380,7 +395,8 @@ inline unsigned int TemplatedDcel<V, HE, F>::numberFaces () const
  * @see vertexBelongsToThis
  */
 template <class V, class HE, class F>
-inline bool TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Vertex* v) const
+inline bool
+TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Vertex* v) const
 {
     return vertexBelongsToThis(v);
 }
@@ -391,7 +407,8 @@ inline bool TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Vertex* v) co
  * @see halfEdgeBelongsToThis
  */
 template <class V, class HE, class F>
-inline bool TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::HalfEdge* he) const
+inline bool
+TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::HalfEdge* he) const
 {
     return halfEdgeBelongsToThis(he);
 }
@@ -402,7 +419,8 @@ inline bool TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::HalfEdge* he)
  * @see faceBelongsToThis
  */
 template <class V, class HE, class F>
-inline bool TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Face* f) const
+inline bool
+TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Face* f) const
 {
     return  faceBelongsToThis(f);
 }
@@ -411,7 +429,8 @@ inline bool TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Face* f) cons
  * @return An iterator that points to the first vertex of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::ConstVertexIterator TemplatedDcel<V, HE, F>::vertexBegin() const
+inline typename TemplatedDcel<V, HE, F>::ConstVertexIterator
+TemplatedDcel<V, HE, F>::vertexBegin() const
 {
     unsigned int i = 0;
     while (i < vertices.size() && vertices[i] == nullptr) ++i;
@@ -422,7 +441,8 @@ inline typename TemplatedDcel<V, HE, F>::ConstVertexIterator TemplatedDcel<V, HE
  * @return An iterator that points after the last vertex of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::ConstVertexIterator TemplatedDcel<V, HE, F>::vertexEnd() const
+inline typename TemplatedDcel<V, HE, F>::ConstVertexIterator
+TemplatedDcel<V, HE, F>::vertexEnd() const
 {
     return ConstVertexIterator((unsigned int)vertices.size(), vertices);
 }
@@ -431,7 +451,8 @@ inline typename TemplatedDcel<V, HE, F>::ConstVertexIterator TemplatedDcel<V, HE
  * @return An iterator that points to the first half edge of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::ConstHalfEdgeIterator TemplatedDcel<V, HE, F>::halfEdgeBegin() const
+inline typename TemplatedDcel<V, HE, F>::ConstHalfEdgeIterator
+TemplatedDcel<V, HE, F>::halfEdgeBegin() const
 {
     unsigned int i = 0;
     while (i < halfEdges.size() && halfEdges[i] == nullptr) ++i;
@@ -442,7 +463,8 @@ inline typename TemplatedDcel<V, HE, F>::ConstHalfEdgeIterator TemplatedDcel<V, 
  * @return An iterator that points after the last half edge of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::ConstHalfEdgeIterator TemplatedDcel<V, HE, F>::halfEdgeEnd() const
+inline typename TemplatedDcel<V, HE, F>::ConstHalfEdgeIterator
+TemplatedDcel<V, HE, F>::halfEdgeEnd() const
 {
     return ConstHalfEdgeIterator((unsigned int)halfEdges.size(), halfEdges);
 }
@@ -451,7 +473,8 @@ inline typename TemplatedDcel<V, HE, F>::ConstHalfEdgeIterator TemplatedDcel<V, 
  * @return An iterator that points to the first face of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::ConstFaceIterator TemplatedDcel<V, HE, F>::faceBegin() const
+inline typename TemplatedDcel<V, HE, F>::ConstFaceIterator
+TemplatedDcel<V, HE, F>::faceBegin() const
 {
     unsigned int i = 0;
     while (i < faces.size() && faces[i] == nullptr) ++i;
@@ -462,7 +485,8 @@ inline typename TemplatedDcel<V, HE, F>::ConstFaceIterator TemplatedDcel<V, HE, 
  * @return An iterator that points after the last face of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::ConstFaceIterator TemplatedDcel<V, HE, F>::faceEnd() const
+inline typename TemplatedDcel<V, HE, F>::ConstFaceIterator
+TemplatedDcel<V, HE, F>::faceEnd() const
 {
     return ConstFaceIterator((unsigned int)faces.size(), faces);
 }
@@ -474,7 +498,8 @@ inline typename TemplatedDcel<V, HE, F>::ConstFaceIterator TemplatedDcel<V, HE, 
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::Vertex* TemplatedDcel<V, HE, F>::vertex(unsigned int idVertex)
+inline typename TemplatedDcel<V, HE, F>::Vertex*
+TemplatedDcel<V, HE, F>::vertex(unsigned int idVertex)
 {
     if (idVertex>= vertices.size()) return nullptr;
     return vertices[idVertex];
@@ -487,7 +512,8 @@ inline typename TemplatedDcel<V, HE, F>::Vertex* TemplatedDcel<V, HE, F>::vertex
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::HalfEdge* TemplatedDcel<V, HE, F>::halfEdge(unsigned int idHalfEdge)
+inline typename TemplatedDcel<V, HE, F>::HalfEdge*
+TemplatedDcel<V, HE, F>::halfEdge(unsigned int idHalfEdge)
 {
     if (idHalfEdge>= halfEdges.size()) return nullptr;
     return halfEdges[idHalfEdge];
@@ -500,7 +526,8 @@ inline typename TemplatedDcel<V, HE, F>::HalfEdge* TemplatedDcel<V, HE, F>::half
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::Face* TemplatedDcel<V, HE, F>::face(unsigned int idFace)
+inline typename TemplatedDcel<V, HE, F>::Face*
+TemplatedDcel<V, HE, F>::face(unsigned int idFace)
 {
     if (idFace>= faces.size()) return nullptr;
     return faces[idFace];
@@ -523,7 +550,9 @@ inline typename TemplatedDcel<V, HE, F>::Face* TemplatedDcel<V, HE, F>::face(uns
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::VertexIterator TemplatedDcel<V, HE, F>::deleteVertex(const TemplatedDcel<V, HE, F>::VertexIterator& vit)
+inline typename TemplatedDcel<V, HE, F>::VertexIterator
+TemplatedDcel<V, HE, F>::deleteVertex(
+		const TemplatedDcel<V, HE, F>::VertexIterator& vit)
 {
     TemplatedDcel::VertexIterator nv = vit;
     TemplatedDcel::Vertex* v = *vit;
@@ -535,9 +564,11 @@ inline typename TemplatedDcel<V, HE, F>::VertexIterator TemplatedDcel<V, HE, F>:
 /**
  * @brief Removes the half edge pointed by the input iterator.
  *
- * Afther the execution of this function, the input iterator cannot be used anymore.
+ * Afther the execution of this function, the input iterator cannot be
+ * used anymore.
  *
- * Sets to nullptr all the following fields if they contains a reference to the deleted half edge:
+ * Sets to nullptr all the following fields if they contains a reference to the
+ * deleted half edge:
  * - he->twin->twin
  * - he->next->prev
  * - he->prev->next
@@ -546,12 +577,15 @@ inline typename TemplatedDcel<V, HE, F>::VertexIterator TemplatedDcel<V, HE, F>:
  * any inner half edge of he->face
  *
  * @param[in] heit: the iterator that points to the half edge
- * @return the iterator that points to the next half edge in the list of half edges
+ * @return the iterator that points to the next half edge in the list of half
+ * edges
  * @par Complexity:
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator TemplatedDcel<V, HE, F>::deleteHalfEdge(const TemplatedDcel<V, HE, F>::HalfEdgeIterator& heit)
+inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator
+TemplatedDcel<V, HE, F>::deleteHalfEdge(
+		const TemplatedDcel<V, HE, F>::HalfEdgeIterator& heit)
 {
     TemplatedDcel::HalfEdgeIterator nhe = heit;
     HalfEdge* he = *heit;
@@ -576,7 +610,9 @@ inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator TemplatedDcel<V, HE, F
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::FaceIterator TemplatedDcel<V, HE, F>::deleteFace(const TemplatedDcel<V, HE, F>::FaceIterator& fit)
+inline typename TemplatedDcel<V, HE, F>::FaceIterator
+TemplatedDcel<V, HE, F>::deleteFace(
+		const TemplatedDcel<V, HE, F>::FaceIterator& fit)
 {
     TemplatedDcel::FaceIterator nf = fit;
     TemplatedDcel::Face* f = *fit;
@@ -589,7 +625,8 @@ inline typename TemplatedDcel<V, HE, F>::FaceIterator TemplatedDcel<V, HE, F>::d
  * @return An iterator that points to the first vertex of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::VertexIterator TemplatedDcel<V, HE, F>::vertexBegin()
+inline typename TemplatedDcel<V, HE, F>::VertexIterator
+TemplatedDcel<V, HE, F>::vertexBegin()
 {
     unsigned int i = 0;
     while (i < vertices.size() && vertices[i] == nullptr) ++i;
@@ -601,7 +638,8 @@ inline typename TemplatedDcel<V, HE, F>::VertexIterator TemplatedDcel<V, HE, F>:
  * @return An iterator that points after the last vertex of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::VertexIterator TemplatedDcel<V, HE, F>::vertexEnd()
+inline typename TemplatedDcel<V, HE, F>::VertexIterator
+TemplatedDcel<V, HE, F>::vertexEnd()
 {
     return VertexIterator((unsigned int)vertices.size(), vertices);
 }
@@ -611,7 +649,8 @@ inline typename TemplatedDcel<V, HE, F>::VertexIterator TemplatedDcel<V, HE, F>:
  * @return An iterator that points to the first half edge of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator TemplatedDcel<V, HE, F>::halfEdgeBegin()
+inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator
+TemplatedDcel<V, HE, F>::halfEdgeBegin()
 {
     unsigned int i = 0;
     while (i < halfEdges.size() && halfEdges[i] == nullptr) ++i;
@@ -623,7 +662,8 @@ inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator TemplatedDcel<V, HE, F
  * @return An iterator that points after the last half edge of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator TemplatedDcel<V, HE, F>::halfEdgeEnd()
+inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator
+TemplatedDcel<V, HE, F>::halfEdgeEnd()
 {
     return HalfEdgeIterator((unsigned int)halfEdges.size(), halfEdges);
 }
@@ -633,7 +673,8 @@ inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator TemplatedDcel<V, HE, F
  * @return An iterator that points to the first face of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::FaceIterator TemplatedDcel<V, HE, F>::faceBegin()
+inline typename TemplatedDcel<V, HE, F>::FaceIterator
+TemplatedDcel<V, HE, F>::faceBegin()
 {
     unsigned int i = 0;
     while (i < faces.size() && faces[i] == nullptr) ++i;
@@ -645,7 +686,8 @@ inline typename TemplatedDcel<V, HE, F>::FaceIterator TemplatedDcel<V, HE, F>::f
  * @return An iterator that points after the last face of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::FaceIterator TemplatedDcel<V, HE, F>::faceEnd()
+inline typename TemplatedDcel<V, HE, F>::FaceIterator
+TemplatedDcel<V, HE, F>::faceEnd()
 {
     return FaceIterator((unsigned int)faces.size(), faces);
 }
@@ -654,7 +696,8 @@ inline typename TemplatedDcel<V, HE, F>::FaceIterator TemplatedDcel<V, HE, F>::f
  * @return a const range based iterator on the vertices of the Dcel
  */
 template <class V, class HE, class F>
-inline const typename TemplatedDcel<V, HE, F>::ConstVertexRangeBasedIterator TemplatedDcel<V, HE, F>::vertexIterator() const
+inline const typename TemplatedDcel<V, HE, F>::ConstVertexRangeBasedIterator
+TemplatedDcel<V, HE, F>::vertexIterator() const
 {
     return ConstVertexRangeBasedIterator(this);
 }
@@ -663,7 +706,8 @@ inline const typename TemplatedDcel<V, HE, F>::ConstVertexRangeBasedIterator Tem
  * @return a range based iterator on the vertices of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::VertexRangeBasedIterator TemplatedDcel<V, HE, F>::vertexIterator()
+inline typename TemplatedDcel<V, HE, F>::VertexRangeBasedIterator
+TemplatedDcel<V, HE, F>::vertexIterator()
 {
     return VertexRangeBasedIterator(this);
 }
@@ -672,7 +716,8 @@ inline typename TemplatedDcel<V, HE, F>::VertexRangeBasedIterator TemplatedDcel<
  * @return a const range based iterator on the half edges of the Dcel
  */
 template <class V, class HE, class F>
-inline const typename TemplatedDcel<V, HE, F>::ConstHalfEdgeRangeBasedIterator TemplatedDcel<V, HE, F>::halfEdgeIterator() const
+inline const typename TemplatedDcel<V, HE, F>::ConstHalfEdgeRangeBasedIterator
+TemplatedDcel<V, HE, F>::halfEdgeIterator() const
 {
     return ConstHalfEdgeRangeBasedIterator(this);
 }
@@ -681,7 +726,8 @@ inline const typename TemplatedDcel<V, HE, F>::ConstHalfEdgeRangeBasedIterator T
  * @return a range based iterator on the half edges of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::HalfEdgeRangeBasedIterator TemplatedDcel<V, HE, F>::halfEdgeIterator()
+inline typename TemplatedDcel<V, HE, F>::HalfEdgeRangeBasedIterator
+TemplatedDcel<V, HE, F>::halfEdgeIterator()
 {
     return HalfEdgeRangeBasedIterator(this);
 }
@@ -690,7 +736,8 @@ inline typename TemplatedDcel<V, HE, F>::HalfEdgeRangeBasedIterator TemplatedDce
  * @return a const range based iterator on the faces of the Dcel
  */
 template <class V, class HE, class F>
-inline const typename TemplatedDcel<V, HE, F>::ConstFaceRangeBasedIterator TemplatedDcel<V, HE, F>::faceIterator() const
+inline const typename TemplatedDcel<V, HE, F>::ConstFaceRangeBasedIterator
+TemplatedDcel<V, HE, F>::faceIterator() const
 {
     return ConstFaceRangeBasedIterator(this);
 }
@@ -699,13 +746,15 @@ inline const typename TemplatedDcel<V, HE, F>::ConstFaceRangeBasedIterator Templ
  * @return a range based iterator on the faces of the Dcel
  */
 template <class V, class HE, class F>
-inline typename TemplatedDcel<V, HE, F>::FaceRangeBasedIterator TemplatedDcel<V, HE, F>::faceIterator()
+inline typename TemplatedDcel<V, HE, F>::FaceRangeBasedIterator
+TemplatedDcel<V, HE, F>::faceIterator()
 {
     return FaceRangeBasedIterator(this);
 }
 
 template <class V, class HE, class F>
-bool TemplatedDcel<V, HE, F>::vertexBelongsToThis(const TemplatedDcel<V, HE, F>::Vertex* v) const
+bool TemplatedDcel<V, HE, F>::vertexBelongsToThis(
+		const TemplatedDcel<V, HE, F>::Vertex* v) const
 {
     if (!v) return false;
     #ifdef NDEBUG
@@ -716,7 +765,8 @@ bool TemplatedDcel<V, HE, F>::vertexBelongsToThis(const TemplatedDcel<V, HE, F>:
 }
 
 template <class V, class HE, class F>
-bool TemplatedDcel<V, HE, F>::halfEdgeBelongsToThis(const TemplatedDcel<V, HE, F>::HalfEdge* he) const
+bool TemplatedDcel<V, HE, F>::halfEdgeBelongsToThis(
+		const TemplatedDcel<V, HE, F>::HalfEdge* he) const
 {
     if (!he) return false;
     #ifdef NDEBUG
@@ -727,7 +777,8 @@ bool TemplatedDcel<V, HE, F>::halfEdgeBelongsToThis(const TemplatedDcel<V, HE, F
 }
 
 template <class V, class HE, class F>
-bool TemplatedDcel<V, HE, F>::faceBelongsToThis(const TemplatedDcel<V, HE, F>::Face* f) const
+bool TemplatedDcel<V, HE, F>::faceBelongsToThis(
+		const TemplatedDcel<V, HE, F>::Face* f) const
 {
     if (!f) return false;
     #ifdef NDEBUG
@@ -753,7 +804,8 @@ bool TemplatedDcel<V, HE, F>::isTriangleMesh() const
 }
 
 /**
- * @brief Computes the Surface area of the mesh, summing all the areas of the Faces contained.
+ * @brief Computes the Surface area of the mesh, summing all the areas of
+ * the Faces contained.
  * @return The Surface Area of the mesh
  * @par Complexity:
  *      \e O(numFaces)
@@ -771,9 +823,11 @@ double TemplatedDcel<V, HE, F>::surfaceArea() const
 /**
  * @brief Computes the Volume of the Mesh.
  *
- * It sums all the *signed* tet volumes, where every tet is made linking a surface triangle and a fixed point in the space.
+ * It sums all the *signed* tet volumes, where every tet is made linking a
+ * surface triangle and a fixed point in the space.
  *
- * @link https://stackoverflow.com/questions/1406029/how-to-calculate-the-volume-of-a-3d-mesh-object-the-surface-of-which-is-made-up
+ * @link https://stackoverflow.com/questions/1406029/how-to-calculate-the-
+ * volume-of-a-3d-mesh-object-the-surface-of-which-is-made-up
  * @return The volume of the mesh.
  * @par Complexity:
  *      \e O(numFaces)
@@ -826,11 +880,12 @@ bool TemplatedDcel<V, HE, F>::saveOnObj(const std::string& fileNameObj) const
 /**
  * @brief Saves the mesh in a Wavefront OBJ file.
  *
- * @warning Holes of faces are not supported. Faces with holes will be closed creating
- * dummy edges.
+ * @warning Holes of faces are not supported. Faces with holes will be closed
+ * creating dummy edges.
  *
  * @param[in] fileNameObj: the file name, \b with \b obj \b extension.
- * @param[in] saveProperites: true if you want to save colors and normals of the mesh.
+ * @param[in] saveProperites: true if you want to save colors and normals of
+ * the mesh.
  *
  * @par Complexity:
  *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
@@ -840,55 +895,83 @@ bool TemplatedDcel<V, HE, F>::saveOnObj(const std::string& fileNameObj, bool sav
 {
     std::vector<double> vertices;
     std::vector<double> verticesNormals;
+	std::vector<float> vertexColors;
     std::vector<int> faces;
+	std::vector<double> faceNormals;
     std::vector<unsigned int> faceSizes;
     std::vector<float> faceColors;
 
-    toStdVectors(vertices, verticesNormals, faces, faceSizes, faceColors);
+	toStdVectors(vertices, verticesNormals, vertexColors, faces, faceNormals,
+				 faceSizes, faceColors);
 
-    io::MeshType meshType = io::POLYGON_MESH;
-    int mode = 0;
+	io::FileMeshMode fm;
+	fm.setPolygonMesh();
     if (saveProperties) {
-         mode = io::NORMAL_VERTICES | io::COLOR_FACES;
-        return saveMeshOnObj(fileNameObj, numberVertices(), numberFaces(), vertices.data(),
-                         faces.data(), meshType, mode, verticesNormals.data(), io::RGB,
-                         internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
-    }
-    else {
-        return saveMeshOnObj(fileNameObj, numberVertices(), numberFaces(), vertices.data(),
-                         faces.data(), meshType, mode, verticesNormals.data(), io::RGB,
-                             internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
-    }
+		fm.setFaceColors();
+		fm.setVertexNormals();
+	}
+	return saveMeshOnObj(fileNameObj, numberVertices(), numberFaces(),
+						 vertices.data(),faces.data(), fm,
+						 verticesNormals.data(), io::RGB, vertexColors.data(),
+						 faceColors.data(), faceSizes.data());
 
 }
 
 /**
  * @brief Saves the mesh in a PLY file.
  *
- * @warning Holes of faces are not supported. Faces with holes will be closed creating
- * dummy edges.
+ * @warning Holes of faces are not supported. Faces with holes will be closed
+ * creating dummy edges.
  *
- * @param[in] fileNamePly: the file name, \b with \b ply \b extension
+ * @param[in] fileNamePly: the file name
+ * @param[in] binary: boolen for saving the file in binary mode, default is true
  *
  * @par Complexity:
  *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
  */
 template <class V, class HE, class F>
-bool TemplatedDcel<V, HE, F>::saveOnPly(const std::string& fileNamePly) const
+bool TemplatedDcel<V, HE, F>::saveOnPly(const std::string& fileNamePly, bool binary) const
+{
+	io::FileMeshMode fm(io::POLYGON_MESH, true, true, true, true);
+	return saveOnPly(fileNamePly, binary, fm);
+}
+
+/**
+ * @brief Saves the mesh in a PLY file.
+ *
+ * @warning Holes of faces are not supported. Faces with holes will be closed
+ * creating dummy edges.
+ *
+ * @param[in] fileNamePly: the file name, \b with \b ply \b extension
+ * @param[in] binary: boolen for saving the file in binary mode, default is true
+ * @param[in] meshMode: controls what properties are going to be saves.
+ * Check the cg3::io::FileMeshMode class.
+ *
+ * @par Complexity:
+ *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
+ */
+template <class V, class HE, class F>
+bool TemplatedDcel<V, HE, F>::saveOnPly(
+		const std::string& fileNamePly,
+		bool binary,
+		io::FileMeshMode fm) const
 {
     std::vector<double> vertices;
     std::vector<double> verticesNormals;
+	std::vector<float> verticesColors;
     std::vector<int> faces;
+	std::vector<double> faceNormals;
     std::vector<unsigned int> faceSizes;
     std::vector<float> faceColors;
 
-    toStdVectors(vertices, verticesNormals, faces, faceSizes, faceColors);
+	toStdVectors(vertices, verticesNormals, verticesColors,
+				 faces, faceNormals, faceSizes, faceColors);
 
-    io::MeshType meshType = io::POLYGON_MESH;
-    int mode = io::NORMAL_VERTICES | io::COLOR_FACES;
-    return saveMeshOnPly(fileNamePly, numberVertices(), numberFaces(), vertices.data(),
-                         faces.data(), meshType, mode, verticesNormals.data(),
-                         io::RGB, internal::dummyVectorFloat.data(), faceColors.data(), faceSizes.data());
+	return saveMeshOnPly(fileNamePly, numberVertices(), numberFaces(),
+						 vertices.data(), faces.data(), binary, fm,
+						 verticesNormals.data(), faceNormals.data(), io::RGB,
+						 verticesColors.data(), faceColors.data(),
+						 faceSizes.data());
 }
 
 /**
@@ -901,7 +984,8 @@ bool TemplatedDcel<V, HE, F>::saveOnPly(const std::string& fileNamePly) const
  *      \e O(numVertices) + \e O(numFaces) + \e O(numHalfEdges)
  */
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::saveOnDcelFile(const std::string& fileNameDcel) const
+void TemplatedDcel<V, HE, F>::saveOnDcelFile(
+		const std::string& fileNameDcel) const
 {
     std::ofstream myfile;
     myfile.open (fileNameDcel, std::ios::out | std::ios::binary);
@@ -920,7 +1004,10 @@ void TemplatedDcel<V, HE, F>::saveOnDcelFile(const std::string& fileNameDcel) co
  *      \e O(1)
  */
 template <class V, class HE, class F>
-typename TemplatedDcel<V, HE, F>::Vertex *TemplatedDcel<V, HE, F>::addVertex(const Pointd& p, const Vec3& n, const Color& c)
+typename TemplatedDcel<V, HE, F>::Vertex *TemplatedDcel<V, HE, F>::addVertex(
+		const Pointd& p,
+		const Vec3& n,
+		const Color& c)
 {
     #ifdef NDEBUG
     Vertex* last= new Vertex(*this);
@@ -961,18 +1048,15 @@ typename TemplatedDcel<V, HE, F>::Vertex *TemplatedDcel<V, HE, F>::addVertex(con
 }
 
 /**
- * \~Italian
- * @brief Aggiunge un half edge alla Dcel e ne restituisce il puntatore.
+ * @brief Adds a Half Edge in the Dcel, returning its pointer.
  *
- * Il Dcel::HalfEdge è inizializzato col costruttore vuoto, e successivamente viene settato un id
- * univoco.
- *
- * @return Il puntatore all'half edge appena inserito nella Dcel
+ * @return Pointer to the Half Edge added in the Dcel.
  * @par Complessità:
  *      \e O(1)
  */
 template <class V, class HE, class F>
-typename TemplatedDcel<V, HE, F>::HalfEdge* TemplatedDcel<V, HE, F>::addHalfEdge()
+typename TemplatedDcel<V, HE, F>::HalfEdge*
+TemplatedDcel<V, HE, F>::addHalfEdge()
 {
     #ifdef NDEBUG
     HalfEdge* last = new HalfEdge(*this);
@@ -999,15 +1083,16 @@ typename TemplatedDcel<V, HE, F>::HalfEdge* TemplatedDcel<V, HE, F>::addHalfEdge
  * \~Italian
  * @brief Aggiunge una faccia alla Dcel e ne restituisce il puntatore.
  *
- * La Dcel::Face è inizializzata col costruttore vuoto, e successivamente viene settato un id
- * univoco.
+ * La Dcel::Face è inizializzata col costruttore vuoto, e successivamente
+ * viene settato un id univoco.
  *
  * @return Il puntatore alla faccia appena inserita nella Dcel
  * @par Complessità:
  *      \e O(1)
  */
 template <class V, class HE, class F>
-typename TemplatedDcel<V, HE, F>::Face* TemplatedDcel<V, HE, F>::addFace(const Vec3& n, const Color& c)
+typename TemplatedDcel<V, HE, F>::Face*
+TemplatedDcel<V, HE, F>::addFace(const Vec3& n, const Color& c)
 {
     #ifdef NDEBUG
     Face* last = new Face(*this);
@@ -1048,14 +1133,16 @@ typename TemplatedDcel<V, HE, F>::Face* TemplatedDcel<V, HE, F>::addFace(const V
  *
  * Una volta eliminato, il vertice passato in input non è più utilizzabile.
  *
- * Setta a nullptr tutti i seguenti campi se contengono un riferimento al vertice eliminato v:
+ * Setta a nullptr tutti i seguenti campi se contengono un riferimento al
+ * vertice eliminato v:
  * per ogni half edge uscente he:
  * - he->fromVertex
  * - he->twin->toVertex
  *
  * @param[in] v: vertice da eliminare
- * @return True se il vertice è stato eliminato correttamente (ossia è stato trovato un vertice con
- * lo stesso id all'interno della lista di vertici), false altrimenti
+ * @return True se il vertice è stato eliminato correttamente (ossia è stato
+ * trovato un vertice con lo stesso id all'interno della lista di vertici),
+ * false altrimenti
  * @par Complessità:
  *      \e O(nIncidentHalfEdges) ->  \e ~O(1)
  */
@@ -1126,16 +1213,20 @@ bool TemplatedDcel<V, HE, F>::deleteHalfEdge(HalfEdge* he)
         if (he->_prev != nullptr)
             if(he->_prev->_next == he) he->_prev->_next = nullptr;
         if (he->_face != nullptr){
-            if (he->_face->_outerHalfEdge == he) he->_face->_outerHalfEdge = nullptr;
+			if (he->_face->_outerHalfEdge == he)
+				he->_face->_outerHalfEdge = nullptr;
             else if (he->_face->hasHoles()) {
-                for (unsigned int i = 0; i < he->_face->_innerHalfEdges.size(); i++){
+				for (unsigned int i = 0;
+					 i < he->_face->_innerHalfEdges.size(); i++){
                     if (he->_face->_innerHalfEdges[i] == he)
-                        he->_face->_innerHalfEdges.erase(he->_face->_innerHalfEdges.begin() + i--);
+						he->_face->_innerHalfEdges.erase(
+									he->_face->_innerHalfEdges.begin() + i--);
                 }
             }
         }
         if (he->_fromVertex != nullptr)
-            if (he->_fromVertex->_incidentHalfEdge == he) he->_fromVertex->_incidentHalfEdge = nullptr;
+			if (he->_fromVertex->_incidentHalfEdge == he)
+				he->_fromVertex->_incidentHalfEdge = nullptr;
         halfEdges[he->_id] = nullptr;
         unusedHeids.insert(he->_id);
         nHalfEdges--;
@@ -1159,13 +1250,15 @@ bool TemplatedDcel<V, HE, F>::deleteHalfEdge(unsigned int heid)
  *
  * Una volta eliminata, la faccia passata in input non è più utilizzabile.
  *
- * Setta a nullptr tutti i seguenti campi se contengono un riferimento alla faccia eliminata f:
+ * Setta a nullptr tutti i seguenti campi se contengono un riferimento alla
+ * faccia eliminata f:
  * per ogni half edge incidente he:
  * - he->face
  *
  * @param[in] f: faccia da eliminare
- * @return True se la faccia è stata eliminata correttamente (ossia è stato trovata una faccia con
- * lo stesso id all'interno della lista delle facce), false altrimenti
+ * @return True se la faccia è stata eliminata correttamente (ossia è stato
+ * trovata una faccia con lo stesso id all'interno della lista delle facce),
+ * false altrimenti
  * @par Complessità:
  *      \e O(nIncidentHalfEdges) -> \e ~O(1)
  */
@@ -1773,13 +1866,12 @@ bool TemplatedDcel<V, HE, F>::loadFromObj(const std::string& filename)
 {
     std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
-    io::MeshType meshType;
-    int mode;
+	io::FileMeshMode fm;
     std::list<Color> vcolor, fcolor;
 
-    if (loadMeshFromObj(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
+	if (loadMeshFromObj(filename, coords, faces, fm, vnorm, vcolor, fcolor, fsizes)){
         clear();
-        afterLoadFile(coords, faces, mode, vnorm, vcolor, fcolor, fsizes);
+		afterLoadFile(coords, faces, fm, vnorm, vcolor, fcolor, fsizes);
         return true;
     }
     else
@@ -1804,19 +1896,37 @@ bool TemplatedDcel<V, HE, F>::loadFromObj(const std::string& filename)
 template <class V, class HE, class F>
 bool TemplatedDcel<V, HE, F>::loadFromPly(const std::string& filename)
 {
-    std::list<double> coords, vnorm;
+	std::list<double> coords, vnorm;
     std::list<unsigned int> faces, fsizes;
-    io::MeshType meshType;
-    int mode;
+	io::FileMeshMode mode;
     std::list<Color> vcolor, fcolor;
 
-    if (loadMeshFromPly(filename, coords, faces, meshType, mode, vnorm, vcolor, fcolor, fsizes)){
+	if (loadMeshFromPly(filename, coords, faces, mode, vnorm, vcolor, fcolor, fsizes)){
         clear();
-        afterLoadFile(coords, faces, mode, vnorm,vcolor, fcolor, fsizes);
+		afterLoadFile(coords, faces, mode, vnorm, vcolor, fcolor, fsizes);
         return true;
     }
     else
-        return false;
+		return false;
+
+
+	/*io::FileMeshMode fm;
+
+	std::vector<double> vcoords, vvnorm;
+	std::vector<unsigned int> vfaces, vfsizes;
+	std::vector<Color> vvcolor, vfcolor;
+
+	if (loadMeshFromPly(filename, vcoords, vfaces, fm, vvnorm, vvcolor, vfcolor, vfsizes)){
+		clear();
+		std::list<double> coords(vcoords.begin(), vcoords.end()), vnorm(vvnorm.begin(), vvnorm.end());
+		std::list<unsigned int> faces(vfaces.begin(), vfaces.end()), fsizes(vfsizes.begin(), vfsizes.end());
+		std::list<Color> vcolor(vfcolor.begin(), vfcolor.end()), fcolor(vfcolor.begin(), vfcolor.end());
+
+		afterLoadFile(coords, faces, fm, vnorm,vcolor, fcolor, fsizes);
+		return true;
+	}
+	else
+		return false;*/
 }
 
 template <class V, class HE, class F>
@@ -2387,12 +2497,21 @@ std::vector<const V*> TemplatedDcel<V, HE, F>::makeSingleBorder(const Face* f) c
 }
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::toStdVectors(std::vector<double>& vertices, std::vector<double>& verticesNormals, std::vector<int>& faces, std::vector<unsigned int>& faceSizes, std::vector<float>& faceColors) const
+void TemplatedDcel<V, HE, F>::toStdVectors(
+		std::vector<double>& vertices,
+		std::vector<double>& verticesNormals,
+		std::vector<float>& verticesColors,
+		std::vector<int>& faces,
+		std::vector<double>& faceNormals,
+		std::vector<unsigned int>& faceSizes,
+		std::vector<float>& faceColors) const
 {
     std::map<int, int> mapVertices;
     vertices.reserve(numberVertices()*3);
     verticesNormals.reserve(numberVertices()*3);
+	verticesColors.reserve(numberVertices()*3);
     faces.reserve(numberFaces()*3);
+	faceNormals.reserve(numberFaces()*3);
     faceSizes.reserve(numberFaces());
     faceColors.reserve(numberFaces()*3);
 
@@ -2404,6 +2523,9 @@ void TemplatedDcel<V, HE, F>::toStdVectors(std::vector<double>& vertices, std::v
         verticesNormals.push_back(v->normal().x());
         verticesNormals.push_back(v->normal().y());
         verticesNormals.push_back(v->normal().z());
+		verticesColors.push_back(v->color().redF());
+		verticesColors.push_back(v->color().greenF());
+		verticesColors.push_back(v->color().blueF());
         mapVertices[v->id()] = iv++;
     }
     for (const Face* f : faceIterator()){
@@ -2424,6 +2546,9 @@ void TemplatedDcel<V, HE, F>::toStdVectors(std::vector<double>& vertices, std::v
             }
             size = (unsigned int)v.size();
         }
+		faceNormals.push_back(f->normal().x());
+		faceNormals.push_back(f->normal().y());
+		faceNormals.push_back(f->normal().z());
         faceSizes.push_back(size);
         faceColors.push_back(f->color().redF());
         faceColors.push_back(f->color().greenF());
@@ -2435,7 +2560,7 @@ template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::afterLoadFile(
         const std::list<double> &coords,
         const std::list<unsigned int> &faces,
-        int mode,
+		const io::FileMeshMode& fm,
         const std::list<double> &vnorm,
         const std::list<Color> &vcolor,
         const std::list<Color> &fcolor,
@@ -2465,14 +2590,14 @@ void TemplatedDcel<V, HE, F>::afterLoadFile(
 
         vertices.push_back(vid);
 
-        if (mode & io::NORMAL_VERTICES){
+		if (fm.hasVertexNormals()){
             Vec3 norm;
             norm.setX(*(vnit++));
             norm.setY(*(vnit++));
             norm.setZ(*(vnit++));
             vid->setNormal(norm);
         }
-        if (mode & io::COLOR_VERTICES){
+		if (fm.hasVertexColors()){
             vid->setColor(*(vcit++));
         }
     }
@@ -2529,7 +2654,7 @@ void TemplatedDcel<V, HE, F>::afterLoadFile(
         eid->setNext(first);
         first->setPrev(eid);
 
-        if (mode & io::COLOR_FACES){
+		if (fm.hasFaceColors()){
             Color c = *(fcit++);
             fid->setColor(c);
         }
@@ -2540,7 +2665,7 @@ void TemplatedDcel<V, HE, F>::afterLoadFile(
         fid->updateArea();
     }
 
-    if (! (mode & io::NORMAL_VERTICES))
+	if (! (fm.hasVertexNormals()))
         updateVertexNormals();
 }
 

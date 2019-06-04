@@ -172,7 +172,8 @@ public:
     double averageHalfEdgesLength()                      const;
     bool saveOnObj(const std::string& fileNameObj) const;
     bool saveOnObj(const std::string& fileNameObj, bool saveProperties)             const;
-    bool saveOnPly(const std::string& fileNamePly)             const;
+	bool saveOnPly(const std::string& fileNamePly, bool binary = true) const;
+	bool saveOnPly(const std::string& fileNamePly, bool binary, io::FileMeshMode fm) const;
     void saveOnDcelFile(const std::string& fileNameDcel)           const;
 
     Vertex* addVertex(const Pointd& p = Pointd(), const Vec3& n = Vec3(), const Color &c = Color(128, 128, 128));
@@ -269,14 +270,17 @@ protected:
     void toStdVectors(
             std::vector<double> &vertices,
             std::vector<double> &verticesNormals,
+			std::vector<float> &verticesColors,
             std::vector<int> &faces,
+			std::vector<double> &faceNormals,
             std::vector<unsigned int> &faceSizes,
             std::vector<float> &faceColors) const;
 
     void afterLoadFile(
             const std::list<double>& coords,
             const std::list<unsigned int>& faces,
-            int mode, const std::list<double>& vnorm,
+			const io::FileMeshMode& fm,
+			const std::list<double>& vnorm,
             const std::list<Color>& vcolor,
             const std::list<Color>& fcolor,
             const std::list<unsigned int>& fsizes);
