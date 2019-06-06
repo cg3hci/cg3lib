@@ -75,7 +75,19 @@ inline void Timer::stop()
 inline void Timer::print ()
 {
     double secs = delay();
-    std::cout << "[" << secs << " secs]\t" << caption << std::endl;
+	int mins = (int)secs / 60;
+	if (mins == 0)
+		std::cout << "[" << secs << " secs]\t" << caption << std::endl;
+	else {
+		secs = secs - mins * 60;
+		int hours = mins / 60;
+		if (hours == 0)
+			std::cout << "[" << mins << " mins; " << secs << " secs]\t" << caption << std::endl;
+		else {
+			mins = mins - hours * 60;
+			std::cout << "[" << hours << " hours; " << mins << " mins; " << secs << " secs]\t" << caption << std::endl;
+		}
+	}
 }
 
 /**
