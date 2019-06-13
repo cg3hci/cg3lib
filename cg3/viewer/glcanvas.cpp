@@ -454,7 +454,7 @@ void GLCanvas::setSelectionLeftButton(bool b)
     if (b)
         setMouseBinding(Qt::NoModifier, Qt::LeftButton, SELECT);
     else
-        enableRotation();
+		enableRotation();
 }
 
 } //namespace cg3::viewer
