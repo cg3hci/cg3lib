@@ -49,30 +49,35 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
 
 	std::vector<Vec3> dirPool = cg3::sphereCoverageFibonacci(nDirs);
 
-    std::set<std::pair<double,Vec3>> priorizitedOrientations;
-    for(Vec3& zAxis : dirPool) {
-        Vec3 axis;
-        double angle;
-        zAxis.normalize();
-        defineRotation(zAxis, axis, angle);
-        Eigen::Matrix3d mr = rotationMatrix(axis, angle);
+	return globalOptimalRotationMatrix(inputMesh, dirPool);
+}
 
-        double L1_extent = 0.0;
-        for(const Dcel::Face* f : inputMesh.faceIterator()) {
-            Vec3 n = f->normal();
-            n.rotate(mr);
-            L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
-        }
+Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel &inputMesh, const std::vector<Vec3> &dirPool)
+{
+	std::set<std::pair<double,Vec3>> priorizitedOrientations;
+	for(Vec3 zAxis : dirPool) {
+		Vec3 axis;
+		double angle;
+		zAxis.normalize();
+		defineRotation(zAxis, axis, angle);
+		Eigen::Matrix3d mr = rotationMatrix(axis, angle);
 
-        priorizitedOrientations.insert(std::make_pair(L1_extent,zAxis));
-    }
+		double L1_extent = 0.0;
+		for(const Dcel::Face* f : inputMesh.faceIterator()) {
+			Vec3 n = f->normal();
+			n.rotate(mr);
+			L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
+		}
 
-    Vec3  bestZ  = priorizitedOrientations.begin()->second;
+		priorizitedOrientations.insert(std::make_pair(L1_extent,zAxis));
+	}
 
-    Vec3  axis;
-    double angle;
-    bestZ.normalize();
-    defineRotation(bestZ, axis, angle);
+	Vec3  bestZ  = priorizitedOrientations.begin()->second;
+
+	Vec3  axis;
+	double angle;
+	bestZ.normalize();
+	defineRotation(bestZ, axis, angle);
 
 	return cg3::rotationMatrix(axis, angle);
 }
@@ -93,33 +98,41 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
 {
 	std::vector<Vec3> dirPool = cg3::sphereCoverageFibonacci(nDirs);
 
-    std::set<std::pair<double,Vec3>> priorizitedOrientations;
-    for(Vec3& zAxis : dirPool) {
-        Vec3 axis;
-        double angle;
-        zAxis.normalize();
-        defineRotation(zAxis, axis, angle);
-        Eigen::Matrix3d mr = rotationMatrix(axis, angle);
+	return globalOptimalRotationMatrix(inputMesh, dirPool);
+}
 
-        double L1_extent = 0.0;
-        for(unsigned int f = 0; f < inputMesh.numberFaces(); f++) {
-            Vec3 n = inputMesh.faceNormal(f);
-            n.rotate(mr);
-            L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
-        }
+Eigen::Matrix3d globalOptimalRotationMatrix(
+		const SimpleEigenMesh &inputMesh,
+		const std::vector<Vec3> &dirPool)
+{
+	std::set<std::pair<double,Vec3>> priorizitedOrientations;
+	for(Vec3 zAxis : dirPool) {
+		Vec3 axis;
+		double angle;
+		zAxis.normalize();
+		defineRotation(zAxis, axis, angle);
+		Eigen::Matrix3d mr = rotationMatrix(axis, angle);
 
-        priorizitedOrientations.insert(std::make_pair(L1_extent,zAxis));
-    }
+		double L1_extent = 0.0;
+		for(unsigned int f = 0; f < inputMesh.numberFaces(); f++) {
+			Vec3 n = inputMesh.faceNormal(f);
+			n.rotate(mr);
+			L1_extent += std::fabs(n.x()) + std::fabs(n.y()) + std::fabs(n.z());
+		}
 
-    Vec3  bestZ  = priorizitedOrientations.begin()->second;
+		priorizitedOrientations.insert(std::make_pair(L1_extent,zAxis));
+	}
 
-    Vec3  axis;
-    double angle;
-    bestZ.normalize();
-    defineRotation(bestZ, axis, angle);
+	Vec3  bestZ  = priorizitedOrientations.begin()->second;
+
+	Vec3  axis;
+	double angle;
+	bestZ.normalize();
+	defineRotation(bestZ, axis, angle);
 
 	return cg3::rotationMatrix(axis, angle);
 }
+
 #endif
 #endif
 

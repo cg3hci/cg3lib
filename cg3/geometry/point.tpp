@@ -501,6 +501,17 @@ inline double Point<T>::normalize()
     return len;
 }
 
+/**
+ * @brief Returns the normalized vector, such that its length is 1
+ * @return
+ */
+template<class T>
+Point<T> Point<T>::normalized() const
+{
+	double len = length();
+	return Point<T>(xCoord/len, yCoord/len, zCoord/len);
+}
+
 #ifdef CG3_WITH_EIGEN
 template <class T>
 Eigen::Vector3d Point<T>::toEigenVector() const

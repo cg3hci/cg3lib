@@ -98,6 +98,7 @@ public:
     void setZ(const T& z);
     void set(const T& x, const T& y, const T& z);
     double normalize();
+	Point<T> normalized() const;
     #ifdef CG3_WITH_EIGEN
     Eigen::Vector3d toEigenVector() const;
     void rotate(const Eigen::Matrix3d &matrix, const Point<T>& centroid = Point<T>());
@@ -159,7 +160,9 @@ typedef Point<double> Pointd; /**< \~English @brief Point composed of double com
 typedef Point<int>    Pointi; /**< \~English @brief Point composed of integer components */
 typedef Point<double>   Vec3; /**< \~English @brief Point composed of double components, sinctactic sugar for discriminate points from vectors */
 template<typename T>
-using Point3D = Point<T>; /**< \~English @brief alias of Point */
+using Point3D = Point<T>;
+
+/**< \~English @brief alias of Point */
 
 } //namespace cg3
 
