@@ -62,6 +62,7 @@ public:
     bool isEpsilonIntern(double px, double py, double pz, double epsilon = 1e-6)     const;
     bool isEpsilonInside(double px, double py, double pz, double epsilon = 1e-6)     const;
     bool intersect(const BoundingBox& otherBox);
+	bool overlap(const BoundingBox& otherBox);
     void extremes(std::vector<Pointd> &extremes) const;
     std::vector<Pointd> extremes() const;
 

@@ -103,7 +103,7 @@ public:
     virtual bool loadFromPly(const std::string &filename);
     virtual bool loadFromFile(const std::string &filename);
 
-    virtual bool saveOnPly(const std::string &filename) const;
+	virtual bool saveOnPly(const std::string &filename, bool binary = true) const;
     virtual bool saveOnObj(const std::string &filename) const;
 
     virtual void translate(const Vec3 &p);

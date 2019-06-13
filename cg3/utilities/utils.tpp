@@ -148,6 +148,16 @@ inline bool isInBounds(const T& value, const R& low, const R& high, Comparator c
 
 /**
  * @ingroup cg3core
+ * Returns true if the two intervals A and B overlap each other (extremes included)
+ */
+template<typename T>
+bool intervalOverlap(const T &minA, const T &maxA, const T &minB, const T &maxB)
+{
+	return minA <= maxB && minB <= maxA;
+}
+
+/**
+ * @ingroup cg3core
  * @brief smartColoring
  * @param elements
  * @param comp

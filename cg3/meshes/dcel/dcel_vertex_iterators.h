@@ -5,76 +5,132 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#ifndef CG3_DCEL_VERTEX_ITERATORS_H
-#define CG3_DCEL_VERTEX_ITERATORS_H
-
 #include "dcel_vertex.h"
-#include "dcel_half_edge.h"
 
 namespace cg3 {
 
-class Dcel::Vertex::GenericIterator
+class Vertex::GenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructor
-    GenericIterator();
+    GenericIterator() {};
 
     //Public Operators
     void* operator * () const {return nullptr;}
-    bool operator == (const GenericIterator& right)  const;
-    bool operator != (const GenericIterator& right)  const;
+    bool operator == (const GenericIterator& right) const {return pos == right.pos && v == right.v;};
+    bool operator != (const GenericIterator& right) const {return !(*this == right);};
 
-    GenericIterator operator ++ ();
-    GenericIterator operator ++ (int);
-    GenericIterator operator -- ();
-    GenericIterator operator -- (int);
+	GenericIterator operator ++ () {
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	GenericIterator operator ++ (int) {
+		GenericIterator old_value = *this;
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
+	GenericIterator operator -- () {
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	GenericIterator operator -- (int) {
+		GenericIterator old_value = *this;
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
 
 protected:
     //Protected Attributes
-    Dcel::Vertex*   v;      /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
-    Dcel::HalfEdge* start;  /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
-    Dcel::HalfEdge* pos;    /**< \~Italian @brief Posizione attuale dell'iteratore */
-    Dcel::HalfEdge* end;    /**< \~Italian @brief Half edge sul quale termina l'iteratore */
+    Vertex*   v;      /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
+    HalfEdge* start;  /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
+    HalfEdge* pos;    /**< \~Italian @brief Posizione attuale dell'iteratore */
+    HalfEdge* end;    /**< \~Italian @brief Half edge sul quale termina l'iteratore */
 
     //Protected Constructor
-    GenericIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    GenericIterator(HalfEdge* start, HalfEdge* end, Vertex* v) : v(v), start(start), pos(start), end(end){};
 };
 
-class Dcel::Vertex::ConstGenericIterator
+class Vertex::ConstGenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructors
-    ConstGenericIterator();
-    ConstGenericIterator(const Dcel::Vertex::GenericIterator& it);
+    ConstGenericIterator() {};
+    ConstGenericIterator(const Vertex::GenericIterator& it) : v(it.v), start(it.start), pos(it.pos), end(it.end) {};
 
     //Public Operators
     const void* operator * () const {return nullptr;}
-    bool operator == (const ConstGenericIterator& right) const;
-    bool operator != (const ConstGenericIterator& right) const;
+    bool operator == (const ConstGenericIterator& right) const {return pos == right.pos && v == right.v;};
+    bool operator != (const ConstGenericIterator& right) const {return !(*this == right);};
 
-    ConstGenericIterator operator ++ ();
-    ConstGenericIterator operator ++ (int);
-    ConstGenericIterator operator -- ();
-    ConstGenericIterator operator -- (int);
+	ConstGenericIterator operator ++ () {
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	ConstGenericIterator operator ++ (int) {
+		ConstGenericIterator old_value = *this;
+		if (pos->twin() == nullptr) pos = nullptr;
+		else {
+			pos = pos->twin()->next();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
+	ConstGenericIterator operator -- () {
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return *this;
+	};
+	ConstGenericIterator operator -- (int) {
+		ConstGenericIterator old_value = *this;
+		if (pos->prev() == nullptr) pos = nullptr;
+		else {
+			pos = pos->prev()->twin();
+			if (pos == end) pos = nullptr;
+		}
+		return old_value;
+	};
 
 protected:
     //Protected Attributes
-    const Dcel::Vertex*   v;        /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
-    const Dcel::HalfEdge* start;    /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
-    const Dcel::HalfEdge* pos;      /**< \~Italian @brief Posizione attuale dell'iteratore */
-    const Dcel::HalfEdge* end;      /**< \~Italian @brief Half edge sul quale termina l'iteratore */
+    const Vertex*   v;        /**< \~Italian @brief Vertice su cui vengono iterati i vertici adiacenti */
+    const HalfEdge* start;    /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
+    const HalfEdge* pos;      /**< \~Italian @brief Posizione attuale dell'iteratore */
+    const HalfEdge* end;      /**< \~Italian @brief Half edge sul quale termina l'iteratore */
 
     //Protected Constructor
-    ConstGenericIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    ConstGenericIterator(const HalfEdge* start, const HalfEdge* end, const Vertex* v): v(v), start(start), pos(start), end(end){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::AdjacentVertexIterator
+ * @class Vertex::AdjacentVertexIterator
  * @brief Iteratore che permette di ciclare sui vertici adiacenti ad un vertice.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti e uscenti
@@ -97,39 +153,39 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::AdjacentVertexIterator vit = v->adjacentVertexBegin(); vit != v->adjacentVertexEnd(); ++vit){
- *     Dcel::Vertex* av = *vit;
+ * for (Vertex::AdjacentVertexIterator vit = v->adjacentVertexBegin(); vit != v->adjacentVertexEnd(); ++vit){
+ *     Vertex* av = *vit;
  *     // operazioni su av
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti i vertici adiacenti compresi tra due dati vertici adiacenti. In questo caso sarà necessario
- * passare i vertici estremi dell'intervallo all'inizializzatore Dcel::Vertex::adjacentVertexBegin(). Per i dettagli su come funzionano queste
+ * passare i vertici estremi dell'intervallo all'inizializzatore Vertex::adjacentVertexBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstAdjacentVertexIterator.
+ * utilizzarlo su const Vertex. Per const Vertex, vedere Vertex::ConstAdjacentVertexIterator.
  */
-class Dcel::Vertex::AdjacentVertexIterator : public Dcel::Vertex::GenericIterator
+class Vertex::AdjacentVertexIterator : public Vertex::GenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructor
-    AdjacentVertexIterator();
+    AdjacentVertexIterator() : GenericIterator(){};
 
     //Public Operators
-    Dcel::Vertex* operator * ()                             const;
+    Vertex* operator * () const {return pos->toVertex();};
 
 protected:
 
     //Protected Constructor
-    AdjacentVertexIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    AdjacentVertexIterator(HalfEdge* start, HalfEdge* end, Vertex* v) : GenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::ConstAdjacentVertexIterator
+ * @class Vertex::ConstAdjacentVertexIterator
  * @brief Iteratore che permette di ciclare sui vertici adiacenti ad un vertice, garantendone l'immutabilità.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti e uscenti
@@ -152,40 +208,40 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::ConstAdjacentVertexIterator vit = v->adjacentVertexBegin(); vit != v->adjacentVertexEnd(); ++vit){
- *     const Dcel::Vertex* av = *vit;
+ * for (Vertex::ConstAdjacentVertexIterator vit = v->adjacentVertexBegin(); vit != v->adjacentVertexEnd(); ++vit){
+ *     const Vertex* av = *vit;
  *     // operazioni const su av
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti i vertici adiacenti compresi tra due dati vertici adiacenti. In questo caso sarà necessario
- * passare i vertici estremi dell'intervallo all'inizializzatore Dcel::Vertex::adjacentVertexBegin(). Per i dettagli su come funzionano queste
+ * passare i vertici estremi dell'intervallo all'inizializzatore Vertex::adjacentVertexBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
- * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
- * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::AdjacentVertexIterator.
+ * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Vertex.
+ * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Vertex::AdjacentVertexIterator.
  */
-class Dcel::Vertex::ConstAdjacentVertexIterator : public Dcel::Vertex::ConstGenericIterator
+class Vertex::ConstAdjacentVertexIterator : public Vertex::ConstGenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructors
-    ConstAdjacentVertexIterator();
-    ConstAdjacentVertexIterator(const Dcel::Vertex::AdjacentVertexIterator& it);
+    ConstAdjacentVertexIterator() : ConstGenericIterator(){};
+    ConstAdjacentVertexIterator(const Vertex::AdjacentVertexIterator& it) : ConstGenericIterator(it){};
 
     //Public Operators
-    const Dcel::Vertex* operator * ()                           const;
+    const Vertex* operator * () const {return pos->toVertex();};
 
 protected:
 
     //Protected Constructor
-    ConstAdjacentVertexIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    ConstAdjacentVertexIterator(const HalfEdge* start, const HalfEdge* end, const Vertex* v) : ConstGenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::OutgoingHalfEdgeIterator
+ * @class Vertex::OutgoingHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge uscenti da un vertice.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti e uscenti
@@ -208,39 +264,39 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::OutgoingHalfEdgeIterator heit = v->outgoingHalfEdgeBegin(); heit != v->outgoingHalfEdgeEnd(); ++heit){
- *     Dcel::HalfEdge* he = *heit;
+ * for (Vertex::OutgoingHalfEdgeIterator heit = v->outgoingHalfEdgeBegin(); heit != v->outgoingHalfEdgeEnd(); ++heit){
+ *     HalfEdge* he = *heit;
  *     // operazioni su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge uscenti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::outgoingHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::outgoingHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstOutgoingHalfEdgeIterator.
+ * utilizzarlo su const Vertex. Per const Vertex, vedere Vertex::ConstOutgoingHalfEdgeIterator.
  */
-class Dcel::Vertex::OutgoingHalfEdgeIterator : public Dcel::Vertex::GenericIterator
+class Vertex::OutgoingHalfEdgeIterator : public Vertex::GenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructor
-    OutgoingHalfEdgeIterator();
+    OutgoingHalfEdgeIterator() : GenericIterator(){};
 
     //Public Operators
-    Dcel::HalfEdge* operator * ()                               const;
+    HalfEdge* operator * () const {return pos;};
 
 protected:
 
     //Protected Constructor
-    OutgoingHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    OutgoingHalfEdgeIterator(HalfEdge* start, HalfEdge* end, Vertex* v) : GenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::ConstOutgoingHalfEdgeIterator
+ * @class Vertex::ConstOutgoingHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge uscenti da un vertice, garantendone l'immutabilità.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti e uscenti
@@ -263,40 +319,40 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::ConstOutgoingHalfEdgeIterator heit = v->outgoingHalfEdgeBegin(); heit != v->outgoingHalfEdgeEnd(); ++heit){
- *     const Dcel::HalfEdge* he = *heit;
+ * for (Vertex::ConstOutgoingHalfEdgeIterator heit = v->outgoingHalfEdgeBegin(); heit != v->outgoingHalfEdgeEnd(); ++heit){
+ *     const HalfEdge* he = *heit;
  *     // operazioni const su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge uscenti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::outgoingHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::outgoingHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
- * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
- * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::OutgoingHalfEdgeIterator.
+ * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Vertex.
+ * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Vertex::OutgoingHalfEdgeIterator.
  */
-class Dcel::Vertex::ConstOutgoingHalfEdgeIterator : public Dcel::Vertex::ConstGenericIterator
+class Vertex::ConstOutgoingHalfEdgeIterator : public Vertex::ConstGenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructors
-    ConstOutgoingHalfEdgeIterator();
-    ConstOutgoingHalfEdgeIterator(const Dcel::Vertex::OutgoingHalfEdgeIterator& it);
+    ConstOutgoingHalfEdgeIterator() : ConstGenericIterator(){};
+    ConstOutgoingHalfEdgeIterator(const Vertex::OutgoingHalfEdgeIterator& it) : ConstGenericIterator(it){};
 
     //Public Operators
-    const Dcel::HalfEdge* operator * ()                             const;
+    const HalfEdge* operator * () const {return pos;};
 
 protected:
 
     //Protected Constructor
-    ConstOutgoingHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    ConstOutgoingHalfEdgeIterator(const HalfEdge* start, const HalfEdge* end, const Vertex* v) : ConstGenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::IncomingHalfEdgeIterator
+ * @class Vertex::IncomingHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge entranti in un vertice.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti e \b uscenti
@@ -319,39 +375,39 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::IncomingHalfEdgeIterator heit = v->incomingHalfEdgeBegin(); heit != v->incomingHalfEdgeEnd(); ++heit){
- *     Dcel::HalfEdge* he = *heit;
+ * for (Vertex::IncomingHalfEdgeIterator heit = v->incomingHalfEdgeBegin(); heit != v->incomingHalfEdgeEnd(); ++heit){
+ *     HalfEdge* he = *heit;
  *     // operazioni su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge entranti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::incomingHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::incomingHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstIncomingHalfEdgeIterator.
+ * utilizzarlo su const Vertex. Per const Vertex, vedere Vertex::ConstIncomingHalfEdgeIterator.
  */
-class Dcel::Vertex::IncomingHalfEdgeIterator : public GenericIterator
+class Vertex::IncomingHalfEdgeIterator : public GenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructor
-    IncomingHalfEdgeIterator();
+    IncomingHalfEdgeIterator() : GenericIterator(){};
 
     //Public Operators
-    Dcel::HalfEdge* operator * ()                               const;
+    HalfEdge* operator * () const {return pos->twin();};
 
 protected:
 
     //Protected Constructor
-    IncomingHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    IncomingHalfEdgeIterator(HalfEdge* start, HalfEdge* end, Vertex* v) : GenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::ConstIncomingHalfEdgeIterator
+ * @class Vertex::ConstIncomingHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge entranti in un vertice, garantendone l'immutabilità.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti e \b uscenti
@@ -374,40 +430,40 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::ConstIncomingHalfEdgeIterator heit = v->incomingHalfEdgeBegin(); heit != v->incomingHalfEdgeEnd(); ++heit){
- *     const Dcel::HalfEdge* he = *heit;
+ * for (Vertex::ConstIncomingHalfEdgeIterator heit = v->incomingHalfEdgeBegin(); heit != v->incomingHalfEdgeEnd(); ++heit){
+ *     const HalfEdge* he = *heit;
  *     // operazioni const su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge entranti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::incomingHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::incomingHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
- * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
- * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::IncomingHalfEdgeIterator.
+ * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Vertex.
+ * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Vertex::IncomingHalfEdgeIterator.
  */
-class Dcel::Vertex::ConstIncomingHalfEdgeIterator : public Dcel::Vertex::ConstGenericIterator
+class Vertex::ConstIncomingHalfEdgeIterator : public Vertex::ConstGenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructors
-    ConstIncomingHalfEdgeIterator();
-    ConstIncomingHalfEdgeIterator(const Dcel::Vertex::IncomingHalfEdgeIterator& it);
+    ConstIncomingHalfEdgeIterator() : ConstGenericIterator(){};
+    ConstIncomingHalfEdgeIterator(const Vertex::IncomingHalfEdgeIterator& it) : ConstGenericIterator(it){};
 
     //Public Operators
-    const Dcel::HalfEdge* operator * ()                             const;
+    const HalfEdge* operator * () const {return pos->twin();};
 
 protected:
 
     //Protected Constructor
-    ConstIncomingHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    ConstIncomingHalfEdgeIterator(const HalfEdge* start, const HalfEdge* end, const Vertex* v) : ConstGenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::IncidentHalfEdgeIterator
+ * @class Vertex::IncidentHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge uscenti e entranti in un vertice.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti
@@ -431,44 +487,66 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::IncidentHalfEdgeIterator heit = v->incidentHalfEdgeBegin(); heit != v->incidentHalfEdgeEnd(); ++heit){
- *     Dcel::HalfEdge* he = *heit;
+ * for (Vertex::IncidentHalfEdgeIterator heit = v->incidentHalfEdgeBegin(); heit != v->incidentHalfEdgeEnd(); ++heit){
+ *     HalfEdge* he = *heit;
  *     // operazioni su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge incidenti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstIncidentHalfEdgeIterator.
+ * utilizzarlo su const Vertex. Per const Vertex, vedere Vertex::ConstIncidentHalfEdgeIterator.
  */
-class Dcel::Vertex::IncidentHalfEdgeIterator : public Dcel::Vertex::GenericIterator
+class Vertex::IncidentHalfEdgeIterator : public Vertex::GenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructor
-    IncidentHalfEdgeIterator();
+    IncidentHalfEdgeIterator() : GenericIterator(){};
 
     //Public Operators
-    Dcel::HalfEdge* operator * ()                               const;
+    HalfEdge* operator * () const {return pos;};
 
-    IncidentHalfEdgeIterator operator ++ ();
-    IncidentHalfEdgeIterator operator ++ (int);
-    IncidentHalfEdgeIterator operator -- ();
-    IncidentHalfEdgeIterator operator -- (int);
+    IncidentHalfEdgeIterator operator ++ () {
+        if (pos->fromVertex() == v) pos = pos->prev();
+        else pos = pos->twin();
+        if (pos == end) pos = nullptr;
+        return *this;
+    };
+    IncidentHalfEdgeIterator operator ++ (int) {
+        IncidentHalfEdgeIterator old_value = *this;
+        if (pos->fromVertex() == v) pos = pos->prev();
+        else pos = pos->twin();
+        if (pos == end) pos = nullptr;
+        return old_value;
+    };
+    IncidentHalfEdgeIterator operator -- () {
+        if (pos->fromVertex() == v) pos = pos->twin();
+        else pos = pos->next();
+        if (pos == end) pos = nullptr;
+        return *this;
+    };
+    IncidentHalfEdgeIterator operator -- (int) {
+        IncidentHalfEdgeIterator old_value = *this;
+        if (pos->fromVertex() == v) pos = pos->twin();
+        else pos = pos->next();
+        if (pos == end) pos = nullptr;
+        return old_value;
+    };
 
 protected:
 
     //Protected Constructor
-    IncidentHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    IncidentHalfEdgeIterator(HalfEdge* start, HalfEdge* end, Vertex* v) : GenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::ConstIncidentHalfEdgeIterator
+ * @class Vertex::ConstIncidentHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge uscenti e entranti in un vertice.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti
@@ -492,45 +570,67 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::ConstIncidentHalfEdgeIterator heit = v->incidentHalfEdgeBegin(); heit != v->incidentHalfEdgeEnd(); ++heit){
- *     const Dcel::HalfEdge* he = *heit;
+ * for (Vertex::ConstIncidentHalfEdgeIterator heit = v->incidentHalfEdgeBegin(); heit != v->incidentHalfEdgeEnd(); ++heit){
+ *     const HalfEdge* he = *heit;
  *     // operazioni const su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge incidenti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
- * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
- * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::IncidentHalfEdgeIterator.
+ * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Vertex.
+ * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Vertex::IncidentHalfEdgeIterator.
  */
-class Dcel::Vertex::ConstIncidentHalfEdgeIterator : public ConstGenericIterator
+class Vertex::ConstIncidentHalfEdgeIterator : public ConstGenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructors
-    ConstIncidentHalfEdgeIterator();
-    ConstIncidentHalfEdgeIterator(const Dcel::Vertex::IncidentHalfEdgeIterator& it);
+    ConstIncidentHalfEdgeIterator() : ConstGenericIterator(){};
+    ConstIncidentHalfEdgeIterator(const Vertex::IncidentHalfEdgeIterator& it) : ConstGenericIterator(it){};
 
     //Public Operators
-    const Dcel::HalfEdge* operator * ()                             const;
+    const HalfEdge* operator * () const {return pos;};
 
-    ConstIncidentHalfEdgeIterator operator ++ ();
-    ConstIncidentHalfEdgeIterator operator ++ (int);
-    ConstIncidentHalfEdgeIterator operator -- ();
-    ConstIncidentHalfEdgeIterator operator -- (int);
+    ConstIncidentHalfEdgeIterator operator ++ (){
+        if (pos->fromVertex() == v) pos = pos->twin();
+        else pos = pos->next();
+        if (pos == end) pos = nullptr;
+        return *this;
+    }
+    ConstIncidentHalfEdgeIterator operator ++ (int){
+        ConstIncidentHalfEdgeIterator old_value = *this;
+        if (pos->fromVertex() == v) pos = pos->twin();
+        else pos = pos->next();
+        if (pos == end) pos = nullptr;
+        return old_value;
+    }
+    ConstIncidentHalfEdgeIterator operator -- (){
+        if (pos->fromVertex() == v) pos = pos->prev();
+        else pos = pos->twin();
+        if (pos == end) pos = nullptr;
+        return *this;
+    }
+    ConstIncidentHalfEdgeIterator operator -- (int){
+        ConstIncidentHalfEdgeIterator old_value = *this;
+        if (pos->fromVertex() == v) pos = pos->prev();
+        else pos = pos->twin();
+        if (pos == end) pos = nullptr;
+        return old_value;
+    }
 
 protected:
 
     //Protected Constructor
-    ConstIncidentHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    ConstIncidentHalfEdgeIterator(const HalfEdge* start, const HalfEdge* end, const Vertex* v) : ConstGenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::IncidentFaceIterator
+ * @class Vertex::IncidentFaceIterator
  * @brief Iteratore che permette di ciclare sulle facce incidenti su un vertice.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti
@@ -554,41 +654,41 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::IncidentFaceIterator heit = v->incidentFaceBegin(); heit != v->incidentFaceEnd(); ++heit){
- *     Dcel::Face* he = *heit;
+ * for (Vertex::IncidentFaceIterator heit = v->incidentFaceBegin(); heit != v->incidentFaceEnd(); ++heit){
+ *     Face* he = *heit;
  *     // operazioni su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti le facce incidenti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::incidentFaceBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::incidentFaceBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità del vertice e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Vertex. Per const Dcel::Vertex, vedere Dcel::Vertex::ConstFaceIterator.
+ * utilizzarlo su const Vertex. Per const Vertex, vedere Vertex::ConstFaceIterator.
  *
  * @warning Nel caso di Dcel composte da poligoni generici, è possibile che un vertice abbia la stessa faccia incidente su due punti diversi.
  */
-class Dcel::Vertex::IncidentFaceIterator : public Dcel::Vertex::GenericIterator
+class Vertex::IncidentFaceIterator : public Vertex::GenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructor
-    IncidentFaceIterator();
+    IncidentFaceIterator() : GenericIterator(){};
 
     //Public Operators
-    Dcel::Face* operator * ()                               const;
+    Face* operator * () const {return pos->face();};
 
 protected:
 
     //Protected Constructor
-    IncidentFaceIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Vertex* v);
+    IncidentFaceIterator(HalfEdge* start, HalfEdge* end, Vertex* v) : GenericIterator(start, end, v){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Vertex::ConstIncidentFaceIterator
+ * @class Vertex::ConstIncidentFaceIterator
  * @brief Iteratore che permette di ciclare sulle facce incidenti su un vertice.
  *
  * Partendo da un half edge start e un half edge end (non compreso), entrambi incidenti
@@ -612,151 +712,147 @@ protected:
  * su tutti i vertici adiacenti ad un dato vertice \c v. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Vertex::ConstIncidentFaceIterator heit = v->incidentFaceBegin(); heit != v->incidentFaceEnd(); ++heit){
- *     const Dcel::Face* he = *heit;
+ * for (Vertex::ConstIncidentFaceIterator heit = v->incidentFaceBegin(); heit != v->incidentFaceEnd(); ++heit){
+ *     const Face* he = *heit;
  *     // operazioni const su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti le facce incidenti compresi tra due dati half edge incidenti. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Vertex::incidentFaceBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Vertex::incidentFaceBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
- * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Dcel::Vertex.
- * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Dcel::Vertex::ConstIncidentFaceIterator.
+ * Questo iteratore garantisce l'immutabilità del vertice della Dcel a cui appartiene, e quindi è possibile utilizzarlo solo su const Vertex.
+ * Se si ha necessità di modificare i vertici presenti nella Dcel, usare Vertex::ConstIncidentFaceIterator.
  *
  * @warning Nel caso di Dcel composte da poligoni generici, è possibile che un vertice abbia la stessa faccia incidente su due punti diversi.
  */
-class Dcel::Vertex::ConstIncidentFaceIterator : public Dcel::Vertex::ConstGenericIterator
+class Vertex::ConstIncidentFaceIterator : public Vertex::ConstGenericIterator
 {
-    friend class Dcel::Vertex;
+    friend class Vertex;
 
 public:
     //Constructors
-    ConstIncidentFaceIterator();
-    ConstIncidentFaceIterator(const Dcel::Vertex::IncidentFaceIterator& it);
+    ConstIncidentFaceIterator() : ConstGenericIterator(){};
+    ConstIncidentFaceIterator(const Vertex::IncidentFaceIterator& it) : ConstGenericIterator(it){};
 
     //Public Operators
-    const Dcel::Face* operator * ()                             const;
+    const Face* operator * () const {return pos->face();};
 
 private:
 
     //Protected Constructor
-    ConstIncidentFaceIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Vertex* v);
+    ConstIncidentFaceIterator(const HalfEdge* start, const HalfEdge* end, const Vertex* v) : ConstGenericIterator(start, end, v){};
 };
 
-class Dcel::Vertex::ConstAdjacentVertexRangeBasedIterator
+class Vertex::ConstAdjacentVertexRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::ConstAdjacentVertexIterator begin() const;
-    Dcel::Vertex::ConstAdjacentVertexIterator end() const;
+    Vertex::ConstAdjacentVertexIterator begin() const {return v->adjacentVertexBegin();};
+    Vertex::ConstAdjacentVertexIterator end() const {return v->adjacentVertexEnd();};
 private:
     ConstAdjacentVertexRangeBasedIterator(const Vertex *v) : v(v) {}
     const Vertex *v;
 };
 
-class Dcel::Vertex::ConstOutgoingHalfEdgeRangeBasedIterator
+class Vertex::ConstOutgoingHalfEdgeRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::ConstOutgoingHalfEdgeIterator begin() const;
-    Dcel::Vertex::ConstOutgoingHalfEdgeIterator end() const;
+    Vertex::ConstOutgoingHalfEdgeIterator begin() const {return v->outgoingHalfEdgeBegin();};
+    Vertex::ConstOutgoingHalfEdgeIterator end() const {return v->outgoingHalfEdgeEnd();};
 private:
     ConstOutgoingHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
     const Vertex *v;
 };
 
-class Dcel::Vertex::ConstIncomingHalfEdgeRangeBasedIterator
+class Vertex::ConstIncomingHalfEdgeRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::ConstIncomingHalfEdgeIterator begin() const;
-    Dcel::Vertex::ConstIncomingHalfEdgeIterator end() const;
+    Vertex::ConstIncomingHalfEdgeIterator begin() const {return v->incomingHalfEdgeBegin();};
+    Vertex::ConstIncomingHalfEdgeIterator end() const {return v->incomingHalfEdgeEnd();};
 private:
     ConstIncomingHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
     const Vertex *v;
 };
 
-class Dcel::Vertex::ConstIncidentHalfEdgeRangeBasedIterator
+class Vertex::ConstIncidentHalfEdgeRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::ConstIncidentHalfEdgeIterator begin() const;
-    Dcel::Vertex::ConstIncidentHalfEdgeIterator end() const;
+    Vertex::ConstIncidentHalfEdgeIterator begin() const {return v->incidentHalfEdgeBegin();};
+    Vertex::ConstIncidentHalfEdgeIterator end() const {return v->incidentHalfEdgeEnd();};
 private:
     ConstIncidentHalfEdgeRangeBasedIterator(const Vertex *v) : v(v) {}
     const Vertex *v;
 };
 
-class Dcel::Vertex::ConstIncidentFaceRangeBasedIterator
+class Vertex::ConstIncidentFaceRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::ConstIncidentFaceIterator begin() const;
-    Dcel::Vertex::ConstIncidentFaceIterator end() const;
+    Vertex::ConstIncidentFaceIterator begin() const {return v->incidentFaceBegin();};
+    Vertex::ConstIncidentFaceIterator end() const {return v->incidentFaceEnd();};
 private:
     ConstIncidentFaceRangeBasedIterator(const Vertex *v) : v(v) {}
     const Vertex *v;
 };
 
-class Dcel::Vertex::AdjacentVertexRangeBasedIterator
+class Vertex::AdjacentVertexRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::AdjacentVertexIterator begin();
-    Dcel::Vertex::AdjacentVertexIterator end();
+    Vertex::AdjacentVertexIterator begin() {return v->adjacentVertexBegin();}
+    Vertex::AdjacentVertexIterator end() {return v->adjacentVertexEnd();}
 private:
     AdjacentVertexRangeBasedIterator(Vertex *v) : v(v) {}
     Vertex *v;
 };
 
-class Dcel::Vertex::OutgoingHalfEdgeRangeBasedIterator
+class Vertex::OutgoingHalfEdgeRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::OutgoingHalfEdgeIterator begin();
-    Dcel::Vertex::OutgoingHalfEdgeIterator end();
+    Vertex::OutgoingHalfEdgeIterator begin() {return v->outgoingHalfEdgeBegin();};
+    Vertex::OutgoingHalfEdgeIterator end() {return v->outgoingHalfEdgeEnd();};
 private:
     OutgoingHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
     Vertex *v;
 };
 
-class Dcel::Vertex::IncomingHalfEdgeRangeBasedIterator
+class Vertex::IncomingHalfEdgeRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::IncomingHalfEdgeIterator begin();
-    Dcel::Vertex::IncomingHalfEdgeIterator end();
+    Vertex::IncomingHalfEdgeIterator begin() {return v->incomingHalfEdgeBegin();};
+    Vertex::IncomingHalfEdgeIterator end() {return v->incomingHalfEdgeEnd();};
 private:
     IncomingHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
     Vertex *v;
 };
 
-class Dcel::Vertex::IncidentHalfEdgeRangeBasedIterator
+class Vertex::IncidentHalfEdgeRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::IncidentHalfEdgeIterator begin();
-    Dcel::Vertex::IncidentHalfEdgeIterator end();
+    Vertex::IncidentHalfEdgeIterator begin() {return v->incidentHalfEdgeBegin();};
+    Vertex::IncidentHalfEdgeIterator end() {return v->incidentHalfEdgeEnd();};
 private:
     IncidentHalfEdgeRangeBasedIterator(Vertex *v) : v(v) {}
     Vertex *v;
 };
 
-class Dcel::Vertex::IncidentFaceRangeBasedIterator
+class Vertex::IncidentFaceRangeBasedIterator
 {
     friend class Vertex;
 public:
-    Dcel::Vertex::IncidentFaceIterator begin();
-    Dcel::Vertex::IncidentFaceIterator end();
+    Vertex::IncidentFaceIterator begin() {return v->incidentFaceBegin();};
+    Vertex::IncidentFaceIterator end() {return v->incidentFaceEnd();};
 private:
     IncidentFaceRangeBasedIterator(Vertex *v) : v(v) {}
     Vertex *v;
 };
 
 } //namespace cg3
-
-#include "dcel_vertex_iterators_inline.tpp"
-
-#endif // CG3_DCEL_VERTEX_ITERATORS_H

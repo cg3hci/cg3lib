@@ -29,10 +29,10 @@ public:
 
     virtual bool loadFromFile(const std::string& filename) = 0;
     virtual bool loadFromObj(const std::string& filename) = 0;
-    virtual bool loadFromPly(const std::string& filename) = 0;
+	virtual bool loadFromPly(const std::string& filename) = 0;
 
     virtual bool saveOnObj(const std::string& filename) const = 0;
-    virtual bool saveOnPly(const std::string& filename) const = 0;
+	virtual bool saveOnPly(const std::string& filename, bool binary = true) const = 0;
 };
 
 } //namespace cg3

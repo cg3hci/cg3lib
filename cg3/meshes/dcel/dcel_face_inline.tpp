@@ -6,8 +6,6 @@
  */
 
 #include "dcel_face.h"
-#include "dcel_face_iterators.h"
-#include "dcel_half_edge.h"
 
 namespace cg3 {
 
@@ -19,24 +17,24 @@ namespace cg3 {
  * @brief Restituisce l'id identificativo nella Dcel della faccia
  * @return L'id della faccia
  */
-inline unsigned int Dcel::Face::id() const
+inline unsigned int Face::id() const
 {
     return _id;
 }
 
-inline const Dcel::Vertex*Dcel::Face::vertex1() const
+inline const Vertex*Face::vertex1() const
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     return _outerHalfEdge->fromVertex();
 }
 
-inline const Dcel::Vertex*Dcel::Face::vertex2() const
+inline const Vertex*Face::vertex2() const
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     return _outerHalfEdge->toVertex();
 }
 
-inline const Dcel::Vertex*Dcel::Face::vertex3() const
+inline const Vertex*Face::vertex3() const
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     assert(_outerHalfEdge->next() != nullptr && "Outer HalfEdge's next is null.");
@@ -48,7 +46,7 @@ inline const Dcel::Vertex*Dcel::Face::vertex3() const
  * @brief Restituisce il flag associato alla faccia
  * @return Il flag della faccia
  */
-inline int Dcel::Face::flag() const
+inline int Face::flag() const
 {
     return _flag;
 }
@@ -59,7 +57,7 @@ inline int Dcel::Face::flag() const
  * @note Non ricalcola la normale, restituisce solo l'ultima normale calcolata o settata
  * @return La normale della faccia
  */
-inline Vec3 Dcel::Face::normal() const
+inline Vec3 Face::normal() const
 {
     #ifdef NDEBUG
     return parent->faceNormals[_id];
@@ -74,7 +72,7 @@ inline Vec3 Dcel::Face::normal() const
  * @note Non ricalcola l'area, restituisce solo l'ultima area calcolata o settata
  * @return L'area della faccia
  */
-inline double Dcel::Face::area() const
+inline double Face::area() const
 {
     return _area;
 }
@@ -84,7 +82,7 @@ inline double Dcel::Face::area() const
  * @brief Restituisce il colore associato alla faccia
  * @return Il colore della faccia
  */
-inline Color Dcel::Face::color() const
+inline Color Face::color() const
 {
     #ifdef NDEBUG
     return parent->faceColors[_id];
@@ -98,7 +96,7 @@ inline Color Dcel::Face::color() const
  * @brief Restituisce il puntatore all'half edge costante di bordo esterno della faccia
  * @return L'HalfEdge di bordo della faccia
  */
-inline const Dcel::HalfEdge* Dcel::Face::outerHalfEdge() const
+inline const HalfEdge* Face::outerHalfEdge() const
 {
     return _outerHalfEdge;
 }
@@ -108,7 +106,7 @@ inline const Dcel::HalfEdge* Dcel::Face::outerHalfEdge() const
  * @brief Restituisce il numero di inner half edges contenuti nella faccia, ossia il numero di buchi
  * @return Il numero di HalfEdge interni della faccia
  */
-inline unsigned int Dcel::Face::numberInnerHalfEdges() const
+inline unsigned int Face::numberInnerHalfEdges() const
 {
     return (unsigned int)_innerHalfEdges.size();
 }
@@ -118,7 +116,7 @@ inline unsigned int Dcel::Face::numberInnerHalfEdges() const
  * @brief Restituisce true se la faccia contiene buchi
  * @return True se la faccia contiene buchi, false altrimenti
  */
-inline bool Dcel::Face::hasHoles() const
+inline bool Face::hasHoles() const
 {
     return (_innerHalfEdges.size() != 0);
 }
@@ -127,24 +125,24 @@ inline bool Dcel::Face::hasHoles() const
  * \~Italian
  * @brief Restituisce true se l'outer half edge non è null
  */
-inline bool Dcel::Face::checkOuterHalfEdge() const
+inline bool Face::checkOuterHalfEdge() const
 {
     return _outerHalfEdge != nullptr;
 }
 
-inline Dcel::Vertex*Dcel::Face::vertex1()
+inline Vertex*Face::vertex1()
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     return _outerHalfEdge->fromVertex();
 }
 
-inline Dcel::Vertex*Dcel::Face::vertex2()
+inline Vertex*Face::vertex2()
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     return _outerHalfEdge->toVertex();
 }
 
-inline Dcel::Vertex*Dcel::Face::vertex3()
+inline Vertex*Face::vertex3()
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     assert(_outerHalfEdge->next() != nullptr && "Outer HalfEdge's next is null.");
@@ -155,7 +153,7 @@ inline Dcel::Vertex*Dcel::Face::vertex3()
  * \~Italian
  * @brief Setta il flag della faccia a 1
  */
-inline void Dcel::Face::setFlag()
+inline void Face::setFlag()
 {
     _flag = 1;
 }
@@ -165,7 +163,7 @@ inline void Dcel::Face::setFlag()
  * @brief Setta il flag della faccia
  * @param[in] newFlag: il valore del flag che verrà settato
  */
-inline void Dcel::Face::setFlag(int newFlag)
+inline void Face::setFlag(int newFlag)
 {
     _flag = newFlag;
 }
@@ -174,7 +172,7 @@ inline void Dcel::Face::setFlag(int newFlag)
  * \~Italian
  * @brief Setta il flag della faccia a 0
  */
-inline void Dcel::Face::resetFlag()
+inline void Face::resetFlag()
 {
     _flag = 0;
 }
@@ -184,7 +182,7 @@ inline void Dcel::Face::resetFlag()
  * @brief Setta il vettore normale della faccia
  * @param[in] newNormal: il vettore normale che verrà settato
  */
-inline void Dcel::Face::setNormal(const Vec3& newNormal)
+inline void Face::setNormal(const Vec3& newNormal)
 {
     #ifdef NDEBUG
     parent->faceNormals[_id] = newNormal;
@@ -198,7 +196,7 @@ inline void Dcel::Face::setNormal(const Vec3& newNormal)
  * @brief Setta la superficie della faccia
  * @param[in] newArea: il valore dell'area che verrà settato
  */
-inline void Dcel::Face::setArea(double newArea)
+inline void Face::setArea(double newArea)
 {
     _area = newArea;
 }
@@ -208,7 +206,7 @@ inline void Dcel::Face::setArea(double newArea)
  * @brief Assegna un nuovo colore alla faccia
  * @param[in] newColor: il nuovo colore che verrà assegnato alla faccia
  */
-inline void Dcel::Face::setColor(const Color& newColor)
+inline void Face::setColor(const Color& newColor)
 {
     #ifdef NDEBUG
     parent->faceColors[_id] = newColor;
@@ -222,7 +220,7 @@ inline void Dcel::Face::setColor(const Color& newColor)
  * @brief Restituisce il puntatore all'half edge di bordo esterno della faccia
  * @return L'HalfEdge di bordo della faccia
  */
-inline Dcel::HalfEdge* Dcel::Face::outerHalfEdge()
+inline HalfEdge* Face::outerHalfEdge()
 {
     return _outerHalfEdge;
 }
@@ -232,7 +230,7 @@ inline Dcel::HalfEdge* Dcel::Face::outerHalfEdge()
  * @brief Assegna un nuovo half edge di bordo esterno alla faccia
  * @param[in] newOuterHalfEdge: puntatore all'half edge di bordo esterno assegnato alla faccia
  */
-inline void Dcel::Face::setOuterHalfEdge(Dcel::HalfEdge* newOuterHalfEdge)
+inline void Face::setOuterHalfEdge(HalfEdge* newOuterHalfEdge)
 {
     _outerHalfEdge = newOuterHalfEdge;
 }
@@ -242,7 +240,7 @@ inline void Dcel::Face::setOuterHalfEdge(Dcel::HalfEdge* newOuterHalfEdge)
  * @brief Aggiunge un nuovo half edge di bordo interno (ossia un buco) alla faccia
  * @param[in] newInnerHalfEdge: nuovo half edge di bordo interno aggiunto alla faccia
  */
-inline void Dcel::Face::addInnerHalfEdge(Dcel::HalfEdge* newInnerHalfEdge)
+inline void Face::addInnerHalfEdge(HalfEdge* newInnerHalfEdge)
 {
     _innerHalfEdges.push_back(newInnerHalfEdge);
 }
@@ -259,9 +257,361 @@ inline void Dcel::Face::addInnerHalfEdge(Dcel::HalfEdge* newInnerHalfEdge)
  *
  * @param[in] id: nuovo id che verrà assegnato alla faccia
  */
-inline void Dcel::Face::setId(unsigned int id)
+inline void Face::setId(unsigned int id)
 {
     this->_id = id;
+}
+
+/*******
+ * Iterators
+ ******/
+
+/****************************
+ * Face begin()/end() *
+ ****************************/
+
+inline Face::ConstAdjacentFaceIterator Face::adjacentFaceBegin() const
+{
+    return ConstAdjacentFaceIterator(_outerHalfEdge, _outerHalfEdge, this);
+}
+
+inline Face::ConstAdjacentFaceIterator Face::adjacentFaceEnd() const
+{
+    return ConstAdjacentFaceIterator(nullptr, nullptr, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::ConstInnerHalfEdgeIterator
+ * @return Un iteratore che punta al primo inner half edge della faccia
+ */
+inline Face::ConstInnerHalfEdgeIterator Face::innerHalfEdgeBegin() const
+{
+    return _innerHalfEdges.begin();
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di finalizzazione di Face::ConstInnerHalfEdgeIterator
+ * @return Un iteratore che punta all'ultimo inner half edge della faccia
+ */
+inline Face::ConstInnerHalfEdgeIterator Face::innerHalfEdgeEnd() const
+{
+    return _innerHalfEdges.end();
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::ConstIncidentHalfEdgeIterator.
+ *
+ * Permette di ciclare sugli half edge incidenti alla faccia, partendo dall'outer half edge.
+ *
+ * @return Un iteratore che punta all'outer half edge della faccia
+ */
+inline Face::ConstIncidentHalfEdgeIterator Face::incidentHalfEdgeBegin() const
+{
+    return ConstIncidentHalfEdgeIterator(_outerHalfEdge, _outerHalfEdge, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di finalizzazione di Face::ConstIncidentHalfEdgeIterator
+ * @warning L'iteratore restituito non è un iteratore valido, e su di esso le operazioni di
+ *          incremento e decremento sono inutili. Questa funzione è da utilizzarsi solamente per
+ *          il \b confronto \b con \b un \b altro \b iteratore \b valido
+ * @return Un iteratore di finalizzazione
+ */
+inline Face::ConstIncidentHalfEdgeIterator Face::incidentHalfEdgeEnd() const
+{
+    return ConstIncidentHalfEdgeIterator(nullptr, nullptr, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::ConstIncidentHalfEdgeIterator.
+ *
+ * Permette di ciclare sugli half edge incidenti alla faccia, partendo dall'half edge start.
+ *
+ * @param[in] start: half edge di partenza
+ * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta all'half edge start
+ */
+inline Face::ConstIncidentHalfEdgeIterator Face::incidentHalfEdgeBegin(const HalfEdge* start) const
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    return ConstIncidentHalfEdgeIterator(start, start, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::ConstIncidentHalfEdgeIterator.
+ *
+ * Permette di ciclare sugli half edge incidenti alla faccia, partendo dall'half edge start e fino all'half edge end.
+ *
+ * @param[in] start: half edge di partenza
+ * @param[in] end: half edge di arrivo, \b non \b compreso
+ * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta all'half edge start
+ */
+inline Face::ConstIncidentHalfEdgeIterator Face::incidentHalfEdgeBegin(const HalfEdge* start, const HalfEdge* end) const
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    assert(end->face() == this && "End half edge is not incident to iterated face.");
+    return ConstIncidentHalfEdgeIterator(start, end, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::ConstIncidentVertexIterator.
+ *
+ * Permette di ciclare sui vertici incidenti alla faccia, partendo dal toVertex dell'outer half edge.
+ *
+ * @return Un iteratore che punta al toVertex dell'outer half edge della faccia
+ */
+inline Face::ConstIncidentVertexIterator Face::incidentVertexBegin() const
+{
+    return ConstIncidentVertexIterator(_outerHalfEdge, _outerHalfEdge, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di finalizzazione di Face::ConstIncidentVertexIterator
+ * @warning L'iteratore restituito non è un iteratore valido, e su di esso le operazioni di
+ *          incremento e decremento sono inutili. Questa funzione è da utilizzarsi solamente per
+ *          il \b confronto \b con \b un \b altro \b iteratore \b valido
+ * @return Un iteratore di finalizzazione
+ */
+inline Face::ConstIncidentVertexIterator Face::incidentVertexEnd() const
+{
+    return ConstIncidentVertexIterator(nullptr, nullptr, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::ConstIncidentVertexIterator.
+ *
+ * Permette di ciclare sui vertici incidenti alla faccia, partendo dal toVertex dell'half edge start.
+ *
+ * @param[in] start: half edge di partenza
+ * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta al toVertex dell'half edge start
+ */
+inline Face::ConstIncidentVertexIterator Face::incidentVertexBegin(const HalfEdge* start) const
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    return ConstIncidentVertexIterator(start, start, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::ConstIncidentVertexIterator.
+ *
+ * Permette di ciclare sui vertici incidenti alla faccia, partendo dal toVertex dell'half edge start e fino al toVertex dell'half edge end.
+ *
+ * @param[in] start: half edge di partenza
+ * @param[in] end: half edge di arrivo, il cui toVertex \b non \b è \b compreso
+ * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta al toVertex dell'half edge start
+ */
+inline Face::ConstIncidentVertexIterator Face::incidentVertexBegin(const HalfEdge* start, const HalfEdge* end) const
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    assert(end->face() == this && "End half edge is not incident to iterated face.");
+    return ConstIncidentVertexIterator(start, end, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::InnerHalfEdgeIterator
+ * @return Un iteratore che punta al primo inner half edge della faccia
+ */
+inline Face::InnerHalfEdgeIterator Face::innerHalfEdgeBegin()
+{
+    return _innerHalfEdges.begin();
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di finalizzazione di Face::InnerHalfEdgeIterator
+ * @return Un iteratore che punta all'ultimo inner half edge della faccia
+ */
+inline Face::InnerHalfEdgeIterator Face::innerHalfEdgeEnd()
+{
+    return _innerHalfEdges.end();
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::IncidentHalfEdgeIterator.
+ *
+ * Permette di ciclare sugli half edge incidenti alla faccia, partendo dall'outer half edge.
+ *
+ * @return Un iteratore che punta all'outer half edge della faccia
+ */
+inline Face::IncidentHalfEdgeIterator Face::incidentHalfEdgeBegin()
+{
+    return IncidentHalfEdgeIterator(_outerHalfEdge, _outerHalfEdge, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di finalizzazione di Face::IncidentHalfEdgeIterator
+ * @warning L'iteratore restituito non è un iteratore valido, e su di esso le operazioni di
+ *          incremento e decremento sono inutili. Questa funzione è da utilizzarsi solamente per
+ *          il \b confronto \b con \b un \b altro \b iteratore \b valido
+ * @return Un iteratore di finalizzazione
+ */
+inline Face::IncidentHalfEdgeIterator Face::incidentHalfEdgeEnd()
+{
+    return IncidentHalfEdgeIterator(nullptr, nullptr, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::IncidentHalfEdgeIterator.
+ *
+ * Permette di ciclare sugli half edge incidenti alla faccia, partendo dall'half edge start.
+ *
+ * @param[in] start: half edge di partenza
+ * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta all'half edge start
+ */
+inline Face::IncidentHalfEdgeIterator Face::incidentHalfEdgeBegin(HalfEdge* start)
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    return IncidentHalfEdgeIterator(start, start, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::IncidentHalfEdgeIterator.
+ *
+ * Permette di ciclare sugli half edge incidenti alla faccia, partendo dall'half edge start e fino all'half edge end.
+ *
+ * @param[in] start: half edge di partenza
+ * @param[in] end: half edge di arrivo, \b non \b compreso
+ * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta all'half edge start
+ */
+inline Face::IncidentHalfEdgeIterator Face::incidentHalfEdgeBegin(HalfEdge* start, HalfEdge* end)
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    assert(end->face() == this && "End half edge is not incident to iterated face.");
+    return IncidentHalfEdgeIterator(start, end, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::IncidentVertexIterator.
+ *
+ * Permette di ciclare sui vertici incidenti alla faccia, partendo dal toVertex dell'outer half edge.
+ *
+ * @return Un iteratore che punta al toVertex dell'outer half edge della faccia
+ */
+inline Face::IncidentVertexIterator Face::incidentVertexBegin()
+{
+    return IncidentVertexIterator(_outerHalfEdge, _outerHalfEdge, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di finalizzazione di Face::IncidentVertexIterator
+ * @warning L'iteratore restituito non è un iteratore valido, e su di esso le operazioni di
+ *          incremento e decremento sono inutili. Questa funzione è da utilizzarsi solamente per
+ *          il \b confronto \b con \b un \b altro \b iteratore \b valido
+ * @return Un iteratore di finalizzazione
+ */
+inline Face::IncidentVertexIterator Face::incidentVertexEnd()
+{
+    return IncidentVertexIterator(nullptr, nullptr, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::IncidentVertexIterator.
+ *
+ * Permette di ciclare sui vertici incidenti alla faccia, partendo dal toVertex dell'half edge start.
+ *
+ * @param[in] start: half edge di partenza
+ * @warning Se start non risulta essere incidente alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta al toVertex dell'half edge start
+ */
+inline Face::IncidentVertexIterator Face::incidentVertexBegin(HalfEdge* start)
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    return IncidentVertexIterator(start, start, this);
+}
+
+/**
+ * \~Italian
+ * @brief Funzione di inizializzazione di Face::IncidentVertexIterator.
+ *
+ * Permette di ciclare sui vertici incidenti alla faccia, partendo dal toVertex dell'half edge start e fino al toVertex dell'half edge end.
+ *
+ * @param[in] start: half edge di partenza
+ * @param[in] end: half edge di arrivo, il cui toVertex \b non \b è \b compreso
+ * @warning Se start e end non risultano essere incidenti alla faccia, viene lanciata un'asserzione e il programma termina
+ * @return Un iteratore che punta al toVertex dell'half edge start
+ */
+inline Face::IncidentVertexIterator Face::incidentVertexBegin(HalfEdge* start, HalfEdge* end)
+{
+    assert(start->face() == this && "Start half edge is not incident to iterated face.");
+    assert(end->face() == this && "End half edge is not incident to iterated face.");
+    return IncidentVertexIterator(start, end, this);
+}
+
+/*****
+ * Range base iterators methods
+ *****/
+
+inline Face::ConstInnerHalfEdgeRangeBasedIterator Face::innerHalfEdgeIterator() const
+{
+    return ConstInnerHalfEdgeRangeBasedIterator(this);
+}
+
+inline Face::ConstAdjacentFaceRangeBasedIterator Face::adjacentFaceIterator() const
+{
+    return ConstAdjacentFaceRangeBasedIterator(this);
+}
+
+inline Face::ConstIncidentHalfEdgeRangeBasedIterator Face::incidentHalfEdgeIterator() const
+{
+    return ConstIncidentHalfEdgeRangeBasedIterator(this);
+}
+
+inline Face::ConstIncidentVertexRangeBasedIterator Face::incidentVertexIterator() const
+{
+    return ConstIncidentVertexRangeBasedIterator(this);
+}
+
+inline Face::AdjacentFaceIterator Face::adjacentFaceBegin()
+{
+    return AdjacentFaceIterator(_outerHalfEdge, _outerHalfEdge, this);
+}
+
+inline Face::AdjacentFaceIterator Face::adjacentFaceEnd()
+{
+    return AdjacentFaceIterator(nullptr, nullptr, this);
+}
+
+inline Face::InnerHalfEdgeRangeBasedIterator Face::innerHalfEdgeIterator()
+{
+    return InnerHalfEdgeRangeBasedIterator(this);
+}
+
+inline Face::AdjacentFaceRangeBasedIterator Face::adjacentFaceIterator()
+{
+    return AdjacentFaceRangeBasedIterator(this);
+}
+
+inline Face::IncidentHalfEdgeRangeBasedIterator Face::incidentHalfEdgeIterator()
+{
+    return IncidentHalfEdgeRangeBasedIterator(this);
+}
+
+inline Face::IncidentVertexRangeBasedIterator Face::incidentVertexIterator()
+{
+    return IncidentVertexRangeBasedIterator(this);
 }
 
 } //namespace cg3

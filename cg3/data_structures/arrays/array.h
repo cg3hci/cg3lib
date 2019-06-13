@@ -91,8 +91,12 @@ public:
     T* cArray(I... indices);
     template<typename... I>
     const T* cArray(I... indices) const;
+	std::vector<T> stdVector();
+	const std::vector<T>& stdVector() const;
 
     void fill (const T& t);
+	template <typename C>
+	void fillContainer (const C& container);
     unsigned long int size(unsigned long int dim) const;
 
     T& min();

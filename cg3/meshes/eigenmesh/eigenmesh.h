@@ -95,7 +95,7 @@ public:
 
     std::pair<int, int> commonVertices(unsigned int f1, unsigned int f2) const;
 
-    virtual bool saveOnPly(const std::string &filename) const;
+	virtual bool saveOnPly(const std::string &filename, bool binary = true) const;
     virtual bool saveOnObj(const std::string &filename) const;
 
     static void merge(EigenMesh &result, const EigenMesh &m1, const EigenMesh &m2);

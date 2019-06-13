@@ -84,14 +84,26 @@ public:
             std::string checkBoxName = "",
             bool checkBoxChecked = true,
             bool closeButtonVisible = false);
+    void pushDrawableObject(const std::shared_ptr<const DrawableObject> &ptr,
+            std::string checkBoxName = "",
+            bool checkBoxChecked = true,
+            bool closeButtonVisible = false);
     bool deleteDrawableObject(const cg3::DrawableObject * obj);
+    bool deleteDrawableObject(const std::shared_ptr<const DrawableObject> &ptr);
     void setDrawableObjectVisibility(const cg3::DrawableObject * obj, bool visible);
+    void setDrawableObjectVisibility(const std::shared_ptr<const DrawableObject> &ptr, bool visible);
     bool containsDrawableObject(const cg3::DrawableObject* obj);
+    bool containsDrawableObject(const std::shared_ptr<const DrawableObject> &ptr);
     bool refreshDrawableObject(const cg3::DrawableObject* obj);
+    bool refreshDrawableObject(const std::shared_ptr<const DrawableObject> &ptr);
     bool setDrawableObjectName(
             const cg3::DrawableObject* obj,
             const std::string& newName);
+    bool setDrawableObjectName(
+            const std::shared_ptr<const DrawableObject> &ptr,
+            const std::string& newName);
     std::string nameOfDrawableObject(const cg3::DrawableObject* obj) const;
+    std::string nameOfDrawableObject(const std::shared_ptr<const DrawableObject> &ptr) const;
     std::vector<const cg3::DrawableObject*> selectedDrawableObjects() const;
     const DrawableObject* selectedDrawableObject() const;
 
@@ -174,6 +186,7 @@ private:
     // Mesh Stack
     //
     std::map<const DrawableObject*, DrawableObjectDrawListManager*> mapDrawListManagers;
+    std::set<std::shared_ptr<const cg3::DrawableObject> > sharedDrawableObjects;
     bool first;
     bool debugObjectsEnabled;
 

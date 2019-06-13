@@ -28,7 +28,17 @@ bool ManipulableObject::drawRelativeAxis() const
 
 void ManipulableObject::setDrawRelativeAxis(bool b) const
 {
-    axis = b;
+	axis = b;
+}
+
+void ManipulableObject::setPosition(const Pointd &pos)
+{
+	ManipulatedFrame::setPosition(qglviewer::Vec(pos.x(), pos.y(), pos.z()));
+}
+
+void ManipulableObject::setTranslation(const Pointd &pos)
+{
+	ManipulatedFrame::setTranslation(qglviewer::Vec(pos.x(), pos.y(), pos.z()));
 }
 
 const double* ManipulableObject::matrix() const
@@ -38,12 +48,24 @@ const double* ManipulableObject::matrix() const
 
 /**
  * @brief ManipulableObject::position
- * @return the position of the center of the object Frame
+ * @return the position of the center of the object Frame in
+ * absolute position
  */
 Pointd ManipulableObject::position() const
 {
     qglviewer::Vec p(ManipulatedFrame::position());
-    return Pointd(p.x, p.y, p.z);
+	return Pointd(p.x, p.y, p.z);
+}
+
+/**
+ * @brief ManipulableObject::translation
+ * @return the position of the center of the object Frame in
+ * relative position with respect of the reference Frame.
+ */
+Pointd ManipulableObject::translation() const
+{
+	qglviewer::Vec p(ManipulatedFrame::translation());
+	return Pointd(p.x, p.y, p.z);
 }
 
 bool ManipulableObject::grabsMouse() const
@@ -63,7 +85,7 @@ double ManipulableObject::grabbingFactor() const
 
 void ManipulableObject::checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera)
 {
-    qglviewer::Vec center(sceneCenter().x(), sceneCenter().y(), sceneCenter().z());
+	qglviewer::Vec center(sceneCenter().x(), sceneCenter().y(), sceneCenter().z());
     const qglviewer::Quaternion qt = rotation();
     center = qt.rotate(center);
     const qglviewer::Vec extreme(center.x + sceneRadius(), center.y + sceneRadius(), center.z + sceneRadius());

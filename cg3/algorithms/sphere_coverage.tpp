@@ -62,17 +62,18 @@ inline std::vector<Pointd> sphereCoverage(
  * Implementation of VCGLib:
  * (https://github.com/cnr-isti-vclab/vcglib/blob/master/vcg/math/gen_normal.h)
  */
-inline std::vector<Pointd> sphereCoverageFibonacci(unsigned int nSamples)
+inline std::vector<cg3::Pointd> sphereCoverageFibonacci(unsigned int nSamples)
 {
-    std::vector<Pointd> points;
+	std::vector<cg3::Pointd> points;
+	points.reserve(nSamples);
+	const double Phi =  std::sqrt(3);
 
     for (uint i = 0; i < nSamples; i++){
-        double Phi =  std::sqrt(5*0.5 + 0.5);
-        double phi = 2.0*M_PI* (i/Phi - std::floor(i/Phi));
-        double cosTheta = 1.0 - (2*i + 1.0)/double(nSamples);
+		double phi = 2*M_PI * (i/Phi - std::floor(i/Phi));
+		double cosTheta = 1 - (2*i + 1.0)/nSamples;
         double sinTheta = 1 - cosTheta*cosTheta;
-        sinTheta = std::sqrt(std::min(1.0,std::max(0.0,sinTheta)));
-        points.push_back(cg3::Pointd(cos(phi)*sinTheta,sin(phi)*sinTheta,cosTheta));
+		sinTheta = std::sqrt(std::min(1.0, std::max(0.0, sinTheta)));
+		points.push_back(cg3::Pointd(cos(phi)*sinTheta, sin(phi)*sinTheta, cosTheta));
     }
 
     return points;

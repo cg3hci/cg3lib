@@ -195,6 +195,24 @@ const T* cg3::Array<T, N>::cArray(I... indices) const
 }
 
 /**
+ * @brief Returns a std::vector containing the elements of the array in row-major order
+ */
+template<class T, size_t N>
+std::vector<T> cg3::Array<T, N>::stdVector()
+{
+	return v;
+}
+
+/**
+ * @brief Returns a std::vector containing the elements of the array in row-major order
+ */
+template<class T, size_t N>
+const std::vector<T>& cg3::Array<T, N>::stdVector() const
+{
+	return v;
+}
+
+/**
  * @brief Fills the entire Array with the value t.
  * @param[in] t
  */
@@ -202,6 +220,26 @@ template<class T, size_t N>
 void cg3::Array<T, N>::fill(const T& t)
 {
     std::fill(v.begin(), v.end(), t);
+}
+
+/**
+ * @brief Fills the entire Array with the values contained in the container c, in row-major
+ * order.
+ *
+ * If the size of the container is greater than the total size of the array, the remaining
+ * of the container will be ignored. If otherwise the size of the container is less, the
+ * remaining values in the array will be left as they were.
+ *
+ * @param[in] c: a container of the same type of the array (begin() and end() members must
+ * be provided in the container).
+ */
+template<class T, size_t N>
+template<typename C>
+void cg3::Array<T, N>::fillContainer(const C& container)
+{
+	uint i = 0;
+	for (auto it = container.begin(); it != container.end() && i < v.size(); ++i, ++it)
+		v[i] = *it;
 }
 
 /**

@@ -37,14 +37,10 @@ SOURCES += \
     $$PWD/meshes/dcel/dcel_face.cpp \
     $$PWD/meshes/dcel/dcel_half_edge.cpp \
     $$PWD/meshes/dcel/dcel_vertex.cpp \
-    $$PWD/meshes/dcel/dcel_struct.cpp \
-    $$PWD/meshes/dcel/dcel_inline.tpp \
     $$PWD/meshes/dcel/dcel_half_edge_inline.tpp \
-    $$PWD/meshes/dcel/dcel_face_iterators_inline.tpp \
-    $$PWD/meshes/dcel/dcel_iterators_inline.tpp \
     $$PWD/meshes/dcel/dcel_vertex_inline.tpp \
-    $$PWD/meshes/dcel/dcel_vertex_iterators_inline.tpp \
     $$PWD/meshes/dcel/dcel_face_inline.tpp \
+    $$PWD/meshes/dcel/dcel_struct.tpp \
     $$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.tpp \
     $$PWD/meshes/dcel/algorithms/dcel_edge_flip.cpp \
     $$PWD/meshes/dcel/algorithms/dcel_to_vectors.cpp \
@@ -52,7 +48,7 @@ SOURCES += \
     $$PWD/meshes/dcel/algorithms/dcel_coloring.cpp \
     $$PWD/meshes/dcel/algorithms/dcel_connected_components.tpp \
     $$PWD/meshes/dcel/algorithms/dcel_robustness.cpp \
-    $$PWD/meshes/dcel/dcel_builder.cpp \
+    $$PWD/meshes/dcel/dcel_builder.cpp
 
 
 contains(DEFINES, CG3_WITH_EIGEN) {

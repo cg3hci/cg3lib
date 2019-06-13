@@ -18,8 +18,8 @@ namespace cg3 {
  * @param[in] v: a sorted std::vector
  * @return the position index of the object if it is found, -1 otherwise
  */
-template <typename T>
-inline int binarySearch(const T &n, const std::vector<T> &v) {
+template <typename T, typename ...A>
+inline int binarySearch(const T &n, const std::vector<T, A...> &v) {
     int first = 0, last =v.size()-1, mid;
     while (first <= last){
         mid = (first + last) / 2;
@@ -39,8 +39,8 @@ inline int binarySearch(const T &n, const std::vector<T> &v) {
  * @param v
  * @return
  */
-template <typename T>
-inline std::vector<size_t> sortIndexes(const std::vector<T> &v)
+template <typename T, typename ...A>
+inline std::vector<size_t> sortIndexes(const std::vector<T, A...> &v)
 {
     // initialize original index locations
     std::vector<size_t> idx(v.size());
@@ -61,8 +61,8 @@ inline std::vector<size_t> sortIndexes(const std::vector<T> &v)
  * @param value
  * @return
  */
-template<typename T>
-inline bool contains(const std::vector<T>& v, const T& value)
+template<typename T, typename ...A>
+inline bool contains(const std::vector<T, A...>& v, const T& value)
 {
     return std::find(v.begin(), v.end(), value) != v.end();
 }
@@ -76,8 +76,8 @@ inline bool contains(const std::vector<T>& v, const T& value)
  * @param value
  * @return
  */
-template<typename T>
-int positionOfElement(const std::vector<T>& v, const T& value)
+template<typename T, typename ...A>
+int positionOfElement(const std::vector<T, A...>& v, const T& value)
 {
     typename std::vector<T>::const_iterator it = std::find(v.begin(), v.end(), value);
     if (it == v.end())

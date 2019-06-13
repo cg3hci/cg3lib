@@ -32,12 +32,12 @@ public:
     Pointd sceneCenter() const;
     double sceneRadius() const;
 
-    void setEdgeColor(const QColor& c);
-    void setEdgeWidth(int w);
+	void setEdgeColor(const QColor& c);
+	void setEdgeWidth(int w);
 
-private:
-    int edgeWidth;
-    Color edgeColor;
+protected:
+	int edgeWidth;
+	Color edgeColor;
 };
 
 } //namespace cg3

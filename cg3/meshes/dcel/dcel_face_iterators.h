@@ -4,18 +4,13 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-
-#ifndef CG3_DCEL_FACE_ITERATORS_H
-#define CG3_DCEL_FACE_ITERATORS_H
-
 #include "dcel_face.h"
-#include "dcel_half_edge.h"
 
 namespace cg3 {
 
 /**
  * \~Italian
- * @class Dcel::Face::ConstInnerHalfEdgeIterator
+ * @class Face::ConstInnerHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sul vettore degli inner half edge associati alla faccia, garantendone
  * l'immutabilità.
  * Ogni inner half edge è associato ad un buco presente all'interno della faccia.
@@ -23,110 +18,111 @@ namespace cg3 {
  * mediante delle semplici operazioni di next, oppure utilizzando un ConstIncidentHalfEdgeIterator opportunamente inizializzato.
  *
  * È possibile utilizzare l'iteratore esattamente come si utilizza un iteratore su un std::vector.
- * Per esempio, data una faccia Dcel::Face* f:
+ * Per esempio, data una faccia Face* f:
  *
  * \code{.cpp}
- * for (Dcel::Face::ConstInnerHalfEdgeIterator heit = f->innerHalfEgeBegin(); heit != f->innerHalfEdgeEnd(); ++heit){
- *     const Dcel::HalfEdge* he = *heit;
+ * for (Face::ConstInnerHalfEdgeIterator heit = f->innerHalfEgeBegin(); heit != f->innerHalfEdgeEnd(); ++heit){
+ *     const HalfEdge* he = *heit;
  *     // operazioni const su he
  * }
  * \endcode
  *
  * Questo iteratore garantisce l'immutabilità della faccia e quindi della Dcel a cui appartiene, e quindi è possibile
- * utilizzarlo solamente su const Dcel::Face. Per poter effettuare modifiche, vedere Dcel::Face::InnerHalfEdgeIterator.
+ * utilizzarlo solamente su const Face. Per poter effettuare modifiche, vedere Face::InnerHalfEdgeIterator.
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face::ConstInnerHalfEdgeIterator
+class Face::ConstInnerHalfEdgeIterator
 {
-    friend class Dcel::Face;
+    friend class Face;
 
 public:
     //Constructors
-    ConstInnerHalfEdgeIterator();
-    ConstInnerHalfEdgeIterator(const Dcel::Face::InnerHalfEdgeIterator& it);
+    ConstInnerHalfEdgeIterator() {};
+    ConstInnerHalfEdgeIterator(const Face::InnerHalfEdgeIterator& it) : iterator(it){};
 
     //Public Operators
-    const Dcel::HalfEdge* operator * ()                                 const;
-    bool operator == (const ConstInnerHalfEdgeIterator& otherIterator)  const;
-    bool operator != (const ConstInnerHalfEdgeIterator& otherIterator)  const;
+    const HalfEdge* operator * () const {return *iterator;};
+    bool operator == (const ConstInnerHalfEdgeIterator& oit) const {return iterator == oit.iterator;};
+    bool operator != (const ConstInnerHalfEdgeIterator& oit) const {return iterator != oit.iterator;};
 
-    ConstInnerHalfEdgeIterator operator ++ ();
-    ConstInnerHalfEdgeIterator operator ++ (int);
-    ConstInnerHalfEdgeIterator operator -- ();
-    ConstInnerHalfEdgeIterator operator -- (int);
+    ConstInnerHalfEdgeIterator operator ++ () {return ++iterator;};
+    ConstInnerHalfEdgeIterator operator ++ (int) {auto old = iterator; ++iterator; return old;};
+    ConstInnerHalfEdgeIterator operator -- () {return --iterator;};
+    ConstInnerHalfEdgeIterator operator -- (int) {auto old = iterator; --iterator; return old;};
 
 protected:
     //Protected Attributes
-    std::vector<Dcel::HalfEdge*>::const_iterator iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore degli inner half edge della faccia. */
+    std::vector<HalfEdge*>::const_iterator iterator; /**< \~Italian @brief Iteratore vero e proprio sul vettore degli inner half edge della faccia. */
 
     //Protected Constructor
-    ConstInnerHalfEdgeIterator(const std::vector<Dcel::HalfEdge*>::const_iterator& it);
+    ConstInnerHalfEdgeIterator(const std::vector<HalfEdge*>::const_iterator& it) : iterator(it){};
 };
 
-class Dcel::Face::GenericIterator
+class Face::GenericIterator
 {
-    friend class Dcel::Face;
+    friend class Face;
 
 public:
     //Constructor
-    GenericIterator();
+    GenericIterator() : f(nullptr), start(nullptr), pos(nullptr), end(nullptr){};
 
     //Public Operators
     void* operator * () const {return nullptr;}
-    bool operator == (const GenericIterator& otherIterator)  const;
-    bool operator != (const GenericIterator& otherIterator)  const;
+    bool operator == (const GenericIterator& otherIterator) const {return pos == otherIterator.pos && f == otherIterator.f;};
+    bool operator != (const GenericIterator& otherIterator) const {return !(*this == otherIterator);};
 
-    GenericIterator operator ++ ();
-    GenericIterator operator ++ (int);
-    GenericIterator operator -- ();
-    GenericIterator operator -- (int);
+    GenericIterator operator ++ () {pos = pos->next(); if (pos == end) pos = nullptr; return *this;};
+    GenericIterator operator ++ (int) {GenericIterator old_value = *this; pos = pos->next(); if (pos == end) pos = nullptr; return old_value;};
+    GenericIterator operator -- () {pos = pos->prev(); if (pos == end) pos = nullptr; return *this;};
+    GenericIterator operator -- (int) {GenericIterator old_value = *this; pos = pos->prev(); if (pos == end) pos = nullptr; return old_value;};
 
 protected:
     //Protected Attributes
-    Dcel::Face*     f;      /**< \~Italian @brief Faccia su cui vengono iterati gli half edge incidenti */
-    Dcel::HalfEdge* start;  /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
-    Dcel::HalfEdge* pos;    /**< \~Italian @brief Posizione attuale dell'iteratore */
-    Dcel::HalfEdge* end;    /**< \~Italian @brief Half edge sul quale termina l'iteratore */
+    Face*     f;      /**< \~Italian @brief Faccia su cui vengono iterati gli half edge incidenti */
+    HalfEdge* start;  /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
+    HalfEdge* pos;    /**< \~Italian @brief Posizione attuale dell'iteratore */
+    HalfEdge* end;    /**< \~Italian @brief Half edge sul quale termina l'iteratore */
 
     //Protected Constructor
-    GenericIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Face* f);
+    GenericIterator(HalfEdge* start, HalfEdge* end, Face* f) : f(f), start(start), pos(start), end(end){};
 };
 
-class Dcel::Face::ConstGenericIterator
+class Face::ConstGenericIterator
 {
-    friend class Dcel::Face;
+    friend class Face;
 
 public:
     //Constructors
-    ConstGenericIterator();
-    ConstGenericIterator(const Dcel::Face::GenericIterator& it);
+    ConstGenericIterator() : f(nullptr), start(nullptr), pos(nullptr), end(nullptr){};
+    ConstGenericIterator(const Face::GenericIterator& it) : f(it.f), start(it.start), pos(it.pos), end(it.end) {};
 
     //Public Operators
     const void* operator * () const {return nullptr;}
-    bool operator == (const ConstGenericIterator& otherIterator)   const;
-    bool operator != (const ConstGenericIterator& otherIterator)   const;
+    bool operator == (const ConstGenericIterator& otherIterator) const {return pos == otherIterator.pos && f == otherIterator.f;};
+    bool operator != (const ConstGenericIterator& otherIterator) const {return !(*this == otherIterator);};
 
-    ConstGenericIterator operator ++ ();
-    ConstGenericIterator operator ++ (int);
-    ConstGenericIterator operator -- ();
-    ConstGenericIterator operator -- (int);
+    ConstGenericIterator operator ++ () {pos = pos->next(); if (pos == end) pos = nullptr; return *this;};
+    ConstGenericIterator operator ++ (int) {ConstGenericIterator old_value = *this; pos = pos->next(); if (pos == end) pos = nullptr; return old_value;};
+    ConstGenericIterator operator -- () {pos = pos->prev(); if (pos == end) pos = nullptr; return *this;};
+    ConstGenericIterator operator -- (int) {ConstGenericIterator old_value = *this; pos = pos->prev(); if (pos == end) pos = nullptr; return old_value;};
+;
 
 protected:
     //Protected Attributes
-    const Dcel::Face*     f;        /**< \~Italian @brief Faccia su cui vengono iterati gli half edge incidenti */
-    const Dcel::HalfEdge* start;    /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
-    const Dcel::HalfEdge* pos;      /**< \~Italian @brief Posizione attuale dell'iteratore */
-    const Dcel::HalfEdge* end;      /**< \~Italian @brief Half edge sul quale termina l'iteratore */
+    const Face*     f;        /**< \~Italian @brief Faccia su cui vengono iterati gli half edge incidenti */
+    const HalfEdge* start;    /**< \~Italian @brief Half edge dal quale è partito l'iteratore */
+    const HalfEdge* pos;      /**< \~Italian @brief Posizione attuale dell'iteratore */
+    const HalfEdge* end;      /**< \~Italian @brief Half edge sul quale termina l'iteratore */
 
     //Protected Constructor
-    ConstGenericIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Face* f);
+    ConstGenericIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) : f(f), start(start), pos(start), end(end){};
 };
 
 
 /**
  * \~Italian
- * @class Dcel::Face::AdjacentFaceIterator
+ * @class Face::AdjacentFaceIterator
  * @brief Iteratore che permette di ciclare sulle facce adiacenti ad una faccia.
  *
  * Partendo da un half edge di start e un half edge di end (non compreso), entrambi
@@ -151,40 +147,40 @@ protected:
  * su tutti gli half edge incidenti ad una data faccia \c f. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Face::AdjacentFaceIterator fit = f->adjacentFaceBegin(); fit != f->adjacentFaceEnd(); ++fit){
- *     Dcel::Face* f = *fit;
+ * for (Face::AdjacentFaceIterator fit = f->adjacentFaceBegin(); fit != f->adjacentFaceEnd(); ++fit){
+ *     Face* f = *fit;
  *     // operazioni su f
  * }
  * \endcode
  *
  * È però possibile anche visitare tutte le facce adiacenti comprese tra due dati half edge. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Face::adjacentFaceBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Face::adjacentFaceBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità della faccia e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Face. Per const Dcel::Face, vedere Dcel::Face::ConstAdjacentFaceIterator.
+ * utilizzarlo su const Face. Per const Face, vedere Face::ConstAdjacentFaceIterator.
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face::AdjacentFaceIterator : public Dcel::Face::GenericIterator
+class Face::AdjacentFaceIterator : public Face::GenericIterator
 {
-    friend class Dcel::Face;
+    friend class Face;
 
 public:
     //Constructor
-    AdjacentFaceIterator();
+    AdjacentFaceIterator() : GenericIterator(){};
 
     //Public Operators
-    Dcel::Face* operator * ()                                     const;
+    Face* operator * () const {return pos->twin()->face();};
 
 protected:
     //Protected Constructor
-    AdjacentFaceIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Face* f);
+    AdjacentFaceIterator(HalfEdge* start, HalfEdge* end, Face* f) : GenericIterator(start, end, f){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Face::ConstAdjacentFaceIterator
+ * @class Face::ConstAdjacentFaceIterator
  * @brief Iteratore che permette di ciclare sulle facce adiacenti ad una faccia, garantendone l'immutabilità.
  *
  * Partendo da un half edge di start e un half edge di end (non compreso), entrambi
@@ -209,42 +205,42 @@ protected:
  * su tutti gli half edge incidenti ad una data faccia \c f. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Face::AdjacentFaceIterator fit = f->adjacentFaceBegin(); fit != f->adjacentFaceEnd(); ++fit){
- *     Dcel::Face* f = *fit;
+ * for (Face::AdjacentFaceIterator fit = f->adjacentFaceBegin(); fit != f->adjacentFaceEnd(); ++fit){
+ *     Face* f = *fit;
  *     // operazioni su f
  * }
  * \endcode
  *
  * È però possibile anche visitare tutte le facce adiacenti comprese tra due dati half edge. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Face::adjacentFaceBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Face::adjacentFaceBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore garantisce l'immutabilità della faccia e quindi della Dcel a cui appartiene, e quindi si può utilizzare solo
- * su const Dcel::Face. Per Dcel::Face, vedere Dcel::Face::AdjacentFaceIterator.
+ * su const Face. Per Face, vedere Face::AdjacentFaceIterator.
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face::ConstAdjacentFaceIterator : public Dcel::Face::ConstGenericIterator
+class Face::ConstAdjacentFaceIterator : public Face::ConstGenericIterator
 {
-    friend class Dcel::Face;
+    friend class Face;
 
 public:
     //Constructors
-    ConstAdjacentFaceIterator();
-    ConstAdjacentFaceIterator(const Dcel::Face::AdjacentFaceIterator& it);
+    ConstAdjacentFaceIterator() : ConstGenericIterator(){};
+    ConstAdjacentFaceIterator(const Face::AdjacentFaceIterator& it) : ConstGenericIterator(it){};
 
     //Public Operators
-    const Dcel::Face* operator * ()                                     const;
+    const Face* operator * () const {return pos->twin()->face();};
 
 protected:
 
     //Protected Constructor
-    ConstAdjacentFaceIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Face* f);
+    ConstAdjacentFaceIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) : ConstGenericIterator(start, end, f){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Face::IncidentHalfEdgeIterator
+ * @class Face::IncidentHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge incidenti ad una faccia.
  *
  * Partendo da un half edge di start e un half edge di end (non compreso), entrambi
@@ -266,41 +262,41 @@ protected:
  * su tutti gli half edge incidenti ad una data faccia \c f. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(); heit != f->incidentHalfEdgeEnd(); ++heit){
- *     Dcel::HalfEdge* he = *heit;
+ * for (Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(); heit != f->incidentHalfEdgeEnd(); ++heit){
+ *     HalfEdge* he = *heit;
  *     // operazioni su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge incidenti compresi tra due dati half edge. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Face::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Face::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità della faccia e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Face. Per const Dcel::Face, vedere Dcel::Face::ConstIncidentHalfEdgeIterator.
+ * utilizzarlo su const Face. Per const Face, vedere Face::ConstIncidentHalfEdgeIterator.
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face::IncidentHalfEdgeIterator : public Dcel::Face::GenericIterator
+class Face::IncidentHalfEdgeIterator : public Face::GenericIterator
 {
-    friend class Dcel::Face;
+    friend class Face;
 
 public:
     // Constructor
-    IncidentHalfEdgeIterator();
+    IncidentHalfEdgeIterator() : GenericIterator(){};
 
     //Public Operators
-    Dcel::HalfEdge* operator * ()                                       const;
+    HalfEdge* operator * () const {return pos;};
 
 protected:
 
     //Protected Constructor
-    IncidentHalfEdgeIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Face* f);
+    IncidentHalfEdgeIterator(HalfEdge* start, HalfEdge* end, Face* f) : GenericIterator(start, end, f){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Face::ConstIncidentHalfEdgeIterator
+ * @class Face::ConstIncidentHalfEdgeIterator
  * @brief Iteratore che permette di ciclare sugli half edge incidenti ad una faccia, garantendone l'immutabilità.
  *
  * Partendo da un half edge di start e un half edge di end (non compreso), entrambi
@@ -322,42 +318,42 @@ protected:
  * su tutti gli half edge incidenti ad una data faccia \c f. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Face::ConstIncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(); heit != f->incidentHalfEdgeEnd(); ++heit){
- *     const Dcel::HalfEdge* he = *heit;
+ * for (Face::ConstIncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(); heit != f->incidentHalfEdgeEnd(); ++heit){
+ *     const HalfEdge* he = *heit;
  *     // operazioni const su he
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti gli half edge incidenti compresi tra due dati half edge. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Face::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Face::incidentHalfEdgeBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore garantisce l'immutabilità della faccia e quindi della Dcel a cui appartiene, e quindi si può utilizzare solo
- * su const Dcel::Face. Per Dcel::Face, vedere Dcel::Face::IncidentHalfEdgeIterator.
+ * su const Face. Per Face, vedere Face::IncidentHalfEdgeIterator.
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face::ConstIncidentHalfEdgeIterator : public Dcel::Face::ConstGenericIterator
+class Face::ConstIncidentHalfEdgeIterator : public Face::ConstGenericIterator
 {
-        friend class Dcel::Face;
+        friend class Face;
 
     public:
         //Constructors
-        ConstIncidentHalfEdgeIterator();
-        ConstIncidentHalfEdgeIterator(const Dcel::Face::IncidentHalfEdgeIterator& it);
+        ConstIncidentHalfEdgeIterator() : ConstGenericIterator(){};
+        ConstIncidentHalfEdgeIterator(const Face::IncidentHalfEdgeIterator& it) :ConstGenericIterator(it){};
 
         //Public Operators
-        const Dcel::HalfEdge* operator * ()                                     const;
+        const HalfEdge* operator * () const {return pos;};
 
     protected:
 
         //Protected Constructor
-        ConstIncidentHalfEdgeIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Face* f);
+        ConstIncidentHalfEdgeIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) : ConstGenericIterator(start, end, f){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Face::IncidentVertexIterator
+ * @class Face::IncidentVertexIterator
  * @brief Iteratore che permette di ciclare sui vertici incidenti ad una faccia.
  *
  * Partendo da un half edge di start e un half edge di end (non compreso), entrambi
@@ -381,41 +377,41 @@ class Dcel::Face::ConstIncidentHalfEdgeIterator : public Dcel::Face::ConstGeneri
  * su tutti gli half edge incidenti ad una data faccia \c f. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Face::IncidentVertexIterator vit = f->incidentVertexBegin(); vit != f->incidentVertexEnd(); ++vit){
- *     Dcel::Vertex* v = *vit;
+ * for (Face::IncidentVertexIterator vit = f->incidentVertexBegin(); vit != f->incidentVertexEnd(); ++vit){
+ *     Vertex* v = *vit;
  *     // operazioni su v
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti i vertici incidenti compresi tra due dati half edge. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Face::incidentVertexBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Face::incidentVertexBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore non garantisce l'immutabilità della faccia e quindi della Dcel a cui appartiene, e quindi non è possibile
- * utilizzarlo su const Dcel::Face. Per const Dcel::Face, vedere Dcel::Face::ConstIncidentVertexIterator.
+ * utilizzarlo su const Face. Per const Face, vedere Face::ConstIncidentVertexIterator.
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face::IncidentVertexIterator : public Dcel::Face::GenericIterator
+class Face::IncidentVertexIterator : public Face::GenericIterator
 {
-        friend class Dcel::Face;
+        friend class Face;
 
     public:
         //Constructor
-        IncidentVertexIterator();
+        IncidentVertexIterator() : GenericIterator() {};
 
         //Public Operators
-        Dcel::Vertex* operator * ()                                     const;
+        Vertex* operator * () const {return pos->toVertex();};
 
     protected:
 
         //Protected Constructor
-        IncidentVertexIterator(Dcel::HalfEdge* start, Dcel::HalfEdge* end, Dcel::Face* f);
+        IncidentVertexIterator(HalfEdge* start, HalfEdge* end, Face* f) : GenericIterator(start, end, f){};
 };
 
 /**
  * \~Italian
- * @class Dcel::Face::ConstIncidentVertexIterator
+ * @class Face::ConstIncidentVertexIterator
  * @brief Iteratore che permette di ciclare sui vertici incidenti ad una faccia, garantendone l'immutabilità.
  *
  * Partendo da un half edge di start e un half edge di end (non compreso), entrambi
@@ -439,129 +435,125 @@ class Dcel::Face::IncidentVertexIterator : public Dcel::Face::GenericIterator
  * su tutti gli half edge incidenti ad una data faccia \c f. In questo caso, sarà sufficiente scrivere:
  *
  * \code{.cpp}
- * for (Dcel::Face::ConstIncidentVertexIterator vit = f->incidentVertexBegin(); vit != f->incidentVertexEnd(); ++vit){
- *     const Dcel::Vertex* v = *vit;
+ * for (Face::ConstIncidentVertexIterator vit = f->incidentVertexBegin(); vit != f->incidentVertexEnd(); ++vit){
+ *     const Vertex* v = *vit;
  *     // operazioni const su v
  * }
  * \endcode
  *
  * È però possibile anche visitare tutti i vertici incidenti compresi tra due dati half edge. In questo caso sarà necessario
- * passare gli half edge estremi dell'intervallo all'inizializzatore Dcel::Face::incidentVertexBegin(). Per i dettagli su come funzionano queste
+ * passare gli half edge estremi dell'intervallo all'inizializzatore Face::incidentVertexBegin(). Per i dettagli su come funzionano queste
  * inizializzazioni si rimanda alla descrizione dei metodi stessi.
  *
  * Questo iteratore garantisce l'immutabilità della faccia e quindi della Dcel a cui appartiene, e quindi è possibile utilizzarlo solamente
- * su const Dcel::Face. Per Dcel::Face, vedere Dcel::Face::IncidentVertexIterator.
+ * su const Face. Per Face, vedere Face::IncidentVertexIterator.
  *
  * @author    Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-class Dcel::Face::ConstIncidentVertexIterator : public Dcel::Face::ConstGenericIterator
+class Face::ConstIncidentVertexIterator : public Face::ConstGenericIterator
 {
-    friend class Dcel::Face;
+    friend class Face;
 
 public:
     //Constructors
-    ConstIncidentVertexIterator();
-    ConstIncidentVertexIterator(const Dcel::Face::IncidentVertexIterator& it);
+    ConstIncidentVertexIterator() : ConstGenericIterator(){};
+    ConstIncidentVertexIterator(const Face::IncidentVertexIterator& it) : ConstGenericIterator(it){};
 
     //Public Operators
-    const Dcel::Vertex* operator * ()                                   const;
+    const Vertex* operator * () const {return pos->toVertex();};
 
 protected:
 
     //Protected Constructor
-    ConstIncidentVertexIterator(const Dcel::HalfEdge* start, const Dcel::HalfEdge* end, const Dcel::Face* f);
+    ConstIncidentVertexIterator(const HalfEdge* start, const HalfEdge* end, const Face* f) : ConstGenericIterator(start, end, f){};
 };
 
-class Dcel::Face::ConstInnerHalfEdgeRangeBasedIterator
+class Face::ConstInnerHalfEdgeRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::ConstInnerHalfEdgeIterator begin() const;
-        Dcel::Face::ConstInnerHalfEdgeIterator end() const;
+        Face::ConstInnerHalfEdgeIterator begin() const {return f->innerHalfEdgeBegin();};
+        Face::ConstInnerHalfEdgeIterator end() const {return f->innerHalfEdgeEnd();};
     private:
         ConstInnerHalfEdgeRangeBasedIterator(const Face *f) : f(f) {}
         const Face *f;
 };
 
-class Dcel::Face::ConstAdjacentFaceRangeBasedIterator
+class Face::ConstAdjacentFaceRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::ConstAdjacentFaceIterator begin() const;
-        Dcel::Face::ConstAdjacentFaceIterator end() const;
+        Face::ConstAdjacentFaceIterator begin() const {return f->adjacentFaceBegin();};
+        Face::ConstAdjacentFaceIterator end() const {return f->adjacentFaceEnd();};
     private:
         ConstAdjacentFaceRangeBasedIterator(const Face *f) : f(f) {}
         const Face *f;
 };
 
-class Dcel::Face::ConstIncidentHalfEdgeRangeBasedIterator
+class Face::ConstIncidentHalfEdgeRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::ConstIncidentHalfEdgeIterator begin() const;
-        Dcel::Face::ConstIncidentHalfEdgeIterator end() const;
+        Face::ConstIncidentHalfEdgeIterator begin() const {return f->incidentHalfEdgeBegin();};
+        Face::ConstIncidentHalfEdgeIterator end() const {return f->incidentHalfEdgeEnd();};
     private:
         ConstIncidentHalfEdgeRangeBasedIterator(const Face *f) : f(f) {}
         const Face *f;
 };
 
-class Dcel::Face::ConstIncidentVertexRangeBasedIterator
+class Face::ConstIncidentVertexRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::ConstIncidentVertexIterator begin() const;
-        Dcel::Face::ConstIncidentVertexIterator end() const;
+        Face::ConstIncidentVertexIterator begin() const {return f->incidentVertexBegin();};
+        Face::ConstIncidentVertexIterator end() const {return f->incidentVertexEnd();};
     private:
         ConstIncidentVertexRangeBasedIterator(const Face *f) : f(f) {}
         const Face *f;
 };
 
-class Dcel::Face::InnerHalfEdgeRangeBasedIterator
+class Face::InnerHalfEdgeRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::InnerHalfEdgeIterator begin();
-        Dcel::Face::InnerHalfEdgeIterator end();
+        Face::InnerHalfEdgeIterator begin() {return f->innerHalfEdgeBegin();};
+        Face::InnerHalfEdgeIterator end() {return f->innerHalfEdgeEnd();};
     private:
         InnerHalfEdgeRangeBasedIterator(Face *f) : f(f) {}
         Face *f;
 };
 
-class Dcel::Face::AdjacentFaceRangeBasedIterator
+class Face::AdjacentFaceRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::AdjacentFaceIterator begin();
-        Dcel::Face::AdjacentFaceIterator end();
+        Face::AdjacentFaceIterator begin() {return f->adjacentFaceBegin();};
+        Face::AdjacentFaceIterator end() {return f->adjacentFaceEnd();};
     private:
         AdjacentFaceRangeBasedIterator(Face *f) : f(f) {}
         Face *f;
 };
 
-class Dcel::Face::IncidentHalfEdgeRangeBasedIterator
+class Face::IncidentHalfEdgeRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::IncidentHalfEdgeIterator begin();
-        Dcel::Face::IncidentHalfEdgeIterator end();
+        Face::IncidentHalfEdgeIterator begin() {return f->incidentHalfEdgeBegin();};
+        Face::IncidentHalfEdgeIterator end() {return f->incidentHalfEdgeEnd();};
     private:
         IncidentHalfEdgeRangeBasedIterator(Face *f) : f(f) {}
         Face *f;
 };
 
-class Dcel::Face::IncidentVertexRangeBasedIterator
+class Face::IncidentVertexRangeBasedIterator
 {
         friend class Face;
     public:
-        Dcel::Face::IncidentVertexIterator begin();
-        Dcel::Face::IncidentVertexIterator end();
+        Face::IncidentVertexIterator begin() {return f->incidentVertexBegin();};
+        Face::IncidentVertexIterator end() {return f->incidentVertexEnd();};
     private:
         IncidentVertexRangeBasedIterator(Face *f) : f(f) {}
         Face *f;
 };
 
 } //namespace cg3
-
-#include "dcel_face_iterators_inline.tpp"
-
-#endif // CG3_DCEL_FACE_ITERATORS_H

@@ -10,8 +10,8 @@ DEFINES += CG3_CORE_DEFINED
 
 CONFIG += CG3_OPENMP
 
-include(core/find_boost.pri)
-include(core/find_eigen.pri)
+include(find_boost.pri)
+include(find_eigen.pri)
 
 win32 {
     DEFINES += _USE_MATH_DEFINES
@@ -27,99 +27,110 @@ CG3_OPENMP {
 
 #core
 HEADERS += \
-    $$PWD/core/cg3/cg3lib.h
+    $$PWD/cg3lib.h
 
 #geometry
 HEADERS += \
-    $$PWD/core/cg3/geometry/bounding_box.h \
-    $$PWD/core/cg3/geometry/cylinder.h \
-    $$PWD/core/cg3/geometry/line.h \
-    $$PWD/core/cg3/geometry/plane.h \
-    $$PWD/core/cg3/geometry/point.h \
-    $$PWD/core/cg3/geometry/quaternion.h \
-    $$PWD/core/cg3/geometry/segment.h \
-    $$PWD/core/cg3/geometry/sphere.h \
-    $$PWD/core/cg3/geometry/transformations.h \
-    $$PWD/core/cg3/geometry/triangle.h \
-    $$PWD/core/cg3/geometry/utils3d.h \
-    $$PWD/core/cg3/geometry/2d/bounding_box2d.h \
-    $$PWD/core/cg3/geometry/2d/intersections2d.h \
-    $$PWD/core/cg3/geometry/2d/line2d.h \
-    $$PWD/core/cg3/geometry/2d/point2d.h \
-    $$PWD/core/cg3/geometry/2d/polygon2d.h \
-    $$PWD/core/cg3/geometry/2d/segment2d.h \
-    $$PWD/core/cg3/geometry/2d/triangle2d.h \
-    $$PWD/core/cg3/geometry/2d/utils2d.h \
-    $$PWD/core/cg3/geometry/2d/triangle2d_utils.h
+    $$PWD/geometry/bounding_box.h \
+    $$PWD/geometry/cylinder.h \
+    $$PWD/geometry/line.h \
+    $$PWD/geometry/plane.h \
+    $$PWD/geometry/point.h \
+    $$PWD/geometry/quaternion.h \
+    $$PWD/geometry/segment.h \
+    $$PWD/geometry/sphere.h \
+    $$PWD/geometry/transformations.h \
+    $$PWD/geometry/triangle.h \
+    $$PWD/geometry/utils3d.h \
+    $$PWD/geometry/2d/bounding_box2d.h \
+    $$PWD/geometry/2d/intersections2d.h \
+    $$PWD/geometry/2d/line2d.h \
+    $$PWD/geometry/2d/point2d.h \
+    $$PWD/geometry/2d/polygon2d.h \
+    $$PWD/geometry/2d/segment2d.h \
+    $$PWD/geometry/2d/triangle2d.h \
+    $$PWD/geometry/2d/utils2d.h \
+    $$PWD/geometry/2d/triangle2d_utils.h
 
 SOURCES += \
-    $$PWD/core/cg3/geometry/bounding_box.tpp \
-    $$PWD/core/cg3/geometry/cylinder.cpp \
-    $$PWD/core/cg3/geometry/line.cpp \
-    $$PWD/core/cg3/geometry/plane.cpp \
-    $$PWD/core/cg3/geometry/point.tpp \
-    $$PWD/core/cg3/geometry/quaternion.cpp \
-    $$PWD/core/cg3/geometry/segment.tpp \
-    $$PWD/core/cg3/geometry/sphere.cpp \
-    $$PWD/core/cg3/geometry/transformations.cpp \
-    $$PWD/core/cg3/geometry/triangle.tpp \
-    $$PWD/core/cg3/geometry/utils3d.tpp \
-    $$PWD/core/cg3/geometry/2d/bounding_box2d.tpp \
-    $$PWD/core/cg3/geometry/2d/intersections2d.cpp \
-    $$PWD/core/cg3/geometry/2d/line2d.cpp \
-    $$PWD/core/cg3/geometry/2d/point2d.tpp \
-    $$PWD/core/cg3/geometry/2d/polygon2d.cpp \
-    $$PWD/core/cg3/geometry/2d/utils2d.tpp \
-    $$PWD/core/cg3/geometry/2d/triangle2d_utils.tpp
+    $$PWD/geometry/bounding_box.tpp \
+    $$PWD/geometry/cylinder.cpp \
+    $$PWD/geometry/line.cpp \
+    $$PWD/geometry/plane.cpp \
+    $$PWD/geometry/point.tpp \
+    $$PWD/geometry/quaternion.cpp \
+    $$PWD/geometry/segment.tpp \
+    $$PWD/geometry/sphere.cpp \
+    $$PWD/geometry/transformations.cpp \
+    $$PWD/geometry/triangle.tpp \
+    $$PWD/geometry/utils3d.tpp \
+    $$PWD/geometry/2d/bounding_box2d.tpp \
+    $$PWD/geometry/2d/intersections2d.cpp \
+    $$PWD/geometry/2d/line2d.cpp \
+    $$PWD/geometry/2d/point2d.tpp \
+    $$PWD/geometry/2d/polygon2d.cpp \
+    $$PWD/geometry/2d/utils2d.tpp \
+    $$PWD/geometry/2d/triangle2d_utils.tpp
 
 #io
 HEADERS += \
-    $$PWD/core/cg3/io/load_save_file.h \
-    $$PWD/core/cg3/io/serializable_object.h \
-    $$PWD/core/cg3/io/serialize.h \
-    $$PWD/core/cg3/io/serialize_eigen.h \
-    $$PWD/core/cg3/io/serialize_qt.h \
-    $$PWD/core/cg3/io/serialize_std.h
+    $$PWD/io/file_commons.h \
+    $$PWD/io/load_save_obj.h \
+    $$PWD/io/load_save_ply.h \
+    $$PWD/io/load_save_file.h \
+    $$PWD/io/serializable_object.h \
+    $$PWD/io/serialize.h \
+    $$PWD/io/serialize_eigen.h \
+    $$PWD/io/serialize_qt.h \
+    $$PWD/io/serialize_std.h \
+    $$PWD/io/ply/ply.h \
+    $$PWD/io/ply/ply_header.h \
+    $$PWD/io/ply/ply_vertex.h \
+    $$PWD/io/ply/ply_face.h
 
 SOURCES += \
-    $$PWD/core/cg3/io/load_save_file.tpp \
-    $$PWD/core/cg3/io/serialize.tpp \
-    $$PWD/core/cg3/io/serialize_eigen.tpp \
-    $$PWD/core/cg3/io/serialize_qt.tpp \
-    $$PWD/core/cg3/io/serialize_std.tpp
+    $$PWD/io/load_save_obj.tpp \
+    $$PWD/io/load_save_ply.tpp \
+    $$PWD/io/serialize.tpp \
+    $$PWD/io/serialize_eigen.tpp \
+    $$PWD/io/serialize_qt.tpp \
+    $$PWD/io/serialize_std.tpp \
+    $$PWD/io/ply/ply.tpp \
+    $$PWD/io/ply/ply_header.cpp \
+    $$PWD/io/ply/ply_vertex.tpp \
+    $$PWD/io/ply/ply_face.tpp
 
 #utilities
 HEADERS += \
-    $$PWD/core/cg3/utilities/color.h \
-    $$PWD/core/cg3/utilities/comparators.h \
-    $$PWD/core/cg3/utilities/const.h \
-    $$PWD/core/cg3/utilities/eigen.h \
-    $$PWD/core/cg3/utilities/hash.h \
-    $$PWD/core/cg3/utilities/map.h \
-    $$PWD/core/cg3/utilities/nested_initializer_lists.h \
-    $$PWD/core/cg3/utilities/pair.h \
-    $$PWD/core/cg3/utilities/set.h \
-    $$PWD/core/cg3/utilities/string.h \
-    $$PWD/core/cg3/utilities/system.h \
-    $$PWD/core/cg3/utilities/timer.h \
-    $$PWD/core/cg3/utilities/tokenizer.h \
-    $$PWD/core/cg3/utilities/vector.h \
-    $$PWD/core/cg3/utilities/utils.h
+    $$PWD/utilities/cg3config.h \
+    $$PWD/utilities/color.h \
+    $$PWD/utilities/comparators.h \
+    $$PWD/utilities/const.h \
+    $$PWD/utilities/eigen.h \
+    $$PWD/utilities/hash.h \
+    $$PWD/utilities/map.h \
+    $$PWD/utilities/nested_initializer_lists.h \
+    $$PWD/utilities/pair.h \
+    $$PWD/utilities/set.h \
+    $$PWD/utilities/string.h \
+    $$PWD/utilities/system.h \
+    $$PWD/utilities/timer.h \
+    $$PWD/utilities/tokenizer.h \
+    $$PWD/utilities/vector.h \
+    $$PWD/utilities/utils.h
 
 SOURCES += \
-    $$PWD/core/cg3/utilities/color.tpp \
-    $$PWD/core/cg3/utilities/eigen.tpp \
-    $$PWD/core/cg3/utilities/hash.tpp \
-    $$PWD/core/cg3/utilities/map.tpp \
-    $$PWD/core/cg3/utilities/pair.tpp \
-    $$PWD/core/cg3/utilities/set.tpp \
-    $$PWD/core/cg3/utilities/string.tpp \
-    $$PWD/core/cg3/utilities/system.tpp \
-    $$PWD/core/cg3/utilities/timer.tpp \
-    $$PWD/core/cg3/utilities/tokenizer.tpp \
-    $$PWD/core/cg3/utilities/vector.tpp \
-    $$PWD/core/cg3/utilities/utils.tpp
-
-INCLUDEPATH += $$PWD/core/
-
+    $$PWD/utilities/color.tpp \
+    $$PWD/utilities/eigen.tpp \
+    $$PWD/utilities/hash.tpp \
+    $$PWD/utilities/map.tpp \
+    $$PWD/utilities/nested_initializer_lists.tpp \
+    $$PWD/utilities/pair.tpp \
+    $$PWD/utilities/set.tpp \
+    $$PWD/utilities/string.tpp \
+    $$PWD/utilities/system.tpp \
+    $$PWD/utilities/timer.tpp \
+    $$PWD/utilities/tokenizer.tpp \
+    $$PWD/utilities/vector.tpp \
+    $$PWD/utilities/utils.tpp
 

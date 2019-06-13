@@ -375,6 +375,14 @@ void GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
     }
 }
 
+void GLCanvas::pushDrawableObject(const std::shared_ptr<const DrawableObject>& ptr, bool visible)
+{
+    if (!containsDrawableObject(ptr)){
+        sharedDrawableObjects.insert(ptr);
+        pushDrawableObject(ptr.get(), visible);
+    }
+}
+
 bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
 {
     std::vector<const DrawableObject *>::iterator it =
@@ -398,11 +406,23 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
     return false;
 }
 
+bool GLCanvas::deleteDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+{
+    bool b = deleteDrawableObject(ptr.get());
+    sharedDrawableObjects.erase(ptr);
+    return b;
+}
+
 bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
 {
     std::vector<const DrawableObject*>::const_iterator it =
             std::find(drawlist.begin(), drawlist.end(), obj);
     return it != drawlist.end();
+}
+
+bool GLCanvas::containsDrawableObject(const std::shared_ptr<const DrawableObject> &ptr) const
+{
+    return sharedDrawableObjects.find(ptr) != sharedDrawableObjects.end();
 }
 
 void GLCanvas::enableRotation(bool b)
@@ -434,7 +454,7 @@ void GLCanvas::setSelectionLeftButton(bool b)
     if (b)
         setMouseBinding(Qt::NoModifier, Qt::LeftButton, SELECT);
     else
-        enableRotation();
+		enableRotation();
 }
 
 } //namespace cg3::viewer

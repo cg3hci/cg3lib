@@ -7,6 +7,7 @@
 #include "utils.h"
 
 #include <cg3/viewer/interfaces/drawable_object.h>
+#include <cg3/viewer/interfaces/manipulable_object.h>
 
 namespace cg3 {
 
@@ -41,6 +42,15 @@ unsigned int searchFirstObject(
     return i;
 }
 
+cg3::Pointd sceneCenterOfDrawableObject(const cg3::DrawableObject* obj)
+{
+	const cg3::ManipulableObject* mobj = dynamic_cast<const cg3::ManipulableObject*>(obj);
+	if (!mobj)
+		return obj->sceneCenter();
+	else
+		return obj->sceneCenter() + mobj->position();
+}
+
 /**
  * @brief Returns the full bounding box of all the DrawableObjects contained in the DrawList.
  *
@@ -58,18 +68,21 @@ BoundingBox fullBoundingBoxDrawableObjects(
 {
     BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
     if (drawlist.size() > 0) {
-        unsigned int i = searchFirstObject(drawlist, onlyVisible);
+		unsigned int i = searchFirstObject(drawlist, onlyVisible);
 
-        if (i < drawlist.size()) { //i will point to the first elagible object
-            bb.min() = drawlist[i]->sceneCenter() - drawlist[i]->sceneRadius();
-            bb.max() = drawlist[i]->sceneCenter() + drawlist[i]->sceneRadius();
+		if (i < drawlist.size()) { //i will point to the first elagible object
+			cg3::Pointd sc = sceneCenterOfDrawableObject(drawlist[i]);
+			bb.min() = sc - drawlist[i]->sceneRadius();
+			bb.max() = sc + drawlist[i]->sceneRadius();
 
-            for (i = i+1; i < drawlist.size(); i++) { //rest of the list
-                if (elagibleObject(drawlist[i], onlyVisible)) {
+			for (i = i+1; i < drawlist.size(); i++) { //rest of the list
+				if (elagibleObject(drawlist[i], onlyVisible)) {
+					cg3::Pointd sc = sceneCenterOfDrawableObject(drawlist[i]);
+
                     bb.min() =
-                            bb.min().min(drawlist[i]->sceneCenter() - drawlist[i]->sceneRadius());
+							bb.min().min(sc - drawlist[i]->sceneRadius());
                     bb.max() =
-                            bb.max().max(drawlist[i]->sceneCenter() + drawlist[i]->sceneRadius());
+							bb.max().max(sc + drawlist[i]->sceneRadius());
                 }
             }
         }

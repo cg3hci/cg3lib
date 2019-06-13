@@ -90,21 +90,21 @@ EigenMesh::EigenMesh(const Dcel& dcel)
 bool EigenMesh::loadFromObj(const std::string& filename)
 {
     clear();
-    int mode = 0;
+	io::FileMeshMode mode;
     bool b = loadTriangleMeshFromObj(filename, V, F, mode, NV, CV, CF);
     updateBoundingBox();
 
     if (b){
         updateFaceNormals();
-        if (!(mode & io::NORMAL_VERTICES)){
+		if (!(mode.hasVertexNormals())){
             updateVerticesNormals();
         }
         else
             NV.rowwise().normalize();
-        if (!(mode & io::COLOR_VERTICES)){
+		if (!(mode.hasVertexColors())){
             updateVertexColorsSize();
         }
-        if (!(mode & io::COLOR_FACES)){
+		if (!(mode.hasFaceColors())){
             updateFaceColorsSize();
         }
     }
@@ -114,21 +114,21 @@ bool EigenMesh::loadFromObj(const std::string& filename)
 bool EigenMesh::loadFromPly(const std::string& filename)
 {
     clear();
-    int mode = 0;
+	io::FileMeshMode mode;
     bool b = loadTriangleMeshFromPly(filename, V, F, mode, NV, CV, CF);
     updateBoundingBox();
 
     if (b){
         updateFaceNormals();
-        if (!(mode & io::NORMAL_VERTICES)){
+		if (!(mode.hasVertexNormals())){
             updateVerticesNormals();
         }
         else
             NV.rowwise().normalize();
-        if (!(mode & io::COLOR_VERTICES)){
+		if (!(mode.hasVertexColors())){
             updateVertexColorsSize();
         }
-        if (!(mode & io::COLOR_FACES)){
+		if (!(mode.hasFaceColors())){
             updateFaceColorsSize();
         }
     }
@@ -302,32 +302,39 @@ std::pair<int, int> EigenMesh::commonVertices(unsigned int f1, unsigned int f2) 
     return std::pair<int, int>(-1, -1);
 }
 
-bool EigenMesh::saveOnPly(const std::string &filename) const
+bool EigenMesh::saveOnPly(const std::string &filename, bool binary) const
 {
-    int mode = io::NORMAL_VERTICES | io::COLOR_VERTICES | io::COLOR_FACES;
-    io::MeshType meshType;
+	io::FileMeshMode mode;
+	mode.setVertexNormals();
+	mode.setVertexColors();
+	mode.setFaceColors();
     if (F.cols() == 3)
-        meshType = io::TRIANGLE_MESH;
+		mode.setTriangleMesh();
     else if (F.cols() == 4)
-        meshType = io::QUAD_MESH;
+		mode.setQuadMesh();
     else
-        meshType = io::POLYGON_MESH;
-    io::ColorMode colorMode = io::RGB;
-    return saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data(), meshType, mode, NV.data(), colorMode, CV.data(), CF.data());
+		mode.setPolygonMesh();
+    io::FileColorMode colorMode = io::RGB;
+	return saveMeshOnPly(filename, V.rows(), F.rows(), V.data(), F.data(),
+						 binary, mode, NV.data(), NF.data(), colorMode,
+						 CV.data(), CF.data());
 }
 
 bool EigenMesh::saveOnObj(const std::string& filename) const
 {
-    int mode = io::TRIANGLE_MESH | io::NORMAL_VERTICES | io::COLOR_VERTICES | io::COLOR_FACES;
-    io::MeshType meshType;
-       if (F.cols() == 3)
-           meshType = io::TRIANGLE_MESH;
-       else if (F.cols() == 4)
-           meshType = io::QUAD_MESH;
-       else
-           meshType = io::POLYGON_MESH;
-    io::ColorMode colorMode = io::RGB;
-    return saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data(), meshType, mode, NV.data(), colorMode, CV.data(), CF.data());
+	io::FileMeshMode mode;
+	mode.setVertexNormals();
+	mode.setVertexColors();
+	mode.setFaceColors();
+	if (F.cols() == 3)
+		mode.setTriangleMesh();
+	else if (F.cols() == 4)
+		mode.setQuadMesh();
+	else
+		mode.setPolygonMesh();
+	io::FileColorMode colorMode = io::RGB;
+	return saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data(), mode,
+						 NV.data(), colorMode, CV.data(), CF.data());
 }
 
 void EigenMesh::merge(EigenMesh& result, const EigenMesh& m1, const EigenMesh& m2)

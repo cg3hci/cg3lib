@@ -22,6 +22,19 @@ inline Timer::Timer(bool _start) :
  * @param caption
  * @param _start
  */
+inline Timer::Timer (const char* caption, bool _start) :
+	caption(caption),
+	isStopped(false)
+{
+	if (_start)
+		start();
+}
+
+/**
+ * @brief Timer::Timer
+ * @param caption
+ * @param _start
+ */
 inline Timer::Timer (const std::string& caption, bool _start) :
     caption(caption),
     isStopped(false)
@@ -62,7 +75,19 @@ inline void Timer::stop()
 inline void Timer::print ()
 {
     double secs = delay();
-    std::cout << "[" << secs << " secs]\t" << caption << std::endl;
+	int mins = (int)secs / 60;
+	if (mins == 0)
+		std::cout << "[" << secs << " secs]\t" << caption << std::endl;
+	else {
+		secs = secs - mins * 60;
+		int hours = mins / 60;
+		if (hours == 0)
+			std::cout << "[" << mins << " mins; " << secs << " secs]\t" << caption << std::endl;
+		else {
+			mins = mins - hours * 60;
+			std::cout << "[" << hours << " hours; " << mins << " mins; " << secs << " secs]\t" << caption << std::endl;
+		}
+	}
 }
 
 /**

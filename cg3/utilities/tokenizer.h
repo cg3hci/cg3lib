@@ -24,12 +24,12 @@ public:
     Tokenizer(const char* string, char separator);
     Tokenizer(const std::string& string, char separator);
 
-    typedef std::vector<std::string>::iterator iterator;
+	typedef std::vector<std::string>::const_iterator iterator;
 
-    iterator begin();
-    iterator end();
+	iterator begin() const;
+	iterator end() const;
 
-    unsigned long int size()const ;
+	unsigned long int size() const ;
     const std::string& operator[](uint i) const;
 
 private:

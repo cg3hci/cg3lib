@@ -89,19 +89,35 @@ inline void drawCylinder(
     Vec3 normal  = dir.cross(z);
     double angle = acos(dir.dot(z)) * 180 / M_PI;
 
-    glColor3f(color.redF(), color.greenF(), color.blueF());
-    glPushMatrix();
-    glTranslated(a.x(), a.y(), a.z());
-    glRotatef(-angle, normal.x(), normal.y(), normal.z());
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glPolygonMode(GL_FRONT, GL_FILL);
-    GLUquadric *cylinder = gluNewQuadric();
+	bool cull = glIsEnabled(GL_CULL_FACE);
+	glDisable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//cylinder
+	glColor3f(color.redF(), color.greenF(), color.blueF());
+	glPushMatrix();
+	glTranslated(a.x(), a.y(), a.z());
+	glRotatef(-angle, normal.x(), normal.y(), normal.z());
+
+	GLUquadric *cylinder = gluNewQuadric();
     gluQuadricNormals(cylinder, GLU_SMOOTH);
     gluQuadricOrientation(cylinder, GLU_OUTSIDE);
     gluCylinder(cylinder, top_radius, bottom_radius, (a-b).length(), slices, stacks);
-    glPopMatrix();
-    glDisable(GL_CULL_FACE);
+
+	GLUquadric *disk1 = gluNewQuadric();
+	gluQuadricNormals(disk1, GLU_SMOOTH);
+	gluQuadricOrientation(disk1, GLU_INSIDE);
+	gluDisk(disk1, 0, top_radius, slices, stacks);
+
+	/*glTranslated((b-a).x(), (b-a).y(), (b-a).z());
+	GLUquadric *disk2 = gluNewQuadric();
+	gluQuadricNormals(disk2, GLU_SMOOTH);
+	gluQuadricOrientation(disk2, GLU_OUTSIDE);
+	gluDisk(disk2, 0, bottom_radius, slices, stacks);*/
+
+	glColor3f(0, 0, 0);
+	glPopMatrix();
+	if (cull)
+		glEnable(GL_CULL_FACE);
 }
 
 /**
@@ -149,6 +165,7 @@ inline void drawLine(
     glVertex3f(a.x(), a.y(), a.z());
     glVertex3f(b.x(), b.y(), b.z());
     glEnd();
+	glColor3f(0, 0, 0);
 }
 
 /**
