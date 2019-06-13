@@ -137,7 +137,7 @@ inline T Triangle<T>::normal() const
 template<class T>
 inline double Triangle<T>::area() const
 {
-    return (((_v3 - _v1).cross(_v2 - _v1)).getLength() / 2);
+    return (((_v3 - _v1).cross(_v2 - _v1)).length() / 2);
 }
 
 template<class T>

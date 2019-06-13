@@ -361,7 +361,7 @@ Vec3 Dcel::Face::updateNormal()
 double Dcel::Face::updateArea()
 {
     updateNormal();
-    if (_normal != Vec3()) {
+    if (normal() != Vec3()) {
         if (isTriangle()) {
             assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
             assert(_outerHalfEdge->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
