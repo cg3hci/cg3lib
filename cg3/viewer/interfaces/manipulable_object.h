@@ -14,7 +14,7 @@
 
 namespace cg3 {
 
-class ManipulableObject : public DrawableObject, private qglviewer::ManipulatedFrame
+class ManipulableObject : public virtual DrawableObject, public qglviewer::ManipulatedFrame
 {
 public:
     ManipulableObject();
@@ -27,9 +27,15 @@ public:
 
     virtual void setDrawRelativeAxis(bool b = true) const;
 
+	virtual void setPosition(const cg3::Pointd& pos);
+
+	virtual void setTranslation(const cg3::Pointd& pos);
+
     virtual const double* matrix() const;
 
     virtual Pointd position() const;
+
+	virtual Pointd translation() const;
 
     virtual bool grabsMouse() const;
 
