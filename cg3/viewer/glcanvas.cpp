@@ -343,7 +343,7 @@ BoundingBox3 GLCanvas::fullBoundingBoxDrawableObjects(bool onlyVisible) const
 void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool vis)
 {
     obj->setVisibility(vis);
-    update();
+	update();
 }
 
 void GLCanvas::clearDrawableObjectsList()

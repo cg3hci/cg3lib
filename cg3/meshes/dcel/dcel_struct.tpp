@@ -1440,10 +1440,17 @@ BoundingBox3 TemplatedDcel<V, HE, F>::updateBoundingBox()
 }
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::setColor(const Color& c)
+void TemplatedDcel<V, HE, F>::setFaceColors(const Color& c)
 {
     for (Face* f : faceIterator())
         f->setColor(c);
+}
+
+template <class V, class HE, class F>
+void TemplatedDcel<V, HE, F>::setVertexColors(const Color& c)
+{
+	for (Vertex* v : vertexIterator())
+		v->setColor(c);
 }
 
 template <class V, class HE, class F>

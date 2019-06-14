@@ -192,7 +192,8 @@ public:
     void updateFaceNormals();
     void updateVertexNormals();
 	BoundingBox3 updateBoundingBox();
-    void setColor(const Color &c);
+	void setFaceColors(const Color &c);
+	void setVertexColors(const Color &c);
     void scale(double scaleFactor);
     void scale(const cg3::Vec3& scaleVector);
 	void scale(const BoundingBox3 &newBoundingBox);
