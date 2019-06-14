@@ -18,7 +18,7 @@ If you use cg3lib in your research projects, please cite the our library using t
 
 ```
 @misc{cg3lib,
-	title  = {{CG3Lib}: A structured {C++} geometry processing library.},
+	title  = {{CG3Lib}: A {C++} geometry processing library.},
 	author = {Alessandro Muntoni and Stefano Nuvoli and others},
 	note   = {https://github.com/cg3hci/cg3lib},
 	year   = {2018},
