@@ -8,8 +8,10 @@ It is composed of different modules:
 - Algorithms: a collection of geometry processing and computetional geometry algorithms;
 - Viewer: a 3D viewer developed with Qt and based on libQGLViewer (http://libqglviewer.com/): it allows to render easily mesh data structures and to create easyly guis (drag&drop with QtCreator);
 - Cgal: a simple interface which allows to use some CGAL functionalities (https://www.cgal.org/);
+- Voro++: a simple 3D Voronoi Data structures computed using the voro++ library (http://math.lbl.gov/voro++/)
 - LibIGL: a simple interface which allows to use some LibIGL functionalities (http://libigl.github.io/libigl/);
-- CinoLib: a simple interface which allows to use some CinoLib functionalities (https://bitbucket.org/maxicino/cinolib/overview);
+- CinoLib: a simple interface which allows to use some CinoLib functionalities (https://github.com/mlivesu/cinolib);
+- VCGLib: a simple interface which allows to use some VCGLib functionalities (https://github.com/cnr-isti-vclab/vcglib)
 
 All these modules are optional (except of the core module) and the project can be compiled on Windows, MacOS and Linux.
 The documentation can be found at the following link: https://cg3hci.github.io/index.html.
