@@ -62,7 +62,7 @@ void dcelToTrimesh(cinolib::Trimesh<>& m, const Dcel& d)
 
     unsigned int i = 0;
     for(const Dcel::Vertex* v : d.vertexIterator()) {
-        Pointd coord = v->coordinate();
+		Point3d coord = v->coordinate();
         unsigned int j=i*3;
         coords[j]=coord.x();
         coords[j+1]=coord.y();

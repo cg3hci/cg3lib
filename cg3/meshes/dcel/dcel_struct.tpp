@@ -2792,7 +2792,7 @@ void TemplatedDcel<V, HE, F>::copyFrom(const cinolib::Trimesh<> &trimesh)
 
     for (unsigned int i = 0; i < (unsigned int)trimesh.num_verts(); i++) {
 
-        Pointd coord(trimesh.vert(i));
+		Point3d coord(trimesh.vert(i));
 
         if (first) {
             bBox.setMin(coord);
@@ -2816,7 +2816,7 @@ void TemplatedDcel<V, HE, F>::copyFrom(const cinolib::Trimesh<> &trimesh)
     for (unsigned int i = 0; i < (unsigned int)trimesh.num_polys(); i++) {
 
         std::vector<int> nid;
-        Pointi ff(trimesh.poly_vert_id(i, 0), trimesh.poly_vert_id(i, 1), trimesh.poly_vert_id(i, 2));
+		Point3i ff(trimesh.poly_vert_id(i, 0), trimesh.poly_vert_id(i, 1), trimesh.poly_vert_id(i, 2));
         nid.push_back(ff.x());
         nid.push_back(ff.y());
         nid.push_back(ff.z());
