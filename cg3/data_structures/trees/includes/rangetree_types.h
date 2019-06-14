@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "cg3/geometry/point3.h"
-#include "cg3/geometry/2d/point2.h"
+#include "cg3/geometry/point2.h"
 
 #include "cg3/data_structures/trees/rangetree.h"
 
