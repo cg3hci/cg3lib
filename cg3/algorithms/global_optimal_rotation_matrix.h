@@ -8,7 +8,7 @@
 #ifndef CG3_GLOBAL_OPTIMAL_ROTATION_MATRIX_H
 #define CG3_GLOBAL_OPTIMAL_ROTATION_MATRIX_H
 
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>

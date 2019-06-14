@@ -23,7 +23,7 @@ Dcel& DcelBuilder::dcel()
     return d;
 }
 
-unsigned int DcelBuilder::addVertex(const Pointd& p, const Vec3& n, const Color &c, int flag)
+unsigned int DcelBuilder::addVertex(const Point3d& p, const Vec3& n, const Color &c, int flag)
 {
     if (mapVertices.find(p) == mapVertices.end()){
         cg3::Dcel::Vertex* v = d.addVertex(p, n, c);
@@ -160,16 +160,16 @@ int DcelBuilder::addFace(const std::vector<uint>& vids, const Color& c, int flag
 }
 
 int DcelBuilder::addFace(
-        const Pointd& p1,
-        const Pointd& p2,
-        const Pointd& p3,
+        const Point3d& p1,
+        const Point3d& p2,
+        const Point3d& p3,
         const Color& c,
         int flag)
 {
     unsigned int vid1, vid2, vid3;
 
     //setting vids
-    std::map<cg3::Pointd, unsigned int>::iterator it;
+    std::map<cg3::Point3d, unsigned int>::iterator it;
     it = mapVertices.find(p1);
     if (it == mapVertices.end())
         vid1 = addVertex(p1);
@@ -192,17 +192,17 @@ int DcelBuilder::addFace(
 }
 
 int DcelBuilder::addFace(
-        const Pointd& p1,
-        const Pointd& p2,
-        const Pointd& p3,
-        const Pointd& p4,
+        const Point3d& p1,
+        const Point3d& p2,
+        const Point3d& p3,
+        const Point3d& p4,
         const Color& c,
         int flag)
 {
     unsigned int vid1, vid2, vid3, vid4;
 
     //setting vids
-    std::map<cg3::Pointd, unsigned int>::iterator it;
+    std::map<cg3::Point3d, unsigned int>::iterator it;
     it = mapVertices.find(p1);
     if (it == mapVertices.end())
         vid1 = addVertex(p1);
@@ -230,10 +230,10 @@ int DcelBuilder::addFace(
     return addFace(vid1, vid2, vid3, vid4, c, flag);
 }
 
-int DcelBuilder::addFace(const std::vector<Pointd>& ps, const Color& c, int flag)
+int DcelBuilder::addFace(const std::vector<Point3d>& ps, const Color& c, int flag)
 {
     std::vector<uint> vids(ps.size());
-    std::map<cg3::Pointd, unsigned int>::iterator it;
+    std::map<cg3::Point3d, unsigned int>::iterator it;
     for (uint i = 0; i < ps.size(); i++){
         it = mapVertices.find(ps[i]);
         if (it == mapVertices.end())

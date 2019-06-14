@@ -18,8 +18,8 @@ class DrawableCylinder : public Cylinder, public DrawableObject
 public:
     DrawableCylinder();
     DrawableCylinder(
-            const Pointd& a,
-            const Pointd& b,
+            const Point3d& a,
+            const Point3d& b,
             double _radius,
             QColor color = QColor(128,128,128),
             unsigned int slices = 50,
@@ -27,7 +27,7 @@ public:
 
     // DrawableObject interface
     void draw() const;
-    Pointd sceneCenter() const;
+    Point3d sceneCenter() const;
     double sceneRadius() const;
 
 protected:

@@ -7,11 +7,12 @@
 #ifndef CG3_SPHERE_H
 #define CG3_SPHERE_H
 
-#include "point.h"
+#include "point3.h"
 
 namespace cg3 {
 
 /**
+ * @ingroup cg3core
  * @brief The Sphere class
  *
  * Represents a 3D sphere with a center and a radius,
@@ -21,16 +22,16 @@ class Sphere : public SerializableObject
 {
 public:
     Sphere();
-    Sphere(const Pointd& _center, double _radius);
+    Sphere(const Point3d& _center, double _radius);
 
-    const Pointd& center() const;
+    const Point3d& center() const;
     const double &radius() const;
     double diameter() const;
     double circumference() const;
     double surfaceArea() const;
     double volume() const;
 
-    void setCenter(const Pointd& center);
+    void setCenter(const Point3d& center);
     void setRadius(double radius);
 
     // SerializableObject interface
@@ -38,7 +39,7 @@ public:
     void deserialize(std::ifstream &binaryFile);
 
 protected:
-    Pointd _center;
+    Point3d _center;
     double _radius;
 };
 

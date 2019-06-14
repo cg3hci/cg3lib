@@ -18,11 +18,11 @@ namespace cg3 {
  *
  * @link http://stackoverflow.com/questions/9600801/evenly-distributing-n-points-on-a-sphere
  */
-inline std::vector<Pointd> sphereCoverage(
+inline std::vector<Point3d> sphereCoverage(
         unsigned int nSamples,
         bool deterministic)
 {
-    std::vector<Pointd> points;
+    std::vector<Point3d> points;
 
     if (nSamples > 0) {
         points.reserve(nSamples);
@@ -44,7 +44,7 @@ inline std::vector<Pointd> sphereCoverage(
             double x   = cos(phi) * r;
             double z   = sin(phi) * r;
 
-            points.push_back(Pointd(x,y,z));
+            points.push_back(Point3d(x,y,z));
         }
     }
     return points;
@@ -62,9 +62,9 @@ inline std::vector<Pointd> sphereCoverage(
  * Implementation of VCGLib:
  * (https://github.com/cnr-isti-vclab/vcglib/blob/master/vcg/math/gen_normal.h)
  */
-inline std::vector<cg3::Pointd> sphereCoverageFibonacci(unsigned int nSamples)
+inline std::vector<cg3::Point3d> sphereCoverageFibonacci(unsigned int nSamples)
 {
-	std::vector<cg3::Pointd> points;
+	std::vector<cg3::Point3d> points;
 	points.reserve(nSamples);
 	const double Phi =  std::sqrt(3);
 
@@ -73,7 +73,7 @@ inline std::vector<cg3::Pointd> sphereCoverageFibonacci(unsigned int nSamples)
 		double cosTheta = 1 - (2*i + 1.0)/nSamples;
         double sinTheta = 1 - cosTheta*cosTheta;
 		sinTheta = std::sqrt(std::min(1.0, std::max(0.0, sinTheta)));
-		points.push_back(cg3::Pointd(cos(phi)*sinTheta, sin(phi)*sinTheta, cosTheta));
+		points.push_back(cg3::Point3d(cos(phi)*sinTheta, sin(phi)*sinTheta, cosTheta));
     }
 
     return points;

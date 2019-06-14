@@ -25,11 +25,11 @@
 #include <QKeyEvent>
 #include <vector>
 
-#include <cg3/geometry/2d/point2d.h>
+#include <cg3/geometry/point2.h>
 #include "interfaces/drawable_object.h"
 #include "interfaces/pickable_object.h"
 #include "interfaces/manipulable_object.h"
-#include "drawable_objects/drawable_bounding_box.h"
+#include "drawable_objects/drawable_bounding_box3.h"
 #include <qmessagebox.h>
 
 namespace cg3 {
@@ -68,8 +68,8 @@ public:
 
     //GLCanvas rendering member functions:
     void fitScene();
-    void fitScene(const cg3::Pointd &center, double radius);
-    void fitScene2d(const cg3::Point2Dd& center, double radius);
+    void fitScene(const cg3::Point3d &center, double radius);
+    void fitScene2d(const cg3::Point2d& center, double radius);
     void toggleUnitBox();
     void setBackgroundColor(const QColor & color);
     void set2DMode();
@@ -79,7 +79,7 @@ public:
     void saveSnapshot(const std::string& filename, bool overwrite = true);
 
     // Point of View member functions:
-    cg3::Pointd cameraPosition() const;
+    cg3::Point3d cameraPosition() const;
     cg3::Vec3 cameraDirection() const;
     void resetPointOfView();
     void serializePointOfView(std::ofstream& file) const;
@@ -89,7 +89,7 @@ public:
     void savePointOfView(const std::string& filename) const;
     bool loadPointOfView(const std::string& filename);
     void setCameraDirection(const cg3::Vec3& vec);
-    void setCameraPosition(const cg3::Pointd& pos);
+    void setCameraPosition(const cg3::Point3d& pos);
     void setPerspectiveCamera();
     void setOrthographicCamera();
     void toggleCameraType();
@@ -98,7 +98,7 @@ public:
     //DrawableObjects List management:
     unsigned int sizeVisibleDrawableObjects() const;
     unsigned int sizeDrawableObjectsList() const;
-    cg3::BoundingBox fullBoundingBoxDrawableObjects(bool onlyVisible = false) const;
+    cg3::BoundingBox3 fullBoundingBoxDrawableObjects(bool onlyVisible = false) const;
     void setDrawableObjectVisibility(const cg3::DrawableObject* obj, bool vis);
 
     //DrawableObjects List management: these members should be used by cg3::MainWindow
@@ -115,7 +115,7 @@ public:
 signals:
 
     void objectPicked(const cg3::PickableObject*, unsigned int);
-    void point2DClicked(cg3::Point2Dd);
+    void point2DClicked(cg3::Point2d);
 
 private:
 
@@ -131,7 +131,7 @@ private:
     std::set<unsigned int> unusedPickableObjectsIds;
     Mode mode;
 
-    const DrawableBoundingBox unitBox;
+	const DrawableBoundingBox3 unitBox;
     bool unitBoxEnabled;
 };
 

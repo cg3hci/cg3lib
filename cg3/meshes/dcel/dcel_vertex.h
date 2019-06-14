@@ -8,7 +8,7 @@
 #ifndef CG3_DCEL_VERTEX_H
 #define CG3_DCEL_VERTEX_H
 
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 #include <cg3/utilities/color.h>
 #include "dcel_half_edge.h"
 
@@ -83,7 +83,7 @@ public:
     unsigned int id()                                const;
     int flag()                                       const;
     cg3::Vec3 normal()                                    const;
-    const Pointd& coordinate()                       const;
+    const Point3d& coordinate()                       const;
     Color color()                                    const;
     int cardinality()                                const;
     const HalfEdge* incidentHalfEdge()         const;
@@ -94,7 +94,7 @@ public:
     void setFlag(int newFlag);
     void resetFlag();
     void setNormal(const Vec3& newNormal);
-    void setCoordinate(const Pointd& newCoordinate);
+    void setCoordinate(const Point3d& newCoordinate);
     void setCardinality(int newCardinality);
     void setColor(const Color &c);
     int decrementCardinality();
@@ -175,20 +175,6 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline unsigned int getId() const {return id();}
-    inline int getFlag() const {return flag();}
-    inline Vec3 getNormal() const {return normal();}
-    inline const Pointd& getCoordinate() const {return coordinate();}
-    inline Color getColor() const {return color();}
-    inline int getCardinality() const {return cardinality();}
-    inline const HalfEdge* getIncidentHalfEdge() const {return incidentHalfEdge();}
-    inline HalfEdge* getIncidentHalfEdge() {return incidentHalfEdge();}
-    inline int getNumberIncidentHalfEdges() const {return numberIncidentHalfEdges();}
-    inline int getNumberIncidentFaces() const {return numberIncidentFaces();}
-    inline int getNumberAdjacentVertices() const {return numberAdjacentVertices();}
-    #endif
-
 protected:
 
     class GenericIterator;
@@ -215,7 +201,7 @@ protected:
     #ifdef NDEBUG
     internal::DcelData* parent;
     #else
-    Pointd          _coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
+    Point3d          _coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
     Vec3            _normal;             /**< \~Italian @brief Vettore normale al vertice */
     Color           _color;              /**< \~Italian @brief Colore associato al vertice */
     #endif

@@ -6,8 +6,8 @@
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
 
-#ifndef CG3_CGAL_POLYHEDRON_H
-#define CG3_CGAL_POLYHEDRON_H
+#ifndef CG3_CGAL_POLYHEDRON3_H
+#define CG3_CGAL_POLYHEDRON3_H
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polyhedron_3.h>
@@ -54,23 +54,7 @@ Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
 SimpleEigenMesh eigenMeshFromPolyhedron(const Polyhedron& poly);
 #endif
 
-#ifdef CG3_OLD_NAMES_COMPATIBILITY
-#ifdef  CG3_DCEL_DEFINED
-inline Polyhedron getPolyhedronFromDcel(const Dcel& dcel,
-        std::map<const Dcel::Vertex*, int>& vertexMap = internal::dummyVertexMap,
-        std::map<const Dcel::Face*, int>& faceMap = internal::dummyFaceMap)
-{
-    return polyhedronFromDcel(dcel, vertexMap, faceMap);
-}
-
-inline Dcel getDcelFromPolyhedron(const Polyhedron& poly) {return dcelFromPolyhedron(poly);}
-#endif
-#ifdef  CG3_EIGENMESH_DEFINED
-inline Polyhedron getPolyhedronFromEigenMesh(const SimpleEigenMesh& mesh) {return polyhedronFromEigenMesh(mesh);}
-#endif
-#endif
-
 } //namespace cg3::cgal
 } //namespace cg3
 
-#endif // CG3_CGAL_POLYHEDRON_H
+#endif // CG3_CGAL_POLYHEDRON3_H

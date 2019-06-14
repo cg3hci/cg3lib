@@ -5,7 +5,7 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 #include "drawable_sphere.h"
-#include "../opengl_objects/opengl_objects.h"
+#include "../opengl_objects/opengl_objects3.h"
 
 namespace cg3 {
 
@@ -17,7 +17,7 @@ DrawableSphere::DrawableSphere() :
 }
 
 DrawableSphere::DrawableSphere(
-        const cg3::Pointd &center,
+        const cg3::Point3d &center,
         double radius,
         QColor color,
         int precision) :
@@ -32,7 +32,7 @@ void DrawableSphere::draw() const
     opengl::drawSphere(_center, _radius, color, precision);
 }
 
-Pointd DrawableSphere::sceneCenter() const {
+Point3d DrawableSphere::sceneCenter() const {
     return _center;
 }
 

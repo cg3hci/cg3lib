@@ -33,11 +33,6 @@ public:
     unsigned long int sizeY() const;
     unsigned long int rows() const;
     unsigned long int cols() const;
-
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline unsigned long int getSizeX() const {return sizeX();}
-    inline unsigned long int getSizeY() const {return sizeY();}
-    #endif
 };
 
 template <class T>

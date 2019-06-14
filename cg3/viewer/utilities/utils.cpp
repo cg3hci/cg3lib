@@ -42,7 +42,7 @@ unsigned int searchFirstObject(
     return i;
 }
 
-cg3::Pointd sceneCenterOfDrawableObject(const cg3::DrawableObject* obj)
+cg3::Point3d sceneCenterOfDrawableObject(const cg3::DrawableObject* obj)
 {
 	const cg3::ManipulableObject* mobj = dynamic_cast<const cg3::ManipulableObject*>(obj);
 	if (!mobj)
@@ -62,22 +62,22 @@ cg3::Pointd sceneCenterOfDrawableObject(const cg3::DrawableObject* obj)
  * @param drawlist
  * @param onlyVisible
  */
-BoundingBox fullBoundingBoxDrawableObjects(
+BoundingBox3 fullBoundingBoxDrawableObjects(
         const std::vector<const cg3::DrawableObject*>& drawlist,
         bool onlyVisible)
 {
-    BoundingBox bb(Pointd(-1,-1,-1), Pointd(1,1,1));
+    BoundingBox3 bb(Point3d(-1,-1,-1), Point3d(1,1,1));
     if (drawlist.size() > 0) {
 		unsigned int i = searchFirstObject(drawlist, onlyVisible);
 
 		if (i < drawlist.size()) { //i will point to the first elagible object
-			cg3::Pointd sc = sceneCenterOfDrawableObject(drawlist[i]);
+			cg3::Point3d sc = sceneCenterOfDrawableObject(drawlist[i]);
 			bb.min() = sc - drawlist[i]->sceneRadius();
 			bb.max() = sc + drawlist[i]->sceneRadius();
 
 			for (i = i+1; i < drawlist.size(); i++) { //rest of the list
 				if (elagibleObject(drawlist[i], onlyVisible)) {
-					cg3::Pointd sc = sceneCenterOfDrawableObject(drawlist[i]);
+					cg3::Point3d sc = sceneCenterOfDrawableObject(drawlist[i]);
 
                     bb.min() =
 							bb.min().min(sc - drawlist[i]->sceneRadius());

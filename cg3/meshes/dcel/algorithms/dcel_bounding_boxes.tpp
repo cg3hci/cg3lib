@@ -10,11 +10,11 @@ namespace cg3 {
 namespace dcelAlgorithms {
 
 template <typename InputIterator>
-BoundingBox boundingBoxOfFaces(
+BoundingBox3 boundingBoxOfFaces(
         InputIterator first,
         InputIterator last)
 {
-    BoundingBox bb;
+    BoundingBox3 bb;
     const Dcel::Face* f = *first;
     bb.setMin(f->outerHalfEdge()->fromVertex()->coordinate());
     bb.setMax(f->outerHalfEdge()->fromVertex()->coordinate());

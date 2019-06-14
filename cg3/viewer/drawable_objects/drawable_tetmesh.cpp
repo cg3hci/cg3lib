@@ -29,7 +29,7 @@ void DrawableTetMesh::draw(const float f) const
     DrawableTetmesh::draw(f);
 }
 
-Pointd DrawableTetMesh::sceneCenter() const
+Point3d DrawableTetMesh::sceneCenter() const
 {
     return DrawableTetmesh::scene_center();
 }

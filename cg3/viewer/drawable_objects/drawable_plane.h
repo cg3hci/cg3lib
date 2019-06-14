@@ -21,12 +21,12 @@ class DrawablePlane : public cg3::Plane, public DrawableObject
 public:
     DrawablePlane(const Vec3& _normal, double _d);
     DrawablePlane(double a, double b, double c, double _d);
-    DrawablePlane(const Pointd &p1, const Pointd &p2, const Pointd &p3);
+    DrawablePlane(const Point3d &p1, const Point3d &p2, const Point3d &p3);
     DrawablePlane(Plane p);
 
     // DrawableObject interface
     void draw() const;
-    Pointd sceneCenter() const;
+    Point3d sceneCenter() const;
     double sceneRadius() const;
 
     // SerializableObject interface
@@ -34,7 +34,7 @@ public:
 
 protected:
     void calculatePoints();
-    cg3::Pointd p1, p2, p3, p4;
+    cg3::Point3d p1, p2, p3, p4;
 };
 
 } // namespace cg3

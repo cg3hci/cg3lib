@@ -27,7 +27,7 @@ public:
 
     // DrawableObject interface
     void draw() const;
-    Pointd sceneCenter() const;
+    Point3d sceneCenter() const;
     double sceneRadius() const;
 
 };

@@ -7,10 +7,10 @@
 
 #include "dcel_face.h"
 #include "dcel_vertex.h"
-#include <cg3/geometry/transformations.h>
-#include <cg3/geometry/utils3d.h>
+#include <cg3/geometry/transformations3.h>
+#include <cg3/geometry/utils3.h>
 #ifdef CG3_CGAL_DEFINED
-#include <cg3/cgal/triangulation.h>
+#include <cg3/cgal/triangulation3.h>
 #endif
 
 namespace cg3 {
@@ -134,9 +134,9 @@ int Face::numberIncidentHalfEdges() const
  * @warning Utilizza Face::ConstIncidentVertexIterator
  * @return Il baricentro della faccia.
  */
-Pointd Face::barycenter() const
+Point3d Face::barycenter() const
 {
-    Pointd p;
+    Point3d p;
     int n = 0;
     for (const Vertex* v : incidentVertexIterator()){
         assert (v != nullptr && "HalfEdge's to vertex is null.");
@@ -156,9 +156,9 @@ Pointd Face::barycenter() const
 void Face::triangulation(std::vector<std::array<const Vertex*, 3> > &triangles) const
 {
     // Taking all the coordinates on vectors
-    std::vector<Pointd> borderCoordinates;
-    std::vector< std::vector<Pointd> > innerBorderCoordinates;
-    std::map<Pointd, const Vertex*> pointsVerticesMap;
+    std::vector<Point3d> borderCoordinates;
+    std::vector< std::vector<Point3d> > innerBorderCoordinates;
+    std::map<Point3d, const Vertex*> pointsVerticesMap;
     for (const HalfEdge* he : incidentHalfEdgeIterator()){
         assert(he != nullptr && "Next component of Previous HalfEdge is null.");
         assert(he->fromVertex() != nullptr && "HalfEdge's from vertex is null.");
@@ -174,7 +174,7 @@ void Face::triangulation(std::vector<std::array<const Vertex*, 3> > &triangles) 
         int i = 0;
         for (Face::ConstInnerHalfEdgeIterator ihe = innerHalfEdgeBegin(), ihend = innerHalfEdgeEnd(); ihe != ihend; ++ihe, ++i){
             const HalfEdge* he = *ihe;
-            std::vector<Pointd> inner;
+            std::vector<Point3d> inner;
             for (Face::ConstIncidentHalfEdgeIterator heit = incidentHalfEdgeBegin(he), hend = incidentHalfEdgeEnd(); heit != hend; ++heit) {
                 assert(*(heit) != nullptr && "Next component of Previous HalfEdge is null.");
                 assert((*heit)->fromVertex() != nullptr && "HalfEdge's from vertex is null.");
@@ -191,15 +191,15 @@ void Face::triangulation(std::vector<std::array<const Vertex*, 3> > &triangles) 
     #ifdef NDEBUG
     std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulate(parent->faceNormals[_id], borderCoordinates, innerBorderCoordinates);
     #else
-    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulate(_normal, borderCoordinates, innerBorderCoordinates);
+    std::vector<std::array<Point3d, 3> > trianglesP = cgal::triangulate3(_normal, borderCoordinates, innerBorderCoordinates);
     #endif
 
     triangles.clear();
     for (unsigned int i = 0; i < trianglesP.size(); ++i) {
-            std::array<Pointd, 3> triangle = trianglesP[i];
-            Pointd p1 = triangle[0];
-            Pointd p2 = triangle[1];
-            Pointd p3 = triangle[2];
+            std::array<Point3d, 3> triangle = trianglesP[i];
+            Point3d p1 = triangle[0];
+            Point3d p2 = triangle[1];
+            Point3d p3 = triangle[2];
             assert(pointsVerticesMap.find(p1) != pointsVerticesMap.end() && "Triangulation vertex not founded on original face.");
             assert(pointsVerticesMap.find(p2) != pointsVerticesMap.end() && "Triangulation vertex not founded on original face.");
             assert(pointsVerticesMap.find(p3) != pointsVerticesMap.end() && "Triangulation vertex not founded on original face.");
@@ -332,7 +332,7 @@ Vec3 Face::updateNormal()
             if (normal != Vec3()){
                 normal.normalize();
 
-                std::vector<Pointd> pol;
+                std::vector<Point3d> pol;
                 for (const Vertex* v : incidentVertexIterator())
                     pol.push_back(v->coordinate());
                 if (! isPolygonCounterClockwise(pol, normal))
@@ -367,9 +367,9 @@ double Face::updateArea()
             assert(_outerHalfEdge->toVertex() != nullptr && "HalfEdge's To Vertex is null.");
             assert(_outerHalfEdge->prev() != nullptr && "HalfEdge's prev is null.");
             assert(_outerHalfEdge->prev()->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");
-            Pointd v1 = _outerHalfEdge->fromVertex()->coordinate();
-            Pointd v2 = _outerHalfEdge->toVertex()->coordinate();
-            Pointd v3 = _outerHalfEdge->prev()->fromVertex()->coordinate();
+            Point3d v1 = _outerHalfEdge->fromVertex()->coordinate();
+            Point3d v2 = _outerHalfEdge->toVertex()->coordinate();
+            Point3d v3 = _outerHalfEdge->prev()->fromVertex()->coordinate();
             _area = (((v3 - v1).cross(v2 - v1)).length() / 2);
         }
         #ifdef CG3_CGAL_DEFINED
@@ -383,9 +383,9 @@ double Face::updateArea()
                 assert(tr[0] != nullptr && "Vertex is null.");
                 assert(tr[1] != nullptr && "Vertex is null.");
                 assert(tr[2] != nullptr && "Vertex is null.");
-                Pointd v1 = tr[0]->coordinate();
-                Pointd v2 = tr[1]->coordinate();
-                Pointd v3 = tr[2]->coordinate();
+                Point3d v1 = tr[0]->coordinate();
+                Point3d v2 = tr[1]->coordinate();
+                Point3d v3 = tr[2]->coordinate();
                 _area += (((v3 - v1).cross(v2 - v1)).length() / 2);
             }
         }

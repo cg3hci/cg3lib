@@ -121,7 +121,7 @@ DrawableMesh::DrawableMesh()
     init();
 }
 
-void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const
+void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Point3d &min, const Point3d &max) const
 {
     if (drawMode & DRAW_WIREFRAME) {
         if (drawMode & DRAW_POINTS) {
@@ -178,7 +178,7 @@ void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords,
         }
     }
     if (drawMode & DRAW_BOUNDINGBOX) {
-        opengl::drawBox(min, max, QColor(0,0,0));
+        opengl::drawBox3(min, max, QColor(0,0,0));
     }
 }
 

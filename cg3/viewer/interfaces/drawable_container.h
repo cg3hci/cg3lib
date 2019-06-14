@@ -9,7 +9,7 @@
 
 #include <cg3/viewer/interfaces/drawable_object.h>
 
-#include <cg3/geometry/bounding_box.h>
+#include <cg3/geometry/bounding_box3.h>
 #include <QtCore>
 
 namespace cg3 {
@@ -48,7 +48,7 @@ public:
 
     // DrawableObject interface
     virtual void draw() const;
-    virtual Pointd sceneCenter() const;
+    virtual Point3d sceneCenter() const;
     virtual double sceneRadius() const;
 
 signals:
@@ -59,7 +59,7 @@ signals:
     void drawableContainerVisibilityObjectChanged(const DrawableObject*, bool) const;
 
 private:
-    cg3::BoundingBox totalBoundingBox() const;
+    cg3::BoundingBox3 totalBoundingBox() const;
 
     std::vector<const cg3::DrawableObject*> objects;
     std::vector<std::string> objectNames;

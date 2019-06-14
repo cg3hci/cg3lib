@@ -6,7 +6,7 @@
  */
 #include "drawable_plane.h"
 #include <cg3/utilities/const.h>
-#include <cg3/viewer/opengl_objects/opengl_objects.h>
+#include <cg3/viewer/opengl_objects/opengl_objects3.h>
 namespace cg3 {
 
 DrawablePlane::DrawablePlane(const Vec3 &normal, double d) : Plane(normal, d)
@@ -19,7 +19,7 @@ DrawablePlane::DrawablePlane(double a, double b, double c, double d) : Plane(a, 
     calculatePoints();
 }
 
-DrawablePlane::DrawablePlane(const Pointd &p1, const Pointd &p2, const Pointd &p3) : Plane(p1, p2, p3)
+DrawablePlane::DrawablePlane(const Point3d &p1, const Point3d &p2, const Point3d &p3) : Plane(p1, p2, p3)
 {
     calculatePoints();
 }
@@ -31,12 +31,12 @@ DrawablePlane::DrawablePlane(Plane p) : Plane(p)
 
 void DrawablePlane::draw() const
 {
-    opengl::drawQuad(p1, p2, p3, p4);
+    opengl::drawQuad3(p1, p2, p3, p4);
 }
 
-Pointd DrawablePlane::sceneCenter() const
+Point3d DrawablePlane::sceneCenter() const
 {
-    return cg3::Pointd();
+    return cg3::Point3d();
 }
 
 double DrawablePlane::sceneRadius() const
@@ -64,7 +64,7 @@ void DrawablePlane::calculatePoints()
 
     // now simply draw a quad centered in a arbitrary point of the plane
     // and large enough to seems a plane
-    cg3::Pointd p0 = - _normal * _d;        // "arbitrary" point
+    cg3::Point3d p0 = - _normal * _d;        // "arbitrary" point
     float  f  = 10000;  // large enough
     cg3::Vec3 fu =  u * f;
     cg3::Vec3 fv =  v * f;

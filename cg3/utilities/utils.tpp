@@ -35,7 +35,7 @@ inline bool epsilonEqual(T x, T v, double epsilon)
  * @return true if the two Points are equals on the epsilon interval, false otherwise
  */
 template <typename T>
-inline bool epsilonEqual(const Point<T> &x, const Point<T> &v, double epsilon)
+inline bool epsilonEqual(const Point3<T> &x, const Point3<T> &v, double epsilon)
 {
     if ((epsilonEqual(x.x(), v.x(), epsilon)) &&
             (epsilonEqual(x.y(), v.y(), epsilon)) &&
@@ -53,7 +53,7 @@ inline bool epsilonEqual(const Point<T> &x, const Point<T> &v, double epsilon)
  * @return true if the two Points are equals on the epsilon interval, false otherwise
  */
 template <typename T>
-inline bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilon)
+inline bool epsilonEqual(const Point2<T> &x, const Point2<T> &v, double epsilon)
 {
     if ((epsilonEqual(x.x(), v.x(), epsilon)) &&
             (epsilonEqual(x.y(), v.y(), epsilon)))
@@ -67,14 +67,14 @@ inline bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilo
  * @param bb
  * @return
  */
-inline Pointd randomPoint(const BoundingBox& bb)
+inline Point3d randomPoint(const BoundingBox3& bb)
 {
     static std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<> distx(bb.minX(), bb.maxX());
     std::uniform_real_distribution<> disty(bb.minY(), bb.maxY());
     std::uniform_real_distribution<> distz(bb.minZ(), bb.maxZ());
-    return Pointd(distx(e2), disty(e2), distz(e2));
+    return Point3d(distx(e2), disty(e2), distz(e2));
 }
 
 /**

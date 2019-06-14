@@ -65,7 +65,7 @@ cgal::Polyhedron polyhedronFromDcel(
 
             int vIndex = 0;
             for (const Dcel::Vertex* v : mesh->vertexIterator()) {
-                Pointd coordinate = v->coordinate();
+				Point3d coordinate = v->coordinate();
 
                 B.add_vertex(PolyhedronPoint(coordinate.x(), coordinate.y(), coordinate.z()));
                 vertexMap->insert(std::make_pair(v,vIndex));
@@ -106,7 +106,7 @@ Dcel dcelFromPolyhedron(const cgal::Polyhedron& poly)
     Dcel d;
     for (Polyhedron::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit){
         PolyhedronPoint p = (*vit).point();
-        Pointd point(p.x(), p.y(), p.z());
+		Point3d point(p.x(), p.y(), p.z());
         d.addVertex(point);
     }
 
@@ -143,13 +143,13 @@ cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
             typedef typename PolyhedronVertex::Point        PolyhedronPoint;
 
             for (unsigned int vIndex = 0; vIndex < mesh->numberVertices(); vIndex++){
-                Pointd coordinate = mesh->vertex(vIndex);
+				Point3d coordinate = mesh->vertex(vIndex);
                 B.add_vertex(PolyhedronPoint(coordinate.x(), coordinate.y(), coordinate.z()));
             }
 
             for (unsigned int fIndex = 0; fIndex < mesh->numberFaces(); fIndex++){
                 B.begin_facet();
-                Pointi face = mesh->face(fIndex);
+				Point3i face = mesh->face(fIndex);
                 for (unsigned int vi = 0; vi < 3; vi++) {
                     B.add_vertex_to_facet(face[vi]);
                 }
@@ -179,7 +179,7 @@ SimpleEigenMesh eigenMeshFromPolyhedron(const cgal::Polyhedron& poly)
 
     for (Polyhedron::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit) {
         PolyhedronPoint p = (*vit).point();
-        Pointd point(p.x(), p.y(), p.z());
+		Point3d point(p.x(), p.y(), p.z());
         map.insert(std::make_pair(p, d.addVertex(point)));
     }
 

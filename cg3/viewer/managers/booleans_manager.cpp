@@ -10,7 +10,7 @@
 
 #include <QFileDialog>
 #include <cg3/utilities/utils.h>
-#include <cg3/geometry/transformations.h>
+#include <cg3/geometry/transformations3.h>
 #include <cg3/meshes/eigenmesh/algorithms/eigenmesh_algorithms.h>
 #include <cg3/libigl/booleans.h>
 
@@ -373,13 +373,13 @@ void BooleansManager::on_wireframeEigenMeshCheckBox_3_stateChanged(int arg1)
 void BooleansManager::on_plusXButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
-        meshes[0]->translate(Pointd(ui->stepSpinBox->value(), 0, 0));
+        meshes[0]->translate(Point3d(ui->stepSpinBox->value(), 0, 0));
     }
     if (ui->mesh2CheckBox->isChecked() && meshes[1] != nullptr){
-        meshes[1]->translate(Pointd(ui->stepSpinBox->value(), 0, 0));
+        meshes[1]->translate(Point3d(ui->stepSpinBox->value(), 0, 0));
     }
     if (ui->resultCheckBox->isChecked() && result != nullptr){
-        result->translate(Pointd(ui->stepSpinBox->value(), 0, 0));
+        result->translate(Point3d(ui->stepSpinBox->value(), 0, 0));
     }
     mainWindow.canvas.update();
 }
@@ -387,13 +387,13 @@ void BooleansManager::on_plusXButton_clicked()
 void BooleansManager::on_minusXButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
-        meshes[0]->translate(Pointd(-ui->stepSpinBox->value(), 0, 0));
+        meshes[0]->translate(Point3d(-ui->stepSpinBox->value(), 0, 0));
     }
     if (ui->mesh2CheckBox->isChecked() && meshes[1] != nullptr){
-        meshes[1]->translate(Pointd(-ui->stepSpinBox->value(), 0, 0));
+        meshes[1]->translate(Point3d(-ui->stepSpinBox->value(), 0, 0));
     }
     if (ui->resultCheckBox->isChecked() && result != nullptr){
-        result->translate(Pointd(-ui->stepSpinBox->value(), 0, 0));
+        result->translate(Point3d(-ui->stepSpinBox->value(), 0, 0));
     }
     mainWindow.canvas.update();
 }
@@ -401,13 +401,13 @@ void BooleansManager::on_minusXButton_clicked()
 void BooleansManager::on_plusYButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
-        meshes[0]->translate(Pointd(0, ui->stepSpinBox->value(), 0));
+        meshes[0]->translate(Point3d(0, ui->stepSpinBox->value(), 0));
     }
     if (ui->mesh2CheckBox->isChecked() && meshes[1] != nullptr){
-        meshes[1]->translate(Pointd(0, ui->stepSpinBox->value(), 0));
+        meshes[1]->translate(Point3d(0, ui->stepSpinBox->value(), 0));
     }
     if (ui->resultCheckBox->isChecked() && result != nullptr){
-        result->translate(Pointd(0, ui->stepSpinBox->value(), 0));
+        result->translate(Point3d(0, ui->stepSpinBox->value(), 0));
     }
     mainWindow.canvas.update();
 }
@@ -415,13 +415,13 @@ void BooleansManager::on_plusYButton_clicked()
 void BooleansManager::on_minusYButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
-        meshes[0]->translate(Pointd(0, -ui->stepSpinBox->value(), 0));
+        meshes[0]->translate(Point3d(0, -ui->stepSpinBox->value(), 0));
     }
     if (ui->mesh2CheckBox->isChecked() && meshes[1] != nullptr){
-        meshes[1]->translate(Pointd(0, -ui->stepSpinBox->value(), 0));
+        meshes[1]->translate(Point3d(0, -ui->stepSpinBox->value(), 0));
     }
     if (ui->resultCheckBox->isChecked() && result != nullptr){
-        result->translate(Pointd(0, -ui->stepSpinBox->value(), 0));
+        result->translate(Point3d(0, -ui->stepSpinBox->value(), 0));
     }
     mainWindow.canvas.update();
 }
@@ -429,13 +429,13 @@ void BooleansManager::on_minusYButton_clicked()
 void BooleansManager::on_plusZButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
-        meshes[0]->translate(Pointd(0, 0, ui->stepSpinBox->value()));
+        meshes[0]->translate(Point3d(0, 0, ui->stepSpinBox->value()));
     }
     if (ui->mesh2CheckBox->isChecked() && meshes[1] != nullptr){
-        meshes[1]->translate(Pointd(0, 0, ui->stepSpinBox->value()));
+        meshes[1]->translate(Point3d(0, 0, ui->stepSpinBox->value()));
     }
     if (ui->resultCheckBox->isChecked() && result != nullptr){
-        result->translate(Pointd(0, 0, ui->stepSpinBox->value()));
+        result->translate(Point3d(0, 0, ui->stepSpinBox->value()));
     }
     mainWindow.canvas.update();
 }
@@ -443,13 +443,13 @@ void BooleansManager::on_plusZButton_clicked()
 void BooleansManager::on_minusZButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
-        meshes[0]->translate(Pointd(0, 0, -ui->stepSpinBox->value()));
+        meshes[0]->translate(Point3d(0, 0, -ui->stepSpinBox->value()));
     }
     if (ui->mesh2CheckBox->isChecked() && meshes[1] != nullptr){
-        meshes[1]->translate(Pointd(0, 0, -ui->stepSpinBox->value()));
+        meshes[1]->translate(Point3d(0, 0, -ui->stepSpinBox->value()));
     }
     if (ui->resultCheckBox->isChecked() && result != nullptr){
-        result->translate(Pointd(0, 0, -ui->stepSpinBox->value()));
+        result->translate(Point3d(0, 0, -ui->stepSpinBox->value()));
     }
     mainWindow.canvas.update();
 }
@@ -497,7 +497,7 @@ void BooleansManager::on_makeBox1PushButton_clicked()
     double min =  std::min(ui->x1SpinBox->value(),ui->y1SpinBox->value());
     min = std::min(min, ui->z1SpinBox->value());
     min /=10;
-    setMesh1(EigenMesh(EigenMeshAlgorithms::makeBox(BoundingBox(Pointd(0,0,0), Pointd(ui->x1SpinBox->value(),ui->y1SpinBox->value(),ui->z1SpinBox->value())))));
+    setMesh1(EigenMesh(EigenMeshAlgorithms::makeBox(BoundingBox3(Point3d(0,0,0), Point3d(ui->x1SpinBox->value(),ui->y1SpinBox->value(),ui->z1SpinBox->value())))));
 }
 
 void BooleansManager::on_makeBox2PushButton_clicked()
@@ -505,7 +505,7 @@ void BooleansManager::on_makeBox2PushButton_clicked()
     double min =  std::min(ui->x2SpinBox->value(),ui->y2SpinBox->value());
     min = std::min(min, ui->z2SpinBox->value());
     min /=10;
-    setMesh2(EigenMesh(EigenMeshAlgorithms::makeBox(BoundingBox(Pointd(0,0,0), Pointd(ui->x2SpinBox->value(),ui->y2SpinBox->value(),ui->z2SpinBox->value())))));
+    setMesh2(EigenMesh(EigenMeshAlgorithms::makeBox(BoundingBox3(Point3d(0,0,0), Point3d(ui->x2SpinBox->value(),ui->y2SpinBox->value(),ui->z2SpinBox->value())))));
 }
 
 void BooleansManager::on_scalePushButton_clicked()

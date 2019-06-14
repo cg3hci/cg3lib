@@ -53,7 +53,7 @@ inline Vec3 Vertex::normal() const
  * @brief Restituisce le coordinate del vertice
  * @return Pointd rappresentante la posizione nello spazio del vertice
  */
-inline const Pointd& Vertex::coordinate() const
+inline const Point3d& Vertex::coordinate() const
 {
     #ifdef NDEBUG
     return parent->vertexCoordinates[_id];
@@ -169,7 +169,7 @@ inline void Vertex::setNormal(const Vec3& newNormal)
  * @brief Setta le coordinate del vertice
  * @param[in] newCoordinate: il punto che verrà settato
  */
-inline void Vertex::setCoordinate(const Pointd& newCoordinate)
+inline void Vertex::setCoordinate(const Point3d& newCoordinate)
 {
     #ifdef NDEBUG
     parent->vertexCoordinates[_id] = newCoordinate;

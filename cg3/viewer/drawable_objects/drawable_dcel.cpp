@@ -77,7 +77,7 @@ void DrawableDcel::draw() const
     }
     if (drawMode & DRAW_FLAGGED_EDGES){
         for (uint i = 0; i < flaggedEdges.size(); i+=2){
-            cg3::opengl::drawLine(flaggedEdges[i], flaggedEdges[i+1], flaggedEdgesColor, flaggedEdgesWireframeWidth);
+            cg3::opengl::drawLine3(flaggedEdges[i], flaggedEdges[i+1], flaggedEdgesColor, flaggedEdgesWireframeWidth);
         }
     }
 }
@@ -87,12 +87,12 @@ void DrawableDcel::draw() const
  * @brief Calcola e restituisce il centro della Dcel.
  * @return il punto rappresentante il centro della mesh.
  */
-Pointd DrawableDcel::sceneCenter() const
+Point3d DrawableDcel::sceneCenter() const
 {
     if (bBox.isValid())
         return bBox.center();
     else
-        return Pointd();
+        return Point3d();
 }
 
 /**
@@ -140,7 +140,7 @@ void DrawableDcel::update()
     int vi = 0;
 
     for (const Dcel::Vertex* v : vertexIterator()) {
-        Pointd p = v->coordinate();
+        Point3d p = v->coordinate();
         Vec3 n = v->normal();
         vertexCoordinates.push_back(p.x());
         vertexCoordinates.push_back(p.y());

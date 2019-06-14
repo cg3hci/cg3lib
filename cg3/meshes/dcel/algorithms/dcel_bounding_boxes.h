@@ -18,12 +18,7 @@ namespace dcelAlgorithms {
  * @return the Bounding Box that bounds the faces contained in the input range.
  */
 template <typename InputIterator>
-BoundingBox boundingBoxOfFaces(InputIterator first, InputIterator last);
-
-#ifdef CG3_OLD_NAMES_COMPATIBILITY
-template <typename InputIterator>
-inline BoundingBox getBoundingBoxOfFaces(InputIterator first, InputIterator last) {return boundingBoxOfFaces(first, last);}
-#endif
+BoundingBox3 boundingBoxOfFaces(InputIterator first, InputIterator last);
 
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3

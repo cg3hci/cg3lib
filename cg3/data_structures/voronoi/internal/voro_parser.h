@@ -7,7 +7,7 @@
 #ifndef CG3_VORO_PARSER_H
 #define CG3_VORO_PARSER_H
 
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -20,7 +20,7 @@
 
 namespace cg3 {
 namespace internal {
-    std::vector<std::vector<Pointd>> parseAllVertices(voro::container& container);
+    std::vector<std::vector<Point3d>> parseAllVertices(voro::container& container);
     std::vector<std::vector<std::vector<uint> > > parseAllFaces(voro::container& container);
     std::vector<std::vector<int>> parseAdjacences(voro::container& container);
 }

@@ -73,64 +73,64 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/viewer.h \
         $$PWD/viewer/glcanvas.h \
         $$PWD/viewer/mainwindow.h \
-        $$PWD/viewer/drawable_objects/drawable_bounding_box.h \
+        $$PWD/viewer/drawable_objects/drawable_bounding_box2.h \
+        $$PWD/viewer/drawable_objects/drawable_bounding_box3.h \
         $$PWD/viewer/drawable_objects/drawable_cylinder.h \
-        $$PWD/viewer/drawable_objects/drawable_objects_container.h\
+        $$PWD/viewer/drawable_objects/drawable_mixed_objects.h \
+        $$PWD/viewer/drawable_objects/drawable_objects_container.h \
+        $$PWD/viewer/drawable_objects/drawable_point3.h \
+        $$PWD/viewer/drawable_objects/drawable_polygon2.h \
+        $$PWD/viewer/drawable_objects/drawable_segment2.h \
+        $$PWD/viewer/drawable_objects/drawable_segment3.h \
         $$PWD/viewer/drawable_objects/drawable_sphere.h \
         $$PWD/viewer/drawable_objects/drawable_plane.h \
-        $$PWD/viewer/drawable_objects/drawable_point.h \
-        $$PWD/viewer/drawable_objects/drawable_segment.h \
-        $$PWD/viewer/drawable_objects/drawable_triangle.h \
-        $$PWD/viewer/drawable_objects/drawable_mixed_objects.h \
-        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.h \
-        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.h \
-        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.h \
+        $$PWD/viewer/drawable_objects/drawable_triangle3.h \
         $$PWD/viewer/interfaces/drawable_container.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/manipulable_object.h \
         $$PWD/viewer/interfaces/pickable_object.h \
         $$PWD/viewer/interfaces/drawable_mesh.h \
+        $$PWD/viewer/opengl_objects/opengl_objects2.h \
+        $$PWD/viewer/opengl_objects/opengl_objects3.h \
+        $$PWD/viewer/utilities/loadersaver.h \
+        $$PWD/viewer/utilities/console_stream.h \
+        $$PWD/viewer/utilities/utils.h \
+        $$PWD/viewer/widgets/qclickablelabel.h \
         $$PWD/viewer/internal/drawable_mesh_drawlist_manager.h \
         $$PWD/viewer/internal/drawable_container_drawlist_manager.h \
         $$PWD/viewer/internal/drawable_object_drawlist_manager.h \
         $$PWD/viewer/internal/manipulable_object_drawlist_manager.h \
-        $$PWD/viewer/internal/submanager.h \
-        $$PWD/viewer/opengl_objects/opengl_objects.h \
-        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.h \
-        $$PWD/viewer/utilities/loadersaver.h \
-        $$PWD/viewer/utilities/console_stream.h \
-        $$PWD/viewer/utilities/utils.h \
-        $$PWD/viewer/widgets/qclickablelabel.h
+        $$PWD/viewer/internal/submanager.h
 
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
         $$PWD/viewer/mainwindow.cpp \
-        $$PWD/viewer/drawable_objects/drawable_bounding_box.cpp \
-        $$PWD/viewer/drawable_objects/drawable_cylinder.cpp \
-        $$PWD/viewer/drawable_objects/drawable_objects_container.tpp \
-        $$PWD/viewer/drawable_objects/drawable_sphere.cpp \
-        $$PWD/viewer/drawable_objects/drawable_plane.cpp \
-        $$PWD/viewer/drawable_objects/drawable_point.cpp \
-        $$PWD/viewer/drawable_objects/drawable_segment.cpp \
-        $$PWD/viewer/drawable_objects/drawable_triangle.cpp \
+        $$PWD/viewer/drawable_objects/drawable_bounding_box2.cpp \
+        $$PWD/viewer/drawable_objects/drawable_bounding_box3.cpp \
+        $$PWD/viewer/drawable_objects/drawable_cylinder.cpp	\
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.cpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_bounding_box2d.cpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_polygon2d.cpp \
-        $$PWD/viewer/drawable_objects/2d/drawable_segment2d.cpp \
+        $$PWD/viewer/drawable_objects/drawable_objects_container.tpp \
+        $$PWD/viewer/drawable_objects/drawable_plane.cpp \
+        $$PWD/viewer/drawable_objects/drawable_point3.cpp \
+        $$PWD/viewer/drawable_objects/drawable_polygon2.cpp \
+        $$PWD/viewer/drawable_objects/drawable_segment2.cpp \
+        $$PWD/viewer/drawable_objects/drawable_segment3.cpp \
+        $$PWD/viewer/drawable_objects/drawable_sphere.cpp \
+        $$PWD/viewer/drawable_objects/drawable_triangle3.cpp \
         $$PWD/viewer/interfaces/drawable_container.cpp \
         $$PWD/viewer/interfaces/drawable_mesh.cpp \
         $$PWD/viewer/interfaces/manipulable_object.cpp \
         $$PWD/viewer/interfaces/pickable_object.cpp \
-        $$PWD/viewer/internal/drawable_mesh_drawlist_manager.cpp \
-        $$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
-        $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
-        $$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp \
-        $$PWD/viewer/opengl_objects/opengl_objects.tpp \
-        $$PWD/viewer/opengl_objects/2d/opengl_objects2d.tpp \
+        $$PWD/viewer/opengl_objects/opengl_objects2.tpp \
+        $$PWD/viewer/opengl_objects/opengl_objects3.tpp \
         $$PWD/viewer/utilities/console_stream.cpp \
         $$PWD/viewer/utilities/loadersaver.cpp \
         $$PWD/viewer/utilities/utils.cpp \
-        $$PWD/viewer/widgets/qclickablelabel.cpp
+        $$PWD/viewer/widgets/qclickablelabel.cpp \
+        $$PWD/viewer/internal/drawable_mesh_drawlist_manager.cpp \
+        $$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
+        $$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
+        $$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp
 
 
     FORMS += \
@@ -145,10 +145,10 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 
     contains(DEFINES, CG3_VORO_DEFINED) {
         HEADERS += \
-            $$PWD/viewer/drawable_objects/drawable_voronoi_diagram.h
+            $$PWD/viewer/drawable_objects/drawable_voronoi_diagram3.h
 
         SOURCES += \
-            $$PWD/viewer/drawable_objects/drawable_voronoi_diagram.cpp
+            $$PWD/viewer/drawable_objects/drawable_voronoi_diagram3.cpp
     }
 
     contains(DEFINES, CG3_DCEL_DEFINED) {

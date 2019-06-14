@@ -99,7 +99,7 @@ void DrawableContainer::draw() const
     }
 }
 
-Pointd DrawableContainer::sceneCenter() const
+Point3d DrawableContainer::sceneCenter() const
 {
     return totalBoundingBox().center();
 }
@@ -109,7 +109,7 @@ double DrawableContainer::sceneRadius() const
     return totalBoundingBox().diag() / 2;
 }
 
-BoundingBox DrawableContainer::totalBoundingBox() const
+BoundingBox3 DrawableContainer::totalBoundingBox() const
 {
     return cg3::fullBoundingBoxDrawableObjects(objects, true);
 }

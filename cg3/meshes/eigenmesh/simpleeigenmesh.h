@@ -11,8 +11,8 @@
 #include <Eigen/Core>
 
 #include <cg3/meshes/mesh.h>
-#include <cg3/geometry/point.h>
-#include <cg3/geometry/bounding_box.h>
+#include <cg3/geometry/point3.h>
+#include <cg3/geometry/bounding_box3.h>
 #include <cg3/utilities/color.h>
 #include <cg3/utilities/const.h>
 #include <cg3/utilities/eigen.h>
@@ -71,22 +71,22 @@ public:
 
     unsigned int numberVertices() const;
     unsigned int numberFaces() const;
-    Pointd vertex(unsigned int i) const;
-    Pointi face(unsigned int i) const;
+    Point3d vertex(unsigned int i) const;
+    Point3i face(unsigned int i) const;
     double faceArea(unsigned int f) const;
     virtual Vec3 faceNormal(unsigned int f) const;
     virtual Vec3 vertexNormal(unsigned int v) const;
     virtual void boundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
-    virtual BoundingBox boundingBox() const;
-    Pointd barycenter() const;
+    virtual BoundingBox3 boundingBox() const;
+    Point3d barycenter() const;
 
     virtual void clear();
     virtual void resizeVertices(unsigned int nv);
     void setVertex(unsigned int i, const Eigen::VectorXd &p);
-    void setVertex(unsigned int i, const Pointd &p);
+    void setVertex(unsigned int i, const Point3d &p);
     void setVertex(unsigned int i, double x, double y, double z);
     virtual unsigned int addVertex(const Eigen::VectorXd &p);
-    virtual unsigned int addVertex(const Pointd &p);
+    virtual unsigned int addVertex(const Point3d &p);
     virtual unsigned int addVertex(double x, double y, double z);
     virtual void resizeFaces(unsigned int nf);
     void setFace(unsigned int i, const Eigen::VectorXi &f);
@@ -109,9 +109,9 @@ public:
     virtual void translate(const Vec3 &p);
     virtual void translate(const Eigen::Vector3d &p);
     virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
-    virtual void rotate(const Vec3& axis, double angle, const Pointd& centroid = Pointd());
-    virtual void scale(const BoundingBox& newBoundingBox);
-    virtual void scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox);
+    virtual void rotate(const Vec3& axis, double angle, const Point3d& centroid = Point3d());
+    virtual void scale(const BoundingBox3& newBoundingBox);
+    virtual void scale(const BoundingBox3& oldBoundingBox, const BoundingBox3& newBoundingBox);
     virtual void scale(const Vec3 &scaleFactor);
     virtual void scale(double scaleFactor);
     virtual void merge(const cg3::SimpleEigenMesh& m2);
@@ -121,18 +121,6 @@ public:
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
-
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline unsigned int getNumberVertices() const {return numberVertices();}
-    inline unsigned int getNumberFaces() const {return numberFaces();}
-    inline Pointd getVertex(unsigned int i) const {return vertex(i);}
-    inline Pointi getFace(unsigned int i) const {return face(i);}
-    inline double getFaceArea(unsigned int f) const {return faceArea(f);}
-    inline virtual Vec3 getFaceNormal(unsigned int f) const {return faceNormal(f);}
-    inline virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const {boundingBox(BBmin, BBmax);}
-    inline virtual BoundingBox getBoundingBox() const {return boundingBox();}
-    inline Pointd getBarycenter() const {return barycenter();}
-    #endif
 
 protected:
     Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> V;
@@ -202,21 +190,21 @@ inline unsigned int SimpleEigenMesh::numberFaces() const
     return F.rows();
 }
 
-inline Pointd SimpleEigenMesh::vertex(unsigned int i) const
+inline Point3d SimpleEigenMesh::vertex(unsigned int i) const
 {
     assert(i < (unsigned int)V.rows());
-    return Pointd(V(i,0), V(i,1), V(i,2));
+    return Point3d(V(i,0), V(i,1), V(i,2));
 }
 
-inline Pointi SimpleEigenMesh::face(unsigned int i) const
+inline Point3i SimpleEigenMesh::face(unsigned int i) const
 {
     assert (i < (unsigned int)F.rows());
-    return Pointi(F(i,0), F(i,1), F(i,2));
+    return Point3i(F(i,0), F(i,1), F(i,2));
 }
 
 inline double SimpleEigenMesh::faceArea(unsigned int f) const
 {
-    Pointd v1 = vertex(F(f,0));
+    Point3d v1 = vertex(F(f,0));
     return ((vertex(F(f,2)) - v1).cross(vertex(F(f,1)) - v1)).length() / 2;
 }
 
@@ -232,9 +220,9 @@ inline void SimpleEigenMesh::boundingBox(Eigen::RowVector3d& BBmin, Eigen::RowVe
     }
 }
 
-inline BoundingBox SimpleEigenMesh::boundingBox() const
+inline BoundingBox3 SimpleEigenMesh::boundingBox() const
 {
-    BoundingBox  bb;
+    BoundingBox3  bb;
     if (V.rows() > 0){
         Eigen::RowVector3d BBmin, BBmax;
         BBmin = V.colwise().minCoeff();
@@ -245,9 +233,9 @@ inline BoundingBox SimpleEigenMesh::boundingBox() const
     return bb;
 }
 
-inline Pointd SimpleEigenMesh::barycenter() const
+inline Point3d SimpleEigenMesh::barycenter() const
 {
-    Pointd bc(V.col(0).mean(), V.col(1).mean(), V.col(2).mean());
+    Point3d bc(V.col(0).mean(), V.col(1).mean(), V.col(2).mean());
     return bc;
 }
 
@@ -269,7 +257,7 @@ inline void SimpleEigenMesh::setVertex(unsigned int i, const Eigen::VectorXd& p)
     V.row(i) =  p;
 }
 
-inline void SimpleEigenMesh::setVertex(unsigned int i, const Pointd& p)
+inline void SimpleEigenMesh::setVertex(unsigned int i, const Point3d& p)
 {
     assert (i < (unsigned int)V.rows());
     V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
@@ -289,7 +277,7 @@ inline unsigned int SimpleEigenMesh::addVertex(const Eigen::VectorXd& p)
     return (unsigned int)V.rows()-1;
 }
 
-inline unsigned int SimpleEigenMesh::addVertex(const Pointd& p)
+inline unsigned int SimpleEigenMesh::addVertex(const Point3d& p)
 {
     V.conservativeResize(V.rows()+1, Eigen::NoChange);
     V(V.rows()-1, 0) = p.x(); V(V.rows()-1, 1) = p.y(); V(V.rows()-1, 2) = p.z();

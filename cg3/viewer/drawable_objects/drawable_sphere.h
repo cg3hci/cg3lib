@@ -18,14 +18,14 @@ class DrawableSphere : public Sphere, public DrawableObject
 public:
     DrawableSphere();
     DrawableSphere(
-            const Pointd& _center,
+            const Point3d& _center,
             double _radius,
             QColor color = QColor(128,128,128),
             int precision = 10);
 
     // DrawableObject interface
     void draw() const;
-    Pointd sceneCenter() const;
+    Point3d sceneCenter() const;
     double sceneRadius() const;
 
 protected:

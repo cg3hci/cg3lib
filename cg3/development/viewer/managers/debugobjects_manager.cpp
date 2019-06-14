@@ -40,7 +40,7 @@ void DebugObjectsManager::on_colorSpherePushButton_clicked()
 
 void DebugObjectsManager::on_addSpherePushButton_clicked()
 {
-    int id = mw.debugObjects.addSphere(Pointd(ui->xSphereSpinBox->value(),
+    int id = mw.debugObjects.addSphere(Point3d(ui->xSphereSpinBox->value(),
                                      ui->ySphereSpinBox->value(),
                                      ui->zSphereSpinBox->value()),
                               ui->radiusSphereSpinBox->value(),

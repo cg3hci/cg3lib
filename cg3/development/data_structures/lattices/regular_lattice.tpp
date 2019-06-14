@@ -15,7 +15,7 @@ RegularLattice3D<VT>::RegularLattice3D()
 }
 
 template<class VT>
-RegularLattice3D<VT>::RegularLattice3D(const cg3::BoundingBox &bb, double unit, bool outsideBB) :
+RegularLattice3D<VT>::RegularLattice3D(const cg3::BoundingBox3 &bb, double unit, bool outsideBB) :
     bb(bb),
     unit(unit)
 {
@@ -29,7 +29,7 @@ RegularLattice3D<VT>::RegularLattice3D(const cg3::BoundingBox &bb, double unit, 
     mresZ = bb.lengthZ() / unit;
     if (outsideBB || std::fmod(bb.lengthZ(), unit) == 0)
         mresZ++;
-    this->bb.max() = Pointd(bb.minX() + unit * (mresX-1), bb.minY() + unit * (mresY-1), bb.minZ() + unit * (mresZ-1));
+    this->bb.max() = Point3d(bb.minX() + unit * (mresX-1), bb.minY() + unit * (mresY-1), bb.minZ() + unit * (mresZ-1));
     vertexProperties.resize(mresX,mresY,mresZ);
 }
 
@@ -52,21 +52,21 @@ unsigned int RegularLattice3D<VT>::resZ() const
 }
 
 template<class VT>
-const BoundingBox &RegularLattice3D<VT>::boundingBox() const
+const BoundingBox3 &RegularLattice3D<VT>::boundingBox() const
 {
     return bb;
 }
 
 template<class VT>
-Pointd RegularLattice3D<VT>::nearestVertex(const Pointd &p) const
+Point3d RegularLattice3D<VT>::nearestVertex(const Point3d &p) const
 {
-    return cg3::Pointd(bb.getMinX() + indexOfCoordinateX(p.x())*unit,
+    return cg3::Point3d(bb.getMinX() + indexOfCoordinateX(p.x())*unit,
                        bb.getMinY() + indexOfCoordinateY(p.y())*unit,
                        bb.getMinZ() + indexOfCoordinateZ(p.z())*unit);
 }
 
 template<class VT>
-const VT &RegularLattice3D<VT>::vertexProperty(const Pointd &p) const
+const VT &RegularLattice3D<VT>::vertexProperty(const Point3d &p) const
 {
     assert(indexOfCoordinateX(p.x()) < vertexProperties.sizeX());
     assert(indexOfCoordinateY(p.y()) < vertexProperties.sizeY());
@@ -78,7 +78,7 @@ const VT &RegularLattice3D<VT>::vertexProperty(const Pointd &p) const
 }
 
 template<class VT>
-VT& RegularLattice3D<VT>::vertexProperty(const Pointd& p)
+VT& RegularLattice3D<VT>::vertexProperty(const Point3d& p)
 {
     assert(indexOfCoordinateX(p.x()) < vertexProperties.sizeX());
     assert(indexOfCoordinateY(p.y()) < vertexProperties.sizeY());
@@ -90,7 +90,7 @@ VT& RegularLattice3D<VT>::vertexProperty(const Pointd& p)
 }
 
 template<class VT>
-void RegularLattice3D<VT>::setVertexProperty(const Pointd &p, const VT &property)
+void RegularLattice3D<VT>::setVertexProperty(const Point3d &p, const VT &property)
 {
     assert(indexOfCoordinateX(p.x()) < vertexProperties.sizeX());
     assert(indexOfCoordinateY(p.y()) < vertexProperties.sizeY());
@@ -184,34 +184,34 @@ typename RegularLattice3D<VT>::ConstIterator RegularLattice3D<VT>::end() const
 }
 
 template<class VT>
-Pointd RegularLattice3D<VT>::vertex(
+Point3d RegularLattice3D<VT>::vertex(
         unsigned int i,
         unsigned int j,
         unsigned int k) const
 {
-    return cg3::Pointd(bb.minX() + i*unit,
+    return cg3::Point3d(bb.minX() + i*unit,
                        bb.minY() + j*unit,
                        bb.minZ() + k*unit);
 }
 
 template<class VT>
-Pointd RegularLattice3D<VT>::vertex(unsigned int id) const
+Point3d RegularLattice3D<VT>::vertex(unsigned int id) const
 {
-    Pointi ids = reverseIndex(id);
+    Point3i ids = reverseIndex(id);
     return vertex(ids.x(),ids.y(),ids.z());
 }
 
 template<class VT>
 VT& RegularLattice3D<VT>::property(unsigned int id)
 {
-    Pointi ids = reverseIndex(id);
+    Point3i ids = reverseIndex(id);
     return vertexProperties(ids.x(), ids.y(), ids.z());
 }
 
 template<class VT>
 const VT& RegularLattice3D<VT>::property(unsigned int id) const
 {
-    Pointi ids = reverseIndex(id);
+    Point3i ids = reverseIndex(id);
     return vertexProperties(ids.x(), ids.y(), ids.z());
 }
 
@@ -237,9 +237,9 @@ uint RegularLattice3D<VT>::indexOfCoordinateZ(double z) const
 }
 
 template<class VT>
-Pointi RegularLattice3D<VT>::reverseIndex(unsigned int id) const
+Point3i RegularLattice3D<VT>::reverseIndex(unsigned int id) const
 {
-    Pointi ids;
+    Point3i ids;
     assert(id < vertexProperties.sizeX()*vertexProperties.sizeY()*vertexProperties.sizeZ());
     ids.z() = id % vertexProperties.sizeZ();
     id/= vertexProperties.sizeZ();

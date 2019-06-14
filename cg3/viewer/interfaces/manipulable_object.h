@@ -7,7 +7,7 @@
 #ifndef CG3_MANIPULABLE_OBJECT_H
 #define CG3_MANIPULABLE_OBJECT_H
 
-#include <cg3/geometry/bounding_box.h>
+#include <cg3/geometry/bounding_box3.h>
 
 #include <QGLViewer/manipulatedFrame.h>
 #include <cg3/viewer/interfaces/drawable_object.h>
@@ -27,15 +27,15 @@ public:
 
     virtual void setDrawRelativeAxis(bool b = true) const;
 
-	virtual void setPosition(const cg3::Pointd& pos);
+	virtual void setPosition(const cg3::Point3d& pos);
 
-	virtual void setTranslation(const cg3::Pointd& pos);
+	virtual void setTranslation(const cg3::Point3d& pos);
 
     virtual const double* matrix() const;
 
-    virtual Pointd position() const;
+    virtual Point3d position() const;
 
-	virtual Pointd translation() const;
+	virtual Point3d translation() const;
 
     virtual bool grabsMouse() const;
 

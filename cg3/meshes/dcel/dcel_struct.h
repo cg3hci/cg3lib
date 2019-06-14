@@ -8,7 +8,7 @@
 #ifndef CG3_DCEL_STRUCT_H
 #define CG3_DCEL_STRUCT_H
 
-#include <cg3/geometry/bounding_box.h>
+#include <cg3/geometry/bounding_box3.h>
 #include <cg3/utilities/color.h>
 #include <cg3/meshes/mesh.h>
 #include "dcel_vertex.h"
@@ -123,7 +123,7 @@ public:
     const Vertex* vertex(unsigned int idVertex)          const;
     const HalfEdge* halfEdge(unsigned int idHalfEdge)    const;
     const Face* face(unsigned int idFace)                const;
-    BoundingBox boundingBox()                            const;
+	BoundingBox3 boundingBox()                            const;
     inline unsigned int numberVertices()        const;
     inline unsigned int numberHalfEdges()       const;
     inline unsigned int numberFaces()           const;
@@ -168,7 +168,7 @@ public:
     bool isTriangleMesh()                                   const;
     double surfaceArea()                                 const;
     double volume()                                         const;
-    Pointd barycenter()                                  const;
+    Point3d barycenter()                                  const;
     double averageHalfEdgesLength()                      const;
     bool saveOnObj(const std::string& fileNameObj) const;
     bool saveOnObj(const std::string& fileNameObj, bool saveProperties)             const;
@@ -176,7 +176,7 @@ public:
 	bool saveOnPly(const std::string& fileNamePly, bool binary, io::FileMeshMode fm) const;
     void saveOnDcelFile(const std::string& fileNameDcel)           const;
 
-    Vertex* addVertex(const Pointd& p = Pointd(), const Vec3& n = Vec3(), const Color &c = Color(128, 128, 128));
+    Vertex* addVertex(const Point3d& p = Point3d(), const Vec3& n = Vec3(), const Color &c = Color(128, 128, 128));
     HalfEdge* addHalfEdge();
     Face* addFace(const Vec3& n = Vec3(), const Color& c = Color(128,128,128));
     bool deleteVertex (Vertex* v);
@@ -191,17 +191,17 @@ public:
     void updateFaceAreas();
     void updateFaceNormals();
     void updateVertexNormals();
-    BoundingBox updateBoundingBox();
+	BoundingBox3 updateBoundingBox();
     void setColor(const Color &c);
     void scale(double scaleFactor);
     void scale(const cg3::Vec3& scaleVector);
-    void scale(const BoundingBox &newBoundingBox);
+	void scale(const BoundingBox3 &newBoundingBox);
     #ifdef CG3_WITH_EIGEN
     void rotate(const Eigen::Matrix3d& matrix);
-    void rotate(const Eigen::Matrix3d& matrix, const Pointd& centroid);
+    void rotate(const Eigen::Matrix3d& matrix, const Point3d& centroid);
     #endif
-    void rotate(const Vec3& axis, double angle, const Pointd& centroid = Pointd());
-    void rotate(double matrix[3][3], const Pointd& centroid = Pointd());
+    void rotate(const Vec3& axis, double angle, const Point3d& centroid = Point3d());
+    void rotate(double matrix[3][3], const Point3d& centroid = Point3d());
     void translate(const Vec3 &c);
     void recalculateIds();
     void resetFaceColors();
@@ -225,22 +225,6 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline const Vertex* getVertex(unsigned int v) const {return vertex(v);}
-    inline Vertex* getVertex(unsigned int v) {return vertex(v);}
-    inline const HalfEdge* getHalfEdge(unsigned int h) const {return halfEdge(h);}
-    inline HalfEdge* getHalfEdge(unsigned int h) {return halfEdge(h);}
-    inline const Face* getFace(unsigned int f) const {return face(f);}
-    inline Face* getFace(unsigned int f) {return face(f);}
-    inline BoundingBox getBoundingBox() const {return boundingBox();}
-    inline unsigned int getNumberVertices() const {return numberVertices();}
-    inline unsigned int getNumberHalfEdges() const {return numberHalfEdges();}
-    inline unsigned int getNumberFaces() const {return numberFaces();}
-    inline double getSurfaceArea() const {return surfaceArea();}
-    Pointd getBarycenter() const {return barycenter();}
-    double getAverageHalfEdgesLength() const {return averageHalfEdgesLength();}
-    #endif
-
 protected:
 
     /*************
@@ -256,7 +240,7 @@ protected:
     unsigned int            nVertices;
     unsigned int            nHalfEdges;
     unsigned int            nFaces;
-    BoundingBox             bBox;
+	BoundingBox3             bBox;
 
     /******************
     * Private Methods *

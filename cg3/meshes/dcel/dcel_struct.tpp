@@ -11,10 +11,10 @@
 #include <cg3/utilities/const.h>
 #include <cg3/io/serialize.h>
 #include <cg3/io/load_save_file.h>
-#include <cg3/geometry/transformations.h>
+#include <cg3/geometry/transformations3.h>
 
 #ifdef  CG3_CGAL_DEFINED
-#include <cg3/cgal/triangulation.h>
+#include <cg3/cgal/triangulation3.h>
 #endif //CGAL_DEFINED
 
 #ifdef  CG3_EIGENMESH_DEFINED
@@ -357,7 +357,7 @@ TemplatedDcel<V, HE, F>::face(unsigned int idFace) const
  *      \e O(1)
  */
 template <class V, class HE, class F>
-inline BoundingBox TemplatedDcel<V, HE, F>::boundingBox() const
+inline BoundingBox3 TemplatedDcel<V, HE, F>::boundingBox() const
 {
     return bBox;
 }
@@ -842,9 +842,9 @@ double TemplatedDcel<V, HE, F>::volume() const
 }
 
 template <class V, class HE, class F>
-Pointd TemplatedDcel<V, HE, F>::barycenter() const
+Point3d TemplatedDcel<V, HE, F>::barycenter() const
 {
-    Pointd bc;
+    Point3d bc;
     for (const TemplatedDcel::Vertex* v : vertexIterator()){
         bc += v->coordinate();
     }
@@ -1005,7 +1005,7 @@ void TemplatedDcel<V, HE, F>::saveOnDcelFile(
  */
 template <class V, class HE, class F>
 typename TemplatedDcel<V, HE, F>::Vertex *TemplatedDcel<V, HE, F>::addVertex(
-		const Pointd& p,
+		const Point3d& p,
 		const Vec3& n,
 		const Color& c)
 {
@@ -1422,11 +1422,11 @@ void TemplatedDcel<V, HE, F>::updateVertexNormals()
  *      \e O(numVertices)
  */
 template <class V, class HE, class F>
-BoundingBox TemplatedDcel<V, HE, F>::updateBoundingBox()
+BoundingBox3 TemplatedDcel<V, HE, F>::updateBoundingBox()
 {
     bBox.reset();
     for (const Vertex* v : vertexIterator()){
-        const Pointd& coord = v->coordinate();
+        const Point3d& coord = v->coordinate();
 
         bBox.setMinX(std::min(bBox.minX(), coord.x()));
         bBox.setMinY(std::min(bBox.minY(), coord.y()));
@@ -1456,7 +1456,7 @@ template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::scale(const Vec3& scaleVector)
 {
     for (Vertex* v : vertexIterator()){
-        Pointd p = v->coordinate();
+        Point3d p = v->coordinate();
         p *= scaleVector;
         v->setCoordinate(p);
     }
@@ -1464,12 +1464,12 @@ void TemplatedDcel<V, HE, F>::scale(const Vec3& scaleVector)
 }
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::scale(const BoundingBox& newBoundingBox)
+void TemplatedDcel<V, HE, F>::scale(const BoundingBox3& newBoundingBox)
 {
-    Pointd oldCenter = bBox.center();
-    Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = bBox.max() - bBox.min();
-    Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
+    Point3d oldCenter = bBox.center();
+    Point3d newCenter = newBoundingBox.center();
+    Point3d deltaOld = bBox.max() - bBox.min();
+    Point3d deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (Vertex* v : vertexIterator()) {
         v->setCoordinate(v->coordinate() - oldCenter);
         v->setCoordinate(v->coordinate() * (deltaNew / deltaOld));
@@ -1482,15 +1482,15 @@ void TemplatedDcel<V, HE, F>::scale(const BoundingBox& newBoundingBox)
 template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d& matrix)
 {
-    Pointd c;
+    Point3d c;
     rotate(matrix, c);
 }
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d &matrix, const Pointd& centroid)
+void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d &matrix, const Point3d& centroid)
 {
     for (Vertex* v : vertexIterator()){
-        Pointd r = v->coordinate();
+        Point3d r = v->coordinate();
         r.rotate(matrix, centroid);
         v->setCoordinate(r);
     }
@@ -1501,7 +1501,7 @@ void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d &matrix, const Pointd
 #endif
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::rotate(const Vec3& axis, double angle, const Pointd& centroid)
+void TemplatedDcel<V, HE, F>::rotate(const Vec3& axis, double angle, const Point3d& centroid)
 {
     double matrix[3][3];
     cg3::rotationMatrix(axis, angle, matrix);
@@ -1509,10 +1509,10 @@ void TemplatedDcel<V, HE, F>::rotate(const Vec3& axis, double angle, const Point
 }
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::rotate(double matrix[3][3], const Pointd& centroid)
+void TemplatedDcel<V, HE, F>::rotate(double matrix[3][3], const Point3d& centroid)
 {
     for (Vertex* v : vertexIterator()){
-        Pointd r = v->coordinate();
+        Point3d r = v->coordinate();
         r.rotate(matrix, centroid);
         v->setCoordinate(r);
         Vec3 n = v->normal();
@@ -1647,11 +1647,11 @@ unsigned int TemplatedDcel<V, HE, F>::triangulateFace(uint idf)
     else {
         // Taking all the coordinates on vectors
         HalfEdge* firstHalfEdge = *(f->incidentHalfEdgeBegin());
-        std::vector<Pointd> borderCoordinates;
-        std::vector< std::vector<Pointd> > innerBorderCoordinates;
+        std::vector<Point3d> borderCoordinates;
+        std::vector< std::vector<Point3d> > innerBorderCoordinates;
         std::map<std::pair<Vertex*, Vertex*>, HalfEdge*> verticesEdgeMap;
         std::map<std::pair<Vertex*, Vertex*>, HalfEdge*> twinsEdgeMap;
-        std::map<Pointd, Vertex*> pointsVerticesMap;
+        std::map<Point3d, Vertex*> pointsVerticesMap;
         for (HalfEdge* he : f->incidentHalfEdgeIterator()){
             borderCoordinates.push_back(he->fromVertex()->coordinate());
             std::pair<Vertex*, Vertex*> pp;
@@ -1664,7 +1664,7 @@ unsigned int TemplatedDcel<V, HE, F>::triangulateFace(uint idf)
         if (f->hasHoles()){
             innerBorderCoordinates.reserve(f->numberInnerHalfEdges());
             for (HalfEdge* he : f->innerHalfEdgeIterator()){
-                std::vector<Pointd> inner;
+                std::vector<Point3d> inner;
                 for (typename Face::IncidentHalfEdgeIterator heit = f->incidentHalfEdgeBegin(he); heit != f->incidentHalfEdgeEnd(); ++heit){
                     inner.push_back((*heit)->fromVertex()->coordinate());
                     std::pair<Vertex*, Vertex*> pp;
@@ -1678,17 +1678,17 @@ unsigned int TemplatedDcel<V, HE, F>::triangulateFace(uint idf)
 
         ///TRIANGULATION
 
-        std::vector<std::array<Pointd, 3> > triangulation = cgal::triangulate(f->normal(), borderCoordinates, innerBorderCoordinates);
+        std::vector<std::array<Point3d, 3> > triangulation = cgal::triangulate3(f->normal(), borderCoordinates, innerBorderCoordinates);
         ///
 
 
         ///RECONSTRUCTION
         for (unsigned int i = 0; i < triangulation.size(); i++) {
-            std::array<Pointd, 3> triangle = triangulation[i];
+            std::array<Point3d, 3> triangle = triangulation[i];
 
-            Pointd p1 = triangle[0];
-            Pointd p2 = triangle[1];
-            Pointd p3 = triangle[2];
+            Point3d p1 = triangle[0];
+            Point3d p2 = triangle[1];
+            Point3d p3 = triangle[2];
 
             HalfEdge* e1, *e2, *e3;
             std::pair<Vertex*, Vertex*> pp;
@@ -2216,7 +2216,7 @@ void TemplatedDcel<V, HE, F>::deserialize(std::ifstream& binaryFile)
 
         for (unsigned int i = 0; i < tmp.nVertices; i++){
             int id, heid;
-            Pointd coord; Vec3 norm; Color color;
+            Point3d coord; Vec3 norm; Color color;
             int c, f;
             cg3::deserialize(id, binaryFile);
             coord.deserialize(binaryFile);
@@ -2577,7 +2577,7 @@ void TemplatedDcel<V, HE, F>::afterLoadFile(
     std::list<Color>::const_iterator vcit = vcolor.begin();
     for (std::list<double>::const_iterator it = coords.begin(); it != coords.end(); ){
         double x = *(it++), y = *(it++), z = *(it++);
-        Pointd coord(x,y,z);
+        Point3d coord(x,y,z);
         if (first) {
             bBox.setMin(coord);
             bBox.setMax(coord);
@@ -2685,7 +2685,7 @@ void TemplatedDcel<V, HE, F>::copyFrom(const SimpleEigenMesh& eigenMesh)
 
     for (unsigned int i = 0; i < eigenMesh.numberVertices(); i++) {
 
-        Pointd coord = eigenMesh.vertex(i);
+        Point3d coord = eigenMesh.vertex(i);
 
         if (first) {
             bBox.setMin(coord);
@@ -2709,7 +2709,7 @@ void TemplatedDcel<V, HE, F>::copyFrom(const SimpleEigenMesh& eigenMesh)
     for (unsigned int i = 0; i < eigenMesh.numberFaces(); i++) {
 
         std::vector<int> nid;
-        Pointi ff = eigenMesh.face(i);
+        Point3i ff = eigenMesh.face(i);
         nid.push_back(ff.x());
         nid.push_back(ff.y());
         nid.push_back(ff.z());

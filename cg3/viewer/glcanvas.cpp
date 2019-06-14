@@ -9,7 +9,7 @@
 #include <iostream>
 
 #include "glcanvas.h"
-#include <cg3/geometry/line.h>
+#include <cg3/geometry/line3.h>
 #include <cg3/geometry/plane.h>
 #include <cg3/utilities/cg3config.h>
 #include <cg3/viewer/utilities/utils.h>
@@ -21,7 +21,7 @@ GLCanvas::GLCanvas(QWidget * parent) :
     zoomSceneFactor(3),
     backgroundColor(Qt::white),
     mode(_3D),
-    unitBox(Pointd(-1,-1,-1), Pointd(1,1,1)),
+    unitBox(Point3d(-1,-1,-1), Point3d(1,1,1)),
     unitBoxEnabled(false)
 {
     setParent(parent);
@@ -89,12 +89,12 @@ void GLCanvas::postSelection(const QPoint& point)
         if (mode == _2D){
             qglviewer::Vec orig, dir;
             camera()->convertClickToLine(point, orig, dir);
-            Line line(Pointd(orig.x, orig.y, orig.z), Vec3(dir.x, dir.y, dir.z));
+            Line3 line(Point3d(orig.x, orig.y, orig.z), Vec3(dir.x, dir.y, dir.z));
             Plane plane(Vec3(0,0,1),0);
-            Pointd inters;
+            Point3d inters;
             bool b = plane.intersection(inters, line);
             if (b) {
-                emit point2DClicked(Point2Dd(inters.x(), inters.y()));
+                emit point2DClicked(Point2d(inters.x(), inters.y()));
             }
             else {
                 QMessageBox::information(
@@ -120,9 +120,9 @@ void GLCanvas::fitScene()
     bool onlyVisible = true;
     if (sizeVisibleDrawableObjects() == 0 && drawlist.size() > 0)
         onlyVisible = false;
-    BoundingBox bb = fullBoundingBoxDrawableObjects(onlyVisible);
+    BoundingBox3 bb = fullBoundingBoxDrawableObjects(onlyVisible);
 
-    Pointd sceneCenter = bb.center();
+    Point3d sceneCenter = bb.center();
     double sceneRadius = bb.diag() / zoomSceneFactor;
 
     if (unitBoxEnabled)
@@ -134,14 +134,14 @@ void GLCanvas::fitScene()
     showEntireScene();
 }
 
-void GLCanvas::fitScene(const Pointd& center, double radius)
+void GLCanvas::fitScene(const Point3d& center, double radius)
 {
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), center.z()));
     setSceneRadius(radius);
     showEntireScene();
 }
 
-void GLCanvas::fitScene2d(const Point2Dd &center, double radius)
+void GLCanvas::fitScene2d(const Point2d &center, double radius)
 {
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), 0));
     setSceneRadius(radius);
@@ -194,10 +194,10 @@ void GLCanvas::saveSnapshot(const std::string &filename, bool overwrite)
     QGLViewer::saveSnapshot(QString::fromStdString(filename), overwrite);
 }
 
-Pointd GLCanvas::cameraPosition() const
+Point3d GLCanvas::cameraPosition() const
 {
     qglviewer::Vec p = camera()->position();
-    return cg3::Pointd(p.x, p.y, p.z);
+    return cg3::Point3d(p.x, p.y, p.z);
 }
 
 Vec3 GLCanvas::cameraDirection() const
@@ -282,7 +282,7 @@ void GLCanvas::setCameraDirection(const Vec3 &vec)
     update();
 }
 
-void GLCanvas::setCameraPosition(const Pointd &pos)
+void GLCanvas::setCameraPosition(const Point3d &pos)
 {
     qglviewer::Vec qglvec(pos.x(), pos.y(), pos.z());
     camera()->setPosition(qglvec);
@@ -335,7 +335,7 @@ unsigned int GLCanvas::sizeDrawableObjectsList() const
     return (unsigned int)drawlist.size();
 }
 
-BoundingBox GLCanvas::fullBoundingBoxDrawableObjects(bool onlyVisible) const
+BoundingBox3 GLCanvas::fullBoundingBoxDrawableObjects(bool onlyVisible) const
 {
     return cg3::fullBoundingBoxDrawableObjects(drawlist, onlyVisible);
 }

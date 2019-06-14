@@ -8,7 +8,7 @@
 #ifndef CG3_REGULAR_LATTICE_H
 #define CG3_REGULAR_LATTICE_H
 
-#include <cg3/geometry/bounding_box.h>
+#include <cg3/geometry/bounding_box3.h>
 #include <cg3/data_structures/arrays/array3d.h>
 
 namespace cg3 {
@@ -26,18 +26,18 @@ public:
     class ConstIterator;
 
     RegularLattice3D();
-    RegularLattice3D(const cg3::BoundingBox& bb, double unit, bool outsideBB = true);
+    RegularLattice3D(const cg3::BoundingBox3& bb, double unit, bool outsideBB = true);
 
     unsigned int resX() const;
     unsigned int resY() const;
     unsigned int resZ() const;
 
-    const cg3::BoundingBox& boundingBox() const;
+    const cg3::BoundingBox3& boundingBox() const;
 
-    cg3::Pointd nearestVertex(const cg3::Pointd& p) const;
-    const VT& vertexProperty(const cg3::Pointd& p) const;
-    VT& vertexProperty(const cg3::Pointd& p);
-    void setVertexProperty(const cg3::Pointd& p, const VT& property);
+    cg3::Point3d nearestVertex(const cg3::Point3d& p) const;
+    const VT& vertexProperty(const cg3::Point3d& p) const;
+    VT& vertexProperty(const cg3::Point3d& p);
+    void setVertexProperty(const cg3::Point3d& p, const VT& property);
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
@@ -56,16 +56,16 @@ public:
 
 protected:
 
-    cg3::Pointd vertex(unsigned int i, unsigned int j, unsigned int k) const;
-    cg3::Pointd vertex(unsigned int id) const;
+    cg3::Point3d vertex(unsigned int i, unsigned int j, unsigned int k) const;
+    cg3::Point3d vertex(unsigned int id) const;
     VT& property(unsigned int id);
     const VT& property(unsigned int id) const;
     uint indexOfCoordinateX(double x) const;
     uint indexOfCoordinateY(double y) const;
     uint indexOfCoordinateZ(double z) const;
-    cg3::Pointi reverseIndex(unsigned int id) const;
+    cg3::Point3i reverseIndex(unsigned int id) const;
 
-    cg3::BoundingBox bb;
+    cg3::BoundingBox3 bb;
     double unit;
     cg3::Array3D<VT> vertexProperties;
 };

@@ -14,7 +14,7 @@ namespace internal {
  * @return True if the first point is less than the other
  * (X component)
  */
-bool point2DDimensionComparatorX(const Point2Dd& o1, const Point2Dd& o2)
+bool point2DDimensionComparatorX(const Point2d& o1, const Point2d& o2)
 {
     if (o1.x() < o2.x())
         return true;
@@ -31,7 +31,7 @@ bool point2DDimensionComparatorX(const Point2Dd& o1, const Point2Dd& o2)
  * @return True if the first point is less than the other
  * (Y component)
  */
-bool point2DDimensionComparatorY(const Point2Dd& o1, const Point2Dd& o2)
+bool point2DDimensionComparatorY(const Point2d& o1, const Point2d& o2)
 {
     if (o1.y() < o2.y())
         return true;
@@ -52,7 +52,7 @@ bool point2DDimensionComparatorY(const Point2Dd& o1, const Point2Dd& o2)
  * @return True if the first point is less than the other
  * (X component)
  */
-bool point3DDimensionComparatorX(const Pointd& o1, const Pointd& o2)
+bool point3DDimensionComparatorX(const Point3d& o1, const Point3d& o2)
 {
     if (o1.x() < o2.x())
         return true;
@@ -69,7 +69,7 @@ bool point3DDimensionComparatorX(const Pointd& o1, const Pointd& o2)
  * @return True if the first point is less than the other
  * (Y component)
  */
-bool point3DDimensionComparatorY(const Pointd& o1, const Pointd& o2)
+bool point3DDimensionComparatorY(const Point3d& o1, const Point3d& o2)
 {
     if (o1.y() < o2.y())
         return true;
@@ -86,7 +86,7 @@ bool point3DDimensionComparatorY(const Pointd& o1, const Pointd& o2)
  * @return True if the first point is less than the other
  * (Z component)
  */
-bool point3DDimensionComparatorZ(const Pointd& o1, const Pointd& o2)
+bool point3DDimensionComparatorZ(const Point3d& o1, const Point3d& o2)
 {
     if (o1.z() < o2.z())
         return true;
@@ -106,10 +106,10 @@ bool point3DDimensionComparatorZ(const Pointd& o1, const Pointd& o2)
  * @brief Get the comparators for each dimension of a 2D point
  * @return Vector of comparators
  */
-std::vector<DefaultComparatorType<Point2Dd>> getComparatorsForPoint2D()
+std::vector<DefaultComparatorType<Point2d>> getComparatorsForPoint2D()
 {
     //Creating vector of comparators for each dimension
-    std::vector<DefaultComparatorType<Point2Dd>> customComparators;
+    std::vector<DefaultComparatorType<Point2d>> customComparators;
 
     customComparators.push_back(&point2DDimensionComparatorX);
     customComparators.push_back(&point2DDimensionComparatorY);
@@ -122,10 +122,10 @@ std::vector<DefaultComparatorType<Point2Dd>> getComparatorsForPoint2D()
  * @brief Get the comparators for each dimension of a 3D point
  * @return Vector of comparators
  */
-std::vector<DefaultComparatorType<Pointd>> getComparatorsForPoint3D()
+std::vector<DefaultComparatorType<Point3d>> getComparatorsForPoint3D()
 {
     //Creating vector of comparators for each dimension
-    std::vector<DefaultComparatorType<Pointd>> customComparators;
+    std::vector<DefaultComparatorType<Point3d>> customComparators;
 
     customComparators.push_back(&point3DDimensionComparatorX);
     customComparators.push_back(&point3DDimensionComparatorY);

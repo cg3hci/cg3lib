@@ -146,12 +146,12 @@ exists($$(VOROPLUSPLUS_HOME)){ #voro++ library is required
     DEFINES += CG3_VORO_DEFINED
 
     HEADERS += \
-        $$PWD/data_structures/voronoi/voronoi_cell.h \
-        $$PWD/data_structures/voronoi/voronoi_diagram.h \
+        $$PWD/data_structures/voronoi/voronoi_cell3.h \
+        $$PWD/data_structures/voronoi/voronoi_diagram3.h \
         $$PWD/data_structures/voronoi/internal/voro_parser.h
 
     SOURCES += \
-        $$PWD/data_structures/voronoi/voronoi_cell.cpp \
-        $$PWD/data_structures/voronoi/voronoi_diagram.cpp \
+        $$PWD/data_structures/voronoi/voronoi_cell3.cpp \
+        $$PWD/data_structures/voronoi/voronoi_diagram3.cpp \
         $$PWD/data_structures/voronoi/internal/voro_parser.cpp
 }

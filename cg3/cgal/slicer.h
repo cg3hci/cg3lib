@@ -8,9 +8,9 @@
 #ifndef CG3_CGAL_SLICER_H
 #define CG3_CGAL_SLICER_H
 
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 
-#include "surfacemesh.h"
+#include "surface_mesh.h"
 
 namespace cg3 {
 
@@ -18,22 +18,22 @@ class Plane;
 
 namespace cgal {
 
-std::vector<std::vector<Pointd> > polylines(
+std::vector<std::vector<Point3d> > polylines(
         const std::string& inputOffFile,
         const Vec3& norm,
         double d);
 
-std::vector<std::vector<Pointd> > polylines(
+std::vector<std::vector<Point3d> > polylines(
         const SurfaceMesh& mesh,
         const Vec3& norm,
         double d);
 
 #ifdef CG3_DCEL_DEFINED
-std::vector<std::vector<Pointd> > polylines(
+std::vector<std::vector<Point3d> > polylines(
         const Dcel& mesh,
         const cg3::Plane& p);
 
-std::vector<std::vector<Pointd> > polylines(
+std::vector<std::vector<Point3d> > polylines(
         const Dcel& mesh,
         const Vec3& norm,
         double d);

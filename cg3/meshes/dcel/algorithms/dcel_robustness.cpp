@@ -5,7 +5,7 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 #include "dcel_robustness.h"
-#include <cg3/geometry/utils3d.h>
+#include <cg3/geometry/utils3.h>
 
 bool cg3::dcelAlgorithms::isWaterTight(const cg3::Dcel& mesh)
 {

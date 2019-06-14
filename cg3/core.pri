@@ -27,50 +27,52 @@ CG3_OPENMP {
 
 #core
 HEADERS += \
-    $$PWD/cg3lib.h
+    $$PWD/cg3lib.h \
+    $$PWD/geometry/segment3.h \
+    $$PWD/geometry/triangle3.h
 
 #geometry
 HEADERS += \
-    $$PWD/geometry/bounding_box.h \
+    $$PWD/geometry/bounding_box2.h \
+    $$PWD/geometry/bounding_box3.h \
     $$PWD/geometry/cylinder.h \
-    $$PWD/geometry/line.h \
+    $$PWD/geometry/intersections2.h \
+    $$PWD/geometry/line2.h \
+    $$PWD/geometry/line3.h \
     $$PWD/geometry/plane.h \
-    $$PWD/geometry/point.h \
+    $$PWD/geometry/point2.h \
+    $$PWD/geometry/point3.h \
+    $$PWD/geometry/polygon2.h \
     $$PWD/geometry/quaternion.h \
     $$PWD/geometry/segment.h \
+    $$PWD/geometry/segment2.h \
     $$PWD/geometry/sphere.h \
-    $$PWD/geometry/transformations.h \
+    $$PWD/geometry/transformations3.h \
     $$PWD/geometry/triangle.h \
-    $$PWD/geometry/utils3d.h \
-    $$PWD/geometry/2d/bounding_box2d.h \
-    $$PWD/geometry/2d/intersections2d.h \
-    $$PWD/geometry/2d/line2d.h \
-    $$PWD/geometry/2d/point2d.h \
-    $$PWD/geometry/2d/polygon2d.h \
-    $$PWD/geometry/2d/segment2d.h \
-    $$PWD/geometry/2d/triangle2d.h \
-    $$PWD/geometry/2d/utils2d.h \
-    $$PWD/geometry/2d/triangle2d_utils.h
+    $$PWD/geometry/triangle2.h \
+    $$PWD/geometry/triangle2_utils.h \
+    $$PWD/geometry/utils2.h \
+    $$PWD/geometry/utils3.h
 
 SOURCES += \
-    $$PWD/geometry/bounding_box.tpp \
+    $$PWD/geometry/bounding_box2.tpp \
+    $$PWD/geometry/bounding_box3.tpp \
     $$PWD/geometry/cylinder.cpp \
-    $$PWD/geometry/line.cpp \
+    $$PWD/geometry/intersections2.cpp \
+    $$PWD/geometry/line2.cpp \
+    $$PWD/geometry/line3.cpp \
     $$PWD/geometry/plane.cpp \
-    $$PWD/geometry/point.tpp \
+    $$PWD/geometry/point2.tpp \
+    $$PWD/geometry/point3.tpp \
+    $$PWD/geometry/polygon2.cpp \
     $$PWD/geometry/quaternion.cpp \
     $$PWD/geometry/segment.tpp \
     $$PWD/geometry/sphere.cpp \
-    $$PWD/geometry/transformations.cpp \
+    $$PWD/geometry/transformations3.cpp \
     $$PWD/geometry/triangle.tpp \
-    $$PWD/geometry/utils3d.tpp \
-    $$PWD/geometry/2d/bounding_box2d.tpp \
-    $$PWD/geometry/2d/intersections2d.cpp \
-    $$PWD/geometry/2d/line2d.cpp \
-    $$PWD/geometry/2d/point2d.tpp \
-    $$PWD/geometry/2d/polygon2d.cpp \
-    $$PWD/geometry/2d/utils2d.tpp \
-    $$PWD/geometry/2d/triangle2d_utils.tpp
+    $$PWD/geometry/triangle2_utils.tpp \
+    $$PWD/geometry/utils2.tpp \
+    $$PWD/geometry/utils3.tpp
 
 #io
 HEADERS += \

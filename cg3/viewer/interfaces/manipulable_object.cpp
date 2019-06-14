@@ -31,12 +31,12 @@ void ManipulableObject::setDrawRelativeAxis(bool b) const
 	axis = b;
 }
 
-void ManipulableObject::setPosition(const Pointd &pos)
+void ManipulableObject::setPosition(const Point3d &pos)
 {
 	ManipulatedFrame::setPosition(qglviewer::Vec(pos.x(), pos.y(), pos.z()));
 }
 
-void ManipulableObject::setTranslation(const Pointd &pos)
+void ManipulableObject::setTranslation(const Point3d &pos)
 {
 	ManipulatedFrame::setTranslation(qglviewer::Vec(pos.x(), pos.y(), pos.z()));
 }
@@ -51,10 +51,10 @@ const double* ManipulableObject::matrix() const
  * @return the position of the center of the object Frame in
  * absolute position
  */
-Pointd ManipulableObject::position() const
+Point3d ManipulableObject::position() const
 {
     qglviewer::Vec p(ManipulatedFrame::position());
-	return Pointd(p.x, p.y, p.z);
+	return Point3d(p.x, p.y, p.z);
 }
 
 /**
@@ -62,10 +62,10 @@ Pointd ManipulableObject::position() const
  * @return the position of the center of the object Frame in
  * relative position with respect of the reference Frame.
  */
-Pointd ManipulableObject::translation() const
+Point3d ManipulableObject::translation() const
 {
 	qglviewer::Vec p(ManipulatedFrame::translation());
-	return Pointd(p.x, p.y, p.z);
+	return Point3d(p.x, p.y, p.z);
 }
 
 bool ManipulableObject::grabsMouse() const

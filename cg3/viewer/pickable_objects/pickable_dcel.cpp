@@ -64,8 +64,8 @@ void PickableDcel::draw() const
         glLineWidth(selectionWidth);
         glColor3ub(selectionColor.red(),selectionColor.green(),selectionColor.blue());
         glBegin(GL_LINES);
-        Pointd p1 = he->fromVertex()->coordinate();
-        Pointd p2 = he->toVertex()->coordinate();
+        Point3d p1 = he->fromVertex()->coordinate();
+        Point3d p2 = he->toVertex()->coordinate();
         glVertex3d(p1.x(), p1.y(), p1.z());
         glVertex3d(p2.x(), p2.y(), p2.z());
         glEnd();

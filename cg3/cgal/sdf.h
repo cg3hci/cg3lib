@@ -28,16 +28,6 @@ std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel);
 std::vector<double> SDFMap(const SimpleEigenMesh& m);
 #endif
 
-#ifdef CG3_OLD_NAMES_COMPATIBILITY
-inline std::vector<double> getSDFMap(const cgal::Polyhedron& mesh) {return SDFMap(mesh);}
-#ifdef  CG3_DCEL_DEFINED
-inline std::map<const Dcel::Face*, double> getSDFMap(const Dcel& dcel) {return SDFMap(dcel);}
-#endif
-#ifdef  CG3_EIGENMESH_DEFINED
-inline std::vector<double> getSDFMap(const SimpleEigenMesh& m) {return SDFMap(m);}
-#endif
-#endif
-
 } //namespace cg3::cgal
 } //namespace cg3
 

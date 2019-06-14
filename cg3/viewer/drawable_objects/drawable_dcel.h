@@ -35,7 +35,7 @@ public:
     // DrawableObject interface
     //
     void draw() const;
-    Pointd sceneCenter() const;
+    Point3d sceneCenter() const;
     double sceneRadius() const;
 
     void update();
@@ -77,7 +77,7 @@ protected:
     std::vector<unsigned int> trianglesFacesMap; /** \~Italian @brief vettore di mappatura triangoli->facce (ogni entrata ha posizione corrispondente a un terzo della posizione della tripla in tris e presenta l'identificativo di una faccia */
     std::vector<std::pair<unsigned int, unsigned int> > facesWireframe; /** \~Italian @brief vettore di coppie usate per renderizzare degli edge: per aggiornare utilizzare metodo update() */
 
-    std::vector<cg3::Pointd> flaggedEdges;
+    std::vector<cg3::Point3d> flaggedEdges;
 
     int facesWireframeWidth = 1;
     float facesWireframeColor[3];

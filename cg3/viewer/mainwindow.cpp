@@ -87,9 +87,9 @@ MainWindow::~MainWindow()
 /**
  * @brief Returns the sizes of the Canvas as number of pixels.
  */
-Point2Di MainWindow::canvasSize() const
+Point2i MainWindow::canvasSize() const
 {
-    return Point2Di(canvas.width(), canvas.height());
+    return Point2i(canvas.width(), canvas.height());
 }
 
 /**

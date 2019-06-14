@@ -8,7 +8,7 @@
 
 #include "plane.h"
 
-#include "line.h"
+#include "line3.h"
 #include <cg3/utilities/utils.h>
 #ifdef CG3_WITH_EIGEN
 #include <Eigen/QR>
@@ -30,7 +30,7 @@ Plane::Plane(double a, double b, double c, double d) :
     normalize();
 }
 
-Plane::Plane(const Pointd& p1, const Pointd& p2, const Pointd& p3)
+Plane::Plane(const Point3d& p1, const Point3d& p2, const Point3d& p3)
 {
     Vec3 v1 (p2 - p1);
     Vec3 v2 (p3 - p1);
@@ -75,7 +75,7 @@ void Plane::normalize()
  * @param p
  * @return true if the point lies on the plane, false otherwise
  */
-bool Plane::pointLiesOnPlane(const Pointd &p, double epsilon) const
+bool Plane::pointLiesOnPlane(const Point3d &p, double epsilon) const
 {
     double sum = _normal.x()*p.x() + _normal.y()*p.y() + _normal.z()*p.z() + _d;
     if(cg3::epsilonEqual(sum, 0.0, epsilon))
@@ -86,7 +86,7 @@ bool Plane::pointLiesOnPlane(const Pointd &p, double epsilon) const
 }
 
 #ifdef CG3_WITH_EIGEN
-bool Plane::intersection(Pointd& inters, const Line& l) const
+bool Plane::intersection(Point3d& inters, const Line3& l) const
 {
     Vec3 n(_normal);
     n.normalize();
@@ -112,7 +112,7 @@ bool Plane::intersection(Pointd& inters, const Line& l) const
 }
 #endif
 
-double Plane::pointDistance(const Pointd& p) const
+double Plane::pointDistance(const Point3d& p) const
 {
     return (_normal.dot(p - (_normal*_d)));
 }

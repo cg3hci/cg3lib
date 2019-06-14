@@ -8,7 +8,6 @@
 #define CG3_TRIANGLE_H
 
 #include "../io/serializable_object.h"
-#include "point.h"
 #include "segment.h"
 
 namespace cg3 {
@@ -52,23 +51,9 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline std::vector<T> getVertices() const {return vertices;}
-    inline std::vector<cg3::Segment<T>> getSides() const {return sides();}
-    #endif
-
 protected:
     T _v1, _v2, _v3;
 };
-
-/* ----- Common typedefs (1D, 2D, 3D double) ----- */
-
-template <class T>
-using Triangle3D = Triangle<Point<T>>;
-
-typedef Triangle3D<double> Triangle3Dd;
-typedef Triangle3D<float> Triangle3Df;
-typedef Triangle3D<int> Triangle3Di;
 
 } // namespace cg3
 

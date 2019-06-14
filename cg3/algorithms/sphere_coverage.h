@@ -9,13 +9,13 @@
 #ifndef SPHERE_COVERAGE_H
 #define SPHERE_COVERAGE_H
 
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 
 namespace cg3 {
 
-std::vector<Pointd> sphereCoverage(unsigned int nSamples = 1000, bool deterministic = true);
+std::vector<Point3d> sphereCoverage(unsigned int nSamples = 1000, bool deterministic = true);
 
-std::vector<Pointd> sphereCoverageFibonacci(unsigned int nSamples = 1000);
+std::vector<Point3d> sphereCoverageFibonacci(unsigned int nSamples = 1000);
 
 } //namespace cg3
 

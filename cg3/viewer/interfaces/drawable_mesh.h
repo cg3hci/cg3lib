@@ -24,7 +24,7 @@
 
 #include <cg3/meshes/mesh.h>
 
-#include "../opengl_objects/opengl_objects.h"
+#include "../opengl_objects/opengl_objects3.h"
 #include "drawable_object.h"
 
 namespace cg3 {
@@ -77,7 +77,7 @@ public:
 protected:
     DrawableMesh();
     virtual void draw() const = 0;
-    virtual void draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Pointd &min, const Pointd &max) const;
+    virtual void draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Point3d &min, const Point3d &max) const;
     virtual void renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const;
 
     enum {

@@ -18,27 +18,27 @@
 #include <string>
 #include <cstdlib>
 #include <map>
-#include "../geometry/point.h"
-#include "../geometry/2d/point2d.h"
+#include "../geometry/point3.h"
+#include "../geometry/point2.h"
 #include "../utilities/color.h"
 #include "const.h"
 
 namespace cg3 {
 
 namespace internal {
-    static BoundingBox dummyBB(cg3::Pointd(), cg3::Pointd(1,1,1));
+    static BoundingBox3 dummyBB(cg3::Point3d(), cg3::Point3d(1,1,1));
 }
 
 template <typename T>
 bool epsilonEqual(T x, T v, double epsilon = CG3_EPSILON);
 
 template <typename T>
-bool epsilonEqual(const Point<T> &x, const Point<T> &v, double epsilon = CG3_EPSILON);
+bool epsilonEqual(const Point3<T> &x, const Point3<T> &v, double epsilon = CG3_EPSILON);
 
 template <typename T>
-bool epsilonEqual(const Point2D<T> &x, const Point2D<T> &v, double epsilon = CG3_EPSILON);
+bool epsilonEqual(const Point2<T> &x, const Point2<T> &v, double epsilon = CG3_EPSILON);
 
-Pointd randomPoint(const BoundingBox& bb = internal::dummyBB);
+Point3d randomPoint(const BoundingBox3& bb = internal::dummyBB);
 
 Vec3 randomDirection();
 

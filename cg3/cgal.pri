@@ -118,43 +118,37 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
 
     HEADERS += \
         $$PWD/cgal/cgal.h \
-        $$PWD/cgal/2d/booleans2d.h \
-        $$PWD/cgal/2d/convexhull2d.h \
-        $$PWD/cgal/2d/minimumbbox2d.h \
-        $$PWD/cgal/2d/segmentintersections2d.h \
-        $$PWD/cgal/2d/triangulation2d.h \
-        $$PWD/cgal/2d/voronoi2d.h \
-        $$PWD/cgal/aabbtree.h \
-        $$PWD/cgal/holefilling.h \
+        $$PWD/cgal/aabb_tree3.h \
+        $$PWD/cgal/booleans2.h \
+        $$PWD/cgal/convex_hull2.h \
+        $$PWD/cgal/delaunay_triangulation3.h \
+        $$PWD/cgal/hole_filling.h \
+        $$PWD/cgal/minimum_bbox2.h \
         $$PWD/cgal/polyhedron.h \
         $$PWD/cgal/sdf.h \
-        $$PWD/cgal/signeddistances.h \
+        $$PWD/cgal/segment_intersections2.h \
         $$PWD/cgal/slicer.h \
-        $$PWD/cgal/surfacemesh.h \
-        $$PWD/cgal/triangulation.h
+        $$PWD/cgal/surface_mesh.h \
+        $$PWD/cgal/triangulation2.h \
+        $$PWD/cgal/triangulation3.h \
+        $$PWD/cgal/voronoi2.h
 
     SOURCES += \
-        $$PWD/cgal/2d/booleans2d.cpp \
-        $$PWD/cgal/2d/convexhull2d.tpp \
-        $$PWD/cgal/2d/minimumbbox2d.cpp \
-        $$PWD/cgal/2d/segmentintersections2d.cpp \
-        $$PWD/cgal/2d/triangulation2d.cpp \
-        $$PWD/cgal/2d/voronoi2d.cpp \
-        $$PWD/cgal/aabbtree.cpp \
-        $$PWD/cgal/holefilling.cpp \
+        $$PWD/cgal/aabb_tree3.cpp \
+        $$PWD/cgal/convex_hull2.tpp \
+        $$PWD/cgal/booleans2.cpp \
+        $$PWD/cgal/delaunay_triangulation3.cpp \
+        $$PWD/cgal/hole_filling.cpp \
+        $$PWD/cgal/minimum_bbox2.cpp \
         $$PWD/cgal/polyhedron.cpp \
         $$PWD/cgal/sdf.cpp \
-        $$PWD/cgal/signeddistances.cpp \
+        $$PWD/cgal/segment_intersections2.cpp \
         $$PWD/cgal/slicer.cpp \
-        $$PWD/cgal/surfacemesh.cpp \
-        $$PWD/cgal/triangulation.cpp
+        $$PWD/cgal/surface_mesh.cpp \
+        $$PWD/cgal/triangulation2.cpp \
+        $$PWD/cgal/triangulation3.cpp \
+        $$PWD/cgal/voronoi2.cpp
 }
 else {
     message(CGAL not installed properly!)
 }
-
-HEADERS += \
-    $$PWD/cgal/delaunaytriangulation.h
-
-SOURCES += \
-    $$PWD/cgal/delaunaytriangulation.cpp

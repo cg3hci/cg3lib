@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "cg3/geometry/point.h"
-#include "cg3/geometry/2d/point2d.h"
+#include "cg3/geometry/point3.h"
+#include "cg3/geometry/2d/point2.h"
 
 #include "cg3/data_structures/trees/rangetree.h"
 
@@ -13,17 +13,17 @@ namespace cg3 {
 namespace internal {
 
 /* Comparators for 2D points */
-inline bool point2DDimensionComparatorX(const Point2Dd& o1, const Point2Dd& o2);
-inline bool point2DDimensionComparatorY(const Point2Dd& o1, const Point2Dd& o2);
+inline bool point2DDimensionComparatorX(const Point2d& o1, const Point2d& o2);
+inline bool point2DDimensionComparatorY(const Point2d& o1, const Point2d& o2);
 
 /* Comparators for 3D points */
-inline bool point2DDimensionComparatorX(const Pointd& o1, const Pointd& o2);
-inline bool point2DDimensionComparatorY(const Pointd& o1, const Pointd& o2);
-inline bool point2DDimensionComparatorZ(const Pointd& o1, const Pointd& o2);
+inline bool point2DDimensionComparatorX(const Point3d& o1, const Point3d& o2);
+inline bool point2DDimensionComparatorY(const Point3d& o1, const Point3d& o2);
+inline bool point2DDimensionComparatorZ(const Point3d& o1, const Point3d& o2);
 
 /* Get vector of comparators for 2D and 3D points */
-std::vector<DefaultComparatorType<Point2Dd>> getComparatorsForPoint2D();
-std::vector<DefaultComparatorType<Pointd>> getComparatorsForPoint3D();
+std::vector<DefaultComparatorType<Point2d>> getComparatorsForPoint2D();
+std::vector<DefaultComparatorType<Point3d>> getComparatorsForPoint3D();
 
 }
 
@@ -32,23 +32,23 @@ std::vector<DefaultComparatorType<Pointd>> getComparatorsForPoint3D();
  *
  * Type T is the type of the value associated to the range tree
  */
-class RangeTree2D : public RangeTree<Point2Dd> {
+class RangeTree2D : public RangeTree<Point2d> {
 public:
     RangeTree2D()
-        : RangeTree<Point2Dd>(2, internal::getComparatorsForPoint2D()) {}
-    RangeTree2D(const std::vector<Point2Dd>& vec)
-        : RangeTree<Point2Dd>(2, vec, internal::getComparatorsForPoint2D()) {}
+        : RangeTree<Point2d>(2, internal::getComparatorsForPoint2D()) {}
+    RangeTree2D(const std::vector<Point2d>& vec)
+        : RangeTree<Point2d>(2, vec, internal::getComparatorsForPoint2D()) {}
 };
 
 /**
  * Range tree of 3D points (double components)
  */
-class RangeTree3D : public RangeTree<Pointd> {
+class RangeTree3D : public RangeTree<Point3d> {
 public:
     RangeTree3D()
-        : RangeTree<Pointd>(3, internal::getComparatorsForPoint3D()) {}
-    RangeTree3D(const std::vector<Pointd>& vec)
-        : RangeTree<Pointd>(3, vec, internal::getComparatorsForPoint3D()) {}
+        : RangeTree<Point3d>(3, internal::getComparatorsForPoint3D()) {}
+    RangeTree3D(const std::vector<Point3d>& vec)
+        : RangeTree<Point3d>(3, vec, internal::getComparatorsForPoint3D()) {}
 };
 
 }

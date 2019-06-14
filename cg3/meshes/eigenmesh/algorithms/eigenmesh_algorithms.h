@@ -15,12 +15,12 @@ namespace cg3 {
 class EigenMeshAlgorithms
 {
 public:
-    static SimpleEigenMesh makeBox(const BoundingBox &bb, double minimumEdge = -1);
-    static SimpleEigenMesh makeBox(const Pointd &min, const Pointd &max, double minimumEdge = -1);
+    static SimpleEigenMesh makeBox(const BoundingBox3 &bb, double minimumEdge = -1);
+    static SimpleEigenMesh makeBox(const Point3d &min, const Point3d &max, double minimumEdge = -1);
 
-    static SimpleEigenMesh makeSphere(const Pointd& center, float radius, unsigned nLatitude = 20);
+    static SimpleEigenMesh makeSphere(const Point3d& center, float radius, unsigned nLatitude = 20);
 
-    static SimpleEigenMesh makeCylinder(const Pointd& p1, const Pointd& p2, float radius, unsigned int subd = 10);
+    static SimpleEigenMesh makeCylinder(const Point3d& p1, const Point3d& p2, float radius, unsigned int subd = 10);
 
     static bool isABox(const SimpleEigenMesh& mesh);
 
@@ -30,9 +30,9 @@ public:
     static Eigen::Matrix<bool, Eigen::Dynamic, 1> dummyEigenVectorXb;
 };
 
-inline SimpleEigenMesh EigenMeshAlgorithms::makeBox(const Pointd &min, const Pointd &max, double minimumEdge)
+inline SimpleEigenMesh EigenMeshAlgorithms::makeBox(const Point3d &min, const Point3d &max, double minimumEdge)
 {
-    return makeBox(BoundingBox(min, max), minimumEdge);
+    return makeBox(BoundingBox3(min, max), minimumEdge);
 }
 
 } //namespace cg3

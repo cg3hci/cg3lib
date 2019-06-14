@@ -9,12 +9,12 @@
 #ifndef CG3_PLANE_H
 #define CG3_PLANE_H
 
-#include "point.h"
+#include "point3.h"
 #include <cg3/utilities/const.h>
 
 namespace cg3 {
 
-class Line;
+class Line3;
 
 /**
  * @ingroup cg3core
@@ -26,7 +26,7 @@ class Plane : public SerializableObject
 public:
     Plane(const Vec3& normal, double d);
     Plane(double a, double b, double c, double d);
-    Plane(const Pointd &p1, const Pointd &p2, const Pointd &p3);
+    Plane(const Point3d &p1, const Point3d &p2, const Point3d &p3);
 
     double a() const;
     double b() const;
@@ -36,26 +36,15 @@ public:
 
     void normalize();
 
-    bool pointLiesOnPlane(const Pointd& p, double epsilon = cg3::CG3_EPSILON) const;
+    bool pointLiesOnPlane(const Point3d& p, double epsilon = cg3::CG3_EPSILON) const;
     #ifdef CG3_WITH_EIGEN
-    bool intersection(Pointd& inters, const Line &l) const;
+    bool intersection(Point3d& inters, const Line3 &l) const;
     #endif
-    double pointDistance(const Pointd& p) const;
+    double pointDistance(const Point3d& p) const;
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
-
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline double getA() const {return a();}
-    inline double getB() const {return b();}
-    inline double getC() const {return c();}
-    inline double getD() const {return d();}
-    inline Vec3 getNormal() const {return normal();}
-    #ifdef CG3_WITH_EIGEN
-    inline bool getIntersection(Pointd& i, const Line &l) const {return intersection(i, l);}
-    #endif
-    #endif
 
 protected:
     Vec3 _normal;

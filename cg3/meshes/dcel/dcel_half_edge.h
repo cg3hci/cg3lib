@@ -137,24 +137,6 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline unsigned int getId() const {return id();}
-    inline int getFlag() const {return flag();}
-    inline const Vertex* getFromVertex() const {return fromVertex();}
-    inline const Vertex* getToVertex() const {return toVertex();}
-    inline const HalfEdge* getTwin() const {return twin();}
-    inline const HalfEdge* getPrev() const {return prev();}
-    inline const HalfEdge* getNext() const {return next();}
-    inline const Face* getFace() const {return face();}
-    inline Vertex* getFromVertex() {return fromVertex();}
-    inline Vertex* getToVertex() {return toVertex();}
-    inline HalfEdge* getTwin() {return twin();}
-    inline HalfEdge* getPrev() {return prev();}
-    inline HalfEdge* getNext() {return next();}
-    inline Face* getFace() {return face();}
-    inline float getLength() const {return length();}
-    #endif
-
 protected:
 
     /***************

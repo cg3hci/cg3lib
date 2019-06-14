@@ -5,7 +5,7 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 #include "drawable_cylinder.h"
-#include "../opengl_objects/opengl_objects.h"
+#include "../opengl_objects/opengl_objects3.h"
 
 #ifdef _WIN32
 #undef min
@@ -23,8 +23,8 @@ DrawableCylinder::DrawableCylinder() :
 }
 
 DrawableCylinder::DrawableCylinder(
-        const Pointd &a,
-        const Pointd &b,
+        const Point3d &a,
+        const Point3d &b,
         double radius,
         QColor color,
         unsigned int slices,
@@ -41,7 +41,7 @@ void DrawableCylinder::draw() const
     opengl::drawCylinder(a, b, _radius, _radius, color, slices, stacks);
 }
 
-Pointd DrawableCylinder::sceneCenter() const
+Point3d DrawableCylinder::sceneCenter() const
 {
     return (a+b)/2;
 }

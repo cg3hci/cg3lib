@@ -18,13 +18,13 @@ Sphere::Sphere() :
 {
 }
 
-Sphere::Sphere(const Pointd &center, double radius) :
+Sphere::Sphere(const Point3d &center, double radius) :
     _center(center),
     _radius(radius)
 {
 }
 
-const Pointd& Sphere::center() const
+const Point3d& Sphere::center() const
 {
     return _center;
 }
@@ -54,7 +54,7 @@ double Sphere::volume() const
     return (4/3) * M_PI * _radius * _radius * _radius;
 }
 
-void Sphere::setCenter(const Pointd &center)
+void Sphere::setCenter(const Point3d &center)
 {
     _center = center;
 }

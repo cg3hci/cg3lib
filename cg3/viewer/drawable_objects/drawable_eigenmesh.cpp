@@ -36,12 +36,12 @@ void DrawableEigenMesh::draw() const
     DrawableMesh::draw(V.rows(), F.rows(), V.data(), F.data(), NV.data(), CV.data(), NF.data(), CF.data(), bb.min(), bb.max());
 }
 
-Pointd DrawableEigenMesh::sceneCenter() const
+Point3d DrawableEigenMesh::sceneCenter() const
 {
     if (bb.isValid())
         return bb.center();
     else
-        return Pointd();
+        return Point3d();
 }
 
 double DrawableEigenMesh::sceneRadius() const

@@ -8,7 +8,7 @@
 #ifndef CG3_COMPARATORS_H
 #define CG3_COMPARATORS_H
 
-#include "../geometry/point.h"
+#include "../geometry/point3.h"
 
 namespace cg3 {
 
@@ -92,7 +92,7 @@ struct cmpUnorderedStdPair
 template <class T>
 struct cmpPointY
 {
-    bool operator()(const Point<T>& a, const Point<T>& b) const
+    bool operator()(const Point3<T>& a, const Point3<T>& b) const
     {
         if (a == b) return false;
         if (a.y() == b.y() && a.x() == b.x()) return (a.z() < b.z());
@@ -117,7 +117,7 @@ struct cmpPointY
 template <class T>
 struct cmpPointZ
 {
-    bool operator()(const Point<T>& a, const Point<T>& b) const
+    bool operator()(const Point3<T>& a, const Point3<T>& b) const
     {
         if (a == b) return false;
         if (a.z() == b.z() && a.x() == b.x()) return (a.y() < b.y());

@@ -9,7 +9,7 @@
 #define CG3_DCEL_FACE_H
 
 #include "dcel_half_edge.h"
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 #include <cg3/utilities/color.h>
 
 namespace cg3 {
@@ -178,7 +178,7 @@ public:
     bool isIncidentTo(const Vertex* v)                                        const;
     int numberIncidentVertices()                                                 const;
     int numberIncidentHalfEdges()                                                const;
-    Pointd barycenter()                                                          const;
+    Point3d barycenter()                                                          const;
     #ifdef CG3_CGAL_DEFINED
     void triangulation(
             std::vector<std::array<const Vertex*, 3> >& triangles)            const;
@@ -240,29 +240,6 @@ public:
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
-
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline unsigned int getId() const {return id();}
-    inline const Vertex* getVertex1() const {return vertex1();}
-    inline const Vertex* getVertex2() const {return vertex2();}
-    inline const Vertex* getVertex3() const {return vertex3();}
-    inline Vertex* getVertex1() {return vertex1();}
-    inline Vertex* getVertex2() {return vertex2();}
-    inline Vertex* getVertex3() {return vertex3();}
-    inline int getFlag() const {return flag();}
-    inline Vec3 getNormal() const {return normal();}
-    inline double getArea() const {return area();}
-    inline Color getColor() const {return color();}
-    inline const HalfEdge* getOuterHalfEdge() const {return outerHalfEdge();}
-    inline HalfEdge* getOuterHalfEdge() {return outerHalfEdge();}
-    inline unsigned int getNumberInnerHalfEdges() const {return numberInnerHalfEdges();}
-    inline int getNumberIncidentVertices() const {return numberIncidentVertices();}
-    inline int getNumberIncidentHalfEdges() const {return numberIncidentHalfEdges();}
-    inline Pointd getBarycenter() const {return barycenter();}
-    #ifdef CG3_CGAL_DEFINED
-    inline void getTriangulation(std::vector<std::array<const Vertex*, 3> >& t) const {return triangulation(t);}
-    #endif
-    #endif
 
 protected:
 

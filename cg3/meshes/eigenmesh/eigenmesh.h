@@ -61,7 +61,7 @@ public:
     virtual unsigned int addFace(const Eigen::VectorXi &f);
     virtual unsigned int addFace(unsigned int t1, unsigned int t2, unsigned int t3);
     virtual unsigned int addVertex(const Eigen::VectorXd &p);
-    virtual unsigned int addVertex(const Pointd &p);
+    virtual unsigned int addVertex(const Point3d &p);
     virtual unsigned int addVertex(double x, double y, double z);
     virtual void removeFace(unsigned int f);
     virtual bool loadFromObj(const std::string &filename);
@@ -78,12 +78,12 @@ public:
     Color faceColor(unsigned int f) const;
     Color vertexColor(unsigned int v) const;
     virtual void boundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
-    virtual BoundingBox boundingBox() const;
-    virtual void translate(const Pointd &p);
+    virtual BoundingBox3 boundingBox() const;
+    virtual void translate(const Point3d &p);
     virtual void translate(const Eigen::Vector3d &p);
     virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
-    virtual void scale(const BoundingBox& newBoundingBox);
-    virtual void scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox);
+    virtual void scale(const BoundingBox3& newBoundingBox);
+    virtual void scale(const BoundingBox3& oldBoundingBox, const BoundingBox3& newBoundingBox);
     virtual void scale(const Vec3 &scaleFactor);
     Eigen::MatrixXf verticesColorMatrix() const;
     Eigen::MatrixXf facesColorMatrix() const;
@@ -108,17 +108,6 @@ public:
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);
 
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline Vec3 getFaceNormal(unsigned int f) const {return faceNormal(f);}
-    inline Vec3 getVertexNormal(unsigned int v) const {return vertexNormal(v);}
-    inline Color getFaceColor(unsigned int f) const {return faceColor(f);}
-    inline Color getVertexColor(unsigned int v) const {return vertexColor(v);}
-    inline virtual void getBoundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const {boundingBox(BBmin, BBmax);}
-    inline virtual BoundingBox getBoundingBox() const {return boundingBox();}
-    inline Eigen::MatrixXf getVerticesColorMatrix() const {return verticesColorMatrix();}
-    inline std::pair<int, int> getCommonVertices(unsigned int f1, unsigned int f2) const {return commonVertices(f1, f2);}
-    #endif
-
 protected:
 
     void updateFaceColorsSize();
@@ -126,7 +115,7 @@ protected:
     void updateColorSizes();
 
     //Eigen::RowVector3d BBmin, BBmax;
-    BoundingBox bb;
+    BoundingBox3 bb;
     Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> NV;
     Eigen::Matrix<double, Eigen::Dynamic, 3, Eigen::RowMajor> NF;
     Eigen::Matrix<float, Eigen::Dynamic, 3, Eigen::RowMajor> CV;
@@ -247,7 +236,7 @@ inline unsigned int EigenMesh::addVertex(const Eigen::VectorXd& p)
     return (unsigned int)V.rows()-1;
 }
 
-inline unsigned int EigenMesh::addVertex(const Pointd &p)
+inline unsigned int EigenMesh::addVertex(const Point3d &p)
 {
     SimpleEigenMesh::addVertex(p);
     NV.conservativeResize(V.rows(), Eigen::NoChange);

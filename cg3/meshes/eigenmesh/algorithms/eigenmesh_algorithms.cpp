@@ -7,15 +7,15 @@
 
 #include "eigenmesh_algorithms.h"
 #include <cg3/utilities/utils.h>
-#include <cg3/geometry/transformations.h>
+#include <cg3/geometry/transformations3.h>
 
 namespace cg3 {
 
-SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minimumEdge)
+SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox3& bb, double minimumEdge)
 {
     SimpleEigenMesh box;
     if (minimumEdge <= 0) {
-        std::vector<Pointd> extremes;
+        std::vector<Point3d> extremes;
         bb.extremes(extremes);
         box.resizeVertices(8);
         for (unsigned int i = 0; i < 8; i++){
@@ -45,7 +45,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         double edgeLengthY = bb.lengthY() / nSubdY;
         double edgeLengthZ = bb.lengthZ() / nSubdZ;
         //creation vertices
-        std::map<Pointi, Pointd> vertices;
+        std::map<Point3i, Point3d> vertices;
         double x, y, z;
         unsigned int i, j , k;
 
@@ -55,8 +55,8 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         for (i = 0; i <= nSubdX; i++){
             y = bb.minY();
             for (j = 0; j <= nSubdY; j++){
-                Pointi pi(i,j,k);
-                Pointd pd(x,y,z);
+                Point3i pi(i,j,k);
+                Point3d pd(x,y,z);
                 vertices[pi] = pd;
                 y+=edgeLengthY;
             }
@@ -68,8 +68,8 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         for (i = 0; i <= nSubdX; i++){
             y = bb.minY();
             for (j = 0; j <= nSubdY; j++){
-                Pointi pi(i,j,k);
-                Pointd pd(x,y,z);
+                Point3i pi(i,j,k);
+                Point3d pd(x,y,z);
                 vertices[pi] = pd;
                 y+=edgeLengthY;
             }
@@ -81,8 +81,8 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         for (i = 0; i <= nSubdX; i++){
             z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
-                Pointi pi(i,j,k);
-                Pointd pd(x,y,z);
+                Point3i pi(i,j,k);
+                Point3d pd(x,y,z);
                 vertices[pi] = pd;
                 z+=edgeLengthZ;
             }
@@ -94,8 +94,8 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         for (i = 0; i <= nSubdX; i++){
             z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
-                Pointi pi(i,j,k);
-                Pointd pd(x,y,z);
+                Point3i pi(i,j,k);
+                Point3d pd(x,y,z);
                 vertices[pi] = pd;
                 z+=edgeLengthZ;
             }
@@ -107,8 +107,8 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         for (j = 0; j <= nSubdY; j++){
             z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
-                Pointi pi(i,j,k);
-                Pointd pd(x,y,z);
+                Point3i pi(i,j,k);
+                Point3d pd(x,y,z);
                 vertices[pi] = pd;
                 z+=edgeLengthZ;
             }
@@ -120,18 +120,18 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         for (j = 0; j <= nSubdY; j++){
             z = bb.minZ();
             for (k = 0; k <= nSubdZ; k++){
-                Pointi pi(i,j,k);
-                Pointd pd(x,y,z);
+                Point3i pi(i,j,k);
+                Point3d pd(x,y,z);
                 vertices[pi] = pd;
                 z+=edgeLengthZ;
             }
             y+=edgeLengthY;
         }
 
-        std::map<Pointi, int> indices;
+        std::map<Point3i, int> indices;
         int index = 0;
         box.resizeVertices((unsigned int)vertices.size());
-        for (std::pair<Pointi, Pointd> pair : vertices) {
+        for (std::pair<Point3i, Point3d> pair : vertices) {
             indices[pair.first] = index;
             box.setVertex(index, pair.second.x(), pair.second.y(), pair.second.z());
             index++;
@@ -143,10 +143,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         k = 0;
         for (i = 0; i < nSubdX; i++){
             for (j = 0; j < nSubdY; j++){
-                Pointi pi1(i,j,k);
-                Pointi pi2(i+1,j,k);
-                Pointi pi3(i+1,j+1,k);
-                Pointi pi4(i,j+1,k);
+                Point3i pi1(i,j,k);
+                Point3i pi2(i+1,j,k);
+                Point3i pi3(i+1,j+1,k);
+                Point3i pi4(i,j+1,k);
                 assert(indices.find(pi1) != indices.end());
                 assert(indices.find(pi2) != indices.end());
                 assert(indices.find(pi3) != indices.end());
@@ -160,10 +160,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         k = nSubdZ;
         for (i = 0; i < nSubdX; i++){
             for (j = 0; j < nSubdY; j++){
-                Pointi pi1(i,j,k);
-                Pointi pi2(i+1,j,k);
-                Pointi pi3(i+1,j+1,k);
-                Pointi pi4(i,j+1,k);
+                Point3i pi1(i,j,k);
+                Point3i pi2(i+1,j,k);
+                Point3i pi3(i+1,j+1,k);
+                Point3i pi4(i,j+1,k);
                 assert(indices.find(pi1) != indices.end());
                 assert(indices.find(pi2) != indices.end());
                 assert(indices.find(pi3) != indices.end());
@@ -177,10 +177,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         j = 0;
         for (i = 0; i < nSubdX; i++){
             for (k = 0; k < nSubdZ; k++){
-                Pointi pi1(i,j,k);
-                Pointi pi2(i+1,j,k);
-                Pointi pi3(i+1,j,k+1);
-                Pointi pi4(i,j,k+1);
+                Point3i pi1(i,j,k);
+                Point3i pi2(i+1,j,k);
+                Point3i pi3(i+1,j,k+1);
+                Point3i pi4(i,j,k+1);
                 assert(indices.find(pi1) != indices.end());
                 assert(indices.find(pi2) != indices.end());
                 assert(indices.find(pi3) != indices.end());
@@ -194,10 +194,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         j = nSubdY;
         for (i = 0; i < nSubdX; i++){
             for (k = 0; k < nSubdZ; k++){
-                Pointi pi1(i,j,k);
-                Pointi pi2(i+1,j,k);
-                Pointi pi3(i+1,j,k+1);
-                Pointi pi4(i,j,k+1);
+                Point3i pi1(i,j,k);
+                Point3i pi2(i+1,j,k);
+                Point3i pi3(i+1,j,k+1);
+                Point3i pi4(i,j,k+1);
                 assert(indices.find(pi1) != indices.end());
                 assert(indices.find(pi2) != indices.end());
                 assert(indices.find(pi3) != indices.end());
@@ -211,10 +211,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         i = 0;
         for (j = 0; j < nSubdY; j++){
             for (k = 0; k < nSubdZ; k++){
-                Pointi pi1(i,j,k);
-                Pointi pi2(i,j+1,k);
-                Pointi pi3(i,j+1,k+1);
-                Pointi pi4(i,j,k+1);
+                Point3i pi1(i,j,k);
+                Point3i pi2(i,j+1,k);
+                Point3i pi3(i,j+1,k+1);
+                Point3i pi4(i,j,k+1);
                 assert(indices.find(pi1) != indices.end());
                 assert(indices.find(pi2) != indices.end());
                 assert(indices.find(pi3) != indices.end());
@@ -228,10 +228,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
         i = nSubdX;
         for (j = 0; j < nSubdY; j++){
             for (k = 0; k < nSubdZ; k++){
-                Pointi pi1(i,j,k);
-                Pointi pi2(i,j+1,k);
-                Pointi pi3(i,j+1,k+1);
-                Pointi pi4(i,j,k+1);
+                Point3i pi1(i,j,k);
+                Point3i pi2(i,j+1,k);
+                Point3i pi3(i,j+1,k+1);
+                Point3i pi4(i,j,k+1);
                 assert(indices.find(pi1) != indices.end());
                 assert(indices.find(pi2) != indices.end());
                 assert(indices.find(pi3) != indices.end());
@@ -254,7 +254,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox& bb, double minim
  * @return
  */
 SimpleEigenMesh EigenMeshAlgorithms::makeSphere(
-        const Pointd &center,
+        const Point3d &center,
         float radius,
         unsigned nLatitude)
 {
@@ -311,8 +311,8 @@ SimpleEigenMesh EigenMeshAlgorithms::makeSphere(
 }
 
 SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(
-        const Pointd &p1,
-        const Pointd &p2,
+        const Point3d &p1,
+        const Point3d &p2,
         float radius,
         unsigned int subd)
 {

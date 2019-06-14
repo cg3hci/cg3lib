@@ -10,7 +10,7 @@
 #define CG3_DRAWABLE_OBJECT_H
 
 #include <float.h>
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 
 #ifdef CG3_VIEWER_DEFINED
 namespace cg3 {
@@ -59,7 +59,7 @@ public :
     virtual void  draw() const = 0; /**< @brief This member function must draw the object through OpenGL calls.
                                                 It will be called at every frame by the canvas. */
 
-    virtual Pointd sceneCenter() const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
+    virtual Point3d sceneCenter() const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.
                                                         It must return the position of the center of the object. */
 
     virtual double sceneRadius() const = 0; /**< @brief This member function is used to find a good camera position to visualize the rendered object.

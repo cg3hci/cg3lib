@@ -8,7 +8,7 @@
 #include "simpleeigenmesh.h"
 
 #include <cg3/io/load_save_file.h>
-#include <cg3/geometry/transformations.h>
+#include <cg3/geometry/transformations3.h>
 
 #ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
@@ -31,7 +31,7 @@ SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel)
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
         vids[v->id()] = i;
-        Pointd p = v->coordinate();
+        Point3d p = v->coordinate();
         V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
         i++;
     }
@@ -61,7 +61,7 @@ SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh)
 
 Vec3 SimpleEigenMesh::faceNormal(unsigned int f) const
 {
-    Pointi vertices = face(f);
+    Point3i vertices = face(f);
     Vec3 normal = (vertex(vertices.y()) - vertex(vertices.x())).cross(vertex(vertices.z()) - vertex(vertices.x()));
     normal.normalize();
     return normal;
@@ -161,22 +161,22 @@ void SimpleEigenMesh::rotate(const Eigen::Matrix3d& m, const Eigen::Vector3d& ce
     V.rowwise() += centroid.transpose();
 }
 
-void SimpleEigenMesh::rotate(const Vec3& axis, double angle, const Pointd& centroid)
+void SimpleEigenMesh::rotate(const Vec3& axis, double angle, const Point3d& centroid)
 {
     Eigen::Vector3d c;
     c << centroid.x(), centroid.y(), centroid.z();
     rotate(cg3::rotationMatrix(axis, angle), c);
 }
 
-void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox)
+void SimpleEigenMesh::scale(const BoundingBox3& newBoundingBox)
 {
-    BoundingBox bb = boundingBox();
-    Pointd oldCenter = bb.center();
-    Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = bb.max() - bb.min();
-    Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
+    BoundingBox3 bb = boundingBox();
+    Point3d oldCenter = bb.center();
+    Point3d newCenter = newBoundingBox.center();
+    Point3d deltaOld = bb.max() - bb.min();
+    Point3d deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (int i = 0; i < V.rows(); i++){
-        Pointd coord = vertex(i);
+        Point3d coord = vertex(i);
         coord -= oldCenter;
         coord *= deltaNew / deltaOld;
         coord += newCenter;
@@ -184,14 +184,14 @@ void SimpleEigenMesh::scale(const BoundingBox& newBoundingBox)
     }
 }
 
-void SimpleEigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox)
+void SimpleEigenMesh::scale(const BoundingBox3& oldBoundingBox, const BoundingBox3& newBoundingBox)
 {
-    Pointd oldCenter = oldBoundingBox.center();
-    Pointd newCenter = newBoundingBox.center();
-    Pointd deltaOld = oldBoundingBox.max() - oldBoundingBox.min();
-    Pointd deltaNew = newBoundingBox.max() - newBoundingBox.min();
+    Point3d oldCenter = oldBoundingBox.center();
+    Point3d newCenter = newBoundingBox.center();
+    Point3d deltaOld = oldBoundingBox.max() - oldBoundingBox.min();
+    Point3d deltaNew = newBoundingBox.max() - newBoundingBox.min();
     for (int i = 0; i < V.rows(); i++){
-        Pointd coord = vertex(i);
+        Point3d coord = vertex(i);
         coord -= oldCenter;
         coord *= deltaNew / deltaOld;
         coord += newCenter;
@@ -237,7 +237,7 @@ void SimpleEigenMesh::merge(SimpleEigenMesh &result, const SimpleEigenMesh& m1, 
     result.F = m1.F;
     int start = m1.numberVertices();
     for (unsigned int i = 0; i < m2.numberFaces(); i++){
-        Pointi fi =m2.face(i);
+        Point3i fi =m2.face(i);
         result.addFace(fi.x()+start, fi.y()+start, fi.z()+start);
     }
 }
@@ -251,7 +251,7 @@ SimpleEigenMesh SimpleEigenMesh::merge(const SimpleEigenMesh& m1, const SimpleEi
     result.F = m1.F;
     int start = m1.numberVertices();
     for (unsigned int i = 0; i < m2.numberFaces(); i++){
-        Pointi fi =m2.face(i);
+        Point3i fi =m2.face(i);
         result.addFace(fi.x()+start, fi.y()+start, fi.z()+start);
     }
     return result;

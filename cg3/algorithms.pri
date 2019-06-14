@@ -14,17 +14,17 @@ DEFINES += CG3_ALGORITHMS_DEFINED
 MODULES += CG3_ALGORITHMS
 
 HEADERS += \
-    $$PWD/algorithms/convexhull.h \
-    $$PWD/algorithms/2d/convexhull2d.h \
-    $$PWD/algorithms/2d/convexhull2d_incremental.h \
+    $$PWD/algorithms/convex_hull2.h \
+    $$PWD/algorithms/convex_hull2_incremental.h \
+    $$PWD/algorithms/convex_hull3.h \
     $$PWD/algorithms/graph_algorithms.h \
     $$PWD/algorithms/sphere_coverage.h \
     $$PWD/algorithms/global_optimal_rotation_matrix.h
 
 SOURCES += \
-    $$PWD/algorithms/convexhull.tpp \
-    $$PWD/algorithms/2d/convexhull2d.tpp  \
-    $$PWD/algorithms/2d/convexhull2d_incremental.tpp \
+    $$PWD/algorithms/convex_hull2.tpp \
+    $$PWD/algorithms/convex_hull2_incremental.tpp \
+    $$PWD/algorithms/convex_hull3.tpp \
     $$PWD/algorithms/graph_algorithms.tpp \
     $$PWD/algorithms/sphere_coverage.tpp \
     $$PWD/algorithms/global_optimal_rotation_matrix.cpp

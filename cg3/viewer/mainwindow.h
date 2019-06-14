@@ -76,7 +76,7 @@ public:
     ~MainWindow();
 
     //Canvas:
-    cg3::Point2Di canvasSize() const;
+    cg3::Point2i canvasSize() const;
 
     //DrawableObjects for the Canvas
     void pushDrawableObject(

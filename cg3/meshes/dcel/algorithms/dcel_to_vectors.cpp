@@ -32,7 +32,7 @@ void dcelAlgorithms::vectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
 }
 
 void dcelAlgorithms::vectorMesh(
-        std::vector<Pointd>& coords,
+        std::vector<Point3d>& coords,
         std::vector<std::vector<int> >& faces,
         const Dcel& d,
         std::vector<const Dcel::Vertex*>& mappingVertices,

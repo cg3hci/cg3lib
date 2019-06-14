@@ -7,7 +7,7 @@
 #ifndef CG3_QUATERNION_H
 #define CG3_QUATERNION_H
 
-#include "point.h"
+#include "point3.h"
 
 namespace cg3 {
 

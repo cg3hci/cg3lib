@@ -67,7 +67,7 @@ EigenMesh::EigenMesh(const Dcel& dcel)
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
         vids[v->id()] = i;
-        Pointd p = v->coordinate();
+        Point3d p = v->coordinate();
         Vec3 n = v->normal();
         n.normalize();
         V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
@@ -189,12 +189,12 @@ void EigenMesh::setVertexNormal(const Vec3 &n, unsigned int v)
     NV.row(v) << n.x(), n.y(), n.z();
 }
 
-BoundingBox EigenMesh::boundingBox() const
+BoundingBox3 EigenMesh::boundingBox() const
 {
     return bb;
 }
 
-void EigenMesh::translate(const Pointd &p)
+void EigenMesh::translate(const Point3d &p)
 {
     SimpleEigenMesh::translate(p);
     updateBoundingBox();
@@ -218,13 +218,13 @@ void EigenMesh::rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d &centroid
     }
 }
 
-void EigenMesh::scale(const BoundingBox& newBoundingBox)
+void EigenMesh::scale(const BoundingBox3& newBoundingBox)
 {
     SimpleEigenMesh::scale(newBoundingBox);
     bb = newBoundingBox;
 }
 
-void EigenMesh::scale(const BoundingBox& oldBoundingBox, const BoundingBox& newBoundingBox)
+void EigenMesh::scale(const BoundingBox3& oldBoundingBox, const BoundingBox3& newBoundingBox)
 {
     SimpleEigenMesh::scale(oldBoundingBox, newBoundingBox);
     bb = newBoundingBox;
@@ -255,8 +255,8 @@ void EigenMesh::updateFaceNormals()
     for(int i = 0; i < nf; i++) {
         const Eigen::Matrix<double, 1, 3, Eigen::RowMajor> v1 = V.row(F(i,1)) - V.row(F(i,0));
         const Eigen::Matrix<double, 1, 3, Eigen::RowMajor> v2 = V.row(F(i,2)) - V.row(F(i,0));
-        Pointd p1(v1(0,0),v1(0,1),v1(0,2));
-        Pointd p = p1.cross(Pointd(v2(0,0),v2(0,1),v2(0,2)));
+        Point3d p1(v1(0,0),v1(0,1),v1(0,2));
+        Point3d p = p1.cross(Point3d(v2(0,0),v2(0,1),v2(0,2)));
         //NF.row(i) = v1.cross(v2);//.normalized(); //eigen probelm
         NF(i,0) = p.x(); NF(i,1) = p.y(); NF(i,2) = p.z();
         double r = NF.row(i).norm();
@@ -391,7 +391,7 @@ EigenMesh& EigenMesh::operator=(const Dcel& dcel)
     for (Dcel::ConstVertexIterator vit = dcel.vertexBegin(); vit != dcel.vertexEnd(); ++vit){
         const Dcel::Vertex* v = *vit;
         vids[v->id()] = i;
-        Pointd p = v->coordinate();
+        Point3d p = v->coordinate();
         Vec3 n = v->normal();
         V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
         NV(i,0) = n.x(); NV(i,1) = n.y(); NV(i,2) = n.z();

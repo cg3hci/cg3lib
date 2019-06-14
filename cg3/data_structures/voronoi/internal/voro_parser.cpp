@@ -15,11 +15,11 @@ const uint SIZE = 4000000; //buffer sizes
  * @param container
  * @return a vector of vertices for every cell of the voronoi diagram
  */
-std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
+std::vector<std::vector<cg3::Point3d> > cg3::internal::parseAllVertices(
         voro::container& container)
 {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
-    std::vector<std::vector<cg3::Pointd>> vertices;
+    std::vector<std::vector<cg3::Point3d>> vertices;
 
     std::vector<uint> ids;
     char bufferSitesIDs[SIZE];
@@ -55,7 +55,7 @@ std::vector<std::vector<cg3::Pointd> > cg3::internal::parseAllVertices(
 
             cg3::Tokenizer t(v, ',');
             assert(t.size() == 3); //if this assert fails, voro++ didn't give a good output string
-            cg3::Pointd p(
+            cg3::Point3d p(
                         std::stod(std::string(t[0].begin()+1, t[0].end())),
                         std::stod(t[1]),
                         std::stod(t[2]));

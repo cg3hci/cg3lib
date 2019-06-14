@@ -41,13 +41,6 @@ public:
     unsigned long int sizeY() const;
     unsigned long int sizeZ() const;
     unsigned long int sizeW() const;
-
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline unsigned long int getSizeX() const {return sizeX();}
-    inline unsigned long int getSizeY() const {return sizeY();}
-    inline unsigned long int getSizeZ() const {return sizeZ();}
-    inline unsigned long int getSizeW() const {return sizeW();}
-    #endif
 };
 
 } //namespace cg3

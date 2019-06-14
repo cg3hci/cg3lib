@@ -7,7 +7,7 @@
 #ifndef CG3_CYLINDER_H
 #define CG3_CYLINDER_H
 
-#include "point.h"
+#include "point3.h"
 
 namespace cg3 {
 
@@ -23,21 +23,21 @@ class Cylinder : public SerializableObject
 public:
     Cylinder();
     Cylinder(
-        const Pointd& a,
-        const Pointd& b,
+        const Point3d& a,
+        const Point3d& b,
         double _radius);
 
-    const Pointd& topCenter() const;
-    const Pointd& bottomCenter() const;
+    const Point3d& topCenter() const;
+    const Point3d& bottomCenter() const;
     double radius() const;
 
-    const Pointd center() const;
+    const Point3d center() const;
     double length() const;
     double surfaceArea() const;
     double volume() const;
 
-    void setTopCenter(const Pointd& tc);
-    void setBottomCenter(const Pointd& bc);
+    void setTopCenter(const Point3d& tc);
+    void setBottomCenter(const Point3d& bc);
     void setRadius(double radius);
 
     // SerializableObject interface
@@ -45,8 +45,8 @@ public:
     void deserialize(std::ifstream &binaryFile);
 
 protected:
-    Pointd a;
-    Pointd b;
+    Point3d a;
+    Point3d b;
     double _radius;
 };
 

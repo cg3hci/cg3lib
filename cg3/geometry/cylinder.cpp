@@ -15,17 +15,17 @@ Cylinder::Cylinder() :
 {
 }
 
-Cylinder::Cylinder(const Pointd &a, const Pointd &b, double radius) :
+Cylinder::Cylinder(const Point3d &a, const Point3d &b, double radius) :
     a(a), b(b), _radius(radius)
 {
 }
 
-const Pointd &Cylinder::topCenter() const
+const Point3d &Cylinder::topCenter() const
 {
     return b;
 }
 
-const Pointd &Cylinder::bottomCenter() const
+const Point3d &Cylinder::bottomCenter() const
 {
     return a;
 }
@@ -35,7 +35,7 @@ double Cylinder::radius() const
     return _radius;
 }
 
-const Pointd Cylinder::center() const
+const Point3d Cylinder::center() const
 {
     return (a+b)/2;
 }
@@ -55,12 +55,12 @@ double Cylinder::volume() const
     return _radius * _radius * M_PI * length();
 }
 
-void Cylinder::setTopCenter(const Pointd &tc)
+void Cylinder::setTopCenter(const Point3d &tc)
 {
     b = tc;
 }
 
-void Cylinder::setBottomCenter(const Pointd &bc)
+void Cylinder::setBottomCenter(const Point3d &bc)
 {
     a = bc;
 }

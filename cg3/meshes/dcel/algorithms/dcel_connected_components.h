@@ -25,13 +25,6 @@ std::vector< std::set<const Dcel::Face*> > connectedComponents(
         InputIterator first,
         InputIterator last);
 
-#ifdef CG3_OLD_NAMES_COMPATIBILITY
-template <typename InputIterator>
-inline std::vector< std::set<const Dcel::Face*> > getConnectedComponents(
-        InputIterator first,
-        InputIterator last) {return connectedComponents(first, last);}
-#endif
-
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 

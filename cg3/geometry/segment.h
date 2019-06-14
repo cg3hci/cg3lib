@@ -9,7 +9,7 @@
 #ifndef CG3_SEGMENT_H
 #define CG3_SEGMENT_H
 
-#include "point.h"
+#include "point3.h"
 
 namespace cg3 {
 
@@ -53,11 +53,6 @@ public:
     /* Utilities */
     std::string toString() const;
 
-    #ifdef CG3_OLD_NAMES_COMPATIBILITY
-    inline const T& getP1() const {return p1();}
-    inline const T& getP2() const {return p2();}
-    #endif
-
 protected:
     /* Fields */
     T _p1;
@@ -67,22 +62,16 @@ protected:
 template<class T>
 std::ostream& operator<<(std::ostream& o, const Segment<T>& b);
 
-/* ----- Common typedefs (1D, 2D, 3D double) ----- */
+/* ----- Common typedefs (1D) ----- */
 
 template <class T>
-using Segment1D = Segment<T>;
+using Segment1 = Segment<T>;
 
-template <class T>
-using Segment3D = Segment<Point<T>>;
+typedef Segment1<double> Segment1d;
 
-typedef Segment1D<double> Segment1Dd;
-typedef Segment3D<double> Segment3Dd;
+typedef Segment1<float> Segment1f;
 
-typedef Segment1D<float> Segment1Df;
-typedef Segment3D<float> Segment3Df;
-
-typedef Segment1D<int> Segment1Di;
-typedef Segment3D<int> Segment3Di;
+typedef Segment1<int> Segment1i;
 
 } //namespace cg3
 

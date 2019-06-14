@@ -38,7 +38,7 @@ typedef CGAL::AABB_tree<AABB_traits>  AABB_tree;
  * @param d
  * @return
  */
-std::vector<std::vector<Pointd>> polylines(
+std::vector<std::vector<Point3d>> polylines(
         const std::string& inputOffFile,
         const Vec3& norm,
         double d)
@@ -60,7 +60,7 @@ std::vector<std::vector<Pointd>> polylines(
  * @param d
  * @return
  */
-std::vector<std::vector<Pointd>> polylines(
+std::vector<std::vector<Point3d>> polylines(
         const SurfaceMesh &mesh,
         const Vec3& norm,
         double d)
@@ -70,11 +70,11 @@ std::vector<std::vector<Pointd>> polylines(
     internal::AABB_tree tree(edges(mesh).first, edges(mesh).second, mesh);
     CGAL::Polygon_mesh_slicer<SurfaceMesh, internal::K> slicer_aabb(mesh, tree);
     slicer_aabb(internal::K::Plane_3(norm.x(), norm.y(), norm.z(), d), std::back_inserter(polylines));
-    std::vector< std::vector<Pointd> > result;
+    std::vector< std::vector<Point3d> > result;
     for (std::vector<internal::K::Point_3> singlePolyline : polylines){
-        std::vector<Pointd> v;
+        std::vector<Point3d> v;
         for (internal::K::Point_3 point : singlePolyline){
-            Pointd pres(point.x(), point.y(), point.z());
+            Point3d pres(point.x(), point.y(), point.z());
             v.push_back(pres);
         }
         result.push_back(v);
@@ -90,7 +90,7 @@ std::vector<std::vector<Pointd>> polylines(
  * @param p
  * @return
  */
-std::vector<std::vector<Pointd> > polylines(
+std::vector<std::vector<Point3d> > polylines(
         const Dcel &mesh,
         const Plane &p)
 {
@@ -105,7 +105,7 @@ std::vector<std::vector<Pointd> > polylines(
  * @param d
  * @return
  */
-std::vector<std::vector<Pointd> > polylines(
+std::vector<std::vector<Point3d> > polylines(
         const Dcel &mesh,
         const Vec3 &norm,
         double d)
