@@ -19,8 +19,8 @@ namespace vcglib {
 
 inline cg3::EigenMesh curveOnManifold(
         const cg3::EigenMesh& mesh,
-        const std::vector<std::pair<cg3::Pointd, cg3::Pointd>>& edges,
-        std::set<std::pair<cg3::Pointd, cg3::Pointd>>& newEdgesCoordinates,
+		const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
+		std::set<std::pair<cg3::Point3d, cg3::Point3d>>& newEdgesCoordinates,
         const int firstStepIterations,
         const int secondStepIterations,
         const double baryCentricThreshold,
@@ -43,9 +43,9 @@ inline cg3::EigenMesh curveOnManifold(
                 const CoordType& p1 = resultMesh.face[i].V0(k)->cP();
                 const CoordType& p2 = resultMesh.face[i].V1(k)->cP();
 
-                std::pair<cg3::Pointd, cg3::Pointd> newEdge;
-                newEdge.first = cg3::Pointd(p1.X(), p1.Y(), p1.Z());
-                newEdge.second = cg3::Pointd(p2.X(), p2.Y(), p2.Z());
+				std::pair<cg3::Point3d, cg3::Point3d> newEdge;
+				newEdge.first = cg3::Point3d(p1.X(), p1.Y(), p1.Z());
+				newEdge.second = cg3::Point3d(p2.X(), p2.Y(), p2.Z());
                 if (newEdge.first < newEdge.second)
                     std::swap(newEdge.first, newEdge.second);
 

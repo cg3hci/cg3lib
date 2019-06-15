@@ -18,8 +18,8 @@ namespace vcglib {
 
 cg3::EigenMesh curveOnManifold(
         const cg3::EigenMesh& mesh,
-        const std::vector<std::pair<cg3::Pointd,cg3::Pointd>>& edges,
-        std::set<std::pair<cg3::Pointd, cg3::Pointd>>& newEdgesCoordinates,
+		const std::vector<std::pair<cg3::Point3d,cg3::Point3d>>& edges,
+		std::set<std::pair<cg3::Point3d, cg3::Point3d>>& newEdgesCoordinates,
         const int firstStepIterations = 30,
         const int secondStepIterations = 10,
         const double baryCentricThreshold = 0.05,

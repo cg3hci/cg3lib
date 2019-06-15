@@ -5,17 +5,22 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
+isEmpty(CINOLIB_PATH) {
+    exists($$(CINOLIB_HOME)) {
+        CINOLIB_PATH = $$(CINOLIB_HOME)
+    }
+}
 
-exists($$(CINOLIB_HOME)){
+exists($$CINOLIB_PATH) {
     DEFINES += CG3_CINOLIB_DEFINED
     MODULES += CG3_CINOLIB
 
     macx{
         QMAKE_CXXFLAGS   = -Wno-c++11-extensions
     }
-    INCLUDEPATH     += $$(CINOLIB_HOME)/include/ #-> link to cinolib
+    INCLUDEPATH     += $$CINOLIB_PATH/include/ #-> link to cinolib
 
-    QMAKE_CXXFLAGS += -isystem $$(CINOLIB_HOME) #-> link to cinolib
+    QMAKE_CXXFLAGS += -isystem $$(CINOLIB_PATH) #-> link to cinolib
 
     HEADERS += \
         $$PWD/cinolib/cinolib_mesh_conversions.h

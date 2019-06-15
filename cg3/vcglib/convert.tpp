@@ -14,10 +14,10 @@ namespace vcglib {
 
 template<class EdgeMesh>
 void edgesToVCG(
-        const std::vector<std::pair<cg3::Pointd, cg3::Pointd>>& edges,
+		const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
         EdgeMesh& edgeMesh)
 {
-    for (const std::pair<cg3::Pointd, cg3::Pointd>& edge : edges) {
+	for (const std::pair<cg3::Point3d, cg3::Point3d>& edge : edges) {
         typename EdgeMesh::CoordType coord1(edge.first.x(), edge.first.y(), edge.first.z());
         typename EdgeMesh::CoordType coord2(edge.second.x(), edge.second.y(), edge.second.z());
         vcg::tri::Allocator<EdgeMesh>::AddEdge(edgeMesh, coord1, coord2);

@@ -43,26 +43,26 @@ macx{
 }
 
 win32 {
-    QGLVIEWERPATH = C:/libs/libQGLViewer
+    QGLVIEWER_PATH = C:/libs/libQGLViewer
 
     exists($$(QGLVIEWER_HOME)){
-        QGLVIEWERPATH = $$(QGLVIEWER_HOME)
+        QGLVIEWER_PATH = $$(QGLVIEWER_HOME)
     }
 
-    exists($$QGLVIEWERPATH){
+    exists($$QGLVIEWER_PATH){
         DEFINES += CG3_VIEWER_DEFINED
         CONFIG += CG3_VIEWER
         MODULES += CG3_VIEWER
 
-        INCLUDEPATH += -I $$quote($$QGLVIEWERPATH)
+        INCLUDEPATH += -I $$quote($$QGLVIEWER_PATH)
 
         LIBS += -lglu32 -lopengl32
 
         CONFIG(debug, debug|release){
-            LIBS += -L$$quote($$QGLVIEWERPATH/QGLViewer) -lQGLViewerd2
+            LIBS += -L$$quote($$QGLVIEWER_PATH/QGLViewer) -lQGLViewerd2
         }
         CONFIG(release, debug|release){
-            LIBS += -L$$quote($$QGLVIEWERPATH/QGLViewer) -lQGLViewer2
+            LIBS += -L$$quote($$QGLVIEWER_PATH/QGLViewer) -lQGLViewer2
         }
     }
 }

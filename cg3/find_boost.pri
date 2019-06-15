@@ -5,12 +5,15 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
+isEmpty(BOOST_PATH) {
+    exists($$(BOOST_HOME)) {
+        BOOST_PATH = $$(BOOST_HOME)
+    }
+}
 
-exists($$(BOOST_HOME)){
+exists($$BOOST_PATH) {
     DEFINES += CG3_WITH_BOOST
-    INCLUDEPATH += -I $$(BOOST_HOME)
-
-    BOOSTPATH = $$(BOOST_HOME)
+    INCLUDEPATH += -I $$BOOST_PATH
 }
 else {
     unix:!macx{
@@ -34,11 +37,11 @@ else {
     }
 
     win32 {
-        BOOSTPATH = C:/libs/boost
+        BOOST_PATH = C:/libs/boost
 
-        exists($$BOOSTPATH){
+        exists($$BOOST_PATH){
             DEFINES += CG3_WITH_BOOST
-            INCLUDEPATH += -I $$quote($$BOOSTPATH)
+            INCLUDEPATH += -I $$quote($$BOOST_PATH)
         }
     }
 }

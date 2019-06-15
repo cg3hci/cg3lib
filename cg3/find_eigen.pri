@@ -5,13 +5,16 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
+isEmpty(EIGEN_PATH) {
+    exists($$(EIGEN_HOME)) {
+        EIGEN_PATH = $$(EIGEN_HOME)
+    }
+}
 
-exists($$(EIGEN_HOME)){
+exists($$EIGEN_PATH) {
     DEFINES += CG3_WITH_EIGEN
     MODULES += CG3_WITH_EIGEN
-    INCLUDEPATH += -I $$(EIGEN_HOME)
-
-    EIGENPATH = $$(EIGEN_HOME)
+    INCLUDEPATH += -I $$EIGEN_PATH
 }
 else {
     unix:!macx{
@@ -45,12 +48,12 @@ else {
     }
 
     win32 {
-        EIGENPATH = C:/libs/eigen3
+        EIGEN_PATH = C:/libs/eigen3
 
-        exists($$EIGENPATH){
+        exists($$EIGEN_PATH){
             DEFINES += CG3_WITH_EIGEN
             MODULES += CG3_WITH_EIGEN
-            INCLUDEPATH += -I $$quote($$EIGENPATH)
+            INCLUDEPATH += -I $$quote($$EIGEN_PATH)
         }
         else{
             MODULES += CG3_WITHOUT_EIGEN

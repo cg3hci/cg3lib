@@ -5,40 +5,37 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
-!isEmpty(VCGLIBPATH) {
-    exists($$VCGLIBPATH) {
-	win32{
-	    QMAKE_CXXFLAGS += -bigobj
-	}
-
-        INCLUDEPATH += $$VCGLIBPATH
-
-	DEFINES += CG3_VCGLIB_DEFINED
-	MODULES += CG3_VCGLIB
-
-        HEADERS += \
-            $$PWD/vcglib/meshes/polygonmeshtype.h \
-            $$PWD/vcglib/meshes/trianglemeshtype.h
-
-        SOURCES +=
+isEmpty(VCGLIB_PATH) {
+    exists($$(VCGLIB_HOME)) {
+        VCGLIB_PATH = $$(VCGLIB_HOME)
     }
-    else {
-        message("The vcglib folder (variable VCGLIBPATH) does not exist!")
+}
+
+exists($$VCGLIB_PATH) {
+    win32{
+        QMAKE_CXXFLAGS += -bigobj
     }
+
+    INCLUDEPATH += $$VCGLIB_PATH
+
+    DEFINES += CG3_VCGLIB_DEFINED
+    MODULES += CG3_VCGLIB
+
+    HEADERS += \
+        $$PWD/vcglib/convert.h \
+        $$PWD/vcglib/curve_on_manifold.h \
+        $$PWD/vcglib/meshes/triangleedgemeshtype.h \
+        $$PWD/vcglib/smoothing.h \
+        $$PWD/vcglib/meshes/polygonmeshtype.h \
+        $$PWD/vcglib/meshes/trianglemeshtype.h
+
+    SOURCES += \
+        $$PWD/vcglib/convert.tpp \
+        $$PWD/vcglib/curve_on_manifold.tpp \
+        $$PWD/vcglib/smoothing.tpp
 }
 else {
-    message("Cannot find vcglib path (variable VCGLIBPATH)!")
+    message("The vcglib folder (variable VCGLIB_PATH) does not exist!")
 }
-
-HEADERS += \
-    $$PWD/vcglib/convert.h \
-    $$PWD/vcglib/curve_on_manifold.h \
-    $$PWD/vcglib/meshes/triangleedgemeshtype.h \
-    $$PWD/vcglib/smoothing.h
-
-SOURCES += \
-    $$PWD/vcglib/convert.tpp \
-    $$PWD/vcglib/curve_on_manifold.tpp \
-    $$PWD/vcglib/smoothing.tpp
 
 

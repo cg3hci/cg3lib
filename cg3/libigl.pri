@@ -5,8 +5,13 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
+isEmpty(LIBIGL_PATH) {
+    exists($$(LIBIGL_HOME)) {
+        LIBIGL_PATH = $$(LIBIGL_HOME)
+    }
+}
 
-exists($$(LIBIGL_HOME)){
+exists($$LIBIGL_PATH) {
     !contains(DEFINES, CG3_EIGENMESH_DEFINED){
         error(Igl module requires Eigenmesh module!)
     }
@@ -21,14 +26,14 @@ exists($$(LIBIGL_HOME)){
 
     unix:!macx{
         LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
-        INCLUDEPATH += $$(LIBIGL_HOME)/include/
+        INCLUDEPATH += $$LIBIGL_PATH/include/
 
-        QMAKE_CXXFLAGS += -isystem $$(LIBIGL_HOME)/include/
+        QMAKE_CXXFLAGS += -isystem $$LIBIGL_PATH/include/
 
         #newest versions of eigen are not supported by libigl
         USE_LIBIGL_EIGEN {
             INCLUDEPATH -= /usr/include/eigen3
-            INCLUDEPATH += $$(LIBIGL_HOME)/external/eigen/
+            INCLUDEPATH += $$LIBIGL_PATH/external/eigen/
         }
 
         LIBIGL_STATIC {
@@ -40,12 +45,7 @@ exists($$(LIBIGL_HOME)){
     win32{
         CONFIG += LIBIGL_STATIC
 
-        LIBIGLPATH = C:/libs/libigl
-        exists($$(LIBIGL_HOME)){
-            LIBIGLPATH = $$(LIBIGL_HOME)
-        }
-
-        INCLUDEPATH += $$LIBIGLPATH/include/
+        INCLUDEPATH += $$LIBIGL_PATH/include/
         QMAKE_CXXFLAGS += -bigobj
     }
 
