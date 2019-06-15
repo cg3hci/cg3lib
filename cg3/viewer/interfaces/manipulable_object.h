@@ -39,6 +39,8 @@ public:
 
     virtual bool grabsMouse() const;
 
+	virtual bool keepsGrabbingMouse() const;
+
     virtual void setGrabbingFactor(double gf);
 
     virtual double grabbingFactor() const;
@@ -52,7 +54,7 @@ protected:
 
 private:
     mutable bool axis;
-    bool keepsGrabbingMouse;
+	bool _keepsGrabbingMouse;
     double gf;
 };
 

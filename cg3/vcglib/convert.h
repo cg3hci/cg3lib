@@ -22,7 +22,7 @@ static std::vector<int> dummyFMap;
 
 template<class EdgeMesh>
 void edgesToVCG(
-        const std::vector<std::pair<cg3::Pointd, cg3::Pointd>>& edges,
+		const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
         EdgeMesh& edgeMesh);
 
 #ifdef CG3_WITH_EIGEN

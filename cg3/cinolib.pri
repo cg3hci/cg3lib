@@ -20,7 +20,7 @@ exists($$CINOLIB_PATH) {
     }
     INCLUDEPATH     += $$CINOLIB_PATH/include/ #-> link to cinolib
 
-    QMAKE_CXXFLAGS += -isystem $$(CINOLIB_PATH) #-> link to cinolib
+    QMAKE_CXXFLAGS += -isystem $$CINOLIB_PATH #-> link to cinolib
 
     HEADERS += \
         $$PWD/cinolib/cinolib_mesh_conversions.h
@@ -28,7 +28,3 @@ exists($$CINOLIB_PATH) {
     SOURCES += \
         $$PWD/cinolib/cinolib_mesh_conversions.cpp
 }
-
-
-
-

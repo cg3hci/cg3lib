@@ -15,7 +15,7 @@ ManipulableObject::ManipulableObject() : ManipulableObject(0.7)
 
 ManipulableObject::ManipulableObject(double grabbingFactor) :
     axis(false),
-    keepsGrabbingMouse(false),
+	_keepsGrabbingMouse(false),
     gf(grabbingFactor)
 {
     setSpinningSensitivity(100.0);
@@ -70,7 +70,12 @@ Point3d ManipulableObject::translation() const
 
 bool ManipulableObject::grabsMouse() const
 {
-    return ManipulatedFrame::grabsMouse();
+	return ManipulatedFrame::grabsMouse();
+}
+
+bool ManipulableObject::keepsGrabbingMouse() const
+{
+	return _keepsGrabbingMouse;
 }
 
 void ManipulableObject::setGrabbingFactor(double gf)
@@ -94,20 +99,20 @@ void ManipulableObject::checkIfGrabsMouse(int x, int y, const qglviewer::Camera*
     const qglviewer::Vec projex = camera->projectedCoordinatesOf(pos + extreme);
     const int threshold = std::sqrt ( std::pow((proj.x - projex.x), 2) +
                                 std::pow((proj.y - projex.y), 2) ) * gf;
-    setGrabsMouse(keepsGrabbingMouse || ((fabs(x - proj.x) < threshold) && (fabs(y - proj.y) < threshold)));
+	setGrabsMouse(_keepsGrabbingMouse || ((fabs(x - proj.x) < threshold) && (fabs(y - proj.y) < threshold)));
 }
 
 void ManipulableObject::mousePressEvent(QMouseEvent* const event, qglviewer::Camera* const camera)
 {
     ManipulatedFrame::mousePressEvent(event, camera);
     if (grabsMouse())
-        keepsGrabbingMouse = true;
+		_keepsGrabbingMouse = true;
 }
 
 void ManipulableObject::mouseReleaseEvent(QMouseEvent* const event, qglviewer::Camera* const camera)
 {
     ManipulatedFrame::mouseReleaseEvent(event, camera);
-    keepsGrabbingMouse = false;
+	_keepsGrabbingMouse = false;
 }
 
 } //namespace cg3
