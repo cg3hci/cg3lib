@@ -6,6 +6,7 @@
  */
 
 #include "manipulable_object.h"
+#include <cg3/geometry/transformations3.h>
 
 namespace cg3 {
 
@@ -85,8 +86,36 @@ void ManipulableObject::setGrabbingFactor(double gf)
 
 double ManipulableObject::grabbingFactor() const
 {
-    return gf;
+	return gf;
 }
+
+void ManipulableObject::rotationMatrix(double m[][3]) const
+{
+	qglviewer::Vec axis = orientation().axis();
+	double angle = orientation().angle();
+	cg3::rotationMatrix(cg3::Vec3(axis.x, axis.y, axis.z), angle, m);
+}
+
+void ManipulableObject::resetRotation()
+{
+	setRotation(qglviewer::Quaternion(0,0,0,1));
+}
+
+#ifdef CG3_WITH_EIGEN
+void ManipulableObject::rotationMatrix(Eigen::Matrix3d &m) const
+{
+	qglviewer::Vec axis = orientation().axis();
+	double angle = orientation().angle();
+	cg3::rotationMatrix(cg3::Vec3(axis.x, axis.y, axis.z), angle, m);
+}
+
+Eigen::Matrix3d ManipulableObject::rotationMatrix() const
+{
+	qglviewer::Vec axis = orientation().axis();
+	double angle = orientation().angle();
+	return cg3::rotationMatrix(cg3::Vec3(axis.x, axis.y, axis.z), angle);
+}
+#endif //CG3_WITH_EIGEN
 
 void ManipulableObject::checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera)
 {

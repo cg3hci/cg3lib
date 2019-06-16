@@ -45,6 +45,15 @@ public:
 
     virtual double grabbingFactor() const;
 
+	virtual void rotationMatrix(double m[][3]) const;
+
+	virtual void resetRotation();
+
+#ifdef CG3_WITH_EIGEN
+	void rotationMatrix(Eigen::Matrix3d& m) const;
+	Eigen::Matrix3d rotationMatrix() const;
+#endif //CG3_WITH_EIGEN
+
     // MouseGrabber interface
     virtual void checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera);
 
