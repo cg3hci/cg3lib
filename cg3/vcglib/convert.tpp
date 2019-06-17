@@ -6,8 +6,17 @@
  */
 #include "convert.h"
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmisleading-indentation"
 #include <vcg/complex/complex.h>
 #include <vcg/complex/algorithms/clean.h>
+#pragma GCC diagnostic pop
+#else
+#include <vcg/complex/complex.h>
+#include <vcg/complex/algorithms/clean.h>
+#endif
+
 
 namespace cg3 {
 namespace vcglib {

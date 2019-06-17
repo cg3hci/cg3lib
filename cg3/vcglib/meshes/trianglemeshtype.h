@@ -7,7 +7,14 @@
 #ifndef CG3_VCGLIB_TRIANGLEMESHTYPE_H
 #define CG3_VCGLIB_TRIANGLEMESHTYPE_H
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-qualifiers"
 #include <vcg/complex/complex.h>
+#pragma GCC diagnostic pop
+#else
+#include <vcg/complex/complex.h>
+#endif
 
 namespace cg3 {
 namespace vcglib {
