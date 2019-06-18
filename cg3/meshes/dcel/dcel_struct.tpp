@@ -1447,10 +1447,24 @@ void TemplatedDcel<V, HE, F>::setFaceColors(const Color& c)
 }
 
 template <class V, class HE, class F>
+void TemplatedDcel<V, HE, F>::setFaceFlags(int flag)
+{
+	for (Face* f : faceIterator())
+		f->setFlag(flag);
+}
+
+template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::setVertexColors(const Color& c)
 {
 	for (Vertex* v : vertexIterator())
 		v->setColor(c);
+}
+
+template <class V, class HE, class F>
+void TemplatedDcel<V, HE, F>::setVertexFlags(int flag)
+{
+	for (Vertex* v : vertexIterator())
+		v->setFlag(flag);
 }
 
 template <class V, class HE, class F>
