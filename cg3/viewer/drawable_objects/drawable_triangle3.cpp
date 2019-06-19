@@ -33,7 +33,7 @@ DrawableTriangle3::DrawableTriangle3(
 
 void DrawableTriangle3::draw() const
 {
-    opengl::drawTriangle(_v1, _v2, _v3, color, width, fill);
+	opengl::drawTriangle(v[0], v[1], v[2], color, width, fill);
 }
 
 Point3d DrawableTriangle3::sceneCenter() const
@@ -43,7 +43,7 @@ Point3d DrawableTriangle3::sceneCenter() const
 
 double DrawableTriangle3::sceneRadius() const
 {
-    return barycenter().dist(_v1);
+	return barycenter().dist(v[0]);
 }
 
 } //namespace cg3

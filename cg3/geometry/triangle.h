@@ -26,11 +26,13 @@ public:
     const T& v1() const;
     const T& v2() const;
     const T& v3() const;
+	const T& operator[](unsigned int i) const;
     std::vector<T> vertices() const;
 
     T& v1();
     T& v2();
     T& v3();
+	T& operator[](unsigned int i);
     void setV1(const T& v1);
     void setV2(const T& v2);
     void setV3(const T& v3);
@@ -52,7 +54,7 @@ public:
     void deserialize(std::ifstream& binaryFile);
 
 protected:
-    T _v1, _v2, _v3;
+	T v[3];
 };
 
 } // namespace cg3
