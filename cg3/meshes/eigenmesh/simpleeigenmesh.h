@@ -96,8 +96,8 @@ public:
     virtual void removeFace(unsigned int f);
     bool isDegenerateTriangle(unsigned int f, double epsilon = CG3_EPSILON) const;
     virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
-    template <typename T, int ...A> void setVerticesMatrix(const Eigen::Matrix<T, A...>& V);
-    template <typename U, int ...A> void setFacesMatrix(const Eigen::Matrix<U, A...>& F);
+	template <typename T, int ...A> void setVerticesMatrix(const Eigen::PlainObjectBase<T>& V);
+	template <typename U, int ...A> void setFacesMatrix(const Eigen::PlainObjectBase<U>& F);
 
     virtual bool loadFromObj(const std::string &filename);
     virtual bool loadFromPly(const std::string &filename);
@@ -332,13 +332,13 @@ inline void SimpleEigenMesh::removeFace(unsigned int f)
 
 
 template <typename T, int ...A>
-inline void SimpleEigenMesh::setVerticesMatrix(const Eigen::Matrix<T, A...>& V)
+inline void SimpleEigenMesh::setVerticesMatrix(const Eigen::PlainObjectBase<T>& V)
 {
     this->V = V;
 }
 
 template <typename U, int ...A>
-inline void SimpleEigenMesh::setFacesMatrix(const Eigen::Matrix<U, A...>& F)
+inline void SimpleEigenMesh::setFacesMatrix(const Eigen::PlainObjectBase<U>& F)
 {
     this->F = F;
 }

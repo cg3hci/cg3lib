@@ -92,6 +92,8 @@ public:
     void updateFacesAndVerticesNormals();
 
     virtual void removeDegenerateTriangles(double epsilon = CG3_EPSILON);
+	template <typename T, int ...A> void setVerticesColorMatrix(const Eigen::PlainObjectBase<T>& CV);
+	template <typename U, int ...A> void setFacesColorMatrix(const Eigen::PlainObjectBase<U>& CF);
 
     std::pair<int, int> commonVertices(unsigned int f1, unsigned int f2) const;
 
@@ -309,6 +311,18 @@ inline void EigenMesh::updateFacesAndVerticesNormals()
 {
     updateFaceNormals();
     updateVerticesNormals();
+}
+
+template <typename T, int ...A>
+void EigenMesh::setVerticesColorMatrix(const Eigen::PlainObjectBase<T>& CV)
+{
+	this->CV = CV;
+}
+
+template <typename U, int ...A>
+void EigenMesh::setFacesColorMatrix(const Eigen::PlainObjectBase<U>& CF)
+{
+	this->CF = CF;
 }
 
 inline void EigenMesh::serialize(std::ofstream& binaryFile) const

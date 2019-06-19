@@ -38,7 +38,10 @@ cg3::EigenMesh taubinSmoothing(
 
     taubinSmoothing(vcgMesh, iterations, lambda, mu, !selectedVertices.empty());
 
-    return cg3::vcglib::VCGToEigenMesh(vcgMesh);
+	EigenMesh tmp = cg3::vcglib::VCGToEigenMesh(vcgMesh);
+	tmp.setVerticesColorMatrix(mesh.verticesColorMatrix());
+	tmp.setFacesColorMatrix(mesh.facesColorMatrix());
+	return tmp;
 }
 #endif
 
