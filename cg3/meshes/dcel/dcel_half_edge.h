@@ -14,7 +14,7 @@
 #include <cg3/io/serializable_object.h>
 
 #ifdef NDEBUG
-#include <cg3/geometry/point.h>
+#include <cg3/geometry/point3.h>
 #include <cg3/utilities/color.h>
 #endif
 
@@ -36,7 +36,7 @@ class DcelData : public virtual cg3::Mesh
 protected:
     //Data
     #ifdef NDEBUG
-    std::vector<Pointd> vertexCoordinates;
+	std::vector<Point3d> vertexCoordinates;
     std::vector<Vec3> vertexNormals;
     std::vector<Color> vertexColors;
     std::vector<Vec3> faceNormals;

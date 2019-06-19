@@ -11,6 +11,7 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-result"
+#pragma GCC diagnostic ignored "-Wreturn-type"
 #include <cinolib/meshes/drawable_tetmesh.h>
 #pragma GCC diagnostic pop
 

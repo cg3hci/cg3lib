@@ -163,7 +163,7 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(const TemplatedDcel<V, HE, F>& dcel)
     std::map<const TemplatedDcel::Face*, TemplatedDcel::Face*> mapFaces;
     vertices.resize(dcel.vertices.size(), nullptr);
     #ifdef NDEBUG
-    vertexCoordinates.resize(dcel.vertexCoordinates.size(), Pointd());
+	vertexCoordinates.resize(dcel.vertexCoordinates.size(), Point3d());
     vertexNormals.resize(dcel.vertexNormals.size(), Vec3());
     vertexColors.resize(dcel.vertexColors.size(), Color());
     #endif
@@ -2229,7 +2229,7 @@ void TemplatedDcel<V, HE, F>::deserialize(std::ifstream& binaryFile)
         //Vertices
         tmp.vertices.resize(tmp.nVertices+tmp.unusedVids.size(), nullptr);
         #ifdef NDEBUG
-        tmp.vertexCoordinates.resize(tmp.nVertices+tmp.unusedVids.size(), Pointd());
+		tmp.vertexCoordinates.resize(tmp.nVertices+tmp.unusedVids.size(), Point3d());
         tmp.vertexNormals.resize(tmp.nVertices+tmp.unusedVids.size(), Vec3());
         tmp.vertexColors.resize(tmp.nVertices+tmp.unusedVids.size(), Color());
         #endif

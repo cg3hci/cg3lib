@@ -89,7 +89,6 @@ public:
 	Point3<T> operator / (const T& scalar )              const;
 	Point3<T> operator / (const Point3<T>& otherPoint)    const;
 
-
     T& x();
     T& y();
     T& z();

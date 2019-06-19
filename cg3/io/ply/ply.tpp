@@ -199,6 +199,7 @@ T readProperty(std::ifstream& file, PropertyType type, bool isColor)
 			p = readDouble<T>(file, isColor); break;
 		default:
 			assert(0);
+			p = 0;
 	}
 	//if I read a color that must be returned as a float or double
 	if (isColor && !std::is_integral<T>::value)
@@ -229,6 +230,7 @@ T readProperty(cg3::Tokenizer::iterator& token, PropertyType type, bool isColor)
 			break;
 		default:
 			assert(0);
+			p = 0;
 	}
 	//if I read a color that must be returned as a float or double
 	if (isColor && !std::is_integral<T>::value)

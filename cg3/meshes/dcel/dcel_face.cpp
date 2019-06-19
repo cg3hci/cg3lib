@@ -30,7 +30,7 @@ namespace cg3 {
  * - flag setted to 0.
  */
 #ifdef NDEBUG
-Face::Face(DcelData& parent) :
+Face::Face(internal::DcelData& parent) :
     parent(&parent),
     _outerHalfEdge(nullptr),
     _area(0),
@@ -189,7 +189,7 @@ void Face::triangulation(std::vector<std::array<const Vertex*, 3> > &triangles) 
     }
 
     #ifdef NDEBUG
-    std::vector<std::array<Pointd, 3> > trianglesP = cgal::triangulate(parent->faceNormals[_id], borderCoordinates, innerBorderCoordinates);
+	std::vector<std::array<Point3d, 3> > trianglesP = cgal::triangulate3(parent->faceNormals[_id], borderCoordinates, innerBorderCoordinates);
     #else
     std::vector<std::array<Point3d, 3> > trianglesP = cgal::triangulate3(_normal, borderCoordinates, innerBorderCoordinates);
     #endif
