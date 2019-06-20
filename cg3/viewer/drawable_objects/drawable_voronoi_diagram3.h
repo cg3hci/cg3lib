@@ -9,9 +9,10 @@
 
 #include <cg3/viewer/drawable_objects/drawable_objects_container.h>
 #include <cg3/viewer/drawable_objects/drawable_dcel.h>
-#include <cg3/data_structures/voronoi/voronoi_diagram3.h>
+#include <cg3/voro++/voronoi_diagram3.h>
 
 namespace cg3 {
+namespace voro {
 
 class DrawableVoronoiCell3 : public VoronoiCell3, public DrawableObject {
 
@@ -30,7 +31,7 @@ protected:
     double sphereRadius;
 };
 
-class DrawableVoronoiDiagram3 : public VoronoiDiagram3, virtual public DrawableObjectsContainer<cg3::DrawableVoronoiCell3>
+class DrawableVoronoiDiagram3 : public VoronoiDiagram3, virtual public DrawableObjectsContainer<DrawableVoronoiCell3>
 {
 public:
 	DrawableVoronoiDiagram3(const BoundingBox3& bb, uint nPoints = 100);
@@ -72,6 +73,7 @@ DrawableVoronoiDiagram3::DrawableVoronoiDiagram3(Iterator begin, Iterator end) :
     finalize();
 }
 
+}
 } //namespace cg3
 
 #endif // CG3_DRAWABLE_VORONOI_DIAGRAM3_H

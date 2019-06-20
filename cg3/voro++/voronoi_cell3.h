@@ -10,9 +10,12 @@
 #include <cg3/geometry/bounding_box3.h>
 
 namespace cg3 {
+
 #ifdef CG3_DCEL_DEFINED
 class Dcel;
 #endif
+
+namespace voro {
 
 class VoronoiCell3 : public SerializableObject
 {
@@ -26,7 +29,7 @@ public:
 	bool operator<(const VoronoiCell3& o) const;
 
     #ifdef CG3_DCEL_DEFINED
-    Dcel geometry() const;
+	cg3::Dcel geometry() const;
     #endif
 
     std::vector<int>::const_iterator begin() const;
@@ -60,6 +63,7 @@ protected:
     std::vector<std::vector<uint>> faces;
 };
 
-}
+} //namespace cg3::voro
+} //namespace cg3
 
 #endif // CG3_VORONOI_CELL3_H

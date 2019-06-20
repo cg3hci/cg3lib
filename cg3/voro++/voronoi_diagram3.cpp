@@ -9,6 +9,7 @@
 #include "internal/voro_parser.h"
 
 namespace cg3 {
+namespace voro {
 
 VoronoiDiagram3::VoronoiDiagram3(const VoronoiDiagram3& vd) :
     bb(vd.bb),
@@ -66,7 +67,7 @@ VoronoiDiagram3& VoronoiDiagram3::operator=(const VoronoiDiagram3& vd)
         mapCells = vd.mapCells;
         nPoints = vd.nPoints;
         (&container)->~container();
-        new (&container) voro::container(this->bb.minX(), this->bb.maxX(),
+		new (&container) ::voro::container(this->bb.minX(), this->bb.maxX(),
                                          this->bb.minY(), this->bb.maxY(),
                                          this->bb.minZ(), this->bb.maxZ(),
                                          6, 6, 6, false, false, false,
@@ -98,7 +99,7 @@ void VoronoiDiagram3::deserialize(std::ifstream& binaryFile)
 {
     cg3::deserializeObjectAttributes("cg3VoronoiDiagram", binaryFile, bb, cells, mapCells, nPoints);
     (&container)->~container();
-    new (&container) voro::container(this->bb.minX(), this->bb.maxX(),
+	new (&container) ::voro::container(this->bb.minX(), this->bb.maxX(),
                                      this->bb.minY(), this->bb.maxY(),
                                      this->bb.minZ(), this->bb.maxZ(),
                                      6, 6, 6, false, false, false,
@@ -133,4 +134,5 @@ void VoronoiDiagram3::finalize()
     }
 }
 
-}
+} //namespace cg3::voro
+} //namespace cg3

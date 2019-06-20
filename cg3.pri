@@ -8,12 +8,18 @@
 
 CONFIG += c++11
 
-CG3_OLD_NAMES_COMPATIBILITY {
-    DEFINES += CG3_OLD_NAMES_COMPATIBILITY
+DEFINES += CG3_QMAKE
+
+CG3_STATIC {
+    #message(cg3 static)
+    DEFINES += CG3_STATIC_LIB
+}
+else {
+    #message(cg3 header only)
 }
 
 CG3_ALL {
-    CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_MESHES CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VCGLIB CG3_VIEWER
+    CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_MESHES CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VCGLIB CG3_VORO++ CG3_VIEWER
 }
 
 CG3_CORE {
@@ -48,6 +54,10 @@ CG3_VCGLIB {
     include (cg3/vcglib.pri)
 }
 
+CG3_VORO++ {
+    include (cg3/voro++.pri)
+}
+
 qt {
     CG3_VIEWER {
         include (cg3/viewer.pri)
@@ -65,7 +75,6 @@ CG3_DEPRECATED {
 CG3_EXAMPLES {
     include (cg3/examples.pri)
 }
-
 
 DISTFILES += \
     $$PWD/LICENSE \

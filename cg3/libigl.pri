@@ -19,11 +19,6 @@ exists($$LIBIGL_PATH) {
     DEFINES += CG3_LIBIGL_DEFINED
     MODULES += CG3_LIBIGL
 
-    exists($$(LIBIGL_STATIC_HOME)){
-        #comment next line if libigl is not used in static mode
-        #CONFIG += LIBIGL_STATIC
-    }
-
     unix:!macx{
         LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
         INCLUDEPATH += $$LIBIGL_PATH/include/
@@ -31,19 +26,14 @@ exists($$LIBIGL_PATH) {
         QMAKE_CXXFLAGS += -isystem $$LIBIGL_PATH/include/
 
         #newest versions of eigen are not supported by libigl
-        USE_LIBIGL_EIGEN {
-            INCLUDEPATH -= /usr/include/eigen3
-            INCLUDEPATH += $$LIBIGL_PATH/external/eigen/
-        }
-
-        LIBIGL_STATIC {
-            DEFINES += IGL_STATIC_LIBRARY
-            LIBS += -L$$(LIBIGL_STATIC_HOME) -ligl_cgal -ligl
-        }
+        #USE_LIBIGL_EIGEN {
+        #    INCLUDEPATH -= /usr/include/eigen3
+        #    INCLUDEPATH += $$LIBIGL_PATH/external/eigen/
+        #}
     }
 
     win32{
-        CONFIG += LIBIGL_STATIC
+        CONFIG += LIBIGL_STATIC #???
 
         INCLUDEPATH += $$LIBIGL_PATH/include/
         QMAKE_CXXFLAGS += -bigobj

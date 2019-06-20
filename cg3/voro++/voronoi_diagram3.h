@@ -22,6 +22,7 @@
 #endif
 
 namespace cg3 {
+namespace voro {
 
 class VoronoiDiagram3 : virtual public SerializableObject
 {
@@ -71,7 +72,7 @@ protected:
     void addSite(uint i, const cg3::Point3d& site);
     virtual void finalize();
     cg3::BoundingBox3 bb;
-    voro::container container;
+	::voro::container container;
 	std::vector<VoronoiCell3> cells;
     std::map<cg3::Point3d, uint> mapCells;
     uint nPoints;
@@ -144,6 +145,7 @@ void VoronoiDiagram3::addSites(Iterator begin, Iterator end)
     finalize();
 }
 
-}
+} //namespace cg3::voro
+} //namespace cg3
 
 #endif // CG3_VORONOI_DIAGRAM3_H

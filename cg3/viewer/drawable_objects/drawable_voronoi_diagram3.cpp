@@ -7,6 +7,7 @@
 #include "drawable_voronoi_diagram3.h"
 
 namespace cg3 {
+namespace voro {
 
 //DrawableVoronoiCell
 DrawableVoronoiCell3::DrawableVoronoiCell3(double sphereRadius) :
@@ -79,11 +80,12 @@ void DrawableVoronoiDiagram3::finalize()
 {
     VoronoiDiagram3::finalize();
     double sphereRadius = bb.diag() / 1000;
-    DrawableObjectsContainer<cg3::DrawableVoronoiCell3>::clear();
+	DrawableObjectsContainer<DrawableVoronoiCell3>::clear();
     for (auto it = VoronoiDiagram3::begin(); it != VoronoiDiagram3::end(); ++it){
         const VoronoiCell3& cell = *it;
         pushBack(DrawableVoronoiCell3(cell, sphereRadius), "Cell " + std::to_string(cell.id()));
     }
 }
 
+}
 }

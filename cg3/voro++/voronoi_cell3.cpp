@@ -13,6 +13,7 @@
 #endif
 
 namespace cg3 {
+namespace voro {
 
 VoronoiCell3::VoronoiCell3() :
     _id(0)
@@ -35,7 +36,7 @@ bool VoronoiCell3::operator<(const VoronoiCell3& o) const
 }
 
 #ifdef CG3_DCEL_DEFINED
-Dcel VoronoiCell3::geometry() const
+cg3::Dcel VoronoiCell3::geometry() const
 {
     DcelBuilder builder;
     for (const cg3::Point3d& p : _coords){
@@ -113,4 +114,5 @@ void VoronoiCell3::setGeometry(
     bb = BoundingBox3(_coords);
 }
 
-}
+} //namespace cg3::voro
+} //namespace cg3

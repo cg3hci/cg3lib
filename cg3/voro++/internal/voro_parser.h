@@ -19,10 +19,12 @@
 #endif
 
 namespace cg3 {
+namespace voro {
 namespace internal {
-    std::vector<std::vector<Point3d>> parseAllVertices(voro::container& container);
-    std::vector<std::vector<std::vector<uint> > > parseAllFaces(voro::container& container);
-    std::vector<std::vector<int>> parseAdjacences(voro::container& container);
+	std::vector<std::vector<Point3d>> parseAllVertices(::voro::container& container);
+	std::vector<std::vector<std::vector<uint> > > parseAllFaces(::voro::container& container);
+	std::vector<std::vector<int>> parseAdjacences(::voro::container& container);
+}
 }
 }
 

@@ -47,6 +47,47 @@
   * @brief The cg3lib Core module provides some basic functions and data structures
   */
 
+#ifdef CG3_STATIC_LIB
+#define CG3_INLINE
+#else //CG3_STATIC_LIB
+#define CG3_INLINE inline
+#endif //CG3_STATIC_LIB
+
+
+//try to include libraries iff the library is purely header only (no qmake)
+#ifndef CG3_QMAKE
+
+#define CG3_CORE_DEFINED
+#define CG3_ALGORITHMS_DEFINED
+#define CG3_DATA_STRUCTURES_DEFINED
+#define CG3_DCEL_DEFINED
+
+#ifdef __has_include //try to include libraries that can be included in CG3
+
+#if __has_include("Eigen/Core")
+#define CG3_WITH_EIGEN
+#define CG3_EIGENMESH_DEFINED
+#endif //has include eigen
+
+#if __has_include("boost/version.hpp")
+#define CG3_WITH_BOOST
+#endif //has include boost
+
+#if __has_include("igl/igl_inline.h")
+#define CG3_LIBIGL_DEFINED
+#endif //has include libigl
+
+#if __has_include("cinolib/cino_inline.h")
+#define CG3_CINOLIB_DEFINED
+#endif //has include cinolib
+
+#if __has_include("vcg/complex/complex.h")
+#define CG3_VCGLIB_DEFINED
+#endif //has include vcg
+
+#endif //__has_include
+#endif //CG3_QMAKE
+
 /**
   * @link: https://stackoverflow.com/questions/11124895/suppress-compiler-warning-function-declared-never-referenced
   * @def CG3_SUPPRESS_WARNING(a)
