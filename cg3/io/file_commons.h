@@ -37,7 +37,7 @@ typedef enum {
  */
 class FileMeshMode {
 public:
-	FileMeshMode() : mode(0), type(TRIANGLE_MESH){};
+    FileMeshMode() : mode(0), type(TRIANGLE_MESH){}
 	FileMeshMode(FileMeshType ft, bool vn, bool vc, bool fn, bool fc) :
 		mode(0), type(ft)
 	{
@@ -46,31 +46,31 @@ public:
 		if (fn) setFaceNormals();
 		if (fc) setFaceColors();
 	}
-	bool isTriangleMesh()   const {return type == TRIANGLE_MESH;};
-	bool isQuadMesh()       const {return type == QUAD_MESH;};
-	bool isPolygonMesh()    const {return type == POLYGON_MESH;};
-	bool hasVertexNormals() const {return mode & VERTEX_NORMALS;};
-	bool hasVertexColors()  const {return mode & VERTEX_COLORS;};
-	bool hasFaceNormals()   const {return mode & FACE_NORMALS;};
-	bool hasFaceColors()    const {return mode & FACE_COLORS;};
+    bool isTriangleMesh()   const {return type == TRIANGLE_MESH;}
+    bool isQuadMesh()       const {return type == QUAD_MESH;}
+    bool isPolygonMesh()    const {return type == POLYGON_MESH;}
+    bool hasVertexNormals() const {return mode & VERTEX_NORMALS;}
+    bool hasVertexColors()  const {return mode & VERTEX_COLORS;}
+    bool hasFaceNormals()   const {return mode & FACE_NORMALS;}
+    bool hasFaceColors()    const {return mode & FACE_COLORS;}
 
-	void setTriangleMesh()  {type = TRIANGLE_MESH;};
-	void setQuadMesh()      {type = QUAD_MESH;};
-	void setPolygonMesh()   {type = POLYGON_MESH;};
-	void setMeshType(FileMeshType t) {type = t;};
-	void setVertexNormals() {mode |= VERTEX_NORMALS;};
-	void setVertexColors()  {mode |= VERTEX_COLORS;};
-	void setFaceNormals()   {mode |= FACE_NORMALS;};
-	void setFaceColors()    {mode |= FACE_COLORS;};
+    void setTriangleMesh()  {type = TRIANGLE_MESH;}
+    void setQuadMesh()      {type = QUAD_MESH;}
+    void setPolygonMesh()   {type = POLYGON_MESH;}
+    void setMeshType(FileMeshType t) {type = t;}
+    void setVertexNormals() {mode |= VERTEX_NORMALS;}
+    void setVertexColors()  {mode |= VERTEX_COLORS;}
+    void setFaceNormals()   {mode |= FACE_NORMALS;}
+    void setFaceColors()    {mode |= FACE_COLORS;}
 
-	void reset() {mode = 0; type = TRIANGLE_MESH;};
+    void reset() {mode = 0; type = TRIANGLE_MESH;}
 
 private:
 	typedef enum {
-		VERTEX_NORMALS =       0b000001,
-		VERTEX_COLORS =        0b000010,
-		FACE_COLORS =          0b000100,
-		FACE_NORMALS =         0b001000
+        VERTEX_NORMALS =       0b000001,
+        VERTEX_COLORS =        0b000010,
+        FACE_COLORS =          0b000100,
+        FACE_NORMALS =         0b001000
 	} FMM;
 	int mode;
 	FileMeshType type;

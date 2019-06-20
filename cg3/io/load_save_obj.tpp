@@ -364,9 +364,9 @@ bool loadTriangleMeshFromObj(
 	bool r = loadMeshFromObj(filename, dummyc, dummyt, modality,
 							 internal::dummyListDouble,
 							 internal::dummyListColor, internal::dummyListColor, faceSizes);
-	if (r == true && modality.isTriangleMesh()){
-		std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
-	}
+    if (r == true && dummyt.size() > 0 && !modality.isTriangleMesh()){
+        std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
+    }
 	if (r) {
 		coords.resize(dummyc.size()/3, 3);
 		triangles.resize(faceSizes.size(), 3);
@@ -422,9 +422,9 @@ bool loadTriangleMeshFromObj(
 	std::list<Color> dummyct;
 	std::list<unsigned int> faceSizes;
 	bool r = loadMeshFromObj(filename, dummyc, dummyt, modality, dummyvn, dummycv, dummyct, faceSizes);
-	if (r == true && modality.isTriangleMesh()){
-		std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
-	}
+    if (r == true && dummyt.size() > 0 && !modality.isTriangleMesh()){
+        std::cerr << "Warning: mesh contained on " << filename << " is not a triangle mesh\n";
+    }
 	if (r) {
 		coords.resize(dummyc.size()/3, 3);
 		triangles.resize(faceSizes.size(), 3);
