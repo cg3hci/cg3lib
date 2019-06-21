@@ -72,4 +72,10 @@ private:
 } //namespace cg3::ply
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_PLY_HEADER_CPP "ply_header.cpp"
+#include CG3_PLY_HEADER_CPP
+#undef CG3_PLY_HEADER_CPP
+#endif
+
 #endif // CG3_PLY_HEADER_H

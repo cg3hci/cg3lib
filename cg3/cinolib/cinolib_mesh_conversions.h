@@ -24,4 +24,10 @@ void dcelToTrimesh(cinolib::Trimesh<>& m, const cg3::Dcel &d);
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CINOLIB_MESH_CONVERSIONS_CPP "cinolib_mesh_conversions.cpp"
+#include CG3_CINOLIB_MESH_CONVERSIONS_CPP
+#undef CG3_CINOLIB_MESH_CONVERSIONS_CPP
+#endif
+
 #endif // CG3_CINOLIB_MESH_CONVERSIONS_H

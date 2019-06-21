@@ -52,4 +52,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CYLINDER_CPP "cylinder.cpp"
+#include CG3_CYLINDER_CPP
+#undef CG3_CYLINDER_CPP
+#endif
+
 #endif // CG3_CYLINDER_H

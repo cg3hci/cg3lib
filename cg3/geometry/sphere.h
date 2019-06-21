@@ -43,6 +43,12 @@ protected:
     double _radius;
 };
 
-}
+} //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_SPHERE_CPP "sphere.cpp"
+#include CG3_SPHERE_CPP
+#undef CG3_SPHERE_CPP
+#endif
 
 #endif // CG3_SPHERE_H

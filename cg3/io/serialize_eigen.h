@@ -49,6 +49,6 @@ void deserialize(Eigen::Matrix<int, -1, 3, 1, -1, 3>& m, std::ifstream& binaryFi
 } //namespace cg3
 #endif //CG3_WITH_EIGEN
 
-#include "serialize_eigen.tpp"
+#include "serialize_eigen.cpp"
 
 #endif // CG3_SERIALIZE_EIGEN_H

@@ -22,4 +22,10 @@ void rotationMatrix(Vec3 axis, double angle, double m[][3]);
 
 }
 
+#ifndef CG3_STATIC
+#define CG3_TRANSFORMATIONS3_CPP "transformations3.cpp"
+#include CG3_TRANSFORMATIONS3_CPP
+#undef CG3_TRANSFORMATIONS3_CPP
+#endif
+
 #endif // CG3_TRANSFORMATIONS3_H

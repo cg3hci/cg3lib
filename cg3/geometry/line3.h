@@ -48,5 +48,10 @@ struct hash<cg3::Line3> {
 
 } //namespace std
 
+#ifndef CG3_STATIC
+#define CG3_LINE3_CPP "line3.cpp"
+#include CG3_LINE3_CPP
+#undef CG3_LINE3_CPP
+#endif
 
 #endif // LINE3_H

@@ -11,6 +11,7 @@
 #include <cg3/geometry/bounding_box3.h>
 #include <cg3/utilities/color.h>
 #include <cg3/meshes/mesh.h>
+#include <cg3/io/file_commons.h>
 #include "dcel_vertex.h"
 #include "dcel_face.h"
 #include "dcel_iterators.h"

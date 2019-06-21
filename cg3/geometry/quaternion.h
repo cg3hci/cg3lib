@@ -43,4 +43,10 @@ private:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_QUATERNION_CPP "quaternion.cpp"
+#include CG3_QUATERNION_CPP
+#undef CG3_QUATERNION_CPP
+#endif
+
 #endif // CG3_QUATERNION_H

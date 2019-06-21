@@ -11,11 +11,11 @@ CONFIG += c++11
 DEFINES += CG3_QMAKE
 
 CG3_STATIC {
-    #message(cg3 static)
-    DEFINES += CG3_STATIC_LIB
+    message(cg3 static)
+    DEFINES += CG3_STATIC
 }
 else {
-    #message(cg3 header only)
+    message(cg3 header only)
 }
 
 CG3_ALL {

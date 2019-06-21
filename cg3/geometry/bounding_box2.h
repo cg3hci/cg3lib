@@ -60,6 +60,26 @@ protected:
 template <class InputContainer>
 BoundingBox2 boundingBox(const InputContainer& container);
 
+/**
+ * @brief Calculates the Bounding Box of the given sets of points
+ * @param[in] container: A container (with begin() and end() member functions) of cg3::Point2Dd
+ * @return the bounding box of the points
+ */
+template<class InputContainer>
+CG3_INLINE BoundingBox2 boundingBox(const InputContainer& container)
+{
+	BoundingBox2 bb;
+	if (container.begin() == container.end())
+		return BoundingBox2();
+	bb.min() = *container.begin();
+	bb.max() = *container.begin();
+	for (const cg3::Point2d& p : container){
+		bb.min() = bb.min().min(p);
+		bb.max() = bb.max().max(p);
+	}
+	return bb;
+}
+
 } //namespace cg3
 
 //hash specialization
@@ -72,6 +92,10 @@ struct hash<cg3::BoundingBox2> {
 
 } //namespace std
 
-#include "bounding_box2.tpp"
+#ifndef CG3_STATIC
+#define CG3_BOUNDINGBOX2_CPP "bounding_box2.cpp"
+#include CG3_BOUNDINGBOX2_CPP
+#undef BOUNDINGBOX2_CPP
+#endif
 
 #endif // CG3_BOUNDINGBOX2_H

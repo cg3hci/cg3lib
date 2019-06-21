@@ -18,7 +18,7 @@
 namespace cg3 {
 
 #ifdef CG3_EIGENMESH_DEFINED
-void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEigenMesh)
+CG3_INLINE void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEigenMesh)
 {
     unsigned int nVertices=simpleEigenMesh.numberVertices();
     unsigned int nFaces=simpleEigenMesh.numberFaces();
@@ -47,7 +47,7 @@ void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEige
 #endif
 
 #ifdef CG3_DCEL_DEFINED
-void dcelToTrimesh(cinolib::Trimesh<>& m, const Dcel& d)
+CG3_INLINE void dcelToTrimesh(cinolib::Trimesh<>& m, const Dcel& d)
 {
     unsigned int nVertices=d.numberVertices();
     unsigned int nFaces=d.numberFaces();

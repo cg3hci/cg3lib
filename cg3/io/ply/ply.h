@@ -117,6 +117,6 @@ T colorValue(cg3::Tokenizer::iterator& token, PropertyType type);
 } //namespace cg3::ply
 } //namespace cg3
 
-#include "ply.tpp"
+#include "ply.cpp"
 
 #endif // CG3_PLY_H

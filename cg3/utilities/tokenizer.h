@@ -41,6 +41,6 @@ private:
 
 }
 
-#include "tokenizer.tpp"
+#include "tokenizer.cpp"
 
 #endif // CG3_TOKENIZER_H

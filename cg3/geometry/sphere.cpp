@@ -12,64 +12,64 @@ namespace cg3 {
 /**
  * @brief Default constructor, creates a Sphere with center (0,0,0) and radius 0.
  */
-Sphere::Sphere() :
+CG3_INLINE Sphere::Sphere() :
     _center(),
     _radius(0)
 {
 }
 
-Sphere::Sphere(const Point3d &center, double radius) :
+CG3_INLINE Sphere::Sphere(const Point3d &center, double radius) :
     _center(center),
     _radius(radius)
 {
 }
 
-const Point3d& Sphere::center() const
+CG3_INLINE const Point3d& Sphere::center() const
 {
     return _center;
 }
 
-const double& Sphere::radius() const
+CG3_INLINE const double& Sphere::radius() const
 {
     return _radius;
 }
 
-double Sphere::diameter() const
+CG3_INLINE double Sphere::diameter() const
 {
     return 2*_radius;
 }
 
-double Sphere::circumference() const
+CG3_INLINE double Sphere::circumference() const
 {
     return 2 * M_PI * _radius;
 }
 
-double Sphere::surfaceArea() const
+CG3_INLINE double Sphere::surfaceArea() const
 {
     return 4 * M_PI * _radius * _radius;
 }
 
-double Sphere::volume() const
+CG3_INLINE double Sphere::volume() const
 {
     return (4/3) * M_PI * _radius * _radius * _radius;
 }
 
-void Sphere::setCenter(const Point3d &center)
+CG3_INLINE void Sphere::setCenter(const Point3d &center)
 {
     _center = center;
 }
 
-void Sphere::setRadius(double radius)
+CG3_INLINE void Sphere::setRadius(double radius)
 {
     _radius = radius;
 }
 
-void Sphere::serialize(std::ofstream &binaryFile) const
+CG3_INLINE void Sphere::serialize(std::ofstream &binaryFile) const
 {
     cg3::serializeObjectAttributes("cg3Sphere", binaryFile, _center, _radius);
 }
 
-void Sphere::deserialize(std::ifstream &binaryFile)
+CG3_INLINE void Sphere::deserialize(std::ifstream &binaryFile)
 {
     cg3::deserializeObjectAttributes("cg3Sphere", binaryFile, _center, _radius);
 }

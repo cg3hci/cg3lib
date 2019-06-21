@@ -53,4 +53,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_PLANE_CPP "plane.cpp"
+#include CG3_PLANE_CPP
+#undef CG3_PLANE_CPP
+#endif
+
 #endif // CG3_PLANE_H

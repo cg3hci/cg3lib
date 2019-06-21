@@ -95,6 +95,6 @@ bool loadFaces(
 } //namespace cg3::ply
 } //namespace cg3
 
-#include "ply_face.tpp"
+#include "ply_face.cpp"
 
 #endif // CG3_PLY_FACE_H

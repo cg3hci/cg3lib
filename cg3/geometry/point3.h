@@ -168,6 +168,6 @@ struct hash<cg3::Point3<T>> {
 
 } //namespace std
 
-#include "point3.tpp"
+#include "point3.cpp"
 
 #endif // CG3_POINT3_H

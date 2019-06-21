@@ -27,13 +27,8 @@ CG3_OPENMP {
 
 #core
 HEADERS += \
-    $$PWD/cg3lib.h \
-    $$PWD/geometry/segment3.h \
-    $$PWD/geometry/triangle3.h
-
-#geometry
-HEADERS += \
-    $$PWD/geometry/bounding_box2.h \
+    $$PWD/cg3lib.h \ #core
+    $$PWD/geometry/bounding_box2.h \ #geometry
     $$PWD/geometry/bounding_box3.h \
     $$PWD/geometry/cylinder.h \
     $$PWD/geometry/intersections2.h \
@@ -46,37 +41,16 @@ HEADERS += \
     $$PWD/geometry/quaternion.h \
     $$PWD/geometry/segment.h \
     $$PWD/geometry/segment2.h \
+    $$PWD/geometry/segment3.h \
     $$PWD/geometry/sphere.h \
     $$PWD/geometry/transformations3.h \
     $$PWD/geometry/triangle.h \
     $$PWD/geometry/triangle2.h \
     $$PWD/geometry/triangle2_utils.h \
+    $$PWD/geometry/triangle3.h \
     $$PWD/geometry/utils2.h \
-    $$PWD/geometry/utils3.h
-
-SOURCES += \
-    $$PWD/geometry/bounding_box2.tpp \
-    $$PWD/geometry/bounding_box3.tpp \
-    $$PWD/geometry/cylinder.cpp \
-    $$PWD/geometry/intersections2.cpp \
-    $$PWD/geometry/line2.cpp \
-    $$PWD/geometry/line3.cpp \
-    $$PWD/geometry/plane.cpp \
-    $$PWD/geometry/point2.tpp \
-    $$PWD/geometry/point3.tpp \
-    $$PWD/geometry/polygon2.cpp \
-    $$PWD/geometry/quaternion.cpp \
-    $$PWD/geometry/segment.tpp \
-    $$PWD/geometry/sphere.cpp \
-    $$PWD/geometry/transformations3.cpp \
-    $$PWD/geometry/triangle.tpp \
-    $$PWD/geometry/triangle2_utils.tpp \
-    $$PWD/geometry/utils2.tpp \
-    $$PWD/geometry/utils3.tpp
-
-#io
-HEADERS += \
-    $$PWD/io/file_commons.h \
+    $$PWD/geometry/utils3.h \
+    $$PWD/io/file_commons.h \ #io
     $$PWD/io/load_save_obj.h \
     $$PWD/io/load_save_ply.h \
     $$PWD/io/load_save_file.h \
@@ -88,23 +62,8 @@ HEADERS += \
     $$PWD/io/ply/ply.h \
     $$PWD/io/ply/ply_header.h \
     $$PWD/io/ply/ply_vertex.h \
-    $$PWD/io/ply/ply_face.h
-
-SOURCES += \
-    $$PWD/io/load_save_obj.tpp \
-    $$PWD/io/load_save_ply.tpp \
-    $$PWD/io/serialize.tpp \
-    $$PWD/io/serialize_eigen.tpp \
-    $$PWD/io/serialize_qt.tpp \
-    $$PWD/io/serialize_std.tpp \
-    $$PWD/io/ply/ply.tpp \
-    $$PWD/io/ply/ply_header.cpp \
-    $$PWD/io/ply/ply_vertex.tpp \
-    $$PWD/io/ply/ply_face.tpp
-
-#utilities
-HEADERS += \
-    $$PWD/utilities/cg3config.h \
+    $$PWD/io/ply/ply_face.h \
+    $$PWD/utilities/cg3_config_folder.h #utilities
     $$PWD/utilities/color.h \
     $$PWD/utilities/comparators.h \
     $$PWD/utilities/const.h \
@@ -121,18 +80,47 @@ HEADERS += \
     $$PWD/utilities/vector.h \
     $$PWD/utilities/utils.h
 
+CG3_STATIC {
 SOURCES += \
-    $$PWD/utilities/color.tpp \
-    $$PWD/utilities/eigen.tpp \
-    $$PWD/utilities/hash.tpp \
-    $$PWD/utilities/map.tpp \
-    $$PWD/utilities/nested_initializer_lists.tpp \
-    $$PWD/utilities/pair.tpp \
-    $$PWD/utilities/set.tpp \
-    $$PWD/utilities/string.tpp \
-    $$PWD/utilities/system.tpp \
-    $$PWD/utilities/timer.tpp \
-    $$PWD/utilities/tokenizer.tpp \
-    $$PWD/utilities/vector.tpp \
-    $$PWD/utilities/utils.tpp
-
+    $$PWD/geometry/bounding_box3.cpp \ #geometry
+    $$PWD/geometry/bounding_box2.cpp \
+    $$PWD/geometry/cylinder.cpp \
+    $$PWD/geometry/intersections2.cpp \
+    $$PWD/geometry/line2.cpp \
+    $$PWD/geometry/line3.cpp \
+    $$PWD/geometry/plane.cpp \
+    $$PWD/geometry/point2.cpp \
+    $$PWD/geometry/point3.cpp \
+    $$PWD/geometry/polygon2.cpp \
+    $$PWD/geometry/quaternion.cpp \
+    $$PWD/geometry/segment.cpp \
+    $$PWD/geometry/sphere.cpp \
+    $$PWD/geometry/transformations3.cpp \
+    $$PWD/geometry/triangle.cpp \
+    $$PWD/geometry/triangle2_utils.cpp \
+    $$PWD/geometry/utils2.cpp \
+    $$PWD/geometry/utils3.cpp \
+    $$PWD/io/load_save_obj.cpp \ #io
+    $$PWD/io/load_save_ply.cpp \
+    $$PWD/io/serialize.cpp \
+    $$PWD/io/serialize_eigen.cpp \
+    $$PWD/io/serialize_qt.cpp \
+    $$PWD/io/serialize_std.cpp \
+    $$PWD/io/ply/ply.cpp \
+    $$PWD/io/ply/ply_face.cpp \
+    $$PWD/io/ply/ply_header.cpp \
+    $$PWD/io/ply/ply_vertex.cpp \
+    $$PWD/utilities/color.cpp \ #utilities
+    $$PWD/utilities/eigen.cpp \
+    $$PWD/utilities/hash.cpp \
+    $$PWD/utilities/map.cpp \
+    $$PWD/utilities/nested_initializer_lists.cpp \
+    $$PWD/utilities/pair.cpp \
+    $$PWD/utilities/set.cpp \
+    $$PWD/utilities/string.cpp \
+    $$PWD/utilities/system.cpp \
+    $$PWD/utilities/timer.cpp \
+    $$PWD/utilities/tokenizer.cpp \
+    $$PWD/utilities/utils.cpp \
+    $$PWD/utilities/vector.cpp
+}

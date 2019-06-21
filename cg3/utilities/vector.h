@@ -27,6 +27,6 @@ int positionOfElement(const std::vector<T, A...>& v, const T& value);
 
 } //namespace cg3
 
-#include "vector.tpp"
+#include "vector.cpp"
 
 #endif // CG3_VECTOR_H

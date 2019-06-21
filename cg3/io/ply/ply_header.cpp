@@ -10,7 +10,7 @@
 namespace cg3 {
 namespace ply {
 
-PlyHeader::PlyHeader() :
+CG3_INLINE PlyHeader::PlyHeader() :
 	_format(ply::UNKNOWN),
 	isValid(false),
 	v(-1),
@@ -19,7 +19,7 @@ PlyHeader::PlyHeader() :
 	std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
 }
 
-PlyHeader::PlyHeader(ply::Format f, const ply::Element &vElement, const ply::Element fElement) :
+CG3_INLINE PlyHeader::PlyHeader(ply::Format f, const ply::Element &vElement, const ply::Element fElement) :
 	_format(f),
 	isValid(true),
 	v(0),
@@ -30,7 +30,7 @@ PlyHeader::PlyHeader(ply::Format f, const ply::Element &vElement, const ply::Ele
 	elements.push_back(fElement);
 }
 
-PlyHeader::PlyHeader(std::ifstream &file) :
+CG3_INLINE PlyHeader::PlyHeader(std::ifstream &file) :
 	_format(ply::UNKNOWN),
 	isValid(false),
 	v(0),
@@ -84,7 +84,7 @@ PlyHeader::PlyHeader(std::ifstream &file) :
 	}
 }
 
-void PlyHeader::clear()
+CG3_INLINE void PlyHeader::clear()
 {
 	_format = ply::UNKNOWN;
 	elements.clear();
@@ -93,12 +93,12 @@ void PlyHeader::clear()
 	f = -1;
 }
 
-bool PlyHeader::errorWhileLoading() const
+CG3_INLINE bool PlyHeader::errorWhileLoading() const
 {
 	return !isValid;
 }
 
-bool PlyHeader::hasVertexAndFaceElements() const
+CG3_INLINE bool PlyHeader::hasVertexAndFaceElements() const
 {
 	if (v < 0 || f < 0) return false;
 	bool vertex = false, face = false;
@@ -121,42 +121,42 @@ bool PlyHeader::hasVertexAndFaceElements() const
 	return vertex && face;
 }
 
-ply::Format PlyHeader::format() const
+CG3_INLINE ply::Format PlyHeader::format() const
 {
 	return _format;
 }
 
-const std::list<ply::Property> &PlyHeader::vertexProperties() const
+CG3_INLINE const std::list<ply::Property> &PlyHeader::vertexProperties() const
 {
 	return elements[v].properties;
 }
 
-const std::list<ply::Property> &PlyHeader::faceProperties() const
+CG3_INLINE const std::list<ply::Property> &PlyHeader::faceProperties() const
 {
 	return elements[f].properties;
 }
 
-uint PlyHeader::numberVertices() const
+CG3_INLINE uint PlyHeader::numberVertices() const
 {
 	return elements[v].numberElements;
 }
 
-uint PlyHeader::numberFaces() const
+CG3_INLINE uint PlyHeader::numberFaces() const
 {
 	return elements[f].numberElements;
 }
 
-void PlyHeader::setNumberVertices(uint nV)
+CG3_INLINE void PlyHeader::setNumberVertices(uint nV)
 {
 	elements[v].numberElements = nV;
 }
 
-void PlyHeader::setNumberFaces(uint nF)
+CG3_INLINE void PlyHeader::setNumberFaces(uint nF)
 {
 	elements[f].numberElements = nF;
 }
 
-io::FileMeshMode PlyHeader::modality() const
+CG3_INLINE io::FileMeshMode PlyHeader::modality() const
 {
 	io::FileMeshMode mod;
 	//x, y, z, nx, ny, nz, red, green, blue, alpha, vertex_indices
@@ -192,7 +192,7 @@ io::FileMeshMode PlyHeader::modality() const
 	return mod;
 }
 
-void PlyHeader::setModality(const io::FileMeshMode &mode, bool binary)
+CG3_INLINE void PlyHeader::setModality(const io::FileMeshMode &mode, bool binary)
 {
 	clear();
 	this->v = 0; this->f = 1; isValid = true;
@@ -257,7 +257,7 @@ void PlyHeader::setModality(const io::FileMeshMode &mode, bool binary)
 	elements.push_back(f);
 }
 
-std::string PlyHeader::toString() const
+CG3_INLINE std::string PlyHeader::toString() const
 {
 	std::string s;
 
@@ -300,29 +300,29 @@ std::string PlyHeader::toString() const
 	return s;
 }
 
-void PlyHeader::addElement(const ply::Element &e)
+CG3_INLINE void PlyHeader::addElement(const ply::Element &e)
 {
 	if (e.type == ply::VERTEX) v = elements.size();
 	if (e.type == ply::FACE) f = elements.size();
 	elements.push_back(e);
 }
 
-void PlyHeader::setFormat(ply::Format f)
+CG3_INLINE void PlyHeader::setFormat(ply::Format f)
 {
 	_format = f;
 }
 
-PlyHeader::iterator PlyHeader::begin() const
+CG3_INLINE PlyHeader::iterator PlyHeader::begin() const
 {
 	return elements.begin();
 }
 
-PlyHeader::iterator PlyHeader::end() const
+CG3_INLINE PlyHeader::iterator PlyHeader::end() const
 {
 	return elements.end();
 }
 
-ply::Element PlyHeader::readElement(const Tokenizer &lineTokenizer) const
+CG3_INLINE ply::Element PlyHeader::readElement(const Tokenizer &lineTokenizer) const
 {
 	ply::Element e;
 	cg3::Tokenizer::iterator token = lineTokenizer.begin();
@@ -340,7 +340,7 @@ ply::Element PlyHeader::readElement(const Tokenizer &lineTokenizer) const
 	return e;
 }
 
-ply::Property PlyHeader::readProperty(const cg3::Tokenizer& lineTokenizer) const
+CG3_INLINE ply::Property PlyHeader::readProperty(const cg3::Tokenizer& lineTokenizer) const
 {
 	ply::Property p;
 	cg3::Tokenizer::iterator token = lineTokenizer.begin();
@@ -366,7 +366,7 @@ ply::Property PlyHeader::readProperty(const cg3::Tokenizer& lineTokenizer) const
 	return p;
 }
 
-ply::PropertyName PlyHeader::stringToName(const std::string& name) const
+CG3_INLINE ply::PropertyName PlyHeader::stringToName(const std::string& name) const
 {
 	ply::PropertyName pn = ply::unknown;
 	if (name == "x") pn = ply::x;
@@ -382,14 +382,14 @@ ply::PropertyName PlyHeader::stringToName(const std::string& name) const
 	return pn;
 }
 
-ply::PropertyName PlyHeader::stringToListName(const std::string &name) const
+CG3_INLINE ply::PropertyName PlyHeader::stringToListName(const std::string &name) const
 {
 	ply::PropertyName pn = ply::unknown;
 	if (name == "vertex_indices") pn = ply::vertex_indices;
 	return pn;
 }
 
-ply::PropertyType PlyHeader::stringToType(const std::string &type) const
+CG3_INLINE ply::PropertyType PlyHeader::stringToType(const std::string &type) const
 {
 	ply::PropertyType pt = ply::UCHAR;
 	if (type == "char") pt = ply::CHAR;
@@ -403,7 +403,7 @@ ply::PropertyType PlyHeader::stringToType(const std::string &type) const
 	return pt;
 }
 
-std::string PlyHeader::nameToString(PropertyName n) const
+CG3_INLINE std::string PlyHeader::nameToString(PropertyName n) const
 {
 	switch (n) {
 		case ply::x: return "x";
@@ -421,7 +421,7 @@ std::string PlyHeader::nameToString(PropertyName n) const
 	}
 }
 
-std::string PlyHeader::typeToString(PropertyType t) const
+CG3_INLINE std::string PlyHeader::typeToString(PropertyType t) const
 {
 	switch (t) {
 		case ply::CHAR: return "char";

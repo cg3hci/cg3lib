@@ -46,4 +46,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_POLYGON2_CPP "polygon2.cpp"
+#include CG3_POLYGON2_CPP
+#undef CG3_POLYGON2_CPP
+#endif
+
 #endif // CG3_POLYGON2_H

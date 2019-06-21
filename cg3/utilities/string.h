@@ -35,6 +35,6 @@ std::string filenameWithExtension(const std::string& fullpath);
 
 } //namespace cg3
 
-#include "string.tpp"
+#include "string.cpp"
 
 #endif // CG3_STRING_H

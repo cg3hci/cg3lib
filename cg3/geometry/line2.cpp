@@ -11,19 +11,19 @@ namespace cg3 {
 /**
  * @brief Empty constructor, initializes the m and q components of the line to zero.
  */
-Line2::Line2() :
+CG3_INLINE Line2::Line2() :
     _m(0),
     _q(0)
 {
 }
 
-Line2::Line2(double m, double q) :
+CG3_INLINE Line2::Line2(double m, double q) :
     _m(m),
     _q(q)
 {
 }
 
-Line2::Line2(const Point2d& p1, const Point2d& p2)
+CG3_INLINE Line2::Line2(const Point2d& p1, const Point2d& p2)
 {
     double det = p2.x() - p1.x();
     if (det != 0) {
@@ -36,12 +36,12 @@ Line2::Line2(const Point2d& p1, const Point2d& p2)
     }
 }
 
-Line2::Line2(const Segment2d& s) :
+CG3_INLINE Line2::Line2(const Segment2d& s) :
     Line2(s.p1(), s.p2())
 {
 }
 
-Line2::Line2(double m, const Point2d& p) : _m(m)
+CG3_INLINE Line2::Line2(double m, const Point2d& p) : _m(m)
 {
     _q = p.y() - m*p.x();
 }
@@ -50,7 +50,7 @@ Line2::Line2(double m, const Point2d& p) : _m(m)
  * @brief Returns the m coefficient of the line.
  * @return the m coefficient of the line. Returns std::numeric_limits<double>::infinity() if the line is a vertical line.
  */
-double Line2::m() const
+CG3_INLINE double Line2::m() const
 {
     return _m;
 }
@@ -59,26 +59,26 @@ double Line2::m() const
  * @brief Returns the m coefficient of the line.
  * @return te q coefficient of the line. Returns the x coordinate if the line is a vertical line.
  */
-double Line2::q() const
+CG3_INLINE double Line2::q() const
 {
     return _q;
 }
 
-double Line2::yValue(double x) const
+CG3_INLINE double Line2::yValue(double x) const
 {
     if (_m == std::numeric_limits<double>::infinity())
         return _m;
     return _m*x + _q;
 }
 
-double Line2::xValue(double y) const
+CG3_INLINE double Line2::xValue(double y) const
 {
     if (_m == std::numeric_limits<double>::infinity())
         return _q;
     return (y-_q)/_m;
 }
 
-Point2d Line2::intersection(const Line2& l) const
+CG3_INLINE Point2d Line2::intersection(const Line2& l) const
 {
     if (_m != l._m){
         if (_m == std::numeric_limits<double>::infinity()){
@@ -94,12 +94,12 @@ Point2d Line2::intersection(const Line2& l) const
     return Point2d();
 }
 
-void Line2::serialize(std::ofstream& binaryFile) const
+CG3_INLINE void Line2::serialize(std::ofstream& binaryFile) const
 {
     cg3::serializeObjectAttributes("cg3Line2D", binaryFile, _m, _q);
 }
 
-void Line2::deserialize(std::ifstream& binaryFile)
+CG3_INLINE void Line2::deserialize(std::ifstream& binaryFile)
 {
     cg3::deserializeObjectAttributes("cg3Line2D", binaryFile, _m, _q);
 }

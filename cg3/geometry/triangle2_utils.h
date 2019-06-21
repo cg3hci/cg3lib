@@ -51,6 +51,6 @@ bool areTriangleOverlapping(
 
 } //namespace cg3
 
-#include "triangle2_utils.tpp"
+#include "triangle2_utils.cpp"
 
 #endif // CG3_TRIANGLE2_UTILS_H

@@ -11,7 +11,7 @@
 #include "glcanvas.h"
 #include <cg3/geometry/line3.h>
 #include <cg3/geometry/plane.h>
-#include <cg3/utilities/cg3config.h>
+#include <cg3/utilities/cg3_config_folder.h>
 #include <cg3/viewer/utilities/utils.h>
 
 namespace cg3 {

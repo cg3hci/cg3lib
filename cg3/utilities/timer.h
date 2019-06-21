@@ -46,6 +46,6 @@ private:
 
 } //namespace cg3
 
-#include "timer.tpp"
+#include "timer.cpp"
 
 #endif //CG3_TIMER_H

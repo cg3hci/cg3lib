@@ -47,11 +47,11 @@
   * @brief The cg3lib Core module provides some basic functions and data structures
   */
 
-#ifdef CG3_STATIC_LIB
+#ifdef CG3_STATIC
 #define CG3_INLINE
-#else //CG3_STATIC_LIB
+#else //CG3_STATIC
 #define CG3_INLINE inline
-#endif //CG3_STATIC_LIB
+#endif //CG3_STATIC
 
 
 //try to include libraries iff the library is purely header only (no qmake)

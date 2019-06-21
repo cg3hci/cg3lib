@@ -25,6 +25,8 @@ exists($$CINOLIB_PATH) {
     HEADERS += \
         $$PWD/cinolib/cinolib_mesh_conversions.h
 
-    SOURCES += \
-        $$PWD/cinolib/cinolib_mesh_conversions.cpp
+    CG3_STATIC {
+        SOURCES += \
+            $$PWD/cinolib/cinolib_mesh_conversions.cpp
+    }
 }

@@ -32,4 +32,10 @@ void checkSegmentIntersection2(
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_INTERSECTIONS2_CPP "intersections2.cpp"
+#include CG3_INTERSECTIONS2_CPP
+#undef CG3_INTERSECTIONS2_CPP
+#endif
+
 #endif // CG3_INTERSECTIONS2_H

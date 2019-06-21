@@ -46,4 +46,10 @@ private:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_LINE2_CPP "line2.cpp"
+#include CG3_LINE2_CPP
+#undef CG3_LINE2_CPP
+#endif
+
 #endif // CG3_LINE2_H

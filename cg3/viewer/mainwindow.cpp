@@ -24,7 +24,7 @@
 #include "internal/drawable_container_drawlist_manager.h"
 #include "internal/drawable_object_drawlist_manager.h"
 
-#include <cg3/utilities/cg3config.h>
+#include <cg3/utilities/cg3_config_folder.h>
 #include <cg3/utilities/string.h>
 #include <cg3/utilities/timer.h>
 

@@ -16,21 +16,21 @@
 
 namespace cg3 {
 
-Plane::Plane(const Vec3& normal, double d) :
+CG3_INLINE Plane::Plane(const Vec3& normal, double d) :
     _normal(normal),
     _d(d)
 {
     normalize();
 }
 
-Plane::Plane(double a, double b, double c, double d) :
+CG3_INLINE Plane::Plane(double a, double b, double c, double d) :
     _normal(a, b, c),
     _d(d)
 {
     normalize();
 }
 
-Plane::Plane(const Point3d& p1, const Point3d& p2, const Point3d& p3)
+CG3_INLINE Plane::Plane(const Point3d& p1, const Point3d& p2, const Point3d& p3)
 {
     Vec3 v1 (p2 - p1);
     Vec3 v2 (p3 - p1);
@@ -39,32 +39,32 @@ Plane::Plane(const Point3d& p1, const Point3d& p2, const Point3d& p3)
     _d = -(_normal.x() * p1.x() + _normal.y() * p1.y() + _normal.z() * p1.z());
 }
 
-double Plane::a() const
+CG3_INLINE double Plane::a() const
 {
     return _normal.x();
 }
 
-double Plane::b() const
+CG3_INLINE double Plane::b() const
 {
     return _normal.y();
 }
 
-double Plane::c() const
+CG3_INLINE double Plane::c() const
 {
     return _normal.z();
 }
 
-double Plane::d() const
+CG3_INLINE double Plane::d() const
 {
     return _d;
 }
 
-Vec3 Plane::normal() const
+CG3_INLINE Vec3 Plane::normal() const
 {
     return _normal;
 }
 
-void Plane::normalize()
+CG3_INLINE void Plane::normalize()
 {
     double oldLength = _normal.normalize();
     _d /= oldLength;
@@ -75,7 +75,7 @@ void Plane::normalize()
  * @param p
  * @return true if the point lies on the plane, false otherwise
  */
-bool Plane::pointLiesOnPlane(const Point3d &p, double epsilon) const
+CG3_INLINE bool Plane::pointLiesOnPlane(const Point3d &p, double epsilon) const
 {
     double sum = _normal.x()*p.x() + _normal.y()*p.y() + _normal.z()*p.z() + _d;
     if(cg3::epsilonEqual(sum, 0.0, epsilon))
@@ -86,7 +86,7 @@ bool Plane::pointLiesOnPlane(const Point3d &p, double epsilon) const
 }
 
 #ifdef CG3_WITH_EIGEN
-bool Plane::intersection(Point3d& inters, const Line3& l) const
+CG3_INLINE bool Plane::intersection(Point3d& inters, const Line3& l) const
 {
     Vec3 n(_normal);
     n.normalize();
@@ -112,17 +112,17 @@ bool Plane::intersection(Point3d& inters, const Line3& l) const
 }
 #endif
 
-double Plane::pointDistance(const Point3d& p) const
+CG3_INLINE double Plane::pointDistance(const Point3d& p) const
 {
     return (_normal.dot(p - (_normal*_d)));
 }
 
-void Plane::serialize(std::ofstream& binaryFile) const
+CG3_INLINE void Plane::serialize(std::ofstream& binaryFile) const
 {
     serializeObjectAttributes("cg3Plane", binaryFile, _normal, _d);
 }
 
-void Plane::deserialize(std::ifstream& binaryFile)
+CG3_INLINE void Plane::deserialize(std::ifstream& binaryFile)
 {
     deserializeObjectAttributes("cg3Plane", binaryFile, _normal, _d);
 }

@@ -17,6 +17,6 @@ inline std::pair<B,A> flipPair(const std::pair<A,B> &p);
 
 } //namespace cg3
 
-#include "pair.tpp"
+#include "pair.cpp"
 
 #endif // CG3_PAIR_H

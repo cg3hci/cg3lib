@@ -24,6 +24,6 @@ void deserialize(QColor& obj, std::ifstream& binaryFile);
 
 }
 
-#include "serialize_qt.tpp"
+#include "serialize_qt.cpp"
 
 #endif // CG3_SERIALIZE_QT_H

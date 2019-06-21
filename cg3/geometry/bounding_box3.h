@@ -106,6 +106,34 @@ protected:
 
 typedef BoundingBox3 Box;
 
+/**
+ * @brief Constructor, creates a bounding box that contains all the Pointd iterated
+ * from begin to end.
+ * @param begin: start iterator on a container of Pointd
+ * @param end: end iterator on a container of Pointd
+ */
+template<class Iterator>
+CG3_INLINE BoundingBox3::BoundingBox3(Iterator begin, Iterator end)
+{
+	_min = *begin;
+	_max = *begin;
+	for (Iterator i = begin; i != end; ++i){
+		_min = _min.min(*i);
+		_max = _max.max(*i);
+	}
+}
+
+/**
+ * @brief Constructor, creates a bounding box that contains all the Pointd contained
+ * in the input container.
+ * @param c: a container of Pointd
+ */
+template<class Container>
+CG3_INLINE BoundingBox3::BoundingBox3(const Container& c) :
+	BoundingBox3(c.begin(), c.end())
+{
+}
+
 } //namespace cg3
 
 //hash specialization
@@ -118,6 +146,10 @@ struct hash<cg3::BoundingBox3> {
 
 } //namespace std
 
-#include "bounding_box3.tpp"
+#ifndef CG3_STATIC
+#define CG3_BOUNDINGBOX3_CPP "bounding_box3.cpp"
+#include CG3_BOUNDINGBOX3_CPP
+#undef BOUNDINGBOX3_CPP
+#endif
 
 #endif // CG3_BOUNDING_BOX3_H

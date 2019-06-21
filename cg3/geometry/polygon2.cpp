@@ -11,27 +11,27 @@
 
 namespace cg3 {
 
-Polygon2::Polygon2()
+CG3_INLINE Polygon2::Polygon2()
 {
 
 }
 
-unsigned int Polygon2::size() const
+CG3_INLINE unsigned int Polygon2::size() const
 {
     return (unsigned int)pol.size();
 }
 
-Point2d&Polygon2::operator [](unsigned int i)
+CG3_INLINE Point2d&Polygon2::operator [](unsigned int i)
 {
     return pol[i];
 }
 
-const Point2d&Polygon2::operator [](unsigned int i) const
+CG3_INLINE const Point2d&Polygon2::operator [](unsigned int i) const
 {
     return pol[i];
 }
 
-void Polygon2::updateBoundingBox()
+CG3_INLINE void Polygon2::updateBoundingBox()
 {
     bb = BoundingBox2();
     if (size() > 0){
@@ -44,7 +44,7 @@ void Polygon2::updateBoundingBox()
     }
 }
 
-void Polygon2::pushBack(const Point2d& p)
+CG3_INLINE void Polygon2::pushBack(const Point2d& p)
 {
     pol.push_back(p);
     if (pol.size() > 1){
@@ -57,53 +57,53 @@ void Polygon2::pushBack(const Point2d& p)
     }
 }
 
-bool Polygon2::isCounterClockWise() const
+CG3_INLINE bool Polygon2::isCounterClockWise() const
 {
     return cg3::isPolygonCounterClockwise(pol);
 }
 
-double Polygon2::area() const
+CG3_INLINE double Polygon2::area() const
 {
     return cg3::polygonArea(pol);
 }
 
-const std::vector<Point2d>& Polygon2::vectorPoints() const
+CG3_INLINE const std::vector<Point2d>& Polygon2::vectorPoints() const
 {
     return pol;
 }
 
-void Polygon2::clear()
+CG3_INLINE void Polygon2::clear()
 {
     pol.clear();
     bb = BoundingBox2();
 }
 
-void Polygon2::serialize(std::ofstream& binaryFile) const
+CG3_INLINE void Polygon2::serialize(std::ofstream& binaryFile) const
 {
     cg3::serializeObjectAttributes("cg3Polygon2D", binaryFile, pol, bb);
 }
 
-void Polygon2::deserialize(std::ifstream& binaryFile)
+CG3_INLINE void Polygon2::deserialize(std::ifstream& binaryFile)
 {
     cg3::deserializeObjectAttributes("cg3Polygon2D", binaryFile, pol, bb);
 }
 
-Polygon2::iterator Polygon2::begin()
+CG3_INLINE Polygon2::iterator Polygon2::begin()
 {
     return pol.begin();
 }
 
-Polygon2::iterator Polygon2::end()
+CG3_INLINE Polygon2::iterator Polygon2::end()
 {
     return pol.end();
 }
 
-Polygon2::const_iterator Polygon2::begin() const
+CG3_INLINE Polygon2::const_iterator Polygon2::begin() const
 {
     return pol.begin();
 }
 
-Polygon2::const_iterator Polygon2::end() const
+CG3_INLINE Polygon2::const_iterator Polygon2::end() const
 {
     return pol.end();
 }

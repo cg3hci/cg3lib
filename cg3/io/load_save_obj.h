@@ -94,6 +94,6 @@ bool saveMeshOnObj(
 
 } //namespace cg3
 
-#include "load_save_obj.tpp"
+#include "load_save_obj.cpp"
 
 #endif // CG3_LOAD_SAVE_OBJ_H

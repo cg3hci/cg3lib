@@ -109,6 +109,10 @@ private:
 
 }
 
-#include "color.tpp"
+#ifndef CG3_STATIC
+#define CG3_COLOR_CPP "color.cpp"
+#include CG3_COLOR_CPP
+#undef CG3_COLOR_CPP
+#endif
 
 #endif // CG3_COLOR_H

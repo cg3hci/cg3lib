@@ -13,17 +13,17 @@ namespace cg3 {
 /**
  * @brief Default constructor: identity rotation
  */
-Quaternion::Quaternion() :
+CG3_INLINE Quaternion::Quaternion() :
     q{0.0, 0.0, 0.0, 1.0}
 {
 }
 
-Quaternion::Quaternion(const Vec3& axis, double angle)
+CG3_INLINE Quaternion::Quaternion(const Vec3& axis, double angle)
 {
     setAxisAngle(axis, angle);
 }
 
-Quaternion::Quaternion(const Vec3& fromVector, const Vec3& toVector)
+CG3_INLINE Quaternion::Quaternion(const Vec3& fromVector, const Vec3& toVector)
 {
     double fromSqNorm = fromVector.lengthSquared();
     double toSqNorm = toVector.lengthSquared();
@@ -49,12 +49,12 @@ Quaternion::Quaternion(const Vec3& fromVector, const Vec3& toVector)
     }
 }
 
-Quaternion::Quaternion(double q1, double q2, double q3, double q4) :
+CG3_INLINE Quaternion::Quaternion(double q1, double q2, double q3, double q4) :
     q{q1, q2, q3, q4}
 {
 }
 
-Vec3 Quaternion::axis() const
+CG3_INLINE Vec3 Quaternion::axis() const
 {
     Vec3 res = Vec3(q[0], q[1], q[2]);
     double s = res.length();
@@ -63,13 +63,13 @@ Vec3 Quaternion::axis() const
     return (std::acos(q[3]) <= M_PI / 2.0) ? res : -res;
 }
 
-double Quaternion::angle() const
+CG3_INLINE double Quaternion::angle() const
 {
     double a = 2.0 * std::acos(q[3]);
     return (a <= M_PI) ? a : 2.0 * M_PI - a;
 }
 
-Quaternion Quaternion::inverse() const
+CG3_INLINE Quaternion Quaternion::inverse() const
 {
     return Quaternion(-q[0], -q[1], -q[2], q[3]);
 }
@@ -78,7 +78,7 @@ Quaternion Quaternion::inverse() const
  * @brief Computes a 4x4 OpenGL Matrix for rotations.
  * @param[in] m: a 4x4 matrix of double.
  */
-void Quaternion::matrix4x4(double m[][4]) const
+CG3_INLINE void Quaternion::matrix4x4(double m[][4]) const
 {
     double q00 = 2.0 * q[0] * q[0];
     double q11 = 2.0 * q[1] * q[1];
@@ -115,14 +115,14 @@ void Quaternion::matrix4x4(double m[][4]) const
     m[3][3] = 1.0;
 }
 
-const double* Quaternion::matrix4x4() const
+CG3_INLINE const double* Quaternion::matrix4x4() const
 {
     static double m[4][4];
     matrix4x4(m);
     return (const double *)(m);
 }
 
-void Quaternion::rotationMatrix(double m[][3]) const
+CG3_INLINE void Quaternion::rotationMatrix(double m[][3]) const
 {
     double mat[4][4];
     matrix4x4(mat);
@@ -132,7 +132,7 @@ void Quaternion::rotationMatrix(double m[][3]) const
 }
 
 #ifdef CG3_WITH_EIGEN
-Eigen::Matrix3d Quaternion::rotationMatrix() const
+CG3_INLINE Eigen::Matrix3d Quaternion::rotationMatrix() const
 {
     Eigen::Matrix3d m;
     double mat[4][4];
@@ -144,7 +144,7 @@ Eigen::Matrix3d Quaternion::rotationMatrix() const
 }
 #endif
 
-void Quaternion::setAxisAngle(const Vec3& axis, double angle)
+CG3_INLINE void Quaternion::setAxisAngle(const Vec3& axis, double angle)
 {
     double norm = axis.length();
     if (norm < CG3_EPSILON) {
@@ -159,7 +159,7 @@ void Quaternion::setAxisAngle(const Vec3& axis, double angle)
     }
 }
 
-void Quaternion::setValue(double q1, double q2, double q3, double q4)
+CG3_INLINE void Quaternion::setValue(double q1, double q2, double q3, double q4)
 {
     q[0] = q1;
     q[1] = q2;
@@ -167,20 +167,20 @@ void Quaternion::setValue(double q1, double q2, double q3, double q4)
     q[3] = q4;
 }
 
-void Quaternion::invert()
+CG3_INLINE void Quaternion::invert()
 {
     q[0] = -q[0];
     q[1] = -q[1];
     q[2] = -q[2];
 }
 
-void Quaternion::negate()
+CG3_INLINE void Quaternion::negate()
 {
     invert();
     q[3] = -q[3];
 }
 
-double Quaternion::normalize()
+CG3_INLINE double Quaternion::normalize()
 {
     double norm = std::sqrt(q[0]*q[0] + q[1]*q[1] + q[2]*q[2] + q[3]*q[3]);
     for (unsigned int i = 0; i < 4; i++)
@@ -188,7 +188,7 @@ double Quaternion::normalize()
     return norm;
 }
 
-Quaternion Quaternion::identity()
+CG3_INLINE Quaternion Quaternion::identity()
 {
     return Quaternion();
 }
