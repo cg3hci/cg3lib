@@ -42,6 +42,6 @@ inline Node* rightRotateHelper(Node* a);
 
 }
 
-#include "avl_helpers.tpp"
+#include "avl_helpers.cpp"
 
 #endif // CG3_AVLHELPERS_H

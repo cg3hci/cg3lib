@@ -93,6 +93,6 @@ inline Node* getMaximumHelperLeaf(Node* node);
 
 }
 
-#include "bstleaf_helpers.tpp"
+#include "bstleaf_helpers.cpp"
 
 #endif // CG3_BSTLEAFHELPERS_H

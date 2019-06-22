@@ -60,6 +60,6 @@ protected:
 }
 
 
-#include "tree_reverseiterator.tpp"
+#include "tree_reverseiterator.cpp"
 
 #endif // CG3_TREEREVERSEITERATOR_H

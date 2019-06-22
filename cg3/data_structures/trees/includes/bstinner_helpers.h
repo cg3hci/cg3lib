@@ -88,6 +88,6 @@ inline Node* getMaximumHelperInner(Node* node);
 
 }
 
-#include "bstinner_helpers.tpp"
+#include "bstinner_helpers.cpp"
 
 #endif // CG3_BSTINNERHELPERS_H

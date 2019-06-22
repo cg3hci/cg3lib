@@ -131,6 +131,6 @@ protected:
 
 } //namespace cg3
 
-#include "array.tpp"
+#include "array.cpp"
 
 #endif // CG3_ARRAY_H

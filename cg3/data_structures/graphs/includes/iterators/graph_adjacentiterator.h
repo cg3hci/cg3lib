@@ -84,6 +84,6 @@ private:
 }
 
 
-#include "graph_adjacentiterator.tpp"
+#include "graph_adjacentiterator.cpp"
 
 #endif // CG3_GRAPH_ADJACENTITERATOR_H

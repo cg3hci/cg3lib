@@ -160,6 +160,6 @@ protected:
 
 } //namespace cg3
 
-#include "bipartite_graph_iterators.tpp"
+#include "bipartite_graph_iterators.cpp"
 
 #endif // CG3_BIPARTITE_GRAPH_ITERATORS_H

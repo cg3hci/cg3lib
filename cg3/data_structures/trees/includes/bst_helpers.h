@@ -41,6 +41,6 @@ namespace internal {
 
 }
 
-#include "bst_helpers.tpp"
+#include "bst_helpers.cpp"
 
 #endif // CG3_BSTHELPERS_H

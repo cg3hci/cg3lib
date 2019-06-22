@@ -61,6 +61,6 @@ protected:
 }
 
 
-#include "tree_iterator.tpp"
+#include "tree_iterator.cpp"
 
 #endif // CG3_TREEITERATOR_H

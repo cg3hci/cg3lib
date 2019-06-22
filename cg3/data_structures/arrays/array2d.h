@@ -40,6 +40,6 @@ std::ostream& operator<< (std::ostream& inputStream, const Array2D<T>& a);
 
 } //namespace cg3
 
-#include "array2d.tpp"
+#include "array2d.cpp"
 
 #endif // CG3_ARRAY2D_H

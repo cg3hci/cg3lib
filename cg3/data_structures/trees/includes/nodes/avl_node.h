@@ -58,6 +58,6 @@ private:
 
 }
 
-#include "avl_node.tpp"
+#include "avl_node.cpp"
 
 #endif // CG3_AVLNODE_H

@@ -39,6 +39,6 @@ protected:
 
 }
 
-#include "graph_genericnodeiterator.tpp"
+#include "graph_genericnodeiterator.cpp"
 
 #endif // CG3_GRAPH_GENERICNODEITERATOR_H

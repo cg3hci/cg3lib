@@ -162,7 +162,7 @@ void swap(AVLInner<K,T,C>& b1, AVLInner<K,T,C>& b2);
 }
 
 
-#include "avlinner.tpp"
+#include "avlinner.cpp"
 
 #endif // CG3_AVLINNER_H
 

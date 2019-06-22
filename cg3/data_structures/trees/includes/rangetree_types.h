@@ -25,7 +25,7 @@ inline bool point2DDimensionComparatorZ(const Point3d& o1, const Point3d& o2);
 std::vector<DefaultComparatorType<Point2d>> getComparatorsForPoint2D();
 std::vector<DefaultComparatorType<Point3d>> getComparatorsForPoint3D();
 
-}
+} //namespace cg3::internal
 
 /**
  * Range tree of 2D points (double components)
@@ -51,6 +51,12 @@ public:
         : RangeTree<Point3d>(3, vec, internal::getComparatorsForPoint3D()) {}
 };
 
-}
+} //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_RANGETREE_TYPES_CPP "rangetree_types.cpp"
+#include CG3_RANGETREE_TYPES_CPP
+#undef CG3_RANGETREE_TYPES_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_RANGETREE_TYPES_H

@@ -45,6 +45,6 @@ public:
 
 } //namespace cg3
 
-#include "array4d.tpp"
+#include "array4d.cpp"
 
 #endif // CG3_ARRAY4D_H

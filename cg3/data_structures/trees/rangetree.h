@@ -236,7 +236,7 @@ void swap(RangeTree<K,T,C>& b1, RangeTree<K,T,C>& b2);
 }
 
 
-#include "rangetree.tpp"
+#include "rangetree.cpp"
 
 #include "includes/rangetree_types.h"
 

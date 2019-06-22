@@ -90,6 +90,6 @@ private:
 }
 
 
-#include "graph_edgeiterator.tpp"
+#include "graph_edgeiterator.cpp"
 
 #endif // CG3_GRAPH_EDGEITERATOR_H

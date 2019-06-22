@@ -161,7 +161,7 @@ void swap(BSTInner<K,T,C>& b1, BSTInner<K,T,C>& b2);
 }
 
 
-#include "bstinner.tpp"
+#include "bstinner.cpp"
 
 #endif // CG3_BSTINNER_H
 
