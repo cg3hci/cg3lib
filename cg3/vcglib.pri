@@ -29,13 +29,13 @@ exists($$VCGLIB_PATH) {
         $$PWD/vcglib/meshes/polygonmeshtype.h \
         $$PWD/vcglib/meshes/trianglemeshtype.h
 
+    CG3_STATIC {
     SOURCES += \
-        $$PWD/vcglib/convert.tpp \
-        $$PWD/vcglib/curve_on_manifold.tpp \
-        $$PWD/vcglib/smoothing.tpp
+        $$PWD/vcglib/convert.cpp \
+        $$PWD/vcglib/curve_on_manifold.cpp \
+        $$PWD/vcglib/smoothing.cpp
+    }
 }
 else {
     message("The vcglib folder (variable VCGLIB_PATH) does not exist!")
 }
-
-

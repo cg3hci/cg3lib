@@ -19,7 +19,7 @@ const uint SIZE = 4000000; //buffer sizes
  * @param container
  * @return a vector of vertices for every cell of the voronoi diagram
  */
-std::vector<std::vector<cg3::Point3d> > parseAllVertices(
+CG3_INLINE std::vector<std::vector<cg3::Point3d> > parseAllVertices(
 		::voro::container& container)
 {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
@@ -76,7 +76,7 @@ std::vector<std::vector<cg3::Point3d> > parseAllVertices(
  * @param container
  * @return a vector of faces for every cell of the voronoi diagram
  */
-std::vector<std::vector<std::vector<uint> > > parseAllFaces(
+CG3_INLINE std::vector<std::vector<std::vector<uint> > > parseAllFaces(
 		::voro::container& container)
 {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
@@ -138,7 +138,7 @@ std::vector<std::vector<std::vector<uint> > > parseAllFaces(
  * @return a vector of adjacences for every cell of the voronoi diagram, parallel to the vector of faces
  * negative numbers are for the cells that are adjacent to the bounds of the box container
  */
-std::vector<std::vector<int> > parseAdjacences(
+CG3_INLINE std::vector<std::vector<int> > parseAdjacences(
 		::voro::container &container)
 {
     std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
@@ -181,6 +181,6 @@ std::vector<std::vector<int> > parseAdjacences(
     return adjs;
 }
 
-}
-}
-}
+} //namespace cg3::voro::internal
+} //namespace cg3::voro
+} //namespace cg3

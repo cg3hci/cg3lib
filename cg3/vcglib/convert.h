@@ -68,6 +68,6 @@ void eigenMeshToVCG(
 }
 }
 
-#include "convert.tpp"
+#include "convert.cpp"
 
 #endif // CG3_VCGLIB_CONVERT_H

@@ -28,8 +28,10 @@ exists($$VOROPLUSPLUS_PATH){
         $$PWD/voro++/voronoi_diagram3.h \
         $$PWD/voro++/internal/voro_parser.h
 
+    CG3_STATIC {
     SOURCES += \
         $$PWD/voro++/voronoi_cell3.cpp \
         $$PWD/voro++/voronoi_diagram3.cpp \
         $$PWD/voro++/internal/voro_parser.cpp
+    }
 }

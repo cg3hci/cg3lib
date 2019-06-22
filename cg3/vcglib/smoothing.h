@@ -38,6 +38,6 @@ void taubinSmoothing(
 }
 }
 
-#include "smoothing.tpp"
+#include "smoothing.cpp"
 
 #endif // CG3_VCGLIB_SMOOTHING_H

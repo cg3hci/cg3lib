@@ -66,4 +66,10 @@ protected:
 } //namespace cg3::voro
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_VORONOI_CELL3_CPP "voronoi_cell3.cpp"
+#include CG3_VORONOI_CELL3_CPP
+#undef CG3_VORONOI_CELL3_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_VORONOI_CELL3_H

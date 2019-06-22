@@ -24,8 +24,14 @@ namespace internal {
 	std::vector<std::vector<Point3d>> parseAllVertices(::voro::container& container);
 	std::vector<std::vector<std::vector<uint> > > parseAllFaces(::voro::container& container);
 	std::vector<std::vector<int>> parseAdjacences(::voro::container& container);
-}
-}
-}
+} //namespace cg3::voro::internal
+} //namespace cg3::voro
+} //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_VORO_PARSER_CPP "voro_parser.cpp"
+#include CG3_VORO_PARSER_CPP
+#undef CG3_VORO_PARSER_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_VORO_PARSER_H

@@ -42,6 +42,6 @@ void curveOnManifold(
 }
 }
 
-#include "curve_on_manifold.tpp"
+#include "curve_on_manifold.cpp"
 
 #endif // CURVE_ON_MANIFOLD_H

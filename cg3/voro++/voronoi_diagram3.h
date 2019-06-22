@@ -148,4 +148,10 @@ void VoronoiDiagram3::addSites(Iterator begin, Iterator end)
 } //namespace cg3::voro
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_VORONOI_DIAGRAM3_CPP "voronoi_diagram3.cpp"
+#include CG3_VORONOI_DIAGRAM3_CPP
+#undef CG3_VORONOI_DIAGRAM3_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_VORONOI_DIAGRAM3_H

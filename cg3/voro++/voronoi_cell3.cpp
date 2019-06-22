@@ -15,28 +15,28 @@
 namespace cg3 {
 namespace voro {
 
-VoronoiCell3::VoronoiCell3() :
+CG3_INLINE VoronoiCell3::VoronoiCell3() :
     _id(0)
 {
 }
 
-uint VoronoiCell3::id() const
+CG3_INLINE uint VoronoiCell3::id() const
 {
     return _id;
 }
 
-const Point3d& VoronoiCell3::site() const
+CG3_INLINE const Point3d& VoronoiCell3::site() const
 {
     return _site;
 }
 
-bool VoronoiCell3::operator<(const VoronoiCell3& o) const
+CG3_INLINE bool VoronoiCell3::operator<(const VoronoiCell3& o) const
 {
     return _id < o._id;
 }
 
 #ifdef CG3_DCEL_DEFINED
-cg3::Dcel VoronoiCell3::geometry() const
+CG3_INLINE cg3::Dcel VoronoiCell3::geometry() const
 {
     DcelBuilder builder;
     for (const cg3::Point3d& p : _coords){
@@ -50,62 +50,62 @@ cg3::Dcel VoronoiCell3::geometry() const
 }
 #endif
 
-std::vector<int>::const_iterator VoronoiCell3::begin() const
+CG3_INLINE std::vector<int>::const_iterator VoronoiCell3::begin() const
 {
     return adjacences.begin();
 }
 
-std::vector<int>::const_iterator VoronoiCell3::end() const
+CG3_INLINE std::vector<int>::const_iterator VoronoiCell3::end() const
 {
     return adjacences.end();
 }
 
-const std::vector<Point3d>&VoronoiCell3::coords() const
+CG3_INLINE const std::vector<Point3d>&VoronoiCell3::coords() const
 {
     return _coords;
 }
 
-int VoronoiCell3::adjacentCell(uint i) const
+CG3_INLINE int VoronoiCell3::adjacentCell(uint i) const
 {
     return adjacences[i];
 }
 
-const std::vector<uint>&VoronoiCell3::face(uint i) const
+CG3_INLINE const std::vector<uint>&VoronoiCell3::face(uint i) const
 {
     return faces[i];
 }
 
-void VoronoiCell3::serialize(std::ofstream &binaryFile) const
+CG3_INLINE void VoronoiCell3::serialize(std::ofstream &binaryFile) const
 {
     cg3::serializeObjectAttributes("cg3VoronoiCell", binaryFile, _id, _site, bb, adjacences, _coords, faces);
 }
 
-void VoronoiCell3::deserialize(std::ifstream &binaryFile)
+CG3_INLINE void VoronoiCell3::deserialize(std::ifstream &binaryFile)
 {
     cg3::deserializeObjectAttributes("cg3VoronoiCell", binaryFile, _id, _site, bb, adjacences, _coords, faces);
 }
 
-VoronoiCell3::VoronoiCell3(int id, const Point3d& site) :
+CG3_INLINE VoronoiCell3::VoronoiCell3(int id, const Point3d& site) :
     _id(id), _site(site)
 {
 }
 
-void VoronoiCell3::clearAdjacences()
+CG3_INLINE void VoronoiCell3::clearAdjacences()
 {
     adjacences.clear();
 }
 
-void VoronoiCell3::addAdjacent(int adj)
+CG3_INLINE void VoronoiCell3::addAdjacent(int adj)
 {
     adjacences.push_back(adj);
 }
 
-void VoronoiCell3::setAdjacents(const std::vector<int>& adjacences)
+CG3_INLINE void VoronoiCell3::setAdjacents(const std::vector<int>& adjacences)
 {
     this->adjacences = adjacences;
 }
 
-void VoronoiCell3::setGeometry(
+CG3_INLINE void VoronoiCell3::setGeometry(
         const std::vector<Point3d>& coords,
         const std::vector<std::vector<uint> >& faces)
 {

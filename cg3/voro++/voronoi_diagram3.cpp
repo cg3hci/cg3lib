@@ -11,7 +11,7 @@
 namespace cg3 {
 namespace voro {
 
-VoronoiDiagram3::VoronoiDiagram3(const VoronoiDiagram3& vd) :
+CG3_INLINE VoronoiDiagram3::VoronoiDiagram3(const VoronoiDiagram3& vd) :
     bb(vd.bb),
     container(this->bb.minX(), this->bb.maxX(),
               this->bb.minY(), this->bb.maxY(),
@@ -29,37 +29,37 @@ VoronoiDiagram3::VoronoiDiagram3(const VoronoiDiagram3& vd) :
     finalize();
 }
 
-uint VoronoiDiagram3::numSites() const
+CG3_INLINE uint VoronoiDiagram3::numSites() const
 {
     return cells.size();
 }
 
-const VoronoiCell3& VoronoiDiagram3::cell(uint i)
+CG3_INLINE const VoronoiCell3& VoronoiDiagram3::cell(uint i)
 {
     assert(i < cells.size());
     return cells[i];
 }
 
-const VoronoiCell3 &VoronoiDiagram3::cell(const Point3d &site)
+CG3_INLINE const VoronoiCell3 &VoronoiDiagram3::cell(const Point3d &site)
 {
     assert(mapCells.find(site) != mapCells.end());
     return cells[mapCells[site]];
 }
 
-void VoronoiDiagram3::addSite(const Point3d &p)
+CG3_INLINE void VoronoiDiagram3::addSite(const Point3d &p)
 {
     addSite(cells.size(), p);
     finalize();
 }
 
-void VoronoiDiagram3::clear()
+CG3_INLINE void VoronoiDiagram3::clear()
 {
     container.clear();
     cells.clear();
     mapCells.clear();
 }
 
-VoronoiDiagram3& VoronoiDiagram3::operator=(const VoronoiDiagram3& vd)
+CG3_INLINE VoronoiDiagram3& VoronoiDiagram3::operator=(const VoronoiDiagram3& vd)
 {
     if (this != &vd){
         bb = vd.bb;
@@ -80,22 +80,22 @@ VoronoiDiagram3& VoronoiDiagram3::operator=(const VoronoiDiagram3& vd)
     return *this;
 }
 
-std::vector<VoronoiCell3>::const_iterator VoronoiDiagram3::begin() const
+CG3_INLINE std::vector<VoronoiCell3>::const_iterator VoronoiDiagram3::begin() const
 {
     return cells.begin();
 }
 
-std::vector<VoronoiCell3>::const_iterator VoronoiDiagram3::end() const
+CG3_INLINE std::vector<VoronoiCell3>::const_iterator VoronoiDiagram3::end() const
 {
     return cells.end();
 }
 
-void VoronoiDiagram3::serialize(std::ofstream& binaryFile) const
+CG3_INLINE void VoronoiDiagram3::serialize(std::ofstream& binaryFile) const
 {
     cg3::serializeObjectAttributes("cg3VoronoiDiagram", binaryFile, bb, cells, mapCells, nPoints);
 }
 
-void VoronoiDiagram3::deserialize(std::ifstream& binaryFile)
+CG3_INLINE void VoronoiDiagram3::deserialize(std::ifstream& binaryFile)
 {
     cg3::deserializeObjectAttributes("cg3VoronoiDiagram", binaryFile, bb, cells, mapCells, nPoints);
     (&container)->~container();
@@ -110,7 +110,7 @@ void VoronoiDiagram3::deserialize(std::ifstream& binaryFile)
     finalize();
 }
 
-void VoronoiDiagram3::addSite(uint i, const Point3d &site)
+CG3_INLINE void VoronoiDiagram3::addSite(uint i, const Point3d &site)
 {
     if (bb.isInside(site) && mapCells.find(site) == mapCells.end()) {
         container.put(i, site.x(), site.y(), site.z());
@@ -119,7 +119,7 @@ void VoronoiDiagram3::addSite(uint i, const Point3d &site)
     }
 }
 
-void VoronoiDiagram3::finalize()
+CG3_INLINE void VoronoiDiagram3::finalize()
 {
     std::vector<std::vector<cg3::Point3d>> vertices = internal::parseAllVertices(container);
     std::vector<std::vector<std::vector<uint>>> faces = internal::parseAllFaces(container);
