@@ -30,7 +30,7 @@ typedef CGAL::Polygon_2<CK>                                     CK_Polygon_2;
  * @param ignoreEndPoints
  * @return
  */
-bool checkSegmentIntersection2D(
+CG3_INLINE bool checkSegmentIntersection2D(
         const Segment2d& seg1, const Segment2d& seg2,
         const bool& ignoreEndPoints)
 {
@@ -69,7 +69,7 @@ bool checkSegmentIntersection2D(
  * @param ignoreEndPoints
  * @return
  */
-std::vector<Segment2d> segmentIntersection2D(
+CG3_INLINE std::vector<Segment2d> segmentIntersection2D(
         const Segment2d& seg1, const Segment2d& seg2,
         const bool& ignoreEndPoints)
 {

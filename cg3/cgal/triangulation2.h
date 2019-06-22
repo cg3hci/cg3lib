@@ -25,4 +25,10 @@ std::vector<std::array<Point2d , 3> > triangulate2(
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_TRIANGULATION2_CPP "triangulation2.cpp"
+#include CG3_CGAL_TRIANGULATION2_CPP
+#undef CG3_CGAL_TRIANGULATION2_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_CGAL_TRIANGULATION2_H

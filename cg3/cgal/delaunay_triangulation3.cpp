@@ -9,15 +9,13 @@
 namespace cg3 {
 namespace cgal {
 
-DelaunayTriangulation3::DelaunayTriangulation3()
+CG3_INLINE DelaunayTriangulation3::DelaunayTriangulation3()
 {
-
 }
 
-void DelaunayTriangulation3::pushPoint(const Point3d& p)
+CG3_INLINE void DelaunayTriangulation3::pushPoint(const Point3d& p)
 {
     triangulation.insert(CGALPoint(p.x(), p.y(), p.z()));
-
 }
 
 }

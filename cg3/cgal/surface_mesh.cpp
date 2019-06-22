@@ -31,7 +31,7 @@ typedef SurfaceMesh::Vertex_index VertexDescriptor;
  * @param d
  * @return
  */
-SurfaceMesh surfaceMeshFromDcel(const Dcel &d)
+CG3_INLINE SurfaceMesh surfaceMeshFromDcel(const Dcel &d)
 {
     SurfaceMesh mesh;
     std::map<const Dcel::Vertex*, internal::VertexDescriptor> mapV;

@@ -42,5 +42,10 @@ std::vector<std::vector<Point3d> > polylines(
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_SLICER_CPP "slicer.cpp"
+#include CG3_CGAL_SLICER_CPP
+#undef CG3_CGAL_SLICER_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_CGAL_SLICER_H

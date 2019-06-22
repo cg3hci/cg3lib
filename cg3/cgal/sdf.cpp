@@ -23,7 +23,7 @@ namespace cgal {
  * @param mesh
  * @return
  */
-std::vector<double> SDFMap(const Polyhedron &mesh)
+CG3_INLINE std::vector<double> SDFMap(const Polyhedron &mesh)
 {
     typedef std::map<Polyhedron::Facet_const_handle, double> Facet_double_map;
     Facet_double_map internal_map;
@@ -74,7 +74,7 @@ std::vector<double> SDFMap(const Polyhedron &mesh)
  * @param dcel
  * @return
  */
-std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel)
+CG3_INLINE std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel)
 {
     std::map<const Dcel::Face*, int> faceMap;
     std::map<const Dcel::Vertex*, int> vertexMap;
@@ -116,7 +116,7 @@ std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel)
  * @param m
  * @return
  */
-std::vector<double> SDFMap(const SimpleEigenMesh &m)
+CG3_INLINE std::vector<double> SDFMap(const SimpleEigenMesh &m)
 {
     Polyhedron mesh = polyhedronFromEigenMesh(m);
     return SDFMap(mesh);

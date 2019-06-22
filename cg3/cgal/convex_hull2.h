@@ -28,6 +28,6 @@ void convexHull2D(
 } //namespace cg3::cgal
 } //namespace cg3
 
-#include "convex_hull2.tpp"
+#include "convex_hull2.cpp"
 
 #endif // CG3_CGAL_CONVEX_HULL2D_H

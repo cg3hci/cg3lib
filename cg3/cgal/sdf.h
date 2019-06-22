@@ -31,4 +31,10 @@ std::vector<double> SDFMap(const SimpleEigenMesh& m);
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_SDF_CPP "sdf.cpp"
+#include CG3_CGAL_SDF_CPP
+#undef CG3_CGAL_SDF_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_CGAL_SDF_H

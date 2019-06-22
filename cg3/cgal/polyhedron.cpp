@@ -32,7 +32,7 @@ typedef Polyhedron::HalfedgeDS  HalfedgeDS;
  * @param faceMap
  * @return
  */
-cgal::Polyhedron polyhedronFromDcel(
+CG3_INLINE cgal::Polyhedron polyhedronFromDcel(
         const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap,
         std::map<const Dcel::Face*, int>& faceMap)
@@ -99,7 +99,7 @@ cgal::Polyhedron polyhedronFromDcel(
  * @param poly
  * @return
  */
-Dcel dcelFromPolyhedron(const cgal::Polyhedron& poly)
+CG3_INLINE Dcel dcelFromPolyhedron(const cgal::Polyhedron& poly)
 {
     typedef typename internal::HalfedgeDS::Vertex  PolyhedronVertex;
     typedef typename PolyhedronVertex::Point       PolyhedronPoint;
@@ -123,7 +123,7 @@ Dcel dcelFromPolyhedron(const cgal::Polyhedron& poly)
  * @param mesh
  * @return
  */
-cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
+CG3_INLINE cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 {
     class PolyhedronBuilder : public CGAL::Modifier_base<internal::HalfedgeDS>
     {
@@ -167,7 +167,7 @@ cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 }
 
 
-SimpleEigenMesh eigenMeshFromPolyhedron(const cgal::Polyhedron& poly)
+CG3_INLINE SimpleEigenMesh eigenMeshFromPolyhedron(const cgal::Polyhedron& poly)
 {
     typedef typename internal::HalfedgeDS::Vertex  PolyhedronVertex;
     typedef typename PolyhedronVertex::Point       PolyhedronPoint;

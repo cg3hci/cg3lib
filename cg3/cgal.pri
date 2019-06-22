@@ -133,10 +133,11 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/triangulation3.h \
         $$PWD/cgal/voronoi2.h
 
+    CG3_STATIC {
     SOURCES += \
         $$PWD/cgal/aabb_tree3.cpp \
-        $$PWD/cgal/convex_hull2.tpp \
         $$PWD/cgal/booleans2.cpp \
+        $$PWD/cgal/convex_hull2.cpp \
         $$PWD/cgal/delaunay_triangulation3.cpp \
         $$PWD/cgal/hole_filling.cpp \
         $$PWD/cgal/minimum_bbox2.cpp \
@@ -148,6 +149,7 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/triangulation2.cpp \
         $$PWD/cgal/triangulation3.cpp \
         $$PWD/cgal/voronoi2.cpp
+    }
 }
 else {
     message(CGAL not installed properly!)

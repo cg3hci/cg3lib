@@ -13,6 +13,7 @@
 #include <CGAL/Polygon_mesh_processing/triangulate_hole.h>
 
 #ifdef CGAL_EIGEN3_ENABLED
+
 namespace cg3 {
 namespace cgal {
 namespace internal {
@@ -30,7 +31,7 @@ typedef Polyhedron::Vertex_handle      Vertex_handle;
  * @param input
  * @param output
  */
-void holeFillingFileOff(const std::string& input, const std::string& output)
+CG3_INLINE void holeFillingFileOff(const std::string& input, const std::string& output)
 {
     std::ifstream sinput(input);
     Polyhedron poly;
@@ -51,7 +52,7 @@ void holeFillingFileOff(const std::string& input, const std::string& output)
  * @brief cgal::holeFilling::holeFilling
  * @param poly
  */
-void holeFilling(cgal::Polyhedron& poly)
+CG3_INLINE void holeFilling(cgal::Polyhedron& poly)
 {
     // Incrementally fill the holes
     unsigned int nb_holes = 0;
@@ -82,7 +83,7 @@ void holeFilling(cgal::Polyhedron& poly)
  * @brief cgal::holeFilling::holeFilling
  * @param poly
  */
-void holeFillingTriangulation(cgal::Polyhedron& poly)
+CG3_INLINE void holeFillingTriangulation(cgal::Polyhedron& poly)
 {
     // Incrementally fill the holes
     unsigned int nb_holes = 0;
@@ -111,31 +112,31 @@ void holeFillingTriangulation(cgal::Polyhedron& poly)
  * @brief holeFilling
  * @param d
  */
-void holeFilling(Dcel& d)
+CG3_INLINE void holeFilling(Dcel& d)
 {
     Polyhedron p = cgal::polyhedronFromDcel(d);
     holeFilling(p);
     d = cgal::dcelFromPolyhedron(p);
 }
-#endif
+#endif //CG3_DCEL_DEFINED
 
 #ifdef CG3_EIGENMESH_DEFINED
-SimpleEigenMesh holeFilling(const SimpleEigenMesh& d)
+CG3_INLINE SimpleEigenMesh holeFilling(const SimpleEigenMesh& d)
 {
     Polyhedron p = cgal::polyhedronFromEigenMesh(d);
     holeFilling(p);
     return cgal::eigenMeshFromPolyhedron(p);
 }
 
-SimpleEigenMesh holeFillingTriangulation(const SimpleEigenMesh& d)
+CG3_INLINE SimpleEigenMesh holeFillingTriangulation(const SimpleEigenMesh& d)
 {
     Polyhedron p = cgal::polyhedronFromEigenMesh(d);
     holeFillingTriangulation(p);
     return cgal::eigenMeshFromPolyhedron(p);
 }
-#endif
+#endif //CG3_EIGENMESH_DEFINED
 
-}
-}
+} //namespace cg3::cgal
+} //namespace cg3
 
-#endif
+#endif //CGAL_EIGEN3_ENABLED

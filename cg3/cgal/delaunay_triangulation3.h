@@ -32,7 +32,13 @@ private:
     Delaunay triangulation;
 };
 
-}
-}
+} //namespace cg3::cgal
+} //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_CGAL_DELAUNAY_TRIANGULATION3_CPP "delaunay_triangulation3.cpp"
+#include CG3_CGAL_DELAUNAY_TRIANGULATION3_CPP
+#undef BOUNDINGBOX2_CPP
+#endif
 
 #endif // CG3_CGAL_DELAUNAY_TRIANGULATION3_H

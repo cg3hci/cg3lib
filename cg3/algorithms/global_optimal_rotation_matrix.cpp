@@ -21,15 +21,15 @@
 
 namespace cg3 {
 
-void defineRotation(const cg3::Vec3& zAxis,
-                    cg3::Vec3& rotationAxis,
+CG3_INLINE void defineRotation(const cg3::Vec3& zAxis,
+					cg3::Vec3& rotationAxis,
                     double& angle)
 {
-    const cg3::Vec3 Z(0,0,1);
+	const cg3::Vec3 Z(0,0,1);
     rotationAxis = zAxis.cross(Z);
     rotationAxis.normalize();
     angle = acos(zAxis.dot(Z));
-    assert(!std::isnan(angle));
+	assert(!std::isnan(angle));
 }
 
 #ifdef CG3_WITH_EIGEN
@@ -42,7 +42,7 @@ void defineRotation(const cg3::Vec3& zAxis,
  * @param nDirs
  * @return A rotation matrix for the input mesh
  */
-Eigen::Matrix3d globalOptimalRotationMatrix(
+CG3_INLINE Eigen::Matrix3d globalOptimalRotationMatrix(
 		const cg3::Dcel& inputMesh,
 		unsigned int nDirs)
 {
@@ -52,7 +52,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
 	return globalOptimalRotationMatrix(inputMesh, dirPool);
 }
 
-Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel &inputMesh, const std::vector<Vec3> &dirPool)
+CG3_INLINE Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel &inputMesh, const std::vector<Vec3> &dirPool)
 {
 	std::set<std::pair<double,Vec3>> priorizitedOrientations;
 	for(Vec3 zAxis : dirPool) {
@@ -92,7 +92,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel &inputMesh, const std::ve
  * @param nDirs
  * @return
  */
-Eigen::Matrix3d globalOptimalRotationMatrix(
+CG3_INLINE Eigen::Matrix3d globalOptimalRotationMatrix(
         const SimpleEigenMesh& inputMesh,
 		unsigned int nDirs)
 {
@@ -101,7 +101,7 @@ Eigen::Matrix3d globalOptimalRotationMatrix(
 	return globalOptimalRotationMatrix(inputMesh, dirPool);
 }
 
-Eigen::Matrix3d globalOptimalRotationMatrix(
+CG3_INLINE Eigen::Matrix3d globalOptimalRotationMatrix(
 		const SimpleEigenMesh &inputMesh,
 		const std::vector<Vec3> &dirPool)
 {

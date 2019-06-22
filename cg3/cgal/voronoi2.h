@@ -23,4 +23,10 @@ void voronoiDiagram2(
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_VORONOI2_CPP "voronoi2.cpp"
+#include CG3_CGAL_VORONOI2_CPP
+#undef CG3_CGAL_VORONOI2_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_CGAL_VORONOI2_H

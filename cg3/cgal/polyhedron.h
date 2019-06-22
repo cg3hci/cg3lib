@@ -6,8 +6,8 @@
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
 
-#ifndef CG3_CGAL_POLYHEDRON3_H
-#define CG3_CGAL_POLYHEDRON3_H
+#ifndef CG3_CGAL_POLYHEDRON_H
+#define CG3_CGAL_POLYHEDRON_H
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polyhedron_3.h>
@@ -57,4 +57,10 @@ SimpleEigenMesh eigenMeshFromPolyhedron(const Polyhedron& poly);
 } //namespace cg3::cgal
 } //namespace cg3
 
-#endif // CG3_CGAL_POLYHEDRON3_H
+#ifndef CG3_STATIC
+#define CG3_CGAL_POLYHEDRON_CPP "polyhedron.cpp"
+#include CG3_CGAL_POLYHEDRON_CPP
+#undef CG3_CGAL_POLYHEDRON_CPP
+#endif //CG3_STATIC
+
+#endif // CG3_CGAL_POLYHEDRON_H

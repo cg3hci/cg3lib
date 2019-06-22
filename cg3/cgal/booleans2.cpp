@@ -25,7 +25,7 @@ typedef CGAL::Polygon_2<Kernel>                           Polygon_2;
 typedef CGAL::Polygon_with_holes_2<Kernel>                Polygon_with_holes_2;
 typedef std::list<Polygon_with_holes_2>                   Pwh_list_2;
 
-void getCoordinates(const internal::Point_2& p, double& x, double& y)
+CG3_INLINE void getCoordinates(const internal::Point_2& p, double& x, double& y)
 {
 
     std::stringstream ss1;
@@ -48,7 +48,7 @@ void getCoordinates(const internal::Point_2& p, double& x, double& y)
  * @return a list of polygons which represent the boolean difference between
  * polygon1 and polygon2.
  */
-std::vector<std::vector<Point2d> > difference(
+CG3_INLINE std::vector<std::vector<Point2d> > difference(
         const std::vector<Point2d>& polygon1,
         const std::vector<Point2d>& polygon2)
 {
@@ -99,7 +99,7 @@ std::vector<std::vector<Point2d> > difference(
  * @return a list of polygons which represent the boolean intersection between
  * polygon1 and polygon2.
  */
-std::vector<std::vector<Point2d> > intersection(
+CG3_INLINE std::vector<std::vector<Point2d> > intersection(
         const std::vector<Point2d>& polygon1,
         const std::vector<Point2d>& polygon2)
 {
@@ -148,7 +148,7 @@ std::vector<std::vector<Point2d> > intersection(
  * @param[in] polygon2: second polygon
  * @return true if the two polygons intersect, false otherwise.
  */
-bool doIntersect(
+CG3_INLINE bool doIntersect(
         const std::vector<Point2d> &polygon1,
         const std::vector<Point2d> &polygon2)
 {

@@ -38,7 +38,7 @@ typedef CGAL::AABB_tree<AABB_traits>  AABB_tree;
  * @param d
  * @return
  */
-std::vector<std::vector<Point3d>> polylines(
+CG3_INLINE std::vector<std::vector<Point3d>> polylines(
         const std::string& inputOffFile,
         const Vec3& norm,
         double d)
@@ -60,7 +60,7 @@ std::vector<std::vector<Point3d>> polylines(
  * @param d
  * @return
  */
-std::vector<std::vector<Point3d>> polylines(
+CG3_INLINE std::vector<std::vector<Point3d>> polylines(
         const SurfaceMesh &mesh,
         const Vec3& norm,
         double d)
@@ -90,7 +90,7 @@ std::vector<std::vector<Point3d>> polylines(
  * @param p
  * @return
  */
-std::vector<std::vector<Point3d> > polylines(
+CG3_INLINE std::vector<std::vector<Point3d> > polylines(
         const Dcel &mesh,
         const Plane &p)
 {
@@ -105,7 +105,7 @@ std::vector<std::vector<Point3d> > polylines(
  * @param d
  * @return
  */
-std::vector<std::vector<Point3d> > polylines(
+CG3_INLINE std::vector<std::vector<Point3d> > polylines(
         const Dcel &mesh,
         const Vec3 &norm,
         double d)

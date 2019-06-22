@@ -21,10 +21,12 @@ HEADERS += \
     $$PWD/algorithms/sphere_coverage.h \
     $$PWD/algorithms/global_optimal_rotation_matrix.h
 
+CG3_STATIC {
 SOURCES += \
-    $$PWD/algorithms/convex_hull2.tpp \
-    $$PWD/algorithms/convex_hull2_incremental.tpp \
-    $$PWD/algorithms/convex_hull3.tpp \
-    $$PWD/algorithms/graph_algorithms.tpp \
-    $$PWD/algorithms/sphere_coverage.tpp \
-    $$PWD/algorithms/global_optimal_rotation_matrix.cpp
+    $$PWD/algorithms/convex_hull2.cpp \
+    $$PWD/algorithms/convex_hull2_incremental.cpp \
+    $$PWD/algorithms/convex_hull3.cpp \
+    $$PWD/algorithms/global_optimal_rotation_matrix.cpp \
+    $$PWD/algorithms/graph_algorithms.cpp \
+    $$PWD/algorithms/sphere_coverage.cpp
+}

@@ -31,4 +31,10 @@ Eigen::Matrix3d globalOptimalRotationMatrix(const SimpleEigenMesh& inputMesh, co
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define  CG3_GLOBAL_OPTIMAL_ROTATION_MATRIX_CPP "global_optimal_rotation_matrix.cpp"
+#include  CG3_GLOBAL_OPTIMAL_ROTATION_MATRIX_CPP
+#undef  CG3_GLOBAL_OPTIMAL_ROTATION_MATRIX_CPP
+#endif
+
 #endif // CG3_GLOBAL_OPTIMAL_ROTATION_MATRIX_H

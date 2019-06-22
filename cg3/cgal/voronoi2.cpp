@@ -44,7 +44,7 @@ typedef VD::Ccb_halfedge_circulator   Ccb_halfedge_circulator;
  * @param sites
  * @return
  */
-std::vector<std::vector<cg3::Point2d> > voronoiDiagram2(
+CG3_INLINE std::vector<std::vector<cg3::Point2d> > voronoiDiagram2(
         const std::vector<cg3::Point2d>& sites)
 {
     std::vector<std::vector<cg3::Point2d> > voronoi;
@@ -85,7 +85,7 @@ std::vector<std::vector<cg3::Point2d> > voronoiDiagram2(
  * @param vl
  * @param fl
  */
-void voronoiDiagram2(
+CG3_INLINE void voronoiDiagram2(
         const std::vector<Point2d>& sites,
         std::vector<Point2d>& vl,
         std::vector<std::vector<unsigned int> >& fl)

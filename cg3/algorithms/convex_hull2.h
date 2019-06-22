@@ -19,7 +19,7 @@ OutputIterator convexHull2D(const InputIterator first, const InputIterator end, 
 
 } //namespace cg3
 
-#include "convex_hull2.tpp"
+#include "convex_hull2.cpp"
 
 
 #endif // CG3_CONVEXHULL2D_H

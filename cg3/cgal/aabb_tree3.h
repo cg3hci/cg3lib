@@ -126,4 +126,10 @@ protected:
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_AABBTREE3_CPP "aabb_tree3.cpp"
+#include CG3_CGAL_AABBTREE3_CPP
+#undef CG3_CGAL_AABBTREE3_CPP
+#endif
+
 #endif // CG3_CGAL_AABBTREE3_H

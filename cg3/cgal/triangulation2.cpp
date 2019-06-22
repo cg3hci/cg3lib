@@ -53,7 +53,7 @@ typedef CGAL::Triangulation_face_base_2<E, TDFB2>                       TFB2;
 typedef CGAL::Triangulation_face_base_with_info_2<FaceInfo2, E, TFB2>   TFBI;
 typedef CGAL::Constrained_triangulation_face_base_2<E, TFBI >           Triangle;
 
-void markDomains(CDT& ct, CDT::Face_handle start, int index, std::list<CDT::Edge>& border)
+CG3_INLINE void markDomains(CDT& ct, CDT::Face_handle start, int index, std::list<CDT::Edge>& border)
 {
     if(start->info().nesting_level != -1){
         return;
@@ -77,7 +77,7 @@ void markDomains(CDT& ct, CDT::Face_handle start, int index, std::list<CDT::Edge
     }
 }
 
-void markDomains(CDT& cdt)
+CG3_INLINE void markDomains(CDT& cdt)
 {
     for(CDT::All_faces_iterator it = cdt.all_faces_begin(); it != cdt.all_faces_end(); ++it){
         it->info().nesting_level = -1;
@@ -103,7 +103,7 @@ void markDomains(CDT& cdt)
  * @param holes
  * @return
  */
-std::vector<std::array<Point2d, 3> > triangulate2(
+CG3_INLINE std::vector<std::array<Point2d, 3> > triangulate2(
         const std::vector<Point2d >& polygon,
         const std::vector<std::vector<Point2d > >& holes)
 {

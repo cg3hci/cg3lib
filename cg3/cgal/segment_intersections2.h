@@ -23,4 +23,10 @@ std::vector<Segment2d> segmentIntersection2D(
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_SEGMENT_INTERSECTIONS2_CPP "segment_intersections2.cpp"
+#include CG3_CGAL_SEGMENT_INTERSECTIONS2_CPP
+#undef CG3_CGAL_SEGMENT_INTERSECTIONS2_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_CGAL_SEGMENT_INTERSECTIONS2_H

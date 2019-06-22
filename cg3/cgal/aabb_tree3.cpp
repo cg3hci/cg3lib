@@ -12,11 +12,11 @@
 
 #ifdef TRIMESH_DEFINED
 #include <trimesh/trimesh.h>
-#endif
+#endif //TRIMESH_DEFINED
 
 #ifdef  CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
+#endif //CG3_EIGENMESH_DEFINED
 
 namespace cg3 {
 namespace cgal {
@@ -24,14 +24,14 @@ namespace cgal {
 /**
  * @brief  Creates an empty AABBTree. This object cannot be used.
  */
-AABBTree3::AABBTree3() {
+CG3_INLINE AABBTree3::AABBTree3() {
 }
 
 /**
  * @brief Copy constructor.
  * @param[in] other: another AABBTree
  */
-AABBTree3::AABBTree3(const AABBTree3& other) :
+CG3_INLINE AABBTree3::AABBTree3(const AABBTree3& other) :
     forDistanceQueries(other.forDistanceQueries),
     treeType(other.treeType),
     triangles(other.triangles),
@@ -56,7 +56,7 @@ AABBTree3::AABBTree3(const AABBTree3& other) :
  * @brief Move constructor.
  * @param[in] other: another AABBTree
  */
-AABBTree3::AABBTree3(AABBTree3 &&other) :
+CG3_INLINE AABBTree3::AABBTree3(AABBTree3 &&other) :
     forDistanceQueries(other.forDistanceQueries),
     treeType(other.treeType),
     triangles(other.triangles),
@@ -83,7 +83,7 @@ AABBTree3::AABBTree3(AABBTree3 &&other) :
  * @param[in] t: the trimesh on which is constructed the tree.
  * @param[in] forDistanceQueries: use this parameter to optimize the tree for distance queries.
  */
-AABBTree3::AABBTree3(const Trimesh<double>& t, bool forDistanceQueries)
+CG3_INLINE AABBTree3::AABBTree3(const Trimesh<double>& t, bool forDistanceQueries)
 {
     treeType = TRIMESH;
     for (int i = 0; i < t.numVertices(); i++){
@@ -115,7 +115,7 @@ AABBTree3::AABBTree3(const Trimesh<double>& t, bool forDistanceQueries)
  * @param[in] m: the eigenmesh on which is constructed the tree.
  * @param[in] forDistanceQueries: use this parameter to optimize the tree for distance queries.
  */
-AABBTree3::AABBTree3(const SimpleEigenMesh& m, bool forDistanceQueries)
+CG3_INLINE AABBTree3::AABBTree3(const SimpleEigenMesh& m, bool forDistanceQueries)
 {
     treeType = EIGENMESH;
     for (unsigned int i = 0; i < m.numberVertices(); i++){
@@ -150,7 +150,7 @@ AABBTree3::AABBTree3(const SimpleEigenMesh& m, bool forDistanceQueries)
  * @param[in] d: the Dcel on which is constructed the tree.
  * @param[in] forDistanceQueries: use this parameter to optimize the tree for distance queries.
  */
-AABBTree3::AABBTree3(const Dcel& d, bool forDistanceQueries) :
+CG3_INLINE AABBTree3::AABBTree3(const Dcel& d, bool forDistanceQueries) :
     forDistanceQueries(forDistanceQueries)
 {
     treeType = DCEL;
@@ -184,7 +184,7 @@ AABBTree3::AABBTree3(const Dcel& d, bool forDistanceQueries) :
  * @param[in] other: the tree which is assigned
  * @return the assigned tree
  */
-AABBTree3& AABBTree3::operator=(const cgal::AABBTree3& other)
+CG3_INLINE AABBTree3& AABBTree3::operator=(const cgal::AABBTree3& other)
 {
     forDistanceQueries = other.forDistanceQueries;
     treeType = other.treeType;
@@ -214,7 +214,7 @@ AABBTree3& AABBTree3::operator=(const cgal::AABBTree3& other)
  * @param[in] p2: ending point of the segment query
  * @return the number of triangles intersected by the segment
  */
-int AABBTree3::numberIntersectedPrimitives(const Point3d& p1, const Point3d& p2) const
+CG3_INLINE int AABBTree3::numberIntersectedPrimitives(const Point3d& p1, const Point3d& p2) const
 {
     CGALPoint pa(p1.x(), p1.y(), p1.z());
     CGALPoint pb(p2.x(), p2.y(), p2.z());
@@ -227,7 +227,7 @@ int AABBTree3::numberIntersectedPrimitives(const Point3d& p1, const Point3d& p2)
  * @param b
  * @return
  */
-int AABBTree3::numberIntersectedPrimitives(const BoundingBox3& b) const
+CG3_INLINE int AABBTree3::numberIntersectedPrimitives(const BoundingBox3& b) const
 {
     CGALBoundingBox bb(b.minX(), b.minY(), b.minZ(), b.maxX(), b.maxY(), b.maxZ());
     return (int) tree.number_of_intersected_primitives(bb);
@@ -238,7 +238,7 @@ int AABBTree3::numberIntersectedPrimitives(const BoundingBox3& b) const
  * @param p
  * @return
  */
-double AABBTree3::squaredDistance(const Point3d& p) const
+CG3_INLINE double AABBTree3::squaredDistance(const Point3d& p) const
 {
     CGALPoint query(p.x(), p.y(), p.z());
     return tree.squared_distance(query);
@@ -249,7 +249,7 @@ double AABBTree3::squaredDistance(const Point3d& p) const
  * @param p
  * @return
  */
-Point3d AABBTree3::nearestPoint(const Point3d& p) const
+CG3_INLINE Point3d AABBTree3::nearestPoint(const Point3d& p) const
 {
     CGALPoint query(p.x(), p.y(), p.z());
     CGALPoint closest = tree.closest_point(query);
@@ -262,7 +262,7 @@ Point3d AABBTree3::nearestPoint(const Point3d& p) const
  * @param numberOfChecks
  * @return
  */
-bool AABBTree3::isInside(const Point3d& p, int numberOfChecks) const
+CG3_INLINE bool AABBTree3::isInside(const Point3d& p, int numberOfChecks) const
 {
     static std::random_device rd;
     static std::mt19937 e2(rd());
@@ -324,7 +324,7 @@ bool AABBTree3::isInside(const Point3d& p, int numberOfChecks) const
  * @param numberOfChecks
  * @return
  */
-bool AABBTree3::isInsidePseudoRandom(const Point3d& p, int numberOfChecks) const
+CG3_INLINE bool AABBTree3::isInsidePseudoRandom(const Point3d& p, int numberOfChecks) const
 {
     assert(numberOfChecks % 2 == 1);
     int inside = 0, outside = 0;
@@ -389,7 +389,7 @@ bool AABBTree3::isInsidePseudoRandom(const Point3d& p, int numberOfChecks) const
  * @param outputList
  * @param b
  */
-void AABBTree3::containedDcelFaces(
+CG3_INLINE void AABBTree3::containedDcelFaces(
         std::list<const Dcel::Face*>& outputList,
         const BoundingBox3& b) const
 {
@@ -411,7 +411,7 @@ void AABBTree3::containedDcelFaces(
  * @param b
  * @return
  */
-std::list<const Dcel::Face*> AABBTree3::containedDcelFaces(const BoundingBox3& b) const
+CG3_INLINE std::list<const Dcel::Face*> AABBTree3::containedDcelFaces(const BoundingBox3& b) const
 {
     std::list<const Dcel::Face*> outputList;
     containedDcelFaces(outputList, b);
@@ -423,7 +423,7 @@ std::list<const Dcel::Face*> AABBTree3::containedDcelFaces(const BoundingBox3& b
  * @param outputList
  * @param b
  */
-void AABBTree3::completelyContainedDcelFaces(
+CG3_INLINE void AABBTree3::completelyContainedDcelFaces(
         std::list<const Dcel::Face*>& outputList,
         const BoundingBox3& b) const
 {
@@ -449,7 +449,7 @@ void AABBTree3::completelyContainedDcelFaces(
  * @param outputList
  * @param b
  */
-void AABBTree3::completelyContainedDcelFaces(
+CG3_INLINE void AABBTree3::completelyContainedDcelFaces(
         std::list<unsigned int>& outputList,
         const BoundingBox3& b) const
 {
@@ -465,7 +465,7 @@ void AABBTree3::completelyContainedDcelFaces(
  * @param b
  * @return
  */
-std::list<const Dcel::Face*> AABBTree3::completelyContainedDcelFaces(
+CG3_INLINE std::list<const Dcel::Face*> AABBTree3::completelyContainedDcelFaces(
         const BoundingBox3& b) const
 {
     std::list<const Dcel::Face*> output;
@@ -473,7 +473,7 @@ std::list<const Dcel::Face*> AABBTree3::completelyContainedDcelFaces(
     return output;
 }
 
-void AABBTree3::intersectedDcelFaces(
+CG3_INLINE void AABBTree3::intersectedDcelFaces(
         const Point3d& p1,
         const Point3d& p2,
         std::list<const Dcel::Face*>& outputList) const
@@ -494,7 +494,7 @@ void AABBTree3::intersectedDcelFaces(
     }
 }
 
-std::list<const Dcel::Face*> AABBTree3::intersectedDcelFaces(
+CG3_INLINE std::list<const Dcel::Face*> AABBTree3::intersectedDcelFaces(
         const Point3d& p1,
         const Point3d& p2) const
 {
@@ -508,7 +508,7 @@ std::list<const Dcel::Face*> AABBTree3::intersectedDcelFaces(
  * @param p
  * @return
  */
-const Dcel::Face* AABBTree3::nearestDcelFace(const Point3d& p) const
+CG3_INLINE const Dcel::Face* AABBTree3::nearestDcelFace(const Point3d& p) const
 {
     assert(treeType == DCEL);
     CGALPoint query(p.x(), p.y(), p.z());
@@ -526,7 +526,7 @@ const Dcel::Face* AABBTree3::nearestDcelFace(const Point3d& p) const
  * @param p
  * @return
  */
-const Dcel::Vertex* AABBTree3::nearestDcelVertex(const Point3d& p) const
+CG3_INLINE const Dcel::Vertex* AABBTree3::nearestDcelVertex(const Point3d& p) const
 {
     assert(treeType == DCEL);
     const Dcel::Face* closestFace = nearestDcelFace(p);
@@ -550,7 +550,7 @@ const Dcel::Vertex* AABBTree3::nearestDcelVertex(const Point3d& p) const
  * @param p2
  * @param outputList
  */
-void AABBTree3::getIntersectedEigenFaces(const Point3d& p1, const Point3d &p2, std::list<int> &outputList)
+CG3_INLINE void AABBTree3::getIntersectedEigenFaces(const Point3d& p1, const Point3d &p2, std::list<int> &outputList)
 {
     assert(treeType == EIGENMESH);
     outputList.clear();
@@ -573,7 +573,7 @@ void AABBTree3::getIntersectedEigenFaces(const Point3d& p1, const Point3d &p2, s
  * @param p
  * @return
  */
-unsigned int AABBTree3::getNearestEigenFace(const Point3d& p) const
+CG3_INLINE unsigned int AABBTree3::getNearestEigenFace(const Point3d& p) const
 {
     assert(treeType == EIGENMESH);
     CGALPoint query(p.x(), p.y(), p.z());
@@ -591,7 +591,7 @@ unsigned int AABBTree3::getNearestEigenFace(const Point3d& p) const
  * @param t
  * @return
  */
-bool AABBTree3::isDegeneratedTriangle(const AABBTree3::CGALTriangle& t)
+CG3_INLINE bool AABBTree3::isDegeneratedTriangle(const AABBTree3::CGALTriangle& t)
 {
     return (t[0] == t[1] || t[0] == t[2] || t[1] == t[2]);
 }

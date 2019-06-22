@@ -28,4 +28,10 @@ bool doIntersect(
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_BOOLEANS2_CPP "booleans2.cpp"
+#include CG3_CGAL_BOOLEANS2_CPP
+#undef BOUNDINGBOX2_CPP
+#endif
+
 #endif // CG3_CGAL_BOOLEANS2_H

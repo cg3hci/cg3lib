@@ -24,7 +24,7 @@ namespace cgal {
  * @param nonRegularPolygon
  * @return
  */
-std::vector<std::array<Point3d, 3> > triangulate3(
+CG3_INLINE std::vector<std::array<Point3d, 3> > triangulate3(
         const Vec3 &normal,
         const std::vector<Point3d>& polygon,
         const std::vector<std::vector<Point3d> >& holes,

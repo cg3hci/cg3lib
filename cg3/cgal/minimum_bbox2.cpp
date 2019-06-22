@@ -31,7 +31,7 @@ typedef CGAL::Polygon_2<CK>                                     CK_Polygon_2;
  * @param dcel
  * @return
  */
-std::vector<Point2d> minRectangle2D(const Dcel* dcel)
+CG3_INLINE std::vector<Point2d> minRectangle2D(const Dcel* dcel)
 {
     std::vector<Point2d> points;
 
@@ -49,7 +49,7 @@ std::vector<Point2d> minRectangle2D(const Dcel* dcel)
  * @param isConvexHull
  * @return
  */
-std::vector<Point2d> minRectangle2D(
+CG3_INLINE std::vector<Point2d> minRectangle2D(
         const std::vector<Point2d>& points,
         bool isConvexHull)
 {

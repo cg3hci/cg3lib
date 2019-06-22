@@ -26,4 +26,10 @@ std::vector<Point2d> minRectangle2D(
 } //namespace cg3::cgal
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CGAL_MINIMUMBBOX2_CPP "minimum_bbox2.cpp"
+#include CG3_CGAL_MINIMUMBBOX2_CPP
+#undef CG3_CGAL_MINIMUMBBOX2_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_CGAL_MINIMUMBBOX2_H
