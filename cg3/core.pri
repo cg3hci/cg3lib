@@ -63,7 +63,7 @@ HEADERS += \
     $$PWD/io/ply/ply_header.h \
     $$PWD/io/ply/ply_vertex.h \
     $$PWD/io/ply/ply_face.h \
-    $$PWD/utilities/cg3_config_folder.h #utilities
+    $$PWD/utilities/cg3_config_folder.h \ #utilities
     $$PWD/utilities/color.h \
     $$PWD/utilities/comparators.h \
     $$PWD/utilities/const.h \
