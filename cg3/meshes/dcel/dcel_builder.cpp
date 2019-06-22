@@ -8,7 +8,7 @@
 
 namespace cg3 {
 
-DcelBuilder::DcelBuilder(Dcel startingDcel) : d(startingDcel), updateNormalOnInsertion(true)
+CG3_INLINE DcelBuilder::DcelBuilder(Dcel startingDcel) : d(startingDcel), updateNormalOnInsertion(true)
 {
     for (cg3::Dcel::Vertex* v : d.vertexIterator()) {
         mapVertices[v->coordinate()] = v->id();
@@ -18,12 +18,12 @@ DcelBuilder::DcelBuilder(Dcel startingDcel) : d(startingDcel), updateNormalOnIns
     }
 }
 
-Dcel& DcelBuilder::dcel()
+CG3_INLINE Dcel& DcelBuilder::dcel()
 {
     return d;
 }
 
-unsigned int DcelBuilder::addVertex(const Point3d& p, const Vec3& n, const Color &c, int flag)
+CG3_INLINE unsigned int DcelBuilder::addVertex(const Point3d& p, const Vec3& n, const Color &c, int flag)
 {
     if (mapVertices.find(p) == mapVertices.end()){
         cg3::Dcel::Vertex* v = d.addVertex(p, n, c);
@@ -35,7 +35,7 @@ unsigned int DcelBuilder::addVertex(const Point3d& p, const Vec3& n, const Color
         return mapVertices[p];
 }
 
-int DcelBuilder::addFace(
+CG3_INLINE int DcelBuilder::addFace(
         unsigned int vid1,
         unsigned int vid2,
         unsigned int vid3,
@@ -49,7 +49,7 @@ int DcelBuilder::addFace(
     return addFace(vids, c, flag);
 }
 
-int DcelBuilder::addFace(
+CG3_INLINE int DcelBuilder::addFace(
         unsigned int vid1,
         unsigned int vid2,
         unsigned int vid3,
@@ -65,7 +65,7 @@ int DcelBuilder::addFace(
     return addFace(vids, c, flag);
 }
 
-int DcelBuilder::addFace(const std::vector<uint>& vids, const Color& c, int flag)
+CG3_INLINE int DcelBuilder::addFace(const std::vector<uint>& vids, const Color& c, int flag)
 {
     //one of the ids does not exist in the dcel
     for (const uint& vid : vids)
@@ -159,7 +159,7 @@ int DcelBuilder::addFace(const std::vector<uint>& vids, const Color& c, int flag
     return f->id();
 }
 
-int DcelBuilder::addFace(
+CG3_INLINE int DcelBuilder::addFace(
         const Point3d& p1,
         const Point3d& p2,
         const Point3d& p3,
@@ -191,7 +191,7 @@ int DcelBuilder::addFace(
     return addFace(vid1, vid2, vid3, c, flag);
 }
 
-int DcelBuilder::addFace(
+CG3_INLINE int DcelBuilder::addFace(
         const Point3d& p1,
         const Point3d& p2,
         const Point3d& p3,
@@ -230,7 +230,7 @@ int DcelBuilder::addFace(
     return addFace(vid1, vid2, vid3, vid4, c, flag);
 }
 
-int DcelBuilder::addFace(const std::vector<Point3d>& ps, const Color& c, int flag)
+CG3_INLINE int DcelBuilder::addFace(const std::vector<Point3d>& ps, const Color& c, int flag)
 {
     std::vector<uint> vids(ps.size());
     std::map<cg3::Point3d, unsigned int>::iterator it;
@@ -244,14 +244,14 @@ int DcelBuilder::addFace(const std::vector<Point3d>& ps, const Color& c, int fla
     return addFace(vids, c, flag);
 }
 
-void DcelBuilder::finalize()
+CG3_INLINE void DcelBuilder::finalize()
 {
     d.updateBoundingBox();
     if (updateNormalOnInsertion)
         d.updateVertexNormals();
 }
 
-void DcelBuilder::setUpdateNormalOnInsertion(bool b)
+CG3_INLINE void DcelBuilder::setUpdateNormalOnInsertion(bool b)
 {
     updateNormalOnInsertion = b;
 }

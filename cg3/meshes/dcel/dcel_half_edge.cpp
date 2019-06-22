@@ -31,7 +31,7 @@ namespace cg3 {
  * - flag pari a 0.
  */
 #ifdef NDEBUG
-HalfEdge::HalfEdge(internal::DcelData& parent) :
+CG3_INLINE HalfEdge::HalfEdge(internal::DcelData& parent) :
     parent(&parent),
     _fromVertex(nullptr),
     _toVertex(nullptr),
@@ -44,7 +44,7 @@ HalfEdge::HalfEdge(internal::DcelData& parent) :
 {
 }
 #else
-HalfEdge::HalfEdge() :
+CG3_INLINE HalfEdge::HalfEdge() :
     _fromVertex(nullptr),
     _toVertex(nullptr),
     _twin(nullptr),
@@ -63,11 +63,313 @@ HalfEdge::HalfEdge() :
  *
  * La classe Dcel dovrà occuparsi di eliminare tutti i riferimenti in essa contenuti (e quindi contenuti di conseguenza anche nella classe HalfEdge).
  */
-HalfEdge::~HalfEdge(void)
+CG3_INLINE HalfEdge::~HalfEdge(void)
 {
 }
 
-bool HalfEdge::isConvex() const {
+/**
+ * \~Italian
+ * @brief Restituisce l'id identificativo nella Dcel dell'half edge
+ * @return L'id dell'a faccia'half edge
+ */
+CG3_INLINE unsigned int HalfEdge::id() const
+{
+	return _id;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce il flag associato all'a faccia'half edge
+ * @return Il flag dell'half edge
+ */
+CG3_INLINE int HalfEdge::flag() const
+{
+	return _flag;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce il puntatore al vertice costante di origine dell'half edge
+ * @return Il from vertex dell'half edge
+ */
+CG3_INLINE const Vertex* HalfEdge::fromVertex() const
+{
+	return _fromVertex;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce il puntatore al vertice costante di destinazione dell'half edge
+ * @return Il to vertex dell'half edge
+ */
+CG3_INLINE const Vertex* HalfEdge::toVertex() const
+{
+	return _toVertex;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore all'half edge costante gemello dell'half edge
+ * @return Il twin dell'half edge
+ */
+CG3_INLINE const HalfEdge* HalfEdge::twin() const
+{
+	return _twin;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore all'half edge costante precedente dell'half edge
+ * @return Il prev dell'half edge
+ */
+CG3_INLINE const HalfEdge* HalfEdge::prev() const
+{
+	return _prev;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore all'half edge costante successivo dell'half edge
+ * @return Il next dell'half edge
+ */
+CG3_INLINE const HalfEdge* HalfEdge::next() const
+{
+	return _next;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore alla faccia costante incidente all'half edge
+ * @return La faccia incidente all'half edge
+ */
+CG3_INLINE const Face* HalfEdge::face() const
+{
+	return _face;
+}
+
+#ifdef DEBUG
+/**
+ * \~Italian
+ * @brief Lancia un'asserzione se il vertice di origine è nullptr
+ */
+CG3_INLINE void HalfEdge::checkFromVertex() const
+{
+	if (_fromVertex == nullptr){
+		std::cerr << "ALERT! Half Edge "<< _id << ": from_vertex is nullptr";
+		assert(! (_fromVertex == nullptr));
+	}
+}
+
+/**
+ * \~Italian
+ * @brief Lancia un'asserzione se il vertice di destinazione è nullptr
+ */
+CG3_INLINE void HalfEdge::checkToVertex() const
+{
+	if (_toVertex == nullptr){
+		std::cerr << "ALERT! Half Edge "<< _id << ": to_vertex is nullptr";
+		assert(! (_toVertex == nullptr));
+	}
+}
+
+/**
+ * \~Italian
+ * @brief Lancia un'asserzione se l'half edge gemello è nullptr
+ */
+CG3_INLINE void HalfEdge::checkTwin() const
+{
+	if (_twin == nullptr){
+		std::cerr << "ALERT! Half Edge "<< _id << ": twin is nullptr";
+		assert(! (_twin == nullptr));
+	}
+}
+
+/**
+ * \~Italian
+ * @brief Lancia un'asserzione se l'half edge precedente è nullptr
+ */
+CG3_INLINE void HalfEdge::checkPrev() const
+{
+	if (_prev == nullptr){
+		std::cerr << "ALERT! Half Edge "<< _id << ": prev is nullptr";
+		assert(! (_prev == nullptr));
+	}
+}
+
+/**
+ * \~Italian
+ * @brief Lancia un'asserzione se l'half edge successivo è nullptr
+ */
+CG3_INLINE void HalfEdge::checkNext() const
+{
+	if (_next == nullptr){
+		std::cerr << "ALERT! Half Edge "<< _id << ": next is nullptr";
+		assert(! (_next == nullptr));
+	}
+}
+
+/**
+ * \~Italian
+ * @brief Lancia un'asserzione se la faccia incidente è nullptr
+ */
+CG3_INLINE void HalfEdge::checkFace() const
+{
+	if (_face == nullptr){
+		std::cerr << "ALERT! Half Edge "<< _id << ": face is nullptr";
+		assert(! (_face == nullptr));
+	}
+}
+#endif
+
+/**
+ * \~Italian
+ * @brief Setta il flag dell'half edge a 1
+ */
+CG3_INLINE void HalfEdge::setFlag()
+{
+	_flag = 1;
+}
+
+/**
+ * \~Italian
+ * @brief Setta il flag dell'half edge
+ * @param[in] new_flag: il valore del flag che verrà settato
+ */
+CG3_INLINE void HalfEdge::setFlag(int new_flag)
+{
+	_flag = new_flag;
+}
+
+/**
+ * \~Italian
+ * @brief Setta il flag dell'half edge a 0
+ */
+CG3_INLINE void HalfEdge::resetFlag()
+{
+	_flag = 0;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce il puntatore al vertice di origine dell'half edge
+ * @return Il from vertex dell'half edge
+ */
+CG3_INLINE Vertex* HalfEdge::fromVertex()
+{
+	return _fromVertex;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce il puntatore al vertice di destinazione dell'half edge
+ * @return Il to vertex dell'half edge
+ */
+CG3_INLINE Vertex* HalfEdge::toVertex()
+{
+	return _toVertex;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore all'half edge gemello dell'half edge
+ * @return Il twin dell'half edge
+ */
+CG3_INLINE HalfEdge* HalfEdge::twin()
+{
+	return _twin;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore all'half edge precedente dell'half edge
+ * @return Il prev dell'half edge
+ */
+CG3_INLINE HalfEdge* HalfEdge::prev()
+{
+	return _prev;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore all'half edge successivo dell'half edge
+ * @return Il next dell'half edge
+ */
+CG3_INLINE HalfEdge* HalfEdge::next()
+{
+	return _next;
+}
+
+/**
+ * \~Italian
+ * @brief Restituisce puntatore alla faccia incidente all'half edge
+ * @return La faccia incidente all'half edge
+ */
+CG3_INLINE Face* HalfEdge::face()
+{
+	return _face;
+}
+
+/**
+ * \~Italian
+ * @brief Setta il vertice di origine
+ * @param[in] newFromVertex: riferimento al from vertex che verrà assegnato all'half edge
+ */
+CG3_INLINE void HalfEdge::setFromVertex(Vertex* newFromVertex)
+{
+	_fromVertex = newFromVertex;
+}
+
+/**
+ * \~Italian
+ * @brief Setta il vertice di destinazione
+ * @param[in] newToVertex: riferimento al to vertex che verrà assegnato all'half edge
+ */
+CG3_INLINE void HalfEdge::setToVertex(Vertex* newToVertex)
+{
+	_toVertex = newToVertex;
+}
+
+/**
+ * \~Italian
+ * @brief Setta l'half edge gemello
+ * @param[in] newTwin: riferimento al twin che verrà assegnato all'half edge
+ */
+CG3_INLINE void HalfEdge::setTwin(HalfEdge* newTwin)
+{
+	_twin = newTwin;
+}
+
+/**
+ * \~Italian
+ * @brief Setta l'half edge precedente
+ * @param[in] newPrev: riferimento al prev che verrà assegnato all'half edge
+ */
+CG3_INLINE void HalfEdge::setPrev(HalfEdge* newPrev)
+{
+	_prev = newPrev;
+}
+
+/**
+ * \~Italian
+ * @brief Setta l'half edge successivo
+ * @param[in] newNext: riferimento al next che verrà assegnato all'half edge
+ */
+CG3_INLINE void HalfEdge::setNext(HalfEdge* newNext)
+{
+	_next = newNext;
+}
+
+/**
+ * \~Italian
+ * @brief Setta la faccia incidente
+ * @param[in] newFace:riferimento alla faccia che verrà assegnato all'half edge
+ */
+CG3_INLINE void HalfEdge::setFace(Face* newFace)
+{
+	_face = newFace;
+}
+
+CG3_INLINE bool HalfEdge::isConvex() const {
     if ((face()->normal()) == (twin()->face()->normal()))
         return true;
     Vec3 dir1 = face()->normal().cross(twin()->face()->normal());
@@ -94,7 +396,7 @@ bool HalfEdge::isConvex() const {
  * @warning Utilizza Face::constIncidentHalfEdgeIterator
  * @return True se l'half edge è un outer component della sua faccia incidente.
  */
-bool HalfEdge::isOuterComponent() const
+CG3_INLINE bool HalfEdge::isOuterComponent() const
 {
     if (_face->numberInnerHalfEdges() == 0) return true;
 //    for (Face::ConstIncidentHalfEdgeIterator heit = _face->incidentHalfEdgeBegin(); heit != _face->incidentHalfEdgeEnd(); ++heit)
@@ -107,7 +409,7 @@ bool HalfEdge::isOuterComponent() const
  * @brief Funzione che restituisce la lunghezza dell'half edge
  * @return La distanza tra il from e il to vertex dell'half edge
  */
-float HalfEdge::length() const
+CG3_INLINE float HalfEdge::length() const
 {
     return _fromVertex->coordinate().dist(_toVertex->coordinate());
 }
@@ -118,7 +420,7 @@ float HalfEdge::length() const
  * @return Una stringa rappresentativa dell'half edge
  * @todo Da aggiornare
  */
-std::string HalfEdge::toString() const
+CG3_INLINE std::string HalfEdge::toString() const
 {
     std::stringstream ss;
 
@@ -150,7 +452,7 @@ std::string HalfEdge::toString() const
  * cg3::TemplatedDcel class. Must be implemented if the half edge is inherited.
  * @param binaryFile
  */
-void HalfEdge::serialize(std::ofstream& binaryFile) const
+CG3_INLINE void HalfEdge::serialize(std::ofstream& binaryFile) const
 {
     CG3_SUPPRESS_WARNING(binaryFile);
 }
@@ -160,9 +462,22 @@ void HalfEdge::serialize(std::ofstream& binaryFile) const
  * cg3::TemplatedDcel class. Must be implemented if the half edge is inherited.
  * @param binaryFile
  */
-void HalfEdge::deserialize(std::ifstream& binaryFile)
+CG3_INLINE void HalfEdge::deserialize(std::ifstream& binaryFile)
 {
     CG3_SUPPRESS_WARNING(binaryFile);
+}
+
+/**
+ * \~Italian
+ * @brief Setta l'id dell'half edge.
+ *
+ * Questa funzione dovrebbe essere chiamata solamente dalla classe Dcel.
+ *
+ * @param[in] id: nuovo id che verrà assegnato all'half edge
+ */
+CG3_INLINE void HalfEdge::setId(unsigned int id)
+{
+	this->_id = id;
 }
 
 } //namespace cg3

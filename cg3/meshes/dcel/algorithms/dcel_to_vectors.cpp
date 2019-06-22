@@ -9,11 +9,11 @@
 namespace cg3 {
 
 /**
- * @brief DcelAlgorithms::getVectorFaces
+ * @brief dcelAlgorithms::vectorFaces
  * @param vector
  * @param d
  */
-void dcelAlgorithms::vectorFaces(std::vector<const Dcel::Face*>& vector, const Dcel& d)
+CG3_INLINE void dcelAlgorithms::vectorFaces(std::vector<const Dcel::Face*>& vector, const Dcel& d)
 {
     int i = 0;
     vector.resize(d.numberFaces());
@@ -22,7 +22,7 @@ void dcelAlgorithms::vectorFaces(std::vector<const Dcel::Face*>& vector, const D
     }
 }
 
-void dcelAlgorithms::vectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
+CG3_INLINE void dcelAlgorithms::vectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
 {
     int i = 0;
     vector.resize(d.numberFaces());
@@ -31,7 +31,7 @@ void dcelAlgorithms::vectorFaces(std::vector<Dcel::Face*>& vector, Dcel& d)
     }
 }
 
-void dcelAlgorithms::vectorMesh(
+CG3_INLINE void dcelAlgorithms::vectorMesh(
         std::vector<Point3d>& coords,
         std::vector<std::vector<int> >& faces,
         const Dcel& d,

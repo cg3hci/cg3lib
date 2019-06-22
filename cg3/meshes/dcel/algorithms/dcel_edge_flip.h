@@ -17,4 +17,10 @@ bool edgeFlip(Dcel& d, const cg3::Dcel::HalfEdge* he);
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DCEL_EDGE_FLIP_CPP "dcel_edge_flip.cpp"
+#include CG3_DCEL_EDGE_FLIP_CPP
+#undef CG3_DCEL_EDGE_FLIP_CPP
+#endif
+
 #endif // CG3_DCEL_EDGE_FLIP_H

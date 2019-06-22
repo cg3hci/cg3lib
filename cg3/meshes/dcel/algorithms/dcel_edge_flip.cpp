@@ -9,7 +9,7 @@
 namespace cg3 {
 namespace dcelAlgorithms {
 
-bool edgeFlip(Dcel& d, const Dcel::HalfEdge* che)
+CG3_INLINE bool edgeFlip(Dcel& d, const Dcel::HalfEdge* che)
 {
     if (!d.contains(che) || che->twin() == nullptr)
         return false;

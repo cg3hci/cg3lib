@@ -11,7 +11,7 @@
 
 namespace cg3 {
 
-void dcelAlgorithms::smartColoring(Dcel& d)
+CG3_INLINE void dcelAlgorithms::smartColoring(Dcel& d)
 {
     struct adjComp {
         std::set<Dcel::Face*> getAdjacences(Dcel::Face* f){

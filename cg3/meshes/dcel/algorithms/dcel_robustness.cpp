@@ -7,7 +7,7 @@
 #include "dcel_robustness.h"
 #include <cg3/geometry/utils3.h>
 
-bool cg3::dcelAlgorithms::isWaterTight(const cg3::Dcel& mesh)
+CG3_INLINE bool cg3::dcelAlgorithms::isWaterTight(const cg3::Dcel& mesh)
 {
     for (const cg3::Dcel::HalfEdge* he : mesh.halfEdgeIterator())
         if (he->twin() == nullptr)
@@ -15,7 +15,7 @@ bool cg3::dcelAlgorithms::isWaterTight(const cg3::Dcel& mesh)
     return true;
 }
 
-bool cg3::dcelAlgorithms::hasDegenerateFaces(const cg3::Dcel& mesh)
+CG3_INLINE bool cg3::dcelAlgorithms::hasDegenerateFaces(const cg3::Dcel& mesh)
 {
 
     for (const cg3::Dcel::Face* f : mesh.faceIterator()){

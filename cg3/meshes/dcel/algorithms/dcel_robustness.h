@@ -19,4 +19,10 @@ bool hasDegenerateFaces(const cg3::Dcel& mesh);
 }
 }
 
+#ifndef CG3_STATIC
+#define CG3_DCEL_ROBUSTNESS_CPP "dcel_robustness.cpp"
+#include CG3_DCEL_ROBUSTNESS_CPP
+#undef CG3_DCEL_ROBUSTNESS_CPP
+#endif
+
 #endif // CG3_DCEL_ROBUSTNESS_H

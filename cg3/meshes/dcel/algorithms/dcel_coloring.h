@@ -17,4 +17,10 @@ void smartColoring(Dcel &d);
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DCEL_COLORING_CPP "dcel_coloring.cpp"
+#include CG3_DCEL_COLORING_CPP
+#undef CG3_DCEL_COLORING_CPP
+#endif
+
 #endif // CG3_DCEL_COLORING_H

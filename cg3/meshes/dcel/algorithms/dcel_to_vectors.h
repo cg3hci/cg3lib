@@ -32,4 +32,10 @@ void vectorMesh(
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DCEL_TO_VECTORS_CPP "dcel_to_vectors.cpp"
+#include CG3_DCEL_TO_VECTORS_CPP
+#undef CG3_DCEL_TO_VECTORS_CPP
+#endif
+
 #endif // CG3_DCEL_TO_VECTORS_H

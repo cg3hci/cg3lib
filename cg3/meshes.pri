@@ -15,6 +15,7 @@ MODULES += CG3_MESHES
 
 HEADERS += \
     $$PWD/meshes/dcel/dcel.h \
+    $$PWD/meshes/dcel/dcel_data.h \
     $$PWD/meshes/dcel/dcel_face.h \
     $$PWD/meshes/dcel/dcel_face_iterators.h \
     $$PWD/meshes/dcel/dcel_half_edge.h \
@@ -33,23 +34,21 @@ HEADERS += \
     $$PWD/meshes/dcel/dcel_builder.h \
     $$PWD/meshes/mesh.h
 
+CG3_STATIC {
 SOURCES += \
+    $$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_coloring.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_connected_components.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_edge_flip.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_flooding.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_robustness.cpp \
+    $$PWD/meshes/dcel/algorithms/dcel_to_vectors.cpp \
+    $$PWD/meshes/dcel/dcel_builder.cpp \
     $$PWD/meshes/dcel/dcel_face.cpp \
     $$PWD/meshes/dcel/dcel_half_edge.cpp \
-    $$PWD/meshes/dcel/dcel_vertex.cpp \
-    $$PWD/meshes/dcel/dcel_half_edge_inline.tpp \
-    $$PWD/meshes/dcel/dcel_vertex_inline.tpp \
-    $$PWD/meshes/dcel/dcel_face_inline.tpp \
-    $$PWD/meshes/dcel/dcel_struct.tpp \
-    $$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.tpp \
-    $$PWD/meshes/dcel/algorithms/dcel_edge_flip.cpp \
-    $$PWD/meshes/dcel/algorithms/dcel_to_vectors.cpp \
-    $$PWD/meshes/dcel/algorithms/dcel_flooding.tpp \
-    $$PWD/meshes/dcel/algorithms/dcel_coloring.cpp \
-    $$PWD/meshes/dcel/algorithms/dcel_connected_components.tpp \
-    $$PWD/meshes/dcel/algorithms/dcel_robustness.cpp \
-    $$PWD/meshes/dcel/dcel_builder.cpp
-
+    $$PWD/meshes/dcel/dcel_struct.cpp \
+    $$PWD/meshes/dcel/dcel_vertex.cpp
+}
 
 contains(DEFINES, CG3_WITH_EIGEN) {
 

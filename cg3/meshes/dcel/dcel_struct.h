@@ -12,8 +12,7 @@
 #include <cg3/utilities/color.h>
 #include <cg3/meshes/mesh.h>
 #include <cg3/io/file_commons.h>
-#include "dcel_vertex.h"
-#include "dcel_face.h"
+#include "dcel_data.h"
 #include "dcel_iterators.h"
 
 #ifdef  CG3_EIGENMESH_DEFINED
@@ -290,6 +289,6 @@ TemplatedDcel<Vertex, HalfEdge, Face> merge(const TemplatedDcel<Vertex, HalfEdge
 
 } //namespace cg3
 
-#include "dcel_struct.tpp"
+#include "dcel_struct.cpp"
 
 #endif // CG3_DCEL_STRUCT_H

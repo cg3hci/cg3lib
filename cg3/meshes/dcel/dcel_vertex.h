@@ -220,6 +220,5 @@ protected:
 } //namespace cg3
 
 #include "dcel_vertex_iterators.h"
-#include "dcel_vertex_inline.tpp"
 
 #endif // CG3_DCEL_VERTEX_H

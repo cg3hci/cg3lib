@@ -9,6 +9,22 @@
 #ifndef CG3_DCEL_H
 #define CG3_DCEL_H
 
+#include "dcel_vertex.h"
+#include "dcel_face.h"
+#ifndef CG3_STATIC
+#define CG3_DCEL_FACE_CPP "dcel_face.cpp"
+#include CG3_DCEL_FACE_CPP
+#undef CG3_DCEL_FACE_CPP
+
+#define CG3_DCEL_VERTEX_CPP "dcel_vertex.cpp"
+#include CG3_DCEL_VERTEX_CPP
+#undef CG3_DCEL_VERTEX_CPP
+
+
+#define DCEL_HALF_EDGE_CPP "dcel_half_edge.cpp"
+#include DCEL_HALF_EDGE_CPP
+#undef DCEL_HALF_EDGE_CPP
+#endif
 #include "dcel_struct.h"
 
 namespace cg3 {

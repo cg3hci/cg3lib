@@ -149,7 +149,7 @@ struct hash<cg3::BoundingBox3> {
 #ifndef CG3_STATIC
 #define CG3_BOUNDINGBOX3_CPP "bounding_box3.cpp"
 #include CG3_BOUNDINGBOX3_CPP
-#undef BOUNDINGBOX3_CPP
+#undef CG3_BOUNDINGBOX3_CPP
 #endif
 
 #endif // CG3_BOUNDING_BOX3_H

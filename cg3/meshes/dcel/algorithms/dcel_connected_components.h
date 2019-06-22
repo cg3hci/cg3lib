@@ -28,6 +28,6 @@ std::vector< std::set<const Dcel::Face*> > connectedComponents(
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 
-#include "dcel_connected_components.tpp"
+#include "dcel_connected_components.cpp"
 
 #endif // CG3_DCEL_CONNECTED_COMPONENTS_H

@@ -80,4 +80,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DCEL_BUILDIER_CPP "dcel_builder.cpp"
+#include CG3_DCEL_BUILDIER_CPP
+#undef CG3_DCEL_BUILDIER_CPP
+#endif
+
 #endif // CG3_DCEL_BUILDIER_H

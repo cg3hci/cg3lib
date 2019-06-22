@@ -292,6 +292,5 @@ std::ostream& operator<< (std::ostream& inputStream, const Face* f);
 } //namespace cg3
 
 #include "dcel_face_iterators.h"
-#include "dcel_face_inline.tpp"
 
 #endif // CG3_DCEL_FACE_H
