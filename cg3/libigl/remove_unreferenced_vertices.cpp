@@ -18,7 +18,7 @@ namespace libigl {
  * @param input
  * @param I
  */
-inline void removeUnreferencedVertices(
+CG3_INLINE void removeUnreferencedVertices(
         SimpleEigenMesh &input, Eigen::Matrix<int,
         Eigen::Dynamic, 1> &I)
 {
@@ -30,7 +30,7 @@ inline void removeUnreferencedVertices(
  * @brief removeUnreferencedVertices
  * @param input
  */
-inline void removeUnreferencedVertices(SimpleEigenMesh &input)
+CG3_INLINE void removeUnreferencedVertices(SimpleEigenMesh &input)
 {
     Eigen::VectorXi I;
     internal::EigenMeshLibIglAlgorithms::removeUnreferencedVertices(input, I);

@@ -15,7 +15,7 @@
  * @param m
  * @return
  */
-inline std::vector<cg3::SimpleEigenMesh> cg3::libigl::connectedComponents(
+CG3_INLINE std::vector<cg3::SimpleEigenMesh> cg3::libigl::connectedComponents(
         const cg3::SimpleEigenMesh &m)
 {
     return internal::EigenMeshLibIglAlgorithms::connectedComponents(m);

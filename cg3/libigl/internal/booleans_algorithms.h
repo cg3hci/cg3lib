@@ -1,6 +1,8 @@
 #ifndef CG3_BOOLEAN_ALGORITHMS_H
 #define CG3_BOOLEAN_ALGORITHMS_H
 
+#include <cg3/cg3lib.h>
+
 #ifdef CG3_CGAL_DEFINED
 
 #ifdef __GNUC__
@@ -19,7 +21,7 @@
 namespace cg3 {
 namespace libigl {
 namespace internal {
-extern std::vector<uint> dummyVector;
+static std::vector<uint> dummyVector;
 
 /* CSGTree typedefs */
 typedef igl::copyleft::cgal::CSGTree CSGTree;
@@ -41,4 +43,11 @@ igl::copyleft::cgal::CSGTree union_(
 } //namespace cg3
 
 #endif // CGAL_DEFINED
+
+#ifndef CG3_STATIC
+#define CG3_BOOLEAN_ALGORITHMS_CPP "booleans_algorithms.cpp"
+#include CG3_BOOLEAN_ALGORITHMS_CPP
+#undef CG3_BOOLEAN_ALGORITHMS_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_BOOLEAN_ALGORITHMS_H

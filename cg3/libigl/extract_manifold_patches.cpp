@@ -19,7 +19,7 @@ namespace libigl {
  * @param I
  * @return
  */
-inline int extractManifoldPatches(
+CG3_INLINE int extractManifoldPatches(
         const SimpleEigenMesh &m,
         Eigen::Matrix<int, Eigen::Dynamic, 1> &I)
 {
@@ -32,7 +32,7 @@ inline int extractManifoldPatches(
  * @param m
  * @return
  */
-inline int extractManifoldPatches(const SimpleEigenMesh &m)
+CG3_INLINE int extractManifoldPatches(const SimpleEigenMesh &m)
 {
     Eigen::VectorXi I;
     return internal::EigenMeshLibIglAlgorithms::extractManifoldPatches(m, I);

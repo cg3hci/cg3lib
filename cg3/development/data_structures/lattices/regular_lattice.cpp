@@ -60,9 +60,9 @@ const BoundingBox3 &RegularLattice3D<VT>::boundingBox() const
 template<class VT>
 Point3d RegularLattice3D<VT>::nearestVertex(const Point3d &p) const
 {
-    return cg3::Point3d(bb.getMinX() + indexOfCoordinateX(p.x())*unit,
-                       bb.getMinY() + indexOfCoordinateY(p.y())*unit,
-                       bb.getMinZ() + indexOfCoordinateZ(p.z())*unit);
+	return cg3::Point3d(bb.minX() + indexOfCoordinateX(p.x())*unit,
+					   bb.minY() + indexOfCoordinateY(p.y())*unit,
+					   bb.minZ() + indexOfCoordinateZ(p.z())*unit);
 }
 
 template<class VT>

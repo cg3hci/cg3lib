@@ -18,7 +18,7 @@ namespace libigl {
  * @param m Input mesh
  * @return Vector of vector of indices
  */
-inline std::vector<std::vector<int>> vertexToVertexAdjacencies(const SimpleEigenMesh& m)
+CG3_INLINE std::vector<std::vector<int>> vertexToVertexAdjacencies(const SimpleEigenMesh& m)
 {
     return internal::EigenMeshLibIglAlgorithms::vertexToVertexAdjacencies(m);
 }
@@ -29,7 +29,7 @@ inline std::vector<std::vector<int>> vertexToVertexAdjacencies(const SimpleEigen
  * @param m Input mesh
  * @return Vector of vector of indices
  */
-inline std::vector<std::vector<int>> vertexToFaceIncidences(const SimpleEigenMesh& m)
+CG3_INLINE std::vector<std::vector<int>> vertexToFaceIncidences(const SimpleEigenMesh& m)
 {
     return internal::EigenMeshLibIglAlgorithms::vertexToFaceIncidences(m);
 }
@@ -40,7 +40,7 @@ inline std::vector<std::vector<int>> vertexToFaceIncidences(const SimpleEigenMes
  * @param m Input mesh
  * @return Vector of vector of indices
  */
-inline std::vector<std::vector<int>> faceToFaceAdjacencies(const SimpleEigenMesh &m)
+CG3_INLINE std::vector<std::vector<int>> faceToFaceAdjacencies(const SimpleEigenMesh &m)
 {
     Eigen::MatrixXi eigenResult =
             internal::EigenMeshLibIglAlgorithms::faceToFaceAdjacencies(m);
@@ -61,7 +61,7 @@ inline std::vector<std::vector<int>> faceToFaceAdjacencies(const SimpleEigenMesh
  * @param m Input mesh
  * @param adjacences Output Adjacency Matrix
  */
-inline void faceToFaceAdjacencies(const SimpleEigenMesh& m, Eigen::MatrixXi& adjacences)
+CG3_INLINE void faceToFaceAdjacencies(const SimpleEigenMesh& m, Eigen::MatrixXi& adjacences)
 {
     adjacences = internal::EigenMeshLibIglAlgorithms::faceToFaceAdjacencies(m);
 }

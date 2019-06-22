@@ -54,22 +54,26 @@ exists($$LIBIGL_PATH) {
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms.h \
         $$PWD/libigl/internal/booleans_algorithms.h
 
+    CG3_STATIC {
     SOURCES += \
-        $$PWD/libigl/booleans.tpp\
-        $$PWD/libigl/connected_components.tpp \
-        $$PWD/libigl/decimate.tpp \
-        $$PWD/libigl/mesh_adjacencies.tpp \
-        $$PWD/libigl/extract_manifold_patches.tpp \
-        $$PWD/libigl/is_edge_manifold.tpp \
-        $$PWD/libigl/is_vertex_manifold.tpp \
-        $$PWD/libigl/remove_duplicate_vertices.tpp \
-        $$PWD/libigl/remove_unreferenced_vertices.tpp \
-        $$PWD/libigl/mesh_distance.tpp \
         $$PWD/libigl/internal/booleans_algorithms.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_decimation.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_verticesremoval.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_manifoldutilities.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_adjacencies.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_booleans.cpp \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_distances.cpp
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_distances.cpp \
+        $$PWD/libigl/booleans.cpp \
+        $$PWD/libigl/connected_components.cpp \
+        $$PWD/libigl/decimate.cpp \
+        $$PWD/libigl/extract_manifold_patches.cpp \
+        $$PWD/libigl/is_edge_manifold.cpp \
+        $$PWD/libigl/is_vertex_manifold.cpp \
+        $$PWD/libigl/mesh_adjacencies.cpp \
+        $$PWD/libigl/mesh_distance.cpp \
+        $$PWD/libigl/remove_duplicate_vertices.cpp \
+        $$PWD/libigl/remove_unreferenced_vertices.cpp
+    }
 }
+
+

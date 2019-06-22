@@ -20,7 +20,7 @@ namespace libigl {
  * @param m Input mesh
  * @return CSG tree of the mesh
  */
-inline CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m)
+CG3_INLINE CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m)
 {
     return internal::EigenMeshLibIglAlgorithms::eigenMeshToCSGTree(m);
 }
@@ -31,7 +31,7 @@ inline CSGTree eigenMeshToCSGTree(const SimpleEigenMesh& m)
  * @param m Input mesh
  * @return CSG tree of the mesh
  */
-inline SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree)
+CG3_INLINE SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree)
 {
     return internal::EigenMeshLibIglAlgorithms::CSGTreeToEigenMesh(tree);
 }
@@ -59,7 +59,7 @@ inline CSGTree intersection(const CSGTree& c1, const CSGTree& c2)
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh intersection(
+CG3_INLINE SimpleEigenMesh intersection(
         const SimpleEigenMesh& m1,
         const SimpleEigenMesh& m2,
         std::vector<uint>& birthFaces)
@@ -75,7 +75,7 @@ inline SimpleEigenMesh intersection(
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline EigenMesh intersection(
+CG3_INLINE EigenMesh intersection(
         const EigenMesh& m1,
         const EigenMesh& m2,
         std::vector<uint>& birthFaces)
@@ -90,7 +90,7 @@ inline EigenMesh intersection(
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
  */
-inline void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
+CG3_INLINE void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
 {
     result = intersection(c1, c2);
 }
@@ -103,7 +103,7 @@ inline void intersection(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
  * @param[in] m2 Second mesh
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void intersection(
+CG3_INLINE void intersection(
         SimpleEigenMesh& result,
         const SimpleEigenMesh& m1,
         const SimpleEigenMesh& m2,
@@ -120,7 +120,7 @@ inline void intersection(
  * @param[in] m2 Second mesh
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void intersection(
+CG3_INLINE void intersection(
         EigenMesh& result,
         const EigenMesh& m1,
         const EigenMesh& m2,
@@ -138,7 +138,7 @@ inline void intersection(
  * @param[in] c2 Second CSGTree
  * @return Resulting CSGTree
  */
-inline CSGTree difference(const CSGTree& c1, const CSGTree& c2)
+CG3_INLINE CSGTree difference(const CSGTree& c1, const CSGTree& c2)
 {
     return internal::difference(c1, c2);
 }
@@ -151,7 +151,7 @@ inline CSGTree difference(const CSGTree& c1, const CSGTree& c2)
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh difference(
+CG3_INLINE SimpleEigenMesh difference(
         const SimpleEigenMesh& m1,
         const SimpleEigenMesh& m2,
         std::vector<uint>& birthFaces)
@@ -167,7 +167,7 @@ inline SimpleEigenMesh difference(
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline EigenMesh difference(
+CG3_INLINE EigenMesh difference(
         const EigenMesh& m1,
         const EigenMesh& m2,
         std::vector<uint>& birthFaces)
@@ -182,7 +182,7 @@ inline EigenMesh difference(
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
  */
-inline void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
+CG3_INLINE void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
 {
     result = difference(c1, c2);
 }
@@ -195,7 +195,7 @@ inline void difference(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
  * @param[in] m2 Second mesh
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void difference(
+CG3_INLINE void difference(
         SimpleEigenMesh& result,
         const SimpleEigenMesh& m1,
         const SimpleEigenMesh& m2,
@@ -212,7 +212,7 @@ inline void difference(
  * @param[in] m2 Second mesh
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void difference(
+CG3_INLINE void difference(
         EigenMesh& result,
         const EigenMesh& m1,
         const EigenMesh& m2,
@@ -231,7 +231,7 @@ inline void difference(
  * @param[in] c2 Second CSGTree
  * @return Resulting CSGTree
  */
-inline CSGTree union_(const CSGTree& c1, const CSGTree& c2)
+CG3_INLINE CSGTree union_(const CSGTree& c1, const CSGTree& c2)
 {
     return internal::union_(c1, c2);
 }
@@ -244,7 +244,7 @@ inline CSGTree union_(const CSGTree& c1, const CSGTree& c2)
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline SimpleEigenMesh union_(
+CG3_INLINE SimpleEigenMesh union_(
         const SimpleEigenMesh& m1,
         const SimpleEigenMesh& m2,
         std::vector<uint>& birthFaces)
@@ -260,7 +260,7 @@ inline SimpleEigenMesh union_(
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-inline EigenMesh union_(
+CG3_INLINE EigenMesh union_(
         const EigenMesh& m1,
         const EigenMesh& m2,
         std::vector<uint>& birthFaces)
@@ -275,7 +275,7 @@ inline EigenMesh union_(
  * @param[in] c1 First CSGTree
  * @param[in] c2 Second CSGTree
  */
-inline void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
+CG3_INLINE void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
 {
     result = union_(c1, c2);
 }
@@ -288,7 +288,7 @@ inline void union_(CSGTree& result, const CSGTree& c1, const CSGTree& c2)
  * @param[in] m2 Second mesh
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void union_(
+CG3_INLINE void union_(
         SimpleEigenMesh& result,
         const SimpleEigenMesh& m1,
         const SimpleEigenMesh& m2,
@@ -305,7 +305,7 @@ inline void union_(
  * @param[in] m2 Second mesh
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  */
-inline void union_(
+CG3_INLINE void union_(
         EigenMesh& result,
         const EigenMesh& m1,
         const EigenMesh& m2,

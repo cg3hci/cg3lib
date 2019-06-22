@@ -17,7 +17,7 @@
 namespace cg3 {
 namespace viewer {
 
-DebugObjectsManager::DebugObjectsManager(QWidget *parent) :
+CG3_INLINE DebugObjectsManager::DebugObjectsManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::DebugObjectsManager),
     tmpColorSphere(128,128,128),
@@ -28,17 +28,17 @@ DebugObjectsManager::DebugObjectsManager(QWidget *parent) :
     mw.enableDebugObjects();
 }
 
-DebugObjectsManager::~DebugObjectsManager()
+CG3_INLINE DebugObjectsManager::~DebugObjectsManager()
 {
     delete ui;
 }
 
-void DebugObjectsManager::on_colorSpherePushButton_clicked()
+CG3_INLINE void DebugObjectsManager::on_colorSpherePushButton_clicked()
 {
     tmpColorSphere = QColorDialog::getColor(Qt::white, this);
 }
 
-void DebugObjectsManager::on_addSpherePushButton_clicked()
+CG3_INLINE void DebugObjectsManager::on_addSpherePushButton_clicked()
 {
     int id = mw.debugObjects.addSphere(Point3d(ui->xSphereSpinBox->value(),
                                      ui->ySphereSpinBox->value(),

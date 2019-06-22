@@ -9,30 +9,19 @@
 DEFINES += CG3_DEVELOPMENT_DEFINED
 MODULES += CG3_DEVELOPMENT
 
-# ----- Algorithms -----
-
 HEADERS += \
-    $$PWD/development/algorithms/marching_cubes.h
-
-SOURCES += \
-    $$PWD/development/algorithms/marching_cubes.cpp \
-    $$PWD/development/data_structures/lattices/regular_lattice_iterators.tpp
-
-# ----- Lattices -----
-
-HEADERS += \
+    $$PWD/development/algorithms/marching_cubes.h \
     $$PWD/development/data_structures/lattices/regular_lattice.h \
-    $$PWD/development/data_structures/lattices/regular_lattice_iterators.h
-
-SOURCES += \
-    $$PWD/development/data_structures/lattices/regular_lattice.tpp
-
-# ----- Viewer -----
-HEADERS += \
+    $$PWD/development/data_structures/lattices/regular_lattice_iterators.h \
     $$PWD/development/viewer/managers/debugobjects_manager.h
 
+CG3_STATIC {
 SOURCES += \
+    $$PWD/development/algorithms/marching_cubes.cpp \
+    $$PWD/development/data_structures/lattices/regular_lattice.cpp \
+    $$PWD/development/data_structures/lattices/regular_lattice_iterators.cpp \
     $$PWD/development/viewer/managers/debugobjects_manager.cpp
+}
 
 FORMS += \
     $$PWD/development/viewer/managers/debugobjects_manager.ui

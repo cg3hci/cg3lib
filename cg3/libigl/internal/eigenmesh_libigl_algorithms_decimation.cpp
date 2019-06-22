@@ -15,7 +15,7 @@ namespace internal {
 
 /* ----- DECIMATION ----- */
 
-SimpleEigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
+CG3_INLINE SimpleEigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
         const SimpleEigenMesh& m,
         int numberDesiredFaces,
         Eigen::VectorXi& mapping)
@@ -34,7 +34,7 @@ SimpleEigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
     return output;
 }
 
-EigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
+CG3_INLINE EigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
         const EigenMesh& m,
         int numberDesiredFaces,
         Eigen::VectorXi& mapping)
@@ -64,7 +64,7 @@ EigenMesh EigenMeshLibIglAlgorithms::decimateMesh(
     return output;
 }
 
-void EigenMeshLibIglAlgorithms::decimateMesh(
+CG3_INLINE void EigenMeshLibIglAlgorithms::decimateMesh(
         SimpleEigenMesh& m,
         int numberDesiredFaces,
         Eigen::VectorXi& mapping)
@@ -79,7 +79,7 @@ void EigenMeshLibIglAlgorithms::decimateMesh(
     m.F = FF;
 }
 
-void EigenMeshLibIglAlgorithms::decimateMesh(
+CG3_INLINE void EigenMeshLibIglAlgorithms::decimateMesh(
         EigenMesh& m,
         int numberDesiredFaces,
         Eigen::VectorXi& mapping)

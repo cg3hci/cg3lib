@@ -18,12 +18,12 @@ namespace internal {
 
 /* ----- MANIFOLD UTILITIES ----- */
 
-bool EigenMeshLibIglAlgorithms::isEdgeManifold(const SimpleEigenMesh& input)
+CG3_INLINE bool EigenMeshLibIglAlgorithms::isEdgeManifold(const SimpleEigenMesh& input)
 {
     return igl::is_edge_manifold(input.F);
 }
 
-bool EigenMeshLibIglAlgorithms::isVertexManifold(
+CG3_INLINE bool EigenMeshLibIglAlgorithms::isVertexManifold(
         const SimpleEigenMesh& input,
         Eigen::Matrix<bool, Eigen::Dynamic, 1>& B)
 {
@@ -31,7 +31,7 @@ bool EigenMeshLibIglAlgorithms::isVertexManifold(
 }
 
 
-unsigned int EigenMeshLibIglAlgorithms::extractManifoldPatches(
+CG3_INLINE unsigned int EigenMeshLibIglAlgorithms::extractManifoldPatches(
         const SimpleEigenMesh& m,
         Eigen::Matrix<int, Eigen::Dynamic, 1>& I)
 {

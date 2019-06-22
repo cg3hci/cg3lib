@@ -19,7 +19,7 @@ namespace internal {
 
 /* ----- ADJACENCIES ----- */
 
-std::vector<SimpleEigenMesh> EigenMeshLibIglAlgorithms::connectedComponents(
+CG3_INLINE std::vector<SimpleEigenMesh> EigenMeshLibIglAlgorithms::connectedComponents(
         const SimpleEigenMesh& mm)
 {
     std::vector<SimpleEigenMesh> connectedComponents;
@@ -49,7 +49,7 @@ std::vector<SimpleEigenMesh> EigenMeshLibIglAlgorithms::connectedComponents(
     return connectedComponents;
 }
 
-std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToVertexAdjacencies(
+CG3_INLINE std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToVertexAdjacencies(
         const SimpleEigenMesh &m)
 {
     std::vector<std::vector<int>> result;
@@ -65,7 +65,7 @@ std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToVertexAdjacenci
     return result;
 }
 
-std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToFaceIncidences(
+CG3_INLINE std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToFaceIncidences(
         const SimpleEigenMesh &m)
 {
     std::vector<std::vector<int>> VF;
@@ -78,7 +78,7 @@ std::vector<std::vector<int>> EigenMeshLibIglAlgorithms::vertexToFaceIncidences(
     return VF;
 }
 
-Eigen::MatrixXi EigenMeshLibIglAlgorithms::faceToFaceAdjacencies(
+CG3_INLINE Eigen::MatrixXi EigenMeshLibIglAlgorithms::faceToFaceAdjacencies(
         const SimpleEigenMesh& m)
 {
     Eigen::MatrixXi eigenResult;

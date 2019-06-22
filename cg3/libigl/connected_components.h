@@ -18,6 +18,10 @@ std::vector<SimpleEigenMesh> connectedComponents(const SimpleEigenMesh &m);
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "connected_components.tpp"
+#ifndef CG3_STATIC
+#define CG3_LIBIGL_CONNECTED_COMPONENTS_CPP "connected_components.cpp"
+#include CG3_LIBIGL_CONNECTED_COMPONENTS_CPP
+#undef CG3_LIBIGL_CONNECTED_COMPONENTS_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_LIBIGL_CONNECTED_COMPONENTS_H

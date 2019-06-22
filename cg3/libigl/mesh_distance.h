@@ -18,6 +18,10 @@ double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "mesh_distance.tpp"
+#ifndef CG3_STATIC
+#define CG3_LIBIGL_MESH_DISTANCE_CPP "mesh_distance.cpp"
+#include CG3_LIBIGL_MESH_DISTANCE_CPP
+#undef CG3_LIBIGL_MESH_DISTANCE_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_LIBIGL_MESH_DISTANCE_H

@@ -51,9 +51,12 @@ EigenMesh union_(const EigenMesh& m1, const EigenMesh& m2, std::vector<uint>& bi
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "booleans.tpp"
-
 #endif //CG3_CGAL_DEFINED
 
+#ifndef CG3_STATIC
+#define CG3_LIBIGL_BOOLEANS_CPP "booleans.cpp"
+#include CG3_LIBIGL_BOOLEANS_CPP
+#undef CG3_LIBIGL_BOOLEANS_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_LIBIGL_BOOLEANS_H

@@ -19,7 +19,7 @@ namespace libigl {
  * @param m2
  * @return
  */
-inline double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
+CG3_INLINE double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2)
 {
     return internal::EigenMeshLibIglAlgorithms::hausdorffDistance(m1, m2);
 }

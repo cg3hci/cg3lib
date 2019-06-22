@@ -57,6 +57,10 @@ void decimateMesh(
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "decimate.tpp"
+#ifndef CG3_STATIC
+#define CG3_LIBIGL_DECIMATE_CPP "decimate.cpp"
+#include CG3_LIBIGL_DECIMATE_CPP
+#undef CG3_LIBIGL_DECIMATE_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_LIBIGL_DECIMATE_H

@@ -19,7 +19,7 @@ namespace libigl {
  * @param B
  * @return
  */
-inline bool isVertexManifold(
+CG3_INLINE bool isVertexManifold(
         const SimpleEigenMesh &input,
         Eigen::Matrix<bool, Eigen::Dynamic, 1> &B)
 {
@@ -32,7 +32,7 @@ inline bool isVertexManifold(
  * @param input
  * @return
  */
-inline bool isVertexManifold(const SimpleEigenMesh &input)
+CG3_INLINE bool isVertexManifold(const SimpleEigenMesh &input)
 {
     Eigen::Matrix<bool, Eigen::Dynamic, 1> B;
     return internal::EigenMeshLibIglAlgorithms::isVertexManifold(input, B);

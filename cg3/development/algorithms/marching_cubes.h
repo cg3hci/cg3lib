@@ -8,8 +8,6 @@
 #ifndef CG3_MARCHING_CUBES_H
 #define CG3_MARCHING_CUBES_H
 
-#ifdef CG3_EIGENMESH_DEFINED
-
 namespace cg3 {
 
 /**
@@ -18,6 +16,10 @@ namespace cg3 {
 
 }
 
+#ifndef CG3_STATIC
+#define CG3_MARCHING_CUBES_CPP "marching_cubes.cpp"
+#include CG3_MARCHING_CUBES_CPP
+#undef CG3_MARCHING_CUBES_CPP
 #endif
 
 #endif // CG3_MARCHING_CUBES_H

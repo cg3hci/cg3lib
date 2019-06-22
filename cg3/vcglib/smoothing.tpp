@@ -16,7 +16,7 @@ namespace cg3 {
 namespace vcglib {
 
 #ifdef CG3_EIGENMESH_DEFINED
-cg3::EigenMesh taubinSmoothing(
+inline cg3::EigenMesh taubinSmoothing(
         const cg3::EigenMesh& mesh,
         const int iterations,
         const float lambda,

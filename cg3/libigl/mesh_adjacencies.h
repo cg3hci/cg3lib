@@ -23,6 +23,10 @@ void faceToFaceAdjacencies(const SimpleEigenMesh &m, Eigen::MatrixXi& adjacences
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "mesh_adjacencies.tpp"
+#ifndef CG3_STATIC
+#define CG3_LIBIGL_VERTEXADJACENCIES_CPP "mesh_adjacencies.cpp"
+#include CG3_LIBIGL_VERTEXADJACENCIES_CPP
+#undef CG3_LIBIGL_VERTEXADJACENCIES_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_LIBIGL_VERTEXADJACENCIES_H

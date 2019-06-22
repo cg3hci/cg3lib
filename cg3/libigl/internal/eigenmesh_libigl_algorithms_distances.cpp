@@ -16,7 +16,7 @@ namespace internal {
 
 /* ----- DISTANCES ----- */
 
-double EigenMeshLibIglAlgorithms::hausdorffDistance(
+CG3_INLINE double EigenMeshLibIglAlgorithms::hausdorffDistance(
         const SimpleEigenMesh& m1,
         const SimpleEigenMesh& m2)
 {

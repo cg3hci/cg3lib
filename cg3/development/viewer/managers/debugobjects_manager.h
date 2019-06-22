@@ -45,4 +45,10 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DEBUGOBJECTS_MANAGER_CPP "debugobjects_manager.cpp"
+#include CG3_DEBUGOBJECTS_MANAGER_CPP
+#undef CG3_DEBUGOBJECTS_MANAGER_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_DEBUGOBJECTS_MANAGER_H

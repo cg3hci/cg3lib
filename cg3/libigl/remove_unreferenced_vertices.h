@@ -22,6 +22,10 @@ void removeUnreferencedVertices(SimpleEigenMesh &input);
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "remove_unreferenced_vertices.tpp"
+#ifndef CG3_STATIC
+#define CG3_REMOVE_UNREFERENCED_VERTICES_CPP "remove_unreferenced_vertices.cpp"
+#include CG3_REMOVE_UNREFERENCED_VERTICES_CPP
+#undef CG3_REMOVE_UNREFERENCED_VERTICES_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_REMOVE_UNREFERENCED_VERTICES_H

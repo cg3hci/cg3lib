@@ -2,11 +2,9 @@
 
 #ifdef CG3_CGAL_DEFINED
 
-
 namespace cg3 {
 namespace libigl {
 namespace internal {
-std::vector<uint> dummyVector;
 
 /**
  * @brief Intersection of two CSG Trees
@@ -14,7 +12,7 @@ std::vector<uint> dummyVector;
  * @param[in] c2 Second CSGTree
  * @return Intersection CSG Tree
  */
-igl::copyleft::cgal::CSGTree intersection(
+CG3_INLINE igl::copyleft::cgal::CSGTree intersection(
         const igl::copyleft::cgal::CSGTree& c1,
         const igl::copyleft::cgal::CSGTree& c2)
 {
@@ -27,7 +25,7 @@ igl::copyleft::cgal::CSGTree intersection(
  * @param[in] c2 Second CSGTree
  * @return Difference CSG Tree
  */
-igl::copyleft::cgal::CSGTree difference(
+CG3_INLINE igl::copyleft::cgal::CSGTree difference(
         const igl::copyleft::cgal::CSGTree& c1,
         const igl::copyleft::cgal::CSGTree& c2)
 {
@@ -40,7 +38,7 @@ igl::copyleft::cgal::CSGTree difference(
  * @param[in] c2 Second CSGTree
  * @return Union CSG Tree
  */
-igl::copyleft::cgal::CSGTree union_(
+CG3_INLINE igl::copyleft::cgal::CSGTree union_(
         const igl::copyleft::cgal::CSGTree& c1,
         const igl::copyleft::cgal::CSGTree& c2)
 {

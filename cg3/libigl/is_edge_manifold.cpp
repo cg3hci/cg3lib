@@ -18,7 +18,7 @@ namespace libigl {
  * @param input
  * @return
  */
-inline bool isEdgeManifold(const SimpleEigenMesh &input)
+CG3_INLINE bool isEdgeManifold(const SimpleEigenMesh &input)
 {
     return internal::EigenMeshLibIglAlgorithms::isEdgeManifold(input);
 }

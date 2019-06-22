@@ -22,6 +22,10 @@ int extractManifoldPatches(const SimpleEigenMesh& m);
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "extract_manifold_patches.tpp"
+#ifndef CG3_STATIC
+#define CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_CPP "extract_manifold_patches.cpp"
+#include CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_CPP
+#undef CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_LIBIGL_EXTRACT_MANIFOLD_PATCHES_H

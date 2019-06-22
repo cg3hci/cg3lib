@@ -18,6 +18,10 @@ inline bool isEdgeManifold(const SimpleEigenMesh& input);
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "is_edge_manifold.tpp"
+#ifndef CG3_STATIC
+#define CG3_LIBIGL_IS_EDGE_MANIFOLD_CPP "is_edge_manifold.cpp"
+#include CG3_LIBIGL_IS_EDGE_MANIFOLD_CPP
+#undef CG3_LIBIGL_IS_EDGE_MANIFOLD_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_LIBIGL_IS_EDGE_MANIFOLD_H

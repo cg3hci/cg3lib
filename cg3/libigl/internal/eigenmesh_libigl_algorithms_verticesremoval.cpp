@@ -19,7 +19,7 @@ namespace internal {
 
 /* ----- VERTICES REMOVAL ----- */
 
-void EigenMeshLibIglAlgorithms::removeUnreferencedVertices(
+CG3_INLINE void EigenMeshLibIglAlgorithms::removeUnreferencedVertices(
         SimpleEigenMesh& input,
         Eigen::Matrix<int, Eigen::Dynamic, 1> &I)
 {
@@ -41,7 +41,7 @@ void EigenMeshLibIglAlgorithms::removeUnreferencedVertices(
     input.F = NF;
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+CG3_INLINE void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
         SimpleEigenMesh& input,
         double epsilon)
 {
@@ -49,7 +49,7 @@ void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
     removeDuplicateVertices(input, I, epsilon);
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+CG3_INLINE void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
         SimpleEigenMesh& input,
         Eigen::Matrix<int, Eigen::Dynamic, 1>& I,
         double epsilon)
@@ -68,7 +68,7 @@ void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
     input.F = NF;
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+CG3_INLINE void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
         EigenMesh& input,
         double epsilon)
 {
@@ -76,7 +76,7 @@ void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
     removeDuplicateVertices(input, I, epsilon);
 }
 
-void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
+CG3_INLINE void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
         EigenMesh& input,
         Eigen::Matrix<int, Eigen::Dynamic, 1>& I,
         double epsilon)

@@ -33,6 +33,10 @@ void removeDuplicateVertices(
 } //namespace cg3::libigl
 } //namespace cg3
 
-#include "remove_duplicate_vertices.tpp"
+#ifndef CG3_STATIC
+#define REMOVE_LIBIGL_DUPLICATE_VERTICES_CPP "remove_duplicate_vertices.cpp"
+#include REMOVE_LIBIGL_DUPLICATE_VERTICES_CPP
+#undef REMOVE_LIBIGL_DUPLICATE_VERTICES_CPP
+#endif //CG3_STATIC
 
 #endif // REMOVE_LIBIGL_DUPLICATE_VERTICES_H
