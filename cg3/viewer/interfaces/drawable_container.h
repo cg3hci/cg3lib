@@ -67,4 +67,10 @@ private:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_CONTAINER_CPP "drawable_container.cpp"
+#include CG3_DRAWABLE_CONTAINER_CPP
+#undef CG3_DRAWABLE_CONTAINER_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_DRAWABLE_CONTAINER_H

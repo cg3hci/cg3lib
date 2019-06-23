@@ -14,7 +14,7 @@
 
 namespace cg3 {
 
-DrawableCylinder::DrawableCylinder() :
+CG3_INLINE DrawableCylinder::DrawableCylinder() :
     Cylinder(),
     color(128,128,128),
     slices(50),
@@ -22,7 +22,7 @@ DrawableCylinder::DrawableCylinder() :
 {
 }
 
-DrawableCylinder::DrawableCylinder(
+CG3_INLINE DrawableCylinder::DrawableCylinder(
         const Point3d &a,
         const Point3d &b,
         double radius,
@@ -36,17 +36,17 @@ DrawableCylinder::DrawableCylinder(
 {
 }
 
-void DrawableCylinder::draw() const
+CG3_INLINE void DrawableCylinder::draw() const
 {
     opengl::drawCylinder(a, b, _radius, _radius, color, slices, stacks);
 }
 
-Point3d DrawableCylinder::sceneCenter() const
+CG3_INLINE Point3d DrawableCylinder::sceneCenter() const
 {
     return (a+b)/2;
 }
 
-double DrawableCylinder::sceneRadius() const
+CG3_INLINE double DrawableCylinder::sceneRadius() const
 {
     return std::max(_radius, a.dist(b)/2);
 }

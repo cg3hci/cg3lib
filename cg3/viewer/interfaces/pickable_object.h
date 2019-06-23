@@ -62,9 +62,18 @@ private:
     static void getIdsFromIdName(unsigned int idName, unsigned int& idObject, unsigned int &idElement);
 
     static unsigned int objectBits; //default is 8 bit -> initialized in pickable_object.cpp
+
+	static uint oBits(int nBits);
     mutable unsigned int id = 0; //member reserved for GLCanvas
 };
 
 } //namespace cg3
+
+//no way to use static members declared in headers in a header only class (only c++17)
+//#ifndef CG3_STATIC
+//#define CG3_PICKABLE_OBJECT_CPP "pickable_object.cpp"
+//#include CG3_PICKABLE_OBJECT_CPP
+//#undef CG3_PICKABLE_OBJECT_CPP
+//#endif //CG3_STATIC
 
 #endif // CG3_PICKABLE_OBJECT_H

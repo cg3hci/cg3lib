@@ -10,7 +10,7 @@
 
 namespace cg3 {
 
-DrawablePolygon2::DrawablePolygon2() :
+CG3_INLINE DrawablePolygon2::DrawablePolygon2() :
     pointColor(0,0,0),
     segmentColor(0,0,0),
     pointSize(3),
@@ -18,27 +18,27 @@ DrawablePolygon2::DrawablePolygon2() :
 {
 }
 
-void DrawablePolygon2::setPointColor(const cg3::Color& value)
+CG3_INLINE void DrawablePolygon2::setPointColor(const cg3::Color& value)
 {
     pointColor = value;
 }
 
-void DrawablePolygon2::setSegmentColor(const cg3::Color& value)
+CG3_INLINE void DrawablePolygon2::setSegmentColor(const cg3::Color& value)
 {
     segmentColor = value;
 }
 
-void DrawablePolygon2::setPointSize(int value)
+CG3_INLINE void DrawablePolygon2::setPointSize(int value)
 {
     pointSize = value;
 }
 
-void DrawablePolygon2::setSegmentSize(int value)
+CG3_INLINE void DrawablePolygon2::setSegmentSize(int value)
 {
     segmentSize = value;
 }
 
-void DrawablePolygon2::draw() const
+CG3_INLINE void DrawablePolygon2::draw() const
 {
     if (pol.size() > 0){
         for (unsigned int i = 0; i < pol.size()-1; i++){
@@ -50,12 +50,12 @@ void DrawablePolygon2::draw() const
     }
 }
 
-Point3d DrawablePolygon2::sceneCenter() const
+CG3_INLINE Point3d DrawablePolygon2::sceneCenter() const
 {
     return cg3::Point3d(bb.center().x(), bb.center().y());
 }
 
-double DrawablePolygon2::sceneRadius() const
+CG3_INLINE double DrawablePolygon2::sceneRadius() const
 {
     return bb.diag() / 2;
 }

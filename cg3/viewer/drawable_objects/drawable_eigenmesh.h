@@ -34,4 +34,10 @@ public:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_EIGENMESH_CPP "drawable_eigenmesh.cpp"
+#include CG3_DRAWABLE_EIGENMESH_CPP
+#undef CG3_DRAWABLE_EIGENMESH_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_DRAWABLE_EIGENMESH_H

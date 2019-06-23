@@ -12,46 +12,46 @@
 
 namespace cg3 {
 
-DrawableBoundingBox3::DrawableBoundingBox3() :
+CG3_INLINE DrawableBoundingBox3::DrawableBoundingBox3() :
     BoundingBox3(),
     edgeWidth(1),
     edgeColor()
 {
 }
 
-DrawableBoundingBox3::DrawableBoundingBox3(const BoundingBox3& bb) :
+CG3_INLINE DrawableBoundingBox3::DrawableBoundingBox3(const BoundingBox3& bb) :
     BoundingBox3(bb),
     edgeWidth(1),
     edgeColor()
 {
 }
 
-DrawableBoundingBox3::DrawableBoundingBox3(const Point3d& min, const Point3d& max) :
+CG3_INLINE DrawableBoundingBox3::DrawableBoundingBox3(const Point3d& min, const Point3d& max) :
 	DrawableBoundingBox3(BoundingBox3(min, max))
 {
 }
 
-void DrawableBoundingBox3::draw() const
+CG3_INLINE void DrawableBoundingBox3::draw() const
 {
     opengl::drawBox3(_min, _max, edgeColor, edgeWidth);
 }
 
-Point3d DrawableBoundingBox3::sceneCenter() const
+CG3_INLINE Point3d DrawableBoundingBox3::sceneCenter() const
 {
     return center();
 }
 
-double DrawableBoundingBox3::sceneRadius() const
+CG3_INLINE double DrawableBoundingBox3::sceneRadius() const
 {
     return diag() / 2;
 }
 
-void DrawableBoundingBox3::setEdgeColor(const QColor& c)
+CG3_INLINE void DrawableBoundingBox3::setEdgeColor(const QColor& c)
 {
     edgeColor = c;
 }
 
-void DrawableBoundingBox3::setEdgeWidth(int w)
+CG3_INLINE void DrawableBoundingBox3::setEdgeWidth(int w)
 {
     edgeWidth = w;
 }

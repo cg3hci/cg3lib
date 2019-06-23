@@ -19,7 +19,7 @@ namespace viewer {
  * @brief Creates a Dcel Manager
  * @param parent: this parameter must be the pointer to the MainWindow.
  */
-DcelManager::DcelManager(QWidget *parent) :
+CG3_INLINE DcelManager::DcelManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::DcelManager),
     mainWindow((cg3::viewer::MainWindow&)*parent),
@@ -32,7 +32,7 @@ DcelManager::DcelManager(QWidget *parent) :
 /**
  * @brief Deletes the Dcel Manager and removes the Dcel from the MainWindow eventually.
  */
-DcelManager::~DcelManager()
+CG3_INLINE DcelManager::~DcelManager()
 {
     if (loaded)
         mainWindow.deleteDrawableObject(&drawableDcel);
@@ -43,7 +43,7 @@ DcelManager::~DcelManager()
  * @brief Returns a reference to the Dcel of contained in the Manager
  * @return
  */
-DrawableDcel &DcelManager::dcel()
+CG3_INLINE DrawableDcel &DcelManager::dcel()
 {
     return drawableDcel;
 }
@@ -55,7 +55,7 @@ DrawableDcel &DcelManager::dcel()
  *
  * @param[in] dcel
  */
-void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
+CG3_INLINE void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
 {
     cleanDcel();
     drawableDcel = dcel;
@@ -71,7 +71,7 @@ void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
  * The manager passes in "Dcel not Loaded" mode, enabling/disabling all the gui's elements
  * accordingly.
  */
-void DcelManager::cleanDcel()
+CG3_INLINE void DcelManager::cleanDcel()
 {
     if (loaded){
         setButtonsDcelNotLoaded();
@@ -88,7 +88,7 @@ void DcelManager::cleanDcel()
  * @brief Calls the update() member of the contained dcel.
  * @see DrawableDcel::update().
  */
-void DcelManager::updateDcel()
+CG3_INLINE void DcelManager::updateDcel()
 {
     if (loaded){
         drawableDcel.update();
@@ -100,7 +100,7 @@ void DcelManager::updateDcel()
 /**
  * @brief DcelManager::isDcelLoaded
  */
-bool DcelManager::isDcelLoaded() const
+CG3_INLINE bool DcelManager::isDcelLoaded() const
 {
     return loaded;
 }
@@ -108,7 +108,7 @@ bool DcelManager::isDcelLoaded() const
 /**
  * @brief Metodo chiamato quando viene premuto il pulsante LoadDcel
  */
-void DcelManager::on_loadDcelButton_clicked()
+CG3_INLINE void DcelManager::on_loadDcelButton_clicked()
 {
     std::string filename = dcells.loadDialog("Open Dcel");
 
@@ -147,7 +147,7 @@ void DcelManager::on_loadDcelButton_clicked()
 /**
  * @brief Metodo chiamato quando viene premuto il pulsante cleanDcel
  */
-void DcelManager::on_cleanDcelButton_clicked()
+CG3_INLINE void DcelManager::on_cleanDcelButton_clicked()
 {
     cleanDcel();
 }
@@ -155,7 +155,7 @@ void DcelManager::on_cleanDcelButton_clicked()
 /**
  * @brief Metodo chiamato quando viene premuto il pulsante saveDcel
  */
-void DcelManager::on_saveDcelButton_clicked()
+CG3_INLINE void DcelManager::on_saveDcelButton_clicked()
 {
     if (loaded) {
         std::string selectedFilter;
@@ -177,7 +177,7 @@ void DcelManager::on_saveDcelButton_clicked()
     }
 }
 
-void DcelManager::on_wireframeDcelCheckBox_stateChanged(int state)
+CG3_INLINE void DcelManager::on_wireframeDcelCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setWireframe(state == Qt::Checked);
@@ -185,7 +185,7 @@ void DcelManager::on_wireframeDcelCheckBox_stateChanged(int state)
     }
 }
 
-void DcelManager::on_wireframeWidthDcelSlider_valueChanged(int value)
+CG3_INLINE void DcelManager::on_wireframeWidthDcelSlider_valueChanged(int value)
 {
     if (loaded) {
         drawableDcel.setWireframeWidth(value);
@@ -193,7 +193,7 @@ void DcelManager::on_wireframeWidthDcelSlider_valueChanged(int value)
     }
 }
 
-void DcelManager::on_wireframeColorDcelButton_clicked()
+CG3_INLINE void DcelManager::on_wireframeColorDcelButton_clicked()
 {
     if (loaded) {
         QColor color = QColorDialog::getColor(Qt::white, this);
@@ -203,7 +203,7 @@ void DcelManager::on_wireframeColorDcelButton_clicked()
     }
 }
 
-void DcelManager::on_pointsDcelRadioButton_toggled(bool checked)
+CG3_INLINE void DcelManager::on_pointsDcelRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked)
@@ -212,7 +212,7 @@ void DcelManager::on_pointsDcelRadioButton_toggled(bool checked)
     }
 }
 
-void DcelManager::on_flatDcelRadioButton_toggled(bool checked)
+CG3_INLINE void DcelManager::on_flatDcelRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked)
@@ -221,7 +221,7 @@ void DcelManager::on_flatDcelRadioButton_toggled(bool checked)
     }
 }
 
-void DcelManager::on_smoothDcelRadioButton_toggled(bool checked)
+CG3_INLINE void DcelManager::on_smoothDcelRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked)
@@ -230,7 +230,7 @@ void DcelManager::on_smoothDcelRadioButton_toggled(bool checked)
     }
 }
 
-void DcelManager::on_vertexColorDcelRadioButton_toggled(bool checked)
+CG3_INLINE void DcelManager::on_vertexColorDcelRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked)
@@ -239,7 +239,7 @@ void DcelManager::on_vertexColorDcelRadioButton_toggled(bool checked)
     }
 }
 
-void DcelManager::on_triangleColorDcelRadioButton_toggled(bool checked)
+CG3_INLINE void DcelManager::on_triangleColorDcelRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked)
@@ -248,7 +248,7 @@ void DcelManager::on_triangleColorDcelRadioButton_toggled(bool checked)
     }
 }
 
-void DcelManager::on_boundingBoxCheckBox_stateChanged(int state)
+CG3_INLINE void DcelManager::on_boundingBoxCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setVisibleBoundingBox(state == Qt::Checked);
@@ -256,7 +256,7 @@ void DcelManager::on_boundingBoxCheckBox_stateChanged(int state)
     }
 }
 
-void DcelManager::on_facesWireframeDcelCheckBox_stateChanged(int state)
+CG3_INLINE void DcelManager::on_facesWireframeDcelCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setFacesWireframe(state == Qt::Checked);
@@ -267,7 +267,7 @@ void DcelManager::on_facesWireframeDcelCheckBox_stateChanged(int state)
 /**
  * @brief setta ai valori predefiniti tutti gli oggetti presenti nel QFrame del DcelManager
  */
-void DcelManager::resetDefaults()
+CG3_INLINE void DcelManager::resetDefaults()
 {
     ui->wireframeDcelCheckBox->setChecked(false);
     ui->boundingBoxCheckBox->setChecked(false);
@@ -284,7 +284,7 @@ void DcelManager::resetDefaults()
  * @warning tutti questi pulsanti assumono che all'interno della DcelManager sia presente una Dcel, per cui
  * non chiamare mai questo metodo se non è presente una dcel all'interno del manager.
  */
-void DcelManager::setButtonsDcelLoaded()
+CG3_INLINE void DcelManager::setButtonsDcelLoaded()
 {
     ui->wireframeColorDcelButton->setEnabled(true);
     ui->boundingBoxCheckBox->setEnabled(true);
@@ -306,7 +306,7 @@ void DcelManager::setButtonsDcelLoaded()
  * Tutti i pulsanti che permettono di effettuare operazioni di modifica visualizzazione sulla Dcel
  * vengono disattivati.
  */
-void DcelManager::setButtonsDcelNotLoaded()
+CG3_INLINE void DcelManager::setButtonsDcelNotLoaded()
 {
     ui->boundingBoxCheckBox->setEnabled(false);
     ui->wireframeColorDcelButton->setEnabled(false);

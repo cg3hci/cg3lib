@@ -12,12 +12,12 @@
 
 namespace cg3 {
 
-DrawableMixedObjects::DrawableMixedObjects(viewer::GLCanvas* canvas) :
+CG3_INLINE DrawableMixedObjects::DrawableMixedObjects(viewer::GLCanvas* canvas) :
     canvas(canvas)
 {
 }
 
-void DrawableMixedObjects::draw() const
+CG3_INLINE void DrawableMixedObjects::draw() const
 {
     for (const Sphere& s : spheres){
         opengl::drawSphere(s.center, s.radius, s.color, s.precision);
@@ -43,21 +43,21 @@ void DrawableMixedObjects::draw() const
     }
 }
 
-Point3d DrawableMixedObjects::sceneCenter() const
+CG3_INLINE Point3d DrawableMixedObjects::sceneCenter() const
 {
     if (bb.diag() > 0)
         return bb.center();
     return Point3d();
 }
 
-double DrawableMixedObjects::sceneRadius() const
+CG3_INLINE double DrawableMixedObjects::sceneRadius() const
 {
     //if (bb.diag() > 0)
     //    return bb.diag()/2;
     return -1;
 }
 
-void DrawableMixedObjects::updateBoundingBox()
+CG3_INLINE void DrawableMixedObjects::updateBoundingBox()
 {
     if (numberObjects() == 0) {
         bb = BoundingBox3();
@@ -89,12 +89,12 @@ void DrawableMixedObjects::updateBoundingBox()
     }
 }
 
-unsigned int DrawableMixedObjects::numberObjects() const
+CG3_INLINE unsigned int DrawableMixedObjects::numberObjects() const
 {
     return (unsigned int) (spheres.size() + cylinders.size() + lines.size());
 }
 
-unsigned int DrawableMixedObjects::addSphere(const Point3d& center, double radius, const QColor& color, int precision)
+CG3_INLINE unsigned int DrawableMixedObjects::addSphere(const Point3d& center, double radius, const QColor& color, int precision)
 {
     Sphere s = {center, radius, color, precision};
     spheres.push_back(s);
@@ -103,13 +103,13 @@ unsigned int DrawableMixedObjects::addSphere(const Point3d& center, double radiu
     return (unsigned int)spheres.size()-1;
 }
 
-void DrawableMixedObjects::clearSpheres()
+CG3_INLINE void DrawableMixedObjects::clearSpheres()
 {
     spheres.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableMixedObjects::addPoint(const Point3d& p, const QColor& color, int size)
+CG3_INLINE unsigned int DrawableMixedObjects::addPoint(const Point3d& p, const QColor& color, int size)
 {
     Point pp = {p, color, size};
     points.push_back(pp);
@@ -118,12 +118,12 @@ unsigned int DrawableMixedObjects::addPoint(const Point3d& p, const QColor& colo
     return (unsigned int)points.size()-1;
 }
 
-void DrawableMixedObjects::clearPoints() {
+CG3_INLINE void DrawableMixedObjects::clearPoints() {
     points.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableMixedObjects::addCylinder(const Point3d& a, const Point3d& b, double radius, const QColor color)
+CG3_INLINE unsigned int DrawableMixedObjects::addCylinder(const Point3d& a, const Point3d& b, double radius, const QColor color)
 {
     Cylinder c = {a, b, radius, color};
     cylinders.push_back(c);
@@ -136,13 +136,13 @@ unsigned int DrawableMixedObjects::addCylinder(const Point3d& a, const Point3d& 
     return (unsigned int)cylinders.size()-1;
 }
 
-void DrawableMixedObjects::clearCylinders()
+CG3_INLINE void DrawableMixedObjects::clearCylinders()
 {
     cylinders.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableMixedObjects::addLine(const Point3d &a, const Point3d &b, const QColor color, int width)
+CG3_INLINE unsigned int DrawableMixedObjects::addLine(const Point3d &a, const Point3d &b, const QColor color, int width)
 {
     Line l = {a, b, width, color};
     lines.push_back(l);
@@ -153,7 +153,7 @@ unsigned int DrawableMixedObjects::addLine(const Point3d &a, const Point3d &b, c
     return (unsigned int)lines.size()-1;
 }
 
-unsigned int DrawableMixedObjects::addLine(const Point2d& a, const Point2d& b, const QColor color, int width)
+CG3_INLINE unsigned int DrawableMixedObjects::addLine(const Point2d& a, const Point2d& b, const QColor color, int width)
 {
     Point3d a_(a.x(), a.y(), 0);
     Point3d b_(b.x(), b.y(), 0);
@@ -166,13 +166,13 @@ unsigned int DrawableMixedObjects::addLine(const Point2d& a, const Point2d& b, c
     return (unsigned int)lines.size()-1;
 }
 
-void DrawableMixedObjects::clearLines()
+CG3_INLINE void DrawableMixedObjects::clearLines()
 {
     lines.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableMixedObjects::addTriangle(const Point3d& a, const Point3d& b, const Point3d& c, const QColor color, int width, bool fill)
+CG3_INLINE unsigned int DrawableMixedObjects::addTriangle(const Point3d& a, const Point3d& b, const Point3d& c, const QColor color, int width, bool fill)
 {
     Triangle t {a, b, c, width, color, fill};
     triangles.push_back(t);
@@ -186,7 +186,7 @@ unsigned int DrawableMixedObjects::addTriangle(const Point3d& a, const Point3d& 
     return (unsigned int)triangles.size()-1;
 }
 
-unsigned int DrawableMixedObjects::addTriangle(const Point2d& a, const Point2d& b, const Point2d& c, const QColor color, int width, bool fill)
+CG3_INLINE unsigned int DrawableMixedObjects::addTriangle(const Point2d& a, const Point2d& b, const Point2d& c, const QColor color, int width, bool fill)
 {
     Point3d a_(a.x(), a.y(), 0);
     Point3d b_(b.x(), b.y(), 0);
@@ -203,19 +203,19 @@ unsigned int DrawableMixedObjects::addTriangle(const Point2d& a, const Point2d& 
     return (unsigned int)triangles.size()-1;
 }
 
-void DrawableMixedObjects::clearTriangles()
+CG3_INLINE void DrawableMixedObjects::clearTriangles()
 {
     triangles.clear();
     updateBoundingBox();
 }
 
-unsigned int DrawableMixedObjects::addText(const Point3d& pos, const std::string& text)
+CG3_INLINE unsigned int DrawableMixedObjects::addText(const Point3d& pos, const std::string& text)
 {
     texts.push_back({pos, text});
     return (unsigned int) texts.size()-1;
 }
 
-void DrawableMixedObjects::clearTexts()
+CG3_INLINE void DrawableMixedObjects::clearTexts()
 {
     texts.clear();
 }

@@ -28,4 +28,10 @@ public:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_PICKABLE_EIGENMESH_CPP "pickable_eigenmesh.cpp"
+#include CG3_PICKABLE_EIGENMESH_CPP
+#undef CG3_PICKABLE_EIGENMESH_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_PICKABLE_EIGENMESH_H

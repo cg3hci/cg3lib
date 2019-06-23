@@ -37,6 +37,12 @@ protected:
     int width;
 };
 
-}
+} //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_SEGMENT2_CPP "drawable_segment2.cpp"
+#include CG3_DRAWABLE_SEGMENT2_CPP
+#undef CG3_DRAWABLE_SEGMENT2_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_DRAWABLE_SEGMENT2_H

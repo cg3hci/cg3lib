@@ -20,4 +20,10 @@ BoundingBox3 fullBoundingBoxDrawableObjects(
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_VIEWER_UTILS_CPP "utils.cpp"
+#include CG3_VIEWER_UTILS_CPP
+#undef CG3_VIEWER_UTILS_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_VIEWER_UTILS_H

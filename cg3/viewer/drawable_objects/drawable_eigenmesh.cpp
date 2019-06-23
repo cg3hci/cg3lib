@@ -15,28 +15,28 @@
 
 namespace cg3 {
 
-DrawableEigenMesh::DrawableEigenMesh()
+CG3_INLINE DrawableEigenMesh::DrawableEigenMesh()
 {
 }
 
-DrawableEigenMesh::DrawableEigenMesh(const SimpleEigenMesh& m) : EigenMesh(m) {
+CG3_INLINE DrawableEigenMesh::DrawableEigenMesh(const SimpleEigenMesh& m) : EigenMesh(m) {
 }
 
 
-DrawableEigenMesh::DrawableEigenMesh(const EigenMesh& m) : EigenMesh(m)
+CG3_INLINE DrawableEigenMesh::DrawableEigenMesh(const EigenMesh& m) : EigenMesh(m)
 {
 }
 
-DrawableEigenMesh::DrawableEigenMesh(const std::string& filename)  : EigenMesh(filename)
+CG3_INLINE DrawableEigenMesh::DrawableEigenMesh(const std::string& filename)  : EigenMesh(filename)
 {
 }
 
-void DrawableEigenMesh::draw() const
+CG3_INLINE void DrawableEigenMesh::draw() const
 {
     DrawableMesh::draw(V.rows(), F.rows(), V.data(), F.data(), NV.data(), CV.data(), NF.data(), CF.data(), bb.min(), bb.max());
 }
 
-Point3d DrawableEigenMesh::sceneCenter() const
+CG3_INLINE Point3d DrawableEigenMesh::sceneCenter() const
 {
     if (bb.isValid())
         return bb.center();
@@ -44,7 +44,7 @@ Point3d DrawableEigenMesh::sceneCenter() const
         return Point3d();
 }
 
-double DrawableEigenMesh::sceneRadius() const
+CG3_INLINE double DrawableEigenMesh::sceneRadius() const
 {
     if (bb.isValid())
         return bb.diag() / 2;

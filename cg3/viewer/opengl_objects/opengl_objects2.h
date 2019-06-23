@@ -66,6 +66,6 @@ void drawQuad2(
 } //namespace cg3::opengl
 } //namespace cg3
 
-#include "opengl_objects2.tpp"
+#include "opengl_objects2.cpp"
 
 #endif // CG3_OPENGL_OBJECTS2_H

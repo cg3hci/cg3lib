@@ -9,7 +9,7 @@
 
 namespace cg3 {
 
-DrawableTriangle3::DrawableTriangle3() :
+CG3_INLINE DrawableTriangle3::DrawableTriangle3() :
     Triangle3d(),
     color(0,0,0),
     width(3),
@@ -17,7 +17,7 @@ DrawableTriangle3::DrawableTriangle3() :
 {
 }
 
-DrawableTriangle3::DrawableTriangle3(
+CG3_INLINE DrawableTriangle3::DrawableTriangle3(
         const Point3d &p1,
         const Point3d &p2,
         const Point3d &p3,
@@ -31,17 +31,17 @@ DrawableTriangle3::DrawableTriangle3(
 {
 }
 
-void DrawableTriangle3::draw() const
+CG3_INLINE void DrawableTriangle3::draw() const
 {
 	opengl::drawTriangle(v[0], v[1], v[2], color, width, fill);
 }
 
-Point3d DrawableTriangle3::sceneCenter() const
+CG3_INLINE Point3d DrawableTriangle3::sceneCenter() const
 {
     return barycenter();
 }
 
-double DrawableTriangle3::sceneRadius() const
+CG3_INLINE double DrawableTriangle3::sceneRadius() const
 {
 	return barycenter().dist(v[0]);
 }

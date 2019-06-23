@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#ifndef CONTAINER_DRAWLIST_MANAGER_H
-#define CONTAINER_DRAWLIST_MANAGER_H
+#ifndef CG3_DRAWABLE_CONTAINER_DRAWLIST_MANAGER_H
+#define CG3_DRAWABLE_CONTAINER_DRAWLIST_MANAGER_H
 
 #include "submanager.h"
 
@@ -65,4 +65,10 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
-#endif // CONTAINER_DRAWLIST_MANAGER_H
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_CONTAINER_DRAWLIST_MANAGER_CPP "drawable_container_drawlist_manager.cpp"
+#include CG3_DRAWABLE_CONTAINER_DRAWLIST_MANAGER_CPP
+#undef CG3_DRAWABLE_CONTAINER_DRAWLIST_MANAGER_CPP
+#endif //CG3_STATIC
+
+#endif // CG3_DRAWABLE_CONTAINER_DRAWLIST_MANAGER_H

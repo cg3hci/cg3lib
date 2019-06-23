@@ -10,11 +10,11 @@
 
 namespace cg3 {
 
-PickableEigenMesh::PickableEigenMesh()
+CG3_INLINE PickableEigenMesh::PickableEigenMesh()
 {
 }
 
-PickableEigenMesh::PickableEigenMesh(const EigenMesh &e) :DrawableEigenMesh(e)
+CG3_INLINE PickableEigenMesh::PickableEigenMesh(const EigenMesh &e) :DrawableEigenMesh(e)
 {
 }
 
@@ -23,7 +23,7 @@ PickableEigenMesh::PickableEigenMesh(const EigenMesh &e) :DrawableEigenMesh(e)
  * @brief PickableEigenmesh::drawWithNames Metodo che si occupa di disegnare le facce assegnando a esse un identificativo
  * riconoscibile nella postSelection (classe glCanvas) in modo da poterne effettuare il picking.
  */
-void PickableEigenMesh::drawWithNames() const
+CG3_INLINE void PickableEigenMesh::drawWithNames() const
 {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_DOUBLE, 0, V.data());

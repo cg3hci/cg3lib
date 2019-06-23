@@ -138,4 +138,10 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_GL_CANVAS_CPP "glcanvas.cpp"
+#include CG3_GL_CANVAS_CPP
+#undef CG3_GL_CANVAS_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_GL_CANVAS_H

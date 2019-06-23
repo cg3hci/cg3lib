@@ -36,6 +36,12 @@ protected:
     unsigned int stacks;
 };
 
-}
+} //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_CYLINDER_CPP "drawable_cylinder.cpp"
+#include CG3_DRAWABLE_CYLINDER_CPP
+#undef CG3_DRAWABLE_CYLINDER_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_DRAWABLE_CYLINDER_H

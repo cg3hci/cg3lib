@@ -46,7 +46,7 @@ public:
  * setting up the canvas and linking it to the scroll area that will contain the
  * checkboxes associtated to the DrawableObjects contained in the canvas.
  */
-MainWindow::MainWindow(QWidget* parent) :
+CG3_INLINE MainWindow::MainWindow(QWidget* parent) :
         QMainWindow(parent),
         ui(new internal::UiMainWindowRaiiWrapper(this)),
         consoleEnabled(false),
@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget* parent) :
     canvas.setSnapshotFormat("PNG");
 }
 
-MainWindow::~MainWindow()
+CG3_INLINE MainWindow::~MainWindow()
 {
     delete ui;
 }
@@ -87,7 +87,7 @@ MainWindow::~MainWindow()
 /**
  * @brief Returns the sizes of the Canvas as number of pixels.
  */
-Point2i MainWindow::canvasSize() const
+CG3_INLINE Point2i MainWindow::canvasSize() const
 {
     return Point2i(canvas.width(), canvas.height());
 }
@@ -100,7 +100,7 @@ Point2i MainWindow::canvasSize() const
  * @param checkBoxName: a name associated to the DrawableObject
  * @param checkBoxChecked: true if the object will be visible, false otherwise
  */
-void MainWindow::pushDrawableObject(
+CG3_INLINE void MainWindow::pushDrawableObject(
         const DrawableObject* obj,
         std::string checkBoxName,
         bool checkBoxChecked,
@@ -120,7 +120,7 @@ void MainWindow::pushDrawableObject(
     }
 }
 
-void MainWindow::pushDrawableObject(
+CG3_INLINE void MainWindow::pushDrawableObject(
         const std::shared_ptr<const DrawableObject> &ptr,
         std::string checkBoxName,
         bool checkBoxChecked,
@@ -138,7 +138,7 @@ void MainWindow::pushDrawableObject(
  *
  * @param obj: the object that will be removed from the canvas
  */
-bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
+CG3_INLINE bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
 {
     if (obj != nullptr && mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
         canvas.deleteDrawableObject(obj);
@@ -152,7 +152,7 @@ bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
     return false;
 }
 
-bool MainWindow::deleteDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+CG3_INLINE bool MainWindow::deleteDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
 {
     bool b = deleteDrawableObject(ptr.get());
     sharedDrawableObjects.erase(ptr);
@@ -163,7 +163,7 @@ bool MainWindow::deleteDrawableObject(const std::shared_ptr<const DrawableObject
  * @brief Sets the visibility/non visibility of a DrawableObject, checking/unchecking its
  * checkbox accordingly.
  */
-void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
+CG3_INLINE void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
     if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
         canvas.setDrawableObjectVisibility(obj, visible);
@@ -171,7 +171,7 @@ void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool vis
     }
 }
 
-void MainWindow::setDrawableObjectVisibility(const std::shared_ptr<const DrawableObject> &ptr, bool visible)
+CG3_INLINE void MainWindow::setDrawableObjectVisibility(const std::shared_ptr<const DrawableObject> &ptr, bool visible)
 {
     setDrawableObjectVisibility(ptr.get(), visible);
 }
@@ -179,12 +179,12 @@ void MainWindow::setDrawableObjectVisibility(const std::shared_ptr<const Drawabl
 /**
  * @brief Returns true if the input DrawableObject is already drawn in the canvas.
  */
-bool MainWindow::containsDrawableObject(const DrawableObject* obj)
+CG3_INLINE bool MainWindow::containsDrawableObject(const DrawableObject* obj)
 {
     return (mapDrawListManagers.find(obj) != mapDrawListManagers.end());
 }
 
-bool MainWindow::containsDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+CG3_INLINE bool MainWindow::containsDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
 {
     return sharedDrawableObjects.find(ptr) != sharedDrawableObjects.end();
 }
@@ -194,7 +194,7 @@ bool MainWindow::containsDrawableObject(const std::shared_ptr<const DrawableObje
  * Sets the properties of the user interface in the DrawableObject.
  * @todo Manage PickableObject and DrawableContainer..
  */
-bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
+CG3_INLINE bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
 {
     if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()) {
 
@@ -213,12 +213,12 @@ bool MainWindow::refreshDrawableObject(const DrawableObject* obj)
     }
 }
 
-bool MainWindow::refreshDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+CG3_INLINE bool MainWindow::refreshDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
 {
     return refreshDrawableObject(ptr.get());
 }
 
-bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::string& newName)
+CG3_INLINE bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::string& newName)
 {
     if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
         mapDrawListManagers[obj]->setDrawableObjectName(newName);
@@ -227,12 +227,12 @@ bool MainWindow::setDrawableObjectName(const DrawableObject* obj, const std::str
     return false;
 }
 
-bool MainWindow::setDrawableObjectName(const std::shared_ptr<const DrawableObject> &ptr, const std::string &newName)
+CG3_INLINE bool MainWindow::setDrawableObjectName(const std::shared_ptr<const DrawableObject> &ptr, const std::string &newName)
 {
     return setDrawableObjectName(ptr.get(), newName);
 }
 
-std::string MainWindow::nameOfDrawableObject(const DrawableObject* obj) const
+CG3_INLINE std::string MainWindow::nameOfDrawableObject(const DrawableObject* obj) const
 {
     auto it = mapDrawListManagers.find(obj);
     if (it != mapDrawListManagers.end()){
@@ -242,7 +242,7 @@ std::string MainWindow::nameOfDrawableObject(const DrawableObject* obj) const
         return "";
 }
 
-std::string MainWindow::nameOfDrawableObject(const std::shared_ptr<const DrawableObject> &ptr) const
+CG3_INLINE std::string MainWindow::nameOfDrawableObject(const std::shared_ptr<const DrawableObject> &ptr) const
 {
     return nameOfDrawableObject(ptr.get());
 }
@@ -251,7 +251,7 @@ std::string MainWindow::nameOfDrawableObject(const std::shared_ptr<const Drawabl
  * @brief Returns a vector of all the selected DrawableObjects of the DrawList.
  * @return the vector of selected objects.
  */
-std::vector<const DrawableObject*> MainWindow::selectedDrawableObjects() const
+CG3_INLINE std::vector<const DrawableObject*> MainWindow::selectedDrawableObjects() const
 {
     std::vector<const DrawableObject*> vec;
     for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p :
@@ -272,7 +272,7 @@ std::vector<const DrawableObject*> MainWindow::selectedDrawableObjects() const
  * one object is selected.
  * @return the selected DrawableObject (if and ONLY if there is one selected DrawableObject)
  */
-const DrawableObject* MainWindow::selectedDrawableObject() const
+CG3_INLINE const DrawableObject* MainWindow::selectedDrawableObject() const
 {
     const DrawableObject* obj = nullptr;
     for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p :
@@ -304,7 +304,7 @@ const DrawableObject* MainWindow::selectedDrawableObject() const
  * @brief Enables the Debug Objects, they will be drawn in the canvas and their
  * checkbox in the scroll area will be shown.
  */
-void MainWindow::enableDebugObjects()
+CG3_INLINE void MainWindow::enableDebugObjects()
 {
     if (debugObjectsEnabled == false){
         pushDrawableObject(&debugObjects, "Debug Objects");
@@ -317,7 +317,7 @@ void MainWindow::enableDebugObjects()
  * @brief Disables the Debug Objects, they will be removed from the canvas and their
  * checkbox in the scroll area will be removed.
  */
-void MainWindow::disableDebugObjects()
+CG3_INLINE void MainWindow::disableDebugObjects()
 {
     if (debugObjectsEnabled == true){
         if (deleteDrawableObject(&debugObjects)) {
@@ -328,7 +328,7 @@ void MainWindow::disableDebugObjects()
     canvas.update();
 }
 
-void MainWindow::toggleDebugObjects()
+CG3_INLINE void MainWindow::toggleDebugObjects()
 {
     if (debugObjectsEnabled)
         disableDebugObjects();
@@ -339,7 +339,7 @@ void MainWindow::toggleDebugObjects()
 /**
  * @brief Sets the full screen mode to the MainWindow according to the boolean parameter.
  */
-void MainWindow::setFullScreen(bool b)
+CG3_INLINE void MainWindow::setFullScreen(bool b)
 {
     canvas.setFullScreen(b);
     if (!b)
@@ -350,7 +350,7 @@ void MainWindow::setFullScreen(bool b)
  * @brief Enables/Disables the console stream
  * streams of the application in the MainWindow.
  */
-void MainWindow::toggleConsole()
+CG3_INLINE void MainWindow::toggleConsole()
 {
     if (consoleEnabled){
         consoleEnabled = false;
@@ -365,7 +365,7 @@ void MainWindow::toggleConsole()
 /**
  * @brief Manages a Key Event and executes relative operations or emits signals.
  */
-void MainWindow::keyPressEvent(QKeyEvent * event)
+CG3_INLINE void MainWindow::keyPressEvent(QKeyEvent * event)
 {
     if(event->matches(QKeySequence::Undo))
         emit(undoEvent());
@@ -380,7 +380,7 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
  * @param[in] parent: the default parent of the QFrame will be the toolbox of the mainwindow.
  * @return an id representing the manager inside the mainWindow.
  */
-unsigned int MainWindow::addManager(QFrame* f, std::string name, QToolBox* parent)
+CG3_INLINE unsigned int MainWindow::addManager(QFrame* f, std::string name, QToolBox* parent)
 {
     if (parent == nullptr)
         parent = ui->toolBox;
@@ -398,7 +398,7 @@ unsigned int MainWindow::addManager(QFrame* f, std::string name, QToolBox* paren
  * @param[in] i: indice del manager da restituire
  * @return il puntatore al manager se esiste, nullptr altrimenti
  */
-QFrame *MainWindow::getManager(unsigned int i)
+CG3_INLINE QFrame *MainWindow::getManager(unsigned int i)
 {
     if (i < managers.size()) return managers[i];
     else return nullptr;
@@ -409,7 +409,7 @@ QFrame *MainWindow::getManager(unsigned int i)
  * @param[in] i: indice del manager da rinominare
  * @param[in] s: il nuovo nome del manager
  */
-void MainWindow::renameManager(unsigned int i, std::string s)
+CG3_INLINE void MainWindow::renameManager(unsigned int i, std::string s)
 {
     if (i < managers.size())
         ui->toolBox->setItemText(i, QString(s.c_str()));
@@ -419,38 +419,38 @@ void MainWindow::renameManager(unsigned int i, std::string s)
  * @brief Modifica il manager visualizzato all'i-esimo.
  * @param[in] i: indice del manager da visualizzare
  */
-void MainWindow::setCurrentManager(unsigned int i)
+CG3_INLINE void MainWindow::setCurrentManager(unsigned int i)
 {
     if (i < managers.size())
         ui->toolBox->setCurrentIndex(i);
 }
 
-void MainWindow::on_actionSave_Snapshot_triggered()
+CG3_INLINE void MainWindow::on_actionSave_Snapshot_triggered()
 {
     ui->glCanvas->saveSnapshot(QString(), false);
 }
 
-void MainWindow::on_actionShow_Axis_triggered()
+CG3_INLINE void MainWindow::on_actionShow_Axis_triggered()
 {
     ui->glCanvas->toggleAxisIsDrawn();
 }
 
-void MainWindow::on_actionFull_Screen_toggled(bool arg1)
+CG3_INLINE void MainWindow::on_actionFull_Screen_toggled(bool arg1)
 {
     setFullScreen(arg1);
 }
 
-void MainWindow::on_actionUpdate_Canvas_triggered()
+CG3_INLINE void MainWindow::on_actionUpdate_Canvas_triggered()
 {
     canvas.update();
 }
 
-void MainWindow::on_actionFit_Scene_triggered()
+CG3_INLINE void MainWindow::on_actionFit_Scene_triggered()
 {
     canvas.fitScene();
 }
 
-void MainWindow::on_actionChange_Background_Color_triggered()
+CG3_INLINE void MainWindow::on_actionChange_Background_Color_triggered()
 {
     QColor color = QColorDialog::getColor(Qt::white, this);
 
@@ -458,17 +458,17 @@ void MainWindow::on_actionChange_Background_Color_triggered()
     canvas.update();
 }
 
-void MainWindow::on_actionSave_Point_Of_View_triggered()
+CG3_INLINE void MainWindow::on_actionSave_Point_Of_View_triggered()
 {
     canvas.savePointOfView();
 }
 
-void MainWindow::on_actionLoad_Point_of_View_triggered()
+CG3_INLINE void MainWindow::on_actionLoad_Point_of_View_triggered()
 {
     canvas.loadPointOfView();
 }
 
-void MainWindow::on_actionShow_Hide_Dock_Widget_triggered()
+CG3_INLINE void MainWindow::on_actionShow_Hide_Dock_Widget_triggered()
 {
     if (ui->dockToolBox->isHidden())
         ui->dockToolBox->show();
@@ -476,7 +476,7 @@ void MainWindow::on_actionShow_Hide_Dock_Widget_triggered()
         ui->dockToolBox->hide();
 }
 
-void MainWindow::on_actionLoad_Point_Of_View_from_triggered()
+CG3_INLINE void MainWindow::on_actionLoad_Point_Of_View_from_triggered()
 {
     std::string s = povLS.loadDialog("Open Point Of View");
     if (s != ""){
@@ -484,7 +484,7 @@ void MainWindow::on_actionLoad_Point_Of_View_from_triggered()
     }
 }
 
-void MainWindow::on_actionSave_Point_Of_View_as_triggered()
+CG3_INLINE void MainWindow::on_actionSave_Point_Of_View_as_triggered()
 {
     std::string s = povLS.saveDialog("Save Point Of View");
     if (s != ""){
@@ -492,12 +492,12 @@ void MainWindow::on_actionSave_Point_Of_View_as_triggered()
     }
 }
 
-void MainWindow::on_actionShow_Hide_Console_triggered()
+CG3_INLINE void MainWindow::on_actionShow_Hide_Console_triggered()
 {
     toggleConsole();
 }
 
-void MainWindow::on_actionShow_Hide_DrawList_triggered()
+CG3_INLINE void MainWindow::on_actionShow_Hide_DrawList_triggered()
 {
     if (ui->dockDrawList->isHidden())
         ui->dockDrawList->show();
@@ -505,40 +505,40 @@ void MainWindow::on_actionShow_Hide_DrawList_triggered()
         ui->dockDrawList->hide();
 }
 
-void MainWindow::on_actionToggle_Debug_Objects_triggered()
+CG3_INLINE void MainWindow::on_actionToggle_Debug_Objects_triggered()
 {
     toggleDebugObjects();
 }
 
-void MainWindow::on_action2D_Mode_triggered()
+CG3_INLINE void MainWindow::on_action2D_Mode_triggered()
 {
     canvas.set2DMode();
 }
 
-void MainWindow::on_action3D_Mode_triggered()
+CG3_INLINE void MainWindow::on_action3D_Mode_triggered()
 {
     canvas.set3DMode();
 }
 
-void MainWindow::on_actionReset_Point_of_View_triggered()
+CG3_INLINE void MainWindow::on_actionReset_Point_of_View_triggered()
 {
     canvas.resetPointOfView();
 }
 
-void MainWindow::on_actionPerspective_Orthographic_Camera_Mode_triggered()
+CG3_INLINE void MainWindow::on_actionPerspective_Orthographic_Camera_Mode_triggered()
 {
     canvas.toggleCameraType();
     canvas.update();
 }
 
-void MainWindow::on_actionShow_Unit_Box_triggered()
+CG3_INLINE void MainWindow::on_actionShow_Unit_Box_triggered()
 {
     canvas.toggleUnitBox();
     canvas.update();
 }
 
 #ifdef CG3_DCEL_DEFINED
-void MainWindow::on_actionLoad_Mesh_triggered()
+CG3_INLINE void MainWindow::on_actionLoad_Mesh_triggered()
 {
     std::string filename = meshLS.loadDialog("Open Mesh");
     if (filename != ""){

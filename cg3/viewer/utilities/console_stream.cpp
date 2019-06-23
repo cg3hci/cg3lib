@@ -5,21 +5,22 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 #include "console_stream.h"
+#include <cg3/cg3lib.h>
 
 namespace cg3 {
 namespace viewer {
 namespace internal {
 
-CLogBuf::CLogBuf(QTextEdit* t)  : textEdit(t), coutOutPut(true)
+CG3_INLINE CLogBuf::CLogBuf(QTextEdit* t)  : textEdit(t), coutOutPut(true)
 {
 }
 
-CLogBuf::~CLogBuf()
+CG3_INLINE CLogBuf::~CLogBuf()
 {
     pubsync();
 }
 
-std::basic_stringbuf<char>::int_type CLogBuf::overflow(
+CG3_INLINE std::basic_stringbuf<char>::int_type CLogBuf::overflow(
         std::basic_stringbuf<char>::int_type v)
 {
     if (v == '\n') {
@@ -34,7 +35,7 @@ std::basic_stringbuf<char>::int_type CLogBuf::overflow(
     return v;
 }
 
-std::streamsize CLogBuf::xsputn(const char* p, std::streamsize n)
+CG3_INLINE std::streamsize CLogBuf::xsputn(const char* p, std::streamsize n)
 {
     mString.append(p, p + n);
 
@@ -52,25 +53,25 @@ std::streamsize CLogBuf::xsputn(const char* p, std::streamsize n)
     return n;
 }
 
-void CLogBuf::setCoutOutput(bool b)
+CG3_INLINE void CLogBuf::setCoutOutput(bool b)
 {
     coutOutPut = b;
 }
 
 } //namespace cg3::viewer::internal
 
-ConsoleStream::ConsoleStream(QTextEdit* text_edit) :
+CG3_INLINE ConsoleStream::ConsoleStream(QTextEdit* text_edit) :
     std::ostream(new internal::CLogBuf(text_edit))
 {
     buf = (internal::CLogBuf*) rdbuf();
 }
 
-ConsoleStream::~ConsoleStream()
+CG3_INLINE ConsoleStream::~ConsoleStream()
 {
     delete rdbuf();
 }
 
-void ConsoleStream::setCoutOutput(bool b)
+CG3_INLINE void ConsoleStream::setCoutOutput(bool b)
 {
     buf->setCoutOutput(b);
 }

@@ -9,14 +9,14 @@
 
 namespace cg3 {
 
-DrawableSphere::DrawableSphere() :
+CG3_INLINE DrawableSphere::DrawableSphere() :
     Sphere(),
     color(128,128,128),
     precision(10)
 {
 }
 
-DrawableSphere::DrawableSphere(
+CG3_INLINE DrawableSphere::DrawableSphere(
         const cg3::Point3d &center,
         double radius,
         QColor color,
@@ -27,16 +27,16 @@ DrawableSphere::DrawableSphere(
 {
 }
 
-void DrawableSphere::draw() const
+CG3_INLINE void DrawableSphere::draw() const
 {
     opengl::drawSphere(_center, _radius, color, precision);
 }
 
-Point3d DrawableSphere::sceneCenter() const {
+CG3_INLINE Point3d DrawableSphere::sceneCenter() const {
     return _center;
 }
 
-double DrawableSphere::sceneRadius() const {
+CG3_INLINE double DrawableSphere::sceneRadius() const {
     return _radius;
 }
 

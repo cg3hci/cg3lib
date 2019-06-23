@@ -17,7 +17,7 @@
 namespace cg3 {
 namespace viewer {
 
-GLCanvas::GLCanvas(QWidget * parent) :
+CG3_INLINE GLCanvas::GLCanvas(QWidget * parent) :
     zoomSceneFactor(3),
     backgroundColor(Qt::white),
     mode(_3D),
@@ -30,14 +30,14 @@ GLCanvas::GLCanvas(QWidget * parent) :
     cg3::internal::initConfigFolder();
 }
 
-void GLCanvas::init()
+CG3_INLINE void GLCanvas::init()
 {
     setFPSIsDisplayed(false);
     setMouseTracking(true);
     camera()->frame()->setSpinningSensitivity(100.0);
 }
 
-void GLCanvas::draw()
+CG3_INLINE void GLCanvas::draw()
 {
     QGLViewer::setBackgroundColor(backgroundColor);
 
@@ -70,7 +70,7 @@ void GLCanvas::draw()
         unitBox.draw();
 }
 
-void GLCanvas::drawWithNames()
+CG3_INLINE void GLCanvas::drawWithNames()
 {
     QGLViewer::setBackgroundColor(backgroundColor);
 
@@ -81,7 +81,7 @@ void GLCanvas::drawWithNames()
     }
 }
 
-void GLCanvas::postSelection(const QPoint& point)
+CG3_INLINE void GLCanvas::postSelection(const QPoint& point)
 {
     int idName = selectedName();
 
@@ -115,7 +115,7 @@ void GLCanvas::postSelection(const QPoint& point)
     }
 }
 
-void GLCanvas::fitScene()
+CG3_INLINE void GLCanvas::fitScene()
 {
     bool onlyVisible = true;
     if (sizeVisibleDrawableObjects() == 0 && drawlist.size() > 0)
@@ -134,33 +134,33 @@ void GLCanvas::fitScene()
     showEntireScene();
 }
 
-void GLCanvas::fitScene(const Point3d& center, double radius)
+CG3_INLINE void GLCanvas::fitScene(const Point3d& center, double radius)
 {
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), center.z()));
     setSceneRadius(radius);
     showEntireScene();
 }
 
-void GLCanvas::fitScene2d(const Point2d &center, double radius)
+CG3_INLINE void GLCanvas::fitScene2d(const Point2d &center, double radius)
 {
     setSceneCenter(qglviewer::Vec(center.x(), center.y(), 0));
     setSceneRadius(radius);
     showEntireScene();
 }
 
-void GLCanvas::toggleUnitBox()
+CG3_INLINE void GLCanvas::toggleUnitBox()
 {
     unitBoxEnabled = !unitBoxEnabled;
     update();
 }
 
-void GLCanvas::setBackgroundColor(const QColor &color)
+CG3_INLINE void GLCanvas::setBackgroundColor(const QColor &color)
 {
     backgroundColor = color;
     update();
 }
 
-void GLCanvas::set2DMode()
+CG3_INLINE void GLCanvas::set2DMode()
 {
     if (mode != _2D){
         mode = _2D;
@@ -170,7 +170,7 @@ void GLCanvas::set2DMode()
     }
 }
 
-void GLCanvas::set3DMode()
+CG3_INLINE void GLCanvas::set3DMode()
 {
     if (mode != _3D){
         mode = _3D;
@@ -179,34 +179,34 @@ void GLCanvas::set3DMode()
     }
 }
 
-void GLCanvas::saveSnapshot()
+CG3_INLINE void GLCanvas::saveSnapshot()
 {
     QGLViewer::saveSnapshot();
 }
 
-void GLCanvas::saveSnapshot(const QString &filename, bool overwrite)
+CG3_INLINE void GLCanvas::saveSnapshot(const QString &filename, bool overwrite)
 {
     QGLViewer::saveSnapshot(filename, overwrite);
 }
 
-void GLCanvas::saveSnapshot(const std::string &filename, bool overwrite)
+CG3_INLINE void GLCanvas::saveSnapshot(const std::string &filename, bool overwrite)
 {
     QGLViewer::saveSnapshot(QString::fromStdString(filename), overwrite);
 }
 
-Point3d GLCanvas::cameraPosition() const
+CG3_INLINE Point3d GLCanvas::cameraPosition() const
 {
     qglviewer::Vec p = camera()->position();
     return cg3::Point3d(p.x, p.y, p.z);
 }
 
-Vec3 GLCanvas::cameraDirection() const
+CG3_INLINE Vec3 GLCanvas::cameraDirection() const
 {
     qglviewer::Vec p = camera()->viewDirection();
     return cg3::Vec3(p.x, p.y, p.z);
 }
 
-void GLCanvas::resetPointOfView()
+CG3_INLINE void GLCanvas::resetPointOfView()
 {
     qglviewer::Vec v(0,0,2.61313);
     qglviewer::Quaternion q(0,0,0,1);
@@ -215,7 +215,7 @@ void GLCanvas::resetPointOfView()
     update();
 }
 
-void GLCanvas::serializePointOfView(std::ofstream &file) const
+CG3_INLINE void GLCanvas::serializePointOfView(std::ofstream &file) const
 {
     qglviewer::Vec v = this->camera()->position();
     qglviewer::Quaternion q = this->camera()->orientation();
@@ -224,7 +224,7 @@ void GLCanvas::serializePointOfView(std::ofstream &file) const
                 q[0], q[1], q[2], q[3]);
 }
 
-bool GLCanvas::deserializePointOfView(std::ifstream &file)
+CG3_INLINE bool GLCanvas::deserializePointOfView(std::ifstream &file)
 {
     qglviewer::Vec v;
     qglviewer::Quaternion q;
@@ -241,17 +241,17 @@ bool GLCanvas::deserializePointOfView(std::ifstream &file)
     }
 }
 
-void GLCanvas::savePointOfView() const
+CG3_INLINE void GLCanvas::savePointOfView() const
 {
     savePointOfView(cg3::internal::configFolderDirectory + "pov.cg3pov");
 }
 
-void GLCanvas::loadPointOfView()
+CG3_INLINE void GLCanvas::loadPointOfView()
 {
     loadPointOfView(cg3::internal::configFolderDirectory + "pov.cg3pov");
 }
 
-void GLCanvas::savePointOfView(const std::string &filename) const
+CG3_INLINE void GLCanvas::savePointOfView(const std::string &filename) const
 {
     std::ofstream file;
     file.open(filename, std::ios::out | std::ios::binary);
@@ -261,7 +261,7 @@ void GLCanvas::savePointOfView(const std::string &filename) const
     file.close();
 }
 
-bool GLCanvas::loadPointOfView(const std::string &filename)
+CG3_INLINE bool GLCanvas::loadPointOfView(const std::string &filename)
 {
     std::ifstream file;
     file.open(filename, std::ios::in | std::ios::binary);
@@ -274,7 +274,7 @@ bool GLCanvas::loadPointOfView(const std::string &filename)
     return ok;
 }
 
-void GLCanvas::setCameraDirection(const Vec3 &vec)
+CG3_INLINE void GLCanvas::setCameraDirection(const Vec3 &vec)
 {
     qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
     qglVec.normalize();
@@ -282,20 +282,20 @@ void GLCanvas::setCameraDirection(const Vec3 &vec)
     update();
 }
 
-void GLCanvas::setCameraPosition(const Point3d &pos)
+CG3_INLINE void GLCanvas::setCameraPosition(const Point3d &pos)
 {
     qglviewer::Vec qglvec(pos.x(), pos.y(), pos.z());
     camera()->setPosition(qglvec);
     update();
 }
 
-void GLCanvas::setPerspectiveCamera()
+CG3_INLINE void GLCanvas::setPerspectiveCamera()
 {
     camera()->setType(qglviewer::Camera::PERSPECTIVE);
     update();
 }
 
-void GLCanvas::setOrthographicCamera()
+CG3_INLINE void GLCanvas::setOrthographicCamera()
 {
     camera()->setType(qglviewer::Camera::ORTHOGRAPHIC);
     update();
@@ -304,7 +304,7 @@ void GLCanvas::setOrthographicCamera()
 /**
  * @brief Toggles the camera type, Perspective or Orthographic.
  */
-void GLCanvas::toggleCameraType()
+CG3_INLINE void GLCanvas::toggleCameraType()
 {
     if (isOrthographicCamera())
         setPerspectiveCamera();
@@ -316,12 +316,12 @@ void GLCanvas::toggleCameraType()
  * @brief
  * @return true if the camera type si Orthographic.
  */
-bool GLCanvas::isOrthographicCamera() const
+CG3_INLINE bool GLCanvas::isOrthographicCamera() const
 {
     return camera()->type() == qglviewer::Camera::ORTHOGRAPHIC;
 }
 
-unsigned int GLCanvas::sizeVisibleDrawableObjects() const
+CG3_INLINE unsigned int GLCanvas::sizeVisibleDrawableObjects() const
 {
     unsigned int count = 0;
     for(unsigned int i=0; i<drawlist.size(); ++i) {
@@ -330,28 +330,28 @@ unsigned int GLCanvas::sizeVisibleDrawableObjects() const
     return count;
 }
 
-unsigned int GLCanvas::sizeDrawableObjectsList() const
+CG3_INLINE unsigned int GLCanvas::sizeDrawableObjectsList() const
 {
     return (unsigned int)drawlist.size();
 }
 
-BoundingBox3 GLCanvas::fullBoundingBoxDrawableObjects(bool onlyVisible) const
+CG3_INLINE BoundingBox3 GLCanvas::fullBoundingBoxDrawableObjects(bool onlyVisible) const
 {
     return cg3::fullBoundingBoxDrawableObjects(drawlist, onlyVisible);
 }
 
-void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool vis)
+CG3_INLINE void GLCanvas::setDrawableObjectVisibility(const DrawableObject* obj, bool vis)
 {
     obj->setVisibility(vis);
 	update();
 }
 
-void GLCanvas::clearDrawableObjectsList()
+CG3_INLINE void GLCanvas::clearDrawableObjectsList()
 {
     drawlist.clear();
 }
 
-void GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
+CG3_INLINE void GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
 {
     if (obj != nullptr){
         obj->setVisibility(visible);
@@ -375,7 +375,7 @@ void GLCanvas::pushDrawableObject(const DrawableObject* obj, bool visible)
     }
 }
 
-void GLCanvas::pushDrawableObject(const std::shared_ptr<const DrawableObject>& ptr, bool visible)
+CG3_INLINE void GLCanvas::pushDrawableObject(const std::shared_ptr<const DrawableObject>& ptr, bool visible)
 {
     if (!containsDrawableObject(ptr)){
         sharedDrawableObjects.insert(ptr);
@@ -383,7 +383,7 @@ void GLCanvas::pushDrawableObject(const std::shared_ptr<const DrawableObject>& p
     }
 }
 
-bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
+CG3_INLINE bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
 {
     std::vector<const DrawableObject *>::iterator it =
             std::find(drawlist.begin(), drawlist.end(), obj);
@@ -406,26 +406,26 @@ bool GLCanvas::deleteDrawableObject(const DrawableObject* obj)
     return false;
 }
 
-bool GLCanvas::deleteDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
+CG3_INLINE bool GLCanvas::deleteDrawableObject(const std::shared_ptr<const DrawableObject> &ptr)
 {
     bool b = deleteDrawableObject(ptr.get());
     sharedDrawableObjects.erase(ptr);
     return b;
 }
 
-bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
+CG3_INLINE bool GLCanvas::containsDrawableObject(const DrawableObject *obj) const
 {
     std::vector<const DrawableObject*>::const_iterator it =
             std::find(drawlist.begin(), drawlist.end(), obj);
     return it != drawlist.end();
 }
 
-bool GLCanvas::containsDrawableObject(const std::shared_ptr<const DrawableObject> &ptr) const
+CG3_INLINE bool GLCanvas::containsDrawableObject(const std::shared_ptr<const DrawableObject> &ptr) const
 {
     return sharedDrawableObjects.find(ptr) != sharedDrawableObjects.end();
 }
 
-void GLCanvas::enableRotation(bool b)
+CG3_INLINE void GLCanvas::enableRotation(bool b)
 {
     if (b)
         setMouseBinding(Qt::NoModifier, Qt::LeftButton, CAMERA, ROTATE);
@@ -433,7 +433,7 @@ void GLCanvas::enableRotation(bool b)
         setMouseBinding(Qt::NoModifier, Qt::LeftButton, NO_CLICK_ACTION);
 }
 
-void GLCanvas::enableTranslation(bool b)
+CG3_INLINE void GLCanvas::enableTranslation(bool b)
 {
     if (b)
         setMouseBinding(Qt::NoModifier, Qt::RightButton, CAMERA, TRANSLATE);
@@ -441,7 +441,7 @@ void GLCanvas::enableTranslation(bool b)
         setMouseBinding(Qt::NoModifier, Qt::RightButton, NO_CLICK_ACTION);
 }
 
-void GLCanvas::enableZoom(bool b)
+CG3_INLINE void GLCanvas::enableZoom(bool b)
 {
     if (b)
         setWheelBinding(Qt::NoModifier, CAMERA, ZOOM);
@@ -449,7 +449,7 @@ void GLCanvas::enableZoom(bool b)
         setWheelBinding(Qt::NoModifier, CAMERA, NO_MOUSE_ACTION);
 }
 
-void GLCanvas::setSelectionLeftButton(bool b)
+CG3_INLINE void GLCanvas::setSelectionLeftButton(bool b)
 {
     if (b)
         setMouseBinding(Qt::NoModifier, Qt::LeftButton, SELECT);

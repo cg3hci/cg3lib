@@ -16,7 +16,7 @@
 
 namespace cg3 {
 
-DrawableDcel::DrawableDcel() : Dcel()
+CG3_INLINE DrawableDcel::DrawableDcel() : Dcel()
 {
     init();
 }
@@ -26,7 +26,7 @@ DrawableDcel::DrawableDcel() : Dcel()
  * @brief Crea una DrawableDcel a partire dalla Dcel passata come parametro (di cui ne verrà fatta una copia)
  * @param[in] d: Dcel che verrà copiata e resa visualizzabile
  */
-DrawableDcel::DrawableDcel(const Dcel &d) : Dcel(d)
+CG3_INLINE DrawableDcel::DrawableDcel(const Dcel &d) : Dcel(d)
 {
     init();
 }
@@ -35,7 +35,7 @@ DrawableDcel::DrawableDcel(const Dcel &d) : Dcel(d)
  * \~Italian
  * @brief Setta impostazioni di visualizzazione di default.
  */
-void DrawableDcel::init()
+CG3_INLINE void DrawableDcel::init()
 {
     DrawableMesh::init();
     update();
@@ -50,7 +50,7 @@ void DrawableDcel::init()
  * \~Italian
  * @brief esegue una clear della Dcel e della DrawableDcel
  */
-void DrawableDcel::clear()
+CG3_INLINE void DrawableDcel::clear()
 {
     Dcel::clear();
     init();
@@ -62,7 +62,7 @@ void DrawableDcel::clear()
     triangleColors.clear();
 }
 
-void DrawableDcel::draw() const
+CG3_INLINE void DrawableDcel::draw() const
 {
     DrawableMesh::draw((unsigned int)vertexCoordinates.size()/3, (unsigned int)triangles.size()/3, vertexCoordinates.data(), triangles.data(), vertexNormals.data(), vertexColors.data(), triangleNormals.data(), triangleColors.data(), bBox.min(), bBox.max());
     if(drawMode & DRAW_FACES_WIREFRAME){
@@ -87,7 +87,7 @@ void DrawableDcel::draw() const
  * @brief Calcola e restituisce il centro della Dcel.
  * @return il punto rappresentante il centro della mesh.
  */
-Point3d DrawableDcel::sceneCenter() const
+CG3_INLINE Point3d DrawableDcel::sceneCenter() const
 {
     if (bBox.isValid())
         return bBox.center();
@@ -100,7 +100,7 @@ Point3d DrawableDcel::sceneCenter() const
  * @brief Calcola il raggio della Dcel.
  * @return Restituisce un valore rappresentante il raggio della mesh
  */
-double DrawableDcel::sceneRadius() const
+CG3_INLINE double DrawableDcel::sceneRadius() const
 {
     if (bBox.isValid())
         return bBox.diag() / 2;
@@ -116,7 +116,7 @@ double DrawableDcel::sceneRadius() const
  * Dcel. Deve essere chiamata ogni volta che è stata fatta una modifica nella Dcel e si vuole visualizzare tale
  * modifica.
  */
-void DrawableDcel::update()
+CG3_INLINE void DrawableDcel::update()
 {
     vertexCoordinates.clear();
     vertexNormals.clear();
@@ -202,18 +202,6 @@ void DrawableDcel::update()
                 triangleNormals.push_back(f->normal().z());
                 actualTriangle++;
             }
-            //Si crea una mappatura triangolo->faccia di appartenenza
-            //Per ogni triangolo prodotto dalla triangolazione della faccia si aggiunge
-            //un colore (composto da una tripla di valori)
-            /*for(unsigned int ti = 0; ti < face_triangles.size(); ti++){
-                trianglesFacesMap.push_back(f->id());
-                triangleColors.push_back(f->color().redF());
-                triangleColors.push_back(f->color().greenF());
-                triangleColors.push_back(f->color().blueF());
-                triangleNormals.push_back(f->normal().x());
-                triangleNormals.push_back(f->normal().y());
-                triangleNormals.push_back(f->normal().z());
-            }*/
             /***********************************************************************/
         }
     }
@@ -258,7 +246,7 @@ void DrawableDcel::update()
  * \~Italian
  * @brief Rendering della mesh
  */
-void DrawableDcel::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const
+CG3_INLINE void DrawableDcel::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const
 {
     DrawableMesh::renderPass(nv, nt, coords, triangles, vertexNormals, vertexColors, triangleNormals, triangleColors);
 }
@@ -267,7 +255,7 @@ void DrawableDcel::renderPass(unsigned int nv, unsigned int nt, const double* co
  * \~Italian
  * @brief Setta la visibilità del wireframe del contorno delle facce della mesh
  */
-void DrawableDcel::setFacesWireframe(bool b)
+CG3_INLINE void DrawableDcel::setFacesWireframe(bool b)
 {
     if (b) drawMode |=  DRAW_FACES_WIREFRAME;
     else   drawMode &= ~DRAW_FACES_WIREFRAME;
@@ -277,7 +265,7 @@ void DrawableDcel::setFacesWireframe(bool b)
  * \~Italian
  * @brief Setta la larghezza del wireframe del contorno delle facce della mesh
  */
-void DrawableDcel::setFacesWireframeWidth(const int w)
+CG3_INLINE void DrawableDcel::setFacesWireframeWidth(const int w)
 {
     facesWireframeWidth = w;
 }
@@ -286,7 +274,7 @@ void DrawableDcel::setFacesWireframeWidth(const int w)
  * \~Italian
  * @brief Setta il colore del wireframe del contorno delle facce della mesh
  */
-void DrawableDcel::setFacesWireframeColor(float r, float g, float b)
+CG3_INLINE void DrawableDcel::setFacesWireframeColor(float r, float g, float b)
 {
     wireframeColor[0] = r;
     wireframeColor[1] = g;
@@ -300,7 +288,7 @@ void DrawableDcel::setFacesWireframeColor(float r, float g, float b)
  * @param w
  * @param color
  */
-void DrawableDcel::setFlaggedEdgesWireframe(
+CG3_INLINE void DrawableDcel::setFlaggedEdgesWireframe(
         bool b,
         int flag,
         int w,
@@ -313,13 +301,13 @@ void DrawableDcel::setFlaggedEdgesWireframe(
     flaggedEdgesColor = color;
 }
 
-void DrawableDcel::deserialize(std::ifstream& binaryFile)
+CG3_INLINE void DrawableDcel::deserialize(std::ifstream& binaryFile)
 {
     Dcel::deserialize(binaryFile);
     update();
 }
 
-bool DrawableDcel::loadFromDcelFile(const std::string& filename)
+CG3_INLINE bool DrawableDcel::loadFromDcelFile(const std::string& filename)
 {
     if (Dcel::loadFromDcelFile(filename)){
         update();
@@ -328,7 +316,7 @@ bool DrawableDcel::loadFromDcelFile(const std::string& filename)
     return false;
 }
 
-bool DrawableDcel::loadFromObj(const std::string& filename)
+CG3_INLINE bool DrawableDcel::loadFromObj(const std::string& filename)
 {
     if (Dcel::loadFromObj(filename)){
         update();
@@ -337,7 +325,7 @@ bool DrawableDcel::loadFromObj(const std::string& filename)
     return false;
 }
 
-bool DrawableDcel::loadFromPly(const std::string& filename)
+CG3_INLINE bool DrawableDcel::loadFromPly(const std::string& filename)
 {
     if (Dcel::loadFromPly(filename)) {
         update();
@@ -346,7 +334,7 @@ bool DrawableDcel::loadFromPly(const std::string& filename)
     return false;
 }
 
-bool DrawableDcel::loadFromFile(const std::string& filename)
+CG3_INLINE bool DrawableDcel::loadFromFile(const std::string& filename)
 {
     if (Dcel::loadFromFile(filename)){
         update();

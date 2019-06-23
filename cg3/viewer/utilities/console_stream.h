@@ -52,4 +52,10 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CONSOLE_STREAM_CPP "console_stream.cpp"
+#include CG3_CONSOLE_STREAM_CPP
+#undef CG3_CONSOLE_STREAM_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_CONSOLE_STREAM_H

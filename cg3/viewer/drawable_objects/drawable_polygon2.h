@@ -37,4 +37,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_POLYGON2_CPP "drawable_polygon2.cpp"
+#include CG3_DRAWABLE_POLYGON2_CPP
+#undef CG3_DRAWABLE_POLYGON2_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_DRAWABLE_POLYGON2_H

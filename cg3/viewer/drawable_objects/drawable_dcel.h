@@ -89,4 +89,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_DCEL_CPP "drawable_dcel.cpp"
+#include CG3_DRAWABLE_DCEL_CPP
+#undef CG3_DRAWABLE_DCEL_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_DRAWABLE_DCEL_H

@@ -70,4 +70,10 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_OBJECT_DRAWLIST_MANAGER_CPP "drawable_object_drawlist_manager.cpp"
+#include CG3_DRAWABLE_OBJECT_DRAWLIST_MANAGER_CPP
+#undef CG3_DRAWABLE_OBJECT_DRAWLIST_MANAGER_CPP
+#endif //CG3_STATIC
+
 #endif // DRAWABLE_OBJECT_DRAWLIST_MANAGER_H

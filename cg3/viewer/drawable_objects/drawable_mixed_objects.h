@@ -5,8 +5,8 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#ifndef CG3_DRAWABLE_DEBUG_OBJECTS_H
-#define CG3_DRAWABLE_DEBUG_OBJECTS_H
+#ifndef CG3_DRAWABLE_MIXED_OBJECTS_H
+#define CG3_DRAWABLE_MIXED_OBJECTS_H
 
 #include "../interfaces/drawable_object.h"
 #include <cg3/geometry/bounding_box3.h>
@@ -142,4 +142,10 @@ protected:
 
 } //namespace cg3
 
-#endif // CG3_DRAWABLE_DEBUG_OBJECTS_H
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_MIXED_OBJECTS_CPP "drawable_mixed_objects.cpp"
+#include CG3_DRAWABLE_MIXED_OBJECTS_CPP
+#undef CG3_DRAWABLE_MIXED_OBJECTS_CPP
+#endif //CG3_STATIC
+
+#endif // CG3_DRAWABLE_MIXED_OBJECTS_H

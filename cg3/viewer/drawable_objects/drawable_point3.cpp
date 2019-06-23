@@ -9,22 +9,22 @@
 
 namespace cg3 {
 
-DrawablePoint3::DrawablePoint3(double x, double y, double z, Color c, int size) :
+CG3_INLINE DrawablePoint3::DrawablePoint3(double x, double y, double z, Color c, int size) :
     Point3d(x, y, z), color(c), size(size)
 {
 }
 
-void DrawablePoint3::draw() const
+CG3_INLINE void DrawablePoint3::draw() const
 {
     opengl::drawPoint3(*this, color, size);
 }
 
-Point3d DrawablePoint3::sceneCenter() const
+CG3_INLINE Point3d DrawablePoint3::sceneCenter() const
 {
     return *this;
 }
 
-double DrawablePoint3::sceneRadius() const
+CG3_INLINE double DrawablePoint3::sceneRadius() const
 {
     return -1;
 }

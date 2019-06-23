@@ -98,4 +98,11 @@ protected:
 };
 
 } //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_MESH_CPP "drawable_mesh.cpp"
+#include CG3_DRAWABLE_MESH_CPP
+#undef CG3_DRAWABLE_MESH_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_DRAWABLE_MESH_H

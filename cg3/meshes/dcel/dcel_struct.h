@@ -23,7 +23,14 @@ namespace cg3 {
 #endif
 
 #ifdef CG3_CINOLIB_DEFINED
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
 #include <cinolib/meshes/trimesh.h>
+#pragma GCC diagnostic pop
+#else
+#include <cinolib/meshes/trimesh.h>
+#endif
 #endif //CG3_CINOLIB_DEFINED
 
 namespace cg3 {

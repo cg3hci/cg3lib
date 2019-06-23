@@ -5,8 +5,8 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#ifndef CG3_DCELMANAGER_H
-#define CG3_DCELMANAGER_H
+#ifndef CG3_DCEL_MANAGER_H
+#define CG3_DCEL_MANAGER_H
 
 #include <QFrame>
 #include <QColor>
@@ -70,4 +70,10 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
-#endif // CG3_DCELMANAGER_H
+#ifndef CG3_STATIC
+#define CG3_DCEL_MANAGER_CPP "dcel_manager.cpp"
+#include CG3_DCEL_MANAGER_CPP
+#undef CG3_DCEL_MANAGER_CPP
+#endif //CG3_STATIC
+
+#endif // CG3_DCEL_MANAGER_H

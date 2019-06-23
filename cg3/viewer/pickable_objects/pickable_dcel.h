@@ -39,4 +39,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_PICKABLE_DCEL_CPP "pickable_dcel.cpp"
+#include CG3_PICKABLE_DCEL_CPP
+#undef CG3_PICKABLE_DCEL_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_PICKABLE_DCEL_H

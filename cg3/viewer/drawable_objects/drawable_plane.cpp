@@ -9,48 +9,48 @@
 #include <cg3/viewer/opengl_objects/opengl_objects3.h>
 namespace cg3 {
 
-DrawablePlane::DrawablePlane(const Vec3 &normal, double d) : Plane(normal, d)
+CG3_INLINE DrawablePlane::DrawablePlane(const Vec3 &normal, double d) : Plane(normal, d)
 {
     calculatePoints();
 }
 
-DrawablePlane::DrawablePlane(double a, double b, double c, double d) : Plane(a, b, c, d)
+CG3_INLINE DrawablePlane::DrawablePlane(double a, double b, double c, double d) : Plane(a, b, c, d)
 {
     calculatePoints();
 }
 
-DrawablePlane::DrawablePlane(const Point3d &p1, const Point3d &p2, const Point3d &p3) : Plane(p1, p2, p3)
+CG3_INLINE DrawablePlane::DrawablePlane(const Point3d &p1, const Point3d &p2, const Point3d &p3) : Plane(p1, p2, p3)
 {
     calculatePoints();
 }
 
-DrawablePlane::DrawablePlane(Plane p) : Plane(p)
+CG3_INLINE DrawablePlane::DrawablePlane(Plane p) : Plane(p)
 {
     calculatePoints();
 }
 
-void DrawablePlane::draw() const
+CG3_INLINE void DrawablePlane::draw() const
 {
     opengl::drawQuad3(p1, p2, p3, p4);
 }
 
-Point3d DrawablePlane::sceneCenter() const
+CG3_INLINE Point3d DrawablePlane::sceneCenter() const
 {
     return cg3::Point3d();
 }
 
-double DrawablePlane::sceneRadius() const
+CG3_INLINE double DrawablePlane::sceneRadius() const
 {
     return -1;
 }
 
-void DrawablePlane::deserialize(std::ifstream &binaryFile)
+CG3_INLINE void DrawablePlane::deserialize(std::ifstream &binaryFile)
 {
     Plane::deserialize(binaryFile);
     calculatePoints();
 }
 
-void DrawablePlane::calculatePoints()
+CG3_INLINE void DrawablePlane::calculatePoints()
 {
     cg3::Vec3 u,v;
     if( _normal ==  AXIS[2] || _normal == AXIS[5]){ // similar -> you are lucky!!!

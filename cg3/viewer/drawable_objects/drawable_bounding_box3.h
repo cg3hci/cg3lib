@@ -42,4 +42,10 @@ protected:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_BOUNDING_BOX3_CPP "drawable_bounding_box3.cpp"
+#include CG3_DRAWABLE_BOUNDING_BOX3_CPP
+#undef CG3_DRAWABLE_BOUNDING_BOX3_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_DRAWABLE_BOUNDING_BOX3_H

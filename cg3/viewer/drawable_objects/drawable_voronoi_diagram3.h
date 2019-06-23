@@ -73,7 +73,13 @@ DrawableVoronoiDiagram3::DrawableVoronoiDiagram3(Iterator begin, Iterator end) :
     finalize();
 }
 
-}
+} //namespace cg3::voro
 } //namespace cg3
+
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_VORONOI_DIAGRAM3_CPP "drawable_voronoi_diagram3.cpp"
+#include CG3_DRAWABLE_VORONOI_DIAGRAM3_CPP
+#undef CG3_DRAWABLE_VORONOI_DIAGRAM3_CPP
+#endif //CG3_STATIC
 
 #endif // CG3_DRAWABLE_VORONOI_DIAGRAM3_H

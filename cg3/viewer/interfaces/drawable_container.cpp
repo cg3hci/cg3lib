@@ -10,11 +10,11 @@
 
 namespace cg3 {
 
-DrawableContainer::DrawableContainer(QObject *parent) : QObject(parent)
+CG3_INLINE DrawableContainer::DrawableContainer(QObject *parent) : QObject(parent)
 {
 }
 
-DrawableContainer::~DrawableContainer()
+CG3_INLINE DrawableContainer::~DrawableContainer()
 {
     clear();
 }
@@ -27,7 +27,7 @@ DrawableContainer::~DrawableContainer()
  * @param objectName
  * @param visibility
  */
-void DrawableContainer::pushBack(
+CG3_INLINE void DrawableContainer::pushBack(
         const DrawableObject *obj,
         const std::string& objectName,
         bool objVisibility)
@@ -42,7 +42,7 @@ void DrawableContainer::pushBack(
  * @param i
  * @return
  */
-const DrawableObject* DrawableContainer::operator [](unsigned int i) const
+CG3_INLINE const DrawableObject* DrawableContainer::operator [](unsigned int i) const
 {
     return objects[i];
 }
@@ -50,7 +50,7 @@ const DrawableObject* DrawableContainer::operator [](unsigned int i) const
 /**
  * @brief Returns the number of elements inside the container.
  */
-unsigned int DrawableContainer::size() const
+CG3_INLINE unsigned int DrawableContainer::size() const
 {
     return (unsigned int)objects.size();
 }
@@ -60,7 +60,7 @@ unsigned int DrawableContainer::size() const
  * objects starting from the i+1 position.
  * @param i
  */
-void DrawableContainer::erase(unsigned int i)
+CG3_INLINE void DrawableContainer::erase(unsigned int i)
 {
     emit drawableContainerErasedObject(objects[i]);
     objects.erase(objects.begin() + i);
@@ -70,7 +70,7 @@ void DrawableContainer::erase(unsigned int i)
 /**
  * @brief Clears the container.
  */
-void DrawableContainer::clear()
+CG3_INLINE void DrawableContainer::clear()
 {
     for (int i = (int)objects.size()-1; i >= 0; i--){
         emit drawableContainerErasedObject(objects[i]);
@@ -79,17 +79,17 @@ void DrawableContainer::clear()
     objectNames.clear();
 }
 
-const std::string& DrawableContainer::objectName(unsigned int i) const
+CG3_INLINE const std::string& DrawableContainer::objectName(unsigned int i) const
 {
     return objectNames[i];
 }
 
-void DrawableContainer::setObjectVisibility(unsigned int i, bool vis) const
+CG3_INLINE void DrawableContainer::setObjectVisibility(unsigned int i, bool vis) const
 {
     emit drawableContainerVisibilityObjectChanged(objects[i], vis);
 }
 
-void DrawableContainer::draw() const
+CG3_INLINE void DrawableContainer::draw() const
 {
     if (isVisible()){
         for (const DrawableObject* o : objects){
@@ -99,17 +99,17 @@ void DrawableContainer::draw() const
     }
 }
 
-Point3d DrawableContainer::sceneCenter() const
+CG3_INLINE Point3d DrawableContainer::sceneCenter() const
 {
     return totalBoundingBox().center();
 }
 
-double DrawableContainer::sceneRadius() const
+CG3_INLINE double DrawableContainer::sceneRadius() const
 {
     return totalBoundingBox().diag() / 2;
 }
 
-BoundingBox3 DrawableContainer::totalBoundingBox() const
+CG3_INLINE BoundingBox3 DrawableContainer::totalBoundingBox() const
 {
     return cg3::fullBoundingBoxDrawableObjects(objects, true);
 }

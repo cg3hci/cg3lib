@@ -34,4 +34,10 @@ public:
 } //namespace cg3::cino
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_CINOLIB_DRAWABLETETMESH_CPP "drawable_tetmesh.cpp"
+#include CG3_CINOLIB_DRAWABLETETMESH_CPP
+#undef CG3_CINOLIB_DRAWABLETETMESH_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_CINOLIB_DRAWABLETETMESH_H

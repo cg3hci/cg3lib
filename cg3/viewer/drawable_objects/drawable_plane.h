@@ -4,8 +4,8 @@
  *
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
-#ifndef DRAWABLE_PLANE_H
-#define DRAWABLE_PLANE_H
+#ifndef CG3_DRAWABLE_PLANE_H
+#define CG3_DRAWABLE_PLANE_H
 
 #include <cg3/geometry/plane.h>
 #include <cg3/viewer/interfaces/drawable_object.h>
@@ -39,4 +39,10 @@ protected:
 
 } // namespace cg3
 
-#endif // DRAWABLE_PLANE_H
+#ifndef CG3_STATIC
+#define CG3_DRAWABLE_PLANE_CPP "drawable_plane.cpp"
+#include CG3_DRAWABLE_PLANE_CPP
+#undef CG3_DRAWABLE_PLANE_CPP
+#endif //CG3_STATIC
+
+#endif // CG3_DRAWABLE_PLANE_H

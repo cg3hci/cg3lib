@@ -69,4 +69,10 @@ private:
 
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_MANIPULABLE_OBJECT_CPP "manipulable_object.cpp"
+#include CG3_MANIPULABLE_OBJECT_CPP
+#undef CG3_MANIPULABLE_OBJECT_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_MANIPULABLE_OBJECT_H

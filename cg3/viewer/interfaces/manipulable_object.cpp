@@ -10,11 +10,11 @@
 
 namespace cg3 {
 
-ManipulableObject::ManipulableObject() : ManipulableObject(0.7)
+CG3_INLINE ManipulableObject::ManipulableObject() : ManipulableObject(0.7)
 {
 }
 
-ManipulableObject::ManipulableObject(double grabbingFactor) :
+CG3_INLINE ManipulableObject::ManipulableObject(double grabbingFactor) :
     axis(false),
 	_keepsGrabbingMouse(false),
     gf(grabbingFactor)
@@ -22,27 +22,27 @@ ManipulableObject::ManipulableObject(double grabbingFactor) :
     setSpinningSensitivity(100.0);
 }
 
-bool ManipulableObject::drawRelativeAxis() const
+CG3_INLINE bool ManipulableObject::drawRelativeAxis() const
 {
     return axis;
 }
 
-void ManipulableObject::setDrawRelativeAxis(bool b) const
+CG3_INLINE void ManipulableObject::setDrawRelativeAxis(bool b) const
 {
 	axis = b;
 }
 
-void ManipulableObject::setPosition(const Point3d &pos)
+CG3_INLINE void ManipulableObject::setPosition(const Point3d &pos)
 {
 	ManipulatedFrame::setPosition(qglviewer::Vec(pos.x(), pos.y(), pos.z()));
 }
 
-void ManipulableObject::setTranslation(const Point3d &pos)
+CG3_INLINE void ManipulableObject::setTranslation(const Point3d &pos)
 {
 	ManipulatedFrame::setTranslation(qglviewer::Vec(pos.x(), pos.y(), pos.z()));
 }
 
-const double* ManipulableObject::matrix() const
+CG3_INLINE const double* ManipulableObject::matrix() const
 {
     return ManipulatedFrame::matrix();
 }
@@ -52,7 +52,7 @@ const double* ManipulableObject::matrix() const
  * @return the position of the center of the object Frame in
  * absolute position
  */
-Point3d ManipulableObject::position() const
+CG3_INLINE Point3d ManipulableObject::position() const
 {
     qglviewer::Vec p(ManipulatedFrame::position());
 	return Point3d(p.x, p.y, p.z);
@@ -63,53 +63,53 @@ Point3d ManipulableObject::position() const
  * @return the position of the center of the object Frame in
  * relative position with respect of the reference Frame.
  */
-Point3d ManipulableObject::translation() const
+CG3_INLINE Point3d ManipulableObject::translation() const
 {
 	qglviewer::Vec p(ManipulatedFrame::translation());
 	return Point3d(p.x, p.y, p.z);
 }
 
-bool ManipulableObject::grabsMouse() const
+CG3_INLINE bool ManipulableObject::grabsMouse() const
 {
 	return ManipulatedFrame::grabsMouse();
 }
 
-bool ManipulableObject::keepsGrabbingMouse() const
+CG3_INLINE bool ManipulableObject::keepsGrabbingMouse() const
 {
 	return _keepsGrabbingMouse;
 }
 
-void ManipulableObject::setGrabbingFactor(double gf)
+CG3_INLINE void ManipulableObject::setGrabbingFactor(double gf)
 {
     this->gf = gf;
 }
 
-double ManipulableObject::grabbingFactor() const
+CG3_INLINE double ManipulableObject::grabbingFactor() const
 {
 	return gf;
 }
 
-void ManipulableObject::rotationMatrix(double m[][3]) const
+CG3_INLINE void ManipulableObject::rotationMatrix(double m[][3]) const
 {
 	qglviewer::Vec axis = orientation().axis();
 	double angle = orientation().angle();
 	cg3::rotationMatrix(cg3::Vec3(axis.x, axis.y, axis.z), angle, m);
 }
 
-void ManipulableObject::resetRotation()
+CG3_INLINE void ManipulableObject::resetRotation()
 {
 	setRotation(qglviewer::Quaternion(0,0,0,1));
 }
 
 #ifdef CG3_WITH_EIGEN
-void ManipulableObject::rotationMatrix(Eigen::Matrix3d &m) const
+CG3_INLINE void ManipulableObject::rotationMatrix(Eigen::Matrix3d &m) const
 {
 	qglviewer::Vec axis = orientation().axis();
 	double angle = orientation().angle();
 	cg3::rotationMatrix(cg3::Vec3(axis.x, axis.y, axis.z), angle, m);
 }
 
-Eigen::Matrix3d ManipulableObject::rotationMatrix() const
+CG3_INLINE Eigen::Matrix3d ManipulableObject::rotationMatrix() const
 {
 	qglviewer::Vec axis = orientation().axis();
 	double angle = orientation().angle();
@@ -117,7 +117,7 @@ Eigen::Matrix3d ManipulableObject::rotationMatrix() const
 }
 #endif //CG3_WITH_EIGEN
 
-void ManipulableObject::checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera)
+CG3_INLINE void ManipulableObject::checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera)
 {
 	qglviewer::Vec center(sceneCenter().x(), sceneCenter().y(), sceneCenter().z());
     const qglviewer::Quaternion qt = rotation();
@@ -131,14 +131,14 @@ void ManipulableObject::checkIfGrabsMouse(int x, int y, const qglviewer::Camera*
 	setGrabsMouse(_keepsGrabbingMouse || ((fabs(x - proj.x) < threshold) && (fabs(y - proj.y) < threshold)));
 }
 
-void ManipulableObject::mousePressEvent(QMouseEvent* const event, qglviewer::Camera* const camera)
+CG3_INLINE void ManipulableObject::mousePressEvent(QMouseEvent* const event, qglviewer::Camera* const camera)
 {
     ManipulatedFrame::mousePressEvent(event, camera);
     if (grabsMouse())
 		_keepsGrabbingMouse = true;
 }
 
-void ManipulableObject::mouseReleaseEvent(QMouseEvent* const event, qglviewer::Camera* const camera)
+CG3_INLINE void ManipulableObject::mouseReleaseEvent(QMouseEvent* const event, qglviewer::Camera* const camera)
 {
     ManipulatedFrame::mouseReleaseEvent(event, camera);
 	_keepsGrabbingMouse = false;

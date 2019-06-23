@@ -27,19 +27,19 @@ PickableObject::PickableObject() : DrawableObject()
 void PickableObject::setMeshBits(unsigned int nBits)
 {
     if (nBits < 32) {
-        objectBits = nBits;
+		objectBits = nBits;
     }
 }
 
 void PickableObject::glPushName(unsigned int idElement) const
 {
-    ::glPushName((id << (32 - objectBits)) + idElement);
+	::glPushName((id << (32 - objectBits)) + idElement);
 }
 
 void PickableObject::getIdsFromIdName(unsigned int idName, unsigned int &idObject, unsigned int& idElement)
 {
-    idObject = idName >> (32 - objectBits);
-    idElement = idName - (idObject << (32 - objectBits));
+	idObject = idName >> (32 - objectBits);
+	idElement = idName - (idObject << (32 - objectBits));
 }
 
 }

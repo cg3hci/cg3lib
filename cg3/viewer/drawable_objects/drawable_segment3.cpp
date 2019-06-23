@@ -10,14 +10,14 @@
 
 namespace cg3 {
 
-DrawableSegment3::DrawableSegment3() :
+CG3_INLINE DrawableSegment3::DrawableSegment3() :
     Segment3d(),
     color(0,0,0),
     width(0)
 {
 }
 
-DrawableSegment3::DrawableSegment3(
+CG3_INLINE DrawableSegment3::DrawableSegment3(
         const Point3d &p1,
         const Point3d &p2,
         Color c,
@@ -28,17 +28,17 @@ DrawableSegment3::DrawableSegment3(
 {
 }
 
-void DrawableSegment3::draw() const
+CG3_INLINE void DrawableSegment3::draw() const
 {
     cg3::opengl::drawLine3(_p1, _p2, color, width);
 }
 
-Point3d DrawableSegment3::sceneCenter() const
+CG3_INLINE Point3d DrawableSegment3::sceneCenter() const
 {
     return (_p1 + _p2)/2;
 }
 
-double DrawableSegment3::sceneRadius() const
+CG3_INLINE double DrawableSegment3::sceneRadius() const
 {
     return length() / 2;
 }

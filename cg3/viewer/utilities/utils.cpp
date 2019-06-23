@@ -11,7 +11,7 @@
 
 namespace cg3 {
 
-bool elagibleObject(const cg3::DrawableObject* obj, bool onlyVisible)
+CG3_INLINE bool elagibleObject(const cg3::DrawableObject* obj, bool onlyVisible)
 {
     //object must:
     // - be different from nullptr
@@ -28,7 +28,7 @@ bool elagibleObject(const cg3::DrawableObject* obj, bool onlyVisible)
     return false;
 }
 
-unsigned int searchFirstObject(
+CG3_INLINE unsigned int searchFirstObject(
         const std::vector<const cg3::DrawableObject*>& drawlist,
         bool onlyVisible)
 {
@@ -42,7 +42,7 @@ unsigned int searchFirstObject(
     return i;
 }
 
-cg3::Point3d sceneCenterOfDrawableObject(const cg3::DrawableObject* obj)
+CG3_INLINE cg3::Point3d sceneCenterOfDrawableObject(const cg3::DrawableObject* obj)
 {
 	const cg3::ManipulableObject* mobj = dynamic_cast<const cg3::ManipulableObject*>(obj);
 	if (!mobj)
@@ -62,7 +62,7 @@ cg3::Point3d sceneCenterOfDrawableObject(const cg3::DrawableObject* obj)
  * @param drawlist
  * @param onlyVisible
  */
-BoundingBox3 fullBoundingBoxDrawableObjects(
+CG3_INLINE BoundingBox3 fullBoundingBoxDrawableObjects(
         const std::vector<const cg3::DrawableObject*>& drawlist,
         bool onlyVisible)
 {

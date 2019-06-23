@@ -16,13 +16,13 @@
 
 namespace cg3 {
 
-PickableDcel::PickableDcel()
+CG3_INLINE PickableDcel::PickableDcel()
 {
     selectionColor = Color(244,196,48);
     selectionWidth = 3;
 }
 
-PickableDcel::PickableDcel(const Dcel& d) : DrawableDcel(d)
+CG3_INLINE PickableDcel::PickableDcel(const Dcel& d) : DrawableDcel(d)
 {
     selectionColor = Color(244,196,48);
     selectionWidth = 3;
@@ -33,7 +33,7 @@ PickableDcel::PickableDcel(const Dcel& d) : DrawableDcel(d)
  * @brief PickableDcel::drawWithNames Metodo che si occupa di disegnare le facce assegnando a esse un identificativo
  * riconoscibile nella postSelection (classe glCanvas) in modo da poterne effettuare il picking.
  */
-void PickableDcel::drawWithNames() const
+CG3_INLINE void PickableDcel::drawWithNames() const
 {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_DOUBLE, 0, vertexCoordinates.data());
@@ -56,7 +56,7 @@ void PickableDcel::drawWithNames() const
  * \~Italian
  * @brief PickableDcel::draw Metodo che si occupa di disegnare il contorno delle facce selezionate durante il picking (selezione multipla).
  */
-void PickableDcel::draw() const
+CG3_INLINE void PickableDcel::draw() const
 {
     DrawableDcel::draw();
     for(Dcel::HalfEdge* he : selectedFacesContour){
@@ -72,12 +72,12 @@ void PickableDcel::draw() const
     }
 }
 
-void PickableDcel::setSelectionColor(Color color)
+CG3_INLINE void PickableDcel::setSelectionColor(Color color)
 {
     selectionColor = color;
 }
 
-void PickableDcel::setSelectionWidth(int value)
+CG3_INLINE void PickableDcel::setSelectionWidth(int value)
 {
     selectionWidth = 2*value;
 }
@@ -87,7 +87,7 @@ void PickableDcel::setSelectionWidth(int value)
  * @brief DrawableDcel::drawFace Metodo che si occupa di effettuare il rendering di una faccia
  * @param f La faccia da renderizzare
  */
-void PickableDcel::drawFace(const Face* f) const
+CG3_INLINE void PickableDcel::drawFace(const Face* f) const
 {
     unsigned int firstIndex = facesTrianglesMap.at(f->id());
     std::map<unsigned int, unsigned int>::const_iterator it = facesTrianglesMap.find(f->id());
@@ -110,7 +110,7 @@ void PickableDcel::drawFace(const Face* f) const
     glDrawElements(GL_TRIANGLES, (GLsizei)face_triangles.size(), GL_UNSIGNED_INT, face_triangles.data());
 }
 
-void PickableDcel::setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour)
+CG3_INLINE void PickableDcel::setSelectedFacesContour(std::vector<Dcel::HalfEdge*> selected_faces_contour)
 {
     this->selectedFacesContour = selected_faces_contour;
 }

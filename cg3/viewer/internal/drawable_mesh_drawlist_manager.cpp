@@ -13,7 +13,7 @@
 namespace cg3 {
 namespace viewer {
 
-DrawableMeshDrawListManager::DrawableMeshDrawListManager(
+CG3_INLINE DrawableMeshDrawListManager::DrawableMeshDrawListManager(
         QWidget *parent,
         const DrawableMesh* mesh) :
     SubManager(parent),
@@ -46,12 +46,12 @@ DrawableMeshDrawListManager::DrawableMeshDrawListManager(
     ls.addSupportedExtension("obj", "ply");
 }
 
-DrawableMeshDrawListManager::~DrawableMeshDrawListManager()
+CG3_INLINE DrawableMeshDrawListManager::~DrawableMeshDrawListManager()
 {
     delete ui;
 }
 
-void DrawableMeshDrawListManager::updateObjectProperties()
+CG3_INLINE void DrawableMeshDrawListManager::updateObjectProperties()
 {
     if (ui->pointsRadioButton->isChecked())
         mesh->setPointsShading();
@@ -68,7 +68,7 @@ void DrawableMeshDrawListManager::updateObjectProperties()
     mw.canvas.update();
 }
 
-void DrawableMeshDrawListManager::updateManagerProperties()
+CG3_INLINE void DrawableMeshDrawListManager::updateManagerProperties()
 {
     ui->pointsRadioButton->setChecked(mesh->isPointShadingEnabled());
     ui->flatRadioButton->setChecked(mesh->isFlatShadingEnabled());
@@ -79,7 +79,7 @@ void DrawableMeshDrawListManager::updateManagerProperties()
     ui->tColorRadioButton->setChecked(mesh->isTriangleColorEnabled());
 }
 
-void DrawableMeshDrawListManager::on_pointsRadioButton_toggled(bool checked)
+CG3_INLINE void DrawableMeshDrawListManager::on_pointsRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setPointsShading();
@@ -87,7 +87,7 @@ void DrawableMeshDrawListManager::on_pointsRadioButton_toggled(bool checked)
     }
 }
 
-void DrawableMeshDrawListManager::on_flatRadioButton_toggled(bool checked)
+CG3_INLINE void DrawableMeshDrawListManager::on_flatRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setFlatShading();
@@ -95,7 +95,7 @@ void DrawableMeshDrawListManager::on_flatRadioButton_toggled(bool checked)
     }
 }
 
-void DrawableMeshDrawListManager::on_smoothRadioButton_toggled(bool checked)
+CG3_INLINE void DrawableMeshDrawListManager::on_smoothRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setSmoothShading();
@@ -103,19 +103,19 @@ void DrawableMeshDrawListManager::on_smoothRadioButton_toggled(bool checked)
     }
 }
 
-void DrawableMeshDrawListManager::on_wireframeCheckBox_stateChanged(int arg1)
+CG3_INLINE void DrawableMeshDrawListManager::on_wireframeCheckBox_stateChanged(int arg1)
 {
     mesh->setWireframe(arg1 == Qt::Checked);
     mw.canvas.update();
 }
 
-void DrawableMeshDrawListManager::on_bboxCheckBox_stateChanged(int arg1)
+CG3_INLINE void DrawableMeshDrawListManager::on_bboxCheckBox_stateChanged(int arg1)
 {
     mesh->setVisibleBoundingBox(arg1 == Qt::Checked);
     mw.canvas.update();
 }
 
-void DrawableMeshDrawListManager::on_vColorRadioButton_toggled(bool checked)
+CG3_INLINE void DrawableMeshDrawListManager::on_vColorRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setEnableVertexColor();
@@ -123,7 +123,7 @@ void DrawableMeshDrawListManager::on_vColorRadioButton_toggled(bool checked)
     }
 }
 
-void DrawableMeshDrawListManager::on_tColorRadioButton_toggled(bool checked)
+CG3_INLINE void DrawableMeshDrawListManager::on_tColorRadioButton_toggled(bool checked)
 {
     if (checked){
         mesh->setEnableTriangleColor();
@@ -131,7 +131,7 @@ void DrawableMeshDrawListManager::on_tColorRadioButton_toggled(bool checked)
     }
 }
 
-void DrawableMeshDrawListManager::on_savePushButton_clicked()
+CG3_INLINE void DrawableMeshDrawListManager::on_savePushButton_clicked()
 {
     std::string ext;
     std::string filename = ls.saveDialog("Save Mesh", ext);
@@ -145,18 +145,18 @@ void DrawableMeshDrawListManager::on_savePushButton_clicked()
     }
 }
 
-void DrawableMeshDrawListManager::on_subFrameAxisCheckBox_stateChanged(int arg1)
+CG3_INLINE void DrawableMeshDrawListManager::on_subFrameAxisCheckBox_stateChanged(int arg1)
 {
     ((ManipulableObject*)mesh)->setDrawRelativeAxis(arg1 == Qt::Checked);
 }
 
-void DrawableMeshDrawListManager::on_wireframeWidthSlider_valueChanged(int value)
+CG3_INLINE void DrawableMeshDrawListManager::on_wireframeWidthSlider_valueChanged(int value)
 {
     mesh->setWireframeWidth(value);
     mw.canvas.update();
 }
 
-void DrawableMeshDrawListManager::on_pointWidthSlider_valueChanged(int value)
+CG3_INLINE void DrawableMeshDrawListManager::on_pointWidthSlider_valueChanged(int value)
 {
     mesh->setPointWidth(value);
     mw.canvas.update();

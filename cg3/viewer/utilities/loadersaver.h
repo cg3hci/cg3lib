@@ -59,4 +59,10 @@ void LoaderSaver::addSupportedExtension(const std::string &ext1, Args... args) {
 } //namespace cg3::viewer
 } //namespace cg3
 
+#ifndef CG3_STATIC
+#define CG3_LOADERSAVER_CPP "loadersaver.cpp"
+#include CG3_LOADERSAVER_CPP
+#undef CG3_LOADERSAVER_CPP
+#endif //CG3_STATIC
+
 #endif // CG3_LOADERSAVER_H

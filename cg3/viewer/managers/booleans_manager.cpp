@@ -17,7 +17,7 @@
 namespace cg3 {
 namespace viewer {
 
-BooleansManager::BooleansManager(QWidget *parent) :
+CG3_INLINE BooleansManager::BooleansManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::BooleansManager),
     mainWindow((cg3::viewer::MainWindow&)*parent),
@@ -29,7 +29,7 @@ BooleansManager::BooleansManager(QWidget *parent) :
     objls.addSupportedExtension("obj");
 }
 
-BooleansManager::~BooleansManager()
+CG3_INLINE BooleansManager::~BooleansManager()
 {
     delete ui;
     for (unsigned int i = 0; i < meshes.size(); i++) {
@@ -40,7 +40,7 @@ BooleansManager::~BooleansManager()
     }
 }
 
-void BooleansManager::setButtonsMeshLoaded(bool b)
+CG3_INLINE void BooleansManager::setButtonsMeshLoaded(bool b)
 {
     ui->loadEigenMeshButton->setEnabled(!b);
     ui->clearEigenMeshButton->setEnabled(b);
@@ -53,7 +53,7 @@ void BooleansManager::setButtonsMeshLoaded(bool b)
     ui->smoothEigenMeshRadioButton->setChecked(true);
 }
 
-void BooleansManager::setButtonsMeshLoaded_2(bool b)
+CG3_INLINE void BooleansManager::setButtonsMeshLoaded_2(bool b)
 {
     ui->loadEigenMeshButton_2->setEnabled(!b);
     ui->clearEigenMeshButton_2->setEnabled(b);
@@ -66,7 +66,7 @@ void BooleansManager::setButtonsMeshLoaded_2(bool b)
     ui->smoothEigenMeshRadioButton_2->setChecked(true);
 }
 
-void BooleansManager::setButtonsResultLoaded(bool b)
+CG3_INLINE void BooleansManager::setButtonsResultLoaded(bool b)
 {
     ui->clearEigenMeshButton_3->setEnabled(b);
     ui->saveEigenMeshButton_3->setEnabled(b);
@@ -78,7 +78,7 @@ void BooleansManager::setButtonsResultLoaded(bool b)
     ui->smoothEigenMeshRadioButton_3->setChecked(true);
 }
 
-void BooleansManager::setMesh1(const EigenMesh& m)
+CG3_INLINE void BooleansManager::setMesh1(const EigenMesh& m)
 {
     if (meshes[0] != nullptr){
         mainWindow.deleteDrawableObject(meshes[0]);
@@ -90,7 +90,7 @@ void BooleansManager::setMesh1(const EigenMesh& m)
     mainWindow.canvas.update();
 }
 
-void BooleansManager::setMesh2(const EigenMesh& m)
+CG3_INLINE void BooleansManager::setMesh2(const EigenMesh& m)
 {
     if (meshes[1] != nullptr){
         mainWindow.deleteDrawableObject(meshes[1]);
@@ -102,7 +102,7 @@ void BooleansManager::setMesh2(const EigenMesh& m)
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_loadEigenMeshButton_clicked()
+CG3_INLINE void BooleansManager::on_loadEigenMeshButton_clicked()
 {
     std::string filename = objls.loadDialog("Load Mesh 1");
     if (filename != "") {
@@ -120,7 +120,7 @@ void BooleansManager::on_loadEigenMeshButton_clicked()
     }
 }
 
-void BooleansManager::on_clearEigenMeshButton_clicked()
+CG3_INLINE void BooleansManager::on_clearEigenMeshButton_clicked()
 {
     setButtonsMeshLoaded(false);
     mainWindow.deleteDrawableObject(meshes[0]);
@@ -128,7 +128,7 @@ void BooleansManager::on_clearEigenMeshButton_clicked()
     meshes[0] = nullptr;
 }
 
-void BooleansManager::on_saveEigenMeshButton_clicked()
+CG3_INLINE void BooleansManager::on_saveEigenMeshButton_clicked()
 {
     std::string filename = objls.saveDialog("Save Mesh 1");
 
@@ -138,7 +138,7 @@ void BooleansManager::on_saveEigenMeshButton_clicked()
 
 }
 
-void BooleansManager::on_setFromResultButton_clicked()
+CG3_INLINE void BooleansManager::on_setFromResultButton_clicked()
 {
     if (result != nullptr){
         if (meshes[0] != nullptr){
@@ -153,7 +153,7 @@ void BooleansManager::on_setFromResultButton_clicked()
     }
 }
 
-void BooleansManager::on_pointsEigenMeshRadioButton_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_pointsEigenMeshRadioButton_toggled(bool checked)
 {
     if (checked){
         meshes[0]->setPointsShading();
@@ -161,7 +161,7 @@ void BooleansManager::on_pointsEigenMeshRadioButton_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_flatEigenMeshRadioButton_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_flatEigenMeshRadioButton_toggled(bool checked)
 {
     if (checked){
         meshes[0]->setFlatShading();
@@ -169,7 +169,7 @@ void BooleansManager::on_flatEigenMeshRadioButton_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_smoothEigenMeshRadioButton_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_smoothEigenMeshRadioButton_toggled(bool checked)
 {
     if (checked){
         meshes[0]->setSmoothShading();
@@ -177,13 +177,13 @@ void BooleansManager::on_smoothEigenMeshRadioButton_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_wireframeEigenMeshCheckBox_stateChanged(int arg1)
+CG3_INLINE void BooleansManager::on_wireframeEigenMeshCheckBox_stateChanged(int arg1)
 {
     meshes[0]->setWireframe(arg1 == Qt::Checked);
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_loadEigenMeshButton_2_clicked()
+CG3_INLINE void BooleansManager::on_loadEigenMeshButton_2_clicked()
 {
     std::string filename = objls.loadDialog("Load Mesh 2");
     if (filename != "") {
@@ -200,7 +200,7 @@ void BooleansManager::on_loadEigenMeshButton_2_clicked()
     }
 }
 
-void BooleansManager::on_clearEigenMeshButton_2_clicked()
+CG3_INLINE void BooleansManager::on_clearEigenMeshButton_2_clicked()
 {
     setButtonsMeshLoaded_2(false);
     mainWindow.deleteDrawableObject(meshes[1]);
@@ -208,7 +208,7 @@ void BooleansManager::on_clearEigenMeshButton_2_clicked()
     meshes[1] = nullptr;
 }
 
-void BooleansManager::on_saveEigenMeshButton_2_clicked()
+CG3_INLINE void BooleansManager::on_saveEigenMeshButton_2_clicked()
 {
     std::string filename = objls.saveDialog("Save Mesh 2");
 
@@ -217,7 +217,7 @@ void BooleansManager::on_saveEigenMeshButton_2_clicked()
     meshes[1]->saveOnObj(filename);
 }
 
-void BooleansManager::on_setFromResultButton_2_clicked()
+CG3_INLINE void BooleansManager::on_setFromResultButton_2_clicked()
 {
     if (result != nullptr){
         if (meshes[1] != nullptr){
@@ -232,7 +232,7 @@ void BooleansManager::on_setFromResultButton_2_clicked()
     }
 }
 
-void BooleansManager::on_pointsEigenMeshRadioButton_2_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_pointsEigenMeshRadioButton_2_toggled(bool checked)
 {
     if (checked){
         meshes[1]->setPointsShading();
@@ -240,7 +240,7 @@ void BooleansManager::on_pointsEigenMeshRadioButton_2_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_flatEigenMeshRadioButton_2_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_flatEigenMeshRadioButton_2_toggled(bool checked)
 {
     if (checked){
         meshes[1]->setFlatShading();
@@ -248,7 +248,7 @@ void BooleansManager::on_flatEigenMeshRadioButton_2_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_smoothEigenMeshRadioButton_2_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_smoothEigenMeshRadioButton_2_toggled(bool checked)
 {
     if (checked){
         meshes[1]->setSmoothShading();
@@ -256,13 +256,13 @@ void BooleansManager::on_smoothEigenMeshRadioButton_2_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_wireframeEigenMeshCheckBox_2_stateChanged(int arg1)
+CG3_INLINE void BooleansManager::on_wireframeEigenMeshCheckBox_2_stateChanged(int arg1)
 {
     meshes[1]->setWireframe(arg1 == Qt::Checked);
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_intersectionButton_clicked()
+CG3_INLINE void BooleansManager::on_intersectionButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
@@ -277,7 +277,7 @@ void BooleansManager::on_intersectionButton_clicked()
     }
 }
 
-void BooleansManager::on_differenceButton_clicked()
+CG3_INLINE void BooleansManager::on_differenceButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
@@ -292,7 +292,7 @@ void BooleansManager::on_differenceButton_clicked()
     }
 }
 
-void BooleansManager::on_unionButton_clicked()
+CG3_INLINE void BooleansManager::on_unionButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
@@ -307,7 +307,7 @@ void BooleansManager::on_unionButton_clicked()
     }
 }
 
-void BooleansManager::on_mergePushButton_clicked()
+CG3_INLINE void BooleansManager::on_mergePushButton_clicked()
 {
     if (meshes[0] != nullptr && meshes[1] != nullptr){
         if (result != nullptr) {
@@ -322,7 +322,7 @@ void BooleansManager::on_mergePushButton_clicked()
     }
 }
 
-void BooleansManager::on_clearEigenMeshButton_3_clicked()
+CG3_INLINE void BooleansManager::on_clearEigenMeshButton_3_clicked()
 {
     mainWindow.deleteDrawableObject(result);
     delete result;
@@ -330,7 +330,7 @@ void BooleansManager::on_clearEigenMeshButton_3_clicked()
     setButtonsResultLoaded(false);
 }
 
-void BooleansManager::on_saveEigenMeshButton_3_clicked()
+CG3_INLINE void BooleansManager::on_saveEigenMeshButton_3_clicked()
 {
     std::string filename = objls.saveDialog("Save Result");
 
@@ -340,7 +340,7 @@ void BooleansManager::on_saveEigenMeshButton_3_clicked()
 
 }
 
-void BooleansManager::on_pointsEigenMeshRadioButton_3_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_pointsEigenMeshRadioButton_3_toggled(bool checked)
 {
     if (checked){
         result->setPointsShading();
@@ -348,7 +348,7 @@ void BooleansManager::on_pointsEigenMeshRadioButton_3_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_flatEigenMeshRadioButton_3_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_flatEigenMeshRadioButton_3_toggled(bool checked)
 {
     if (checked){
         result->setFlatShading();
@@ -356,7 +356,7 @@ void BooleansManager::on_flatEigenMeshRadioButton_3_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_smoothEigenMeshRadioButton_3_toggled(bool checked)
+CG3_INLINE void BooleansManager::on_smoothEigenMeshRadioButton_3_toggled(bool checked)
 {
     if (checked){
         result->setSmoothShading();
@@ -364,13 +364,13 @@ void BooleansManager::on_smoothEigenMeshRadioButton_3_toggled(bool checked)
     }
 }
 
-void BooleansManager::on_wireframeEigenMeshCheckBox_3_stateChanged(int arg1)
+CG3_INLINE void BooleansManager::on_wireframeEigenMeshCheckBox_3_stateChanged(int arg1)
 {
     result->setWireframe(arg1 == Qt::Checked);
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_plusXButton_clicked()
+CG3_INLINE void BooleansManager::on_plusXButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->translate(Point3d(ui->stepSpinBox->value(), 0, 0));
@@ -384,7 +384,7 @@ void BooleansManager::on_plusXButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_minusXButton_clicked()
+CG3_INLINE void BooleansManager::on_minusXButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->translate(Point3d(-ui->stepSpinBox->value(), 0, 0));
@@ -398,7 +398,7 @@ void BooleansManager::on_minusXButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_plusYButton_clicked()
+CG3_INLINE void BooleansManager::on_plusYButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->translate(Point3d(0, ui->stepSpinBox->value(), 0));
@@ -412,7 +412,7 @@ void BooleansManager::on_plusYButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_minusYButton_clicked()
+CG3_INLINE void BooleansManager::on_minusYButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->translate(Point3d(0, -ui->stepSpinBox->value(), 0));
@@ -426,7 +426,7 @@ void BooleansManager::on_minusYButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_plusZButton_clicked()
+CG3_INLINE void BooleansManager::on_plusZButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->translate(Point3d(0, 0, ui->stepSpinBox->value()));
@@ -440,7 +440,7 @@ void BooleansManager::on_plusZButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_minusZButton_clicked()
+CG3_INLINE void BooleansManager::on_minusZButton_clicked()
 {
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->translate(Point3d(0, 0, -ui->stepSpinBox->value()));
@@ -454,7 +454,7 @@ void BooleansManager::on_minusZButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_rotateButton_clicked()
+CG3_INLINE void BooleansManager::on_rotateButton_clicked()
 {
     Vec3 axis(ui->axisXSpinBox->value(), ui->axisYSpinBox->value(), ui->axisZSpinBox->value());
     double angle = ui->angleSpinBox->value()*M_PI/180;
@@ -475,7 +475,7 @@ void BooleansManager::on_rotateButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_undoRotateButton_clicked()
+CG3_INLINE void BooleansManager::on_undoRotateButton_clicked()
 {
     Eigen::Matrix3d m;
     cg3::rotationMatrix(-lastAxis, lastAngle, m);
@@ -492,7 +492,7 @@ void BooleansManager::on_undoRotateButton_clicked()
     mainWindow.canvas.update();
 }
 
-void BooleansManager::on_makeBox1PushButton_clicked()
+CG3_INLINE void BooleansManager::on_makeBox1PushButton_clicked()
 {
     double min =  std::min(ui->x1SpinBox->value(),ui->y1SpinBox->value());
     min = std::min(min, ui->z1SpinBox->value());
@@ -500,7 +500,7 @@ void BooleansManager::on_makeBox1PushButton_clicked()
     setMesh1(EigenMesh(EigenMeshAlgorithms::makeBox(BoundingBox3(Point3d(0,0,0), Point3d(ui->x1SpinBox->value(),ui->y1SpinBox->value(),ui->z1SpinBox->value())))));
 }
 
-void BooleansManager::on_makeBox2PushButton_clicked()
+CG3_INLINE void BooleansManager::on_makeBox2PushButton_clicked()
 {
     double min =  std::min(ui->x2SpinBox->value(),ui->y2SpinBox->value());
     min = std::min(min, ui->z2SpinBox->value());
@@ -508,7 +508,7 @@ void BooleansManager::on_makeBox2PushButton_clicked()
     setMesh2(EigenMesh(EigenMeshAlgorithms::makeBox(BoundingBox3(Point3d(0,0,0), Point3d(ui->x2SpinBox->value(),ui->y2SpinBox->value(),ui->z2SpinBox->value())))));
 }
 
-void BooleansManager::on_scalePushButton_clicked()
+CG3_INLINE void BooleansManager::on_scalePushButton_clicked()
 {
     Vec3 scaleFactor(ui->scaleXSpinBox->value(), ui->scaleYSpinBox->value(), ui->scaleZSpinBox->value());
 

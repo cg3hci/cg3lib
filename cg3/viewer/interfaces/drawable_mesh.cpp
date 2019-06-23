@@ -9,7 +9,7 @@
 
 namespace cg3 {
 
-void DrawableMesh::init()
+CG3_INLINE void DrawableMesh::init()
 {
     drawMode          = DRAW_SMOOTH | DRAW_FACECOLOR;
     wireframeWidth    = 1;
@@ -19,109 +19,109 @@ void DrawableMesh::init()
     pointWidth = 3;
 }
 
-bool DrawableMesh::isWireframeEnabled() const
+CG3_INLINE bool DrawableMesh::isWireframeEnabled() const
 {
     return drawMode & DRAW_WIREFRAME;
 }
 
-bool DrawableMesh::isPointShadingEnabled() const
+CG3_INLINE bool DrawableMesh::isPointShadingEnabled() const
 {
     return drawMode & DRAW_POINTS;
 }
 
-bool DrawableMesh::isFlatShadingEnabled() const
+CG3_INLINE bool DrawableMesh::isFlatShadingEnabled() const
 {
     return drawMode & DRAW_FLAT;
 }
 
-bool DrawableMesh::isSmoothShadingEnabled() const
+CG3_INLINE bool DrawableMesh::isSmoothShadingEnabled() const
 {
     return drawMode & DRAW_SMOOTH;
 }
 
-bool DrawableMesh::isBboxEnabled() const
+CG3_INLINE bool DrawableMesh::isBboxEnabled() const
 {
     return drawMode & DRAW_BOUNDINGBOX;
 }
 
-bool DrawableMesh::isTriangleColorEnabled() const
+CG3_INLINE bool DrawableMesh::isTriangleColorEnabled() const
 {
     return drawMode & DRAW_FACECOLOR;
 }
 
-bool DrawableMesh::isVertexColorEnabled() const
+CG3_INLINE bool DrawableMesh::isVertexColorEnabled() const
 {
     return drawMode & DRAW_VERTEXCOLOR;
 }
 
-void DrawableMesh::setWireframe(bool b) const
+CG3_INLINE void DrawableMesh::setWireframe(bool b) const
 {
     if (b) drawMode |=  DRAW_WIREFRAME;
     else   drawMode &= ~DRAW_WIREFRAME;
 }
 
-void DrawableMesh::setFlatShading() const
+CG3_INLINE void DrawableMesh::setFlatShading() const
 {
     drawMode |=  DRAW_FLAT;
     drawMode &= ~DRAW_SMOOTH;
     drawMode &= ~DRAW_POINTS;
 }
 
-void DrawableMesh::setSmoothShading() const
+CG3_INLINE void DrawableMesh::setSmoothShading() const
 {
     drawMode |=  DRAW_SMOOTH;
     drawMode &= ~DRAW_FLAT;
     drawMode &= ~DRAW_POINTS;
 }
 
-void DrawableMesh::setPointsShading() const
+CG3_INLINE void DrawableMesh::setPointsShading() const
 {
     drawMode |=  DRAW_POINTS;
     drawMode &= ~DRAW_FLAT;
     drawMode &= ~DRAW_SMOOTH;
 }
 
-void DrawableMesh::setWireframeColor(float r, float g, float b) const
+CG3_INLINE void DrawableMesh::setWireframeColor(float r, float g, float b) const
 {
     wireframeColor[0] = r;
     wireframeColor[1] = g;
     wireframeColor[2] = b;
 }
 
-void DrawableMesh::setWireframeWidth(int width) const
+CG3_INLINE void DrawableMesh::setWireframeWidth(int width) const
 {
     wireframeWidth = width;
 }
 
-void DrawableMesh::setPointWidth(int width) const
+CG3_INLINE void DrawableMesh::setPointWidth(int width) const
 {
     pointWidth = width;
 }
 
-void DrawableMesh::setEnableVertexColor() const
+CG3_INLINE void DrawableMesh::setEnableVertexColor() const
 {
     drawMode |=  DRAW_VERTEXCOLOR;
     drawMode &= ~DRAW_FACECOLOR;
 }
 
-void DrawableMesh::setEnableTriangleColor() const
+CG3_INLINE void DrawableMesh::setEnableTriangleColor() const
 {
     drawMode |=  DRAW_FACECOLOR;
     drawMode &= ~DRAW_VERTEXCOLOR;
 }
 
-void DrawableMesh::setVisibleBoundingBox(bool b) const
+CG3_INLINE void DrawableMesh::setVisibleBoundingBox(bool b) const
 {
     if (b) drawMode |=  DRAW_BOUNDINGBOX;
     else   drawMode &= ~DRAW_BOUNDINGBOX;
 }
 
-DrawableMesh::DrawableMesh()
+CG3_INLINE DrawableMesh::DrawableMesh()
 {
     init();
 }
 
-void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Point3d &min, const Point3d &max) const
+CG3_INLINE void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords, const int* pTriangles, const double* pVertexNormals, const float* pVertexColors, const double* pTriangleNormals, const float* pTriangleColors, const Point3d &min, const Point3d &max) const
 {
     if (drawMode & DRAW_WIREFRAME) {
         if (drawMode & DRAW_POINTS) {
@@ -182,7 +182,7 @@ void DrawableMesh::draw(unsigned int nv, unsigned int nt, const double* pCoords,
     }
 }
 
-void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const
+CG3_INLINE void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* coords, const int* triangles, const double* vertexNormals, const float* vertexColors, const double* triangleNormals, const float* triangleColors) const
 {
     if (drawMode & DRAW_POINTS) {
         glEnableClientState(GL_VERTEX_ARRAY);
@@ -267,7 +267,7 @@ void DrawableMesh::renderPass(unsigned int nv, unsigned int nt, const double* co
     }
 }
 
-void _check_gl_error(const char *file, int line)
+CG3_INLINE void _check_gl_error(const char *file, int line)
 {
     GLenum err (glGetError());
 

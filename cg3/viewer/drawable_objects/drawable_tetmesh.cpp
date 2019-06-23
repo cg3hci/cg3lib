@@ -9,32 +9,32 @@
 namespace cg3 {
 namespace cino {
 
-DrawableTetMesh::DrawableTetMesh()
+CG3_INLINE DrawableTetMesh::DrawableTetMesh()
 {
 }
 
-DrawableTetMesh::DrawableTetMesh(const std::string& s)
+CG3_INLINE DrawableTetMesh::DrawableTetMesh(const std::string& s)
 {
     this->load(s.c_str());
     this->updateGL();
 }
 
-void DrawableTetMesh::draw() const
+CG3_INLINE void DrawableTetMesh::draw() const
 {
     DrawableTetmesh::draw();
 }
 
-void DrawableTetMesh::draw(const float f) const
+CG3_INLINE void DrawableTetMesh::draw(const float f) const
 {
     DrawableTetmesh::draw(f);
 }
 
-Point3d DrawableTetMesh::sceneCenter() const
+CG3_INLINE Point3d DrawableTetMesh::sceneCenter() const
 {
     return DrawableTetmesh::scene_center();
 }
 
-double DrawableTetMesh::sceneRadius() const
+CG3_INLINE double DrawableTetMesh::sceneRadius() const
 {
     return (double) DrawableTetmesh::scene_radius();
 }

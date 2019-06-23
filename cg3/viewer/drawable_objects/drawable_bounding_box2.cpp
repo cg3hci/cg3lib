@@ -16,7 +16,7 @@
 
 namespace cg3 {
 
-DrawableBoundingBox2::DrawableBoundingBox2() :
+CG3_INLINE DrawableBoundingBox2::DrawableBoundingBox2() :
     BoundingBox2(),
     pointSize(2),
     pointColor(),
@@ -25,7 +25,7 @@ DrawableBoundingBox2::DrawableBoundingBox2() :
 {
 }
 
-DrawableBoundingBox2::DrawableBoundingBox2(const BoundingBox2& b) :
+CG3_INLINE DrawableBoundingBox2::DrawableBoundingBox2(const BoundingBox2& b) :
     BoundingBox2(b),
     pointSize(2),
     pointColor(),
@@ -34,49 +34,49 @@ DrawableBoundingBox2::DrawableBoundingBox2(const BoundingBox2& b) :
 {
 }
 
-DrawableBoundingBox2::DrawableBoundingBox2(const Point2d& min, const Point2d& max) :
+CG3_INLINE DrawableBoundingBox2::DrawableBoundingBox2(const Point2d& min, const Point2d& max) :
 	DrawableBoundingBox2(BoundingBox2(min, max))
 {
 }
 
-void DrawableBoundingBox2::draw() const
+CG3_INLINE void DrawableBoundingBox2::draw() const
 {
     drawEdges();
     drawPoints();
 }
 
-Point3d DrawableBoundingBox2::sceneCenter() const
+CG3_INLINE Point3d DrawableBoundingBox2::sceneCenter() const
 {
     Point2d c = center();
     return Point3d(c.x(), c.y(), 0);
 }
 
-double DrawableBoundingBox2::sceneRadius() const
+CG3_INLINE double DrawableBoundingBox2::sceneRadius() const
 {
     return diag();
 }
 
-void DrawableBoundingBox2::setEdgeColor(const QColor& c)
+CG3_INLINE void DrawableBoundingBox2::setEdgeColor(const QColor& c)
 {
     edgeColor = c;
 }
 
-void DrawableBoundingBox2::setPointColor(const QColor& c)
+CG3_INLINE void DrawableBoundingBox2::setPointColor(const QColor& c)
 {
     pointColor = c;
 }
 
-void DrawableBoundingBox2::setEdgeWidth(int w)
+CG3_INLINE void DrawableBoundingBox2::setEdgeWidth(int w)
 {
     edgeWidth = w;
 }
 
-void DrawableBoundingBox2::setPointSize(int s)
+CG3_INLINE void DrawableBoundingBox2::setPointSize(int s)
 {
     pointSize = s;
 }
 
-void DrawableBoundingBox2::drawEdges() const
+CG3_INLINE void DrawableBoundingBox2::drawEdges() const
 {
 	opengl::drawLine2(Point2d(min().x(), min().y()),
                        Point2d(max().x(), min().y()),
@@ -96,7 +96,7 @@ void DrawableBoundingBox2::drawEdges() const
                        edgeWidth);
 }
 
-void DrawableBoundingBox2::drawPoints() const
+CG3_INLINE void DrawableBoundingBox2::drawPoints() const
 {
 	opengl::drawPoint2(minCoord, pointColor, pointSize);
 	opengl::drawPoint2(cg3::Point2d(minCoord.x(), maxCoord.y()), pointColor, pointSize);
