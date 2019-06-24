@@ -84,9 +84,9 @@ inline void drawCylinder(
         unsigned int slices,
         unsigned int stacks)
 {
-    Vec3 dir     = b - a; dir.normalize();
+    Vec3d dir     = b - a; dir.normalize();
     Point3d z       = Point3d(0,0,1);
-    Vec3 normal  = dir.cross(z);
+    Vec3d normal  = dir.cross(z);
     double angle = acos(dir.dot(z)) * 180 / M_PI;
 
 	bool cull = glIsEnabled(GL_CULL_FACE);

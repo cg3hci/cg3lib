@@ -26,7 +26,7 @@ public:
     cg3::Dcel& dcel();
     unsigned int addVertex(
             const cg3::Point3d& p,
-            const Vec3& n = Vec3(),
+            const Vec3d& n = Vec3d(),
             const Color &c = Color(128, 128, 128),
             int flag = 0);
 

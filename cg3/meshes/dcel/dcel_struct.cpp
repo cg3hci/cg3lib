@@ -164,7 +164,7 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(const TemplatedDcel<V, HE, F>& dcel)
     vertices.resize(dcel.vertices.size(), nullptr);
     #ifdef NDEBUG
 	vertexCoordinates.resize(dcel.vertexCoordinates.size(), Point3d());
-    vertexNormals.resize(dcel.vertexNormals.size(), Vec3());
+	vertexNormals.resize(dcel.vertexNormals.size(), Vec3d());
     vertexColors.resize(dcel.vertexColors.size(), Color());
     #endif
     for (const TemplatedDcel::Vertex* ov : dcel.vertexIterator()) {
@@ -190,7 +190,7 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(const TemplatedDcel<V, HE, F>& dcel)
 
     faces.resize(dcel.faces.size(), nullptr);
     #ifdef NDEBUG
-    faceNormals.resize(dcel.faceNormals.size(), Vec3());
+	faceNormals.resize(dcel.faceNormals.size(), Vec3d());
     faceColors.resize(dcel.faceColors.size(), Color());
     #endif
     for (const Face* of : dcel.faceIterator()){
@@ -1006,7 +1006,7 @@ void TemplatedDcel<V, HE, F>::saveOnDcelFile(
 template <class V, class HE, class F>
 typename TemplatedDcel<V, HE, F>::Vertex *TemplatedDcel<V, HE, F>::addVertex(
 		const Point3d& p,
-		const Vec3& n,
+		const Vec3d& n,
 		const Color& c)
 {
     #ifdef NDEBUG
@@ -1092,7 +1092,7 @@ TemplatedDcel<V, HE, F>::addHalfEdge()
  */
 template <class V, class HE, class F>
 typename TemplatedDcel<V, HE, F>::Face*
-TemplatedDcel<V, HE, F>::addFace(const Vec3& n, const Color& c)
+TemplatedDcel<V, HE, F>::addFace(const Vec3d& n, const Color& c)
 {
     #ifdef NDEBUG
     Face* last = new Face(*this);
@@ -1470,11 +1470,11 @@ void TemplatedDcel<V, HE, F>::setVertexFlags(int flag)
 template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::scale(double scaleFactor)
 {
-    scale(Vec3(scaleFactor, scaleFactor, scaleFactor));
+    scale(Vec3d(scaleFactor, scaleFactor, scaleFactor));
 }
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::scale(const Vec3& scaleVector)
+void TemplatedDcel<V, HE, F>::scale(const Vec3d& scaleVector)
 {
     for (Vertex* v : vertexIterator()){
         Point3d p = v->coordinate();
@@ -1522,7 +1522,7 @@ void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d &matrix, const Point3
 #endif
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::rotate(const Vec3& axis, double angle, const Point3d& centroid)
+void TemplatedDcel<V, HE, F>::rotate(const Vec3d& axis, double angle, const Point3d& centroid)
 {
     double matrix[3][3];
     cg3::rotationMatrix(axis, angle, matrix);
@@ -1536,7 +1536,7 @@ void TemplatedDcel<V, HE, F>::rotate(double matrix[3][3], const Point3d& centroi
         Point3d r = v->coordinate();
         r.rotate(matrix, centroid);
         v->setCoordinate(r);
-        Vec3 n = v->normal();
+        Vec3d n = v->normal();
         n.rotate(matrix, centroid);
         v->setNormal(n);
     }
@@ -1545,7 +1545,7 @@ void TemplatedDcel<V, HE, F>::rotate(double matrix[3][3], const Point3d& centroi
 }
 
 template <class V, class HE, class F>
-void TemplatedDcel<V, HE, F>::translate(const cg3::Vec3& c)
+void TemplatedDcel<V, HE, F>::translate(const cg3::Vec3d& c)
 {
     for (Vertex* v : vertexIterator()){
         v->setCoordinate(v->coordinate() + c);
@@ -2230,14 +2230,14 @@ void TemplatedDcel<V, HE, F>::deserialize(std::ifstream& binaryFile)
         tmp.vertices.resize(tmp.nVertices+tmp.unusedVids.size(), nullptr);
         #ifdef NDEBUG
 		tmp.vertexCoordinates.resize(tmp.nVertices+tmp.unusedVids.size(), Point3d());
-        tmp.vertexNormals.resize(tmp.nVertices+tmp.unusedVids.size(), Vec3());
+		tmp.vertexNormals.resize(tmp.nVertices+tmp.unusedVids.size(), Vec3d());
         tmp.vertexColors.resize(tmp.nVertices+tmp.unusedVids.size(), Color());
         #endif
         std::map<int, int> vert;
 
         for (unsigned int i = 0; i < tmp.nVertices; i++){
             int id, heid;
-            Point3d coord; Vec3 norm; Color color;
+            Point3d coord; Vec3d norm; Color color;
             int c, f;
             cg3::deserialize(id, binaryFile);
             coord.deserialize(binaryFile);
@@ -2276,14 +2276,14 @@ void TemplatedDcel<V, HE, F>::deserialize(std::ifstream& binaryFile)
         //Faces
         tmp.faces.resize(tmp.nFaces+tmp.unusedFids.size(), nullptr);
         #ifdef NDEBUG
-        tmp.faceNormals.resize(tmp.nFaces+tmp.unusedFids.size(), Vec3());
+		tmp.faceNormals.resize(tmp.nFaces+tmp.unusedFids.size(), Vec3d());
         tmp.faceColors.resize(tmp.nFaces+tmp.unusedFids.size(), Color());
         #endif
         for (unsigned int i = 0; i < tmp.nFaces; i++){
             int id, ohe, /*cr, cg, cb,*/ flag, nihe;
             double /*nx, ny, nz,*/ area;
             Color color;
-            Vec3 norm;
+            Vec3d norm;
             cg3::deserialize(id, binaryFile);
             cg3::deserialize(ohe, binaryFile);
             norm.deserialize(binaryFile);
@@ -2612,7 +2612,7 @@ void TemplatedDcel<V, HE, F>::afterLoadFile(
         vertices.push_back(vid);
 
 		if (fm.hasVertexNormals()){
-            Vec3 norm;
+            Vec3d norm;
             norm.setX(*(vnit++));
             norm.setY(*(vnit++));
             norm.setZ(*(vnit++));

@@ -24,23 +24,23 @@ static const double EPSILON = 1e-6;
  * @ingroup cg3core
  * @brief AXIS
  */
-static const std::array<Vec3, 6> AXIS
+static const std::array<Vec3d, 6> AXIS
 {
-    Vec3( 1, 0, 0),
-    Vec3( 0, 1, 0),
-    Vec3( 0, 0 ,1),
-    Vec3(-1, 0, 0),
-    Vec3( 0,-1, 0),
-    Vec3( 0, 0,-1),
+    Vec3d( 1, 0, 0),
+    Vec3d( 0, 1, 0),
+    Vec3d( 0, 0 ,1),
+    Vec3d(-1, 0, 0),
+    Vec3d( 0,-1, 0),
+    Vec3d( 0, 0,-1),
 };
 
 static const cg3::BoundingBox3 unitBoundingBox(
         cg3::Point3d(-1,-1,-1),
         cg3::Point3d( 1, 1, 1));
 
-static const cg3::Vec3 X_AXIS(1, 0, 0);
-static const cg3::Vec3 Y_AXIS(0, 1, 0);
-static const cg3::Vec3 Z_AXIS(0, 0, 1);
+static const cg3::Vec3d X_AXIS(1, 0, 0);
+static const cg3::Vec3d Y_AXIS(0, 1, 0);
+static const cg3::Vec3d Z_AXIS(0, 0, 1);
 
 /**
  * @ingroup cg3core

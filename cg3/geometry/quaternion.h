@@ -15,11 +15,11 @@ class Quaternion
 {
 public:
     Quaternion();
-    Quaternion(const Vec3& axis, double angle);
-    Quaternion(const Vec3& fromVector, const Vec3& toVector);
+    Quaternion(const Vec3d& axis, double angle);
+    Quaternion(const Vec3d& fromVector, const Vec3d& toVector);
     Quaternion(double q1, double q2, double q3, double q4);
 
-    Vec3 axis() const;
+    Vec3d axis() const;
     double angle() const;
     Quaternion inverse() const;
     void matrix4x4(double m[4][4]) const;
@@ -29,7 +29,7 @@ public:
     Eigen::Matrix3d rotationMatrix() const;
     #endif
 
-    void setAxisAngle(const Vec3& axis, double angle);
+    void setAxisAngle(const Vec3d& axis, double angle);
     void setValue(double q1, double q2, double q3, double q4);
     void invert();
     void negate();

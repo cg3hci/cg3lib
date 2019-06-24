@@ -24,7 +24,7 @@ class Line3;
 class Plane : public SerializableObject
 {
 public:
-    Plane(const Vec3& normal, double d);
+    Plane(const Vec3d& normal, double d);
     Plane(double a, double b, double c, double d);
     Plane(const Point3d &p1, const Point3d &p2, const Point3d &p3);
 
@@ -32,7 +32,7 @@ public:
     double b() const;
     double c() const;
     double d() const;
-    Vec3 normal() const;
+    Vec3d normal() const;
 
     void normalize();
 
@@ -47,7 +47,7 @@ public:
     void deserialize(std::ifstream& binaryFile);
 
 protected:
-    Vec3 _normal;
+    Vec3d _normal;
     double _d;
 };
 

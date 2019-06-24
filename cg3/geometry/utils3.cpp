@@ -37,8 +37,8 @@ inline double angle(const Vector& v1, const Vector& v2)
  * @return Angle in radians
  */
 inline double internalAngle(
-        const Vec3& v1, const Vec3& v2,
-        const Vec3& direction)
+        const Vec3d& v1, const Vec3d& v2,
+        const Vec3d& direction)
 {
     if (cg3::epsilonEqual(v1,v2))
         return 0;
@@ -47,7 +47,7 @@ inline double internalAngle(
 
     double ang = cg3::angle(v1,v2);
 
-    Vec3 cross = v1.cross(v2);
+    Vec3d cross = v1.cross(v2);
     cross.normalize();
 
     int sign = cross.dot(direction) >= 0 ? 1 : -1;
@@ -69,7 +69,7 @@ inline Point3d orthogonalProjectionOnAPlane(
 {
     //TO BE TESTED
 
-    const Vec3& planeNormal = plane.normal();
+    const Vec3d& planeNormal = plane.normal();
     const double d = plane.d();
 
 	cg3::Point3d planePoint = planeNormal*d;
@@ -86,7 +86,7 @@ inline Point3d orthogonalProjectionOnAPlane(
  * @return Projected point
  */
 inline Point3d orthogonalProjectionOnAPlane(
-        const Vec3& planeNormal,
+        const Vec3d& planeNormal,
 		const Point3d& planePoint,
 		const Point3d& point)
 {
@@ -127,10 +127,10 @@ inline bool areCollinear(
  *         given normal
  */
 template <template < class ... > class Container, class T, class ... Args>
-bool isPolygonCounterClockwise(const Container<Point3<T> >& polygon, const Vec3& normal)
+bool isPolygonCounterClockwise(const Container<Point3<T> >& polygon, const Vec3d& normal)
 {
-    Vec3 zAxis(0,0,1);
-    Vec3 v = -(normal.cross(zAxis));
+    Vec3d zAxis(0,0,1);
+    Vec3d v = -(normal.cross(zAxis));
     v.normalize();
     double dot = normal.dot(zAxis);
     double angle = acos(dot);
@@ -138,7 +138,7 @@ bool isPolygonCounterClockwise(const Container<Point3<T> >& polygon, const Vec3&
     double r[3][3] = {{0}};
     if (normal != zAxis){
         if (normal == -zAxis){
-            v = Vec3(1,0,0);
+            v = Vec3d(1,0,0);
         }
         rotationMatrix(v, angle, r);
     }

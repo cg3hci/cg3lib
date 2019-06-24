@@ -18,12 +18,12 @@ CG3_INLINE Quaternion::Quaternion() :
 {
 }
 
-CG3_INLINE Quaternion::Quaternion(const Vec3& axis, double angle)
+CG3_INLINE Quaternion::Quaternion(const Vec3d& axis, double angle)
 {
     setAxisAngle(axis, angle);
 }
 
-CG3_INLINE Quaternion::Quaternion(const Vec3& fromVector, const Vec3& toVector)
+CG3_INLINE Quaternion::Quaternion(const Vec3d& fromVector, const Vec3d& toVector)
 {
     double fromSqNorm = fromVector.lengthSquared();
     double toSqNorm = toVector.lengthSquared();
@@ -33,7 +33,7 @@ CG3_INLINE Quaternion::Quaternion(const Vec3& fromVector, const Vec3& toVector)
         q[3] = 1.0;
     }
     else {
-        Vec3 axis = fromVector.cross(toVector);
+        Vec3d axis = fromVector.cross(toVector);
         double axisSqNorm = axis.lengthSquared();
 
         // Aligned vectors
@@ -54,9 +54,9 @@ CG3_INLINE Quaternion::Quaternion(double q1, double q2, double q3, double q4) :
 {
 }
 
-CG3_INLINE Vec3 Quaternion::axis() const
+CG3_INLINE Vec3d Quaternion::axis() const
 {
-    Vec3 res = Vec3(q[0], q[1], q[2]);
+    Vec3d res = Vec3d(q[0], q[1], q[2]);
     double s = res.length();
     if (s > CG3_EPSILON)
         res /= s;
@@ -144,7 +144,7 @@ CG3_INLINE Eigen::Matrix3d Quaternion::rotationMatrix() const
 }
 #endif
 
-CG3_INLINE void Quaternion::setAxisAngle(const Vec3& axis, double angle)
+CG3_INLINE void Quaternion::setAxisAngle(const Vec3d& axis, double angle)
 {
     double norm = axis.length();
     if (norm < CG3_EPSILON) {

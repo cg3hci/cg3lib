@@ -146,7 +146,7 @@ public:
     const Vertex* vertex2()                const;
     const Vertex* vertex3()                const;
     int flag()                                   const;
-    cg3::Vec3 normal()                                const;
+    cg3::Vec3d normal()                                const;
     double area()                                const;
     Color color()                                const;
     const HalfEdge* outerHalfEdge()        const;
@@ -161,7 +161,7 @@ public:
     void setFlag();
     void setFlag(int newFlag);
     void resetFlag();
-    void setNormal(const Vec3& newNormal);
+    void setNormal(const Vec3d& newNormal);
     void setArea(double newArea);
     void setColor(const Color& newColor);
     HalfEdge* outerHalfEdge();
@@ -210,7 +210,7 @@ public:
     ConstIncidentHalfEdgeRangeBasedIterator incidentHalfEdgeIterator()              const;
     ConstIncidentVertexRangeBasedIterator incidentVertexIterator()                  const;
 
-    Vec3 updateNormal();
+    Vec3d updateNormal();
     double updateArea();
     void removeInnerHalfEdge(const InnerHalfEdgeIterator& iterator);
     bool removeInnerHalfEdge(const HalfEdge* halfEdge);
@@ -264,7 +264,7 @@ protected:
     #ifdef NDEBUG
     internal::DcelData *parent;
     #else
-    Vec3                            _normal;
+    Vec3d                            _normal;
     Color                           _color;
     #endif
     HalfEdge*                 _outerHalfEdge;

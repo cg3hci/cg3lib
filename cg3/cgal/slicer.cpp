@@ -40,7 +40,7 @@ typedef CGAL::AABB_tree<AABB_traits>  AABB_tree;
  */
 CG3_INLINE std::vector<std::vector<Point3d>> polylines(
         const std::string& inputOffFile,
-        const Vec3& norm,
+        const Vec3d& norm,
         double d)
 {
     std::ifstream input(inputOffFile.c_str());
@@ -62,7 +62,7 @@ CG3_INLINE std::vector<std::vector<Point3d>> polylines(
  */
 CG3_INLINE std::vector<std::vector<Point3d>> polylines(
         const SurfaceMesh &mesh,
-        const Vec3& norm,
+        const Vec3d& norm,
         double d)
 {
     // Slicer constructor from the mesh
@@ -107,7 +107,7 @@ CG3_INLINE std::vector<std::vector<Point3d> > polylines(
  */
 CG3_INLINE std::vector<std::vector<Point3d> > polylines(
         const Dcel &mesh,
-        const Vec3 &norm,
+        const Vec3d &norm,
         double d)
 {
     SurfaceMesh m = cgal::surfaceMeshFromDcel(mesh);

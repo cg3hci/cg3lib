@@ -83,7 +83,7 @@ inline Point3d randomPoint(const BoundingBox3& bb)
  * @link https://stackoverflow.com/questions/5408276/sampling-uniformly-distributed-random-points-inside-a-spherical-volume
  * @return
  */
-inline Vec3 randomDirection()
+inline Vec3d randomDirection()
 {
     static std::random_device rd;
     std::mt19937 e2(rd());
@@ -98,7 +98,7 @@ inline Vec3 randomDirection()
     double x = sin(theta) * cos(phi);
     double y = sin(theta) * sin(phi);
     double z = cos(theta);
-    return Vec3(x,y,z);
+    return Vec3d(x,y,z);
 }
 
 

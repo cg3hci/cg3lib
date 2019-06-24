@@ -22,8 +22,8 @@ public:
     virtual BoundingBox3 boundingBox() const = 0;
 
     virtual void scale(double scaleFactor) = 0;
-    virtual void translate(const Vec3& dir) = 0;
-    virtual void rotate(const Vec3& axis, double angle, const Point3d& centroid = Point3d()) = 0;
+    virtual void translate(const Vec3d& dir) = 0;
+    virtual void rotate(const Vec3d& axis, double angle, const Point3d& centroid = Point3d()) = 0;
 
     virtual Point3d barycenter() const = 0;
 

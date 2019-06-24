@@ -68,7 +68,7 @@ EigenMesh::EigenMesh(const Dcel& dcel)
         const Dcel::Vertex* v = *vit;
         vids[v->id()] = i;
         Point3d p = v->coordinate();
-        Vec3 n = v->normal();
+        Vec3d n = v->normal();
         n.normalize();
         V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
         NV(i,0) = n.x(); NV(i,1) = n.y(); NV(i,2) = n.z();
@@ -79,7 +79,7 @@ EigenMesh::EigenMesh(const Dcel& dcel)
         const Dcel::Face* f = *fit;
         F(i, 0) = vids[f->vertex1()->id()]; F(i, 1) = vids[f->vertex2()->id()]; F(i, 2) = vids[f->vertex3()->id()];
         Color c = f->color();
-        Vec3 n = f->normal();
+        Vec3d n = f->normal();
         CF(i,0) = c.redF(); CF(i,1) = c.greenF(); CF(i,2) = c.blueF();
         NF(i,0) = n.x(); NF(i,1) = n.y(); NF(i,2) = n.z();
         i++;
@@ -183,7 +183,7 @@ void EigenMesh::setVertexColor(double red, double green, double blue, int v)
     }
 }
 
-void EigenMesh::setVertexNormal(const Vec3 &n, unsigned int v)
+void EigenMesh::setVertexNormal(const Vec3d &n, unsigned int v)
 {
     assert(v < (unsigned int)V.rows());
     NV.row(v) << n.x(), n.y(), n.z();
@@ -230,7 +230,7 @@ void EigenMesh::scale(const BoundingBox3& oldBoundingBox, const BoundingBox3& ne
     bb = newBoundingBox;
 }
 
-void EigenMesh::scale(const Vec3& scaleFactor)
+void EigenMesh::scale(const Vec3d& scaleFactor)
 {
     SimpleEigenMesh::scale(scaleFactor);
     updateBoundingBox();
@@ -392,7 +392,7 @@ EigenMesh& EigenMesh::operator=(const Dcel& dcel)
         const Dcel::Vertex* v = *vit;
         vids[v->id()] = i;
         Point3d p = v->coordinate();
-        Vec3 n = v->normal();
+        Vec3d n = v->normal();
         V(i,0) = p.x(); V(i,1) = p.y(); V(i,2) = p.z();
         NV(i,0) = n.x(); NV(i,1) = n.y(); NV(i,2) = n.z();
         i++;
@@ -402,7 +402,7 @@ EigenMesh& EigenMesh::operator=(const Dcel& dcel)
         const Dcel::Face* f = *fit;
         F(i, 0) = vids[f->vertex1()->id()]; F(i, 1) = vids[f->vertex2()->id()]; F(i, 2) = vids[f->vertex3()->id()];
         Color c = f->color();
-        Vec3 n = f->normal();
+        Vec3d n = f->normal();
         CF(i,0) = c.redF(); CF(i,1) = c.greenF(); CF(i,2) = c.blueF();
         NF(i,0) = n.x(); NF(i,1) = n.y(); NF(i,2) = n.z();
         i++;

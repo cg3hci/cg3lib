@@ -23,7 +23,7 @@ CG3_INLINE Dcel& DcelBuilder::dcel()
     return d;
 }
 
-CG3_INLINE unsigned int DcelBuilder::addVertex(const Point3d& p, const Vec3& n, const Color &c, int flag)
+CG3_INLINE unsigned int DcelBuilder::addVertex(const Point3d& p, const Vec3d& n, const Color &c, int flag)
 {
     if (mapVertices.find(p) == mapVertices.end()){
         cg3::Dcel::Vertex* v = d.addVertex(p, n, c);

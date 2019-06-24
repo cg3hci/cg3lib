@@ -20,12 +20,12 @@ namespace cgal {
 
 std::vector<std::vector<Point3d> > polylines(
         const std::string& inputOffFile,
-        const Vec3& norm,
+        const Vec3d& norm,
         double d);
 
 std::vector<std::vector<Point3d> > polylines(
         const SurfaceMesh& mesh,
-        const Vec3& norm,
+        const Vec3d& norm,
         double d);
 
 #ifdef CG3_DCEL_DEFINED
@@ -35,7 +35,7 @@ std::vector<std::vector<Point3d> > polylines(
 
 std::vector<std::vector<Point3d> > polylines(
         const Dcel& mesh,
-        const Vec3& norm,
+        const Vec3d& norm,
         double d);
     #endif
 

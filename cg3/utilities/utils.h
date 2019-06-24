@@ -40,7 +40,7 @@ bool epsilonEqual(const Point2<T> &x, const Point2<T> &v, double epsilon = CG3_E
 
 Point3d randomPoint(const BoundingBox3& bb = internal::dummyBB);
 
-Vec3 randomDirection();
+Vec3d randomDirection();
 
 double truncate(double d, unsigned int numberOfDecimalDigitsToKeep);
 

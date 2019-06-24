@@ -80,7 +80,7 @@ private:
     cg3::viewer::MainWindow& mainWindow;
     std::vector<cg3::DrawableEigenMesh*> meshes;
     cg3::DrawableEigenMesh* result;
-    cg3::Vec3 lastAxis;
+    cg3::Vec3d lastAxis;
     double lastAngle;
     cg3::viewer::LoaderSaver objls;
 };

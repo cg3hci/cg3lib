@@ -25,7 +25,7 @@ namespace cgal {
  * @return
  */
 CG3_INLINE std::vector<std::array<Point3d, 3> > triangulate3(
-        const Vec3 &normal,
+        const Vec3d &normal,
         const std::vector<Point3d>& polygon,
         const std::vector<std::vector<Point3d> >& holes,
         bool& nonRegularPolygon)
@@ -34,8 +34,8 @@ CG3_INLINE std::vector<std::array<Point3d, 3> > triangulate3(
     std::map<Point2d, Point3d> pointsVerticesMap;
 
     //Rotation of the coordinates
-    Vec3 zAxis(0,0,1);
-    Vec3 axis = -(normal.cross(zAxis));
+    Vec3d zAxis(0,0,1);
+    Vec3d axis = -(normal.cross(zAxis));
     axis.normalize();
     double dot = normal.dot(zAxis);
     double angle = acos(dot);
@@ -43,7 +43,7 @@ CG3_INLINE std::vector<std::array<Point3d, 3> > triangulate3(
     double r[3][3] = {{0}};
     if (normal != zAxis){
         if (normal == -zAxis){
-            axis = Vec3(1,0,0);
+            axis = Vec3d(1,0,0);
         }
         rotationMatrix(axis, angle, r);
     }

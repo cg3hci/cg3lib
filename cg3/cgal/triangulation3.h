@@ -20,7 +20,7 @@ static std::vector< std::vector<Point3d> > dummy_holes;
 } //namespace cg3::cgal::internal
 
 std::vector<std::array<Point3d, 3> > triangulate3(
-        const Vec3 &normal,
+        const Vec3d &normal,
         const std::vector<Point3d>& polygon,
         const std::vector<std::vector<Point3d> >& holes = internal::dummy_holes,
         bool& nonRegularPolygon = internal::dummy);

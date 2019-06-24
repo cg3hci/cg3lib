@@ -89,8 +89,8 @@ CG3_INLINE void GLCanvas::postSelection(const QPoint& point)
         if (mode == _2D){
             qglviewer::Vec orig, dir;
             camera()->convertClickToLine(point, orig, dir);
-            Line3 line(Point3d(orig.x, orig.y, orig.z), Vec3(dir.x, dir.y, dir.z));
-            Plane plane(Vec3(0,0,1),0);
+            Line3 line(Point3d(orig.x, orig.y, orig.z), Vec3d(dir.x, dir.y, dir.z));
+            Plane plane(Vec3d(0,0,1),0);
             Point3d inters;
             bool b = plane.intersection(inters, line);
             if (b) {
@@ -200,10 +200,10 @@ CG3_INLINE Point3d GLCanvas::cameraPosition() const
     return cg3::Point3d(p.x, p.y, p.z);
 }
 
-CG3_INLINE Vec3 GLCanvas::cameraDirection() const
+CG3_INLINE Vec3d GLCanvas::cameraDirection() const
 {
     qglviewer::Vec p = camera()->viewDirection();
-    return cg3::Vec3(p.x, p.y, p.z);
+    return cg3::Vec3d(p.x, p.y, p.z);
 }
 
 CG3_INLINE void GLCanvas::resetPointOfView()
@@ -274,7 +274,7 @@ CG3_INLINE bool GLCanvas::loadPointOfView(const std::string &filename)
     return ok;
 }
 
-CG3_INLINE void GLCanvas::setCameraDirection(const Vec3 &vec)
+CG3_INLINE void GLCanvas::setCameraDirection(const Vec3d &vec)
 {
     qglviewer::Vec qglVec (vec.x(), vec.y(), vec.z());
     qglVec.normalize();

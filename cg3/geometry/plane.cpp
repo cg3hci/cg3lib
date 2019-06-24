@@ -16,7 +16,7 @@
 
 namespace cg3 {
 
-CG3_INLINE Plane::Plane(const Vec3& normal, double d) :
+CG3_INLINE Plane::Plane(const Vec3d& normal, double d) :
     _normal(normal),
     _d(d)
 {
@@ -32,8 +32,8 @@ CG3_INLINE Plane::Plane(double a, double b, double c, double d) :
 
 CG3_INLINE Plane::Plane(const Point3d& p1, const Point3d& p2, const Point3d& p3)
 {
-    Vec3 v1 (p2 - p1);
-    Vec3 v2 (p3 - p1);
+    Vec3d v1 (p2 - p1);
+    Vec3d v2 (p3 - p1);
     _normal = v1.cross(v2);
     _normal.normalize();
     _d = -(_normal.x() * p1.x() + _normal.y() * p1.y() + _normal.z() * p1.z());
@@ -59,7 +59,7 @@ CG3_INLINE double Plane::d() const
     return _d;
 }
 
-CG3_INLINE Vec3 Plane::normal() const
+CG3_INLINE Vec3d Plane::normal() const
 {
     return _normal;
 }
@@ -88,9 +88,9 @@ CG3_INLINE bool Plane::pointLiesOnPlane(const Point3d &p, double epsilon) const
 #ifdef CG3_WITH_EIGEN
 CG3_INLINE bool Plane::intersection(Point3d& inters, const Line3& l) const
 {
-    Vec3 n(_normal);
+    Vec3d n(_normal);
     n.normalize();
-    Vec3 dir = l.dir();
+    Vec3d dir = l.dir();
     dir.normalize();
     if (n.dot(dir) == 0) return false;
 

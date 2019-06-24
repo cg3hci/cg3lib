@@ -19,7 +19,7 @@ namespace cg3 {
 class DrawablePlane : public cg3::Plane, public DrawableObject
 {
 public:
-    DrawablePlane(const Vec3& _normal, double _d);
+    DrawablePlane(const Vec3d& _normal, double _d);
     DrawablePlane(double a, double b, double c, double _d);
     DrawablePlane(const Point3d &p1, const Point3d &p2, const Point3d &p3);
     DrawablePlane(Plane p);

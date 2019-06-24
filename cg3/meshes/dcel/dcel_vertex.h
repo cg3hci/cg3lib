@@ -82,7 +82,7 @@ public:
 
     unsigned int id()                                const;
     int flag()                                       const;
-    cg3::Vec3 normal()                                    const;
+    cg3::Vec3d normal()                                    const;
     const Point3d& coordinate()                       const;
     Color color()                                    const;
     int cardinality()                                const;
@@ -93,7 +93,7 @@ public:
     void setFlag();
     void setFlag(int newFlag);
     void resetFlag();
-    void setNormal(const Vec3& newNormal);
+    void setNormal(const Vec3d& newNormal);
     void setCoordinate(const Point3d& newCoordinate);
     void setCardinality(int newCardinality);
     void setColor(const Color &c);
@@ -134,7 +134,7 @@ public:
     ConstIncidentFaceIterator incidentFaceBegin(const HalfEdge* start)                                    const;
     ConstIncidentFaceIterator incidentFaceBegin(const HalfEdge* start, const HalfEdge* end)         const;
 
-    Vec3 updateNormal();
+    Vec3d updateNormal();
     unsigned int updateCardinality();
     HalfEdge* findSharedHalfEdge(const Vertex* vertex);
     AdjacentVertexIterator adjacentVertexBegin();
@@ -202,7 +202,7 @@ protected:
     internal::DcelData* parent;
     #else
     Point3d          _coordinate;         /**< \~Italian @brief Punto nello spazio 3D rappresentante la posizione del vertice */
-    Vec3            _normal;             /**< \~Italian @brief Vettore normale al vertice */
+    Vec3d            _normal;             /**< \~Italian @brief Vettore normale al vertice */
     Color           _color;              /**< \~Italian @brief Colore associato al vertice */
     #endif
     HalfEdge* _incidentHalfEdge;   /**< \~Italian @brief Uno degli half edge uscenti incidenti sul vertice */

@@ -9,7 +9,7 @@
 #include <cg3/viewer/opengl_objects/opengl_objects3.h>
 namespace cg3 {
 
-CG3_INLINE DrawablePlane::DrawablePlane(const Vec3 &normal, double d) : Plane(normal, d)
+CG3_INLINE DrawablePlane::DrawablePlane(const Vec3d &normal, double d) : Plane(normal, d)
 {
     calculatePoints();
 }
@@ -52,7 +52,7 @@ CG3_INLINE void DrawablePlane::deserialize(std::ifstream &binaryFile)
 
 CG3_INLINE void DrawablePlane::calculatePoints()
 {
-    cg3::Vec3 u,v;
+    cg3::Vec3d u,v;
     if( _normal ==  AXIS[2] || _normal == AXIS[5]){ // similar -> you are lucky!!!
        u = AXIS[0]; // x
        v = AXIS[1]; // y
@@ -66,8 +66,8 @@ CG3_INLINE void DrawablePlane::calculatePoints()
     // and large enough to seems a plane
     cg3::Point3d p0 = - _normal * _d;        // "arbitrary" point
     float  f  = 10000;  // large enough
-    cg3::Vec3 fu =  u * f;
-    cg3::Vec3 fv =  v * f;
+    cg3::Vec3d fu =  u * f;
+    cg3::Vec3d fv =  v * f;
     p1 = p0 - fu - fv;
     p2 = p0 + fu - fv;
     p3 = p0 + fu + fv;

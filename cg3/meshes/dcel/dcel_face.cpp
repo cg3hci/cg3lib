@@ -105,7 +105,7 @@ CG3_INLINE int Face::flag() const
  * @note Non ricalcola la normale, restituisce solo l'ultima normale calcolata o settata
  * @return La normale della faccia
  */
-CG3_INLINE Vec3 Face::normal() const
+CG3_INLINE Vec3d Face::normal() const
 {
 	#ifdef NDEBUG
 	return parent->faceNormals[_id];
@@ -230,7 +230,7 @@ CG3_INLINE void Face::resetFlag()
  * @brief Setta il vettore normale della faccia
  * @param[in] newNormal: il vettore normale che verrà settato
  */
-CG3_INLINE void Face::setNormal(const Vec3& newNormal)
+CG3_INLINE void Face::setNormal(const Vec3d& newNormal)
 {
 	#ifdef NDEBUG
 	parent->faceNormals[_id] = newNormal;
@@ -529,7 +529,7 @@ CG3_INLINE Face::ConstIncidentVertexIterator Face::incidentVertexBegin(const Ver
  * @warning Utilizza Face::ConstIncidentVertexIterator
  * @return La normale alla faccia aggiornata
  */
-CG3_INLINE Vec3 Face::updateNormal()
+CG3_INLINE Vec3d Face::updateNormal()
 {
     assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
     Vertex* a = _outerHalfEdge->fromVertex();
@@ -539,10 +539,10 @@ CG3_INLINE Vec3 Face::updateNormal()
     Vertex* c = _outerHalfEdge->next()->toVertex();
     assert(c != nullptr && "HalfEdge's To Vertex is null.");
 
-    Vec3 normal;
+    Vec3d normal;
     if (isTriangle()){
         normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
-        if (normal != Vec3())
+        if (normal != Vec3d())
             normal.normalize();
     }
     else {
@@ -558,11 +558,11 @@ CG3_INLINE Vec3 Face::updateNormal()
                 end = true;
         }
         if (end) {
-            normal = Vec3(0,0,0);
+            normal = Vec3d(0,0,0);
         }
         else {
             normal = (b->coordinate() - a->coordinate()).cross(c->coordinate() - a->coordinate());
-            if (normal != Vec3()){
+            if (normal != Vec3d()){
                 normal.normalize();
 
                 std::vector<Point3d> pol;
@@ -573,7 +573,7 @@ CG3_INLINE Vec3 Face::updateNormal()
             }
         }
     }
-    if (normal == Vec3())
+    if (normal == Vec3d())
         std::cerr << "Warning: degenerate triangle/polygon; ID: " << id() << "\n";
     #ifdef NDEBUG
     parent->faceNormals[_id] = normal;
@@ -593,7 +593,7 @@ CG3_INLINE Vec3 Face::updateNormal()
 CG3_INLINE double Face::updateArea()
 {
     updateNormal();
-    if (normal() != Vec3()) {
+    if (normal() != Vec3d()) {
         if (isTriangle()) {
             assert(_outerHalfEdge != nullptr && "Face's Outer HalfEdge is null.");
             assert(_outerHalfEdge->fromVertex() != nullptr && "HalfEdge's From Vertex is null.");

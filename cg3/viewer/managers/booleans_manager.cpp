@@ -456,7 +456,7 @@ CG3_INLINE void BooleansManager::on_minusZButton_clicked()
 
 CG3_INLINE void BooleansManager::on_rotateButton_clicked()
 {
-    Vec3 axis(ui->axisXSpinBox->value(), ui->axisYSpinBox->value(), ui->axisZSpinBox->value());
+    Vec3d axis(ui->axisXSpinBox->value(), ui->axisYSpinBox->value(), ui->axisZSpinBox->value());
     double angle = ui->angleSpinBox->value()*M_PI/180;
     lastAxis = axis;
     lastAngle = angle;
@@ -510,7 +510,7 @@ CG3_INLINE void BooleansManager::on_makeBox2PushButton_clicked()
 
 CG3_INLINE void BooleansManager::on_scalePushButton_clicked()
 {
-    Vec3 scaleFactor(ui->scaleXSpinBox->value(), ui->scaleYSpinBox->value(), ui->scaleZSpinBox->value());
+    Vec3d scaleFactor(ui->scaleXSpinBox->value(), ui->scaleYSpinBox->value(), ui->scaleZSpinBox->value());
 
     if (ui->mesh1CheckBox->isChecked() && meshes[0] != nullptr){
         meshes[0]->scale(scaleFactor);

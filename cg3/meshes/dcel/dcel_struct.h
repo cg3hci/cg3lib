@@ -183,9 +183,9 @@ public:
 	bool saveOnPly(const std::string& fileNamePly, bool binary, io::FileMeshMode fm) const;
     void saveOnDcelFile(const std::string& fileNameDcel)           const;
 
-    Vertex* addVertex(const Point3d& p = Point3d(), const Vec3& n = Vec3(), const Color &c = Color(128, 128, 128));
+    Vertex* addVertex(const Point3d& p = Point3d(), const Vec3d& n = Vec3d(), const Color &c = Color(128, 128, 128));
     HalfEdge* addHalfEdge();
-    Face* addFace(const Vec3& n = Vec3(), const Color& c = Color(128,128,128));
+    Face* addFace(const Vec3d& n = Vec3d(), const Color& c = Color(128,128,128));
     bool deleteVertex (Vertex* v);
     bool deleteVertex (unsigned int vid);
     bool deleteHalfEdge (HalfEdge* he);
@@ -204,15 +204,15 @@ public:
 	void setVertexColors(const Color &c);
 	void setVertexFlags(int flag);
     void scale(double scaleFactor);
-    void scale(const cg3::Vec3& scaleVector);
+    void scale(const cg3::Vec3d& scaleVector);
 	void scale(const BoundingBox3 &newBoundingBox);
     #ifdef CG3_WITH_EIGEN
     void rotate(const Eigen::Matrix3d& matrix);
     void rotate(const Eigen::Matrix3d& matrix, const Point3d& centroid);
     #endif
-    void rotate(const Vec3& axis, double angle, const Point3d& centroid = Point3d());
+    void rotate(const Vec3d& axis, double angle, const Point3d& centroid = Point3d());
     void rotate(double matrix[3][3], const Point3d& centroid = Point3d());
-    void translate(const Vec3 &c);
+    void translate(const Vec3d &c);
     void recalculateIds();
     void resetFaceColors();
     void clear();

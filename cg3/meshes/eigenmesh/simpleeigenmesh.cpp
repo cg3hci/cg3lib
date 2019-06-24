@@ -59,10 +59,10 @@ SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh)
 }
 #endif
 
-Vec3 SimpleEigenMesh::faceNormal(unsigned int f) const
+Vec3d SimpleEigenMesh::faceNormal(unsigned int f) const
 {
     Point3i vertices = face(f);
-    Vec3 normal = (vertex(vertices.y()) - vertex(vertices.x())).cross(vertex(vertices.z()) - vertex(vertices.x()));
+    Vec3d normal = (vertex(vertices.y()) - vertex(vertices.x())).cross(vertex(vertices.z()) - vertex(vertices.x()));
     normal.normalize();
     return normal;
 }
@@ -73,10 +73,10 @@ Vec3 SimpleEigenMesh::faceNormal(unsigned int f) const
  * function is called, and the complexity is O(number of faces).
  * @param v: vertex id
  */
-Vec3 SimpleEigenMesh::vertexNormal(unsigned int v) const
+Vec3d SimpleEigenMesh::vertexNormal(unsigned int v) const
 {
     unsigned int n = 0;
-    Vec3 normal;
+    Vec3d normal;
     for (unsigned int f = 0; f < F.rows(); f++){
         for (unsigned int i = 0; i < 3; i++){
             if ((unsigned int)F(f,i) == v){
@@ -140,7 +140,7 @@ bool SimpleEigenMesh::saveOnObj(const std::string& filename) const
     return saveMeshOnObj(filename, V.rows(), F.rows(), V.data(), F.data());
 }
 
-void SimpleEigenMesh::translate(const Vec3& p)
+void SimpleEigenMesh::translate(const Vec3d& p)
 {
     Eigen::RowVector3d v;
     v << p.x(), p.y(), p.z();
@@ -161,7 +161,7 @@ void SimpleEigenMesh::rotate(const Eigen::Matrix3d& m, const Eigen::Vector3d& ce
     V.rowwise() += centroid.transpose();
 }
 
-void SimpleEigenMesh::rotate(const Vec3& axis, double angle, const Point3d& centroid)
+void SimpleEigenMesh::rotate(const Vec3d& axis, double angle, const Point3d& centroid)
 {
     Eigen::Vector3d c;
     c << centroid.x(), centroid.y(), centroid.z();
@@ -199,7 +199,7 @@ void SimpleEigenMesh::scale(const BoundingBox3& oldBoundingBox, const BoundingBo
     }
 }
 
-void SimpleEigenMesh::scale(const Vec3& scaleFactor)
+void SimpleEigenMesh::scale(const Vec3d& scaleFactor)
 {
     if (scaleFactor.x() > 0 && scaleFactor.y() > 0 && scaleFactor.z() > 0){
         for (unsigned int i = 0; i < V.rows(); i++){
@@ -212,7 +212,7 @@ void SimpleEigenMesh::scale(const Vec3& scaleFactor)
 
 void SimpleEigenMesh::scale(double scaleFactor)
 {
-    scale(cg3::Vec3(scaleFactor, scaleFactor, scaleFactor));
+    scale(cg3::Vec3d(scaleFactor, scaleFactor, scaleFactor));
 }
 
 void SimpleEigenMesh::merge(const SimpleEigenMesh& m2)

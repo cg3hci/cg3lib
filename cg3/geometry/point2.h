@@ -115,7 +115,9 @@ Point2<T> normalOfSegment(const Point2<T>& p1, const Point2<T>& p2);
 typedef Point2<double> Point2d;
 typedef Point2<float> Point2f;
 typedef Point2<int> Point2i;
-typedef Point2<double> Vec2;
+typedef Point2<double> Vec2d;
+typedef Point2<float> Vec2f;
+typedef Point2<int> Vec2i;
 
 } //namespace cg3
 

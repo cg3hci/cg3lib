@@ -21,8 +21,8 @@ class Line3 : public SerializableObject
 {
 public:
 	Line3();
-	Line3(const Point3d& p0, const Vec3& dir);
-    const Vec3& dir() const;
+	Line3(const Point3d& p0, const Vec3d& dir);
+    const Vec3d& dir() const;
     const Point3d& startingPoint() const;
 
     bool pointLiesOnLine(const Point3d &p) const;
@@ -33,7 +33,7 @@ public:
 
 protected:
     Point3d p0;
-    Vec3 _dir;
+    Vec3d _dir;
 };
 
 } //namespace cg3

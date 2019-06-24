@@ -80,7 +80,7 @@ public:
 
     // Point of View member functions:
     cg3::Point3d cameraPosition() const;
-    cg3::Vec3 cameraDirection() const;
+    cg3::Vec3d cameraDirection() const;
     void resetPointOfView();
     void serializePointOfView(std::ofstream& file) const;
     bool deserializePointOfView(std::ifstream& file);
@@ -88,7 +88,7 @@ public:
     void loadPointOfView();
     void savePointOfView(const std::string& filename) const;
     bool loadPointOfView(const std::string& filename);
-    void setCameraDirection(const cg3::Vec3& vec);
+    void setCameraDirection(const cg3::Vec3d& vec);
     void setCameraPosition(const cg3::Point3d& pos);
     void setPerspectiveCamera();
     void setOrthographicCamera();

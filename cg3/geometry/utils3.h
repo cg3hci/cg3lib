@@ -19,16 +19,16 @@ template <class Vector>
 inline double angle(const Vector& v1, const Vector& v2);
 
 inline double internalAngle(
-        const Vec3& v1,
-        const Vec3& v2,
-        const Vec3& direction);
+        const Vec3d& v1,
+        const Vec3d& v2,
+        const Vec3d& direction);
 
 inline Point3d orthogonalProjectionOnAPlane(
         const Plane& plane,
         const Point3d& point);
 
 inline Point3d orthogonalProjectionOnAPlane(
-        const Vec3& planeNormal,
+        const Vec3d& planeNormal,
         const Point3d& planePoint,
         const Point3d& point);
 
@@ -42,7 +42,7 @@ inline bool areCollinear(
 template <template < class ... > class Container, class T, class ... Args>
 inline bool isPolygonCounterClockwise(
         const Container<Point3<T>>& polygon,
-        const Vec3& normal);
+        const Vec3d& normal);
 
 } //namespace cg3
 

@@ -81,7 +81,7 @@ CG3_INLINE int Vertex::flag() const
  * @note Non ricalcola la normale, restituisce solo l'ultima normale calcolata o settata
  * @return La normale al vertice
  */
-CG3_INLINE Vec3 Vertex::normal() const
+CG3_INLINE Vec3d Vertex::normal() const
 {
 	#ifdef NDEBUG
 	return parent->vertexNormals[_id];
@@ -197,7 +197,7 @@ CG3_INLINE void Vertex::resetFlag()
  * @brief Setta il vettore normale al vertice
  * @param[in] newNormal: il vettore normale che verrà settato
  */
-CG3_INLINE void Vertex::setNormal(const Vec3& newNormal)
+CG3_INLINE void Vertex::setNormal(const Vec3d& newNormal)
 {
 	#ifdef NDEBUG
 	parent->vertexNormals[_id] = newNormal;
@@ -383,7 +383,7 @@ CG3_INLINE std::string Vertex::toString() const
  * @par Complessità:
  *      \e O(Cardinality)
  */
-CG3_INLINE Vec3 Vertex::updateNormal()
+CG3_INLINE Vec3d Vertex::updateNormal()
 {
     #ifdef NDEBUG
     parent->vertexNormals[_id].set(0,0,0);

@@ -372,9 +372,9 @@ CG3_INLINE void HalfEdge::setFace(Face* newFace)
 CG3_INLINE bool HalfEdge::isConvex() const {
     if ((face()->normal()) == (twin()->face()->normal()))
         return true;
-    Vec3 dir1 = face()->normal().cross(twin()->face()->normal());
+    Vec3d dir1 = face()->normal().cross(twin()->face()->normal());
     dir1.normalize();
-    Vec3 dir2 = (toVertex()->coordinate() - fromVertex()->coordinate());
+    Vec3d dir2 = (toVertex()->coordinate() - fromVertex()->coordinate());
     dir2.normalize();
     return (epsilonEqual(dir1, dir2));
 }

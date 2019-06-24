@@ -141,7 +141,7 @@ CG3_INLINE void DrawableDcel::update()
 
     for (const Dcel::Vertex* v : vertexIterator()) {
         Point3d p = v->coordinate();
-        Vec3 n = v->normal();
+        Vec3d n = v->normal();
         vertexCoordinates.push_back(p.x());
         vertexCoordinates.push_back(p.y());
         vertexCoordinates.push_back(p.z());
@@ -227,14 +227,14 @@ CG3_INLINE void DrawableDcel::update()
         if (he->twin() != nullptr) {
             if (he->id() < he->twin()->id()){
                 if (he->flag() == flag || he->twin()->flag() == flag){
-                    Vec3 ff = (he->face()->normal() + he->twin()->face()->normal())/2;
+                    Vec3d ff = (he->face()->normal() + he->twin()->face()->normal())/2;
                     flaggedEdges.push_back(he->fromVertex()->coordinate() + ff*cg3::CG3_EPSILON);
                     flaggedEdges.push_back(he->toVertex()->coordinate() + ff*cg3::CG3_EPSILON);
                 }
             }
         } else {
             if (he->flag() == flag){
-                Vec3 ff = he->face()->normal();
+                Vec3d ff = he->face()->normal();
                 flaggedEdges.push_back(he->fromVertex()->coordinate() + ff*cg3::CG3_EPSILON);
                 flaggedEdges.push_back(he->toVertex()->coordinate() + ff*cg3::CG3_EPSILON);
             }

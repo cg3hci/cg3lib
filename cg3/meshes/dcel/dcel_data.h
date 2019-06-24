@@ -26,9 +26,9 @@ protected:
 	//Data
 	#ifdef NDEBUG
 	std::vector<Point3d> vertexCoordinates;
-	std::vector<Vec3> vertexNormals;
+	std::vector<Vec3d> vertexNormals;
 	std::vector<Color> vertexColors;
-	std::vector<Vec3> faceNormals;
+	std::vector<Vec3d> faceNormals;
 	std::vector<Color> faceColors;
 	#endif
 };

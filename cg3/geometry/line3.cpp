@@ -14,14 +14,14 @@ CG3_INLINE Line3::Line3()
 {
 }
 
-CG3_INLINE Line3::Line3(const Point3d &p0, const Vec3 &dir) :
+CG3_INLINE Line3::Line3(const Point3d &p0, const Vec3d &dir) :
     p0(p0),
     _dir(dir)
 {
     this->_dir.normalize();
 }
 
-CG3_INLINE const Vec3&Line3::dir() const
+CG3_INLINE const Vec3d&Line3::dir() const
 {
     return _dir;
 }
@@ -34,7 +34,7 @@ CG3_INLINE const Point3d&Line3::startingPoint() const
 CG3_INLINE bool Line3::pointLiesOnLine(const Point3d& p) const
 {
     if (p.x() != 0 && p.y() != 0 && p.z() != 0){
-        Vec3 t = (_dir - p0) / p;
+        Vec3d t = (_dir - p0) / p;
         return (t.x() == t.y() && t.x() == t.z());
     }
     else {

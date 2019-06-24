@@ -316,11 +316,11 @@ SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(
         float radius,
         unsigned int subd)
 {
-    Vec3 vector = p2 - p1;
+    Vec3d vector = p2 - p1;
     vector.normalize();
     std::cerr << "vector cyl: " << vector << "\n";
-    double angv = acos(vector.dot(Vec3(0,0,1)));
-    Vec3 vcrss = vector.cross(Vec3(0,0,1));
+    double angv = acos(vector.dot(Vec3d(0,0,1)));
+    Vec3d vcrss = vector.cross(Vec3d(0,0,1));
     std::cerr << "ang: " << angv << "\n";
     std::cerr << "vcross: " << vcrss << "\n";
     Eigen::Matrix3d rot = rotationMatrix(vcrss, -angv);
@@ -351,10 +351,10 @@ SimpleEigenMesh EigenMeshAlgorithms::makeCylinder(
         circle.addFace((i+1)%subd, (i+1)%subd + base, i+base);
     }
 
-    if (vector != Vec3(0,0,1) && vector != Vec3(0,0,-1))
+    if (vector != Vec3d(0,0,1) && vector != Vec3d(0,0,-1))
         circle.rotate(rot);
 
-    if (vector == Vec3(0,0,-1))
+    if (vector == Vec3d(0,0,-1))
         circle.translate(p2);
     else
         circle.translate(p1);
@@ -368,7 +368,7 @@ bool EigenMeshAlgorithms::isABox(const SimpleEigenMesh& mesh)
     std::array<bool, 6> init = {false};
     bool isABox = true;
     for (unsigned int i = 0; i < mesh.numberFaces() && isABox; i++){
-        Vec3 n = mesh.faceNormal(i);
+        Vec3d n = mesh.faceNormal(i);
         bool found = false;
         for (unsigned int a = 0; a < cg3::AXIS.size() && !found; a++){
             if (epsilonEqual(n, cg3::AXIS[a])){

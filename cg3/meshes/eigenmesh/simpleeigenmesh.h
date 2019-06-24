@@ -74,8 +74,8 @@ public:
     Point3d vertex(unsigned int i) const;
     Point3i face(unsigned int i) const;
     double faceArea(unsigned int f) const;
-    virtual Vec3 faceNormal(unsigned int f) const;
-    virtual Vec3 vertexNormal(unsigned int v) const;
+    virtual Vec3d faceNormal(unsigned int f) const;
+    virtual Vec3d vertexNormal(unsigned int v) const;
     virtual void boundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
     virtual BoundingBox3 boundingBox() const;
     Point3d barycenter() const;
@@ -106,13 +106,13 @@ public:
 	virtual bool saveOnPly(const std::string &filename, bool binary = true) const;
     virtual bool saveOnObj(const std::string &filename) const;
 
-    virtual void translate(const Vec3 &p);
+    virtual void translate(const Vec3d &p);
     virtual void translate(const Eigen::Vector3d &p);
     virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
-    virtual void rotate(const Vec3& axis, double angle, const Point3d& centroid = Point3d());
+    virtual void rotate(const Vec3d& axis, double angle, const Point3d& centroid = Point3d());
     virtual void scale(const BoundingBox3& newBoundingBox);
     virtual void scale(const BoundingBox3& oldBoundingBox, const BoundingBox3& newBoundingBox);
-    virtual void scale(const Vec3 &scaleFactor);
+    virtual void scale(const Vec3d &scaleFactor);
     virtual void scale(double scaleFactor);
     virtual void merge(const cg3::SimpleEigenMesh& m2);
     static void merge(SimpleEigenMesh &result, const SimpleEigenMesh &m1, const SimpleEigenMesh &m2);

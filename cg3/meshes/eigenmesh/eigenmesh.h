@@ -69,12 +69,12 @@ public:
     void setFaceColor(const Color &c, int f = -1);
     void setFaceColor(int red, int green, int blue, int f = -1);
     void setFaceColor(double red, double green, double blue, int f = -1);
-    Vec3 faceNormal(unsigned int f) const;
+    Vec3d faceNormal(unsigned int f) const;
     void setVertexColor(const Color& c, int v = -1);
     void setVertexColor(int red, int green, int blue, int v = -1);
     void setVertexColor(double red, double green, double blue, int v = -1);
-    Vec3 vertexNormal(unsigned int v) const;
-    void setVertexNormal(const Vec3& n, unsigned int v);
+    Vec3d vertexNormal(unsigned int v) const;
+    void setVertexNormal(const Vec3d& n, unsigned int v);
     Color faceColor(unsigned int f) const;
     Color vertexColor(unsigned int v) const;
     virtual void boundingBox(Eigen::RowVector3d &BBmin, Eigen::RowVector3d &BBmax) const;
@@ -84,7 +84,7 @@ public:
     virtual void rotate(const Eigen::Matrix3d &m, const Eigen::Vector3d& centroid = Eigen::Vector3d::Zero());
     virtual void scale(const BoundingBox3& newBoundingBox);
     virtual void scale(const BoundingBox3& oldBoundingBox, const BoundingBox3& newBoundingBox);
-    virtual void scale(const Vec3 &scaleFactor);
+    virtual void scale(const Vec3d &scaleFactor);
     Eigen::MatrixXf verticesColorMatrix() const;
     Eigen::MatrixXf facesColorMatrix() const;
     void updateFaceNormals();
@@ -204,7 +204,7 @@ inline unsigned int EigenMesh::addFace(const Eigen::VectorXi& f)
 {
     SimpleEigenMesh::addFace(f);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
-    Vec3 n = SimpleEigenMesh::faceNormal(F.rows()-1);
+    Vec3d n = SimpleEigenMesh::faceNormal(F.rows()-1);
     for (unsigned int i = 0; i < 3; i++)
         NF(F.rows()-1, i) = n(i);
     CF.conservativeResize(F.rows(), Eigen::NoChange);
@@ -217,7 +217,7 @@ inline unsigned int EigenMesh::addFace(unsigned int t1, unsigned int t2, unsigne
 {
     SimpleEigenMesh::addFace(t1, t2, t3);
     NF.conservativeResize(F.rows(), Eigen::NoChange);
-    Vec3 n = SimpleEigenMesh::faceNormal(F.rows()-1);
+    Vec3d n = SimpleEigenMesh::faceNormal(F.rows()-1);
     for (unsigned int i = 0; i < 3; i++)
         NF(F.rows()-1, i) = n(i);
     CF.conservativeResize(F.rows(), Eigen::NoChange);
@@ -269,16 +269,16 @@ inline void EigenMesh::removeFace(unsigned int f)
     cg3::removeRowFromEigenMatrix(CF, f);
 }
 
-inline Vec3 EigenMesh::faceNormal(unsigned int f) const
+inline Vec3d EigenMesh::faceNormal(unsigned int f) const
 {
     assert (f < (unsigned int)F.rows());
-    return Vec3(NF(f,0), NF(f,1), NF(f,2));
+    return Vec3d(NF(f,0), NF(f,1), NF(f,2));
 }
 
-inline Vec3 EigenMesh::vertexNormal(unsigned int v) const
+inline Vec3d EigenMesh::vertexNormal(unsigned int v) const
 {
     assert (v < (unsigned int)V.rows());
-    return Vec3(NV(v,0), NV(v,1), NV(v,2));
+    return Vec3d(NV(v,0), NV(v,1), NV(v,2));
 }
 
 inline Color EigenMesh::faceColor(unsigned int f) const

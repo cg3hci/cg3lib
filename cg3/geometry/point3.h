@@ -152,7 +152,10 @@ std::string to_string(const Point3<T>& p);
 typedef Point3<float>  Point3f; /**< \~English @brief Point composed of float components */
 typedef Point3<double> Point3d; /**< \~English @brief Point composed of double components */
 typedef Point3<int>    Point3i; /**< \~English @brief Point composed of integer components */
-typedef Point3<double>   Vec3; /**< \~English @brief Point composed of double components, sinctactic sugar for discriminate points from vectors */
+typedef Point3<float>   Vec3f; /**< \~English @brief Point composed of float components, sinctactic sugar to discriminate points from vectors */
+typedef Point3<double>   Vec3d; /**< \~English @brief Point composed of double components, sinctactic sugar to discriminate points from vectors */
+typedef Point3<int>   Vec3i; /**< \~English @brief Point composed of integer components, sinctactic sugar to discriminate points from vectors */
+
 
 /**< \~English @brief alias of Point */
 
