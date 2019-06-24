@@ -39,7 +39,7 @@ bool isBetween(
  * @param[in] ignoreEndPoints Ignore if endpoints are the same
  * @return True if segments have an intersection
  */
-bool checkSegmentIntersection2(
+CG3_INLINE bool checkSegmentIntersection2(
         const Segment2d& seg1,
         const Segment2d& seg2,
         const bool ignoreEndPoints)
@@ -69,7 +69,7 @@ bool checkSegmentIntersection2(
  * @param[in] eps Epsilon for operations
  * @param[out] intersectionPoint Point in which the segment intersect
  */
-void checkSegmentIntersection2(
+CG3_INLINE void checkSegmentIntersection2(
         const Segment2d& seg1,
         const Segment2d& seg2,
         char& code,
@@ -197,7 +197,7 @@ namespace internal {
  * Returns true iff the 3 points are collinear. 3 points are collinear
  * iff triangle area is zero
  */
-bool areCollinearPoints(
+CG3_INLINE bool areCollinearPoints(
         const Point2d& a,
         const Point2d& b,
         const Point2d& c,
@@ -213,7 +213,7 @@ bool areCollinearPoints(
  * Returns true iff point c lies on the closed segment ab.
  * Assumes it is already known that abc are collinear.
  */
-bool isBetween(
+CG3_INLINE bool isBetween(
         const Point2d& a,
         const Point2d& b,
         const Point2d& c,
