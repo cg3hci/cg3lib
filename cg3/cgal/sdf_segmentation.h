@@ -8,6 +8,10 @@
 #ifndef CG3_CGAL_SDF_SEGMENTATION_H
 #define CG3_CGAL_SDF_SEGMENTATION_H
 
+#include <boost/version.hpp>
+
+#if BOOST_VERSION > 106501
+
 #include "polyhedron.h"
 
 #ifdef  CG3_EIGENMESH_DEFINED
@@ -27,6 +31,8 @@ std::vector<int> skeletonSdfSegmentation(const SimpleEigenMesh& m);
 
 } //namespace cg3::cgal
 } //namespace cg3
+
+#endif //BOOST_VERSION
 
 #ifndef CG3_STATIC
 #define CG3_CGAL_SDF_SEGMENTATION_CPP "sdf_segmentation.cpp"

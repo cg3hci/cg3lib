@@ -7,6 +7,8 @@
  */
 #include "sdf_segmentation.h"
 
+#if BOOST_VERSION > 106501
+
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
 #include <CGAL/IO/Polyhedron_iostream.h>
@@ -169,3 +171,5 @@ CG3_INLINE std::vector<int> skeletonSdfSegmentation(const SimpleEigenMesh &mesh)
 
 } //namespace cg3::cgal
 } //namespace cg3
+
+#endif //BOOST_VERSION
