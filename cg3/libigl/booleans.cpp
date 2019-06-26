@@ -46,7 +46,7 @@ CG3_INLINE SimpleEigenMesh CSGTreeToEigenMesh(const CSGTree& tree)
  * @param[in] c2 Second CSGTree
  * @return Resulting CSGTree
  */
-inline CSGTree intersection(const CSGTree& c1, const CSGTree& c2)
+CG3_INLINE CSGTree intersection(const CSGTree& c1, const CSGTree& c2)
 {
     return internal::intersection(c1, c2);
 }
