@@ -4,7 +4,6 @@
  *
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-
 #ifndef CG3_CGAL_MINIMUM_BBOX2_H
 #define CG3_CGAL_MINIMUM_BBOX2_H
 
@@ -16,7 +15,7 @@ class Dcel;
 namespace cgal {
 
 #ifdef  CG3_DCEL_DEFINED
-std::vector<Point2d> minRectangle2D(const Dcel* dcel);
+std::vector<Point2d> minRectangle2D(const Dcel &dcel);
 #endif
 
 std::vector<Point2d> minRectangle2D(

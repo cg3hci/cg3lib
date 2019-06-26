@@ -14,6 +14,10 @@
 #include <string>
 #include <algorithm>
 
+#ifdef CG3_DCEL_DEFINED
+#include <cg3/meshes/dcel/dcel_builder.h>
+#endif
+
 namespace cg3 {
 namespace cgal {
 
@@ -27,7 +31,7 @@ namespace cgal {
  * @return
  */
 template<class P>
-P polyhedronFromDcel(
+inline P polyhedronFromDcel(
         const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap,
         std::map<const Dcel::Face*, int>& faceMap)
@@ -96,12 +100,12 @@ P polyhedronFromDcel(
  * @return
  */
 template<class P>
-Dcel dcelFromPolyhedron(const P& poly)
+inline Dcel dcelFromPolyhedron(const P& poly)
 {
     typedef typename P::HalfedgeDS  HalfedgeDS;
     typedef typename HalfedgeDS::Vertex  PolyhedronVertex;
     typedef typename PolyhedronVertex::Point       PolyhedronPoint;
-    Dcel d;
+	DcelBuilder d;
     for (typename P::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit){
         PolyhedronPoint p = (*vit).point();
 		Point3d point(p.x(), p.y(), p.z());
@@ -110,7 +114,9 @@ Dcel dcelFromPolyhedron(const P& poly)
 
     //add faces to dcel
 
-    return d;
+	d.finalize();
+
+	return d.dcel();
 }
 #endif
 
@@ -122,7 +128,7 @@ Dcel dcelFromPolyhedron(const P& poly)
  * @return
  */
 template<class P>
-P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
+inline P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 {
     typedef typename P::HalfedgeDS  HalfedgeDS;
     class PolyhedronBuilder : public CGAL::Modifier_base<HalfedgeDS>
@@ -168,7 +174,7 @@ P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 
 
 template<class P>
-SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly)
+inline SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly)
 {
     typedef typename P::HalfedgeDS  HalfedgeDS;
     typedef typename HalfedgeDS::Vertex  PolyhedronVertex;

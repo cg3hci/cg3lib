@@ -4,10 +4,11 @@
  *
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-
 #include "minimum_bbox2.h"
 
+#ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
+#endif // CG3_DCEL_DEFINED
 
 #include <CGAL/Polygon_2.h>
 #include <CGAL/min_quadrilateral_2.h>
@@ -24,23 +25,23 @@ typedef CGAL::Polygon_2<CK>                                     CK_Polygon_2;
 
 } //namespace cg3::cgal::internal
 
-#ifdef  CG3_DCEL_DEFINED
+#ifdef CG3_DCEL_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief getMinRectangle2D
  * @param dcel
- * @return
+ * @return the minimum rectangle 2d (XY) containing the given shape
  */
-CG3_INLINE std::vector<Point2d> minRectangle2D(const Dcel* dcel)
+CG3_INLINE std::vector<Point2d> minRectangle2D(const Dcel& dcel)
 {
     std::vector<Point2d> points;
 
-    for (const Dcel::Vertex* v : dcel->vertexIterator())
+	for (const Dcel::Vertex* v : dcel.vertexIterator())
         points.push_back(Point2d(v->coordinate().x(),v->coordinate().y()));
 
     return minRectangle2D(points);
 }
-#endif
+#endif //CG3_DCEL_DEFINED
 
 /**
  * @ingroup cg3cgal
@@ -86,7 +87,6 @@ CG3_INLINE std::vector<Point2d> minRectangle2D(
 
     return rectanglePoints;
 }
-
 
 } //namespace cg3::cgal
 } //namespace cg3

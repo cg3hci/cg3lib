@@ -64,10 +64,6 @@ SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly);
 } //namespace cg3::cgal
 } //namespace cg3
 
-#ifndef CG3_STATIC
-#define CG3_CGAL_POLYHEDRON_CPP "polyhedron.cpp"
-#include CG3_CGAL_POLYHEDRON_CPP
-#undef CG3_CGAL_POLYHEDRON_CPP
-#endif //CG3_STATIC
+#include "polyhedron.cpp"
 
 #endif // CG3_CGAL_POLYHEDRON_H
