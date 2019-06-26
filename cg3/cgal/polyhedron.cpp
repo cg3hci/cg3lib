@@ -31,7 +31,7 @@ namespace cgal {
  * @return
  */
 template<class P>
-inline P polyhedronFromDcel(
+P polyhedronFromDcel(
         const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap,
         std::map<const Dcel::Face*, int>& faceMap)
@@ -100,7 +100,7 @@ inline P polyhedronFromDcel(
  * @return
  */
 template<class P>
-inline Dcel dcelFromPolyhedron(const P& poly)
+Dcel dcelFromPolyhedron(const P& poly)
 {
     typedef typename P::HalfedgeDS  HalfedgeDS;
     typedef typename HalfedgeDS::Vertex  PolyhedronVertex;
@@ -128,7 +128,7 @@ inline Dcel dcelFromPolyhedron(const P& poly)
  * @return
  */
 template<class P>
-inline P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
+P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 {
     typedef typename P::HalfedgeDS  HalfedgeDS;
     class PolyhedronBuilder : public CGAL::Modifier_base<HalfedgeDS>
@@ -174,7 +174,7 @@ inline P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 
 
 template<class P>
-inline SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly)
+SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly)
 {
     typedef typename P::HalfedgeDS  HalfedgeDS;
     typedef typename HalfedgeDS::Vertex  PolyhedronVertex;
