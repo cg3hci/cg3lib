@@ -19,7 +19,7 @@
 namespace cg3 {
 namespace cgal {
 
-CGAL::Mean_curvature_flow_skeletonization<PolyhedronWithId>::Skeleton skeleton(PolyhedronWithId& mesh);
+CGAL::Mean_curvature_flow_skeletonization<PolyhedronWithId>::Skeleton skeleton(const PolyhedronWithId& mesh);
 
 #ifdef  CG3_EIGENMESH_DEFINED
 std::vector<cg3::Point3d> skeleton(
