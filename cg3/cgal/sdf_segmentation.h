@@ -5,14 +5,11 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-#ifndef CG3_CGAL_SDF_H
-#define CG3_CGAL_SDF_H
+#ifndef CG3_CGAL_SDF_SEGMENTATION_H
+#define CG3_CGAL_SDF_SEGMENTATION_H
 
 #include "polyhedron.h"
 
-#ifdef  CG3_DCEL_DEFINED
-#include <cg3/meshes/dcel/dcel.h>
-#endif
 #ifdef  CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/simpleeigenmesh.h>
 #endif
@@ -20,23 +17,21 @@
 namespace cg3 {
 namespace cgal {
 
-std::vector<double> SDFMap(const Polyhedron& mesh);
-
-#ifdef  CG3_DCEL_DEFINED
-std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel);
-#endif
+std::vector<int> skeletonSdfSegmentation(PolyhedronWithId& mesh);
+std::vector<int> sdfSegmentation(const Polyhedron& mesh);
 
 #ifdef  CG3_EIGENMESH_DEFINED
-std::vector<double> SDFMap(const SimpleEigenMesh& m);
+std::vector<int> sdfSegmentation(const SimpleEigenMesh& m);
+std::vector<int> skeletonSdfSegmentation(const SimpleEigenMesh& m);
 #endif
 
 } //namespace cg3::cgal
 } //namespace cg3
 
 #ifndef CG3_STATIC
-#define CG3_CGAL_SDF_CPP "sdf.cpp"
-#include CG3_CGAL_SDF_CPP
-#undef CG3_CGAL_SDF_CPP
+#define CG3_CGAL_SDF_SEGMENTATION_CPP "sdf_segmentation.cpp"
+#include CG3_CGAL_SDF_SEGMENTATION_CPP
+#undef CG3_CGAL_SDF_SEGMENTATION_CPP
 #endif //CG3_STATIC
 
-#endif // CG3_CGAL_SDF_H
+#endif // CG3_CGAL_SDF_SEGMENTATION_H

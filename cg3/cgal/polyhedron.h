@@ -11,6 +11,8 @@
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polyhedron_3.h>
+#include <CGAL/Polyhedron_items_with_id_3.h>
+#include <CGAL/Simple_cartesian.h>
 
 #ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
@@ -33,6 +35,7 @@ namespace cgal {
  * @brief The Polyhedron class
  */
 typedef CGAL::Polyhedron_3<CGAL::Exact_predicates_inexact_constructions_kernel> Polyhedron;
+typedef CGAL::Polyhedron_3<CGAL::Simple_cartesian<double>, CGAL::Polyhedron_items_with_id_3> PolyhedronWithId;
 
 #ifdef  CG3_DCEL_DEFINED
 namespace internal {
@@ -42,16 +45,20 @@ static std::map<const Dcel::Face*, int> dummyFaceMap;
 
 } //namespace cg3::cgal::internal
 
-Polyhedron polyhedronFromDcel(const Dcel& dcel,
+template<class P = Polyhedron>
+P polyhedronFromDcel(const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap = internal::dummyVertexMap,
         std::map<const Dcel::Face*, int>& faceMap = internal::dummyFaceMap);
 
-Dcel dcelFromPolyhedron(const Polyhedron& poly);
+template<class P = Polyhedron>
+Dcel dcelFromPolyhedron(const P& poly);
 #endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
-Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
-SimpleEigenMesh eigenMeshFromPolyhedron(const Polyhedron& poly);
+template<class P = Polyhedron>
+P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
+template<class P = Polyhedron>
+SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly);
 #endif
 
 } //namespace cg3::cgal

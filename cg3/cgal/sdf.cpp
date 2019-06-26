@@ -5,7 +5,6 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-
 #include "sdf.h"
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>

@@ -8,7 +8,6 @@
 
 #include "polyhedron.h"
 
-#include <CGAL/Simple_cartesian.h>
 #include <CGAL/Polyhedron_incremental_builder_3.h>
 
 #include <vector>
@@ -17,11 +16,6 @@
 
 namespace cg3 {
 namespace cgal {
-namespace internal {
-
-typedef Polyhedron::HalfedgeDS  HalfedgeDS;
-
-} //namespace cg3::cgal::internal
 
 #ifdef  CG3_DCEL_DEFINED
 /**
@@ -32,13 +26,15 @@ typedef Polyhedron::HalfedgeDS  HalfedgeDS;
  * @param faceMap
  * @return
  */
-CG3_INLINE cgal::Polyhedron polyhedronFromDcel(
+template<class P>
+P polyhedronFromDcel(
         const Dcel& dcel,
         std::map<const Dcel::Vertex*, int>& vertexMap,
         std::map<const Dcel::Face*, int>& faceMap)
 {
+    typedef typename P::HalfedgeDS  HalfedgeDS;
 
-    class PolyhedronBuilder : public CGAL::Modifier_base<internal::HalfedgeDS>
+    class PolyhedronBuilder : public CGAL::Modifier_base<HalfedgeDS>
     {
     public:
         const Dcel* mesh;
@@ -51,16 +47,16 @@ CG3_INLINE cgal::Polyhedron polyhedronFromDcel(
             mesh(dcel), vertexMap(&vertexMap), faceMap(&faceMap)
         {}
 
-        void operator()( internal::HalfedgeDS& hds)
+        void operator()( HalfedgeDS& hds)
         {
             vertexMap->clear();
             faceMap->clear();
 
             // Postcondition: hds is a valid polyhedral surface.
-            CGAL::Polyhedron_incremental_builder_3<internal::HalfedgeDS> B( hds, true);
+            CGAL::Polyhedron_incremental_builder_3<HalfedgeDS> B( hds, true);
             B.begin_surface(mesh->numberVertices(), mesh->numberFaces(), mesh->numberHalfEdges());
 
-            typedef typename internal::HalfedgeDS::Vertex   PolyhedronVertex;
+            typedef typename HalfedgeDS::Vertex   PolyhedronVertex;
             typedef typename PolyhedronVertex::Point        PolyhedronPoint;
 
             int vIndex = 0;
@@ -86,7 +82,7 @@ CG3_INLINE cgal::Polyhedron polyhedronFromDcel(
         }
     };
 
-    Polyhedron mesh;
+    P mesh;
     PolyhedronBuilder polyhedronDcelBuilder(&dcel, vertexMap, faceMap);
     mesh.delegate(polyhedronDcelBuilder);
 
@@ -99,12 +95,14 @@ CG3_INLINE cgal::Polyhedron polyhedronFromDcel(
  * @param poly
  * @return
  */
-CG3_INLINE Dcel dcelFromPolyhedron(const cgal::Polyhedron& poly)
+template<class P>
+Dcel dcelFromPolyhedron(const P& poly)
 {
-    typedef typename internal::HalfedgeDS::Vertex  PolyhedronVertex;
+    typedef typename P::HalfedgeDS  HalfedgeDS;
+    typedef typename HalfedgeDS::Vertex  PolyhedronVertex;
     typedef typename PolyhedronVertex::Point       PolyhedronPoint;
     Dcel d;
-    for (Polyhedron::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit){
+    for (typename P::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit){
         PolyhedronPoint p = (*vit).point();
 		Point3d point(p.x(), p.y(), p.z());
         d.addVertex(point);
@@ -123,9 +121,11 @@ CG3_INLINE Dcel dcelFromPolyhedron(const cgal::Polyhedron& poly)
  * @param mesh
  * @return
  */
-CG3_INLINE cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
+template<class P>
+P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 {
-    class PolyhedronBuilder : public CGAL::Modifier_base<internal::HalfedgeDS>
+    typedef typename P::HalfedgeDS  HalfedgeDS;
+    class PolyhedronBuilder : public CGAL::Modifier_base<HalfedgeDS>
     {
     public:
         const SimpleEigenMesh* mesh;
@@ -133,13 +133,13 @@ CG3_INLINE cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
         PolyhedronBuilder(const SimpleEigenMesh* mesh) : mesh(mesh)
         {}
 
-        void operator()( internal::HalfedgeDS& hds)
+        void operator()( HalfedgeDS& hds)
         {
             // Postcondition: hds is a valid polyhedral surface.
-            CGAL::Polyhedron_incremental_builder_3<internal::HalfedgeDS> B( hds, true);
+            CGAL::Polyhedron_incremental_builder_3<HalfedgeDS> B( hds, true);
             B.begin_surface(mesh->numberVertices(), mesh->numberFaces());
 
-            typedef typename internal::HalfedgeDS::Vertex   PolyhedronVertex;
+            typedef typename HalfedgeDS::Vertex   PolyhedronVertex;
             typedef typename PolyhedronVertex::Point        PolyhedronPoint;
 
             for (unsigned int vIndex = 0; vIndex < mesh->numberVertices(); vIndex++){
@@ -159,7 +159,7 @@ CG3_INLINE cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
         }
     };
 
-    Polyhedron pmesh;
+    P pmesh;
     PolyhedronBuilder polyhedronEigenMeshBuilder(&mesh);
     pmesh.delegate(polyhedronEigenMeshBuilder);
 
@@ -167,23 +167,25 @@ CG3_INLINE cgal::Polyhedron polyhedronFromEigenMesh(const SimpleEigenMesh& mesh)
 }
 
 
-CG3_INLINE SimpleEigenMesh eigenMeshFromPolyhedron(const cgal::Polyhedron& poly)
+template<class P>
+SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly)
 {
-    typedef typename internal::HalfedgeDS::Vertex  PolyhedronVertex;
+    typedef typename P::HalfedgeDS  HalfedgeDS;
+    typedef typename HalfedgeDS::Vertex  PolyhedronVertex;
     typedef typename PolyhedronVertex::Point       PolyhedronPoint;
-    typedef typename Polyhedron::Halfedge_around_facet_const_circulator Halfedge_facet_circulator;
+    typedef typename P::Halfedge_around_facet_const_circulator Halfedge_facet_circulator;
 
     SimpleEigenMesh d;
 
     std::map<PolyhedronPoint, unsigned int> map;
 
-    for (Polyhedron::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit) {
+    for (typename P::Vertex_const_iterator vit = poly.vertices_begin(); vit != poly.vertices_end(); ++vit) {
         PolyhedronPoint p = (*vit).point();
 		Point3d point(p.x(), p.y(), p.z());
         map.insert(std::make_pair(p, d.addVertex(point)));
     }
 
-    for (Polyhedron::Facet_const_iterator fit = poly.facets_begin(); fit != poly.facets_end(); ++fit) {
+    for (typename P::Facet_const_iterator fit = poly.facets_begin(); fit != poly.facets_end(); ++fit) {
         Halfedge_facet_circulator circulator = fit->facet_begin();
 
         unsigned int v[3];

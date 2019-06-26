@@ -131,7 +131,9 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/surface_mesh.h \
         $$PWD/cgal/triangulation2.h \
         $$PWD/cgal/triangulation3.h \
-        $$PWD/cgal/voronoi2.h
+        $$PWD/cgal/voronoi2.h \
+        $$PWD/cgal/sdf_segmentation.h \
+        $$PWD/cgal/skeleton.h
 
     CG3_STATIC {
     SOURCES += \
@@ -148,7 +150,9 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
         $$PWD/cgal/surface_mesh.cpp \
         $$PWD/cgal/triangulation2.cpp \
         $$PWD/cgal/triangulation3.cpp \
-        $$PWD/cgal/voronoi2.cpp
+        $$PWD/cgal/voronoi2.cpp \
+        $$PWD/cgal/sdf_segmentation.cpp \
+        $$PWD/cgal/skeleton.cpp
     }
 }
 else {
