@@ -23,6 +23,7 @@ DrawableObjectsContainer<T>::~DrawableObjectsContainer()
 template<typename T>
 DrawableObjectsContainer<T>::DrawableObjectsContainer(
         const DrawableObjectsContainer<T>& other) :
+	cg3::DrawableContainer (),
     visibleObject(other.visibleObject)
 {
     uint i = 0;
