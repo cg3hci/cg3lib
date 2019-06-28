@@ -31,8 +31,6 @@ public:
 	BoundingBox3(const Point3d& min, const Point3d& max);
     template<class Iterator>
 	BoundingBox3(Iterator begin, Iterator end);
-    template<class Container>
-	BoundingBox3(const Container& c);
 
     const Point3d& min()        const;
     const Point3d& max()        const;
@@ -121,17 +119,6 @@ CG3_INLINE BoundingBox3::BoundingBox3(Iterator begin, Iterator end)
 		_min = _min.min(*i);
 		_max = _max.max(*i);
 	}
-}
-
-/**
- * @brief Constructor, creates a bounding box that contains all the Pointd contained
- * in the input container.
- * @param c: a container of Pointd
- */
-template<class Container>
-CG3_INLINE BoundingBox3::BoundingBox3(const Container& c) :
-	BoundingBox3(c.begin(), c.end())
-{
 }
 
 } //namespace cg3
