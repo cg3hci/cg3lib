@@ -199,11 +199,11 @@ inline bool isPointLyingInCircle(
  * @return true if the points of the polygon are stored in counterclockwise order
  */
 template <template < class ... > class Container, class T, class ... Args>
-inline bool isPolygonCounterClockwise(const Container<Point2<T>>& polygon)
+inline bool isPolygonCounterClockwise(const Container<Point2<T>, Args...>& polygon)
 {
     double sum = 0;
-    for (typename Container<Point2<T>>::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
-        typename Container<Point2<T>>::const_iterator next = it;
+    for (typename Container<Point2<T>, Args...>::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
+        typename Container<Point2<T>, Args...>::const_iterator next = it;
         next++;
         if (next == polygon.end())
             next = polygon.begin();
@@ -225,11 +225,11 @@ inline bool isPolygonCounterClockwise(const Container<Point2<T>>& polygon)
  * @link https://www.mathopenref.com/coordpolygonarea2.html
  */
 template <template < class ... > class Container, class T, class ... Args>
-inline double polygonArea(const Container<Point2<T>>& polygon)
+inline double polygonArea(const Container<Point2<T>, Args...>& polygon)
 {
     double area = 0;
-    for (typename Container<Point2<T>>::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
-        typename Container<Point2<T>>::const_iterator next = it;
+    for (typename Container<Point2<T>, Args...>::const_iterator it = polygon.begin(); it != polygon.end(); ++it) {
+        typename Container<Point2<T>, Args...>::const_iterator next = it;
         next++;
         if (next == polygon.end())
             next = polygon.begin();

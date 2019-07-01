@@ -32,8 +32,9 @@ namespace cg3 {
 class Dcel : public TemplatedDcel<Vertex, HalfEdge, Face>
 {
 public:
-    Dcel(const TemplatedDcel<Vertex, HalfEdge, Face>& t) : TemplatedDcel(t) {};
-    Dcel(TemplatedDcel<Vertex, HalfEdge, Face>&& t) : TemplatedDcel(t) {};
+    Dcel() : TemplatedDcel() {}
+    Dcel(const TemplatedDcel<Vertex, HalfEdge, Face>& t) : TemplatedDcel(t) {}
+    Dcel(TemplatedDcel<Vertex, HalfEdge, Face>&& t) : TemplatedDcel(t) {}
     using TemplatedDcel<Vertex, HalfEdge, Face>::TemplatedDcel; //inherits constructors
     using TemplatedDcel<Vertex, HalfEdge, Face>::operator=; //inherits assignment operators
 };

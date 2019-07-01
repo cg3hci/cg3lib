@@ -63,10 +63,10 @@ inline bool isPointLyingInCircle(
 #endif
 
 template <template < class ... > class Container, class T, class ... Args>
-inline bool isPolygonCounterClockwise(const Container<Point2<T>>& polygon);
+inline bool isPolygonCounterClockwise(const Container<Point2<T>, Args...>& polygon);
 
 template <template < class ... > class Container, class T, class ... Args>
-inline double polygonArea(const Container<Point2<T>>& polygon);
+inline double polygonArea(const Container<Point2<T>, Args...>& polygon);
 
 } //namespace cg3
 

@@ -6,6 +6,7 @@
  */
 #include "ply_header.h"
 #include <cg3/utilities/tokenizer.h>
+#include <clocale>
 
 namespace cg3 {
 namespace ply {
@@ -60,8 +61,8 @@ CG3_INLINE PlyHeader::PlyHeader(std::ifstream &file) :
 					}
 					else if (headerLine == "element") { //new type of element read
 						if (!first){ //last element finished, save it
-							if (element.type == ply::VERTEX) v = elements.size();
-							if (element.type == ply::FACE) f = elements.size();
+                                                        if (element.type == ply::VERTEX) v = (long int)elements.size();
+                                                        if (element.type == ply::FACE) f = (long int)elements.size();
 							elements.push_back(element);
 							element = ply::Element();
 						}
@@ -73,8 +74,8 @@ CG3_INLINE PlyHeader::PlyHeader(std::ifstream &file) :
 						element.properties.push_back(p);
 					}
 					else if (headerLine == "end_header") { //save the last element
-						if (element.type == ply::VERTEX) v = elements.size();
-						if (element.type == ply::FACE) f = elements.size();
+                                                if (element.type == ply::VERTEX) v = (long int)elements.size();
+                                                if (element.type == ply::FACE) f = (long int)elements.size();
 						elements.push_back(element);
 					}
 				}
@@ -146,12 +147,12 @@ CG3_INLINE uint PlyHeader::numberFaces() const
 	return elements[f].numberElements;
 }
 
-CG3_INLINE void PlyHeader::setNumberVertices(uint nV)
+CG3_INLINE void PlyHeader::setNumberVertices(unsigned long int nV)
 {
 	elements[v].numberElements = nV;
 }
 
-CG3_INLINE void PlyHeader::setNumberFaces(uint nF)
+CG3_INLINE void PlyHeader::setNumberFaces(unsigned long int nF)
 {
 	elements[f].numberElements = nF;
 }
@@ -302,8 +303,8 @@ CG3_INLINE std::string PlyHeader::toString() const
 
 CG3_INLINE void PlyHeader::addElement(const ply::Element &e)
 {
-	if (e.type == ply::VERTEX) v = elements.size();
-	if (e.type == ply::FACE) f = elements.size();
+        if (e.type == ply::VERTEX) v = (long int)elements.size();
+        if (e.type == ply::FACE) f = (long int)elements.size();
 	elements.push_back(e);
 }
 

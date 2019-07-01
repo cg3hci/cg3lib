@@ -82,19 +82,20 @@ bool loadMeshFromPly(
 	return loadOk;
 }
 
-template <template <typename... Args> class Con1, template <typename... Args> class Con2,
-		  template <typename... Args> class Con3, template <typename... Args> class Con4,
-		  template <typename... Args> class Con5, template <typename... Args> class Con6,
-		  typename T, typename V, typename C, typename W>
+template <template <class ... > class Con1, template <class ... > class Con2,
+          template <class ... > class Con3, template <class ... > class Con4,
+          template <class ... > class Con5, template <class ... > class Con6,
+          class T, class V, class C, class W,
+          class ... ArgsT, class ... ArgsV, class ... ArgsC, class ... ArgsColor, class ... ArgsW>
 bool loadMeshFromPly(
 		const std::string& filename,
-		Con1<T>& coords,
-		Con2<V>& faces,
+        Con1<T, ArgsT...>& coords,
+        Con2<V, ArgsV...>& faces,
 		io::FileMeshMode& modality,
-		Con3<C>& verticesNormals,
-		Con4<Color>& verticesColors,
-		Con5<Color>& facesColors,
-		Con6<W>& faceSizes)
+        Con3<C, ArgsC...>& verticesNormals,
+        Con4<Color, ArgsColor...>& verticesColors,
+        Con5<Color, ArgsColor...>& facesColors,
+        Con6<W, ArgsW...>& faceSizes)
 {
 	std::vector<T> vcoords;
 	std::vector<V> vfaces;
@@ -316,8 +317,8 @@ inline bool saveMeshOnPly(
 
 	ply::PlyHeader header;
 	header.setModality(modality, binary);
-	header.setNumberVertices(nVertices);
-	header.setNumberFaces(nFaces);
+        header.setNumberVertices((unsigned long int)nVertices);
+        header.setNumberFaces((unsigned long int)nFaces);
 	fp.open (plyfilename);
 	if(!fp) {
 		return false;

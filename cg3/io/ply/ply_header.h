@@ -40,8 +40,8 @@ public:
 	const std::list<ply::Property>& faceProperties() const;
 	uint numberVertices() const;
 	uint numberFaces() const;
-	void setNumberVertices(uint nV);
-	void setNumberFaces(uint nF);
+        void setNumberVertices(unsigned long int nV);
+        void setNumberFaces(unsigned long int nF);
 	io::FileMeshMode modality() const;
 	void setModality(const io::FileMeshMode& mode, bool binary = true);
 	std::string toString() const;
@@ -66,7 +66,7 @@ private:
 	ply::Format _format;
 	std::vector<ply::Element> elements;
 	bool isValid;
-	int v, f;
+        long int v, f;
 };
 
 } //namespace cg3::ply

@@ -36,8 +36,8 @@ class TemplatedDcel<V, HE, F>::ConstVertexRangeBasedIterator
 {
     friend class TemplatedDcel;
 public:
-    TemplatedDcel::ConstVertexIterator begin() const {return d->vertexBegin();};
-    TemplatedDcel::ConstVertexIterator end() const {return d->vertexEnd();};
+    typename TemplatedDcel::ConstVertexIterator begin() const {return d->vertexBegin();}
+    typename TemplatedDcel::ConstVertexIterator end() const {return d->vertexEnd();}
 private:
     ConstVertexRangeBasedIterator(const TemplatedDcel *d) : d(d) {}
     const TemplatedDcel *d;
@@ -48,9 +48,9 @@ class TemplatedDcel<V, HE, F>::ConstHalfEdgeRangeBasedIterator
 {
     friend class TemplatedDcel;
 public:
-	TemplatedDcel::ConstHalfEdgeIterator
-	begin() const {return d->halfEdgeBegin();};
-    TemplatedDcel::ConstHalfEdgeIterator end() const {return d->halfEdgeEnd();};
+    typename TemplatedDcel::ConstHalfEdgeIterator
+    begin() const {return d->halfEdgeBegin();}
+    typename TemplatedDcel::ConstHalfEdgeIterator end() const {return d->halfEdgeEnd();}
 private:
     ConstHalfEdgeRangeBasedIterator(const TemplatedDcel *d) : d(d) {}
     const TemplatedDcel *d;
@@ -61,8 +61,8 @@ class TemplatedDcel<V, HE, F>::ConstFaceRangeBasedIterator
 {
     friend class TemplatedDcel;
 public:
-    TemplatedDcel::ConstFaceIterator begin() const {return d->faceBegin();};
-    TemplatedDcel::ConstFaceIterator end() const {return d->faceEnd();};
+    typename TemplatedDcel::ConstFaceIterator begin() const {return d->faceBegin();}
+    typename TemplatedDcel::ConstFaceIterator end() const {return d->faceEnd();}
 private:
     ConstFaceRangeBasedIterator(const TemplatedDcel *d) : d(d) {}
     const TemplatedDcel *d;
@@ -73,8 +73,8 @@ class TemplatedDcel<V, HE, F>::VertexRangeBasedIterator
 {
     friend class TemplatedDcel;
 public:
-    TemplatedDcel::VertexIterator begin() {return d->vertexBegin();};
-    TemplatedDcel::VertexIterator end() {return d->vertexEnd();};
+    typename TemplatedDcel::VertexIterator begin() {return d->vertexBegin();}
+    typename TemplatedDcel::VertexIterator end() {return d->vertexEnd();}
 private:
     VertexRangeBasedIterator(TemplatedDcel *d) : d(d) {}
     TemplatedDcel *d;
@@ -85,8 +85,8 @@ class TemplatedDcel<V, HE, F>::HalfEdgeRangeBasedIterator
 {
     friend class TemplatedDcel;
 public:
-    TemplatedDcel::HalfEdgeIterator begin() {return d->halfEdgeBegin();};
-    TemplatedDcel::HalfEdgeIterator end() {return d->halfEdgeEnd();};
+    typename TemplatedDcel::HalfEdgeIterator begin() {return d->halfEdgeBegin();}
+    typename TemplatedDcel::HalfEdgeIterator end() {return d->halfEdgeEnd();}
 private:
     HalfEdgeRangeBasedIterator(TemplatedDcel *d) : d(d) {}
     TemplatedDcel *d;
@@ -97,8 +97,8 @@ class TemplatedDcel<V, HE, F>::FaceRangeBasedIterator
 {
     friend class TemplatedDcel;
 public:
-    TemplatedDcel::FaceIterator begin() {return d->faceBegin();};
-    TemplatedDcel::FaceIterator end() {return d->faceEnd();};
+    typename TemplatedDcel::FaceIterator begin() {return d->faceBegin();}
+    typename TemplatedDcel::FaceIterator end() {return d->faceEnd();}
 private:
     FaceRangeBasedIterator(TemplatedDcel *d) : d(d) {}
     TemplatedDcel *d;
@@ -396,7 +396,7 @@ inline unsigned int TemplatedDcel<V, HE, F>::numberFaces () const
  */
 template <class V, class HE, class F>
 inline bool
-TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Vertex* v) const
+TemplatedDcel<V, HE, F>::contains(const typename TemplatedDcel::Vertex* v) const
 {
     return vertexBelongsToThis(v);
 }
@@ -408,7 +408,7 @@ TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Vertex* v) const
  */
 template <class V, class HE, class F>
 inline bool
-TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::HalfEdge* he) const
+TemplatedDcel<V, HE, F>::contains(const typename TemplatedDcel::HalfEdge* he) const
 {
     return halfEdgeBelongsToThis(he);
 }
@@ -420,7 +420,7 @@ TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::HalfEdge* he) const
  */
 template <class V, class HE, class F>
 inline bool
-TemplatedDcel<V, HE, F>::contains(const TemplatedDcel::Face* f) const
+TemplatedDcel<V, HE, F>::contains(const typename TemplatedDcel::Face* f) const
 {
     return  faceBelongsToThis(f);
 }
@@ -552,7 +552,7 @@ TemplatedDcel<V, HE, F>::face(unsigned int idFace)
 template <class V, class HE, class F>
 inline typename TemplatedDcel<V, HE, F>::VertexIterator
 TemplatedDcel<V, HE, F>::deleteVertex(
-		const TemplatedDcel<V, HE, F>::VertexIterator& vit)
+        const typename TemplatedDcel<V, HE, F>::VertexIterator& vit)
 {
     TemplatedDcel::VertexIterator nv = vit;
     TemplatedDcel::Vertex* v = *vit;
@@ -585,7 +585,7 @@ TemplatedDcel<V, HE, F>::deleteVertex(
 template <class V, class HE, class F>
 inline typename TemplatedDcel<V, HE, F>::HalfEdgeIterator
 TemplatedDcel<V, HE, F>::deleteHalfEdge(
-		const TemplatedDcel<V, HE, F>::HalfEdgeIterator& heit)
+        const typename TemplatedDcel<V, HE, F>::HalfEdgeIterator& heit)
 {
     TemplatedDcel::HalfEdgeIterator nhe = heit;
     HalfEdge* he = *heit;
@@ -612,7 +612,7 @@ TemplatedDcel<V, HE, F>::deleteHalfEdge(
 template <class V, class HE, class F>
 inline typename TemplatedDcel<V, HE, F>::FaceIterator
 TemplatedDcel<V, HE, F>::deleteFace(
-		const TemplatedDcel<V, HE, F>::FaceIterator& fit)
+        const typename TemplatedDcel<V, HE, F>::FaceIterator& fit)
 {
     TemplatedDcel::FaceIterator nf = fit;
     TemplatedDcel::Face* f = *fit;
@@ -754,7 +754,7 @@ TemplatedDcel<V, HE, F>::faceIterator()
 
 template <class V, class HE, class F>
 bool TemplatedDcel<V, HE, F>::vertexBelongsToThis(
-		const TemplatedDcel<V, HE, F>::Vertex* v) const
+        const typename TemplatedDcel<V, HE, F>::Vertex* v) const
 {
     if (!v) return false;
     #ifdef NDEBUG
@@ -766,7 +766,7 @@ bool TemplatedDcel<V, HE, F>::vertexBelongsToThis(
 
 template <class V, class HE, class F>
 bool TemplatedDcel<V, HE, F>::halfEdgeBelongsToThis(
-		const TemplatedDcel<V, HE, F>::HalfEdge* he) const
+        const typename TemplatedDcel<V, HE, F>::HalfEdge* he) const
 {
     if (!he) return false;
     #ifdef NDEBUG
@@ -778,7 +778,7 @@ bool TemplatedDcel<V, HE, F>::halfEdgeBelongsToThis(
 
 template <class V, class HE, class F>
 bool TemplatedDcel<V, HE, F>::faceBelongsToThis(
-		const TemplatedDcel<V, HE, F>::Face* f) const
+        const typename TemplatedDcel<V, HE, F>::Face* f) const
 {
     if (!f) return false;
     #ifdef NDEBUG
@@ -1147,7 +1147,7 @@ TemplatedDcel<V, HE, F>::addFace(const Vec3d& n, const Color& c)
  *      \e O(nIncidentHalfEdges) ->  \e ~O(1)
  */
 template <class V, class HE, class F>
-bool TemplatedDcel<V, HE, F>::deleteVertex(TemplatedDcel::Vertex* v)
+bool TemplatedDcel<V, HE, F>::deleteVertex(typename TemplatedDcel::Vertex* v)
 {
     if (v != nullptr){
         if (v->_incidentHalfEdge != nullptr){

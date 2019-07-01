@@ -127,7 +127,7 @@ inline bool areCollinear(
  *         given normal
  */
 template <template < class ... > class Container, class T, class ... Args>
-bool isPolygonCounterClockwise(const Container<Point3<T> >& polygon, const Vec3d& normal)
+bool isPolygonCounterClockwise(const Container<Point3<T>, Args...>& polygon, const Vec3d& normal)
 {
     Vec3d zAxis(0,0,1);
     Vec3d v = -(normal.cross(zAxis));

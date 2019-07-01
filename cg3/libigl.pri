@@ -33,7 +33,7 @@ exists($$LIBIGL_PATH) {
     }
 
     win32{
-        CONFIG += LIBIGL_STATIC #???
+        #CONFIG += LIBIGL_STATIC #???
 
         INCLUDEPATH += $$LIBIGL_PATH/include/
         QMAKE_CXXFLAGS += -bigobj

@@ -11,7 +11,6 @@
 #ifdef  CG3_CGAL_DEFINED
 
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-
 #include <igl/copyleft/cgal/CSGTree.h>
 #include "internal/booleans_algorithms.h"
 

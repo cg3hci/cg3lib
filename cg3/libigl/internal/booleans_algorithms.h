@@ -2,6 +2,7 @@
 #define CG3_BOOLEAN_ALGORITHMS_H
 
 #include <cg3/cg3lib.h>
+#include <cstdlib>
 
 #ifdef CG3_CGAL_DEFINED
 
@@ -21,7 +22,7 @@
 namespace cg3 {
 namespace libigl {
 namespace internal {
-static std::vector<uint> dummyVector;
+static std::vector<unsigned int> dummyVector;
 
 /* CSGTree typedefs */
 typedef igl::copyleft::cgal::CSGTree CSGTree;

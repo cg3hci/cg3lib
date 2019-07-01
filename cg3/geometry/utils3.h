@@ -41,7 +41,7 @@ inline bool areCollinear(
 
 template <template < class ... > class Container, class T, class ... Args>
 inline bool isPolygonCounterClockwise(
-        const Container<Point3<T>>& polygon,
+        const Container<Point3<T>, Args...>& polygon,
         const Vec3d& normal);
 
 } //namespace cg3

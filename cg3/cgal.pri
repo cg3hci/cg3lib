@@ -36,70 +36,69 @@ macx{
 
 win32{
     contains(DEFINES, CG3_WITH_BOOST){
-        CGALPATH = C:/libs/CGAL
+        CGAL_PATH = C:/libs/CGAL
         exists($$(CGAL_HOME)){
-            CGALPATH = $$(CGAL_HOME)
+            CGAL_PATH = $$(CGAL_HOME)
         }
 
-        exists($$BOOSTPATH){
-            exists($$CGALPATH){
+        exists($$BOOST_PATH){
+            exists($$CGAL_PATH){
                 DEFINES += CG3_CGAL_DEFINED
                 CONFIG += CG3_CGAL
                 MODULES += CG3_CGAL
 
-                INCLUDEPATH += -I $$quote($$CGALPATH/include)
-                INCLUDEPATH += -I $$quote($$CGALPATH/auxiliary/gmp/include)
+                INCLUDEPATH += -I $$quote($$CGAL_PATH/include)
+                INCLUDEPATH += -I $$quote($$CGAL_PATH/auxiliary/gmp/include)
 
 
 
 #               ------------- MSVC2017 compiler -------------
 #               Library names could change when using different
 #               version of MSVC/Boost/CGAL
+                CG3_WIN_MSVC {
+                    CONFIG(debug, debug|release){
+                        LIBS += -L$$quote($$CGAL_PATH/lib) -lCGAL-vc140-mt-gd-4.*
+                    }
+                    CONFIG(release, debug|release){
+                        LIBS += -L$$quote($$CGAL_PATH/lib) -lCGAL-vc140-mt-4.*
+                    }
 
-#                CONFIG(debug, debug|release){
-#                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-gd-4.*
-#                }
-#                CONFIG(release, debug|release){
-#                    LIBS += -L$$quote($$CGALPATH/lib) -lCGAL-vc140-mt-4.*
-#                }
+                    LIBS += -L$$quote($$CGAL_PATH/auxiliary/gmp/lib) -llibgmp-10
+                    LIBS += -L$$quote($$CGAL_PATH/auxiliary/gmp/lib) -llibmpfr-4
 
-#                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibgmp-10
-#                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -llibmpfr-4
+                    CONFIG(debug, debug|release){
+                        LIBS += -L$$quote($$BOOST_PATH/lib64-msvc-14.1) -l$$BOOST_PATH/lib64-msvc-14.1/boost_system-vc141-mt-gd-x64*
+                        LIBS += -L$$quote($$BOOST_PATH/lib64-msvc-14.1) -l$$BOOST_PATH/lib64-msvc-14.1/boost_log-vc141-mt-gd-x64*
+                        LIBS += -L$$quote($$BOOST_PATH/lib64-msvc-14.1) -l$$BOOST_PATH/lib64-msvc-14.1/boost_thread-vc141-mt-gd-x64*
+                    }
+                    CONFIG(release, debug|release){
+                        LIBS += -L$$quote($$BOOS_TPATH/lib64-msvc-14.1) -l$$BOOST_PATH/lib64-msvc-14.1/boost_system-vc141-mt-x64*
+                        LIBS += -L$$quote($$BOOST_PATH/lib64-msvc-14.1) -l$$BOOST_PATH/lib64-msvc-14.1/boost_log-vc141-mt-x64*
+                        LIBS += -L$$quote($$BOOST_PATH/lib64-msvc-14.1) -l$$BOOST_PATH/lib64-msvc-14.1/boost_thread-vc141-mt-x64*
+                    }
 
-#                CONFIG(debug, debug|release){
-#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-gd-x64*
-#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-gd-x64*
-#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-gd-x64*
-#                }
-#                CONFIG(release, debug|release){
-#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_system-vc141-mt-x64*
-#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_log-vc141-mt-x64*
-#                    LIBS += -L$$quote($$BOOSTPATH/lib64-msvc-14.1) -l$$BOOSTPATH/lib64-msvc-14.1/boost_thread-vc141-mt-x64*
-#                }
-
-#                LIBS += -DBOOST_LOG_DYN_LINK
-#               Cannot find the following libraries in MSVC. TODO: check if they
-#               are required by Windows/MSVC environment
-#                LIBS += -frounding-math
-#                LIBS += -lpthread
-
-
-
+                    LIBS += -DBOOST_LOG_DYN_LINK
+                    # Cannot find the following libraries in MSVC. TODO: check if they
+                    # are required by Windows/MSVC environment
+                    #LIBS += -frounding-math
+                    #LIBS += -lpthread
+                }
 
 #               ------------- MinGW compiler -------------
 #               Library names could change when using different version
 #               of MinGW/Boost/CGAL
+                CG3_WIN_MINGW {
+                    LIBS += -L$$quote($$CGAL_PATH/bin) -lCGAL
+                    LIBS += -L$$quote($$CGAL_PATH/auxiliary/gmp/lib) -lgmp-10
+                    LIBS += -L$$quote($$CGAL_PATH/auxiliary/gmp/lib) -lmpfr-4
+                    LIBS += -frounding-math
 
-                LIBS += -L$$quote($$CGALPATH/bin) -lCGAL
-                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -lgmp-10
-                LIBS += -L$$quote($$CGALPATH/auxiliary/gmp/lib) -lmpfr-4
-                LIBS += -frounding-math
-
-                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_system
-                LIBS += -DBOOST_LOG_DYN_LINK
-                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_log
-                LIBS += -L$$quote($$BOOSTPATH/lib) -lboost_thread
-                LIBS += -lpthread
+                    LIBS += -L$$quote($$BOOST_PATH/lib) -lboost_system
+                    LIBS += -DBOOST_LOG_DYN_LINK
+                    LIBS += -L$$quote($$BOOST_PATH/lib) -lboost_log
+                    LIBS += -L$$quote($$BOOST_PATH/lib) -lboost_thread
+                    LIBS += -lpthread
+                }
             }
         }
     }

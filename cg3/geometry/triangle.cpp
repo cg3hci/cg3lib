@@ -11,13 +11,13 @@ namespace cg3 {
 
 template <class T>
 inline Triangle<T>::Triangle() :
-	v({})
+    v{}
 {
 }
 
 template<class T>
 inline Triangle<T>::Triangle(const T& v1, const T& v2, const T& v3):
-	v({v1, v2, v3})
+    v{v1, v2, v3}
 {
 }
 

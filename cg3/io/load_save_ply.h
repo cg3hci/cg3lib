@@ -24,19 +24,20 @@ bool loadMeshFromPly(
 		std::vector<Color>& facesColors = internal::dummyVectorColor,
 		std::vector<W>& faceSizes = internal::dummyVectorUnsignedInt);
 
-template <template <typename... Args> class Con1, template <typename... Args> class Con2,
-		  template <typename... Args> class Con3, template <typename... Args> class Con4,
-		  template <typename... Args> class Con5, template <typename... Args> class Con6,
-		  typename T, typename V, typename C = double, typename W = unsigned int>
+template <template <class ... > class Con1, template <class ... > class Con2,
+          template <class ... > class Con3, template <class ... > class Con4,
+          template <class ... > class Con5, template <class ... > class Con6,
+          class T, class V, class C, class W,
+          class ... ArgsT, class ... ArgsV, class ... ArgsC, class ... ArgsColor, class ... ArgsW>
 bool loadMeshFromPly(
 		const std::string& filename,
-		std::vector<T>& coords,
-		std::vector<V>& faces,
+        Con1<T, ArgsT...>& coords,
+        Con2<V, ArgsV...>& faces,
 		io::FileMeshMode& modality = internal::dummyFileMeshMode,
-		std::vector<C>& verticesNormals = internal::dummyListDouble,
-		std::vector<Color>& verticesColors = internal::dummyVectorColor,
-		std::vector<Color>& facesColors = internal::dummyVectorColor,
-		std::vector<W>& faceSizes = internal::dummyVectorUnsignedInt);
+        Con3<C, ArgsC...>& verticesNormals = internal::dummyListDouble,
+        Con4<Color, ArgsColor...>& verticesColors = internal::dummyVectorColor,
+        Con5<Color, ArgsColor...>& facesColors = internal::dummyVectorColor,
+        Con6<W, ArgsW...>& faceSizes = internal::dummyVectorUnsignedInt);
 
 #ifdef CG3_WITH_EIGEN
 template <typename T, typename V>

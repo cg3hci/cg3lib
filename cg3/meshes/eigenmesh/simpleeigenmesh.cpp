@@ -77,7 +77,7 @@ Vec3d SimpleEigenMesh::vertexNormal(unsigned int v) const
 {
     unsigned int n = 0;
     Vec3d normal;
-    for (unsigned int f = 0; f < F.rows(); f++){
+    for (unsigned int f = 0; f < (unsigned int)F.rows(); f++){
         for (unsigned int i = 0; i < 3; i++){
             if ((unsigned int)F(f,i) == v){
                 n++;
@@ -93,13 +93,13 @@ Vec3d SimpleEigenMesh::vertexNormal(unsigned int v) const
 
 bool SimpleEigenMesh::isDegenerateTriangle(unsigned int f, double epsilon) const
 {
-    assert(f < F.rows());
+    assert(f < (unsigned int)F.rows());
     return faceArea(f) <= epsilon;
 }
 
 void SimpleEigenMesh::removeDegenerateTriangles(double epsilon)
 {
-    for (unsigned int i = 0; i < F.rows(); i++){
+    for (unsigned int i = 0; i < (unsigned int)F.rows(); i++){
         if (isDegenerateTriangle(i, epsilon)){
             this->removeFace(i);
             i--;
@@ -202,7 +202,7 @@ void SimpleEigenMesh::scale(const BoundingBox3& oldBoundingBox, const BoundingBo
 void SimpleEigenMesh::scale(const Vec3d& scaleFactor)
 {
     if (scaleFactor.x() > 0 && scaleFactor.y() > 0 && scaleFactor.z() > 0){
-        for (unsigned int i = 0; i < V.rows(); i++){
+        for (unsigned int i = 0; i < (uint)V.rows(); i++){
             V.row(i) = Eigen::Vector3d(V(i,0) * scaleFactor.x(),
                                        V(i,1) * scaleFactor.y(),
                                        V(i,2) * scaleFactor.z());
@@ -219,7 +219,7 @@ void SimpleEigenMesh::merge(const SimpleEigenMesh& m2)
 {
     uint start = V.rows();
     V.conservativeResize(start+m2.V.rows(), 3);
-    for (uint i = 0; i < m2.V.rows(); ++i){
+    for (uint i = 0; i < (uint)m2.V.rows(); ++i){
         V.row(start + i) = m2.V.row(i);
     }
     uint startf = F.rows();

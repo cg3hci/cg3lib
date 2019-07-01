@@ -68,10 +68,6 @@ win32 {
 }
 
 contains(DEFINES, CG3_VIEWER_DEFINED){
-NO_NOT_COMPILE_VIEWER {
-    INCLUDEPATH += $$OUT_PWD
-}
-
     HEADERS += \
         $$PWD/viewer/viewer.h \
         $$PWD/viewer/glcanvas.h \
