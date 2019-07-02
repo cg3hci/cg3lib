@@ -22,7 +22,7 @@ namespace viewer {
 CG3_INLINE DcelManager::DcelManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::DcelManager),
-    mainWindow((cg3::viewer::MainWindow&)*parent),
+	mainWindow((cg3::viewer::AbstractMainWindow&)*parent),
     loaded(false)
 {
     ui->setupUi(this);
@@ -60,7 +60,7 @@ CG3_INLINE void DcelManager::setDcel(const Dcel &dcel, const std::string &name)
     cleanDcel();
     drawableDcel = dcel;
     mainWindow.pushDrawableObject(&drawableDcel, name);
-    mainWindow.canvas.update();
+	mainWindow.updateCanvas();
     loaded = true;
 
     setButtonsDcelLoaded();
@@ -78,8 +78,8 @@ CG3_INLINE void DcelManager::cleanDcel()
 
         resetDefaults();
         mainWindow.deleteDrawableObject(&drawableDcel);
-        mainWindow.canvas.update();
-        mainWindow.canvas.fitScene();
+		mainWindow.updateCanvas();
+		mainWindow.fitSceneCanvas();
         loaded = false;
     }
 }
@@ -92,8 +92,8 @@ CG3_INLINE void DcelManager::updateDcel()
 {
     if (loaded){
         drawableDcel.update();
-        mainWindow.canvas.update();
-        mainWindow.canvas.fitScene();
+		mainWindow.updateCanvas();
+		mainWindow.fitSceneCanvas();
     }
 }
 
@@ -132,8 +132,8 @@ CG3_INLINE void DcelManager::on_loadDcelButton_clicked()
             drawableDcel.setSmoothShading();
             drawableDcel.update();
             mainWindow.pushDrawableObject(&drawableDcel, filename.substr(filename.find_last_of("/") + 1));
-            mainWindow.canvas.update();
-            mainWindow.canvas.fitScene();
+			mainWindow.updateCanvas();
+			mainWindow.fitSceneCanvas();
             setButtonsDcelLoaded();
             loaded = true;
         }
@@ -181,7 +181,7 @@ CG3_INLINE void DcelManager::on_wireframeDcelCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setWireframe(state == Qt::Checked);
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -189,7 +189,7 @@ CG3_INLINE void DcelManager::on_wireframeWidthDcelSlider_valueChanged(int value)
 {
     if (loaded) {
         drawableDcel.setWireframeWidth(value);
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -199,7 +199,7 @@ CG3_INLINE void DcelManager::on_wireframeColorDcelButton_clicked()
         QColor color = QColorDialog::getColor(Qt::white, this);
 
         drawableDcel.setWireframeColor(color.redF(), color.greenF(), color.blueF());
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -208,7 +208,7 @@ CG3_INLINE void DcelManager::on_pointsDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setPointsShading();
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -217,7 +217,7 @@ CG3_INLINE void DcelManager::on_flatDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setFlatShading();
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -226,7 +226,7 @@ CG3_INLINE void DcelManager::on_smoothDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setSmoothShading();
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -235,7 +235,7 @@ CG3_INLINE void DcelManager::on_vertexColorDcelRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked)
             drawableDcel.setEnableVertexColor();
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -244,7 +244,7 @@ CG3_INLINE void DcelManager::on_triangleColorDcelRadioButton_toggled(bool checke
     if (loaded) {
         if (checked)
             drawableDcel.setEnableTriangleColor();
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -252,7 +252,7 @@ CG3_INLINE void DcelManager::on_boundingBoxCheckBox_stateChanged(int state)
 {
     if (loaded) {
         drawableDcel.setVisibleBoundingBox(state == Qt::Checked);
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -260,7 +260,7 @@ CG3_INLINE void DcelManager::on_facesWireframeDcelCheckBox_stateChanged(int stat
 {
     if (loaded) {
         drawableDcel.setFacesWireframe(state == Qt::Checked);
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 

@@ -8,6 +8,7 @@
 #define CG3_DRAWABLE_MESH_DRAWLIST_MANAGER_H
 
 #include "submanager.h"
+#include "../interfaces/abstract_mainwindow.h"
 
 #include <cg3/viewer/utilities/loadersaver.h>
 
@@ -16,8 +17,6 @@ namespace cg3 {
 class DrawableMesh;
 
 namespace viewer {
-
-class MainWindow;
 
 namespace Ui {
 class DrawableMeshDrawListManager;
@@ -63,7 +62,7 @@ private slots:
 
 private:
     Ui::DrawableMeshDrawListManager *ui;
-    MainWindow& mw;
+	AbstractMainWindow& mw;
     const DrawableMesh* mesh;
     LoaderSaver ls;
 };

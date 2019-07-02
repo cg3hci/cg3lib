@@ -8,14 +8,13 @@
 #define DRAWABLE_OBJECT_DRAWLIST_MANAGER_H
 
 #include "submanager.h"
+#include "../interfaces/abstract_mainwindow.h"
 
 namespace cg3 {
 
 class DrawableObject;
 
 namespace viewer {
-
-class MainWindow;
 
 namespace Ui {
 class DrawableObjectDrawListManager;
@@ -60,7 +59,7 @@ private slots:
 
 private:
     Ui::DrawableObjectDrawListManager *ui;
-    MainWindow& mw;
+	AbstractMainWindow& mw;
     const DrawableObject* object;
     SubManager* subframe;
     bool selected;

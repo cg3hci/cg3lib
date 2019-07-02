@@ -7,7 +7,6 @@
 #include "manipulable_object_drawlist_manager.h"
 #include "ui_manipulable_object_drawlist_manager.h"
 
-#include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/interfaces/manipulable_object.h>
 
 namespace cg3 {
@@ -18,7 +17,7 @@ CG3_INLINE ManipulableFormDrawlistManager::ManipulableFormDrawlistManager(
         const ManipulableObject* obj) :
     SubManager(parent),
     ui(new Ui::ManipulableFormDrawlistManager),
-    mw((MainWindow&)*parent),
+	mw((AbstractMainWindow&)*parent),
 	obj(obj)
 {
     ui->setupUi(this);
@@ -32,7 +31,7 @@ CG3_INLINE ManipulableFormDrawlistManager::~ManipulableFormDrawlistManager()
 CG3_INLINE void ManipulableFormDrawlistManager::updateObjectProperties()
 {
     obj->setDrawRelativeAxis(ui->subFrameAxisCheckBox->isChecked());
-    mw.canvas.update();
+	mw.updateCanvas();
 }
 
 CG3_INLINE void ManipulableFormDrawlistManager::updateManagerProperties()
@@ -43,7 +42,7 @@ CG3_INLINE void ManipulableFormDrawlistManager::updateManagerProperties()
 CG3_INLINE void ManipulableFormDrawlistManager::on_subFrameAxisCheckBox_stateChanged(int arg1)
 {
     obj->setDrawRelativeAxis(arg1 == Qt::Checked);
-    mw.canvas.update();
+	mw.updateCanvas();
 }
 
 } //namespace cg3::viewer

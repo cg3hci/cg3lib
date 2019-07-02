@@ -23,6 +23,7 @@
 #pragma clang diagnostic pop
 #endif
 
+#include "interfaces/abstract_mainwindow.h"
 #include "glcanvas.h"
 #include "utilities/loadersaver.h"
 #include "utilities/console_stream.h"
@@ -66,7 +67,7 @@ class UiMainWindowRaiiWrapper;
  * Managers and DrawableObjects.
  * @ingroup cg3viewer
  */
-class MainWindow : public QMainWindow
+class MainWindow : public AbstractMainWindow
 {
     Q_OBJECT
 
@@ -77,6 +78,9 @@ public:
 
     //Canvas:
     cg3::Point2i canvasSize() const;
+	// AbstractMainWindow interface
+	void updateCanvas();
+	void fitSceneCanvas();
 
     //DrawableObjects for the Canvas
     void pushDrawableObject(

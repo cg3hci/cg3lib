@@ -7,7 +7,6 @@
 #include "drawable_container_drawlist_manager.h"
 #include "ui_drawable_container_drawlist_manager.h"
 
-#include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/internal/drawable_object_drawlist_manager.h>
 #include <cg3/viewer/interfaces/drawable_container.h>
 #include <QSpacerItem>
@@ -22,7 +21,7 @@ CG3_INLINE DrawableContainerDrawListManager::DrawableContainerDrawListManager(
         bool closeButtonVisible) :
     SubManager(parent),
     ui(new Ui::DrawableContainerDrawListManager),
-    mw((MainWindow&)*parent),
+	mw((AbstractMainWindow&)*parent),
     cont(cont)
 {
     ui->setupUi(this);
@@ -115,38 +114,38 @@ CG3_INLINE void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContai
         const DrawableObject* obj)
 {
 
-    mw.canvas.deleteDrawableObject(obj);
+	mw.deleteDrawableObject(obj);
     ui->verticalLayout->removeWidget(mapSubManagers[obj]);
     mapSubManagers[obj]->setVisible(false);
     mapSubManagers.erase(obj);
-    mw.canvas.update();
+	mw.updateCanvas();
 }
 
 CG3_INLINE void DrawableContainerDrawListManager::changeVisibilityObject(
         const DrawableObject* obj,
         bool vis)
 {
-    mw.canvas.setDrawableObjectVisibility(obj, vis);
+	mw.setDrawableObjectVisibility(obj, vis);
     mapSubManagers[obj]->setDrawableObjectVisibility(vis);
-    mw.canvas.update();
+	mw.updateCanvas();
 }
 
 CG3_INLINE void DrawableContainerDrawListManager::on_visibleButton_clicked()
 {
     for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p : mapSubManagers){
-        mw.canvas.setDrawableObjectVisibility(p.first, true);
+		mw.setDrawableObjectVisibility(p.first, true);
         p.second->setDrawableObjectVisibility(true);
     }
-    mw.canvas.update();
+	mw.updateCanvas();
 }
 
 CG3_INLINE void DrawableContainerDrawListManager::on_hiddenButton_clicked()
 {
     for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p : mapSubManagers){
-        mw.canvas.setDrawableObjectVisibility(p.first, false);
+		mw.setDrawableObjectVisibility(p.first, false);
         p.second->setDrawableObjectVisibility(false);
     }
-    mw.canvas.update();
+	mw.updateCanvas();
 }
 
 } //namespace cg3::viewer

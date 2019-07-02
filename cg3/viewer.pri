@@ -84,6 +84,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_sphere.h \
         $$PWD/viewer/drawable_objects/drawable_plane.h \
         $$PWD/viewer/drawable_objects/drawable_triangle3.h \
+        $$PWD/viewer/interfaces/abstract_mainwindow.h \
         $$PWD/viewer/interfaces/drawable_container.h \
         $$PWD/viewer/interfaces/drawable_object.h \
         $$PWD/viewer/interfaces/manipulable_object.h \

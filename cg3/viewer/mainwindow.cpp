@@ -47,7 +47,7 @@ public:
  * checkboxes associtated to the DrawableObjects contained in the canvas.
  */
 CG3_INLINE MainWindow::MainWindow(QWidget* parent) :
-        QMainWindow(parent),
+		AbstractMainWindow(parent),
         ui(new internal::UiMainWindowRaiiWrapper(this)),
         consoleEnabled(false),
         first(true),
@@ -73,7 +73,7 @@ CG3_INLINE MainWindow::MainWindow(QWidget* parent) :
     ui->actionLoad_Mesh->setVisible(false);
     #endif
 
-    showMaximized();
+	QMainWindow::showMaximized();
 
     canvas.setSnapshotQuality(100);
     canvas.setSnapshotFormat("PNG");
@@ -89,7 +89,17 @@ CG3_INLINE MainWindow::~MainWindow()
  */
 CG3_INLINE Point2i MainWindow::canvasSize() const
 {
-    return Point2i(canvas.width(), canvas.height());
+	return Point2i(canvas.width(), canvas.height());
+}
+
+CG3_INLINE void MainWindow::updateCanvas()
+{
+	canvas.update();
+}
+
+CG3_INLINE void MainWindow::fitSceneCanvas()
+{
+	canvas.fitScene();
 }
 
 /**
@@ -149,6 +159,12 @@ CG3_INLINE bool MainWindow::deleteDrawableObject(const DrawableObject* obj)
         canvas.update();
         return true;
     }
+	else {
+		if (canvas.containsDrawableObject(obj)){
+			canvas.deleteDrawableObject(obj);
+			canvas.update();
+		}
+	}
     return false;
 }
 
@@ -161,14 +177,20 @@ CG3_INLINE bool MainWindow::deleteDrawableObject(const std::shared_ptr<const Dra
 
 /**
  * @brief Sets the visibility/non visibility of a DrawableObject, checking/unchecking its
- * checkbox accordingly.
+ * checkbox accordingly if it is in the list of DrawableObjects of the MainWindow.
  */
 CG3_INLINE void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
     if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
-        canvas.setDrawableObjectVisibility(obj, visible);
-        mapDrawListManagers[obj]->setDrawableObjectVisibility(visible);
+		if (obj->isVisible() != visible)
+			mapDrawListManagers[obj]->setDrawableObjectVisibility(visible);
+		canvas.setDrawableObjectVisibility(obj, visible);
     }
+	else {
+		if (canvas.containsDrawableObject(obj)){
+			canvas.setDrawableObjectVisibility(obj, visible);
+		}
+	}
 }
 
 CG3_INLINE void MainWindow::setDrawableObjectVisibility(const std::shared_ptr<const DrawableObject> &ptr, bool visible)

@@ -8,6 +8,7 @@
 #define CG3_DRAWABLE_CONTAINER_DRAWLIST_MANAGER_H
 
 #include "submanager.h"
+#include "../interfaces/abstract_mainwindow.h"
 
 class QSpacerItem;
 
@@ -18,7 +19,6 @@ class DrawableContainer;
 
 namespace viewer {
 
-class MainWindow;
 class DrawableObjectDrawListManager;
 
 namespace Ui {
@@ -56,7 +56,7 @@ private slots:
 
 private:
     Ui::DrawableContainerDrawListManager *ui;
-    MainWindow& mw;
+	AbstractMainWindow& mw;
     const DrawableContainer* cont;
     std::map<const DrawableObject*, DrawableObjectDrawListManager*> mapSubManagers;
     QSpacerItem* m_spacer;

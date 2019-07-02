@@ -16,7 +16,7 @@ namespace viewer {
 CG3_INLINE EigenMeshManager::EigenMeshManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::EigenMeshManager),
-    mainWindow((cg3::viewer::MainWindow&)*parent),
+	mainWindow((cg3::viewer::AbstractMainWindow&)*parent),
     loaded (false)
 {
     ui->setupUi(this);
@@ -32,8 +32,8 @@ CG3_INLINE void EigenMeshManager::setEigenMesh(const EigenMesh& m)
     mainWindow.pushDrawableObject(&mesh, "EigenMesh");
     setButtonsMeshLoaded(true);
     loaded = true;
-    mainWindow.canvas.update();
-    mainWindow.canvas.fitScene();
+	mainWindow.updateCanvas();
+	mainWindow.fitSceneCanvas();
 }
 
 CG3_INLINE EigenMeshManager::~EigenMeshManager()
@@ -57,8 +57,8 @@ CG3_INLINE void EigenMeshManager::on_loadMeshButton_clicked()
             mesh.setEnableTriangleColor();
             mainWindow.pushDrawableObject(&mesh, filename.substr(filename.find_last_of("/") + 1));
             setButtonsMeshLoaded(true);
-            mainWindow.canvas.update();
-            mainWindow.canvas.fitScene();
+			mainWindow.updateCanvas();
+			mainWindow.fitSceneCanvas();
         }
         else {
             std::cerr << "Error while loading file " << filename << ".\n";
@@ -71,8 +71,8 @@ CG3_INLINE void EigenMeshManager::on_clearMeshButton_clicked()
     if (loaded) {
         setButtonsMeshLoaded(false);
         mainWindow.deleteDrawableObject(&mesh);
-        mainWindow.canvas.update();
-        mainWindow.canvas.fitScene();
+		mainWindow.updateCanvas();
+		mainWindow.fitSceneCanvas();
     }
 }
 
@@ -102,7 +102,7 @@ CG3_INLINE void EigenMeshManager::on_pointsMeshRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setPointsShading();
-            mainWindow.canvas.update();
+			mainWindow.updateCanvas();
         }
     }
 }
@@ -112,7 +112,7 @@ CG3_INLINE void EigenMeshManager::on_flatMeshRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setFlatShading();
-            mainWindow.canvas.update();
+			mainWindow.updateCanvas();
         }
     }
 }
@@ -122,7 +122,7 @@ CG3_INLINE void EigenMeshManager::on_smoothMeshRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setSmoothShading();
-            mainWindow.canvas.update();
+			mainWindow.updateCanvas();
         }
     }
 }
@@ -131,7 +131,7 @@ CG3_INLINE void EigenMeshManager::on_wireframeMeshCheckBox_stateChanged(int arg1
 {
     if (loaded) {
         mesh.setWireframe(arg1 == Qt::Checked);
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 
@@ -140,7 +140,7 @@ CG3_INLINE void EigenMeshManager::on_verticesColorRadioButton_toggled(bool check
     if (loaded) {
         if (checked){
             mesh.setEnableVertexColor();
-            mainWindow.canvas.update();
+			mainWindow.updateCanvas();
         }
     }
 }
@@ -150,7 +150,7 @@ CG3_INLINE void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked)
     if (loaded) {
         if (checked){
             mesh.setEnableTriangleColor();
-            mainWindow.canvas.update();
+			mainWindow.updateCanvas();
         }
     }
 }
@@ -159,7 +159,7 @@ CG3_INLINE void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1)
 {
     if (loaded) {
         mesh.setVisibleBoundingBox(arg1 == Qt::Checked);
-        mainWindow.canvas.update();
+		mainWindow.updateCanvas();
     }
 }
 

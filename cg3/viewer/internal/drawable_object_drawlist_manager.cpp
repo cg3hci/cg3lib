@@ -7,7 +7,6 @@
 #include "drawable_object_drawlist_manager.h"
 #include "ui_drawable_object_drawlist_manager.h"
 
-#include <cg3/viewer/mainwindow.h>
 #include <cg3/viewer/interfaces/drawable_mesh.h>
 #include <cg3/viewer/interfaces/drawable_container.h>
 #include <cg3/viewer/interfaces/manipulable_object.h>
@@ -26,7 +25,7 @@ CG3_INLINE DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         bool closeButtonVisible) :
     QFrame(parent),
     ui(new Ui::DrawableObjectDrawListManager),
-    mw((MainWindow&)*parent),
+	mw((AbstractMainWindow&)*parent),
     object(object),
     subframe(nullptr),
     selected(false),
@@ -102,7 +101,7 @@ CG3_INLINE bool DrawableObjectDrawListManager::isContainer() const
  */
 CG3_INLINE void DrawableObjectDrawListManager::updateObjectProperties()
 {
-    mw.canvas.setDrawableObjectVisibility(object, ui->checkBox->isChecked());
+	mw.setDrawableObjectVisibility(object, ui->checkBox->isChecked());
     if (subframe)
         subframe->updateObjectProperties();
 }
@@ -181,8 +180,8 @@ CG3_INLINE void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
 
 CG3_INLINE void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)
 {
-    mw.canvas.setDrawableObjectVisibility(object, state == Qt::Checked);
-    mw.canvas.update();
+	mw.setDrawableObjectVisibility(object, state == Qt::Checked);
+	mw.updateCanvas();
 }
 
 CG3_INLINE void DrawableObjectDrawListManager::on_closePushButton_clicked()

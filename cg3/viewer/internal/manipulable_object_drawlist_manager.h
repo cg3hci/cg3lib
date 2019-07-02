@@ -8,14 +8,13 @@
 #define CG3_MANIPULABLE_OBJECT_DRAWLIST_MANAGER_H
 
 #include "submanager.h"
+#include "../interfaces/abstract_mainwindow.h"
 
 namespace cg3 {
 
 class ManipulableObject;
 
 namespace viewer {
-
-class MainWindow;
 
 namespace Ui {
 class ManipulableFormDrawlistManager;
@@ -40,7 +39,7 @@ private slots:
 
 private:
     Ui::ManipulableFormDrawlistManager *ui;
-    MainWindow& mw;
+	AbstractMainWindow& mw;
     const ManipulableObject* obj;
 };
 

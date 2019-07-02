@@ -9,7 +9,7 @@
 #define CG3_EIGENMESH_MANAGER_H
 
 #include <QFrame>
-#include <cg3/viewer/mainwindow.h>
+#include <cg3/viewer/interfaces/abstract_mainwindow.h>
 #include <cg3/viewer/utilities/loadersaver.h>
 #include "../drawable_objects/drawable_eigenmesh.h"
 
@@ -49,7 +49,7 @@ private slots:
 private:
     void setButtonsMeshLoaded(bool b);
     Ui::EigenMeshManager *ui;
-    cg3::viewer::MainWindow& mainWindow;
+	cg3::viewer::AbstractMainWindow& mainWindow;
     cg3::DrawableEigenMesh mesh;
     cg3::viewer::LoaderSaver objls;
     bool loaded;

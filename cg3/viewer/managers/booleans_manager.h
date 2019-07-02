@@ -9,7 +9,7 @@
 #define CG3_BOOLEANS_MANAGER_H
 
 #include <QFrame>
-#include <cg3/viewer/mainwindow.h>
+#include <cg3/viewer/interfaces/abstract_mainwindow.h>
 #include <cg3/viewer/utilities/loadersaver.h>
 #include "../drawable_objects/drawable_eigenmesh.h"
 
@@ -77,7 +77,7 @@ private slots:
 
 private:
     Ui::BooleansManager *ui;
-    cg3::viewer::MainWindow& mainWindow;
+	cg3::viewer::AbstractMainWindow& mainWindow;
     std::vector<cg3::DrawableEigenMesh*> meshes;
     cg3::DrawableEigenMesh* result;
     cg3::Vec3d lastAxis;

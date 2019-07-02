@@ -16,7 +16,6 @@
 namespace cg3 {
 namespace viewer {
 class GLCanvas;
-class MainWindow;
 }
 #endif
 
