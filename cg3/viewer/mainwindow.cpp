@@ -181,16 +181,13 @@ CG3_INLINE bool MainWindow::deleteDrawableObject(const std::shared_ptr<const Dra
  */
 CG3_INLINE void MainWindow::setDrawableObjectVisibility(const DrawableObject* obj, bool visible)
 {
-    if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
+	if (mapDrawListManagers.find(obj) != mapDrawListManagers.end()){
 		if (obj->isVisible() != visible)
 			mapDrawListManagers[obj]->setDrawableObjectVisibility(visible);
-		canvas.setDrawableObjectVisibility(obj, visible);
-    }
-	else {
-		if (canvas.containsDrawableObject(obj)){
-			canvas.setDrawableObjectVisibility(obj, visible);
-		}
+
 	}
+	canvas.setDrawableObjectVisibility(obj, visible);
+	canvas.update();
 }
 
 CG3_INLINE void MainWindow::setDrawableObjectVisibility(const std::shared_ptr<const DrawableObject> &ptr, bool visible)
