@@ -250,14 +250,9 @@ CG3_INLINE bool BoundingBox3::overlap(const BoundingBox3& otherBox)
 CG3_INLINE void BoundingBox3::extremes(std::vector<Point3d>& extremes) const
 {
     extremes.resize(8);
-    extremes[0] = _min;
-    extremes[1].set(_max.x(), _min.y(), _min.z());
-    extremes[2].set(_max.x(), _min.y(), _max.z());
-    extremes[3].set(_min.x(), _min.y(), _max.z());
-    extremes[4].set(_min.x(), _max.y(), _min.z());
-    extremes[5].set(_max.x(), _max.y(), _min.z());
-    extremes[6] = _max;
-    extremes[7].set(_min.x(), _max.y(), _max.z());
+	for (uint i = 0; i < 8; ++i) {
+		extremes[i] = this->operator[](i);
+	}
 }
 
 /**

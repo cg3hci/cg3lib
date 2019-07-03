@@ -19,7 +19,7 @@ SimpleEigenMesh EigenMeshAlgorithms::makeBox(const BoundingBox3& bb, double mini
         bb.extremes(extremes);
         box.resizeVertices(8);
         for (unsigned int i = 0; i < 8; i++){
-            box.setVertex(i, extremes[i].x(), extremes[i].y(), extremes[i].z());
+			box.setVertex(i, bb[i]);
         }
         box.resizeFaces(12);
         box.setFace(0, 0,1,2);
