@@ -21,8 +21,15 @@ namespace viewer {
  *
  * @param initialPath: default: "."
  */
+CG3_INLINE LoaderSaver::LoaderSaver(QWidget *parent, const std::string &initialPath) :
+	_actualPath(initialPath),
+	parent(parent)
+{
+}
+
 CG3_INLINE LoaderSaver::LoaderSaver(const std::string &initialPath) :
-    _actualPath(initialPath)
+	_actualPath(initialPath),
+	parent(nullptr)
 {
 }
 
@@ -85,7 +92,7 @@ CG3_INLINE const std::string&LoaderSaver::actualPath() const
 CG3_INLINE std::string LoaderSaver::loadDialog(const std::string& windowName)
 {
     QString selectedFilter;
-    QString filename = QFileDialog::getOpenFileName(nullptr,
+	QString filename = QFileDialog::getOpenFileName(parent,
                        QString::fromStdString(windowName),
                        QString::fromStdString(_actualPath),
                        QString::fromStdString(listToExtensions(true)), &selectedFilter);
@@ -114,7 +121,7 @@ CG3_INLINE std::string LoaderSaver::saveDialog(
 {
     QString selectedFilter;
     selectedExtension = "";
-    QString filename = QFileDialog::getSaveFileName(nullptr,
+	QString filename = QFileDialog::getSaveFileName(parent,
                                                     QString::fromStdString(windowName),
                                                     QString::fromStdString(_actualPath),
                                                     QString::fromStdString(listToExtensions(false)), &selectedFilter);
@@ -148,9 +155,9 @@ CG3_INLINE std::string LoaderSaver::saveDialog(
 CG3_INLINE std::string LoaderSaver::directoryDialog(const std::string &windowName)
 {
     std::string folder = "";
-    QString foldername = QFileDialog::getExistingDirectory(nullptr,
+	QString foldername = QFileDialog::getExistingDirectory(parent,
                                                            QString::fromStdString(windowName),
-                                                           QString::fromStdString(_actualPath));
+														   QString::fromStdString(_actualPath));
     if (!foldername.isEmpty()){
         folder = foldername.toStdString();
         _actualPath = folder;

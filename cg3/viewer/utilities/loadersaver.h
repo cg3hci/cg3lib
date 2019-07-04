@@ -12,6 +12,8 @@
 #include <list>
 #include <memory>
 
+class QWidget;
+
 namespace cg3 {
 namespace viewer {
 
@@ -29,6 +31,7 @@ namespace viewer {
 class LoaderSaver
 {
 public:
+	LoaderSaver(QWidget* parent, const std::string& initialPath= ".");
     LoaderSaver(const std::string& initialPath = ".");
 
     void addSupportedExtension(const std::string& extension);
@@ -46,6 +49,7 @@ public:
 private:
     std::string _actualPath;
     std::list<std::string> supportedExtensions;
+	QWidget* parent;
 
     std::string listToExtensions(bool allFormats);
 };
