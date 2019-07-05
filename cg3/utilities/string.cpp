@@ -55,8 +55,14 @@ inline void separateExtensionFromFilename(
         std::string& extension)
 {
     size_t lastindex = fullname.find_last_of(".");
-    rawname = fullname.substr(0, lastindex);
-    extension = fullname.substr(lastindex, fullname.size());
+	if (lastindex != std::string::npos){
+		rawname = fullname.substr(0, lastindex);
+		extension = fullname.substr(lastindex, fullname.size());
+	}
+	else {
+		rawname = "";
+		extension = "";
+	}
 }
 
 /**
@@ -81,8 +87,14 @@ inline void separateFilenameFromPath(
         std::string &filename)
 {
     size_t lastindex = fullpath.find_last_of("/");
-    path = fullpath.substr(0, lastindex);
-    filename = fullpath.substr(lastindex+1, fullpath.size());
+	if (lastindex != std::string::npos){
+		path = fullpath.substr(0, lastindex);
+		filename = fullpath.substr(lastindex+1, fullpath.size());
+	}
+	else {
+		path = "";
+		filename = "";
+	}
 }
 
 /**
