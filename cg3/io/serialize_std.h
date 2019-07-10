@@ -78,6 +78,4 @@ void deserialize(std::array<T, A...> &a, std::ifstream& binaryFile);
 
 } //namespace cg3
 
-#include "serialize_std.cpp"
-
 #endif // CG3_SERIALIZE_STD_H

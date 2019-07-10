@@ -93,4 +93,8 @@ void deserializeAttribute(std::ifstream& binaryFile, T& t, Args&... args);
 
 #include "serialize.cpp"
 
+#include "serialize_std.cpp"
+#include "serialize_eigen.cpp"
+#include "serialize_qt.cpp"
+
 #endif // CG3_SERIALIZE_H
