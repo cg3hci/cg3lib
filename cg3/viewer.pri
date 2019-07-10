@@ -72,6 +72,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/viewer.h \
         $$PWD/viewer/glcanvas.h \
         $$PWD/viewer/mainwindow.h \
+        $$PWD/viewer/drawable_objects/drawable_arrow3.h \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2.h \
         $$PWD/viewer/drawable_objects/drawable_bounding_box3.h \
         $$PWD/viewer/drawable_objects/drawable_cylinder.h \
@@ -106,6 +107,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
     SOURCES += \
         $$PWD/viewer/glcanvas.cpp \
         $$PWD/viewer/mainwindow.cpp \
+        $$PWD/viewer/drawable_objects/drawable_arrow3.cpp \
         $$PWD/viewer/drawable_objects/drawable_bounding_box2.cpp \
         $$PWD/viewer/drawable_objects/drawable_bounding_box3.cpp \
         $$PWD/viewer/drawable_objects/drawable_cylinder.cpp \
