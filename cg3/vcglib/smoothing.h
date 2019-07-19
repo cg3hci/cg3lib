@@ -35,6 +35,21 @@ void taubinSmoothing(
         const float mu,
         bool selectedVertices);
 
+
+#ifdef CG3_EIGENMESH_DEFINED
+inline cg3::EigenMesh laplacianSmoothing(
+        const cg3::EigenMesh& mesh,
+        const int iterations,
+        const std::vector<size_t>& selectedVertices = internal::dummySelectedVertices);
+
+#endif
+
+template <class TriangleEdgeMeshType>
+void laplacianSmoothing(
+        TriangleEdgeMeshType& mesh,
+        const int iterations,
+        bool selectedVertices);
+
 }
 }
 

@@ -24,7 +24,7 @@ CGAL::Mean_curvature_flow_skeletonization<PolyhedronWithId>::Skeleton skeleton(c
 #ifdef  CG3_EIGENMESH_DEFINED
 std::vector<cg3::Point3d> skeleton(
         const SimpleEigenMesh& mesh,
-        std::vector<std::vector<unsigned int>>& correspondingVertices,
+        std::vector<std::vector<size_t>>& birthVertices,
         std::vector<std::vector<size_t>>& polylines);
 #endif
 

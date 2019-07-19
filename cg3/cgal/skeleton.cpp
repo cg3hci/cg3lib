@@ -21,7 +21,8 @@ CG3_INLINE CGAL::Mean_curvature_flow_skeletonization<PolyhedronWithId>::Skeleton
     typedef Skeleton::edge_descriptor                                   Skeleton_edge;
 
     Skeleton skeleton;
-    CGAL::extract_mean_curvature_flow_skeleton(mesh, skeleton);
+    Skeletonization skeletonization(mesh);
+    skeletonization(skeleton);
 
 //    std::cout << "Number of vertices of the skeleton: " << boost::num_vertices(skeleton) << "\n";
 //    std::cout << "Number of edges of the skeleton: " << boost::num_edges(skeleton) << "\n";
@@ -31,12 +32,12 @@ CG3_INLINE CGAL::Mean_curvature_flow_skeletonization<PolyhedronWithId>::Skeleton
 
 #ifdef  CG3_EIGENMESH_DEFINED
 namespace internal {
-static std::vector<std::vector<unsigned int>> dummyBirthVertices;
+static std::vector<std::vector<size_t>> dummyBirthVertices;
 static std::vector<std::vector<size_t>> dummyPolylines;
 }
 CG3_INLINE std::vector<cg3::Point3d> skeleton(
         const SimpleEigenMesh &mesh,
-        std::vector<std::vector<unsigned int>>& birthVertices = internal::dummyBirthVertices,
+        std::vector<std::vector<size_t>>& birthVertices = internal::dummyBirthVertices,
         std::vector<std::vector<size_t>>& polylines = internal::dummyPolylines)
 {
     typedef boost::graph_traits<PolyhedronWithId>::vertex_descriptor    vertex_descriptor;
@@ -50,6 +51,8 @@ CG3_INLINE std::vector<cg3::Point3d> skeleton(
 
     PolyhedronWithId pmesh = polyhedronFromEigenMesh<PolyhedronWithId>(mesh);
     std::vector<cg3::Point3d> skeletonPoints;
+
+    CGAL::set_halfedgeds_items_id(pmesh);
 
     Skeleton cgalSkel = skeleton(pmesh);
 
@@ -67,8 +70,8 @@ CG3_INLINE std::vector<cg3::Point3d> skeleton(
     BOOST_FOREACH(Skeleton_vertex v, vertices(cgalSkel)) {
         const PolyhedronWithId::Point& point = cgalSkel[v].point;
         const size_t& vertexId = vMap.at(cg3::Point3d(point.x(), point.y(), point.z()));
-        BOOST_FOREACH(vertex_descriptor vd, cgalSkel[v].vertices) {
-            unsigned int id = vd->id();
+        BOOST_FOREACH(const vertex_descriptor& vd, cgalSkel[v].vertices) {
+            const size_t& id = vd->id();
             birthVertices[vertexId].push_back(id);
         }
     }
