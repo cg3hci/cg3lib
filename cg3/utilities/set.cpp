@@ -66,10 +66,9 @@ inline std::set<T, A...> difference(
 
 /**
  * @ingroup cg3core
- * @brief isSubset
  * @param a
  * @param b
- * @return
+ * @return returns true if set a is subset of set b, false otherwise
  */
 template<typename T, typename ...A>
 inline bool isSubset(
@@ -87,7 +86,7 @@ inline bool isSubset(
  * @return
  */
 template<typename T, typename ...A>
-bool contains(const std::set<T, A...>& s, const T& obj)
+inline bool contains(const std::set<T, A...>& s, const T& obj)
 {
     return s.find(obj) != s.end();
 }
