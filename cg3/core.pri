@@ -63,6 +63,7 @@ HEADERS += \
     $$PWD/io/ply/ply_header.h \
     $$PWD/io/ply/ply_vertex.h \
     $$PWD/io/ply/ply_face.h \
+    $$PWD/io/ply/ply_edge.h \
     $$PWD/utilities/cg3_config_folder.h \ #utilities
     $$PWD/utilities/color.h \
     $$PWD/utilities/comparators.h \
@@ -107,6 +108,7 @@ SOURCES += \
     $$PWD/io/serialize_qt.cpp \
     $$PWD/io/serialize_std.cpp \
     $$PWD/io/ply/ply.cpp \
+    $$PWD/io/ply/ply_edge.cpp \
     $$PWD/io/ply/ply_face.cpp \
     $$PWD/io/ply/ply_header.cpp \
     $$PWD/io/ply/ply_vertex.cpp \

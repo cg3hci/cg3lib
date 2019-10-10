@@ -76,7 +76,7 @@ bool loadFacesTxt(
 		io::FileMeshType& meshType,
 		B faceNormals[],
 		io::FileColorMode colorMod,
-		C facesColors[],
+		C faceColors[],
 		D polygonSizes[])
 {
 	bool error = false;
@@ -101,14 +101,14 @@ bool loadFacesTxt(
 				case ply::nz:
 					faceNormals[f*3+2] = internal::readProperty<B>(token, p.type); break;
 				case ply::red :
-					facesColors[f*colorStep] = internal::readProperty<C>(token, p.type, true); break;
+					faceColors[f*colorStep] = internal::readProperty<C>(token, p.type, true); break;
 				case ply::green :
-					facesColors[f*colorStep+1] = internal::readProperty<C>(token, p.type, true); break;
+					faceColors[f*colorStep+1] = internal::readProperty<C>(token, p.type, true); break;
 				case ply::blue :
-					facesColors[f*colorStep+2] = internal::readProperty<C>(token, p.type, true); break;
+					faceColors[f*colorStep+2] = internal::readProperty<C>(token, p.type, true); break;
 				case ply::alpha :
 					if (colorStep == 4){ // alpha in file that will be saved
-						facesColors[f*colorStep+3] = internal::readProperty<C>(token, p.type, true);
+						faceColors[f*colorStep+3] = internal::readProperty<C>(token, p.type, true);
 					}
 					else { // alpha in file that will not be saved
 						++token;
@@ -175,9 +175,9 @@ bool loadFacesBin(
 		const PlyHeader& header,
 		A& faces,
 		io::FileMeshType& meshType,
-		B facesNormals[],
+		B faceNormals[],
 		io::FileColorMode colorMod ,
-		C facesColors[],
+		C faceColors[],
 		D polygonSizes[])
 {
 	uint colorStep = 3;
@@ -187,20 +187,20 @@ bool loadFacesBin(
 		for (ply::Property p : header.faceProperties()) {
 			switch (p.name) {
 				case ply::nx :
-					facesNormals[f*3] = internal::readProperty<B>(file, p.type); break;
+					faceNormals[f*3] = internal::readProperty<B>(file, p.type); break;
 				case ply::ny :
-					facesNormals[f*3+1] = internal::readProperty<B>(file, p.type); break;
+					faceNormals[f*3+1] = internal::readProperty<B>(file, p.type); break;
 				case ply::nz :
-					facesNormals[f*3+2] = internal::readProperty<B>(file, p.type); break;
+					faceNormals[f*3+2] = internal::readProperty<B>(file, p.type); break;
 				case ply::red :
-					facesColors[f*colorStep] = internal::readProperty<C>(file, p.type); break;
+					faceColors[f*colorStep] = internal::readProperty<C>(file, p.type); break;
 				case ply::green :
-					facesColors[f*colorStep+1] = internal::readProperty<C>(file, p.type); break;
+					faceColors[f*colorStep+1] = internal::readProperty<C>(file, p.type); break;
 				case ply::blue :
-					facesColors[f*colorStep+2] = internal::readProperty<C>(file, p.type); break;
+					faceColors[f*colorStep+2] = internal::readProperty<C>(file, p.type); break;
 				case ply::alpha :
 					if (colorStep == 4)
-						facesColors[f*colorStep+3] = internal::readProperty<C>(file, p.type);
+						faceColors[f*colorStep+3] = internal::readProperty<C>(file, p.type);
 					else
 						internal::readProperty<C>(file, p.type);
 						;
@@ -208,7 +208,6 @@ bool loadFacesBin(
 				case ply::vertex_indices :
 					loadFaceIndicesBin(file, p, f, faces, polygonSizes);
 					break;
-				case ply::unknown :
 				default:
 					if (p.list){
 						uint s = internal::readProperty<int>(file, p.listSizeType);
@@ -246,9 +245,9 @@ void saveFaces(
 		const PlyHeader& header,
 		const A faces[],
 		io::FileMeshMode meshMode,
-		const B facesNormals[],
+		const B faceNormals[],
 		io::FileColorMode colorMod ,
-		const C facesColors[],
+		const C faceColors[],
 		const D polygonSizes[])
 {
 	bool bin = header.format() == ply::BINARY;
@@ -260,20 +259,20 @@ void saveFaces(
 		for (ply::Property p : header.faceProperties()) {
 			switch (p.name) {
 				case ply::nx :
-					internal::writeProperty(file, facesNormals[f*3], p.type, bin); break;
+					internal::writeProperty(file, faceNormals[f*3], p.type, bin); break;
 				case ply::ny :
-					internal::writeProperty(file, facesNormals[f*3+1], p.type, bin); break;
+					internal::writeProperty(file, faceNormals[f*3+1], p.type, bin); break;
 				case ply::nz :
-					internal::writeProperty(file, facesNormals[f*3+2], p.type, bin); break;
+					internal::writeProperty(file, faceNormals[f*3+2], p.type, bin); break;
 				case ply::red :
-					internal::writeProperty(file, facesColors[f*colorStep], p.type, bin, true); break;
+					internal::writeProperty(file, faceColors[f*colorStep], p.type, bin, true); break;
 				case ply::green :
-					internal::writeProperty(file, facesColors[f*colorStep+1], p.type, bin, true); break;
+					internal::writeProperty(file, faceColors[f*colorStep+1], p.type, bin, true); break;
 				case ply::blue :
-					internal::writeProperty(file, facesColors[f*colorStep+2], p.type, bin, true); break;
+					internal::writeProperty(file, faceColors[f*colorStep+2], p.type, bin, true); break;
 				case ply::alpha :
 					if (colorStep == 4)
-						internal::writeProperty(file, facesColors[f*colorStep+3], p.type, bin, true);
+						internal::writeProperty(file, faceColors[f*colorStep+3], p.type, bin, true);
 					else
 						internal::writeProperty(file, (p.type < 6 ? 255 : 1), p.type, bin, true);
 						;
@@ -281,7 +280,6 @@ void saveFaces(
 				case ply::vertex_indices :
 					internal::saveFaceIndices(file, p, f, startingIndex, faces, meshMode, polygonSizes, bin);
 					break;
-				case ply::unknown :
 				default:
 					internal::writeProperty(file, 0, p.type, bin); break;
 			}
@@ -296,16 +294,16 @@ bool loadFaces(std::ifstream& file,
 		const PlyHeader& header,
 		A& faces,
 		io::FileMeshType& meshType,
-		B facesNormals[],
+		B faceNormals[],
 		io::FileColorMode colorMod ,
-		C facesColors[],
+		C faceColors[],
 		D polygonSizes[])
 {
 	if(header.format() == ply::ASCII) {
-		return internal::loadFacesTxt(file, header, faces, meshType, facesNormals, colorMod, facesColors, polygonSizes);
+		return internal::loadFacesTxt(file, header, faces, meshType, faceNormals, colorMod, faceColors, polygonSizes);
 	}
 	else {
-		return internal::loadFacesBin(file, header, faces, meshType, facesNormals, colorMod, facesColors, polygonSizes);
+		return internal::loadFacesBin(file, header, faces, meshType, faceNormals, colorMod, faceColors, polygonSizes);
 	}
 }
 

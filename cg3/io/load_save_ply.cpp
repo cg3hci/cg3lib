@@ -14,18 +14,21 @@
 
 #include "ply/ply_vertex.h"
 #include "ply/ply_face.h"
+#include "ply/ply_edge.h"
 
 namespace cg3 {
 
-template <typename T, typename V, typename C, typename W>
+template <typename T, typename V, typename E, typename C, typename W>
 bool loadMeshFromPly(
 		const std::string& filename,
 		std::vector<T>& coords,
 		std::vector<V>& faces,
+		std::vector<E>& edges,
 		io::FileMeshMode& modality,
-		std::vector<C>& verticesNormals,
-		std::vector<Color>& verticesColors,
-		std::vector<Color>& facesColors,
+		std::vector<C>& vertexNormals,
+		std::vector<Color>& vertexColors,
+		std::vector<Color>& faceColors,
+		std::vector<Color>& edgeColors,
 		std::vector<W>& faceSizes)
 {
 	std::ifstream file(filename.c_str());
@@ -42,13 +45,16 @@ bool loadMeshFromPly(
 
 	uint nV = header.numberVertices();
 	uint nF = header.numberFaces();
-	std::vector<uint> vc, fc; //v and f colors
+	uint nE = header.numberEdges();
+	std::vector<uint> vc, fc, ec; //v and f colors
 	std::vector<double> fn; //f normals
 	coords.resize(nV*3);
+	edges.resize(nE*2);
 	faces.clear();
-	verticesNormals.resize(nV*3);
+	vertexNormals.resize(nV*3);
 	vc.resize(nV*4); //also alpha
 	fc.resize(nF*4); //also alpha
+	ec.resize(nE*4); //also alpha
 	fn.resize(nF*3);
 	faceSizes.resize(nF);
 
@@ -56,11 +62,14 @@ bool loadMeshFromPly(
 	for (ply::Element el : header){
 		switch (el.type) {
 			case ply::VERTEX:
-				loadOk = ply::loadVertices(file, header, coords.data(), verticesNormals.data(), io::RGBA, vc.data());
+				loadOk = ply::loadVertices(file, header, coords.data(), vertexNormals.data(), io::RGBA, vc.data());
 				break;
 			case ply::FACE:
 				loadOk = ply::loadFaces(file, header, faces, meshType, fn.data(), io::RGBA, fc.data(), faceSizes.data());
 				modality.setMeshType(meshType);
+				break;
+			case ply::EDGE:
+				loadOk = ply::loadEdges(file, header, edges.data(), io::RGBA, ec.data());
 				break;
 			default:
 				break;
@@ -68,18 +77,78 @@ bool loadMeshFromPly(
 		if (!loadOk)
 			return false;
 	}
-	verticesColors.clear();
-	verticesColors.reserve(nV);
+	vertexColors.clear();
+	vertexColors.reserve(nV);
 	for (uint i = 0; i < vc.size(); i+=4){
-		verticesColors.push_back(Color(vc[i], vc[i+1], vc[i+2], vc[i+3]));
+		vertexColors.push_back(Color(vc[i], vc[i+1], vc[i+2], vc[i+3]));
 	}
-	facesColors.clear();
-	facesColors.reserve(nF);
+	faceColors.clear();
+	faceColors.reserve(nF);
 	for (uint i = 0; i < fc.size(); i+=4){
-		facesColors.push_back(Color(fc[i], fc[i+1], fc[i+2], fc[i+3]));
+		faceColors.push_back(Color(fc[i], fc[i+1], fc[i+2], fc[i+3]));
+	}
+	edgeColors.clear();
+	edgeColors.reserve(nE);
+	for (uint i = 0; i < ec.size(); i+=4){
+		faceColors.push_back(Color(ec[i], ec[i+1], ec[i+2], ec[i+3]));
 	}
 	file.close();
 	return loadOk;
+}
+
+template <typename T, typename V, typename C, typename W>
+bool loadMeshFromPly(
+		const std::string& filename,
+		std::vector<T>& coords,
+		std::vector<V>& faces,
+		io::FileMeshMode& modality,
+		std::vector<C>& vertexNormals,
+		std::vector<Color>& vertexColors,
+		std::vector<Color>& faceColors,
+		std::vector<W>& faceSizes)
+{
+	std::vector<uint> edges;
+	std::vector<Color> eCols;
+	return loadMeshFromPly(filename, coords, faces, edges, modality, vertexNormals,
+						   vertexColors, faceColors, eCols, faceSizes);
+}
+
+template <template <class ... > class Con1, template <class ... > class Con2,
+		  template <class ... > class Con3, template <class ... > class Con4,
+		  template <class ... > class Con5, template <class ... > class Con6,
+		  template <class ... > class Con7, template <class ... > class Con8,
+		  class T, class V, class E, class C, class W,
+		  class ... ArgsT, class ... ArgsV, class ... ArgsE, class ... ArgsC, class ... ArgsColor, class ... ArgsW>
+bool loadMeshFromPly(
+		const std::string& filename,
+		Con1<T, ArgsT...>& coords,
+		Con2<V, ArgsV...>& faces,
+		Con3<E, ArgsE...>& edges,
+		io::FileMeshMode& modality,
+		Con4<C, ArgsC...>& vertexNormals,
+		Con5<Color, ArgsColor...>& vertexColors,
+		Con6<Color, ArgsColor...>& faceColors,
+		Con7<Color, ArgsColor...>& edgeColors,
+		Con8<W, ArgsW...>& faceSizes)
+{
+	std::vector<T> vcoords;
+	std::vector<V> vfaces;
+	std::vector<E> vedges;
+	std::vector<C> vvertexNormals;
+	std::vector<Color> vvertexColors, vfaceColors, vedgeColors;
+	std::vector<W> vfaceSizes;
+	bool b = loadMeshFromPly(filename, vcoords, vfaces, vedges, modality, vvertexNormals, vvertexColors, vfaceColors, vedgeColors, vfaceSizes);
+	if (b){
+		coords = Con1<T>(vcoords.begin(), vcoords.end());
+		faces = Con2<V>(vfaces.begin(), vfaces.end());
+		edges = Con3<E>(vedges.begin(), vedges.end());
+		vertexNormals = Con4<C>(vvertexNormals.begin(), vvertexNormals.end());
+		vertexColors = Con5<Color>(vvertexColors.begin(), vvertexColors.end());
+		faceColors = Con6<Color>(vfaceColors.begin(), vfaceColors.end());
+		edgeColors = Con7<Color>(vedgeColors.begin(), vedgeColors.end());
+		faceSizes = Con8<W>(vfaceSizes.begin(), vfaceSizes.end());
+	}
+	return b;
 }
 
 template <template <class ... > class Con1, template <class ... > class Con2,
@@ -92,23 +161,24 @@ bool loadMeshFromPly(
         Con1<T, ArgsT...>& coords,
         Con2<V, ArgsV...>& faces,
 		io::FileMeshMode& modality,
-        Con3<C, ArgsC...>& verticesNormals,
-        Con4<Color, ArgsColor...>& verticesColors,
-        Con5<Color, ArgsColor...>& facesColors,
+		Con3<C, ArgsC...>& vertexNormals,
+		Con4<Color, ArgsColor...>& vertexColors,
+		Con5<Color, ArgsColor...>& faceColors,
         Con6<W, ArgsW...>& faceSizes)
 {
 	std::vector<T> vcoords;
 	std::vector<V> vfaces;
-	std::vector<C> vverticesNormals;
-	std::vector<Color> vverticesColors, vfacesColors;
+	std::vector<uint> vedges;
+	std::vector<C> vvertexNormals;
+	std::vector<Color> vvertexColors, vfaceColors, vedgeColors;
 	std::vector<W> vfaceSizes;
-	bool b = loadMeshFromPly(filename, vcoords, vfaces, modality, vverticesNormals, vverticesColors, vfacesColors, vfaceSizes);
+	bool b = loadMeshFromPly(filename, vcoords, vfaces, vedges, modality, vvertexNormals, vvertexColors, vfaceColors, vedgeColors, vfaceSizes);
 	if (b){
 		coords = Con1<T>(vcoords.begin(), vcoords.end());
 		faces = Con2<V>(vfaces.begin(), vfaces.end());
-		verticesNormals = Con3<C>(vverticesNormals.begin(), vverticesNormals.end());
-		verticesColors = Con4<Color>(vverticesColors.begin(), vverticesColors.end());
-		facesColors = Con5<Color>(vfacesColors.begin(), vfacesColors.end());
+		vertexNormals = Con3<C>(vvertexNormals.begin(), vvertexNormals.end());
+		vertexColors = Con4<Color>(vvertexColors.begin(), vvertexColors.end());
+		faceColors = Con5<Color>(vfaceColors.begin(), vfaceColors.end());
 		faceSizes = Con6<W>(vfaceSizes.begin(), vfaceSizes.end());
 	}
 	return b;
@@ -270,6 +340,51 @@ bool loadTriangleMeshFromPly(
 
 	}
 	return r;
+}
+
+template <typename A, typename B, typename E, typename C, typename D, typename T, typename V, typename X, typename W>
+bool saveMeshOnPly(
+		const std::string &filename,
+		size_t nVertices,
+		size_t nFaces,
+		size_t nEdges,
+		const A vertices[],
+		const B faces[],
+		const E edges[],
+		bool binary,
+		io::FileMeshMode modality,
+		const C verticesNormals[],
+		const D facesNormals[],
+		io::FileColorMode colorMod,
+		const T verticesColors[],
+		const V faceColors[],
+		const X edgeColors[],
+		const W polygonSizes[])
+{
+	std::string plyfilename;
+	std::setlocale(LC_NUMERIC, "en_US.UTF-8"); // makes sure "." is the decimal separator
+	std::ofstream fp;
+	size_t lastindex = filename.find_last_of(".");
+	if (lastindex != filename.size())
+		plyfilename = filename;
+	else
+		plyfilename = filename + ".ply";
+
+	ply::PlyHeader header;
+	header.setModality(modality, binary);
+	header.setNumberVertices((unsigned long int)nVertices);
+	header.setNumberFaces((unsigned long int)nFaces);
+	header.setNumberEdges((unsigned long int)nEdges);
+	fp.open (plyfilename);
+	if(!fp) {
+		return false;
+	}
+	fp << header.toString();
+	ply::saveVertices(fp, header, vertices, verticesNormals, colorMod, verticesColors);
+	ply::saveFaces(fp, header, faces, modality, facesNormals, colorMod, faceColors, polygonSizes);
+	ply::saveEdges(fp, header, edges, colorMod, edgeColors);
+	fp.close();
+	return true;
 }
 
 /**

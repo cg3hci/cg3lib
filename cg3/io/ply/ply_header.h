@@ -30,18 +30,23 @@ class PlyHeader
 public:
 	PlyHeader();
 	PlyHeader(ply::Format f, const ply::Element& vElement, const ply::Element fElement);
+	PlyHeader(ply::Format f, const ply::Element& vElement, const ply::Element fElement, const ply::Element eElement);
 	PlyHeader(std::ifstream& file);
 	void clear();
 
 	bool errorWhileLoading() const;
 	bool hasVertexAndFaceElements() const;
+	bool hasEdges() const;
 	ply::Format format() const;
 	const std::list<ply::Property>& vertexProperties() const;
 	const std::list<ply::Property>& faceProperties() const;
+	const std::list<ply::Property>& edgeProperties() const;
 	uint numberVertices() const;
 	uint numberFaces() const;
-        void setNumberVertices(unsigned long int nV);
-        void setNumberFaces(unsigned long int nF);
+	uint numberEdges() const;
+	void setNumberVertices(unsigned long int nV);
+	void setNumberFaces(unsigned long int nF);
+	void setNumberEdges(unsigned long int nE);
 	io::FileMeshMode modality() const;
 	void setModality(const io::FileMeshMode& mode, bool binary = true);
 	std::string toString() const;
@@ -66,7 +71,7 @@ private:
 	ply::Format _format;
 	std::vector<ply::Element> elements;
 	bool isValid;
-        long int v, f;
+	long int v, f, e;
 };
 
 } //namespace cg3::ply

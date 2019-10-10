@@ -21,18 +21,18 @@ bool loadVerticesTxt(
 		std::ifstream& file,
 		const PlyHeader& header,
 		A vertices[],
-		B verticesNormals[],
+		B vertexNormals[],
 		io::FileColorMode colorMod ,
-		C verticesColors[]);
+		C vertexColors[]);
 
 template <typename A, typename B, typename C>
 bool loadVerticesBin(
 		std::ifstream& file,
 		const PlyHeader& header,
 		A vertices[],
-		B verticesNormals[],
+		B vertexNormals[],
 		io::FileColorMode colorMod ,
-		C verticesColors[]);
+		C vertexColors[]);
 
 } //namespace cg3::ply::internal
 
@@ -41,18 +41,18 @@ void saveVertices(
 		std::ofstream& file,
 		const PlyHeader& header,
 		const A vertices[],
-		const B verticesNormals[],
+		const B vertexNormals[],
 		io::FileColorMode colorMod ,
-		const C verticesColors[]);
+		const C vertexColors[]);
 
 template <typename A, typename B, typename C>
 bool loadVertices(
 		std::ifstream& file,
 		const PlyHeader& header,
 		A vertices[],
-		B verticesNormals[],
+		B vertexNormals[],
 		io::FileColorMode colorMod ,
-		C verticesColors[]);
+		C vertexColors[]);
 
 } //namespace cg3::ply
 } //namespace cg3

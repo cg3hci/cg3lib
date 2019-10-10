@@ -46,7 +46,7 @@ bool loadFacesTxt(
 		io::FileMeshType& meshType,
 		B faceNormals[],
 		io::FileColorMode colorMod ,
-		C facesColors[],
+		C faceColors[],
 		D polygonSizes[]);
 
 template <template <typename... Args> class Container, typename A, typename D>
@@ -63,9 +63,9 @@ bool loadFacesBin(
 		const PlyHeader& header,
 		A& faces, //container with push_back method
 		io::FileMeshType& meshType,
-		B facesNormals[],
+		B faceNormals[],
 		io::FileColorMode colorMod ,
-		C facesColors[],
+		C faceColors[],
 		D polygonSizes[]);
 
 } //namespace cg3::ply::internal
@@ -76,9 +76,9 @@ void saveFaces(
 		const PlyHeader& header,
 		const A faces[],
 		io::FileMeshMode meshMode,
-		const B facesNormals[],
+		const B faceNormals[],
 		io::FileColorMode colorMod ,
-		const C facesColors[],
+		const C faceColors[],
 		const D polygonSizes[]);
 
 template <typename A, typename B, typename C, typename D>
@@ -87,9 +87,9 @@ bool loadFaces(
 		const PlyHeader& header,
 		A& faces,
 		io::FileMeshType& meshType,
-		B facesNormals[],
+		B faceNormals[],
 		io::FileColorMode colorMod ,
-		C facesColors[],
+		C faceColors[],
 		D polygonSizes[]);
 
 } //namespace cg3::ply

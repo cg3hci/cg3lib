@@ -18,7 +18,7 @@ namespace ply {
 
 typedef enum {ASCII, BINARY, UNKNOWN} Format;
 typedef enum {VERTEX, FACE, EDGE, MATERIAL, OTHER} ElementType;
-typedef enum {unknown = -1, x, y, z, nx, ny, nz, red, green, blue, alpha, vertex_indices} PropertyName;
+typedef enum {unknown = -1, x, y, z, nx, ny, nz, red, green, blue, alpha, vertex_indices, vertex1, vertex2} PropertyName;
 typedef enum {CHAR, UCHAR, SHORT, USHORT, INT, UINT, FLOAT, DOUBLE} PropertyType;
 
 struct Property {

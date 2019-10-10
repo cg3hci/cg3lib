@@ -38,13 +38,15 @@ typedef enum {
 class FileMeshMode {
 public:
     FileMeshMode() : mode(0), type(TRIANGLE_MESH){}
-	FileMeshMode(FileMeshType ft, bool vn, bool vc, bool fn, bool fc) :
+	FileMeshMode(FileMeshType ft, bool vn, bool vc, bool fn, bool fc, bool e = false, bool ec = false) :
 		mode(0), type(ft)
 	{
 		if (vn) setVertexNormals();
 		if (vc) setVertexColors();
 		if (fn) setFaceNormals();
 		if (fc) setFaceColors();
+		if (e) setEdges();
+		if (ec) setEdgeColors();
 	}
     bool isTriangleMesh()   const {return type == TRIANGLE_MESH;}
     bool isQuadMesh()       const {return type == QUAD_MESH;}
@@ -53,6 +55,8 @@ public:
     bool hasVertexColors()  const {return mode & VERTEX_COLORS;}
     bool hasFaceNormals()   const {return mode & FACE_NORMALS;}
     bool hasFaceColors()    const {return mode & FACE_COLORS;}
+	bool hasEdges()         const {return mode & EDGES;}
+	bool hasEdgeColors()    const {return mode & EDGE_COLORS;}
 
     void setTriangleMesh()  {type = TRIANGLE_MESH;}
     void setQuadMesh()      {type = QUAD_MESH;}
@@ -62,15 +66,19 @@ public:
     void setVertexColors()  {mode |= VERTEX_COLORS;}
     void setFaceNormals()   {mode |= FACE_NORMALS;}
     void setFaceColors()    {mode |= FACE_COLORS;}
+	void setEdges()			{mode |= EDGES;}
+	void setEdgeColors()	{mode |= EDGE_COLORS;}
 
     void reset() {mode = 0; type = TRIANGLE_MESH;}
 
 private:
 	typedef enum {
-        VERTEX_NORMALS =       0b000001,
-        VERTEX_COLORS =        0b000010,
-        FACE_COLORS =          0b000100,
-        FACE_NORMALS =         0b001000
+		VERTEX_NORMALS =		0b000001,
+		VERTEX_COLORS =			0b000010,
+		FACE_COLORS =			0b000100,
+		FACE_NORMALS =			0b001000,
+		EDGES =					0b010000,
+		EDGE_COLORS =			0b100000
 	} FMM;
 	int mode;
 	FileMeshType type;
@@ -89,6 +97,8 @@ static std::vector<float> dummyVectorFloat;
 static std::vector<int> dummyVectorInt;
 static std::vector<unsigned int> dummyVectorUnsignedInt;
 static std::vector<Color> dummyVectorColor;
+static std::vector<Color> dummyVectorColor2;
+static std::vector<Color> dummyVectorColor3;
 
 static std::list<int> dummyListInt;
 static std::list<unsigned int> dummyListUnsignedInt;

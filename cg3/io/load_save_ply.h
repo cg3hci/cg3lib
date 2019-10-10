@@ -13,16 +13,49 @@ namespace cg3 {
 /*
  * Load
  */
+//with edges
+template <typename T, typename V, typename E, typename C = double, typename W = unsigned int>
+bool loadMeshFromPly(
+		const std::string& filename,
+		std::vector<T>& coords,
+		std::vector<V>& faces,
+		std::vector<E>& edges,
+		io::FileMeshMode& modality = internal::dummyFileMeshMode,
+		std::vector<C>& vertexNormals = internal::dummyListDouble,
+		std::vector<Color>& vertexColors = internal::dummyVectorColor,
+		std::vector<Color>& faceColors = internal::dummyVectorColor2,
+		std::vector<Color>& edgeColors = internal::dummyVectorColor2,
+		std::vector<W>& faceSizes = internal::dummyVectorUnsignedInt);
+
+//without edges
 template <typename T, typename V, typename C = double, typename W = unsigned int>
 bool loadMeshFromPly(
 		const std::string& filename,
 		std::vector<T>& coords,
 		std::vector<V>& faces,
 		io::FileMeshMode& modality = internal::dummyFileMeshMode,
-		std::vector<C>& verticesNormals = internal::dummyListDouble,
-		std::vector<Color>& verticesColors = internal::dummyVectorColor,
-		std::vector<Color>& facesColors = internal::dummyVectorColor,
+		std::vector<C>& vertexNormals = internal::dummyListDouble,
+		std::vector<Color>& vertexColors = internal::dummyVectorColor,
+		std::vector<Color>& faceColors = internal::dummyVectorColor2,
 		std::vector<W>& faceSizes = internal::dummyVectorUnsignedInt);
+
+template <template <class ... > class Con1, template <class ... > class Con2,
+		  template <class ... > class Con3, template <class ... > class Con4,
+		  template <class ... > class Con5, template <class ... > class Con6,
+		  template <class ... > class Con7, template <class ... > class Con8,
+		  class T, class V, class E, class C, class W,
+		  class ... ArgsT, class ... ArgsV, class ... ArgsE, class ... ArgsC, class ... ArgsColor, class ... ArgsW>
+bool loadMeshFromPly(
+		const std::string& filename,
+		Con1<T, ArgsT...>& coords,
+		Con2<V, ArgsV...>& faces,
+		Con3<E, ArgsE...>& edges,
+		io::FileMeshMode& modality = internal::dummyFileMeshMode,
+		Con4<C, ArgsC...>& vertexNormals = internal::dummyListDouble,
+		Con5<Color, ArgsColor...>& vertexColors = internal::dummyVectorColor,
+		Con6<Color, ArgsColor...>& faceColors = internal::dummyVectorColor2,
+		Con7<Color, ArgsColor...>& edgeColors = internal::dummyVectorColor3,
+		Con8<W, ArgsW...>& faceSizes = internal::dummyVectorUnsignedInt);
 
 template <template <class ... > class Con1, template <class ... > class Con2,
           template <class ... > class Con3, template <class ... > class Con4,
@@ -34,9 +67,9 @@ bool loadMeshFromPly(
         Con1<T, ArgsT...>& coords,
         Con2<V, ArgsV...>& faces,
 		io::FileMeshMode& modality = internal::dummyFileMeshMode,
-        Con3<C, ArgsC...>& verticesNormals = internal::dummyListDouble,
-        Con4<Color, ArgsColor...>& verticesColors = internal::dummyVectorColor,
-        Con5<Color, ArgsColor...>& facesColors = internal::dummyVectorColor,
+		Con3<C, ArgsC...>& vertexNormals = internal::dummyListDouble,
+		Con4<Color, ArgsColor...>& vertexColors = internal::dummyVectorColor,
+		Con5<Color, ArgsColor...>& faceColors = internal::dummyVectorColor2,
         Con6<W, ArgsW...>& faceSizes = internal::dummyVectorUnsignedInt);
 
 #ifdef CG3_WITH_EIGEN
@@ -60,6 +93,25 @@ bool loadTriangleMeshFromPly(
 /*
  * Save
  */
+template <typename A, typename B, typename E, typename C = double, typename D = double, typename T = float, typename V = float, typename X = float, typename W = unsigned int>
+bool saveMeshOnPly(
+		const std::string &filename,
+		size_t nVertices,
+		size_t nFaces,
+		size_t nEdges,
+		const A vertices[],
+		const B faces[],
+		const E edges[],
+		bool binary = true,
+		io::FileMeshMode modality = internal::dummyConstFileMeshMode,
+		const C verticesNormals[] = internal::dummyVectorDouble.data(),
+		const D facesNormals[] = internal::dummyVectorDouble.data(),
+		io::FileColorMode colorMod = io::RGB,
+		const T verticesColors[] = internal::dummyVectorFloat.data(),
+		const V faceColors[] = internal::dummyVectorFloat.data(),
+		const X edgeColors[] = internal::dummyVectorFloat.data(),
+		const W polygonSizes[] = internal::dummyVectorUnsignedInt.data());
+
 template <typename A, typename B, typename C = double, typename D = double, typename T = float, typename V = float, typename W = unsigned int>
 bool saveMeshOnPly(
 		const std::string &filename,
@@ -68,7 +120,7 @@ bool saveMeshOnPly(
 		const A vertices[],
 		const B faces[],
 		bool binary = true,
-		io::FileMeshMode meshType = internal::dummyConstFileMeshMode,
+		io::FileMeshMode modality = internal::dummyConstFileMeshMode,
 		const C verticesNormals[] = internal::dummyVectorDouble.data(),
 		const D facesNormals[] = internal::dummyVectorDouble.data(),
 		io::FileColorMode colorMod = io::RGB,
