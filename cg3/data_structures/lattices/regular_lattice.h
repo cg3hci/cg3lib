@@ -33,11 +33,16 @@ public:
     unsigned int resZ() const;
 
     const cg3::BoundingBox3& boundingBox() const;
+	double unit() const;
 
+	cg3::Point3d vertex(unsigned int i, unsigned int j, unsigned int k) const;
     cg3::Point3d nearestVertex(const cg3::Point3d& p) const;
-    const VT& vertexProperty(const cg3::Point3d& p) const;
+	VT vertexProperty(unsigned int i, unsigned int j, unsigned int k) const;
+	VT& vertexProperty(unsigned int i, unsigned int j, unsigned int k);
+	VT vertexProperty(const cg3::Point3d& p) const;
     VT& vertexProperty(const cg3::Point3d& p);
     void setVertexProperty(const cg3::Point3d& p, const VT& property);
+	void setVertexProperty(unsigned int i, unsigned int j, unsigned int k, const VT& property);
 
     // SerializableObject interface
     void serialize(std::ofstream& binaryFile) const;
@@ -56,17 +61,17 @@ public:
 
 protected:
 
-    cg3::Point3d vertex(unsigned int i, unsigned int j, unsigned int k) const;
+
     cg3::Point3d vertex(unsigned int id) const;
     VT& property(unsigned int id);
-    const VT& property(unsigned int id) const;
+	VT property(unsigned int id) const;
     uint indexOfCoordinateX(double x) const;
     uint indexOfCoordinateY(double y) const;
     uint indexOfCoordinateZ(double z) const;
     cg3::Point3i reverseIndex(unsigned int id) const;
 
     cg3::BoundingBox3 bb;
-    double unit;
+	double _unit;
     cg3::Array3D<VT> vertexProperties;
 };
 

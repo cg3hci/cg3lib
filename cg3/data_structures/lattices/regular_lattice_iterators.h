@@ -20,8 +20,8 @@ class RegularLattice3D<VT>::VertexIterator
 public:
     VertexIterator();
 
-    Pointd operator *() const;
-    const Pointd* operator ->() const;
+	Point3d operator *() const;
+	const Point3d* operator ->() const;
     bool operator == (const VertexIterator& otherIterator) const;
     bool operator != (const VertexIterator& otherIterator) const;
 
@@ -31,7 +31,7 @@ public:
     VertexIterator operator -- (int);
 
 protected:
-    mutable Pointd tmp;
+	mutable Point3d tmp;
     const RegularLattice3D<VT>* l;
     unsigned int pos;
     VertexIterator(unsigned int pos, const RegularLattice3D<VT> &g);
@@ -90,8 +90,8 @@ class RegularLattice3D<VT>::Iterator
 public:
     Iterator();
 
-    std::pair<Pointd, VT&> operator *() const;
-    std::pair<Pointd, VT&>* operator ->() const;
+	std::pair<Point3d, VT&> operator *() const;
+	std::pair<Point3d, VT&>* operator ->() const;
     bool operator == (const Iterator& otherIterator) const;
     bool operator != (const Iterator& otherIterator) const;
 
@@ -102,7 +102,7 @@ public:
 
 protected:
     mutable VT tmpvt;
-    mutable std::pair<Pointd, VT&> tmpp;
+	mutable std::pair<Point3d, VT&> tmpp;
     RegularLattice3D<VT>* l;
     unsigned int pos;
     Iterator(unsigned int pos, RegularLattice3D<VT> &g);
@@ -115,8 +115,8 @@ class RegularLattice3D<VT>::ConstIterator
 public:
     ConstIterator();
 
-    std::pair<Pointd, const VT&> operator *() const;
-    const std::pair<Pointd, const VT&>* operator ->() const;
+	std::pair<Point3d, const VT&> operator *() const;
+	const std::pair<Point3d, const VT&>* operator ->() const;
     bool operator == (const ConstIterator& otherIterator) const;
     bool operator != (const ConstIterator& otherIterator) const;
 
@@ -127,7 +127,7 @@ public:
 
 protected:
     mutable VT tmpvt;
-    mutable std::pair<Pointd, const VT&> tmpp;
+	mutable std::pair<Point3d, const VT&> tmpp;
     const RegularLattice3D<VT>* l;
     unsigned int pos;
     ConstIterator(unsigned int pos, const RegularLattice3D<VT> &g);

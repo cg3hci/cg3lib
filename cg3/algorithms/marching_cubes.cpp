@@ -272,7 +272,62 @@ static const Array2D<int> triTable = {
     {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}    //255
 };
 
+cg3::Point3d edgeCoordinate(const cg3::RegularLattice3D<bool>& l, uint i, uint j, uint k, uint edge){
+	switch (edge) {
+	case 0:  return (l.vertex(i,  j,  k  ) + l.vertex(i+1,j,  k  )) * 0.5;
+	case 1:  return (l.vertex(i+1,j,  k  ) + l.vertex(i+1,j+1,k  )) * 0.5;
+	case 2:  return (l.vertex(i+1,j+1,k  ) + l.vertex(i,  j+1,k  )) * 0.5;
+	case 3:  return (l.vertex(i,  j+1,k  ) + l.vertex(i,  j,  k  )) * 0.5;
 
+	case 4:  return (l.vertex(i,  j,  k+1) + l.vertex(i+1,j,  k+1)) * 0.5;
+	case 5:  return (l.vertex(i+1,j,  k+1) + l.vertex(i+1,j+1,k+1)) * 0.5;
+	case 6:  return (l.vertex(i+1,j+1,k+1) + l.vertex(i,  j+1,k+1)) * 0.5;
+	case 7:  return (l.vertex(i,  j+1,k+1) + l.vertex(i,  j,  k+1)) * 0.5;
+
+	case 8:  return (l.vertex(i,  j,  k  ) + l.vertex(i,  j,  k+1)) * 0.5;
+	case 9:  return (l.vertex(i+1,j,  k  ) + l.vertex(i+1,j,  k+1)) * 0.5;
+	case 10: return (l.vertex(i+1,j+1,k  ) + l.vertex(i+1,j+1,k+1)) * 0.5;
+	case 11: return (l.vertex(i,  j+1,k  ) + l.vertex(i,  j+1,k+1)) * 0.5;
+
+	default:
+		assert(0);
+		return cg3::Point3d();
+	}
 }
 
 }
+
+CG3_INLINE Dcel marchingCubes(const cg3::RegularLattice3D<bool>& l)
+{
+	cg3::DcelBuilder b;
+	for (uint i = 0; i < l.resX()-1; ++i){
+		for (uint j = 0; j < l.resY()-1; ++j){
+			for (uint k = 0; k < l.resZ()-1; ++k){
+
+				uint cubeIndex = 0;
+				if (l.vertexProperty(i,   j,   k  )) cubeIndex |= 1;
+				if (l.vertexProperty(i+1, j,   k  )) cubeIndex |= 2;
+				if (l.vertexProperty(i+1, j+1, k  )) cubeIndex |= 4;
+				if (l.vertexProperty(i,   j+1, k  )) cubeIndex |= 8;
+				if (l.vertexProperty(i,   j,   k+1)) cubeIndex |= 16;
+				if (l.vertexProperty(i+1, j,   k+1)) cubeIndex |= 32;
+				if (l.vertexProperty(i+1, j+1, k+1)) cubeIndex |= 64;
+				if (l.vertexProperty(i,   j+1, k+1)) cubeIndex |= 128;
+
+				for(uint n = 0; n < 16 && internal::triTable(cubeIndex,n) != -1; n+=3){
+					cg3::Point3d p1 = internal::edgeCoordinate(
+								l, i, j, k, internal::triTable(cubeIndex, n));
+					cg3::Point3d p2 = internal::edgeCoordinate(
+								l, i, j, k, internal::triTable(cubeIndex, n+1));
+					cg3::Point3d p3 = internal::edgeCoordinate(
+								l, i, j, k, internal::triTable(cubeIndex, n+2));
+					b.addFace(p2, p1, p3);
+				}
+			}
+		}
+	}
+	b.finalize();
+	return b.dcel();
+}
+
+} //namespace cg3

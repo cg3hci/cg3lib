@@ -17,7 +17,7 @@ MODULES += CG3_DATA_SRUCTURES
 # ----- Arrays -----
 
 HEADERS += \
-    $$PWD/data_structures/arrays/arrays.h \
+    $$PWD/data_structures/arrays/arrays.h \ #arrays
     $$PWD/data_structures/arrays/array2d.h \
     $$PWD/data_structures/arrays/array3d.h \
     $$PWD/data_structures/arrays/array4d.h \
@@ -32,6 +32,8 @@ HEADERS += \
     $$PWD/data_structures/graphs/bipartite_graph.h \
     $$PWD/data_structures/graphs/bipartite_graph_iterators.h \
     $$PWD/data_structures/graphs/undirected_node.h \
+    $$PWD/data_structures/lattices/regular_lattice.h \ #lattices
+    $$PWD/data_structures/lattices/regular_lattice_iterators.h \
     $$PWD/data_structures/trees/includes/tree_common.h \ #tree common
     $$PWD/data_structures/trees/includes/iterators/tree_genericiterator.h \
     $$PWD/data_structures/trees/includes/iterators/tree_insertiterator.h \
@@ -57,7 +59,7 @@ HEADERS += \
 
 CG3_STATIC {
 SOURCES += \
-    $$PWD/data_structures/arrays/array.cpp \
+    $$PWD/data_structures/arrays/array.cpp \ #arrays
     $$PWD/data_structures/arrays/array2d.cpp \
     $$PWD/data_structures/arrays/array3d.cpp \
     $$PWD/data_structures/arrays/array4d.cpp \
@@ -70,6 +72,8 @@ SOURCES += \
     $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.cpp \
     $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.cpp \
     $$PWD/data_structures/graphs/includes/nodes/graph_node.cpp \
+    $$PWD/data_structures/lattices/regular_lattice.cpp \ #lattices
+    $$PWD/data_structures/lattices/regular_lattice_iterators.cpp \
     $$PWD/data_structures/trees/aabbtree.cpp \
     $$PWD/data_structures/trees/avlinner.cpp \
     $$PWD/data_structures/trees/avlleaf.cpp \

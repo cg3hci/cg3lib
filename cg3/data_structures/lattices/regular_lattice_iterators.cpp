@@ -14,13 +14,13 @@ cg3::RegularLattice3D<VT>::VertexIterator::VertexIterator() : l(nullptr), pos(0)
 }
 
 template<class VT>
-Pointd cg3::RegularLattice3D<VT>::VertexIterator::operator *() const
+Point3d cg3::RegularLattice3D<VT>::VertexIterator::operator *() const
 {
     return l->vertex(pos);
 }
 
 template<class VT>
-const Pointd* cg3::RegularLattice3D<VT>::VertexIterator::operator ->() const
+const Point3d* cg3::RegularLattice3D<VT>::VertexIterator::operator ->() const
 {
     tmp = l->vertex(pos);
     return &tmp;
@@ -205,21 +205,21 @@ cg3::RegularLattice3D<VT>::ConstPropertyIterator::ConstPropertyIterator(unsigned
 }
 
 template<class VT>
-cg3::RegularLattice3D<VT>::Iterator::Iterator() : tmpvt(), tmpp(Pointd(), tmpvt), l(nullptr), pos(0)
+cg3::RegularLattice3D<VT>::Iterator::Iterator() : tmpvt(), tmpp(Point3d(), tmpvt), l(nullptr), pos(0)
 {
 }
 
 template<class VT>
-std::pair<Pointd, VT&> cg3::RegularLattice3D<VT>::Iterator::operator *() const
+std::pair<Point3d, VT&> cg3::RegularLattice3D<VT>::Iterator::operator *() const
 {
-    return std::pair<Pointd, VT&>(l->vertex(pos), l->property(pos));
+	return std::pair<Point3d, VT&>(l->vertex(pos), l->property(pos));
 }
 
 template<class VT>
-std::pair<Pointd, VT&>* cg3::RegularLattice3D<VT>::Iterator::operator ->() const
+std::pair<Point3d, VT&>* cg3::RegularLattice3D<VT>::Iterator::operator ->() const
 {
     if (pos < l->resX()*l->resY()*l->resZ()){
-        tmpp = std::pair<Pointd, VT&>(l->vertex(pos), l->property(pos));
+		tmpp = std::pair<Point3d, VT&>(l->vertex(pos), l->property(pos));
     }
     return &tmpp;
 }
@@ -268,28 +268,28 @@ typename cg3::RegularLattice3D<VT>::Iterator cg3::RegularLattice3D<VT>::Iterator
 
 template<class VT>
 cg3::RegularLattice3D<VT>::Iterator::Iterator(unsigned int pos, RegularLattice3D<VT>& g) :
-    tmpvt(), tmpp(Pointd(), tmpvt), l(&g), pos(pos)
+	tmpvt(), tmpp(Point3d(), tmpvt), l(&g), pos(pos)
 {
     if (pos < l->resX()*l->resY()*l->resZ()){
-        tmpp = std::pair<Pointd, VT&>(l->vertex(pos), l->property(pos));
+		tmpp = std::pair<Point3d, VT&>(l->vertex(pos), l->property(pos));
     }
 }
 
 template<class VT>
-cg3::RegularLattice3D<VT>::ConstIterator::ConstIterator() : tmpvt(), tmpp(Pointd(), tmpvt), l(nullptr), pos(0)
+cg3::RegularLattice3D<VT>::ConstIterator::ConstIterator() : tmpvt(), tmpp(Point3d(), tmpvt), l(nullptr), pos(0)
 {
 }
 
 template<class VT>
-std::pair<Pointd, const VT&> cg3::RegularLattice3D<VT>::ConstIterator::operator *() const
+std::pair<Point3d, const VT&> cg3::RegularLattice3D<VT>::ConstIterator::operator *() const
 {
-    return std::pair<Pointd, const VT&>(l->vertex(pos), l->property(pos));
+	return std::pair<Point3d, const VT&>(l->vertex(pos), l->property(pos));
 }
 
 template<class VT>
-const std::pair<Pointd, const VT&>* cg3::RegularLattice3D<VT>::ConstIterator::operator ->() const
+const std::pair<Point3d, const VT&>* cg3::RegularLattice3D<VT>::ConstIterator::operator ->() const
 {
-    tmpp = std::pair<Pointd, const VT&>(l->vertex(pos), l->property(pos));
+	tmpp = std::pair<Point3d, const VT&>(l->vertex(pos), l->property(pos));
     return &tmpp;
 }
 
@@ -337,10 +337,10 @@ typename cg3::RegularLattice3D<VT>::ConstIterator cg3::RegularLattice3D<VT>::Con
 
 template<class VT>
 cg3::RegularLattice3D<VT>::ConstIterator::ConstIterator(unsigned int pos, const RegularLattice3D<VT>& g) :
-    tmpvt(), tmpp(Pointd(), tmpvt), l(&g), pos(pos)
+	tmpvt(), tmpp(Point3d(), tmpvt), l(&g), pos(pos)
 {
     if (pos < l->resX()*l->resY()*l->resZ()){
-        tmpp = std::pair<Pointd, const VT&>(l->vertex(pos), l->property(pos));
+		tmpp = std::pair<Point3d, const VT&>(l->vertex(pos), l->property(pos));
     }
 }
 

@@ -8,13 +8,14 @@
 #ifndef CG3_MARCHING_CUBES_H
 #define CG3_MARCHING_CUBES_H
 
+#include <cg3/data_structures/lattices/regular_lattice.h>
+#include <cg3/meshes/dcel/dcel_builder.h>
+
 namespace cg3 {
 
-/**
- * @todo
- */
+cg3::Dcel marchingCubes(const cg3::RegularLattice3D<bool>& l);
 
-}
+} //namespace cg3
 
 #ifndef CG3_STATIC
 #define CG3_MARCHING_CUBES_CPP "marching_cubes.cpp"
