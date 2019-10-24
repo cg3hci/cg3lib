@@ -93,7 +93,18 @@ CG3_INLINE void ManipulableObject::rotationMatrix(double m[][3]) const
 {
 	qglviewer::Vec axis = orientation().axis();
 	double angle = orientation().angle();
-	cg3::rotationMatrix(cg3::Vec3d(axis.x, axis.y, axis.z), angle, m);
+	if (angle == 0){
+		for (uint i = 0; i < 3; i++){
+			for (uint j = 0; j < 3; j++){
+				if (i==j)
+					m[i][j] = 1;
+				else
+					m[i][j] = 0;
+			}
+		}
+	}
+	else
+		cg3::rotationMatrix(cg3::Vec3d(axis.x, axis.y, axis.z), angle, m);
 }
 
 CG3_INLINE void ManipulableObject::resetRotation()
@@ -106,13 +117,18 @@ CG3_INLINE void ManipulableObject::rotationMatrix(Eigen::Matrix3d &m) const
 {
 	qglviewer::Vec axis = orientation().axis();
 	double angle = orientation().angle();
-	cg3::rotationMatrix(cg3::Vec3d(axis.x, axis.y, axis.z), angle, m);
+	if (angle == 0)
+		m = Eigen::Matrix3d::Identity();
+	else
+		cg3::rotationMatrix(cg3::Vec3d(axis.x, axis.y, axis.z), angle, m);
 }
 
 CG3_INLINE Eigen::Matrix3d ManipulableObject::rotationMatrix() const
 {
 	qglviewer::Vec axis = orientation().axis();
 	double angle = orientation().angle();
+	if (angle == 0)
+		return  Eigen::Matrix3d::Identity();
 	return cg3::rotationMatrix(cg3::Vec3d(axis.x, axis.y, axis.z), angle);
 }
 #endif //CG3_WITH_EIGEN
