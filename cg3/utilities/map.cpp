@@ -6,6 +6,7 @@
  */
 
 #include "map.h"
+#include <algorithm>
 
 namespace cg3 {
 
@@ -23,6 +24,19 @@ inline std::multimap<B,A> flipMap(const M<A,B,Args...> &src)
                    std::inserter(dst, dst.begin()),
                    flipPair<A,B>);
     return dst;
+}
+
+/**
+ * @ingroup cg3core
+ * @brief contains
+ * @param m
+ * @param obj
+ * @return
+ */
+template<typename K, typename V, typename ...A>
+inline bool contains(const std::map<K, V, A...>& m, const K& obj)
+{
+	return m.find(obj) != m.end();
 }
 
 }
