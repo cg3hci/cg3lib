@@ -9,14 +9,10 @@
 
 namespace cg3 {
 
-#ifdef CG3_DCEL_DEFINED
 class Dcel;
 
 void laplacianSmoothing(cg3::Dcel& mesh, unsigned int nIt = 1);
 cg3::Dcel laplacianSmoothing(const cg3::Dcel& mesh, unsigned int nIt = 1);
-
-
-#endif //CG3_DCEL_DEFINED
 
 } //namespace cg3
 

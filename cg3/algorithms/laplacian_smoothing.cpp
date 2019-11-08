@@ -5,14 +5,10 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 #include "laplacian_smoothing.h"
-
-#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif //CG3_DCEL_DEFINED
 
 namespace cg3 {
 
-#ifdef CG3_DCEL_DEFINED
 /**
  * @brief Computes nIt iterations of laplacian smoothing on the mesh
  * @param [in/out] mesh: mesh on which the smoothing will be applied
@@ -57,7 +53,5 @@ Dcel laplacianSmoothing(const Dcel& mesh, unsigned int nIt)
 	laplacianSmoothing(output, nIt);
 	return output;
 }
-
-#endif //CG3_DCEL_DEFINED
 
 }

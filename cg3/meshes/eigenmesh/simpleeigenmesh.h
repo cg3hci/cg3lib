@@ -54,6 +54,7 @@ class SimpleEigenMesh : public SerializableObject, public virtual Mesh
 
 public:
     SimpleEigenMesh();
+	SimpleEigenMesh(const char* filename);
     SimpleEigenMesh(const std::string& filename);
     template <typename T, typename U> SimpleEigenMesh(const Eigen::PlainObjectBase<T> &V, const Eigen::PlainObjectBase<U> &F);
     #ifdef  CG3_DCEL_DEFINED
@@ -133,6 +134,11 @@ protected:
 
 inline SimpleEigenMesh::SimpleEigenMesh()
 {
+}
+
+inline SimpleEigenMesh::SimpleEigenMesh(const char* filename)
+{
+	loadFromFile(filename);
 }
 
 inline SimpleEigenMesh::SimpleEigenMesh(const std::string &filename)

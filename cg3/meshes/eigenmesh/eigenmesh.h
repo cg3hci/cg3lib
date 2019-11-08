@@ -37,6 +37,7 @@ class EigenMesh : public SimpleEigenMesh
 
 public:
     EigenMesh();
+	EigenMesh(const char* filename);
     EigenMesh(const std::string& filename);
     EigenMesh(const SimpleEigenMesh &m);
     EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F);

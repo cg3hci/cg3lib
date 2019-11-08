@@ -18,7 +18,17 @@ namespace cg3 {
 
 CG3_INLINE DrawableDcel::DrawableDcel() : Dcel()
 {
-    init();
+	init();
+}
+
+CG3_INLINE DrawableDcel::DrawableDcel(const char* filename) : Dcel(filename)
+{
+	init();
+}
+
+CG3_INLINE DrawableDcel::DrawableDcel(const std::string& filename) : Dcel(filename)
+{
+	init();
 }
 
 /**

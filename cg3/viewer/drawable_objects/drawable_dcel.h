@@ -27,6 +27,8 @@ class DrawableDcel : public Dcel, public DrawableMesh
 public:
 
     DrawableDcel();
+	DrawableDcel(const char* filename);
+	DrawableDcel(const std::string& filename);
     DrawableDcel(const Dcel &d);
 
     void clear();

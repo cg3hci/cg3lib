@@ -27,6 +27,10 @@ CG3_INLINE DrawableEigenMesh::DrawableEigenMesh(const EigenMesh& m) : EigenMesh(
 {
 }
 
+CG3_INLINE DrawableEigenMesh::DrawableEigenMesh(const char* filename) : EigenMesh(filename)
+{
+}
+
 CG3_INLINE DrawableEigenMesh::DrawableEigenMesh(const std::string& filename)  : EigenMesh(filename)
 {
 }

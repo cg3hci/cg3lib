@@ -23,6 +23,7 @@ public:
     DrawableEigenMesh();
     DrawableEigenMesh(const SimpleEigenMesh &m);
     DrawableEigenMesh(const EigenMesh &m);
+	DrawableEigenMesh(const char* filename);
     DrawableEigenMesh(const std::string &filename);
 
     // DrawableObject interface

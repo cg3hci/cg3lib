@@ -21,6 +21,15 @@ namespace cg3 {
 EigenMesh::EigenMesh() {
 }
 
+EigenMesh::EigenMesh(const char* filename) :
+	SimpleEigenMesh(filename)
+{
+	updateColorSizes();
+	updateFaceNormals();
+	updateVerticesNormals();
+	updateBoundingBox();
+}
+
 EigenMesh::EigenMesh(const SimpleEigenMesh& m) :
     SimpleEigenMesh(m)
 {

@@ -127,7 +127,8 @@ inline TemplatedDcel<V, HE, F>::TemplatedDcel(const char *filename) :
 	nHalfEdges(0),
 	nFaces(0)
 {
-    loadFromFile(std::string(filename));
+	if (!loadFromFile(std::string(filename)))
+		std::cerr << filename << " not found or not valid.\n";
 }
 
 template <class V, class HE, class F>
@@ -136,7 +137,8 @@ inline TemplatedDcel<V, HE, F>::TemplatedDcel(const std::string& filename) :
 	nHalfEdges(0),
 	nFaces(0)
 {
-    loadFromFile(filename);
+	if (!loadFromFile(std::string(filename)))
+		std::cerr << filename << " not found or not valid.\n";
 }
 
 /**
@@ -1852,16 +1854,13 @@ bool TemplatedDcel<V, HE, F>::loadFromFile(const std::string& filename)
 {
     std::string ext = filename.substr(filename.find_last_of(".") + 1);
     if(ext == "obj" || ext == "OBJ") { //obj file
-        loadFromObj(filename);
-        return true;
+		return loadFromObj(filename);
     }
     else if(ext == "ply" || ext == "PLY") { //ply file
-        loadFromPly(filename);
-        return true;
+		return loadFromPly(filename);
     }
     else if (ext == "dcel" || ext == "DCEL") {
-        loadFromDcelFile(filename);
-        return true;
+		return loadFromDcelFile(filename);
     }
     else
         return false;

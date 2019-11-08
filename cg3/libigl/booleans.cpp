@@ -9,6 +9,7 @@
 
 #include "internal/eigenmesh_libigl_algorithms.h"
 
+#ifdef  CG3_CGAL_DEFINED
 namespace cg3 {
 namespace libigl {
 
@@ -75,7 +76,7 @@ CG3_INLINE SimpleEigenMesh intersection(
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-CG3_INLINE EigenMesh intersection(
+CG3_INLINE EigenMesh mwintersection(
         const EigenMesh& m1,
         const EigenMesh& m2,
         std::vector<uint>& birthFaces)
@@ -317,3 +318,4 @@ CG3_INLINE void union_(
 
 } //namespace cg3::libigl
 } //namespace cg3
+#endif // CG3_CGAL_DEFINED
