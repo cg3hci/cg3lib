@@ -10,10 +10,7 @@ compiler:
   - gcc
 
 install:
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]
-    then
-      sudo apt-get -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev      
-    fi
+  - sudo apt-get -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev      
   - git clone --recursive https://github.com/cg3hci/cg3lib
 
 script:
