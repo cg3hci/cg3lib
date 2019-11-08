@@ -1,0 +1,55 @@
+# Enable C++ support
+language: cpp
+
+os:
+#  - osx
+  - linux
+
+dist: bionic
+sudo: required
+
+compiler:
+  - clang
+  - gcc
+
+git: 
+  depth: 1
+
+install:
+  - |
+#    if [[ "$TRAVIS_OS_NAME" == "osx" ]]
+#    then
+#       npm install -g appdmg
+#       export COLUMNS=80
+#       curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
+#       chmod +x ./macports-ci
+#       ./macports-ci install
+#       PATH="/opt/local/bin:$PATH"
+#       sudo port -N install clang-6.0
+#       sudo port -N install libomp
+#       sudo port -N install qt59
+#       sudo port -N install qt59-qtscript
+#       sudo port -N install qt59-qttools
+       #Set up Qt environment
+       #Use Qt from MacPorts, change QTDIR if using own version of Qt
+#       export QTDIR=/opt/local/libexec/qt5
+#       export PATH=$QTDIR/bin:$PATH
+#       export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
+#       export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH   
+#       echo "----------"
+#       echo $PATH
+#       echo "----------"
+#       clang --version
+#       echo "----------"
+#       qmake --version 
+#    fi
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]
+    then
+      sudo apt-get -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev      
+    fi
+  - git clone --recursive https://github.com/cg3hci/cg3lib
+
+script:
+  - cd cg3lib/examples
+  - qmake examples.pro
+  - make
