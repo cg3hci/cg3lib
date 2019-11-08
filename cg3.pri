@@ -72,10 +72,6 @@ CG3_DEPRECATED {
     include (cg3/deprecated.pri)
 }
 
-CG3_EXAMPLES {
-    include (cg3/examples.pri)
-}
-
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \

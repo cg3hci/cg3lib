@@ -22,6 +22,9 @@ public:
     explicit ExampleManager(QWidget *parent = 0);
     ~ExampleManager();
 
+private slots:
+	void on_helloWorldPushButton_clicked();
+
 private:
     Ui::ExampleManager *ui;
 

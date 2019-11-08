@@ -121,6 +121,10 @@ public:
     void setFullScreen(bool);
     void toggleConsole(); //work in progress...
     void keyPressEvent(QKeyEvent * event); //event options for keys pressed
+	void showDockWidget();
+	void hideDockWidget();
+	void showDrawList();
+	void hideDrawList();
 
     //Managers:
     unsigned int addManager(QFrame *f, std::string name, QToolBox *parent = nullptr);

@@ -389,7 +389,27 @@ CG3_INLINE void MainWindow::keyPressEvent(QKeyEvent * event)
     if(event->matches(QKeySequence::Undo))
         emit(undoEvent());
     if (event->matches(QKeySequence::Redo))
-        emit(redoEvent());
+		emit(redoEvent());
+}
+
+CG3_INLINE void MainWindow::showDockWidget()
+{
+	ui->dockToolBox->show();
+}
+
+CG3_INLINE void MainWindow::hideDockWidget()
+{
+	ui->dockToolBox->hide();
+}
+
+CG3_INLINE void MainWindow::showDrawList()
+{
+	ui->dockDrawList->show();
+}
+
+CG3_INLINE void MainWindow::hideDrawList()
+{
+	ui->dockDrawList->hide();
 }
 
 /**

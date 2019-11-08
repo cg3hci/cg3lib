@@ -19,3 +19,12 @@ ExampleManager::~ExampleManager()
 {
     delete ui;
 }
+
+void ExampleManager::on_helloWorldPushButton_clicked()
+{
+	QMessageBox* box = new QMessageBox(this);
+	box->setWindowTitle("Hello World!");
+
+	box->setText("Hello World!");
+	box->exec();
+}
