@@ -11,12 +11,13 @@ compiler:
 
 install:
   - sudo apt-get -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev      
-  - git clone --recursive https://github.com/libigl/libigl.git
+  - cd ..
+  - git clone --recursive https://github.com/libigl/libigl
+  - ls libigl/
   - env LIBIGL_HOME=$(pwd)/libigl/
+  - echo $LIBIGL_HOME
 
 script:
-  - cd ..
-  - ls
   - cd cg3lib/examples
   - qmake examples.pro
   - make
