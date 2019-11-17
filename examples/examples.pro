@@ -2,7 +2,9 @@ TEMPLATE      = subdirs
 
 CONFIG += ordered
 
-SUBDIRS      += adding_manager \
+SUBDIRS      += aabb_tree \
+                adding_manager \
+                bipartite_graph \
                 bst_tree \
                 convex_hull_2d \
                 convex_hull_3d \

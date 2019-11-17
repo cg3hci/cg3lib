@@ -2,8 +2,9 @@ CONFIG += CG3_CORE CG3_DATA_STRUCTURES
 
 include (../../cg3.pri)
 
-HEADERS += bstsample.h
+HEADERS += \
+    bst_functions.h
 
 SOURCES += \
-    bstsample.cpp \
+    bst_functions.cpp \
     main.cpp
