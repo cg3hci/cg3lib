@@ -10,6 +10,17 @@
 #include <cg3/viewer/drawable_objects/drawable_dcel.h>
 #include <random>
 
+/**
+ * @ingroup algorithms_tut
+ * @page ConvexHull3D_tutorial Convex Hull 3D of a set of Points
+ *
+ * Cg3lib allows to calculate a convex hull 3d mesh starting from a set of points or also from another mesh.
+ * In the following example, a cg3::viewer::MainWindow is created and a convex hull calculated from a set of
+ * randomly generated set of points is pushed in the mainWindow.
+ *
+ * @include main.cpp
+ */
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);

@@ -15,7 +15,6 @@ install:
   - git clone --recursive https://github.com/libigl/libigl
   - ls libigl/
   - export LIBIGL_HOME=$(pwd)/libigl/
-  - echo $LIBIGL_HOME
 
 script:
   - cd cg3lib/examples

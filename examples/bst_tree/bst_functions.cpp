@@ -4,14 +4,9 @@
  *
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-#ifndef CG3_BSTSAMPLE_H
-#define CG3_BSTSAMPLE_H
+#include "bst_functions.h"
 
-namespace BSTSample {
-
-    void execute();
-
+bool reverseComparator(const int& o1, const int& o2) {
+    return o1 > o2;
 }
 
-
-#endif // CG3_BSTSAMPLE_H
