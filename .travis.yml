@@ -15,6 +15,6 @@ install:
   - env LIBIGL_HOME=$(pwd)/libigl/
 
 script:
-  - cd cg3lib/examples
+  - cd cg3hci/cg3lib/examples
   - qmake examples.pro
   - make
