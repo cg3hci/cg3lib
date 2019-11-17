@@ -12,7 +12,7 @@ compiler:
 install:
   - sudo apt-get -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev      
   - git clone --recursive https://github.com/libigl/libigl.git
-  - export LIBIGL_HOME = $(pwd)/libigl/
+  - env LIBIGL_HOME=$(pwd)/libigl/
 
 script:
   - cd cg3lib/examples
