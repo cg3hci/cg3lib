@@ -76,7 +76,7 @@ CG3_INLINE SimpleEigenMesh intersection(
  * @param[out] birthFaces vector of indices indicating the birth faces of the resulting mesh
  * @return Resulting mesh
  */
-CG3_INLINE EigenMesh mwintersection(
+CG3_INLINE EigenMesh intersection(
         const EigenMesh& m1,
         const EigenMesh& m2,
         std::vector<uint>& birthFaces)

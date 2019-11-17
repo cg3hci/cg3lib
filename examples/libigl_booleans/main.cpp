@@ -18,15 +18,23 @@ int main(int argc, char *argv[])
     cg3::viewer::MainWindow mw;  //Main window, it contains QGLViewer canvas
 	mw.hideDockWidget();
 
+	//loading the two meshes
 	cg3::DrawableEigenMesh mesh1(CG3_STRINGIFY(SOURCE_PATH) "/../../shared/bimba.obj");
 	cg3::DrawableEigenMesh mesh2(CG3_STRINGIFY(SOURCE_PATH) "/../../shared/bunny.obj");
 
-	mw.pushDrawableObject(&mesh1, "Bimba", false); // push the input mesh in the mainWindow
-	mw.pushDrawableObject(&mesh2, "Bunny", false); // push the input mesh in the mainWindow
+	//push the two meshes into the main window, both not visible
+	mw.pushDrawableObject(&mesh1, "Bimba", false);
+	mw.pushDrawableObject(&mesh2, "Bunny", false);
 
+	//computing the boolena operations between the two meshes
 	cg3::DrawableEigenMesh intersection = cg3::libigl::intersection(mesh1, mesh2);
+	cg3::DrawableEigenMesh _union = cg3::libigl::union_(mesh1, mesh2);
+	cg3::DrawableEigenMesh difference = cg3::libigl::difference(mesh1, mesh2);
 
+	//push the results into the main window, only the intersection will be visible
 	mw.pushDrawableObject(&intersection, "Intersection");
+	mw.pushDrawableObject(&_union, "Union", false);
+	mw.pushDrawableObject(&difference, "difference", false);
 
 	mw.canvas.fitScene();
 	mw.canvas.update();
