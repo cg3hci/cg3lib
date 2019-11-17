@@ -14,7 +14,7 @@ install:
   - cd ..
   - git clone --recursive https://github.com/libigl/libigl
   - ls libigl/
-  - env LIBIGL_HOME=$(pwd)/libigl/
+  - export LIBIGL_HOME=$(pwd)/libigl/
   - echo $LIBIGL_HOME
 
 script:
