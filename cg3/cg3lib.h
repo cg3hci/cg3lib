@@ -8,9 +8,24 @@
 #ifndef CG3_CG3LIB_H
 #define CG3_CG3LIB_H
 
-#if __cplusplus >= 201300
-#define CG3_CPP14
-#endif
+/**
+  * @link: https://stackoverflow.com/questions/11124895/suppress-compiler-warning-function-declared-never-referenced
+  * @def CG3_SUPPRESS_WARNING(a)
+  * @brief CG3_SUPPRESS_WARNING allows to suppress an "unused variable" warning.
+  */
+#define CG3_SUPPRESS_WARNING(a) (void)a
+
+/**
+  * @link: https://stackoverflow.com/questions/20631922/expand-macro-inside-string-literal
+  * @def CG3_STRINGIFY(X)
+  * @brief CG3_STRINGIFY expands a macro inside a literal string.
+  * Example:\n
+  * \code{.cpp}
+  * CG3_STRINGIFY(M_PI); //-> "3.14159265358979323846"
+  * \endcode
+  */
+#define CG3_STRINGIFY2(X) #X
+#define CG3_STRINGIFY(X) CG3_STRINGIFY2(X)
 
 /**
   * @mainpage cg3lib
@@ -46,6 +61,10 @@
   *
   * @brief The cg3lib Core module provides some basic functions and data structures
   */
+
+#if __cplusplus >= 201300
+#define CG3_CPP14
+#endif
 
 #ifdef CG3_STATIC
 #define CG3_INLINE
@@ -87,24 +106,5 @@
 
 #endif //__has_include
 #endif //CG3_QMAKE
-
-/**
-  * @link: https://stackoverflow.com/questions/11124895/suppress-compiler-warning-function-declared-never-referenced
-  * @def CG3_SUPPRESS_WARNING(a)
-  * @brief CG3_SUPPRESS_WARNING allows to suppress an "unused variable" warning.
-  */
-#define CG3_SUPPRESS_WARNING(a) (void)a
-
-/**
-  * @link: https://stackoverflow.com/questions/20631922/expand-macro-inside-string-literal
-  * @def CG3_STRINGIFY(X)
-  * @brief CG3_STRINGIFY expands a macro inside a literal string.
-  * Example:\n
-  * \code{.cpp}
-  * CG3_STRINGIFY(M_PI); //-> "3.14159265358979323846"
-  * \endcode
-  */
-#define CG3_STRINGIFY2(X) #X
-#define CG3_STRINGIFY(X) CG3_STRINGIFY2(X)
 
 #endif // CG3_CG3LIB_H
