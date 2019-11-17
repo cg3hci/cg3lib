@@ -1,0 +1,6 @@
+CONFIG += CG3_CORE CG3_MESHES CG3_CGAL CG3_LIBIGL CG3_VIEWER
+
+include(../../cg3.pri)
+
+SOURCES +=	main.cpp
+

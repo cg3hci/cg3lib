@@ -8,5 +8,8 @@ SUBDIRS      += aabb_tree \
                 bst_tree \
                 convex_hull_2d \
                 convex_hull_3d \
+                graph \
                 laplacian_smoothing \
-                libigl_booleans
+                libigl_booleans \
+                range_tree \
+                viewer
