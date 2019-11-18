@@ -10,8 +10,7 @@
 
 #include <vector>
 #include <assert.h>
-#include <iomanip>
-#include "array.h"
+#include "array_.h"
 #include "array_bool.h"
 
 namespace cg3 {
@@ -25,6 +24,7 @@ class Array4D : public Array<T, 4>
 {
 public:
     Array4D();
+	Array4D(const Array<T, 4>& a);
     Array4D(
             unsigned long int sizeX,
             unsigned long int sizeY,

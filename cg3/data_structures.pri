@@ -17,11 +17,11 @@ MODULES += CG3_DATA_SRUCTURES
 # ----- Arrays -----
 
 HEADERS += \
-    $$PWD/data_structures/arrays/arrays.h \ #arrays
+    $$PWD/data_structures/arrays/array_.h \ #arrays
+    $$PWD/data_structures/arrays/arrays.h \
     $$PWD/data_structures/arrays/array2d.h \
     $$PWD/data_structures/arrays/array3d.h \
     $$PWD/data_structures/arrays/array4d.h \
-    $$PWD/data_structures/arrays/array.h \
     $$PWD/data_structures/arrays/array_bool.h \ #graphs
     $$PWD/data_structures/graphs/graph.h \
     $$PWD/data_structures/graphs/includes/nodes/graph_node.h \
@@ -59,7 +59,7 @@ HEADERS += \
 
 CG3_STATIC {
 SOURCES += \
-    $$PWD/data_structures/arrays/array.cpp \ #arrays
+    $$PWD/data_structures/arrays/array_.cpp \ #arrays
     $$PWD/data_structures/arrays/array2d.cpp \
     $$PWD/data_structures/arrays/array3d.cpp \
     $$PWD/data_structures/arrays/array4d.cpp \

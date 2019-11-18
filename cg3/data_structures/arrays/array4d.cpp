@@ -14,6 +14,11 @@ Array4D<T>::Array4D() : Array<T, 4>()
 {
 }
 
+template<typename T>
+Array4D<T>::Array4D(const Array<T, 4>& a) : Array<T, 4>(a)
+{
+}
+
 template <class T>
 inline Array4D<T>::Array4D(
         unsigned long int sizeX,

@@ -1,0 +1,7 @@
+CONFIG += CG3_CORE CG3_MESHES CG3_VIEWER
+
+include(../../cg3.pri)
+
+DEFINES += SOURCE_PATH=$$PWD
+
+SOURCES += main.cpp

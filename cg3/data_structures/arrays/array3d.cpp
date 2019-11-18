@@ -15,6 +15,11 @@ Array3D<T>::Array3D() : Array<T,3>()
 }
 
 template <class T>
+Array3D<T>::Array3D(const Array<T,3>& a) : Array<T,3>(a)
+{
+}
+
+template <class T>
 inline Array3D<T>::Array3D(
         unsigned long int sizeX,
         unsigned long int sizeY,
