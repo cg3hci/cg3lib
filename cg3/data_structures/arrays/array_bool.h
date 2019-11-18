@@ -7,7 +7,7 @@
 #ifndef CG3_ARRAY_BOOL_H
 #define CG3_ARRAY_BOOL_H
 
-#include "array.h"
+#include "array_.h"
 
 namespace cg3 {
 

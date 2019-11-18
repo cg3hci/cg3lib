@@ -10,7 +10,6 @@
 
 #include <vector>
 #include <assert.h>
-#include <iomanip>
 #include <cg3/io/serialize.h>
 #include <cg3/utilities/nested_initializer_lists.h>
 
@@ -131,6 +130,6 @@ protected:
 
 } //namespace cg3
 
-#include "array.cpp"
+#include "array_.cpp"
 
 #endif // CG3_ARRAY_H

@@ -5,7 +5,7 @@
  * @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
  */
 
-#include "array.h"
+#include "array_.h"
 
 /**
  * @brief Creates an N-Dimensional Array with size 0 for every dimension.

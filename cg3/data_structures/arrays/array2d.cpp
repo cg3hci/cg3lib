@@ -16,6 +16,12 @@ Array2D<T>::Array2D() :
 }
 
 template <class T>
+Array2D<T>::Array2D(const Array<T, 2>& a) :
+	Array<T, 2>(a)
+{
+}
+
+template <class T>
 inline Array2D<T>::Array2D(unsigned long int sizeX, unsigned long int sizeY) :
     Array<T, 2>(sizeX, sizeY)
 {

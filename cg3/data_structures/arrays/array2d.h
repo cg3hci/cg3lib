@@ -11,7 +11,7 @@
 #include <vector>
 #include <assert.h>
 #include <iomanip>
-#include "array.h"
+#include "array_.h"
 #include "array_bool.h"
 
 namespace cg3 {
@@ -25,6 +25,7 @@ class Array2D : public Array<T, 2>
 {
 public:
     Array2D();
+	Array2D(const Array<T, 2>& a);
     Array2D(unsigned long int sizeX, unsigned long int sizeY);
     Array2D(unsigned long int sizeX, unsigned long int sizeY, const T& value);
     Array2D(cg3::NestedInitializerLists<T, 2> values);
