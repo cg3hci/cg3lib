@@ -13,5 +13,6 @@ SUBDIRS      += aabb_tree \
                 graph \
                 laplacian_smoothing \
                 libigl_booleans \
+                mesh_picking \
                 range_tree \
                 viewer
