@@ -11,11 +11,6 @@ jobs:
     - uses: actions/checkout@v1
     - name: installing dependencies
       run: |
-           echo "--##--"
-           pwd
-           echo "--##--"
-           ls
-           echo "--##--"
            sudo apt update
            sudo apt -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev
            cd ..
@@ -24,7 +19,12 @@ jobs:
            export LIBIGL_HOME=$(pwd)/libigl/
     - name: compiling examples
       run: |
-           cd cg3lib/examples
+           echo "--##--"
+           pwd
+           echo "--##--"
+           ls
+           echo "--##--"
+           cd examples
            qmake examples.pro
            make
       
