@@ -17,7 +17,8 @@ jobs:
            ls libigl/
            export LIBIGL_HOME=$(pwd)/libigl/
     - name: compiling examples
-      run: cd cg3lib/examples
+      run: |
+           cd cg3lib/examples
            qmake examples.pro
            make
       
