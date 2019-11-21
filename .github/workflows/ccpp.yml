@@ -1,0 +1,26 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: installing dependencies
+      run: |
+           sudo apt update
+           sudo apt -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev
+           cd ..
+           git clone --recursive https://github.com/libigl/libigl
+           ls libigl/
+    - name: compiling examples
+      #env: LIBIGL_HOME: "$(pwd)/libigl/"
+      run: |
+           export LIBIGL_HOME=$(pwd)/../libigl/
+           cd examples
+           qmake examples.pro
+           make
+      
