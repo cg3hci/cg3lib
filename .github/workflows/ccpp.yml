@@ -16,9 +16,10 @@ jobs:
            cd ..
            git clone --recursive https://github.com/libigl/libigl
            ls libigl/
-           export LIBIGL_HOME=$(pwd)/libigl/
     - name: compiling examples
+      #env: LIBIGL_HOME: "$(pwd)/libigl/"
       run: |
+           export LIBIGL_HOME=$(pwd)/../libigl/
            echo "--##--"
            pwd
            echo "--##--"
