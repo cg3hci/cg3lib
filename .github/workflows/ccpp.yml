@@ -20,11 +20,6 @@ jobs:
       #env: LIBIGL_HOME: "$(pwd)/libigl/"
       run: |
            export LIBIGL_HOME=$(pwd)/../libigl/
-           echo "--##--"
-           pwd
-           echo "--##--"
-           ls
-           echo "--##--"
            cd examples
            qmake examples.pro
            make
