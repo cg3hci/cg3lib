@@ -44,7 +44,7 @@ macx{
         INCLUDEPATH += $$QGLVIEWER_PATH/QGLViewer.framework/Headers
 
         LIBS += -F$$QGLVIEWER_PATH/ -framework QGLViewer
-        LIBS += -libc++experimental.a
+        #LIBS += -libc++experimental.a
     }
 }
 
