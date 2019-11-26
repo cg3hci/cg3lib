@@ -13,6 +13,10 @@ jobs:
       run: |
             brew install qt cgal
             #install libQGLViewer
+            export QTDIR=/usr/local/opt/qt
+            export PATH=$QTDIR/bin:$PATH
+            export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
+            export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH
             cd ..
             git clone https://github.com/GillesDebunne/libQGLViewer.git
             cd libQGLViewer/QGLViewer
