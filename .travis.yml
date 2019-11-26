@@ -12,6 +12,7 @@ addons:
       - libeigen3-dev
   homebrew:
     packages:
+      - llvm
       - qt
       - cgal #it installs also boost, eigen, gmp
 
