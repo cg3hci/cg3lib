@@ -1,17 +1,53 @@
 # Enable C++ support
 language: cpp
 
-os: linux
-dist: bionic
-sudo: required
-
 compiler:
   - clang
   - gcc
 
+addons:
+  apt:
+    packages:
+      - qt5-default 
+      - libboost-all-dev 
+      - libcgal-dev 
+      - libgmp-dev 
+      - libqglviewer-dev-qt5 
+      - libeigen3-dev
+  homebrew:
+    packages:
+      - qt
+      - cgal #it installs also boost, eigen, gmp
+
+matrix:
+  include:
+    - os: osx
+    
+    - os: linux
+      dist: bionic
+      sudo: required
+
 install:
-  - sudo apt-get -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev      
   - cd ..
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]
+    then
+      #Set up Qt from brew
+      export QTDIR=/usr/local/opt/qt
+      export PATH=$QTDIR/bin:$PATH
+      export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
+      export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH
+      
+      #install libQGLViewer
+      git clone https://github.com/GillesDebunne/libQGLViewer.git
+      cd libQGLViewer/QGLViewer
+      qmake
+      make 
+      make install
+      export QGLVIEWER_HOME=/usr/local/lib #here is installed QGLViewer.framework
+      cd ..
+      cd ..
+    fi
   - git clone --recursive https://github.com/libigl/libigl
   - ls libigl/
   - export LIBIGL_HOME=$(pwd)/libigl/

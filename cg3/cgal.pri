@@ -10,28 +10,17 @@
     error(Cgal module requires Core module!)
 }
 
-unix:!macx{
+!win32{
     DEFINES += CG3_CGAL_DEFINED
     MODULES += CG3_CGAL
 
+    macx{
+        INCLUDEPATH += -I/usr/local/include/
+        LIBS += -L/usr/local/lib/
+    }
+
     LIBS += -lmpfr -lgmp -lCGAL -frounding-math -lCGAL_Core
     LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
-}
-
-macx{
-    exists(/libs/include/CGAL/) {
-        DEFINES += CG3_CGAL_DEFINED
-        CONFIG += CG3_CGAL
-        MODULES += CG3_CGAL
-
-        INCLUDEPATH += -I /libs/include/CGAL/
-
-        LIBS += -frounding-math
-        LIBS += -L/libs/lib/gmp -lgmp
-        LIBS += -L/libs/lib/CGAL -lCGAL -lCGAL_Core
-        LIBS += -L/libs/lib/boost -lboost_system-mt -DBOOST_LOG_DYN_LINK -lboost_log-mt -lboost_thread-mt -lpthread
-        LIBS += -L/libs/lib/mpfr -lmpfr
-    }
 }
 
 win32{

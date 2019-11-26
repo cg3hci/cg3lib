@@ -5,10 +5,9 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
-isEmpty(EIGEN_PATH) {
-    exists($$(EIGEN_HOME)) {
-        EIGEN_PATH = $$(EIGEN_HOME)
-    }
+
+exists($$(EIGEN_HOME)) {
+    EIGEN_PATH = $$(EIGEN_HOME)
 }
 
 exists($$EIGEN_PATH) {
@@ -17,43 +16,29 @@ exists($$EIGEN_PATH) {
     INCLUDEPATH += -I $$EIGEN_PATH
 }
 else {
-    unix:!macx{
+    !win32{
         exists(/usr/include/eigen3){
             DEFINES += CG3_WITH_EIGEN
             MODULES += CG3_WITH_EIGEN
             INCLUDEPATH += -I /usr/include/eigen3
         }
         else{
-            MODULES += CG3_WITHOUT_EIGEN
-        }
-    }
-
-    macx{
-        exists(/libs/include/eigen3){
-            DEFINES += CG3_WITH_EIGEN
-            MODULES += CG3_WITH_EIGEN
-            INCLUDEPATH += -I /libs/include/eigen3/
-        }
-        else {
-            exists(/usr/local/Cellar/eigen/3.3.4/include/eigen3){
+            exists(/usr/local/include/eigen3){
                 DEFINES += CG3_WITH_EIGEN
                 MODULES += CG3_WITH_EIGEN
-                INCLUDEPATH += -I /usr/local/Cellar/eigen/3.3.4/include/eigen3
+                INCLUDEPATH += -I /usr/local/include/eigen3/
             }
-            else{
+            else {
                 MODULES += CG3_WITHOUT_EIGEN
             }
         }
-
     }
 
     win32 {
-        EIGEN_PATH = C:/libs/eigen3
-
-        exists($$EIGEN_PATH){
+        exists(C:/libs/eigen3){
             DEFINES += CG3_WITH_EIGEN
             MODULES += CG3_WITH_EIGEN
-            INCLUDEPATH += -I $$quote($$EIGEN_PATH)
+            INCLUDEPATH += -I "C:/libs/eigen3"
         }
         else{
             MODULES += CG3_WITHOUT_EIGEN

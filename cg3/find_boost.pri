@@ -5,43 +5,43 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
-isEmpty(BOOST_PATH) {
-    exists($$(BOOST_HOME)) {
-        BOOST_PATH = $$(BOOST_HOME)
-    }
+
+exists($$(BOOST_HOME)) {
+    BOOST_PATH = $$(BOOST_HOME)
 }
 
 exists($$BOOST_PATH) {
     DEFINES += CG3_WITH_BOOST
+    MODULES += CG3_WITH_BOOST
     INCLUDEPATH += -I $$BOOST_PATH
 }
 else {
-    unix:!macx{
+    !win32{
         exists(/usr/include/boost){
             DEFINES += CG3_WITH_BOOST
-        }
-    }
-
-    macx{
-        exists(/libs/include/boost/){
-            INCLUDEPATH += -I /libs/include/boost/
-            INCLUDEPATH += -I /libs/include/
-            DEFINES += CG3_WITH_BOOST
+            MODULES += CG3_WITH_BOOST
         }
         else {
-            exists(/usr/local/Cellar/boost/1.66.0/include/){
-                INCLUDEPATH += -I /usr/local/Cellar/boost/1.66.0/include/
+            exists(/usr/local/include/boost/){
+                INCLUDEPATH += -I /usr/local/include/
+                MODULES += CG3_WITH_BOOST
                 DEFINES += CG3_WITH_BOOST
+            }
+            else {
+                MODULES += CG3_WITHOUT_BOOST
             }
         }
     }
 
     win32 {
-        BOOST_PATH = C:/libs/boost
-
-        exists($$BOOST_PATH){
+        exists(C:/libs/boost){
             DEFINES += CG3_WITH_BOOST
-            INCLUDEPATH += -I $$quote($$BOOST_PATH)
+            MODULES += CG3_WITH_BOOST
+            INCLUDEPATH += -I "C:/libs/boost"
+            BOOST_PATH = C:/libs/boost
+        }
+        else {
+            MODULES += CG3_WITHOUT_BOOST
         }
     }
 }

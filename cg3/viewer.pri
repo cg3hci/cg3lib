@@ -29,15 +29,21 @@ unix:!macx{
 }
 
 macx{
-    exists(/libs/frameworks/QGLViewer){
+    #QGLVIEWER_PATH = /libs/frameworks/QGLViewer
+    QGLVIEWER_PATH = /usr/local/lib
+
+    exists($$(QGLVIEWER_HOME)){
+        QGLVIEWER_PATH = $$(QGLVIEWER_HOME)
+    }
+
+    exists($$QGLVIEWER_PATH){
         DEFINES += CG3_VIEWER_DEFINED
         CONFIG += CG3_VIEWER
         MODULES += CG3_VIEWER
 
-        INCLUDEPATH += -I /libs/include/boost
-        INCLUDEPATH += /libs/frameworks/QGLViewer/QGLViewer.framework/Headers
+        INCLUDEPATH += $$QGLVIEWER_PATH/QGLViewer.framework/Headers
 
-        LIBS += -F/libs/frameworks/QGLViewer -framework QGLViewer
+        LIBS += -F$$QGLVIEWER_PATH/frameworks/QGLViewer -framework QGLViewer
         LIBS += -libc++experimental.a
     }
 }
