@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: installing dependencies
       run: |
-            brew install qt cgal
+            brew install qt cgal llvm
             #install libQGLViewer
             export QTDIR=/usr/local/opt/qt
             export PATH=$QTDIR/bin:$PATH
