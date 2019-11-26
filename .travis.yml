@@ -48,6 +48,7 @@ install:
       qmake
       make 
       make install
+      ls -al /usr/local/lib/QGLViewer.framework
       export QGLVIEWER_HOME=/usr/local/lib #here is installed QGLViewer.framework
       cd ..
       cd ..
