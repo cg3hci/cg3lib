@@ -1,10 +1,6 @@
 # Enable C++ support
 language: cpp
 
-compiler:
-  - clang
-  - gcc
-
 addons:
   apt:
     packages:
@@ -22,8 +18,14 @@ addons:
 matrix:
   include:
     - os: osx
+      osx_image: xcode11
+      compiler:
+      - clang
     
     - os: linux
+      compiler:
+      - clang
+      - gcc
       dist: bionic
       sudo: required
 
