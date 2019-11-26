@@ -1,0 +1,39 @@
+name: MacOSClang
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: macos
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: installing dependencies
+      run: |
+            brew install --yes qt cgal
+            export QTDIR=/usr/local/opt/qt
+            export PATH=$QTDIR/bin:$PATH
+            export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
+            export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH
+            
+            #install libQGLViewer
+            cd ..
+            git clone https://github.com/GillesDebunne/libQGLViewer.git
+            cd libQGLViewer/QGLViewer
+            qmake
+            make 
+            make install
+            ls -al /usr/local/lib/QGLViewer.framework
+            export QGLVIEWER_HOME=/usr/local/lib #here is installed QGLViewer.framework
+            cd ..
+            cd ..
+            git clone --recursive https://github.com/libigl/libigl
+            ls libigl/
+    - name: compiling examples
+      #env: LIBIGL_HOME: "$(pwd)/libigl/"
+      run: |
+            export LIBIGL_HOME=$(pwd)/../libigl/
+            cd examples
+            qmake examples.pro
+            make
