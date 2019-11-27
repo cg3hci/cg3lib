@@ -1,6 +1,6 @@
 name: UbuntuLatestGCC
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -11,15 +11,17 @@ jobs:
     - uses: actions/checkout@v1
     - name: installing dependencies
       run: |
-           sudo apt update
+           sudo apt -y update
            sudo apt -y install qt5-default libboost-all-dev libcgal-dev libgmp-dev libqglviewer-dev-qt5 libeigen3-dev
            cd ..
            git clone --recursive https://github.com/libigl/libigl
-           ls libigl/
+           git clone --depth=1 --branch=devel https://github.com/cnr-isti-vclab/vcglib.git
+           git clone https://github.com/mlivesu/cinolib.git
     - name: compiling examples
-      #env: LIBIGL_HOME: "$(pwd)/libigl/"
       run: |
-           export LIBIGL_HOME=$(pwd)/../libigl/
+           export LIBIGL_HOME=$(pwd)/../libigl
+           export VCGLIB_HOME=$(pwd)/vcglib
+           export CINOLIB_HOME=$(pwd)/cinolib
            cd examples
            qmake examples.pro
            make

@@ -56,7 +56,13 @@ install:
     fi
   - git clone --recursive https://github.com/libigl/libigl
   - ls libigl/
-  - export LIBIGL_HOME=$(pwd)/libigl/
+  - export LIBIGL_HOME=$(pwd)/libigl
+  - git clone --depth=1 --branch=devel https://github.com/cnr-isti-vclab/vcglib.git
+  - ls vcglib/
+  - export VCGLIB_HOME=$(pwd)/vcglib
+  - git clone https://github.com/mlivesu/cinolib.git
+  - ls cinolib/
+  - export CINOLIB_HOME=$(pwd)/cinolib
 
 script:
   - cd cg3lib/examples

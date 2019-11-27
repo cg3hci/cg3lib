@@ -27,6 +27,8 @@ jobs:
             cd ..
             #install libigl
             git clone --recursive https://github.com/libigl/libigl
+            git clone --depth=1 --branch=devel https://github.com/cnr-isti-vclab/vcglib.git
+            git clone https://github.com/mlivesu/cinolib.git
     - name: compiling examples
       run: |
             export QTDIR=/usr/local/opt/qt
@@ -34,7 +36,9 @@ jobs:
             export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
             export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH
             export QGLVIEWER_HOME=/usr/local/lib #here is installed QGLViewer.framework
-            export LIBIGL_HOME=$(pwd)/../libigl/
+            export LIBIGL_HOME=$(pwd)/../libigl
+            export VCGLIB_HOME=$(pwd)/vcglib
+            export CINOLIB_HOME=$(pwd)/cinolib
             cd examples
             qmake examples.pro
             make
