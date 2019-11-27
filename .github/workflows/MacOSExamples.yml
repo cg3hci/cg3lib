@@ -1,4 +1,4 @@
-name: MacOSClang
+name: MacOSExamples
 
 on: [push, pull_request]
 
