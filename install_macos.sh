@@ -27,7 +27,7 @@ echo "export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH" >> ~/.bash_profile
 cd /usr/local/opt
 git clone https://github.com/GillesDebunne/libQGLViewer.git
 cd libQGLViewer/QGLViewer
-qmake
+/usr/local/opt/qt/bin/qmake
 make 
 make install  
 echo "export QGLVIEWER_HOME=/usr/local/lib" >> ~/.bash_profile #here is installed QGLViewer.framework
