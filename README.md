@@ -19,6 +19,30 @@ It is composed of different modules:
 All these modules are optional (except of the core module) and the project can be compiled on Windows, MacOS and Linux.
 The documentation can be found at the following link: https://cg3hci.github.io/index.html.
 
+## Installation
+### MacOS
+```
+git clone https://github.com/cg3hci/cg3lib.git
+bash cg3lib/install_macos.sh
+```
+
+### Ubuntu
+```
+git clone https://github.com/cg3hci/cg3lib.git
+bash cg3lib/install_ubuntu.sh
+```
+## Usage
+Look at the examples in the "examples" folder inside the repo.
+
+Compiling the examples:
+```
+cd cg3lib/examples
+qmake
+make
+```
+
+## Citation
+
 If you use cg3lib in your research projects, please cite the our library using this BibTeX entry:
 
 ```
