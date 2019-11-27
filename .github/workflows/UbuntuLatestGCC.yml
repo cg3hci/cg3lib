@@ -1,4 +1,4 @@
-name: UbuntuLatestGCC
+name: UbuntuExamples
 
 on: [push, pull_request]
 
