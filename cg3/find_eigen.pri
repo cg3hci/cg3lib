@@ -6,8 +6,10 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-exists($$(EIGEN_HOME)) {
-    EIGEN_PATH = $$(EIGEN_HOME)
+isEmpty(EIGEN_PATH){
+    exists($$(EIGEN_HOME)) {
+        EIGEN_PATH = $$(EIGEN_HOME)
+    }
 }
 
 exists($$EIGEN_PATH) {
@@ -16,14 +18,14 @@ exists($$EIGEN_PATH) {
     INCLUDEPATH += -I $$EIGEN_PATH
 }
 else {
-    !win32{
-        exists(/usr/include/eigen3){
+    unix{
+        exists(/usr/include/eigen3){ #linux apt default
             DEFINES += CG3_WITH_EIGEN
             MODULES += CG3_WITH_EIGEN
             INCLUDEPATH += -I /usr/include/eigen3
         }
         else{
-            exists(/usr/local/include/eigen3){
+            exists(/usr/local/include/eigen3){ #mac brew default
                 DEFINES += CG3_WITH_EIGEN
                 MODULES += CG3_WITH_EIGEN
                 INCLUDEPATH += -I /usr/local/include/eigen3/
@@ -39,6 +41,7 @@ else {
             DEFINES += CG3_WITH_EIGEN
             MODULES += CG3_WITH_EIGEN
             INCLUDEPATH += -I "C:/libs/eigen3"
+            EIGEN_PATH = C:/libs/eigen3
         }
         else{
             MODULES += CG3_WITHOUT_EIGEN

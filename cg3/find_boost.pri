@@ -6,8 +6,10 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-exists($$(BOOST_HOME)) {
-    BOOST_PATH = $$(BOOST_HOME)
+isEmpty(BOOST_PATH){
+    exists($$(BOOST_HOME)) {
+        BOOST_PATH = $$(BOOST_HOME)
+    }
 }
 
 exists($$BOOST_PATH) {
@@ -16,13 +18,13 @@ exists($$BOOST_PATH) {
     INCLUDEPATH += -I $$BOOST_PATH
 }
 else {
-    !win32{
-        exists(/usr/include/boost){
+    unix{
+        exists(/usr/include/boost){ #linux apt default
             DEFINES += CG3_WITH_BOOST
             MODULES += CG3_WITH_BOOST
         }
         else {
-            exists(/usr/local/include/boost/){
+            exists(/usr/local/include/boost/){ #mac brew default
                 INCLUDEPATH += -I /usr/local/include/
                 MODULES += CG3_WITH_BOOST
                 DEFINES += CG3_WITH_BOOST

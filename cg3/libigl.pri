@@ -13,23 +13,17 @@ isEmpty(LIBIGL_PATH) {
 
 exists($$LIBIGL_PATH) {
     !contains(DEFINES, CG3_EIGENMESH_DEFINED){
-        error(Igl module requires Eigenmesh module!)
+        error(Igl module requires Meshes module!)
     }
 
     DEFINES += CG3_LIBIGL_DEFINED
     MODULES += CG3_LIBIGL
 
-    unix:!macx{
+    unix{
         LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
         INCLUDEPATH += $$LIBIGL_PATH/include/
 
         QMAKE_CXXFLAGS += -isystem $$LIBIGL_PATH/include/
-
-        #newest versions of eigen are not supported by libigl
-        #USE_LIBIGL_EIGEN {
-        #    INCLUDEPATH -= /usr/include/eigen3
-        #    INCLUDEPATH += $$LIBIGL_PATH/external/eigen/
-        #}
     }
 
     win32{
@@ -75,5 +69,7 @@ exists($$LIBIGL_PATH) {
         $$PWD/libigl/remove_unreferenced_vertices.cpp
     }
 }
-
+else {
+    message(LibIGL not installed properly!)
+}
 

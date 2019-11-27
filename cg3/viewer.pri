@@ -29,7 +29,6 @@ unix:!macx{
 }
 
 macx{
-    #QGLVIEWER_PATH = /libs/frameworks/QGLViewer
     QGLVIEWER_PATH = /usr/local/lib
 
     exists($$(QGLVIEWER_HOME)){
