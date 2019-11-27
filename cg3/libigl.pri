@@ -20,7 +20,8 @@ exists($$LIBIGL_PATH) {
     MODULES += CG3_LIBIGL
 
     unix{
-        LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
+        linux:LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
+        macx:LIBS += -L/usr/local/lib/ -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread-mt
         INCLUDEPATH += $$LIBIGL_PATH/include/
 
         QMAKE_CXXFLAGS += -isystem $$LIBIGL_PATH/include/
