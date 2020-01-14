@@ -922,6 +922,9 @@ bool TemplatedDcel<V, HE, F>::saveOnObj(const std::string& fileNameObj, bool sav
 /**
  * @brief Saves the mesh in a PLY file.
  *
+ * Default mode: saves only vertex normals and face colors.
+ * To personalize the mode, use saveOnPly(const std::string&, bool, cg3::io::FileMeshMode).
+ *
  * @warning Holes of faces are not supported. Faces with holes will be closed
  * creating dummy edges.
  *
@@ -934,7 +937,7 @@ bool TemplatedDcel<V, HE, F>::saveOnObj(const std::string& fileNameObj, bool sav
 template <class V, class HE, class F>
 bool TemplatedDcel<V, HE, F>::saveOnPly(const std::string& fileNamePly, bool binary) const
 {
-	io::FileMeshMode fm(io::POLYGON_MESH, true, true, true, true);
+	io::FileMeshMode fm(io::POLYGON_MESH, true, false, false, true);
 	return saveOnPly(fileNamePly, binary, fm);
 }
 
