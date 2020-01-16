@@ -66,6 +66,7 @@ HEADERS += \
     $$PWD/io/ply/ply_edge.h \
     $$PWD/utilities/cg3_config_folder.h \ #utilities
     $$PWD/utilities/color.h \
+    $$PWD/utilities/command_line_argument_manager.h \
     $$PWD/utilities/comparators.h \
     $$PWD/utilities/const.h \
     $$PWD/utilities/eigen.h \
@@ -113,6 +114,7 @@ SOURCES += \
     $$PWD/io/ply/ply_header.cpp \
     $$PWD/io/ply/ply_vertex.cpp \
     $$PWD/utilities/color.cpp \ #utilities
+    $$PWD/utilities/command_line_argument_manager.cpp \
     $$PWD/utilities/eigen.cpp \
     $$PWD/utilities/hash.cpp \
     $$PWD/utilities/map.cpp \
