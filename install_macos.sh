@@ -16,7 +16,7 @@
 # requires: brew
 #
 
-brew install git qt cgal llvm
+brew install git qt boost eigen cgal llvm
 
 echo "export QTDIR=/usr/local/opt/qt" >> ~/.bash_profile
 echo "export PATH=$QTDIR/bin:$PATH" >> ~/.bash_profile
