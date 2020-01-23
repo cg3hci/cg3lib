@@ -83,6 +83,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_cylinder.h \
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.h \
         $$PWD/viewer/drawable_objects/drawable_objects_container.h \
+        $$PWD/viewer/drawable_objects/drawable_point2.h \
         $$PWD/viewer/drawable_objects/drawable_point3.h \
         $$PWD/viewer/drawable_objects/drawable_polygon2.h \
         $$PWD/viewer/drawable_objects/drawable_segment2.h \
@@ -119,6 +120,7 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
         $$PWD/viewer/drawable_objects/drawable_mixed_objects.cpp \
         $$PWD/viewer/drawable_objects/drawable_objects_container.cpp \
         $$PWD/viewer/drawable_objects/drawable_plane.cpp \
+        $$PWD/viewer/drawable_objects/drawable_point2.cpp \
         $$PWD/viewer/drawable_objects/drawable_point3.cpp \
         $$PWD/viewer/drawable_objects/drawable_polygon2.cpp \
         $$PWD/viewer/drawable_objects/drawable_segment2.cpp \
