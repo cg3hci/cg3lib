@@ -22,6 +22,7 @@ It is composed of different modules:
 All these modules are optional (except of the core module) and the project can be compiled on Windows, MacOS and Linux.
 The documentation can be found at the following link: https://cg3hci.github.io/index.html.
 
+
 ## Installation
 ### MacOS
 ```
