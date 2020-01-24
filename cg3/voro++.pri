@@ -5,13 +5,13 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
-isEmpty(VOROPLUSPLUS_PATH) {
-    exists($$(VOROPLUSPLUS_HOME)) {
+
+isEmpty(VOROPLUSPLUS_PATH):!isEmpty(VOROPLUSPLUS_HOME):exists($$(VOROPLUSPLUS_HOME)) {
         VOROPLUSPLUS_PATH = $$(VOROPLUSPLUS_HOME)
     }
 }
 
-exists($$VOROPLUSPLUS_PATH){
+!isEmpty(VOROPLUSPLUS_PATH):exists($$VOROPLUSPLUS_PATH){
     !contains(DEFINES, CG3_CORE_DEFINED){
         error(Voro++ module requires Core module)
     }

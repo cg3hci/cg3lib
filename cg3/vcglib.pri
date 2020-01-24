@@ -5,13 +5,12 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
-isEmpty(VCGLIB_PATH) {
-    exists($$(VCGLIB_HOME)) {
-        VCGLIB_PATH = $$(VCGLIB_HOME)
-    }
+
+isEmpty(VCGLIB_PATH):!isEmpty(VCGLIB_HOME):exists($$(VCGLIB_HOME)) {
+    VCGLIB_PATH = $$(VCGLIB_HOME)
 }
 
-exists($$VCGLIB_PATH) {
+!isEmpty(VCGLIB_PATH):exists($$VCGLIB_PATH) {
     win32{
         QMAKE_CXXFLAGS += -bigobj
     }

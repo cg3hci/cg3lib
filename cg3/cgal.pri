@@ -27,12 +27,13 @@ unix{
 win32{
     contains(DEFINES, CG3_WITH_BOOST){
         CGAL_PATH = C:/libs/CGAL
-        exists($$(CGAL_HOME)){
+
+        !isEmpty(CGAL_HOME):exists($$(CGAL_HOME)) {
             CGAL_PATH = $$(CGAL_HOME)
         }
 
-        exists($$BOOST_PATH){
-            exists($$CGAL_PATH){
+        !isEmpty(BOOST_PATH):exists($$(BOOST_PATH)) {
+            !isEmpty(CGAL_PATH):exists($$(CGAL_PATH)) {
                 DEFINES += CG3_CGAL_DEFINED
                 CONFIG += CG3_CGAL
                 MODULES += CG3_CGAL

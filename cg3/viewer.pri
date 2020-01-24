@@ -31,11 +31,11 @@ unix:!macx{
 macx{
     QGLVIEWER_PATH = /usr/local/lib
 
-    exists($$(QGLVIEWER_HOME)){
+    !isEmpty(QGLVIEWER_HOME):exists($$(QGLVIEWER_HOME)) {
         QGLVIEWER_PATH = $$(QGLVIEWER_HOME)
     }
 
-    exists($$QGLVIEWER_PATH){
+    !isEmpty(QGLVIEWER_PATH):exists($$(QGLVIEWER_PATH)) {
         DEFINES += CG3_VIEWER_DEFINED
         CONFIG += CG3_VIEWER
         MODULES += CG3_VIEWER
@@ -50,11 +50,11 @@ macx{
 win32 {
     QGLVIEWER_PATH = C:/libs/libQGLViewer
 
-    exists($$(QGLVIEWER_HOME)){
+    !isEmpty(QGLVIEWER_HOME):exists($$(QGLVIEWER_HOME)) {
         QGLVIEWER_PATH = $$(QGLVIEWER_HOME)
     }
 
-    exists($$QGLVIEWER_PATH){
+    !isEmpty(QGLVIEWER_PATH):exists($$(QGLVIEWER_PATH)) {
         DEFINES += CG3_VIEWER_DEFINED
         CONFIG += CG3_VIEWER
         MODULES += CG3_VIEWER
