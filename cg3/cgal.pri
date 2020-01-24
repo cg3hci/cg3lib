@@ -28,12 +28,14 @@ win32{
     contains(DEFINES, CG3_WITH_BOOST){
         CGAL_PATH = C:/libs/CGAL
 
-        !isEmpty(CGAL_HOME):exists($$(CGAL_HOME)) {
-            CGAL_PATH = $$(CGAL_HOME)
+        CGAL_ENV_VARIABLE = $$(CGAL_HOME)
+
+        !isEmpty(CGAL_ENV_VARIABLE):exists($$CGAL_ENV_VARIABLE) {
+            CGAL_PATH = $$CGAL_ENV_VARIABLE
         }
 
-        !isEmpty(BOOST_PATH):exists($$(BOOST_PATH)) {
-            !isEmpty(CGAL_PATH):exists($$(CGAL_PATH)) {
+        !isEmpty(BOOST_PATH):exists($$BOOST_PATH) {
+            !isEmpty(CGAL_PATH):exists($$CGAL_PATH) {
                 DEFINES += CG3_CGAL_DEFINED
                 CONFIG += CG3_CGAL
                 MODULES += CG3_CGAL

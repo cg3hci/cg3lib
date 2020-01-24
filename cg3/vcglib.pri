@@ -6,8 +6,10 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-isEmpty(VCGLIB_PATH):!isEmpty(VCGLIB_HOME):exists($$(VCGLIB_HOME)) {
-    VCGLIB_PATH = $$(VCGLIB_HOME)
+VCGLIB_ENV_VARIABLE = $$(VCGLIB_HOME)
+
+isEmpty(VCGLIB_PATH):!isEmpty(VCGLIB_ENV_VARIABLE):exists($$VCGLIB_ENV_VARIABLE) {
+    VCGLIB_PATH = $$VCGLIB_ENV_VARIABLE
 }
 
 !isEmpty(VCGLIB_PATH):exists($$VCGLIB_PATH) {

@@ -6,12 +6,13 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-isEmpty(VOROPLUSPLUS_PATH):!isEmpty(VOROPLUSPLUS_HOME):exists($$(VOROPLUSPLUS_HOME)) {
-        VOROPLUSPLUS_PATH = $$(VOROPLUSPLUS_HOME)
-    }
+VOROPLUSPLUS_ENV_VARIABLE = $$(VOROPLUSPLUS_HOME)
+
+isEmpty(VOROPLUSPLUS_PATH):!isEmpty(VOROPLUSPLUS_ENV_VARIABLE):exists($$VOROPLUSPLUS_ENV_VARIABLE) {
+    VOROPLUSPLUS_PATH = $$VOROPLUSPLUS_ENV_VARIABLE
 }
 
-!isEmpty(VOROPLUSPLUS_PATH):exists($$VOROPLUSPLUS_PATH){
+!isEmpty(VOROPLUSPLUS_PATH):exists($$VOROPLUSPLUS_PATH) {
     !contains(DEFINES, CG3_CORE_DEFINED){
         error(Voro++ module requires Core module)
     }

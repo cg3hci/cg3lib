@@ -6,11 +6,13 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_HOME):exists($$(LIBIGL_HOME)) {
-    LIBIGL_PATH = $$(LIBIGL_HOME)
+LIBIGL_ENV_VARIABLE = $$(LIBIGL_HOME)
+
+isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_ENV_VARIABLE):exists($$LIBIGL_ENV_VARIABLE) {
+    LIBIGL_PATH = $$LIBIGL_ENV_VARIABLE
 }
 
-!isEmpty(LIBIGL_PATH):exists($$(LIBIGL_PATH)) {
+!isEmpty(LIBIGL_PATH):exists($$LIBIGL_PATH) {
     !contains(DEFINES, CG3_EIGENMESH_DEFINED){
         error(Igl module requires Meshes module!)
     }

@@ -6,11 +6,13 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-isEmpty(EIGEN_PATH):!isEmpty(EIGEN_HOME):exists($$(EIGEN_HOME)) {
-    EIGEN_PATH = $$(EIGEN_HOME)
+EIGEN_ENV_VARIABLE = $$(EIGEN_HOME)
+
+isEmpty(EIGEN_PATH):!isEmpty(EIGEN_ENV_VARIABLE):exists($$EIGEN_ENV_VARIABLE) {
+    EIGEN_PATH = $$EIGEN_ENV_VARIABLE
 }
 
-!isEmpty(EIGEN_PATH):exists($$(EIGEN_PATH)) {
+!isEmpty(EIGEN_PATH):exists($$EIGEN_PATH) {
     DEFINES += CG3_WITH_EIGEN
     MODULES += CG3_WITH_EIGEN
     INCLUDEPATH += -I $$EIGEN_PATH

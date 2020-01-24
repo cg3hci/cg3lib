@@ -6,11 +6,13 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-isEmpty(BOOST_PATH):!isEmpty(BOOST_HOME):exists($$(BOOST_HOME)) {
-    BOOST_PATH = $$(BOOST_HOME)
+BOOST_ENV_VARIABLE = $$(BOOST_HOME)
+
+isEmpty(BOOST_PATH):!isEmpty(BOOST_ENV_VARIABLE):exists($$BOOST_ENV_VARIABLE) {
+    BOOST_PATH = $$BOOST_ENV_VARIABLE
 }
 
-!isEmpty(BOOST_PATH):exists($$(BOOST_PATH)) {
+!isEmpty(BOOST_PATH):exists($$BOOST_PATH) {
     DEFINES += CG3_WITH_BOOST
     MODULES += CG3_WITH_BOOST
     INCLUDEPATH += -I $$BOOST_PATH

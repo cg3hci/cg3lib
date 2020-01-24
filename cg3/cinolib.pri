@@ -6,11 +6,13 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-isEmpty(CINOLIB_PATH):!isEmpty(CINOLIB_HOME):exists($$(CINOLIB_HOME)) {
-    CINOLIB_PATH = $$(CINOLIB_HOME)
+CINOLIB_ENV_VARIABLE = $$(CINOLIB_HOME)
+
+isEmpty(CINOLIB_PATH):!isEmpty(CINOLIB_ENV_VARIABLE):exists($$CINOLIB_ENV_VARIABLE) {
+    CINOLIB_PATH = $$CINOLIB_ENV_VARIABLE
 }
 
-!isEmpty(CINOLIB_PATH):exists($$(CINOLIB_PATH)) {
+!isEmpty(CINOLIB_PATH):exists($$CINOLIB_PATH) {
     DEFINES += CG3_CINOLIB_DEFINED
     MODULES += CG3_CINOLIB
 
