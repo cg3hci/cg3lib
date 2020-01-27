@@ -20,7 +20,7 @@ jobs:
             cd ..
             git clone https://github.com/GillesDebunne/libQGLViewer.git
             cd libQGLViewer/QGLViewer
-            qmake
+            qmake -spec macx-g++
             make 
             make install            
             cd ..
