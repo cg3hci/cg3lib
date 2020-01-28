@@ -44,7 +44,14 @@ macx{
 
         INCLUDEPATH += $$QGLVIEWER_PATH/QGLViewer.framework/Headers
 
-        LIBS += -F$$QGLVIEWER_PATH/ -framework QGLViewer
+        exists($$QGLVIEWER_PATH/QGLViewer.framework) {
+            !plugin:QMAKE_POST_LINK=install_name_tool -change QGLViewer.framework/Versions/2/QGLViewer $$QGLVIEWER_PATH/QGLViewer.framework/Versions/2/QGLViewer $${TARGET}.app/Contents/MacOS/$${TARGET} #VERSION_MAJOR
+            LIBS += -F$$QGLVIEWER_PATH -framework QGLViewer
+        } else {
+            !plugin:QMAKE_POST_LINK=install_name_tool -change libQGLViewer.2.dylib $$QGLVIEWER_PATH/libQGLViewer.2.dylib $${TARGET}.app/Contents/MacOS/$${TARGET} #VERSION_MAJOR
+            LIBS *= -L$$QGLVIEWER_PATH -lQGLViewer
+        }
+
         #LIBS += -libc++experimental.a
     }
 }
