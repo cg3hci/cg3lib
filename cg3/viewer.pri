@@ -44,11 +44,16 @@ macx{
 
         INCLUDEPATH += $$QGLVIEWER_PATH/QGLViewer.framework/Headers
 
+        TARGETPATH = $${TARGET}.app/Contents/MacOS/$${TARGET}
+        !isEmpty(DESTDIR) {
+            TARGETPATH = $${DESTDIR}/$${TARGET}.app/Contents/MacOS/$${TARGET}
+        }
+
         exists($$QGLVIEWER_PATH/QGLViewer.framework) {
-            !plugin:QMAKE_POST_LINK=install_name_tool -change QGLViewer.framework/Versions/2/QGLViewer $$QGLVIEWER_PATH/QGLViewer.framework/Versions/2/QGLViewer $${TARGET}.app/Contents/MacOS/$${TARGET} #VERSION_MAJOR
+            !plugin:QMAKE_POST_LINK=install_name_tool -change QGLViewer.framework/Versions/2/QGLViewer $$QGLVIEWER_PATH/QGLViewer.framework/Versions/2/QGLViewer $$TARGETPATH #VERSION_MAJOR
             LIBS += -F$$QGLVIEWER_PATH -framework QGLViewer
         } else {
-            !plugin:QMAKE_POST_LINK=install_name_tool -change libQGLViewer.2.dylib $$QGLVIEWER_PATH/libQGLViewer.2.dylib $${TARGET}.app/Contents/MacOS/$${TARGET} #VERSION_MAJOR
+            !plugin:QMAKE_POST_LINK=install_name_tool -change libQGLViewer.2.dylib $$QGLVIEWER_PATH/libQGLViewer.2.dylib $$TARGETPATH #VERSION_MAJOR
             LIBS *= -L$$QGLVIEWER_PATH -lQGLViewer
         }
 
