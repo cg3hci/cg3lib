@@ -117,7 +117,10 @@ void curveOnManifold(
     cc.SplitMeshWithPolyline(edgeMesh);
 
     // Now the two meshes should have coincident edges
-    cc.TagFaceEdgeSelWithPolyLine(edgeMesh);
+    bool done = cc.TagFaceEdgeSelWithPolyLine(edgeMesh);
+    if (!done) {
+        std::cout << "Warning: vcglib bug of curve on manifold! Edges have not been tagged properly." << std::endl;
+    }
 }
 
 }
