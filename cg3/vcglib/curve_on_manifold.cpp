@@ -19,8 +19,8 @@ namespace vcglib {
 
 inline cg3::EigenMesh curveOnManifold(
         const cg3::EigenMesh& mesh,
-		const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
-		std::set<std::pair<cg3::Point3d, cg3::Point3d>>& newEdgesCoordinates,
+        const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
+        std::set<std::pair<cg3::Point3d, cg3::Point3d>>& newEdgesCoordinates,
         const int firstStepIterations,
         const int secondStepIterations,
         const double baryCentricThreshold,
@@ -36,20 +36,21 @@ inline cg3::EigenMesh curveOnManifold(
 
     curveOnManifold(vcgMesh, edgeMesh, resultMesh, firstStepIterations, secondStepIterations, baryCentricThreshold, fixBorders, fixCorners);
 
-    vcg::tri::Allocator<TriangleEdgeMesh>::CompactEveryVector(resultMesh);
     for (size_t i = 0; i < resultMesh.face.size(); i++) {
-        for (int k = 0; k < resultMesh.face[i].VN(); k++) {
-            if (resultMesh.face[i].IsFaceEdgeS(k)) {
-                const CoordType& p1 = resultMesh.face[i].V0(k)->cP();
-                const CoordType& p2 = resultMesh.face[i].V1(k)->cP();
+        if (!resultMesh.face[i].IsD()) {
+            for (int k = 0; k < resultMesh.face[i].VN(); k++) {
+                if (resultMesh.face[i].IsFaceEdgeS(k)) {
+                    const CoordType& p1 = resultMesh.face[i].V0(k)->cP();
+                    const CoordType& p2 = resultMesh.face[i].V1(k)->cP();
 
-				std::pair<cg3::Point3d, cg3::Point3d> newEdge;
-				newEdge.first = cg3::Point3d(p1.X(), p1.Y(), p1.Z());
-				newEdge.second = cg3::Point3d(p2.X(), p2.Y(), p2.Z());
-                if (newEdge.first < newEdge.second)
-                    std::swap(newEdge.first, newEdge.second);
+                    std::pair<cg3::Point3d, cg3::Point3d> newEdge;
+                    newEdge.first = cg3::Point3d(p1.X(), p1.Y(), p1.Z());
+                    newEdge.second = cg3::Point3d(p2.X(), p2.Y(), p2.Z());
+                    if (newEdge.first < newEdge.second)
+                        std::swap(newEdge.first, newEdge.second);
 
-                newEdgesCoordinates.insert(newEdge);
+                    newEdgesCoordinates.insert(newEdge);
+                }
             }
         }
     }
