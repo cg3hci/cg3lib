@@ -29,12 +29,83 @@ inline cg3::EigenMesh curveOnManifold(
 {
     typedef cg3::vcglib::TriangleEdgeMesh TriangleEdgeMesh;
     typedef typename TriangleEdgeMesh::CoordType CoordType;
+    typedef typename TriangleEdgeMesh::ScalarType ScalarType;
     cg3::vcglib::TriangleEdgeMesh vcgMesh, resultMesh, edgeMesh;
 
     cg3::vcglib::eigenMeshToVCG(mesh, vcgMesh);
     cg3::vcglib::edgesToVCG(edges, edgeMesh);
 
-    curveOnManifold(vcgMesh, edgeMesh, resultMesh, firstStepIterations, secondStepIterations, baryCentricThreshold, fixBorders, fixCorners);
+    bool done = curveOnManifold(vcgMesh, edgeMesh, resultMesh, firstStepIterations, secondStepIterations, baryCentricThreshold, fixBorders, fixCorners);
+
+    if (!done) {
+        size_t totalEdgesSelected = 0;
+        for (size_t i = 0; i < resultMesh.face.size(); i++) {
+            if (!resultMesh.face[i].IsD()) {
+                for (int k = 0; k < resultMesh.face[i].VN(); k++) {
+                    if (resultMesh.face[i].IsFaceEdgeS(k)) {
+                        totalEdgesSelected++;
+                    }
+                }
+            }
+        }
+        std::cout << "Fixing curve on manifold bug: " << totalEdgesSelected << " selected. This number should be: " << edgeMesh.EN()*2 << std::endl;
+
+        vcg::tri::UpdateBounding<TriangleEdgeMesh>::Box(resultMesh);
+        vcg::tri::UpdateTopology<TriangleEdgeMesh>::FaceFace(resultMesh);
+        ScalarType maxD=resultMesh.bbox.Diag();
+        ScalarType minD=0;
+
+        vcg::GridStaticPtr<typename TriangleEdgeMesh::FaceType,typename TriangleEdgeMesh::FaceType::ScalarType> Grid;
+        Grid.Set(resultMesh.face.begin(), resultMesh.face.end());
+
+        size_t newEdgesSelected = 0;
+        for (size_t i = 0; i < edgeMesh.edge.size(); i++) {
+            if (!edgeMesh.edge[i].IsD()) {
+                const CoordType& p1 = edgeMesh.edge[i].V0(0)->cP();
+                const CoordType& p2 = edgeMesh.edge[i].V1(0)->cP();
+
+                CoordType midPoint = (p1 + p2) / 2;
+
+                typename TriangleEdgeMesh::CoordType closestPoint;
+                typename TriangleEdgeMesh::FaceType* f =
+                        vcg::tri::GetClosestFaceBase<TriangleEdgeMesh>(
+                            resultMesh,
+                            Grid,
+                            midPoint,
+                            maxD,minD,
+                            closestPoint);
+
+                int bestEdge = 0;
+                ScalarType bestDistance = std::numeric_limits<double>::max();
+
+                for (int j = 0; j < f->VN(); j++) {
+                    CoordType point = (f->V0(j)->cP() + f->V1(j)->cP()) / 2;
+
+                    ScalarType distance = (point - closestPoint).Norm();
+
+                    if (distance < bestDistance) {
+                        bestEdge = j;
+                        bestDistance = distance;
+                    }
+                }
+
+                typename TriangleEdgeMesh::FaceType* adjF = f->FFp(bestEdge);
+                int adjFI = f->FFi(bestEdge);
+
+                if (!f->IsFaceEdgeS(bestEdge)) {
+                    f->SetFaceEdgeS(bestEdge);
+                    newEdgesSelected++;
+                }
+
+                if (!adjF->IsFaceEdgeS(adjFI)) {
+                    adjF->SetFaceEdgeS(adjFI);
+                    newEdgesSelected++;
+                }
+            }
+        }
+
+        std::cout << "Fixing curve on manifold bug: " << newEdgesSelected << " new edges selected. This number should be: " << edgeMesh.EN()*2 - totalEdgesSelected << "." << std::endl;
+    }
 
     for (size_t i = 0; i < resultMesh.face.size(); i++) {
         if (!resultMesh.face[i].IsD()) {
@@ -61,7 +132,7 @@ inline cg3::EigenMesh curveOnManifold(
 #endif
 
 template <class TriangleEdgeMeshType>
-void curveOnManifold(
+bool curveOnManifold(
         TriangleEdgeMeshType& polyMesh,
         TriangleEdgeMeshType& edgeMesh,
         TriangleEdgeMeshType& resultMesh,
@@ -121,6 +192,7 @@ void curveOnManifold(
     if (!done) {
         std::cout << "Warning: vcglib bug of curve on manifold! Edges have not been tagged properly." << std::endl;
     }
+    return done;
 }
 
 }

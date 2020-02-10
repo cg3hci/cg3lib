@@ -30,7 +30,7 @@ cg3::EigenMesh curveOnManifold(
 #endif
 
 template <class TriangleEdgeMeshType>
-void curveOnManifold(
+bool curveOnManifold(
         TriangleEdgeMeshType& mesh,
         TriangleEdgeMeshType& edgeMesh,
         TriangleEdgeMeshType& resultMesh,
