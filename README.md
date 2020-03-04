@@ -1,7 +1,5 @@
 # cg3lib
 
-[![Build Status](https://travis-ci.org/cg3hci/cg3lib.svg?branch=master)](https://travis-ci.org/cg3hci/cg3lib)
-
 [![Actions Status](https://github.com/cg3hci/cg3lib/workflows/UbuntuExamples/badge.svg)](https://github.com/cg3hci/cg3lib/actions)
 
 [![Actions Status](https://github.com/cg3hci/cg3lib/workflows/MacOSExamples/badge.svg)](https://github.com/cg3hci/cg3lib/actions)
