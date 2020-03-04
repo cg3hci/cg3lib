@@ -21,8 +21,8 @@ unix{
         LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread-mt
     }
 
-    LIBS += -lmpfr -lgmp -lCGAL -frounding-math -lCGAL_Core
-    !macx:LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
+    LIBS += -lmpfr -lgmp -frounding-math
+    !macx:LIBS += -lCGAL -lCGAL_Core -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
 }
 
 win32{

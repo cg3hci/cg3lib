@@ -25,6 +25,10 @@ CG3_OPENMP {
     }
 }
 
+macx{
+    DEFINES += GL_SILENCE_DEPRECATION
+}
+
 #core
 HEADERS += \
     $$PWD/cg3lib.h \ #core
