@@ -15,6 +15,7 @@ unix{
     MODULES += CG3_CGAL
 
     macx{
+        CONFIG += c++14
         INCLUDEPATH += -I/usr/local/include/
         LIBS += -L/usr/local/lib/
         LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread-mt
