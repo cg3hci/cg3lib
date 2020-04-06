@@ -48,6 +48,16 @@ public:
     /* Mesh distances */
     static double hausdorffDistance(const SimpleEigenMesh& m1, const SimpleEigenMesh& m2);
 
+    /* Curvature */
+    static void vertexCurvature(
+            const SimpleEigenMesh& m,
+            std::vector<Vec3d>& minDirection,
+            std::vector<Vec3d>& maxDirection,
+            std::vector<double>& minValue,
+            std::vector<double>& maxValue,
+            const unsigned int nRing = 5);
+
+
     #ifdef CG3_CGAL_DEFINED
 
     /* CSG conversions */
@@ -88,18 +98,21 @@ private:
 #define CG3_EIGENMESH_LIBIGL_ALGORITHMS_DISTANCES_CPP "eigenmesh_libigl_algorithms_distances.cpp"
 #define CG3_EIGENMESH_LIBIGL_ALGORITHMS_MANIFOLDUTILITIES_CPP "eigenmesh_libigl_algorithms_manifoldutilities.cpp"
 #define CG3_EIGENMESH_LIBIGL_ALGORITHMS_VERTICESREMOVAL_CPP "eigenmesh_libigl_algorithms_verticesremoval.cpp"
+#define CG3_EIGENMESH_LIBIGL_ALGORITHMS_CURVATURE_CPP "eigenmesh_libigl_algorithms_curvature.cpp"
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_ADJACENCIES_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_BOOLEANS_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_DECIMATION_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_DISTANCES_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_MANIFOLDUTILITIES_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_VERTICESREMOVAL_CPP
+#include CG3_EIGENMESH_LIBIGL_ALGORITHMS_CURVATURE_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_ADJACENCIES_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_BOOLEANS_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_DECIMATION_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_DISTANCES_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_MANIFOLDUTILITIES_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_VERTICESREMOVAL_CPP
+#undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_CURVATURE_CPP
 #endif //CG3_STATIC
 
 #endif // CG3_EIGENMESH_LIBIGL_ALGORITHMS_H

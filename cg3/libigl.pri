@@ -39,6 +39,7 @@ isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_ENV_VARIABLE):exists($$LIBIGL_ENV_VARIABLE)
         $$PWD/libigl/libigl.h \
         $$PWD/libigl/booleans.h \
         $$PWD/libigl/connected_components.h \
+        $$PWD/libigl/curvature.h \
         $$PWD/libigl/decimate.h \
         $$PWD/libigl/mesh_adjacencies.h \
         $$PWD/libigl/extract_manifold_patches.h \
@@ -59,8 +60,10 @@ isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_ENV_VARIABLE):exists($$LIBIGL_ENV_VARIABLE)
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_adjacencies.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_booleans.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_distances.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_curvature.cpp \
         $$PWD/libigl/booleans.cpp \
         $$PWD/libigl/connected_components.cpp \
+        $$PWD/libigl/curvature.cpp \
         $$PWD/libigl/decimate.cpp \
         $$PWD/libigl/extract_manifold_patches.cpp \
         $$PWD/libigl/is_edge_manifold.cpp \
