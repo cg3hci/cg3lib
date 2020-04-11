@@ -23,7 +23,10 @@ namespace cg3 {
  * @param nRing Ring for computing the curvature
  * @return Saliency
 */
-std::vector<double> computeSaliency(const EigenMesh& mesh, const double sigma, const unsigned int nRing)
+std::vector<double> computeSaliency(
+        const EigenMesh& mesh,
+        const double sigma,
+        const unsigned int nRing)
 {
     std::vector<double> meanCurvature = cg3::libigl::meanVertexCurvature(mesh, nRing);
     std::vector<double> gaussianWeighted1 = cg3::vertexGaussianWeightedSmoothing(mesh, meanCurvature, sigma, sigma * 2);

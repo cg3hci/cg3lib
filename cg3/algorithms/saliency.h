@@ -14,7 +14,10 @@
 
 namespace cg3 {
 
-std::vector<double> computeSaliency(const EigenMesh& mesh, const double sigma, const unsigned int nRing);
+std::vector<double> computeSaliency(
+        const EigenMesh& mesh,
+        const double sigma,
+        const unsigned int nRing = 5);
 
 } //namespace cg3
 
