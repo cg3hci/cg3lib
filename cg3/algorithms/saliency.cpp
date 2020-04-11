@@ -23,7 +23,7 @@ namespace cg3 {
  * @param nRing Ring for computing the curvature
  * @return Saliency
 */
-std::vector<double> computeSaliency(
+CG3_INLINE std::vector<double> computeSaliency(
         const EigenMesh& mesh,
         const double sigma,
         const unsigned int nRing)
