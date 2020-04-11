@@ -21,7 +21,7 @@ std::vector<double> computeSaliency(const EigenMesh& mesh, const double sigma, c
 #endif
 
 #ifndef CG3_STATIC
-#define  CG3_SALIENCY_CPP "SALIENCY.cpp"
+#define  CG3_SALIENCY_CPP "saliency.cpp"
 #include  CG3_SALIENCY_CPP
 #undef  CG3_SALIENCY_CPP
 #endif //CG3_STATIC

@@ -32,7 +32,7 @@ std::vector<double> vertexGaussianWeightedSmoothing(
 #endif
 
 #ifndef CG3_STATIC
-#define  CG3_GAUSSIAN_WEIGHTED_SMOOTHING_CPP "GAUSSIAN_WEIGHTED_SMOOTHING.cpp"
+#define  CG3_GAUSSIAN_WEIGHTED_SMOOTHING_CPP "gaussian_weighted_smoothing.cpp"
 #include  CG3_GAUSSIAN_WEIGHTED_SMOOTHING_CPP
 #undef  CG3_GAUSSIAN_WEIGHTED_SMOOTHING_CPP
 #endif //CG3_STATIC
