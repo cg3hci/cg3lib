@@ -17,68 +17,74 @@ namespace cg3 {
  * @brief Smooth of a function over a mesh (defined on vertices), using a gaussian weighted
  * function
  * @param mesh Input mesh
- * @param values Input function
+ * @param function Input function defined on vertices
+ * @param iterations Iterations
  * @param sigma Standard deviation of the gaussian function
  * @param neighborDistance Maximum distance of a vertex to be counted as neighbor
  * @param vvAdj Vertex-vertex adjacencies of the mesh
  * @return Gaussian weighted value of the function for each vertex. If it was impossible
  * to find a value (denomination equals 0 while computing) the original value is returned.
  */
-std::vector<double> vertexGaussianWeightedSmoothing(
+CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
         const cg3::EigenMesh& mesh,
-        const std::vector<double>& values,
+        const std::vector<double>& function,
+        const unsigned int iterations,
         const double sigma,
         const double neighborDistance,
         const std::vector<std::vector<int>>& vvAdj)
 {
-    std::vector<double> gaussianWeighted(mesh.numberVertices());
+    std::vector<double> gaussianWeighted = function;
 
-    for(unsigned int vId = 0; vId < mesh.numberVertices(); vId++){
-        double numerator = 0;
-        double denominator = 0;
+    for (unsigned int it = 0; it < iterations; it++) {
+        std::vector<double> lastValues = gaussianWeighted;
 
-        //Current point being evaluated
-        cg3::Point3d p = mesh.vertex(vId);
+        for(unsigned int vId = 0; vId < mesh.numberVertices(); vId++){
+            double numerator = 0;
+            double denominator = 0;
 
-        //Stack
-        std::vector<int> stack;
-        std::vector<bool> visited(mesh.numberVertices(), false);
+            //Current point being evaluated
+            cg3::Point3d p = mesh.vertex(vId);
 
-        //Initializing with the current vertex
-        stack.push_back(vId);
-        visited[vId] = true;
+            //Stack
+            std::vector<int> stack;
+            std::vector<bool> visited(mesh.numberVertices(), false);
 
-        while (!stack.empty()){
-            int currentVertex = stack.back();
-            stack.pop_back();
+            //Initializing with the current vertex
+            stack.push_back(vId);
+            visited[vId] = true;
 
-            cg3::Point3d currentPoint = mesh.vertex(currentVertex);
+            while (!stack.empty()){
+                int currentVertex = stack.back();
+                stack.pop_back();
 
-            double distance = p.dist(currentPoint);
-            double expression = std::exp(-(distance * distance) / (2.0 * sigma * sigma));
+                cg3::Point3d currentPoint = mesh.vertex(currentVertex);
 
-            numerator += values[currentVertex] * expression;
-            denominator += expression;
+                double distance = p.dist(currentPoint);
+                double expression = std::exp(-(distance * distance) / (2.0 * sigma * sigma));
 
-            for(size_t j = 0; j < vvAdj[currentVertex].size(); j++){
-                int adjVId = vvAdj[currentVertex][j];
+                numerator += lastValues[currentVertex] * expression;
+                denominator += expression;
 
-                if(!visited[adjVId]) {
-                    double distance = mesh.vertex(vId).dist(mesh.vertex(adjVId));
+                for(size_t j = 0; j < vvAdj[currentVertex].size(); j++){
+                    int adjVId = vvAdj[currentVertex][j];
 
-                    if (distance <= neighborDistance) {
-                        stack.push_back(vvAdj[currentVertex][j]);
-                        visited[vvAdj[currentVertex][j]] = true;
+                    if(!visited[adjVId]) {
+                        double distance = mesh.vertex(vId).dist(mesh.vertex(adjVId));
+
+                        if (distance <= neighborDistance) {
+                            stack.push_back(vvAdj[currentVertex][j]);
+                            visited[vvAdj[currentVertex][j]] = true;
+                        }
                     }
                 }
             }
-        }
 
-        if (denominator != 0) {
-            gaussianWeighted[vId] = numerator / denominator;
-        }
-        else {
-            gaussianWeighted[vId] = values[vId];
+            if (denominator != 0) {
+                gaussianWeighted[vId] = numerator / denominator;
+            }
+            else {
+                gaussianWeighted[vId] = lastValues[vId];
+            }
         }
     }
 
@@ -88,20 +94,22 @@ std::vector<double> vertexGaussianWeightedSmoothing(
 /**
  * @brief Smooth of a function over a mesh, using a gaussian weighted function
  * @param mesh Input mesh
- * @param values Input function
+ * @param function Input function defined on vertices
+ * @param iterations Iterations
  * @param sigma Standard deviation of the gaussian function
  * @param neighborDistance Maximum distance of a vertex to be counted as neighbor
  * @param vvAdj Vertex-vertex adjacencies of the mesh
  * @return Gaussian weighted value of the function for each vertex.
  */
-std::vector<double> vertexGaussianWeightedSmoothing(
+CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
         const cg3::EigenMesh& mesh,
-        const std::vector<double>& values,
+        const std::vector<double>& function,
+        const unsigned int iterations,
         const double sigma,
         const double neighborDistance)
 {
     std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
-    return vertexGaussianWeightedSmoothing(mesh, values, sigma, neighborDistance, vvAdj);
+    return vertexFunctionGaussianSmoothing(mesh, function, iterations, sigma, neighborDistance, vvAdj);
 }
 
 #endif

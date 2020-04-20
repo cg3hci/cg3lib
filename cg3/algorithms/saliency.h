@@ -16,8 +16,32 @@ namespace cg3 {
 
 std::vector<double> computeSaliency(
         const EigenMesh& mesh,
+        const std::vector<double>& meanCurvature,
+        const double sigma);
+
+std::vector<double> computeSaliency(
+        const EigenMesh& mesh,
         const double sigma,
         const unsigned int nRing = 5);
+
+
+std::vector<double> computeSaliencyMultiScale(
+        const cg3::EigenMesh& mesh,
+        const std::vector<double>& meanCurvature,
+        const std::vector<std::vector<int>>& vvAdj,
+        const unsigned int nScales = 5);
+
+std::vector<double> computeSaliencyMultiScale(
+        const cg3::EigenMesh& mesh,
+        const std::vector<std::vector<int>>& vvAdj,
+        const unsigned int nRing = 5,
+        const unsigned int nScales = 5);
+
+std::vector<double> computeSaliencyMultiScale(
+        const cg3::EigenMesh& mesh,
+        const unsigned int nRing = 5,
+        const unsigned int nScales = 5);
+
 
 } //namespace cg3
 
