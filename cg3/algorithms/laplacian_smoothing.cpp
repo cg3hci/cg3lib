@@ -10,11 +10,6 @@
 #include <cg3/meshes/dcel/dcel.h>
 #endif
 
-#ifdef CG3_EIGENMESH_DEFINED
-#include <cg3/meshes/eigenmesh/eigenmesh.h>
-#include <cg3/libigl/mesh_adjacencies.h>
-#endif
-
 namespace cg3 {
 
 #ifdef CG3_DCEL_DEFINED
@@ -62,69 +57,6 @@ CG3_INLINE Dcel laplacianSmoothing(const Dcel& mesh, unsigned int nIt)
 	cg3::Dcel output = mesh;
 	laplacianSmoothing(output, nIt);
 	return output;
-}
-
-#endif
-
-
-#ifdef CG3_EIGENMESH_DEFINED
-
-/**
- * @brief Smooth of a function over a mesh (defined on vertices), using a laplacian smoothing
- * @param mesh Input mesh
- * @param function Input function defined on vertices
- * @param iterations Iterations
- * @param weight Weight for each vertex for its value
- * @param vvAdj Vertex-vertex adjacencies of the mesh
- * @return Laplacian smoothed value of the function for each vertex.
- */
-CG3_INLINE std::vector<double> vertexFunctionLaplacianSmoothing(
-        const cg3::EigenMesh& mesh,
-        const std::vector<double>& function,
-        const unsigned int iterations,
-        const double weight,
-        const std::vector<std::vector<int>>& vvAdj)
-{
-    std::vector<double> laplacianValue = function;
-
-    for (unsigned int it = 0; it < iterations; it++) {
-        std::vector<double> lastValues = laplacianValue;
-
-        for(unsigned int vId = 0; vId < mesh.numberVertices(); vId++) {
-            double adjValue = 0;
-
-            for(size_t j = 0; j < vvAdj[vId].size(); j++) {
-                double adjId = vvAdj[vId][j];
-
-                adjValue += lastValues[adjId];
-            }
-
-            adjValue /= vvAdj[vId].size();
-
-            laplacianValue[vId] = (weight * lastValues[vId]) + ((1 - weight) * adjValue);
-        }
-    }
-
-    return laplacianValue;
-}
-
-/**
- * @brief Smooth of a function over a mesh, using a gaussian weighted function
- * @param mesh Input mesh
- * @param function Input function defined on vertices
- * @param iterations Iterations
- * @param weight Weight for each vertex for its value
- * @param vvAdj Vertex-vertex adjacencies of the mesh
- * @return Laplacian smoothed value of the function for each vertex.
- */
-CG3_INLINE std::vector<double> vertexFunctionLaplacianSmoothing(
-        const cg3::EigenMesh& mesh,
-        const std::vector<double>& function,
-        const double weight,
-        const unsigned int iterations)
-{
-    std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
-    return vertexFunctionLaplacianSmoothing(mesh, function, iterations, weight, vvAdj);
 }
 
 #endif

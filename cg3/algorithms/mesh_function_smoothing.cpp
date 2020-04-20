@@ -5,9 +5,11 @@
  * @author Stefano Nuvoli (muntoni.alessandro@gmail.com)
  * @author Alessandro Tola (alessandro85.tola@gmail.com)
  */
-#include "gaussian_weighted_smoothing.h"
+#include "mesh_function_smoothing.h"
 
+#ifdef CG3_LIBIGL_DEFINED
 #include <cg3/libigl/mesh_adjacencies.h>
+#endif
 
 namespace cg3 {
 
@@ -25,7 +27,7 @@ namespace cg3 {
  * @return Gaussian weighted value of the function for each vertex. If it was impossible
  * to find a value (denomination equals 0 while computing) the original value is returned.
  */
-CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
+inline std::vector<double> vertexFunctionGaussianSmoothing(
         const cg3::EigenMesh& mesh,
         const std::vector<double>& function,
         const unsigned int iterations,
@@ -91,6 +93,8 @@ CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
     return gaussianWeighted;
 }
 
+#ifdef CG3_LIBIGL_DEFINED
+
 /**
  * @brief Smooth of a function over a mesh, using a gaussian weighted function
  * @param mesh Input mesh
@@ -101,7 +105,7 @@ CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
  * @param vvAdj Vertex-vertex adjacencies of the mesh
  * @return Gaussian weighted value of the function for each vertex.
  */
-CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
+inline std::vector<double> vertexFunctionGaussianSmoothing(
         const cg3::EigenMesh& mesh,
         const std::vector<double>& function,
         const unsigned int iterations,
@@ -111,6 +115,71 @@ CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
     std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
     return vertexFunctionGaussianSmoothing(mesh, function, iterations, sigma, neighborDistance, vvAdj);
 }
+
+#endif
+
+/**
+ * @brief Smooth of a function over a mesh (defined on vertices), using a laplacian smoothing
+ * @param mesh Input mesh
+ * @param function Input function defined on vertices
+ * @param iterations Iterations
+ * @param weight Weight for each vertex for its value
+ * @param vvAdj Vertex-vertex adjacencies of the mesh
+ * @return Laplacian smoothed value of the function for each vertex.
+ */
+template<class T>
+std::vector<T> vertexFunctionLaplacianSmoothing(
+        const cg3::EigenMesh& mesh,
+        const std::vector<T>& function,
+        const unsigned int iterations,
+        const double weight,
+        const std::vector<std::vector<int>>& vvAdj)
+{
+    std::vector<T> laplacianValue = function;
+
+    for (unsigned int it = 0; it < iterations; it++) {
+        std::vector<T> lastValues = laplacianValue;
+
+        for(unsigned int vId = 0; vId < mesh.numberVertices(); vId++) {
+            T adjValue = 0;
+
+            for(size_t j = 0; j < vvAdj[vId].size(); j++) {
+                unsigned int adjId = vvAdj[vId][j];
+
+                adjValue += lastValues[adjId];
+            }
+
+            adjValue /= vvAdj[vId].size();
+
+            laplacianValue[vId] = (weight * lastValues[vId]) + ((1 - weight) * adjValue);
+        }
+    }
+
+    return laplacianValue;
+}
+
+#ifdef CG3_LIBIGL_DEFINED
+/**
+ * @brief Smooth of a function over a mesh, using a gaussian weighted function
+ * @param mesh Input mesh
+ * @param function Input function defined on vertices
+ * @param iterations Iterations
+ * @param weight Weight for each vertex for its value
+ * @param vvAdj Vertex-vertex adjacencies of the mesh
+ * @return Laplacian smoothed value of the function for each vertex.
+ */
+template<class T>
+std::vector<T> vertexFunctionLaplacianSmoothing(
+        const cg3::EigenMesh& mesh,
+        const std::vector<T>& function,
+        const double weight,
+        const unsigned int iterations)
+{
+    std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
+    return vertexFunctionLaplacianSmoothing(mesh, function, iterations, weight, vvAdj);
+}
+
+#endif
 
 #endif
 

@@ -10,7 +10,7 @@
 #include <cg3/libigl/mesh_adjacencies.h>
 #include <cg3/libigl/curvature.h>
 
-#include <cg3/algorithms/gaussian_weighted_smoothing.h>
+#include <cg3/algorithms/mesh_function_smoothing.h>
 #include <cg3/algorithms/normalization.h>
 
 namespace cg3 {

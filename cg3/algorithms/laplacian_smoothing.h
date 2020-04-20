@@ -22,25 +22,6 @@ cg3::Dcel laplacianSmoothing(const cg3::Dcel& mesh, unsigned int nIt = 1);
 
 #endif
 
-
-#ifdef CG3_EIGENMESH_DEFINED
-
-class EigenMesh;
-std::vector<double> vertexFunctionLaplacianSmoothing(
-        const cg3::EigenMesh& mesh,
-        const std::vector<double>& function,
-        const unsigned int iterations,
-        const double weight,
-        const std::vector<std::vector<int>>& vvAdj);
-
-std::vector<double> vertexFunctionLaplacianSmoothing(
-        const cg3::EigenMesh& mesh,
-        const std::vector<double>& function,
-        const unsigned int iterations,
-        const double weight);
-
-#endif
-
 } //namespace cg3
 
 #ifndef CG3_STATIC
