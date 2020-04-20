@@ -14,7 +14,7 @@
 
 namespace cg3 {
 
-CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
+std::vector<double> vertexFunctionGaussianSmoothing(
         const cg3::EigenMesh& mesh,
         const std::vector<double>& function,
         const unsigned int iterations,
@@ -22,7 +22,7 @@ CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
         const double neighborDistance,
         const std::vector<std::vector<int>>& vvAdj);
 
-CG3_INLINE std::vector<double> vertexFunctionGaussianSmoothing(
+std::vector<double> vertexFunctionGaussianSmoothing(
         const cg3::EigenMesh& mesh,
         const std::vector<double>& function,
         const unsigned int iterations,
