@@ -45,41 +45,31 @@ CG3_INLINE std::vector<double> varianceNormalization(
 {
     std::vector<double> normalizedFunction(function.size());
 
-    //We find the variance from 0
-    double positiveSTD = 0;
-    double negativeSTD = 0;
-
-    size_t numPositive = 0;
-    size_t numNegative = 0;
+    double avg = 0;
     for(size_t i = 0; i < function.size(); i++) {
-        if (function[i] >= 0) {
-            positiveSTD += (function[i] * function[i]);
-            numPositive++;
-        }
-        else {
-            negativeSTD += (function[i] * function[i]);
-            numNegative++;
-        }
+        avg += function[i];
     }
-    positiveSTD /= numPositive;
-    negativeSTD /= numNegative;
+    avg /= function.size();
 
-    positiveSTD = std::sqrt(positiveSTD) * stdMultiplier;
-    negativeSTD = std::sqrt(negativeSTD) * stdMultiplier;
+    double standardDeviation = 0;
+    for(size_t i = 0; i < function.size(); i++) {
+        standardDeviation += (function[i] - avg) * (function[i] - avg);
+    }
+    standardDeviation /= function.size();
+
+    standardDeviation = std::sqrt(standardDeviation);
+
+    const double stdMultiplied = standardDeviation * stdMultiplier;
+    const double minValue = avg - stdMultiplied;
+    const double maxValue = avg + stdMultiplied;
 
     for(size_t i = 0; i < function.size(); i++) {
-        if (function[i] >= 0) {
-            if (function[i] > positiveSTD)
-                normalizedFunction[i] = 1;
-            else
-                normalizedFunction[i] = 0.5 + ((function[i] / positiveSTD) / 2.0);
-        }
-        else {
-            if (-function[i] > negativeSTD)
-                normalizedFunction[i] = 0;
-            else
-                normalizedFunction[i] = 0.5 - ((-function[i] / negativeSTD) / 2.0);
-        }
+        if (function[i] >= maxValue)
+            normalizedFunction[i] = 1.0;
+        else if (function[i] <= minValue)
+            normalizedFunction[i] = 0.0;
+        else
+            normalizedFunction[i] = (function[i] - minValue) / (maxValue - minValue);
     }
 
     return normalizedFunction;

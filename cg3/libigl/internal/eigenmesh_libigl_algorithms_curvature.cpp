@@ -23,7 +23,6 @@ namespace internal {
  * @param maxDirection Minimum principal curvature direction for each vertex
  * @param minValue Minimum principal curvature magnitude for each vertex
  * @param maxValue Minimum principal curvature magnitude for each vertex
- * @param maxValue Minimum principal curvature magnitude  for each vertex
  * @param nRing Controls the size of the neighbourhood used, 1 = average edge length
  */
 CG3_INLINE void EigenMeshLibIglAlgorithms::vertexCurvature(
