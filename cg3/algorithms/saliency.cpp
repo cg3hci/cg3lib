@@ -70,14 +70,15 @@ CG3_INLINE std::vector<double> computeSaliencyMultiScale(
         const cg3::EigenMesh& mesh,
         const std::vector<double>& meanCurvature,
         const std::vector<std::vector<int>>& vvAdj,
-        const unsigned int nScales)
+        const unsigned int nScales,
+        const double eps)
 {
-    double epsilon = (mesh.boundingBox().diag() * 0.003);
+    double boundingBoxFactor = (mesh.boundingBox().diag() * eps);
 
     //Calculate sigmas
     std::vector<double> sigma(nScales);
     for(size_t i = 0; i < nScales; i++){
-        sigma[i] = epsilon * (i + 2);
+        sigma[i] = boundingBoxFactor * (i + 2);
     }
 
     //Calculate saliencies for each scale
@@ -170,10 +171,11 @@ CG3_INLINE std::vector<double> computeSaliencyMultiScale(
         const cg3::EigenMesh& mesh,
         const std::vector<std::vector<int>>& vvAdj,
         const unsigned int nRing,
-        const unsigned int nScales)
+        const unsigned int nScales,
+        const double eps)
 {
     std::vector<double> meanCurvature = cg3::libigl::meanVertexCurvature(mesh, nRing);
-    return computeSaliencyMultiScale(mesh, meanCurvature, vvAdj, nScales);
+    return computeSaliencyMultiScale(mesh, meanCurvature, vvAdj, nScales, eps);
 }
 
 /**
@@ -186,10 +188,11 @@ CG3_INLINE std::vector<double> computeSaliencyMultiScale(
 CG3_INLINE std::vector<double> computeSaliencyMultiScale(
         const cg3::EigenMesh& mesh,
         const unsigned int nRing,
-        const unsigned int nScales)
+        const unsigned int nScales,
+        const double eps)
 {
     std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
-    return computeSaliencyMultiScale(mesh, vvAdj, nRing, nScales);
+    return computeSaliencyMultiScale(mesh, vvAdj, nRing, nScales, eps);
 }
 
 

@@ -41,31 +41,34 @@ isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_ENV_VARIABLE):exists($$LIBIGL_ENV_VARIABLE)
         $$PWD/libigl/connected_components.h \
         $$PWD/libigl/curvature.h \
         $$PWD/libigl/decimate.h \
-        $$PWD/libigl/mesh_adjacencies.h \
         $$PWD/libigl/extract_manifold_patches.h \
+        $$PWD/libigl/geodesics.h \
         $$PWD/libigl/is_edge_manifold.h \
         $$PWD/libigl/is_vertex_manifold.h \
+        $$PWD/libigl/mesh_adjacencies.h \
+        $$PWD/libigl/mesh_distance.h \
         $$PWD/libigl/remove_duplicate_vertices.h \
         $$PWD/libigl/remove_unreferenced_vertices.h \
-        $$PWD/libigl/mesh_distance.h \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.h \
-        $$PWD/libigl/internal/booleans_algorithms.h
+        $$PWD/libigl/internal/booleans_algorithms.h \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms.h
 
     CG3_STATIC {
-    SOURCES += \
+    SOURCES +=  \
         $$PWD/libigl/internal/booleans_algorithms.cpp \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_decimation.cpp \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_verticesremoval.cpp \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_manifoldutilities.cpp \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_adjacencies.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_booleans.cpp \
-        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_distances.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_adjacencies.cpp \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms_curvature.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_decimation.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_distances.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_geodesics.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_manifoldutilities.cpp \
+        $$PWD/libigl/internal/eigenmesh_libigl_algorithms_verticesremoval.cpp \
         $$PWD/libigl/booleans.cpp \
         $$PWD/libigl/connected_components.cpp \
         $$PWD/libigl/curvature.cpp \
         $$PWD/libigl/decimate.cpp \
         $$PWD/libigl/extract_manifold_patches.cpp \
+        $$PWD/libigl/geodesics.cpp \
         $$PWD/libigl/is_edge_manifold.cpp \
         $$PWD/libigl/is_vertex_manifold.cpp \
         $$PWD/libigl/mesh_adjacencies.cpp \

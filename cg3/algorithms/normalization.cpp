@@ -10,6 +10,8 @@
 
 #include <cmath>
 
+#include "assert.h"
+
 namespace cg3 {
 
 CG3_INLINE std::vector<double> linearNormalization(
@@ -19,8 +21,14 @@ CG3_INLINE std::vector<double> linearNormalization(
 {
     std::vector<double> normalizedFunction(function.size());
 
-    for(size_t i = 0; i < function.size(); i++){
-        normalizedFunction[i] = (function[i] - minFunction) / (maxFunction - minFunction);
+    if (maxFunction - minFunction == 0) {
+        std::fill(normalizedFunction.begin(), normalizedFunction.end(), 0);
+    }
+    else {
+        for(size_t i = 0; i < function.size(); i++) {
+            assert(function[i] >= minFunction && function[i] <= maxFunction);
+            normalizedFunction[i] = (function[i] - minFunction) / (maxFunction - minFunction);
+        }
     }
 
     return normalizedFunction;

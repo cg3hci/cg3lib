@@ -29,18 +29,21 @@ std::vector<double> computeSaliencyMultiScale(
         const cg3::EigenMesh& mesh,
         const std::vector<double>& meanCurvature,
         const std::vector<std::vector<int>>& vvAdj,
-        const unsigned int nScales = 5);
+        const unsigned int nScales = 5,
+        const double eps = 0.003);
 
 std::vector<double> computeSaliencyMultiScale(
         const cg3::EigenMesh& mesh,
         const std::vector<std::vector<int>>& vvAdj,
         const unsigned int nRing = 5,
-        const unsigned int nScales = 5);
+        const unsigned int nScales = 5,
+        const double eps = 0.003);
 
 std::vector<double> computeSaliencyMultiScale(
         const cg3::EigenMesh& mesh,
         const unsigned int nRing = 5,
-        const unsigned int nScales = 5);
+        const unsigned int nScales = 5,
+        const double eps = 0.003);
 
 
 } //namespace cg3

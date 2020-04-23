@@ -12,6 +12,8 @@
 
 #include "booleans_algorithms.h"
 
+#include <igl/heat_geodesics.h>
+
 namespace cg3 {
 namespace libigl {
 namespace internal {
@@ -57,6 +59,17 @@ public:
             std::vector<double>& maxValue,
             const unsigned int nRing = 5);
 
+    /* Geodesics */
+    static void exactGeodesics(
+            const SimpleEigenMesh& m,
+            const std::vector<unsigned int>& sourceVertices,
+            const std::vector<unsigned int>& targetVertices,
+            std::vector<double>& vertexGeodesics);
+
+    static void heatGeodesicsPrecomputeData(
+            const SimpleEigenMesh& m,
+            igl::HeatGeodesicsData<double>& precomputedData);
+
 
     #ifdef CG3_CGAL_DEFINED
 
@@ -99,6 +112,7 @@ private:
 #define CG3_EIGENMESH_LIBIGL_ALGORITHMS_MANIFOLDUTILITIES_CPP "eigenmesh_libigl_algorithms_manifoldutilities.cpp"
 #define CG3_EIGENMESH_LIBIGL_ALGORITHMS_VERTICESREMOVAL_CPP "eigenmesh_libigl_algorithms_verticesremoval.cpp"
 #define CG3_EIGENMESH_LIBIGL_ALGORITHMS_CURVATURE_CPP "eigenmesh_libigl_algorithms_curvature.cpp"
+#define CG3_EIGENMESH_LIBIGL_ALGORITHMS_GEODESICS_CPP "eigenmesh_libigl_algorithms_geodesics.cpp"
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_ADJACENCIES_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_BOOLEANS_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_DECIMATION_CPP
@@ -106,6 +120,7 @@ private:
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_MANIFOLDUTILITIES_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_VERTICESREMOVAL_CPP
 #include CG3_EIGENMESH_LIBIGL_ALGORITHMS_CURVATURE_CPP
+#include CG3_EIGENMESH_LIBIGL_ALGORITHMS_GEODESICS_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_ADJACENCIES_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_BOOLEANS_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_DECIMATION_CPP
@@ -113,6 +128,7 @@ private:
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_MANIFOLDUTILITIES_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_VERTICESREMOVAL_CPP
 #undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_CURVATURE_CPP
+#undef CG3_EIGENMESH_LIBIGL_ALGORITHMS_GEODESICS_CPP
 #endif //CG3_STATIC
 
 #endif // CG3_EIGENMESH_LIBIGL_ALGORITHMS_H
