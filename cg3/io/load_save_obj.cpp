@@ -581,7 +581,7 @@ bool saveMeshOnObj(
 		fp << "v " << vertices[i] << " " << vertices[i+1] << " " << vertices[i+2];
 		if (modality.hasVertexColors()){
 			Color c = internal::colorFromArray(colorMod == io::RGB ? i : (i/3)*4, verticesColors, colorMod);
-			fp << " " << c.redF() << " " << c.blueF() << " " << c.greenF();
+            fp << " " << c.redF() << " " << c.greenF() << " " << c.blueF();
 		}
 		fp << std::endl;
 	}
