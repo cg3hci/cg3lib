@@ -12,8 +12,8 @@
 #include <float.h>
 #include <cg3/geometry/point3.h>
 
-#ifdef CG3_VIEWER_DEFINED
 namespace cg3 {
+#ifdef CG3_VIEWER_DEFINED
 namespace viewer {
 class GLCanvas;
 }
