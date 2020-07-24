@@ -60,11 +60,10 @@ public:
             const unsigned int nRing = 5);
 
     /* Geodesics */
-    static void exactGeodesics(
+    static std::vector<double> exactGeodesics(
             const SimpleEigenMesh& m,
             const std::vector<unsigned int>& sourceVertices,
-            const std::vector<unsigned int>& targetVertices,
-            std::vector<double>& vertexGeodesics);
+            const std::vector<unsigned int>& targetVertices);
 
     static void heatGeodesicsPrecomputeData(
             const SimpleEigenMesh& m,

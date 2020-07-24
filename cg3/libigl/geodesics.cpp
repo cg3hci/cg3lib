@@ -18,19 +18,17 @@ namespace libigl {
  * @param m Input mesh
  * @param sourceVertices Source vertices
  * @param targetVertices Target vertices
- * @param vertexGeodesics Output geodesics for each target vertex
+ * @return Output geodesics for each target vertex
  */
-CG3_INLINE void exactGeodesics(
+CG3_INLINE std::vector<double> exactGeodesics(
         const SimpleEigenMesh& m,
         const std::vector<unsigned int>& sourceVertices,
-        const std::vector<unsigned int>& targetVertices,
-        std::vector<double>& vertexGeodesics)
+        const std::vector<unsigned int>& targetVertices)
 {
     return internal::EigenMeshLibIglAlgorithms::exactGeodesics(
                 m,
                 sourceVertices,
-                targetVertices,
-                vertexGeodesics);
+                targetVertices);
 }
 
 /**
@@ -38,13 +36,14 @@ CG3_INLINE void exactGeodesics(
  * @brief Get exact geodesics given source vertices and faces (all elements are in the target)
  * @param m Input mesh
  * @param sourceVertices Source vertices
- * @param vertexGeodesics Output geodesics for each target vertex
+ * @return Output geodesics for each target vertex
  */
-CG3_INLINE void exactGeodesics(
+CG3_INLINE std::vector<double> exactGeodesics(
         const SimpleEigenMesh& m,
-        const std::vector<unsigned int>& sourceVertices,
-        std::vector<double>& vertexGeodesics)
+        const std::vector<unsigned int>& sourceVertices)
 {
+    std::vector<double> geodesics;
+
     std::vector<unsigned int> targetVertices;
 
     targetVertices.resize(m.numberVertices());
@@ -55,8 +54,7 @@ CG3_INLINE void exactGeodesics(
     return exactGeodesics(
                 m,
                 sourceVertices,
-                targetVertices,
-                vertexGeodesics);
+                targetVertices);
 }
 
 /**

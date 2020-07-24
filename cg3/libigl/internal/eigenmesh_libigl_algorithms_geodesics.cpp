@@ -24,12 +24,13 @@ namespace internal {
  * @param targetVertices Target vertices
  * @param vertexGeodesics Output geodesics for each target vertex
  */
-CG3_INLINE void EigenMeshLibIglAlgorithms::exactGeodesics(
+CG3_INLINE std::vector<double> EigenMeshLibIglAlgorithms::exactGeodesics(
         const SimpleEigenMesh& m,
         const std::vector<unsigned int>& sourceVertices,
-        const std::vector<unsigned int>& targetVertices,
-        std::vector<double>& vertexGeodesics)
+        const std::vector<unsigned int>& targetVertices)
 {
+    std::vector<double> vertexGeodesics;
+
     Eigen::MatrixXd V = m.V;
     Eigen::MatrixXi F = m.F;
 
@@ -49,6 +50,8 @@ CG3_INLINE void EigenMeshLibIglAlgorithms::exactGeodesics(
     vertexGeodesics.resize(targetVertices.size());
     for (size_t i = 0; i < targetVertices.size(); i++)
         vertexGeodesics[i] = d(i);
+
+    return vertexGeodesics;
 }
 
 

@@ -17,16 +17,14 @@ namespace libigl {
 
 typedef igl::HeatGeodesicsData<double> HeatGeodesicsData;
 
-void exactGeodesics(
+std::vector<double> exactGeodesics(
         const SimpleEigenMesh& m,
         const std::vector<unsigned int>& sourceVertices,
-        const std::vector<unsigned int>& targetVertices,
-        std::vector<double>& vertexGeodesics);
+        const std::vector<unsigned int>& targetVertices);
 
-void exactGeodesics(
+std::vector<double> exactGeodesics(
         const SimpleEigenMesh& m,
-        const std::vector<unsigned int>& sourceVertices,
-        std::vector<double>& vertexGeodesics);
+        const std::vector<unsigned int>& sourceVertices);
 
 std::vector<double> heatGeodesics(
         const SimpleEigenMesh& m,
