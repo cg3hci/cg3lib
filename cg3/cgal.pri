@@ -22,7 +22,10 @@ unix{
     }
 
     LIBS += -lmpfr -lgmp -frounding-math
-    !macx:LIBS += -lCGAL -lCGAL_Core -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
+    !macx:LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
+    !contains(DEFINES, CGAL_HEADER_ONLY) {
+        !macx:LIBS += -lCGAL -lCGAL_Core
+    }
 }
 
 win32{
