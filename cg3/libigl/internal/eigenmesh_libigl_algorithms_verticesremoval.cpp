@@ -8,7 +8,7 @@
 #include "eigenmesh_libigl_algorithms.h"
 
 #include <igl/remove_unreferenced.h>
-#include <igl/remove_duplicates.h>
+#include <igl/remove_duplicate_vertices.h>
 
 namespace cg3 {
 
@@ -61,7 +61,8 @@ CG3_INLINE void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
     /// If IGL Static (pull request problem)
     Eigen::MatrixXd VV = input.V, NV;
     Eigen::MatrixXi FF = input.F, NF;
-    igl::remove_duplicates( VV,FF, NV, NF, I,epsilon );
+    Eigen::Matrix<int, Eigen::Dynamic, 1> IInverse;
+    igl::remove_duplicate_vertices( VV,FF, epsilon, NV, I, IInverse, NF);
     ///
 
     input.V = NV;
@@ -88,7 +89,8 @@ CG3_INLINE void EigenMeshLibIglAlgorithms::removeDuplicateVertices(
     /// If IGL Static (pull request problem)
     Eigen::MatrixXd VV = input.V, NV;
     Eigen::MatrixXi FF = input.F, NF;
-    igl::remove_duplicates( VV,FF, NV, NF, I,epsilon );
+    Eigen::Matrix<int, Eigen::Dynamic, 1> IInverse;
+    igl::remove_duplicate_vertices( VV,FF, epsilon, NV, I, IInverse, NF);
     ///
 
     input.V = NV;
