@@ -49,14 +49,14 @@ make
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4431778.svg)](https://doi.org/10.5281/zenodo.4431778)
 
-If you use cg3lib in your research projects, please cite the our library using this BibTeX entry:
+If you use cg3lib in your research projects, please cite the library using this BibTeX entry:
 
 ```
 @software{cg3lib,
   author       = {Alessandro Muntoni and
                   Stefano Nuvoli and
                   Filippo Fanni},
-  title        = {cg3hci/cg3lib: cg3lib v0.5},
+  title        = {{CG3Lib}: A {C++} geometry processing library.},
   month        = jan,
   year         = 2021,
   publisher    = {Zenodo},
