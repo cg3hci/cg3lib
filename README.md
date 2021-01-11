@@ -52,11 +52,10 @@ make
 If you use cg3lib in your research projects, please cite the library using this BibTeX entry:
 
 ```
-@software{cg3lib,
+@software{alessandro_muntoni_2021_4431778,
   author       = {Alessandro Muntoni and
-                  Stefano Nuvoli and
-                  Filippo Fanni},
-  title        = {{CG3Lib}: A {C++} geometry processing library.},
+                  Stefano Nuvoli},
+  title        = {CG3Lib: A C++ geometry processing library},
   month        = jan,
   year         = 2021,
   publisher    = {Zenodo},
