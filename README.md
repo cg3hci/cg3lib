@@ -4,6 +4,8 @@
 
 [![Actions Status](https://github.com/cg3hci/cg3lib/workflows/MacOSExamples/badge.svg)](https://github.com/cg3hci/cg3lib/actions)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4431778.svg)](https://doi.org/10.5281/zenodo.4431778)
+
 Cg3Lib is a C++ geometry processing library developed by the CG3HCI Group of the University of Cagliari.
 It is composed of different modules:
 - Core: it provides some basic data structures (Point, BoundingBox...), parsers for saving and loading multiple mesh formats and utilities;
@@ -45,14 +47,22 @@ make
 
 ## Citation
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4431778.svg)](https://doi.org/10.5281/zenodo.4431778)
+
 If you use cg3lib in your research projects, please cite the our library using this BibTeX entry:
 
 ```
-@misc{cg3lib,
-	title  = {{CG3Lib}: A {C++} geometry processing library.},
-	author = {Alessandro Muntoni and Stefano Nuvoli and others},
-	note   = {https://github.com/cg3hci/cg3lib},
-	year   = {2018},
+@software{cg3lib,
+  author       = {Alessandro Muntoni and
+                  Stefano Nuvoli and
+                  Filippo Fanni},
+  title        = {cg3hci/cg3lib: cg3lib v0.5},
+  month        = jan,
+  year         = 2021,
+  publisher    = {Zenodo},
+  version      = {v0.5},
+  doi          = {10.5281/zenodo.4431778},
+  url          = {https://doi.org/10.5281/zenodo.4431778}
 }
 ```
 
