@@ -38,5 +38,5 @@ if (CG3_CORE)
 endif()
 
 if (CG3_DATA_STRUCTURES)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/data_structures.cmake)
+	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/data_structures.cmake)
 endif()

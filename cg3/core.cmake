@@ -17,7 +17,9 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/geometry/line3.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/plane.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/point2.h
+		${CMAKE_CURRENT_LIST_DIR}/geometry/point2.inl
 		${CMAKE_CURRENT_LIST_DIR}/geometry/point3.h
+		${CMAKE_CURRENT_LIST_DIR}/geometry/point3.inl
 		${CMAKE_CURRENT_LIST_DIR}/geometry/polygon2.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/quaternion.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/segment.h
@@ -27,8 +29,10 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/geometry/sphere.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle.h
+		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle.inl
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle2.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle2_utils.h
+		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle2_utils.inl
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle3.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/utils2.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/utils2.inl
@@ -74,14 +78,10 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/geometry/line2.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/line3.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/plane.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/point2.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/point3.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/polygon2.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/quaternion.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/sphere.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle2_utils.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/utils3.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/io/load_save_ply.cpp #io
 		${CMAKE_CURRENT_LIST_DIR}/io/serialize.cpp

@@ -40,7 +40,9 @@ HEADERS += \
     $$PWD/geometry/line3.h \
     $$PWD/geometry/plane.h \
     $$PWD/geometry/point2.h \
+    $$PWD/geometry/point2.inl \
     $$PWD/geometry/point3.h \
+    $$PWD/geometry/point3.inl \
     $$PWD/geometry/polygon2.h \
     $$PWD/geometry/quaternion.h \
     $$PWD/geometry/segment.h \
@@ -50,8 +52,10 @@ HEADERS += \
     $$PWD/geometry/sphere.h \
     $$PWD/geometry/transformations3.h \
     $$PWD/geometry/triangle.h \
+    $$PWD/geometry/triangle.inl \
     $$PWD/geometry/triangle2.h \
     $$PWD/geometry/triangle2_utils.h \
+    $$PWD/geometry/triangle2_utils.inl \
     $$PWD/geometry/triangle3.h \
     $$PWD/geometry/utils2.h \
     $$PWD/geometry/utils2.inl \
@@ -98,17 +102,12 @@ SOURCES += \
     $$PWD/geometry/line2.cpp \
     $$PWD/geometry/line3.cpp \
     $$PWD/geometry/plane.cpp \
-    $$PWD/geometry/point2.cpp \
-    $$PWD/geometry/point3.cpp \
     $$PWD/geometry/polygon2.cpp \
     $$PWD/geometry/quaternion.cpp \
     $$PWD/geometry/sphere.cpp \
     $$PWD/geometry/transformations3.cpp \
-    $$PWD/geometry/triangle.cpp \
-    $$PWD/geometry/triangle2_utils.cpp \
     $$PWD/geometry/utils3.cpp \
-    #io
-    $$PWD/io/load_save_ply.cpp \
+    $$PWD/io/load_save_ply.cpp \ #io
     $$PWD/io/serialize.cpp \
     $$PWD/io/serialize_eigen.cpp \
     $$PWD/io/serialize_qt.cpp \
