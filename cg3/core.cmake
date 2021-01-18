@@ -1,3 +1,11 @@
+#
+# This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+# This Source Code Form is subject to the terms of the GNU GPL 3.0
+#
+# @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+# @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
+#
+
 if (CG3_STATIC)
 	SET(CG3_CORE_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/cg3lib.h #core
@@ -13,6 +21,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/geometry/polygon2.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/quaternion.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/segment.h
+		${CMAKE_CURRENT_LIST_DIR}/geometry/segment.inl
 		${CMAKE_CURRENT_LIST_DIR}/geometry/segment2.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/segment3.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/sphere.h
@@ -22,9 +31,11 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle2_utils.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle3.h
 		${CMAKE_CURRENT_LIST_DIR}/geometry/utils2.h
+		${CMAKE_CURRENT_LIST_DIR}/geometry/utils2.inl
 		${CMAKE_CURRENT_LIST_DIR}/geometry/utils3.h
 		${CMAKE_CURRENT_LIST_DIR}/io/file_commons.h #io
 		${CMAKE_CURRENT_LIST_DIR}/io/load_save_obj.h
+		${CMAKE_CURRENT_LIST_DIR}/io/load_save_obj.inl
 		${CMAKE_CURRENT_LIST_DIR}/io/load_save_ply.h
 		${CMAKE_CURRENT_LIST_DIR}/io/load_save_file.h
 		${CMAKE_CURRENT_LIST_DIR}/io/serializable_object.h
@@ -67,15 +78,12 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/geometry/point3.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/polygon2.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/quaternion.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/segment.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/sphere.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/triangle2_utils.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/utils2.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/utils3.cpp
-		${CMAKE_CURRENT_LIST_DIR}/io/load_save_obj.cpp #io
-		${CMAKE_CURRENT_LIST_DIR}/io/load_save_ply.cpp
+		${CMAKE_CURRENT_LIST_DIR}/geometry/utils3.cpp 
+		${CMAKE_CURRENT_LIST_DIR}/io/load_save_ply.cpp #io
 		${CMAKE_CURRENT_LIST_DIR}/io/serialize.cpp
 		${CMAKE_CURRENT_LIST_DIR}/io/serialize_eigen.cpp
 		${CMAKE_CURRENT_LIST_DIR}/io/serialize_qt.cpp

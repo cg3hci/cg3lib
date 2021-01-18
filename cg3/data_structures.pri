@@ -22,8 +22,8 @@ HEADERS += \
     $$PWD/data_structures/arrays/array2d.h \
     $$PWD/data_structures/arrays/array3d.h \
     $$PWD/data_structures/arrays/array4d.h \
-    $$PWD/data_structures/arrays/array_bool.h \ #graphs
-    $$PWD/data_structures/graphs/graph.h \
+    $$PWD/data_structures/arrays/array_bool.h \
+    $$PWD/data_structures/graphs/graph.h \ #graphs
     $$PWD/data_structures/graphs/includes/nodes/graph_node.h \
     $$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.h \
     $$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.h \

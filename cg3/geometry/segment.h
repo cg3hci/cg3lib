@@ -85,7 +85,7 @@ struct hash<cg3::Segment<T>> {
 
 } //namespace std
 
-#include "segment.cpp"
+#include "segment.inl"
 
 
 #endif // CG3_SEGMENT_H
