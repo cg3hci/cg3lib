@@ -19,6 +19,6 @@ std::vector<Point3d> sphereCoverageFibonacci(unsigned int nSamples = 1000);
 
 } //namespace cg3
 
-#include "sphere_coverage.cpp"
+#include "sphere_coverage.inl"
 
 #endif // SPHERE_COVERAGE_H

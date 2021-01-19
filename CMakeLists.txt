@@ -9,16 +9,6 @@
 cmake_minimum_required(VERSION 3.9)
 project(cg3lib)
 
-find_package(Qt5
-	COMPONENTS
-	Core)
-find_package(Eigen3)
-
-if (TARGET Eigen3::Eigen)
-	add_definitions(-DCG3_WITH_EIGEN)
-	include_directories(${EIGEN3_INCLUDE_DIR})
-endif()
-
 option(CG3_STATIC "" ON)
 
 if (CG3_STATIC)
@@ -39,6 +29,8 @@ option(CG3_VIEWER "" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/external/external.cmake)
+
 if (CG3_CORE)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/core.cmake)
 endif()
@@ -49,4 +41,8 @@ endif()
 
 if (CG3_MESHES)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/meshes.cmake)
+endif()
+
+if (CG3_ALGORITHMS)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/algorithms.cmake)
 endif()

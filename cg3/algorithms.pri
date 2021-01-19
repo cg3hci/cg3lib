@@ -7,38 +7,38 @@
 #
 
 !contains(DEFINES, CG3_CORE_DEFINED){
-    error(Algorithms module requires Core module!)
+	error(Algorithms module requires Core module!)
 }
 
 DEFINES += CG3_ALGORITHMS_DEFINED
 MODULES += CG3_ALGORITHMS
 
 HEADERS += \
-    $$PWD/algorithms/convex_hull2.h \
-    $$PWD/algorithms/convex_hull2_incremental.h \
-    $$PWD/algorithms/convex_hull3.h \
-    $$PWD/algorithms/graph_algorithms.h \
-    $$PWD/algorithms/laplacian_smoothing.h \
-    $$PWD/algorithms/marching_cubes.h \
-    $$PWD/algorithms/mesh_function_smoothing.h \
-    $$PWD/algorithms/normalization.h \
-    $$PWD/algorithms/saliency.h \
-    $$PWD/algorithms/sphere_coverage.h \
-    $$PWD/algorithms/global_optimal_rotation_matrix.h
+	$$PWD/algorithms/convex_hull2.h \
+	$$PWD/algorithms/convex_hull2.inl \
+	$$PWD/algorithms/convex_hull2_incremental.h \
+	$$PWD/algorithms/convex_hull2_incremental.inl \
+	$$PWD/algorithms/convex_hull3.h \
+	$$PWD/algorithms/convex_hull3.inl \
+	$$PWD/algorithms/graph_algorithms.h \
+	$$PWD/algorithms/laplacian_smoothing.h \
+	$$PWD/algorithms/marching_cubes.h \
+	$$PWD/algorithms/mesh_function_smoothing.h \
+	$$PWD/algorithms/normalization.h \
+	$$PWD/algorithms/saliency.h \
+	$$PWD/algorithms/sphere_coverage.h \
+	$$PWD/algorithms/sphere_coverage.inl \
+	$$PWD/algorithms/global_optimal_rotation_matrix.h
 
 CG3_STATIC {
 
 SOURCES += \
-    $$PWD/algorithms/convex_hull2.cpp \
-    $$PWD/algorithms/convex_hull2_incremental.cpp \
-    $$PWD/algorithms/convex_hull3.cpp \
-    $$PWD/algorithms/global_optimal_rotation_matrix.cpp \
-    $$PWD/algorithms/graph_algorithms.cpp \
-    $$PWD/algorithms/marching_cubes.cpp \
-    $$PWD/algorithms/mesh_function_smoothing.cpp \
-    $$PWD/algorithms/normalization.cpp \
-    $$PWD/algorithms/saliency.cpp \
-    $$PWD/algorithms/laplacian_smoothing.cpp \
-    $$PWD/algorithms/sphere_coverage.cpp
+	$$PWD/algorithms/global_optimal_rotation_matrix.cpp \
+	$$PWD/algorithms/graph_algorithms.cpp \
+	$$PWD/algorithms/marching_cubes.cpp \
+	$$PWD/algorithms/mesh_function_smoothing.cpp \
+	$$PWD/algorithms/normalization.cpp \
+	$$PWD/algorithms/saliency.cpp \
+	$$PWD/algorithms/laplacian_smoothing.cpp
 
 }
