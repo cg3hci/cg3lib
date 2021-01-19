@@ -130,6 +130,6 @@ bool saveMeshOnPly(
 
 } //namespace cg3
 
-#include "load_save_ply.cpp"
+#include "load_save_ply.inl"
 
 #endif // CG3_LOAD_SAVE_PLY_H

@@ -8,10 +8,11 @@
 #ifndef CG3_COLOR_H
 #define CG3_COLOR_H
 
+#include "hash.h"
+
 #ifdef QT_GUI_LIB
 
 #include <QColor>
-#include "hash.h"
 
 namespace cg3 {
 

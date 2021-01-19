@@ -46,6 +46,6 @@ inline bool isPolygonCounterClockwise(
 
 } //namespace cg3
 
-#include "utils3.cpp"
+#include "utils3.inl"
 
 #endif // CG3_UTILS3_H

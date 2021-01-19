@@ -57,6 +57,6 @@ struct hash<std::array<T, A...> >
 
 } //namespace std
 
-#include "hash.cpp"
+#include "hash.inl"
 
 #endif // CG3_HASH_H

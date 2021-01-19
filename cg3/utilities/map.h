@@ -23,6 +23,6 @@ bool contains(
 
 } //namespace cg3
 
-#include "map.cpp"
+#include "map.inl"
 
 #endif // CG3_MAP_H
