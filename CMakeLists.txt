@@ -14,10 +14,16 @@ find_package(Qt5
 	Core)
 find_package(Eigen3)
 
+if (TARGET Eigen3::Eigen)
+	add_definitions(-DCG3_WITH_EIGEN)
+	include_directories(${EIGEN3_INCLUDE_DIR})
+endif()
+
 option(CG3_STATIC "" ON)
 
 if (CG3_STATIC)
 	add_definitions(-DCG3_STATIC)
+	add_definitions(-DCG3_QMAKE) #todo: reomve this
 endif()
 
 option(CG3_CORE "" ON)
@@ -39,4 +45,8 @@ endif()
 
 if (CG3_DATA_STRUCTURES)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/data_structures.cmake)
+endif()
+
+if (CG3_MESHES)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/meshes.cmake)
 endif()

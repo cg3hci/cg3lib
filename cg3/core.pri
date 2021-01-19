@@ -92,6 +92,7 @@ HEADERS += \
 	$$PWD/utilities/comparators.h \
 	$$PWD/utilities/const.h \
 	$$PWD/utilities/eigen.h \
+	$$PWD/utilities/eigen.inl \
 	$$PWD/utilities/hash.h \
 	$$PWD/utilities/hash.inl \
 	$$PWD/utilities/map.h \
@@ -129,6 +130,5 @@ SOURCES += \
 	$$PWD/geometry/sphere.cpp \
 	$$PWD/geometry/transformations3.cpp \
 	$$PWD/io/ply/ply_header.cpp \ #io
-	$$PWD/utilities/color.cpp \ #utilities
-	$$PWD/utilities/eigen.cpp 
+	$$PWD/utilities/color.cpp #utilities
 }

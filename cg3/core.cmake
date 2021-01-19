@@ -69,6 +69,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/utilities/comparators.h
 		${CMAKE_CURRENT_LIST_DIR}/utilities/const.h
 		${CMAKE_CURRENT_LIST_DIR}/utilities/eigen.h
+		${CMAKE_CURRENT_LIST_DIR}/utilities/eigen.inl
 		${CMAKE_CURRENT_LIST_DIR}/utilities/hash.h
 		${CMAKE_CURRENT_LIST_DIR}/utilities/hash.inl
 		${CMAKE_CURRENT_LIST_DIR}/utilities/map.h
@@ -106,7 +107,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.cpp #io
 		${CMAKE_CURRENT_LIST_DIR}/io/ply/ply_header.cpp
 		${CMAKE_CURRENT_LIST_DIR}/utilities/color.cpp #utilities
-		${CMAKE_CURRENT_LIST_DIR}/utilities/eigen.cpp)
+		)
 
 add_library(cg3-core SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
 

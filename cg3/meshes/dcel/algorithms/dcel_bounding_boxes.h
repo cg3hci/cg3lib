@@ -23,6 +23,6 @@ BoundingBox3 boundingBoxOfFaces(InputIterator first, InputIterator last);
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 
-#include "dcel_bounding_boxes.cpp"
+#include "dcel_bounding_boxes.inl"
 
 #endif // CG3_DCEL_BOUNDING_BOXES_H
