@@ -19,17 +19,19 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/smoothing.inl
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/meshes/polygonmeshtype.h 
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/meshes/trianglemeshtype.h)
+	
+	#used just for visualization of the module in IDEs
+	SET(CG3_VCGLIB_SOURCES
+		${CMAKE_CURRENT_LIST_DIR}/vcglib/dummy_source.cpp)
 
-	#SET(CG3_VCGLIB_SOURCES)
-
-	#add_library(
-	#	cg3-vcglib SHARED
-	#	${CG3_VCGLIB_HEADERS})
+	add_library(
+		cg3-vcglib SHARED
+		${CG3_VCGLIB_HEADERS} ${CG3_VCGLIB_SOURCES})
 
 	#target_link_libraries(
 	#	cg3-vcglib
 	#	PUBLIC
 	#		cg3-core cg3-data-structures cg3-meshes)
 	
-	add_library(cg3-vcglib INTERFACE)
+	#add_library(cg3-vcglib INTERFACE)
 endif()

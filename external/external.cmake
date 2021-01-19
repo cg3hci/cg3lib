@@ -1,22 +1,29 @@
-#Qt
-find_package(Qt5
-	COMPONENTS
-	Core
-	Gui
-	OpenGL
-	Xml
-	Widgets)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake_modules)
+
+##### Looking for libraries that may be used with cg3lib
+##### and may be already installed
 
 #Eigen
 find_package(Eigen3)
-if (TARGET Eigen3::Eigen)
-	add_definitions(-DCG3_WITH_EIGEN)
-	include_directories(${EIGEN3_INCLUDE_DIR})
-endif()
+
+#QGLViewer (will look also for Qt)
+find_package(QGLViewer)
 
 #CGAL
 set(CGAL_DO_NOT_WARN_ABOUT_CMAKE_BUILD_TYPE TRUE)
 find_package(CGAL)
+
+
+##### Setting libraries to be used with cg3lib
+
+#Eigen
+if (TARGET Eigen3::Eigen)
+	add_definitions(-DCG3_WITH_EIGEN)
+	include_directories(${EIGEN3_INCLUDE_DIR})
+	message(STATUS "- Eigen - using system-provided library")
+endif()
+
+#CGAL
 if (TARGET CGAL::CGAL)
 	message(STATUS "- CGAL - using system-provided library")
 else()
@@ -50,9 +57,13 @@ else()
 	#todo
 endif()
 
-#OpenGL
-find_package(OpenGL)
-find_package(QGLViewer)
+#QGLViewer
+if (DEFINED QGLVIEWER_LIBRARY_RELEASE)
+	message(STATUS "- QGLViewer - using system-provided library")
+else()
+	message(STATUS "- QGLViewer - using bundled source")
+	#todo
+endif()
 
 #Voro++
 if (DEFINED ENV{VOROPLUSPLUS_HOME})
