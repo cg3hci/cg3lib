@@ -61,15 +61,15 @@ if (CG3_LIBIGL)
 endif()
 
 if (CG3_VCGLIB)
-	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/vcglib.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/vcglib.cmake)
 endif()
 
 if (CG3_VORO++)
-	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/voro++.cmake)
 endif()
 
 if (CG3_VIEWER)
-	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/viewer.cmake)
 endif()
 
 if (CG3_DEVELOPEMENT)

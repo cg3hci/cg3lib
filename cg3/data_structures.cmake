@@ -5,6 +5,7 @@
 # @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
+
 if (CG3_STATIC)
 	add_definitions(-DCG3_DATA_STRUCTURES_DEFINED)
 	

@@ -1,7 +1,11 @@
 #Qt
 find_package(Qt5
 	COMPONENTS
-	Core)
+	Core
+	Gui
+	OpenGL
+	Xml
+	Widgets)
 
 #Eigen
 find_package(Eigen3)

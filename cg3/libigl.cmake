@@ -1,3 +1,11 @@
+#
+# This file is part of cg3lib: https://github.com/cg3hci/cg3lib
+# This Source Code Form is subject to the terms of the GNU GPL 3.0
+#
+# @author Alessandro Muntoni (muntoni.alessandro@gmail.com)
+# @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
+#
+
 if (CG3_STATIC)
 	add_definitions(-DCG3_LIBIGL_DEFINED)
 

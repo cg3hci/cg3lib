@@ -24,6 +24,7 @@ isEmpty(VCGLIB_PATH):!isEmpty(VCGLIB_ENV_VARIABLE):exists($$VCGLIB_ENV_VARIABLE)
 
     HEADERS += \
         $$PWD/vcglib/convert.h \
+		$$PWD/vcglib/convert.inl \
         $$PWD/vcglib/curve_on_manifold.h \
         $$PWD/vcglib/meshes/triangleedgemeshtype.h \
         $$PWD/vcglib/smoothing.h \
@@ -32,7 +33,6 @@ isEmpty(VCGLIB_PATH):!isEmpty(VCGLIB_ENV_VARIABLE):exists($$VCGLIB_ENV_VARIABLE)
 
     CG3_STATIC {
     SOURCES += \
-        $$PWD/vcglib/convert.cpp \
         $$PWD/vcglib/curve_on_manifold.cpp \
         $$PWD/vcglib/smoothing.cpp
     }
