@@ -46,3 +46,7 @@ endif()
 if (CG3_ALGORITHMS)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/algorithms.cmake)
 endif()
+
+if (CG3_CGAL AND TARGET CGAL::CGAL)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cgal.cmake)
+endif()

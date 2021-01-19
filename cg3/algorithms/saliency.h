@@ -14,6 +14,7 @@
 
 namespace cg3 {
 
+#ifdef CG3_LIBIGL_DEFINED
 std::vector<double> computeSaliency(
         const EigenMesh& mesh,
         const std::vector<double>& meanCurvature,
@@ -24,7 +25,6 @@ std::vector<double> computeSaliency(
         const double sigma,
         const unsigned int nRing = 5);
 
-
 std::vector<double> computeSaliencyMultiScale(
         const cg3::EigenMesh& mesh,
         const std::vector<double>& meanCurvature,
@@ -44,7 +44,7 @@ std::vector<double> computeSaliencyMultiScale(
         const unsigned int nRing = 5,
         const unsigned int nScales = 5,
         const double eps = 0.003);
-
+#endif
 
 } //namespace cg3
 

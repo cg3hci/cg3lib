@@ -6,6 +6,8 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 if (CG3_STATIC)
+	add_definitions(-DCG3_DATA_STRUCTURES_DEFINED)
+	
 	SET(CG3_DATA_STRUCTURES_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.h #arrays
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.inl

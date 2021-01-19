@@ -7,6 +7,8 @@
 #
 
 if (CG3_STATIC)
+	add_definitions(-DCG3_DCEL_DEFINED)
+	
 	SET(CG3_MESHES_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel.h 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_data.h 
@@ -43,6 +45,8 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex.cpp)
 	
 	if (TARGET Eigen3::Eigen)
+		add_definitions(-DCG3_EIGENMESH_DEFINED)
+		
 		list(APPEND CG3_MESHES_HEADERS
 			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/simpleeigenmesh.h 
 			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/eigenmesh.h 

@@ -7,6 +7,8 @@
 #
 
 if (CG3_STATIC)
+	add_definitions(-DCG3_CORE_DEFINED)
+	
 	SET(CG3_CORE_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/cg3lib.h #core
 		${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.h #geometry

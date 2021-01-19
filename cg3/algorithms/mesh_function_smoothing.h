@@ -55,6 +55,6 @@ std::vector<double> vertexFunctionLaplacianSmoothing(
 
 #endif
 
-#include "mesh_function_smoothing.cpp"
+#include "mesh_function_smoothing.inl"
 
 #endif // CG3_MESH_FUNCTION_SMOOTHING_H

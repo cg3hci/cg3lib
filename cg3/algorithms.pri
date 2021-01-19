@@ -21,6 +21,7 @@ HEADERS += \
 	$$PWD/algorithms/convex_hull3.h \
 	$$PWD/algorithms/convex_hull3.inl \
 	$$PWD/algorithms/graph_algorithms.h \
+	$$PWD/algorithms/graph_algorithms.inl \
 	$$PWD/algorithms/laplacian_smoothing.h \
 	$$PWD/algorithms/marching_cubes.h \
 	$$PWD/algorithms/mesh_function_smoothing.h \
@@ -34,7 +35,6 @@ CG3_STATIC {
 
 SOURCES += \
 	$$PWD/algorithms/global_optimal_rotation_matrix.cpp \
-	$$PWD/algorithms/graph_algorithms.cpp \
 	$$PWD/algorithms/marching_cubes.cpp \
 	$$PWD/algorithms/mesh_function_smoothing.cpp \
 	$$PWD/algorithms/normalization.cpp \

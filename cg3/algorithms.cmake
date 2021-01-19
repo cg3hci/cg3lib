@@ -7,6 +7,8 @@
 #
 
 if (CG3_STATIC)
+	add_definitions(-DCG3_ALGORITHMS_DEFINED)
+	
 	SET(CG3_ALGORITHMS_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2.h 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2.inl
@@ -15,9 +17,11 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull3.h
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull3.inl
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/graph_algorithms.h 
+		${CMAKE_CURRENT_LIST_DIR}/algorithms/graph_algorithms.inl
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.h 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.h 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/mesh_function_smoothing.h 
+		${CMAKE_CURRENT_LIST_DIR}/algorithms/mesh_function_smoothing.inl
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.h 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.h 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.h
@@ -25,10 +29,8 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.h)
 	
 	SET(CG3_ALGORITHMS_SOURCES
-		${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.cpp 
-		${CMAKE_CURRENT_LIST_DIR}/algorithms/graph_algorithms.cpp 
-		${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.cpp 
-		${CMAKE_CURRENT_LIST_DIR}/algorithms/mesh_function_smoothing.cpp 
+		${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.cpp  
+		${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.cpp  
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.cpp 
