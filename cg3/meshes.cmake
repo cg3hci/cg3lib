@@ -42,10 +42,21 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_half_edge.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex.cpp)
 	
-	add_library(cg3-meshes SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
+	if (TARGET Eigen3::Eigen)
+		list(APPEND CG3_MESHES_HEADERS
+			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/simpleeigenmesh.h 
+			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/eigenmesh.h 
+			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/algorithms/eigenmesh_algorithms.h)
+		
+		list(APPEND CG3_MESHES_SOURCES
+			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/simpleeigenmesh.cpp 
+			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/eigenmesh.cpp 
+			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/algorithms/eigenmesh_algorithms.cpp)
+	endif()
+	
+	add_library(cg3-meshes SHARED ${CG3_MESHES_HEADERS} ${CG3_MESHES_SOURCES})
 	
 	target_include_directories(cg3-meshes
 		PUBLIC
-			cg3-core
-			${EIGEN_INCLUDE_DIRS})
+			cg3-core)
 endif()

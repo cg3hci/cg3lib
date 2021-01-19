@@ -111,8 +111,4 @@ if (CG3_STATIC)
 
 add_library(cg3-core SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
 
-target_include_directories(cg3-core
-	PUBLIC
-		${EIGEN_INCLUDE_DIRS})
-
 endif()
