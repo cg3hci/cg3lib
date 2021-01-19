@@ -47,7 +47,7 @@ if (CG3_STATIC)
 		${CG3_CGAL_HEADERS} ${CG3_CGAL_SOURCES})
 	
 	target_link_libraries(
-		cg3-algorithms
+		cg3-cgal
 		PUBLIC 
 			cg3-core cg3-data-structures cg3-meshes)
 endif()

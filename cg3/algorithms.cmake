@@ -33,8 +33,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.cpp  
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.cpp 
-		${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.cpp 
-		)
+		${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.cpp)
 	
 	add_library(
 		cg3-algorithms SHARED 

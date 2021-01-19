@@ -26,6 +26,7 @@ option(CG3_LIBIGL "" ON)
 option(CG3_VCGLIB "" ON)
 option(CG3_VORO++ "" ON)
 option(CG3_VIEWER "" ON)
+option(CG3_DEVELOPEMENT "" OFF)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -49,4 +50,28 @@ endif()
 
 if (CG3_CGAL AND TARGET CGAL::CGAL)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cgal.cmake)
+endif()
+
+if (CG3_CINOLIB)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cinolib.cmake)
+endif()
+
+if (CG3_LIBIGL)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
+endif()
+
+if (CG3_VCGLIB)
+	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/vcglib.cmake)
+endif()
+
+if (CG3_VORO++)
+	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
+endif()
+
+if (CG3_VIEWER)
+	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
+endif()
+
+if (CG3_DEVELOPEMENT)
+	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
 endif()
