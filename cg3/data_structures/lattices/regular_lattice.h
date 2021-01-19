@@ -78,6 +78,6 @@ protected:
 } //namespace cg3
 
 #include "regular_lattice_iterators.h"
-#include "regular_lattice.cpp"
+#include "regular_lattice.inl"
 
 #endif // CG3_REGULAR_LATTICE_H

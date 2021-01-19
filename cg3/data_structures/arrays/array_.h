@@ -130,6 +130,6 @@ protected:
 
 } //namespace cg3
 
-#include "array_.cpp"
+#include "array_.inl"
 
 #endif // CG3_ARRAY_H

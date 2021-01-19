@@ -117,6 +117,6 @@ protected:
 
 } //namespace cg3
 
-#include "array_bool.cpp"
+#include "array_bool.inl"
 
 #endif // CG3_ARRAY_BOOL_H

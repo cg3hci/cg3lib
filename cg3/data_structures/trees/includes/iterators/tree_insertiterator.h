@@ -45,6 +45,6 @@ private:
 }
 
 
-#include "tree_insertiterator.cpp"
+#include "tree_insertiterator.inl"
 
 #endif // CG3_TREEINSERTITERATOR_H

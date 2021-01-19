@@ -161,7 +161,7 @@ void swap(AVLLeaf<K,T,C>& b1, AVLLeaf<K,T,C>& b2);
 }
 
 
-#include "avlleaf.cpp"
+#include "avlleaf.inl"
 
 #endif // CG3_AVLLEAF_H
 

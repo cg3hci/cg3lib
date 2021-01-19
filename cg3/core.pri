@@ -127,8 +127,8 @@ SOURCES += \
 	$$PWD/geometry/polygon2.cpp \
 	$$PWD/geometry/quaternion.cpp \
 	$$PWD/geometry/sphere.cpp \
-	$$PWD/geometry/transformations3.cpp \ #io
-	$$PWD/io/ply/ply_header.cpp \
+	$$PWD/geometry/transformations3.cpp \
+	$$PWD/io/ply/ply_header.cpp \ #io
 	$$PWD/utilities/color.cpp \ #utilities
 	$$PWD/utilities/eigen.cpp 
 }

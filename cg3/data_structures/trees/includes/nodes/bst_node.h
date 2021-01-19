@@ -55,6 +55,6 @@ private:
 
 }
 
-#include "bst_node.cpp"
+#include "bst_node.inl"
 
 #endif // CG3_BSTNODE_H

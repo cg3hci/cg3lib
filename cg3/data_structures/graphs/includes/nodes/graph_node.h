@@ -41,6 +41,6 @@ private:
 
 }
 
-#include "graph_node.cpp"
+#include "graph_node.inl"
 
 #endif // CG3_GRAPH_NODE_H
