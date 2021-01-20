@@ -96,4 +96,6 @@ if (CG3_STATIC)
 		${CG3_DATA_STRUCTURES_HEADERS} ${CG3_DATA_STRUCTURES_SOURCES})
 
 	target_link_libraries(cg3-data-structures PUBLIC cg3-core)
+	
+	list(APPEND CG3_LINK_LIBRARIES cg3-data-structures)
 endif()

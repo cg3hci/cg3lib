@@ -58,5 +58,7 @@ if (CG3_STATIC)
 		cg3-cgal
 		PUBLIC 
 			cg3-core cg3-data-structures cg3-meshes mpfr gmp)
+	
+	list(APPEND CG3_LINK_LIBRARIES cg3-cgal gmp)
 endif()
 

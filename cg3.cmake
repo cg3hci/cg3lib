@@ -25,9 +25,7 @@ if (TARGET cg3-viewer)
 	set(CMAKE_AUTORCC ON)
 endif()
 
-if (CG3_CORE)
-	add_definitions(-DCG3_CORE_DEFINED)
-endif()
+add_definitions(-DCG3_CORE_DEFINED)
 
 if(CG3_DATA_STRUCTURES)
 	add_definitions(-DCG3_DATA_STRUCTURES_DEFINED)
@@ -42,27 +40,27 @@ if(CG3_ALGORITHMS)
 	add_definitions(-DCG3_ALGORITHMS_DEFINED)
 endif()
 
-if(CG3_CGAL)
+if(CG3_CGAL AND CG3_CGAL_FOUND)
 	add_definitions(-DCG3_CGAL_DEFINED)
 endif()
 
-if(CG3_CINOLIB)
+if(CG3_CINOLIB AND CG3_CINOLIB_FOUND)
 	add_definitions(-DCG3_CINOLIB_DEFINED)
 endif()
 
-if(CG3_LIBIGL)
+if(CG3_LIBIGL AND CG3_LIBIGL_FOUND)
 	add_definitions(-DCG3_LIBIGL_DEFINED)
 endif()
 
-if(CG3_VCGLIB)
+if(CG3_VCGLIB AND CG3_VCGLIB_FOUND)
 	add_definitions(-DCG3_VCGLIB_DEFINED)
 endif()
 
-if(CG3_VORO++)
+if(CG3_VORO++ AND CG3_VORO_FOUND)
 	add_definitions(-DCG3_VOROPLUSPLUS_DEFINED)
 endif()
 
-if(CG3_VIEWER)
+if(CG3_VIEWER AND CG3_QGLVIEWER_FOUND)
 	add_definitions(-DCG3_VIEWER_DEFINED)
 endif()
 

@@ -167,4 +167,6 @@ if (CG3_STATIC)
 	target_link_libraries(
 		cg3-viewer PUBLIC 
 			${CG3_VIEWER_LINK_LIBS})
+	
+	list(APPEND CG3_LINK_LIBRARIES cg3-viewer)
 endif()

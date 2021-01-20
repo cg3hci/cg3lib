@@ -16,7 +16,6 @@ if (CG3_STATIC)
 	add_definitions(-DCG3_QMAKE) #todo: remove this
 endif()
 
-option(CG3_CORE "" ON)
 option(CG3_DATA_STRUCTURES "" ON)
 option(CG3_MESHES "" ON)
 option(CG3_ALGORITHMS "" ON)
@@ -28,11 +27,11 @@ option(CG3_VORO++ "" ON)
 option(CG3_VIEWER "" ON)
 option(CG3_DEVELOPEMENT "" OFF)
 
+set(CG3_LINK_LIBRARIES "")
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 
-if (CG3_CORE)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/core.cmake)
-endif()
+include(${CMAKE_CURRENT_SOURCE_DIR}/core.cmake)
 
 if (CG3_DATA_STRUCTURES)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/data_structures.cmake)
@@ -76,3 +75,5 @@ endif()
 if (CG3_DEVELOPEMENT)
 	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
 endif()
+
+set(CG3_LINK_LIBRARIES ${CG3_LINK_LIBRARIES} PARENT_SCOPE)

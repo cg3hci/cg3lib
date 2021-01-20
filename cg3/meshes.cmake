@@ -67,4 +67,6 @@ if (CG3_STATIC)
 	if (TARGET Qt5::Gui)
 		target_link_libraries(cg3-meshes PUBLIC Qt5::Gui)
 	endif()
+	
+	list(APPEND CG3_LINK_LIBRARIES cg3-meshes)
 endif()

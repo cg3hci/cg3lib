@@ -43,4 +43,6 @@ if (CG3_STATIC)
 		cg3-algorithms
 		PUBLIC 
 			cg3-core cg3-data-structures)
+		
+	list(APPEND CG3_LINK_LIBRARIES cg3-algorithms)
 endif()

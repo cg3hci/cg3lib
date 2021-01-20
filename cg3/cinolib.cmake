@@ -23,4 +23,6 @@ if (CG3_STATIC)
 		cg3-cinolib
 		PUBLIC 
 			cg3-core cg3-data-structures cg3-meshes)
+	
+	list(APPEND CG3_LINK_LIBRARIES cg3-cinolib)
 endif()
