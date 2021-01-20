@@ -9,34 +9,34 @@
 VCGLIB_ENV_VARIABLE = $$(VCGLIB_HOME)
 
 isEmpty(VCGLIB_PATH):!isEmpty(VCGLIB_ENV_VARIABLE):exists($$VCGLIB_ENV_VARIABLE) {
-    VCGLIB_PATH = $$VCGLIB_ENV_VARIABLE
+	VCGLIB_PATH = $$VCGLIB_ENV_VARIABLE
 }
 
 !isEmpty(VCGLIB_PATH):exists($$VCGLIB_PATH) {
-    win32{
-        QMAKE_CXXFLAGS += -bigobj
-    }
+	win32{
+		QMAKE_CXXFLAGS += -bigobj
+	}
 
-    INCLUDEPATH += $$VCGLIB_PATH
+	INCLUDEPATH += $$VCGLIB_PATH
 
-    DEFINES += CG3_VCGLIB_DEFINED
-    MODULES += CG3_VCGLIB
+	DEFINES += CG3_VCGLIB_DEFINED
+	MODULES += CG3_VCGLIB
 
-    HEADERS += \
-        $$PWD/vcglib/convert.h \
+	HEADERS += \
+		$$PWD/vcglib/convert.h \
 		$$PWD/vcglib/convert.inl \
-        $$PWD/vcglib/curve_on_manifold.h \
-        $$PWD/vcglib/meshes/triangleedgemeshtype.h \
-        $$PWD/vcglib/smoothing.h \
-        $$PWD/vcglib/meshes/polygonmeshtype.h \
-        $$PWD/vcglib/meshes/trianglemeshtype.h
+		$$PWD/vcglib/curve_on_manifold.h \
+		$$PWD/vcglib/curve_on_manifold.inl \
+		$$PWD/vcglib/meshes/triangleedgemeshtype.h \
+		$$PWD/vcglib/smoothing.h \
+		$$PWD/vcglib/smoothing.inl \
+		$$PWD/vcglib/meshes/polygonmeshtype.h \
+		$$PWD/vcglib/meshes/trianglemeshtype.h
 
-    CG3_STATIC {
-    SOURCES += \
-        $$PWD/vcglib/curve_on_manifold.cpp \
-        $$PWD/vcglib/smoothing.cpp
-    }
+	CG3_STATIC {
+
+	}
 }
 else {
-    message("The vcglib folder (variable VCGLIB_PATH) does not exist!")
+	message("The vcglib folder (variable VCGLIB_PATH) does not exist!")
 }

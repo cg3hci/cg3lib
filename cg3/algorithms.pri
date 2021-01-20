@@ -25,6 +25,7 @@ HEADERS += \
 	$$PWD/algorithms/laplacian_smoothing.h \
 	$$PWD/algorithms/marching_cubes.h \
 	$$PWD/algorithms/mesh_function_smoothing.h \
+	$$PWD/algorithms/mesh_function_smoothing.inl \
 	$$PWD/algorithms/normalization.h \
 	$$PWD/algorithms/saliency.h \
 	$$PWD/algorithms/sphere_coverage.h \
@@ -36,7 +37,6 @@ CG3_STATIC {
 SOURCES += \
 	$$PWD/algorithms/global_optimal_rotation_matrix.cpp \
 	$$PWD/algorithms/marching_cubes.cpp \
-	$$PWD/algorithms/mesh_function_smoothing.cpp \
 	$$PWD/algorithms/normalization.cpp \
 	$$PWD/algorithms/saliency.cpp \
 	$$PWD/algorithms/laplacian_smoothing.cpp
