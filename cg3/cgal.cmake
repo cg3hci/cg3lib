@@ -13,7 +13,7 @@ endif()
 if (CG3_STATIC)
 	add_definitions(-DCG3_CGAL_DEFINED)
 	
-	SET(CG3_CGAL_HEADERS
+	set(CG3_CGAL_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/cgal/cgal.h 
 		${CMAKE_CURRENT_LIST_DIR}/cgal/aabb_tree3.h 
 		${CMAKE_CURRENT_LIST_DIR}/cgal/booleans2.h 
@@ -34,7 +34,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/cgal/sdf_segmentation.h 
 		${CMAKE_CURRENT_LIST_DIR}/cgal/skeleton.h)
 	
-	SET(CG3_CGAL_SOURCES
+	set(CG3_CGAL_SOURCES
 		${CMAKE_CURRENT_LIST_DIR}/cgal/aabb_tree3.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/cgal/booleans2.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/cgal/delaunay_triangulation3.cpp 

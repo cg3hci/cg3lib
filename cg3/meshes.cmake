@@ -9,7 +9,7 @@
 if (CG3_STATIC)
 	add_definitions(-DCG3_DCEL_DEFINED)
 	
-	SET(CG3_MESHES_HEADERS
+	set(CG3_MESHES_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel.h 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_data.h 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_face.h 
@@ -34,7 +34,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_builder.h 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/mesh.h)
 	
-	SET(CG3_MESHES_SOURCES 
+	set(CG3_MESHES_SOURCES 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_coloring.cpp  
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_edge_flip.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_robustness.cpp 
@@ -44,7 +44,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_half_edge.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex.cpp)
 	
-	if (TARGET Eigen3::Eigen)
+	if(TARGET Eigen3::Eigen)
 		add_definitions(-DCG3_EIGENMESH_DEFINED)
 		
 		list(APPEND CG3_MESHES_HEADERS

@@ -9,7 +9,7 @@
 if (CG3_STATIC)
 	add_definitions(-DCG3_ALGORITHMS_DEFINED)
 	
-	SET(CG3_ALGORITHMS_HEADERS
+	set(CG3_ALGORITHMS_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2.h 
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2.inl
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2_incremental.h
@@ -28,7 +28,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.inl
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.h)
 	
-	SET(CG3_ALGORITHMS_SOURCES
+	set(CG3_ALGORITHMS_SOURCES
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.cpp  
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.cpp  
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.cpp 

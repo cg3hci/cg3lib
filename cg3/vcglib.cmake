@@ -9,7 +9,7 @@
 if (CG3_STATIC)
 	add_definitions(-DCG3_VCGLIB_DEFINED)
 
-	SET(CG3_VCGLIB_HEADERS
+	set(CG3_VCGLIB_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/convert.h
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/convert.inl
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/curve_on_manifold.h
@@ -21,17 +21,10 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/meshes/trianglemeshtype.h)
 	
 	#used just for visualization of the module in IDEs
-	SET(CG3_VCGLIB_SOURCES
+	set(CG3_VCGLIB_SOURCES
 		${CMAKE_CURRENT_LIST_DIR}/vcglib/dummy_source.cpp)
 
 	add_library(
 		cg3-vcglib SHARED
 		${CG3_VCGLIB_HEADERS} ${CG3_VCGLIB_SOURCES})
-
-	#target_link_libraries(
-	#	cg3-vcglib
-	#	PUBLIC
-	#		cg3-core cg3-data-structures cg3-meshes)
-	
-	#add_library(cg3-vcglib INTERFACE)
 endif()

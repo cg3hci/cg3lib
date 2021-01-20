@@ -9,7 +9,7 @@
 if (CG3_STATIC)
 	add_definitions(-DCG3_CORE_DEFINED)
 	
-	SET(CG3_CORE_HEADERS
+	set(CG3_CORE_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/cg3lib.h #core
 		${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.h #geometry
 		${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box3.h
@@ -95,7 +95,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/utilities/utils.h
 		${CMAKE_CURRENT_LIST_DIR}/utilities/utils.inl)
 
-	SET(CG3_CORE_SOURCES
+	set(CG3_CORE_SOURCES
 		${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box3.cpp #geometry
 		${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.cpp
 		${CMAKE_CURRENT_LIST_DIR}/geometry/cylinder.cpp

@@ -9,7 +9,7 @@
 if (CG3_STATIC)
 	add_definitions(-DCG3_DATA_STRUCTURES_DEFINED)
 	
-	SET(CG3_DATA_STRUCTURES_HEADERS
+	set(CG3_DATA_STRUCTURES_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.h #arrays
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.inl
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/arrays.h
@@ -86,7 +86,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/aabb_node.h
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/aabb_node.inl)
 
-	SET(CG3_DATA_STRUCTURES_SOURCES
+	set(CG3_DATA_STRUCTURES_SOURCES
 		#graphs 
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/rangetree_types.cpp  # aabb tree
 		)

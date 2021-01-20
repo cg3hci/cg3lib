@@ -68,8 +68,11 @@ if (CG3_VORO++)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/voro++.cmake)
 endif()
 
-if (CG3_VIEWER)
+if (CG3_VIEWER AND CG3_STATIC)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/viewer.cmake)
+elseif(CG3_VIEWER)
+	message("ERROR: cg3lib needs to be built in static mode to build the viewer module")
+	return()
 endif()
 
 if (CG3_DEVELOPEMENT)

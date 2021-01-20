@@ -9,10 +9,10 @@
 if (CG3_STATIC)
 	add_definitions(-DCG3_CINOLIB_DEFINED)
 	
-	SET(CG3_CINOLIB_HEADERS
+	set(CG3_CINOLIB_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}//cinolib/cinolib_mesh_conversions.h)
 	
-	SET(CG3_CINOLIB_SOURCES
+	set(CG3_CINOLIB_SOURCES
 		${CMAKE_CURRENT_LIST_DIR}//cinolib/cinolib_mesh_conversions.cpp)
 	
 	add_library(

@@ -9,7 +9,7 @@
 if (CG3_STATIC)
 	add_definitions(-DCG3_LIBIGL_DEFINED)
 
-	SET(CG3_LIBIGL_HEADERS
+	set(CG3_LIBIGL_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/libigl/libigl.h 
 		${CMAKE_CURRENT_LIST_DIR}/libigl/booleans.h 
 		${CMAKE_CURRENT_LIST_DIR}/libigl/connected_components.h 
@@ -26,7 +26,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/libigl/internal/booleans_algorithms.h 
 		${CMAKE_CURRENT_LIST_DIR}/libigl/internal/eigenmesh_libigl_algorithms.h)
 
-	SET(CG3_LIBIGL_SOURCES
+	set(CG3_LIBIGL_SOURCES
 		${CMAKE_CURRENT_LIST_DIR}/libigl/internal/booleans_algorithms.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/libigl/internal/eigenmesh_libigl_algorithms_booleans.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/libigl/internal/eigenmesh_libigl_algorithms_adjacencies.cpp 
