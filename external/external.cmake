@@ -1,10 +1,13 @@
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake_modules)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules/")
 
 ##### Looking for libraries that may be used with cg3lib
 ##### and may be already installed
 
 #Eigen
 find_package(Eigen3)
+
+#Qt
+find_package(Qt5 COMPONENTS Core Xml OpenGL Gui Widgets)
 
 #QGLViewer (will look also for Qt)
 find_package(QGLViewer)

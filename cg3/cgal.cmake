@@ -57,6 +57,6 @@ if (CG3_STATIC)
 	target_link_libraries(
 		cg3-cgal
 		PUBLIC 
-			cg3-core cg3-data-structures cg3-meshes)
+			cg3-core cg3-data-structures cg3-meshes mpfr gmp)
 endif()
 

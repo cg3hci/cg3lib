@@ -6,14 +6,14 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-cmake_minimum_required(VERSION 3.9)
-project(cg3lib)
+#cmake_minimum_required(VERSION 3.9)
+#project(cg3lib)
 
 option(CG3_STATIC "" ON)
 
 if (CG3_STATIC)
 	add_definitions(-DCG3_STATIC)
-	add_definitions(-DCG3_QMAKE) #todo: reomve this
+	add_definitions(-DCG3_QMAKE) #todo: remove this
 endif()
 
 option(CG3_CORE "" ON)
@@ -28,48 +28,46 @@ option(CG3_VORO++ "" ON)
 option(CG3_VIEWER "" ON)
 option(CG3_DEVELOPEMENT "" OFF)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/external/external.cmake)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 if (CG3_CORE)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/core.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/core.cmake)
 endif()
 
 if (CG3_DATA_STRUCTURES)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/data_structures.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/data_structures.cmake)
 endif()
 
 if (CG3_MESHES)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/meshes.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/meshes.cmake)
 endif()
 
 if (CG3_ALGORITHMS)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/algorithms.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/algorithms.cmake)
 endif()
 
 if (CG3_CGAL AND TARGET CGAL::CGAL)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cgal.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cgal.cmake)
 endif()
 
 if (CG3_CINOLIB)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cinolib.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cinolib.cmake)
 endif()
 
 if (CG3_LIBIGL)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/libigl.cmake)
 endif()
 
 if (CG3_VCGLIB)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/vcglib.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/vcglib.cmake)
 endif()
 
 if (CG3_VORO++)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/voro++.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/voro++.cmake)
 endif()
 
 if (CG3_VIEWER AND CG3_STATIC)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/viewer.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/viewer.cmake)
 elseif(CG3_VIEWER)
 	message("ERROR: cg3lib needs to be built in static mode to build the viewer module")
 	return()

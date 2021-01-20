@@ -93,7 +93,8 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/icons/icons.qrc)
 	
 	set(CG3_VIEWER_LINK_LIBS
-		cg3-core 
+		cg3-core
+		stdc++fs
 		${QGLVIEWER_LIBRARY}
 		Qt5::Core
 		Qt5::OpenGL
