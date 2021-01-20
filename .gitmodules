@@ -1,0 +1,12 @@
+[submodule "external/eigen"]
+	path = external/eigen
+	url = https://gitlab.com/libeigen/eigen/
+[submodule "external/cinolib"]
+	path = external/cinolib
+	url = https://github.com/mlivesu/cinolib
+[submodule "external/libigl"]
+	path = external/libigl
+	url = https://github.com/libigl/libigl
+[submodule "external/vcglib"]
+	path = external/vcglib
+	url = https://github.com/cnr-isti-vclab/vcglib

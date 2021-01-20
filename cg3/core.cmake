@@ -111,11 +111,10 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/utilities/color.cpp #utilities
 		)
 
-add_library(cg3-core SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
-
-if (TARGET Qt5::Gui)
-	message("cg3lib core with qt")
-	target_link_libraries(cg3-core PUBLIC Qt5::Gui)
-endif()
+	add_library(cg3-core SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
+	
+	if (TARGET Qt5::Gui)
+		target_link_libraries(cg3-core PUBLIC Qt5::Gui)
+	endif()
 
 endif()

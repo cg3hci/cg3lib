@@ -25,17 +25,44 @@ if (TARGET cg3-viewer)
 	set(CMAKE_AUTORCC ON)
 endif()
 
-add_definitions(-DCG3_ALGORITHMS_DEFINED)
+if (CG3_CORE)
+	add_definitions(-DCG3_CORE_DEFINED)
+endif()
 
-add_definitions(-DCG3_LIBIGL_DEFINED)
-add_definitions(-DCG3_EIGENMESH_DEFINED)
-add_definitions(-DCG3_CGAL_DEFINED)
-add_definitions(-DCG3_CINOLIB_DEFINED)
-add_definitions(-DCG3_CORE_DEFINED)
-add_definitions(-DCG3_DATA_STRUCTURES_DEFINED)
-add_definitions(-DCG3_DCEL_DEFINED)
-add_definitions(-DCG3_VCGLIB_DEFINED)
-add_definitions(-DCG3_VIEWER_DEFINED)
+if(CG3_DATA_STRUCTURES)
+	add_definitions(-DCG3_DATA_STRUCTURES_DEFINED)
+endif()
 
+if(CG3_MESHES)
+	add_definitions(-DCG3_DCEL_DEFINED)
+	add_definitions(-DCG3_EIGENMESH_DEFINED)
+endif()
 
+if(CG3_ALGORITHMS)
+	add_definitions(-DCG3_ALGORITHMS_DEFINED)
+endif()
+
+if(CG3_CGAL)
+	add_definitions(-DCG3_CGAL_DEFINED)
+endif()
+
+if(CG3_CINOLIB)
+	add_definitions(-DCG3_CINOLIB_DEFINED)
+endif()
+
+if(CG3_LIBIGL)
+	add_definitions(-DCG3_LIBIGL_DEFINED)
+endif()
+
+if(CG3_VCGLIB)
+	add_definitions(-DCG3_VCGLIB_DEFINED)
+endif()
+
+if(CG3_VORO++)
+	add_definitions(-DCG3_VOROPLUSPLUS_DEFINED)
+endif()
+
+if(CG3_VIEWER)
+	add_definitions(-DCG3_VIEWER_DEFINED)
+endif()
 
