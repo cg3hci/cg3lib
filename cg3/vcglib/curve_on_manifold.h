@@ -42,6 +42,6 @@ bool curveOnManifold(
 }
 }
 
-#include "curve_on_manifold.cpp"
+#include "curve_on_manifold.inl"
 
 #endif // CURVE_ON_MANIFOLD_H
