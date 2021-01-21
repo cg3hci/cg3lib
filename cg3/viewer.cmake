@@ -7,11 +7,11 @@
 #
 
 if (CG3_STATIC)
+	list(APPEND CG3_MODULE_DEFINITIONS CG3_VIEWER_DEFINED)
+
 	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_AUTOUIC ON)
 	set(CMAKE_AUTORCC ON)
-	
-	add_definitions(-DCG3_VIEWER_DEFINED)
 
 	set(CG3_VIEWER_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/viewer/viewer.h
@@ -91,7 +91,7 @@ if (CG3_STATIC)
 
 	set(CG3_VIEWER_RESOURCES
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/icons/icons.qrc)
-	
+
 	set(CG3_VIEWER_LINK_LIBS
 		cg3-core
 		stdc++fs
@@ -138,12 +138,8 @@ if (CG3_STATIC)
 				
 				list(APPEND CG3_VIEWER_FORMS
 					${CMAKE_CURRENT_LIST_DIR}/viewer/managers/booleans_manager.ui)
-				
-				list(APPEND CG3_VIEWER_LINK_LIBS cg3-cgal cg3-libigl)
 			endif()
 		endif()
-		
-		list(APPEND CG3_VIEWER_LINK_LIBS cg3-meshes)
 	endif()
 	
 	if (TARGET cg3-cinolib)
@@ -157,7 +153,7 @@ if (CG3_STATIC)
 		list(APPEND CG3_VIEWER_SOURCES
 			${CMAKE_CURRENT_LIST_DIR}/viewer/drawable_objects/drawable_tetmesh.cpp)
 		
-		list(APPEND CG3_VIEWER_LINK_LIBS GL GLU cg3-cinolib)
+		list(APPEND CG3_VIEWER_LINK_LIBS GL GLU)
 	endif()
 	
 	add_library(

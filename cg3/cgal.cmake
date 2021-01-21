@@ -6,13 +6,9 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-if (TARGET Eigen3::Eigen)
-	add_definitions(-DCGAL_EIGEN3_ENABLED)
-endif()
-
 if (CG3_STATIC)
-	add_definitions(-DCG3_CGAL_DEFINED)
-	
+	list(APPEND CG3_MODULE_DEFINITIONS CG3_CGAL_DEFINED)
+
 	set(CG3_CGAL_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/cgal/cgal.h 
 		${CMAKE_CURRENT_LIST_DIR}/cgal/aabb_tree3.h 
@@ -53,11 +49,14 @@ if (CG3_STATIC)
 	add_library(
 		cg3-cgal SHARED 
 		${CG3_CGAL_HEADERS} ${CG3_CGAL_SOURCES})
+	if (TARGET Eigen3::Eigen)
+		target_compile_definitions(cg3-cgal PUBLIC CGAL_EIGEN3_ENABLED)
+	endif()
 	
 	target_link_libraries(
 		cg3-cgal
 		PUBLIC 
-			cg3-core cg3-data-structures cg3-meshes mpfr gmp)
+			cg3-core mpfr gmp)
 	
 	list(APPEND CG3_LINK_LIBRARIES cg3-cgal gmp)
 endif()

@@ -7,8 +7,8 @@
 #
 
 if (CG3_STATIC)
-	add_definitions(-DCG3_DCEL_DEFINED)
-	
+	list(APPEND CG3_MODULE_DEFINITIONS CG3_DCEL_DEFINED)
+
 	set(CG3_MESHES_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel.h 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_data.h 
@@ -45,8 +45,8 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex.cpp)
 	
 	if(TARGET Eigen3::Eigen)
-		add_definitions(-DCG3_EIGENMESH_DEFINED)
-		
+		list(APPEND CG3_MODULE_DEFINITIONS CG3_EIGENMESH_DEFINED)
+
 		list(APPEND CG3_MESHES_HEADERS
 			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/simpleeigenmesh.h 
 			${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/eigenmesh.h 
@@ -59,8 +59,8 @@ if (CG3_STATIC)
 	endif()
 	
 	add_library(cg3-meshes SHARED ${CG3_MESHES_HEADERS} ${CG3_MESHES_SOURCES})
-	
-	target_include_directories(cg3-meshes
+
+	target_link_libraries(cg3-meshes
 		PUBLIC
 			cg3-core)
 		

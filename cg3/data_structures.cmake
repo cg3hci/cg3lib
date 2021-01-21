@@ -7,8 +7,8 @@
 #
 
 if (CG3_STATIC)
-	add_definitions(-DCG3_DATA_STRUCTURES_DEFINED)
-	
+	list(APPEND CG3_MODULE_DEFINITIONS CG3_DATA_STRUCTURES_DEFINED)
+
 	set(CG3_DATA_STRUCTURES_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.h #arrays
 		${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.inl

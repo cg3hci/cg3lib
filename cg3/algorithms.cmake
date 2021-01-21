@@ -7,7 +7,7 @@
 #
 
 if (CG3_STATIC)
-	add_definitions(-DCG3_ALGORITHMS_DEFINED)
+	list(APPEND CG3_MODULE_DEFINITIONS CG3_ALGORITHMS_DEFINED)
 	
 	set(CG3_ALGORITHMS_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2.h 
@@ -42,7 +42,7 @@ if (CG3_STATIC)
 	target_link_libraries(
 		cg3-algorithms
 		PUBLIC 
-			cg3-core cg3-data-structures)
+			cg3-core)
 		
 	list(APPEND CG3_LINK_LIBRARIES cg3-algorithms)
 endif()

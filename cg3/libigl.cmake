@@ -7,7 +7,7 @@
 #
 
 if (CG3_STATIC)
-	add_definitions(-DCG3_LIBIGL_DEFINED)
+	list(APPEND CG3_MODULE_DEFINITIONS CG3_LIBIGL_DEFINED)
 
 	set(CG3_LIBIGL_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/libigl/libigl.h 
@@ -56,7 +56,7 @@ if (CG3_STATIC)
 	target_link_libraries(
 		cg3-libigl
 		PUBLIC
-			cg3-core cg3-data-structures cg3-meshes)
+			cg3-core)
 	
 	list(APPEND CG3_LINK_LIBRARIES cg3-libigl)
 endif()

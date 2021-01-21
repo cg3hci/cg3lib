@@ -76,4 +76,11 @@ if (CG3_DEVELOPEMENT)
 	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
 endif()
 
-set(CG3_LINK_LIBRARIES ${CG3_LINK_LIBRARIES} PARENT_SCOPE)
+include(post.cmake)
+
+add_library(cg3lib INTERFACE)
+target_link_libraries(cg3lib INTERFACE ${CG3_LINK_LIBRARIES})
+target_include_directories(cg3lib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/..)
+target_compile_definitions(cg3lib INTERFACE ${CG3_MODULE_DEFINITIONS})
+
+#set(CG3_LINK_LIBRARIES ${CG3_LINK_LIBRARIES} PARENT_SCOPE)

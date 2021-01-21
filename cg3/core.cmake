@@ -6,7 +6,9 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-add_definitions(-DCG3_CORE_DEFINED)
+## module definitions
+# this variable is used by all the other modules
+SET(CG3_MODULE_DEFINITIONS CG3_CORE_DEFINED)
 
 set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/cg3lib.h #core
@@ -112,6 +114,7 @@ if (CG3_STATIC)
 		)
 
 	add_library(cg3-core SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
+	target_compile_definitions(cg3-core PUBLIC CG3_QMAKE)
 
 	if (TARGET Qt5::Gui)
 		target_link_libraries(cg3-core PUBLIC Qt5::Gui)
