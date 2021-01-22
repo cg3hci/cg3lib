@@ -1,4 +1,4 @@
-CONFIG += CG3_CORE CG3_VIEWER
+CONFIG += CG3_STATIC CG3_CORE CG3_VIEWER
 
 include(../../cg3.pri)
 
