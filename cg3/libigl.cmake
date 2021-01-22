@@ -56,6 +56,7 @@ if (CG3_STATIC)
 	target_link_libraries(
 		cg3-libigl
 		PUBLIC
+			libigl
 			cg3-core)
 	
 	list(APPEND CG3_LINK_LIBRARIES cg3-libigl)

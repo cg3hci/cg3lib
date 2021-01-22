@@ -98,7 +98,7 @@ if (CG3_STATIC)
 	set(CG3_VIEWER_LINK_LIBS
 		cg3-core
 		stdc++fs
-		${QGLVIEWER_LIBRARY}
+		QGLViewer
 		Qt5::Core
 		Qt5::OpenGL
 		Qt5::Widgets
@@ -141,6 +141,8 @@ if (CG3_STATIC)
 				
 				list(APPEND CG3_VIEWER_FORMS
 					${CMAKE_CURRENT_LIST_DIR}/viewer/managers/booleans_manager.ui)
+				
+				list(APPEND CG3_VIEWER_LINK_LIBS libigl)
 			endif()
 		endif()
 	endif()
@@ -156,7 +158,7 @@ if (CG3_STATIC)
 		list(APPEND CG3_VIEWER_SOURCES
 			${CMAKE_CURRENT_LIST_DIR}/viewer/drawable_objects/drawable_tetmesh.cpp)
 		
-		list(APPEND CG3_VIEWER_LINK_LIBS GL GLU)
+		list(APPEND CG3_VIEWER_LINK_LIBS cinolib)
 	endif()
 	
 	add_library(
