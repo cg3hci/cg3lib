@@ -88,10 +88,4 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
-#ifndef CG3_STATIC
-#define CG3_BOOLEANS_MANAGER_CPP "booleans_manager.cpp"
-#include CG3_BOOLEANS_MANAGER_CPP
-#undef CG3_BOOLEANS_MANAGER_CPP
-#endif //CG3_STATIC
-
 #endif // CG3_BOOLEANS_MANAGER_H

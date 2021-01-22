@@ -95,36 +95,39 @@ set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/utilities/utils.h
 	${CMAKE_CURRENT_LIST_DIR}/utilities/utils.inl)
 
+set(CG3_CORE_SOURCES
+	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box3.cpp #geometry
+	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/cylinder.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/intersections2.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/line2.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/line3.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/plane.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/polygon2.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/quaternion.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/sphere.cpp
+	${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.cpp #io
+	${CMAKE_CURRENT_LIST_DIR}/io/ply/ply_header.cpp
+	${CMAKE_CURRENT_LIST_DIR}/utilities/color.cpp #utilities
+	)
+
 if (CG3_STATIC)
-	set(CG3_CORE_SOURCES
-		${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box3.cpp #geometry
-		${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/cylinder.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/intersections2.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/line2.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/line3.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/plane.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/polygon2.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/quaternion.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/sphere.cpp
-		${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.cpp #io
-		${CMAKE_CURRENT_LIST_DIR}/io/ply/ply_header.cpp
-		${CMAKE_CURRENT_LIST_DIR}/utilities/color.cpp #utilities
-		)
-
 	add_library(cg3-core SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
-	target_include_directories(cg3-core PUBLIC ${CG3_INCLUDE_DIR})
-	target_compile_definitions(cg3-core PUBLIC CG3_QMAKE)
-
-	if (TARGET Eigen)
-		target_link_libraries(cg3-core PUBLIC Eigen)
-	endif()
-	if (TARGET Qt5::Gui)
-		target_link_libraries(cg3-core PUBLIC Qt5::Gui)
-	endif()
-	if (TARGET cinolib)
-		target_link_libraries(cg3-core PUBLIC cinolib)
-	endif()
-
-	list(APPEND CG3_LINK_LIBRARIES cg3-core)
+else()
+	add_library(cg3-core INTERFACE)
 endif()
+
+target_include_directories(cg3-core ${CG3_TARGET_MOD} ${CG3_INCLUDE_DIR})
+target_compile_definitions(cg3-core ${CG3_TARGET_MOD} CG3_QMAKE)
+
+if (TARGET Eigen)
+	target_link_libraries(cg3-core ${CG3_TARGET_MOD} Eigen)
+endif()
+if (TARGET Qt5::Gui)
+	target_link_libraries(cg3-core ${CG3_TARGET_MOD} Qt5::Gui)
+endif()
+if (TARGET cinolib)
+	target_link_libraries(cg3-core ${CG3_TARGET_MOD} cinolib)
+endif()
+
+list(APPEND CG3_LINK_LIBRARIES cg3-core)

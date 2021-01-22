@@ -70,10 +70,4 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
-#ifndef CG3_STATIC
-#define CG3_DCEL_MANAGER_CPP "dcel_manager.cpp"
-#include CG3_DCEL_MANAGER_CPP
-#undef CG3_DCEL_MANAGER_CPP
-#endif //CG3_STATIC
-
 #endif // CG3_DCEL_MANAGER_H

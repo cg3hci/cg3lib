@@ -221,10 +221,4 @@ public:
 } //namespace cg3::viewer
 } //namespace cg3
 
-#ifndef CG3_STATIC
-#define CG3_MAINWINDOW_CPP "mainwindow.cpp"
-#include CG3_MAINWINDOW_CPP
-#undef CG3_MAINWINDOW_CPP
-#endif //CG3_STATIC
-
 #endif // CG3_MAINWINDOW_H

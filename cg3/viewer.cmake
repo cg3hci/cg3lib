@@ -6,16 +6,25 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
+list(APPEND CG3_MODULE_DEFINITIONS CG3_VIEWER_DEFINED)
+
+set(CMAKE_AUTOMOC ON PARENT_SCOPE)
+set(CMAKE_AUTOUIC ON PARENT_SCOPE)
+set(CMAKE_AUTORCC ON PARENT_SCOPE)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CG3_VIEWER_LINK_LIBS
+	cg3-core
+	stdc++fs
+	QGLViewer
+	Qt5::Core
+	Qt5::OpenGL
+	Qt5::Widgets
+	Qt5::Xml)
+
 if (CG3_STATIC)
-	list(APPEND CG3_MODULE_DEFINITIONS CG3_VIEWER_DEFINED)
-
-	set(CMAKE_AUTOMOC ON PARENT_SCOPE)
-	set(CMAKE_AUTOUIC ON PARENT_SCOPE)
-	set(CMAKE_AUTORCC ON PARENT_SCOPE)
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_AUTOUIC ON)
-	set(CMAKE_AUTORCC ON)
-
 	set(CG3_VIEWER_HEADERS
 		${CMAKE_CURRENT_LIST_DIR}/viewer/viewer.h
 		${CMAKE_CURRENT_LIST_DIR}/viewer/glcanvas.h
@@ -54,7 +63,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_object_drawlist_manager.h
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/manipulable_object_drawlist_manager.h
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/submanager.h)
-
+	
 	set(CG3_VIEWER_SOURCES
 		${CMAKE_CURRENT_LIST_DIR}/viewer/glcanvas.cpp
 		${CMAKE_CURRENT_LIST_DIR}/viewer/mainwindow.cpp
@@ -84,37 +93,28 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/viewer/utilities/utils.cpp
 		${CMAKE_CURRENT_LIST_DIR}/viewer/widgets/qclickablelabel.cpp
 		)
-
+	
 	set(CG3_VIEWER_FORMS
 		${CMAKE_CURRENT_LIST_DIR}/viewer/mainwindow.ui
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_mesh_drawlist_manager.ui
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_container_drawlist_manager.ui
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_object_drawlist_manager.ui
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/manipulable_object_drawlist_manager.ui)
-
+	
 	set(CG3_VIEWER_RESOURCES
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/icons/icons.qrc)
-
-	set(CG3_VIEWER_LINK_LIBS
-		cg3-core
-		stdc++fs
-		QGLViewer
-		Qt5::Core
-		Qt5::OpenGL
-		Qt5::Widgets
-		Qt5::Xml)
 	
 	if (TARGET cg3-meshes)
 		list(APPEND CG3_VIEWER_HEADERS
 			${CMAKE_CURRENT_LIST_DIR}/viewer/drawable_objects/drawable_dcel.h
 			${CMAKE_CURRENT_LIST_DIR}/viewer/pickable_objects/pickable_dcel.h
 			${CMAKE_CURRENT_LIST_DIR}/viewer/managers/dcel_manager.h)
-
+	
 		list(APPEND CG3_VIEWER_SOURCES
 			${CMAKE_CURRENT_LIST_DIR}/viewer/drawable_objects/drawable_dcel.cpp
 			${CMAKE_CURRENT_LIST_DIR}/viewer/managers/dcel_manager.cpp
 			${CMAKE_CURRENT_LIST_DIR}/viewer/pickable_objects/pickable_dcel.cpp)
-
+	
 		list(APPEND CG3_VIEWER_FORMS
 			${CMAKE_CURRENT_LIST_DIR}/viewer/managers/dcel_manager.ui)
 		
@@ -160,15 +160,76 @@ if (CG3_STATIC)
 		
 		list(APPEND CG3_VIEWER_LINK_LIBS cinolib)
 	endif()
+else()
+	set(CG3_VIEWER_HEADERS
+		${CMAKE_CURRENT_LIST_DIR}/viewer/mainwindow.h
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_mesh_drawlist_manager.h
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_container_drawlist_manager.h
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_object_drawlist_manager.h
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/manipulable_object_drawlist_manager.h)
 	
-	add_library(
-		cg3-viewer SHARED 
-		${CG3_VIEWER_HEADERS} ${CG3_VIEWER_SOURCES} ${CG3_VIEWER_FORMS} ${CG3_VIEWER_RESOURCES})
-	target_include_directories(cg3-viewer PUBLIC ${CG3_INCLUDE_DIR})
+	set(CG3_VIEWER_SOURCES
+		${CMAKE_CURRENT_LIST_DIR}/viewer/mainwindow.cpp
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_container_drawlist_manager.cpp
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_mesh_drawlist_manager.cpp
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_object_drawlist_manager.cpp
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/manipulable_object_drawlist_manager.cpp
+		)
 	
-	target_link_libraries(
-		cg3-viewer PUBLIC 
-			${CG3_VIEWER_LINK_LIBS})
+	set(CG3_VIEWER_FORMS
+		${CMAKE_CURRENT_LIST_DIR}/viewer/mainwindow.ui
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_mesh_drawlist_manager.ui
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_container_drawlist_manager.ui
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_object_drawlist_manager.ui
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/manipulable_object_drawlist_manager.ui)
 	
-	list(APPEND CG3_LINK_LIBRARIES cg3-viewer)
+	set(CG3_VIEWER_RESOURCES
+		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/icons/icons.qrc)
+	
+	if (TARGET cg3-meshes)
+		list(APPEND CG3_VIEWER_HEADERS
+			${CMAKE_CURRENT_LIST_DIR}/viewer/managers/dcel_manager.h)
+	
+		list(APPEND CG3_VIEWER_SOURCES
+			${CMAKE_CURRENT_LIST_DIR}/viewer/managers/dcel_manager.cpp)
+	
+		list(APPEND CG3_VIEWER_FORMS
+			${CMAKE_CURRENT_LIST_DIR}/viewer/managers/dcel_manager.ui)
+		
+		if(TARGET Eigen3::Eigen)
+			list(APPEND CG3_VIEWER_HEADERS
+				${CMAKE_CURRENT_LIST_DIR}/viewer/managers/eigenmesh_manager.h)
+	
+			list(APPEND CG3_VIEWER_SOURCES
+				${CMAKE_CURRENT_LIST_DIR}/viewer/managers/eigenmesh_manager.cpp)
+	
+			list(APPEND CG3_VIEWER_FORMS
+				${CMAKE_CURRENT_LIST_DIR}/viewer/managers/eigenmesh_manager.ui)
+			
+			if (TARGET cg3-cgal AND TARGET cg3-libigl)
+				list(APPEND CG3_VIEWER_HEADERS
+					${CMAKE_CURRENT_LIST_DIR}/viewer/managers/booleans_manager.h)
+				
+				list(APPEND CG3_VIEWER_SOURCES
+					${CMAKE_CURRENT_LIST_DIR}/viewer/managers/booleans_manager.cpp)
+				
+				list(APPEND CG3_VIEWER_FORMS
+					${CMAKE_CURRENT_LIST_DIR}/viewer/managers/booleans_manager.ui)
+				
+				list(APPEND CG3_VIEWER_LINK_LIBS libigl)
+			endif()
+		endif()
+	endif()
 endif()
+
+
+add_library(
+	cg3-viewer SHARED 
+	${CG3_VIEWER_HEADERS} ${CG3_VIEWER_SOURCES} ${CG3_VIEWER_FORMS} ${CG3_VIEWER_RESOURCES})
+
+
+target_include_directories(cg3-viewer PUBLIC ${CG3_INCLUDE_DIR})
+
+target_link_libraries(cg3-viewer PUBLIC ${CG3_VIEWER_LINK_LIBS})
+
+list(APPEND CG3_LINK_LIBRARIES cg3-viewer)

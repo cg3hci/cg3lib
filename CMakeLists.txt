@@ -6,15 +6,18 @@
 # @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
 #
 
-#cmake_minimum_required(VERSION 3.9)
-#project(cg3lib)
+cmake_minimum_required(VERSION 3.9)
+project(cg3lib)
 
 option(CG3_STATIC "Build cg3lib statically. All the selected modules will be built first, and then linked." ON)
 
 if (CG3_STATIC)
-	add_definitions(-DCG3_STATIC)
-	add_definitions(-DCG3_QMAKE) #todo: remove this
+	set(CG3_TARGET_MOD PUBLIC)
+else()
+	set(CG3_TARGET_MOD INTERFACE)
 endif()
+
+add_definitions(-DCG3_QMAKE) #todo: remove this
 
 option(CG3_DATA_STRUCTURES "Enable the data structures module" ON)
 option(CG3_MESHES "Enable the meshes module" ON)
