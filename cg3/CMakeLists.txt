@@ -9,27 +9,31 @@
 #cmake_minimum_required(VERSION 3.9)
 #project(cg3lib)
 
-option(CG3_STATIC "" ON)
+option(CG3_STATIC "Build cg3lib statically. All the selected modules will be built first, and then linked." ON)
 
 if (CG3_STATIC)
 	add_definitions(-DCG3_STATIC)
 	add_definitions(-DCG3_QMAKE) #todo: remove this
 endif()
 
-option(CG3_DATA_STRUCTURES "" ON)
-option(CG3_MESHES "" ON)
-option(CG3_ALGORITHMS "" ON)
-option(CG3_CGAL "" ON)
-option(CG3_CINOLIB "" ON)
-option(CG3_LIBIGL "" ON)
-option(CG3_VCGLIB "" ON)
-option(CG3_VORO++ "" ON)
-option(CG3_VIEWER "" ON)
+option(CG3_DATA_STRUCTURES "Enable the data structures module" ON)
+option(CG3_MESHES "Enable the meshes module" ON)
+option(CG3_ALGORITHMS "Enable the algorithms module" ON)
+option(CG3_CGAL "Enable the CGAL module (requires CGAL)" ON)
+option(CG3_CINOLIB "Enable the CinoLib module (requires CinoLib)" ON)
+option(CG3_LIBIGL "Enable the LibIGL module (requires LibIGL)" ON)
+option(CG3_VCGLIB "Enable the VCGLib module (requires VCGLib)" ON)
+option(CG3_VORO++ "Enable the Voro++ module (requires Voro++)" ON)
+option(CG3_VIEWER "Enable the Viewer module (requires QGLViewer)" ON)
 option(CG3_DEVELOPEMENT "" OFF)
 
+#this variable will contain all the linkable target modules that will be built
 set(CG3_LINK_LIBRARIES "")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
+#this variable will contain all the macros defined by the built modules
+set(CG3_MODULE_DEFINITIONS "")
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..) #root path: cg3
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/core.cmake)
 
@@ -65,17 +69,15 @@ if (CG3_VORO++)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/voro++.cmake)
 endif()
 
-if (CG3_VIEWER AND CG3_STATIC)
+if (CG3_VIEWER)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/viewer.cmake)
-elseif(CG3_VIEWER)
-	message("ERROR: cg3lib needs to be built in static mode to build the viewer module")
-	return()
 endif()
 
 if (CG3_DEVELOPEMENT)
 	#include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
 endif()
 
+# this cmake script will associate all the macros needed to all the built modules
 include(post.cmake)
 
 add_library(cg3lib INTERFACE)

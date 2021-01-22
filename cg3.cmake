@@ -12,11 +12,4 @@ option(CG3_STATIC "" ON)
 
 include(${CMAKE_CURRENT_LIST_DIR}/external/external.cmake)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/cg3)
-#include_directories(${CMAKE_CURRENT_LIST_DIR})
-
-if (TARGET cg3-viewer)
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_AUTOUIC ON)
-	set(CMAKE_AUTORCC ON)
-endif()
 

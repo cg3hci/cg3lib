@@ -7,8 +7,7 @@
 #
 
 ## module definitions
-# this variable is used by all the other modules
-SET(CG3_MODULE_DEFINITIONS CG3_CORE_DEFINED)
+list(APPEND CG3_MODULE_DEFINITIONS CG3_CORE_DEFINED)
 
 set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/cg3lib.h #core
