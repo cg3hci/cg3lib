@@ -113,10 +113,11 @@ if (CG3_STATIC)
 		)
 
 	add_library(cg3-core SHARED ${CG3_CORE_HEADERS} ${CG3_CORE_SOURCES})
+	target_include_directories(cg3-core PUBLIC ${CG3_INCLUDE_DIR})
 	target_compile_definitions(cg3-core PUBLIC CG3_QMAKE)
 
-	if (TARGET Eigen3::Eigen)
-		target_link_libraries(cg3-core PUBLIC Eigen3::Eigen)
+	if (TARGET Eigen)
+		target_link_libraries(cg3-core PUBLIC Eigen)
 	endif()
 	if (TARGET Qt5::Gui)
 		target_link_libraries(cg3-core PUBLIC Qt5::Gui)

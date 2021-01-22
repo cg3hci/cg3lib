@@ -49,8 +49,10 @@ if (CG3_STATIC)
 	add_library(
 		cg3-cgal SHARED 
 		${CG3_CGAL_HEADERS} ${CG3_CGAL_SOURCES})
-	if (TARGET Eigen3::Eigen)
+	target_include_directories(cg3-cgal PUBLIC ${CG3_INCLUDE_DIR})
+	if (TARGET Eigen)
 		target_compile_definitions(cg3-cgal PUBLIC CGAL_EIGEN3_ENABLED)
+		target_link_libraries(cg3-cgal PUBLIC Eigen)
 	endif()
 	
 	target_link_libraries(

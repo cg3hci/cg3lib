@@ -94,6 +94,7 @@ if (CG3_STATIC)
 	add_library(
 		cg3-data-structures SHARED 
 		${CG3_DATA_STRUCTURES_HEADERS} ${CG3_DATA_STRUCTURES_SOURCES})
+	target_include_directories(cg3-data-structures PUBLIC ${CG3_INCLUDE_DIR})
 
 	target_link_libraries(cg3-data-structures PUBLIC cg3-core)
 	

@@ -52,6 +52,7 @@ if (CG3_STATIC)
 	add_library(
 		cg3-libigl SHARED
 		${CG3_LIBIGL_HEADERS} ${CG3_LIBIGL_SOURCES})
+	target_include_directories(cg3-libigl PUBLIC ${CG3_INCLUDE_DIR})
 
 	target_link_libraries(
 		cg3-libigl

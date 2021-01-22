@@ -33,44 +33,46 @@ set(CG3_LINK_LIBRARIES "")
 #this variable will contain all the macros defined by the built modules
 set(CG3_MODULE_DEFINITIONS "")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..) #root path: cg3
+set(CG3_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/core.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/external/external.cmake)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/core.cmake)
 
 if (CG3_DATA_STRUCTURES)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/data_structures.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/data_structures.cmake)
 endif()
 
 if (CG3_MESHES)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/meshes.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/meshes.cmake)
 endif()
 
 if (CG3_ALGORITHMS)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/algorithms.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/algorithms.cmake)
 endif()
 
 if (CG3_CGAL AND TARGET CGAL::CGAL)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cgal.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cgal.cmake)
 endif()
 
 if (CG3_CINOLIB)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cinolib.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cinolib.cmake)
 endif()
 
 if (CG3_LIBIGL)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/libigl.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/libigl.cmake)
 endif()
 
 if (CG3_VCGLIB)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/vcglib.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/vcglib.cmake)
 endif()
 
 if (CG3_VORO++)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/voro++.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/voro++.cmake)
 endif()
 
 if (CG3_VIEWER)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/viewer.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/viewer.cmake)
 endif()
 
 if (CG3_DEVELOPEMENT)
@@ -78,7 +80,7 @@ if (CG3_DEVELOPEMENT)
 endif()
 
 # this cmake script will associate all the macros needed to all the built modules
-include(post.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/post.cmake)
 
 add_library(cg3lib INTERFACE)
 target_link_libraries(cg3lib INTERFACE ${CG3_LINK_LIBRARIES})

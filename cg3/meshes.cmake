@@ -44,7 +44,7 @@ if (CG3_STATIC)
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_half_edge.cpp 
 		${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex.cpp)
 	
-	if(TARGET Eigen3::Eigen)
+	if(TARGET Eigen)
 		list(APPEND CG3_MODULE_DEFINITIONS CG3_EIGENMESH_DEFINED)
 
 		list(APPEND CG3_MESHES_HEADERS
@@ -59,6 +59,7 @@ if (CG3_STATIC)
 	endif()
 	
 	add_library(cg3-meshes SHARED ${CG3_MESHES_HEADERS} ${CG3_MESHES_SOURCES})
+	target_include_directories(cg3-meshes PUBLIC ${CG3_INCLUDE_DIR})
 
 	target_link_libraries(cg3-meshes
 		PUBLIC

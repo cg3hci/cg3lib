@@ -27,6 +27,8 @@ if (CG3_STATIC)
 	add_library(
 		cg3-vcglib SHARED
 		${CG3_VCGLIB_HEADERS} ${CG3_VCGLIB_SOURCES})
+	target_include_directories(cg3-vcglib PUBLIC ${CG3_INCLUDE_DIR})
+	
 	target_link_libraries(cg3-vcglib PUBLIC vcglib)
 	
 	list(APPEND CG3_LINK_LIBRARIES cg3-vcglib)

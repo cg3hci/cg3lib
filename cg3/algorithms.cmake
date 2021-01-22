@@ -39,6 +39,8 @@ if (CG3_STATIC)
 		cg3-algorithms SHARED 
 		${CG3_ALGORITHMS_HEADERS} ${CG3_ALGORITHMS_SOURCES})
 	
+	target_include_directories(cg3-algorithms PUBLIC ${CG3_INCLUDE_DIR})
+	
 	target_link_libraries(
 		cg3-algorithms
 		PUBLIC 

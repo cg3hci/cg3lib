@@ -164,6 +164,7 @@ if (CG3_STATIC)
 	add_library(
 		cg3-viewer SHARED 
 		${CG3_VIEWER_HEADERS} ${CG3_VIEWER_SOURCES} ${CG3_VIEWER_FORMS} ${CG3_VIEWER_RESOURCES})
+	target_include_directories(cg3-viewer PUBLIC ${CG3_INCLUDE_DIR})
 	
 	target_link_libraries(
 		cg3-viewer PUBLIC 

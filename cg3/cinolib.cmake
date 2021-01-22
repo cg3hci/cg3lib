@@ -18,6 +18,7 @@ if (CG3_STATIC)
 	add_library(
 		cg3-cinolib SHARED 
 		${CG3_CINOLIB_HEADERS} ${CG3_CINOLIB_SOURCES})
+	target_include_directories(cg3-cinolib PUBLIC ${CG3_INCLUDE_DIR})
 	
 	target_link_libraries(
 		cg3-cinolib
