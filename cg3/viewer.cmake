@@ -160,8 +160,9 @@ if (CG3_STATIC)
 		
 		list(APPEND CG3_VIEWER_LINK_LIBS cinolib)
 	endif()
-else()
+elseif(CG3_VIEWER_STATIC)
 	set(CG3_VIEWER_HEADERS
+		${CMAKE_CURRENT_LIST_DIR}/viewer/interfaces/pickable_object.h
 		${CMAKE_CURRENT_LIST_DIR}/viewer/mainwindow.h
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_mesh_drawlist_manager.h
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_container_drawlist_manager.h
@@ -169,6 +170,7 @@ else()
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/manipulable_object_drawlist_manager.h)
 	
 	set(CG3_VIEWER_SOURCES
+		${CMAKE_CURRENT_LIST_DIR}/viewer/interfaces/pickable_object.cpp
 		${CMAKE_CURRENT_LIST_DIR}/viewer/mainwindow.cpp
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_container_drawlist_manager.cpp
 		${CMAKE_CURRENT_LIST_DIR}/viewer/internal/drawable_mesh_drawlist_manager.cpp

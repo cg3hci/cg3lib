@@ -9,11 +9,18 @@
 cmake_minimum_required(VERSION 3.9)
 project(cg3lib)
 
-option(CG3_STATIC "Build cg3lib statically. All the selected modules will be built first, and then linked." ON)
+option(CG3_STATIC "Build cg3lib statically. All the selected modules will be built first, and then linked." OFF)
+option(CG3_VIEWER_STATIC "Build just what is necessary to be built in the viewer, leaving the rest of the library header only." ON)
 
 if (CG3_STATIC)
 	set(CG3_TARGET_MOD PUBLIC)
+	message(STATUS "Using static build cg3lib")
 else()
+	if (CG3_VIEWER_STATIC)
+		message(STATUS "Using header only cg3lib with static viewer module")
+	else()
+		message(STATUS "Using header only cg3lib")
+	endif()
 	set(CG3_TARGET_MOD INTERFACE)
 endif()
 
