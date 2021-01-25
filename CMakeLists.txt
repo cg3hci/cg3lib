@@ -9,8 +9,25 @@
 cmake_minimum_required(VERSION 3.9)
 project(cg3lib)
 
-option(CG3_STATIC "Build cg3lib statically. All the selected modules will be built first, and then linked." OFF)
-option(CG3_VIEWER_STATIC "Build just what is necessary to be built in the viewer, leaving the rest of the library header only." ON)
+## Build options ##
+
+option(CG3_STATIC "Build cg3lib statically. All the selected modules will be built first, and then linked." ON)
+option(CG3_VIEWER_STATIC "Build just what is necessary to be built in the viewer, leaving the rest of the library header only." OFF)
+
+option(CG3_BUILD_EXAMPLES "" OFF)
+
+option(CG3_DATA_STRUCTURES "Enable the data structures module" ON)
+option(CG3_MESHES "Enable the meshes module" ON)
+option(CG3_ALGORITHMS "Enable the algorithms module" ON)
+option(CG3_CGAL "Enable the CGAL module (requires CGAL)" ON)
+option(CG3_CINOLIB "Enable the CinoLib module (requires CinoLib)" ON)
+option(CG3_LIBIGL "Enable the LibIGL module (requires LibIGL)" ON)
+option(CG3_VCGLIB "Enable the VCGLib module (requires VCGLib)" ON)
+option(CG3_VORO++ "Enable the Voro++ module (requires Voro++)" ON)
+option(CG3_VIEWER "Enable the Viewer module (requires QGLViewer)" ON)
+option(CG3_DEVELOPEMENT "" OFF)
+
+add_definitions(-DCG3_QMAKE) #todo: remove this
 
 if (CG3_STATIC)
 	set(CG3_TARGET_MOD PUBLIC)
@@ -23,19 +40,6 @@ else()
 	endif()
 	set(CG3_TARGET_MOD INTERFACE)
 endif()
-
-add_definitions(-DCG3_QMAKE) #todo: remove this
-
-option(CG3_DATA_STRUCTURES "Enable the data structures module" ON)
-option(CG3_MESHES "Enable the meshes module" ON)
-option(CG3_ALGORITHMS "Enable the algorithms module" ON)
-option(CG3_CGAL "Enable the CGAL module (requires CGAL)" ON)
-option(CG3_CINOLIB "Enable the CinoLib module (requires CinoLib)" ON)
-option(CG3_LIBIGL "Enable the LibIGL module (requires LibIGL)" ON)
-option(CG3_VCGLIB "Enable the VCGLib module (requires VCGLib)" ON)
-option(CG3_VORO++ "Enable the Voro++ module (requires Voro++)" ON)
-option(CG3_VIEWER "Enable the Viewer module (requires QGLViewer)" ON)
-option(CG3_DEVELOPEMENT "" OFF)
 
 #this variable will contain all the linkable target modules that will be built
 set(CG3_LINK_LIBRARIES "")
@@ -97,4 +101,6 @@ target_link_libraries(cg3lib INTERFACE ${CG3_LINK_LIBRARIES})
 target_include_directories(cg3lib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 target_compile_definitions(cg3lib INTERFACE ${CG3_MODULE_DEFINITIONS})
 
-#set(CG3_LINK_LIBRARIES ${CG3_LINK_LIBRARIES} PARENT_SCOPE)
+if (CG3_BUILD_EXAMPLES)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
+endif()

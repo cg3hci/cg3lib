@@ -142,7 +142,7 @@ if (CG3_STATIC)
 				list(APPEND CG3_VIEWER_FORMS
 					${CMAKE_CURRENT_LIST_DIR}/viewer/managers/booleans_manager.ui)
 				
-				list(APPEND CG3_VIEWER_LINK_LIBS libigl)
+				list(APPEND CG3_VIEWER_LINK_LIBS cg3-libigl)
 			endif()
 		endif()
 	endif()
@@ -218,7 +218,7 @@ elseif(CG3_VIEWER_STATIC)
 				list(APPEND CG3_VIEWER_FORMS
 					${CMAKE_CURRENT_LIST_DIR}/viewer/managers/booleans_manager.ui)
 				
-				list(APPEND CG3_VIEWER_LINK_LIBS libigl)
+				list(APPEND CG3_VIEWER_LINK_LIBS cg3-libigl)
 			endif()
 		endif()
 	endif()
