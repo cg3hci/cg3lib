@@ -58,10 +58,4 @@ private:
 } //namespace cg3::viewer
 } //namespace cg3
 
-#ifndef CG3_STATIC
-#define CG3_EIGENMESH_MANAGER_CPP "eigenmesh_manager.cpp"
-#include CG3_EIGENMESH_MANAGER_CPP
-#undef CG3_EIGENMESH_MANAGER_CPP
-#endif //CG3_STATIC
-
 #endif // CG3_EIGENMESH_MANAGER_H

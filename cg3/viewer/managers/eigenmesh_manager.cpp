@@ -13,7 +13,7 @@
 namespace cg3 {
 namespace viewer {
 
-CG3_INLINE EigenMeshManager::EigenMeshManager(QWidget *parent) :
+EigenMeshManager::EigenMeshManager(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::EigenMeshManager),
 	mainWindow((cg3::viewer::AbstractMainWindow&)*parent),
@@ -23,7 +23,7 @@ CG3_INLINE EigenMeshManager::EigenMeshManager(QWidget *parent) :
     objls.addSupportedExtension("obj", "ply");
 }
 
-CG3_INLINE void EigenMeshManager::setEigenMesh(const EigenMesh& m)
+void EigenMeshManager::setEigenMesh(const EigenMesh& m)
 {
     if (loaded){
         mainWindow.deleteDrawableObject(&mesh);
@@ -36,7 +36,7 @@ CG3_INLINE void EigenMeshManager::setEigenMesh(const EigenMesh& m)
 	mainWindow.fitSceneCanvas();
 }
 
-CG3_INLINE EigenMeshManager::~EigenMeshManager()
+EigenMeshManager::~EigenMeshManager()
 {
     if (loaded){
         mainWindow.deleteDrawableObject(&mesh);
@@ -44,7 +44,7 @@ CG3_INLINE EigenMeshManager::~EigenMeshManager()
     delete ui;
 }
 
-CG3_INLINE void EigenMeshManager::on_loadMeshButton_clicked()
+void EigenMeshManager::on_loadMeshButton_clicked()
 {
     std::string filename = objls.loadDialog("Open Eigen Mesh");
     if (filename != "") {
@@ -66,7 +66,7 @@ CG3_INLINE void EigenMeshManager::on_loadMeshButton_clicked()
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_clearMeshButton_clicked()
+void EigenMeshManager::on_clearMeshButton_clicked()
 {
     if (loaded) {
         setButtonsMeshLoaded(false);
@@ -76,7 +76,7 @@ CG3_INLINE void EigenMeshManager::on_clearMeshButton_clicked()
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_saveMeshButton_clicked()
+void EigenMeshManager::on_saveMeshButton_clicked()
 {
     if (loaded){
         QString selectedFilter;
@@ -97,7 +97,7 @@ CG3_INLINE void EigenMeshManager::on_saveMeshButton_clicked()
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_pointsMeshRadioButton_toggled(bool checked)
+void EigenMeshManager::on_pointsMeshRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked){
@@ -107,7 +107,7 @@ CG3_INLINE void EigenMeshManager::on_pointsMeshRadioButton_toggled(bool checked)
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_flatMeshRadioButton_toggled(bool checked)
+void EigenMeshManager::on_flatMeshRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked){
@@ -117,7 +117,7 @@ CG3_INLINE void EigenMeshManager::on_flatMeshRadioButton_toggled(bool checked)
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_smoothMeshRadioButton_toggled(bool checked)
+void EigenMeshManager::on_smoothMeshRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked){
@@ -127,7 +127,7 @@ CG3_INLINE void EigenMeshManager::on_smoothMeshRadioButton_toggled(bool checked)
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_wireframeMeshCheckBox_stateChanged(int arg1)
+void EigenMeshManager::on_wireframeMeshCheckBox_stateChanged(int arg1)
 {
     if (loaded) {
         mesh.setWireframe(arg1 == Qt::Checked);
@@ -135,7 +135,7 @@ CG3_INLINE void EigenMeshManager::on_wireframeMeshCheckBox_stateChanged(int arg1
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_verticesColorRadioButton_toggled(bool checked)
+void EigenMeshManager::on_verticesColorRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked){
@@ -145,7 +145,7 @@ CG3_INLINE void EigenMeshManager::on_verticesColorRadioButton_toggled(bool check
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked)
+void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked)
 {
     if (loaded) {
         if (checked){
@@ -155,7 +155,7 @@ CG3_INLINE void EigenMeshManager::on_faceColorRadioButton_toggled(bool checked)
     }
 }
 
-CG3_INLINE void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1)
+void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1)
 {
     if (loaded) {
         mesh.setVisibleBoundingBox(arg1 == Qt::Checked);
@@ -163,7 +163,7 @@ CG3_INLINE void EigenMeshManager::on_boundingBoxCheckBox_stateChanged(int arg1)
     }
 }
 
-CG3_INLINE void EigenMeshManager::setButtonsMeshLoaded(bool b)
+void EigenMeshManager::setButtonsMeshLoaded(bool b)
 {
     ui->loadMeshButton->setEnabled(!b);
     ui->clearMeshButton->setEnabled(b);

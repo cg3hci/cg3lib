@@ -92,6 +92,6 @@ protected:
 
 #include "bipartite_graph_iterators.h"
 
-#include "bipartite_graph.cpp"
+#include "bipartite_graph.inl"
 
 #endif // BIPARTITE_GRAPH_H

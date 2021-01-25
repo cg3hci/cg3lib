@@ -15,7 +15,12 @@ CG3_STATIC {
     DEFINES += CG3_STATIC
 }
 else {
-    message(cg3 header only)
+    CG3_VIEWER_STATIC {
+        message("cg3 header only, viewer static")
+    }
+    else {
+        message(cg3 header only)
+    }
 }
 
 CG3_ALL {

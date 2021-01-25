@@ -12,7 +12,7 @@
 namespace cg3 {
 namespace viewer {
 
-CG3_INLINE ManipulableFormDrawlistManager::ManipulableFormDrawlistManager(
+ManipulableFormDrawlistManager::ManipulableFormDrawlistManager(
         QWidget *parent,
         const ManipulableObject* obj) :
     SubManager(parent),
@@ -23,23 +23,23 @@ CG3_INLINE ManipulableFormDrawlistManager::ManipulableFormDrawlistManager(
     ui->setupUi(this);
 }
 
-CG3_INLINE ManipulableFormDrawlistManager::~ManipulableFormDrawlistManager()
+ManipulableFormDrawlistManager::~ManipulableFormDrawlistManager()
 {
     delete ui;
 }
 
-CG3_INLINE void ManipulableFormDrawlistManager::updateObjectProperties()
+void ManipulableFormDrawlistManager::updateObjectProperties()
 {
     obj->setDrawRelativeAxis(ui->subFrameAxisCheckBox->isChecked());
 	mw.updateCanvas();
 }
 
-CG3_INLINE void ManipulableFormDrawlistManager::updateManagerProperties()
+void ManipulableFormDrawlistManager::updateManagerProperties()
 {
     ui->subFrameAxisCheckBox->setChecked(obj->drawRelativeAxis());
 }
 
-CG3_INLINE void ManipulableFormDrawlistManager::on_subFrameAxisCheckBox_stateChanged(int arg1)
+void ManipulableFormDrawlistManager::on_subFrameAxisCheckBox_stateChanged(int arg1)
 {
     obj->setDrawRelativeAxis(arg1 == Qt::Checked);
 	mw.updateCanvas();

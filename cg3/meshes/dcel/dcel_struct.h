@@ -296,6 +296,6 @@ TemplatedDcel<Vertex, HalfEdge, Face> merge(const TemplatedDcel<Vertex, HalfEdge
 
 } //namespace cg3
 
-#include "dcel_struct.cpp"
+#include "dcel_struct.inl"
 
 #endif // CG3_DCEL_STRUCT_H

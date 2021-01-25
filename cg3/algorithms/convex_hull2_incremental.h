@@ -68,7 +68,7 @@ inline void addPointToConvexHull(
 
 } //namespace cg3
 
-#include "convex_hull2_incremental.cpp"
+#include "convex_hull2_incremental.inl"
 
 
 #endif // CG3_CONVEXHULL2DINCREMENTAL_H

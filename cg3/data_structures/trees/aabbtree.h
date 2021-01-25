@@ -238,7 +238,7 @@ void swap(AABBTree<D,K,T,C>& b1, AABBTree<D,K,T,C>& b2);
 }
 
 
-#include "aabbtree.cpp"
+#include "aabbtree.inl"
 
 #endif // CG3_AABBTREE_H
 

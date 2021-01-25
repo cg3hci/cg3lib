@@ -208,6 +208,6 @@ protected:
 #include "includes/iterators/graph_adjacentiterator.h"
 #include "includes/iterators/graph_edgeiterator.h"
 
-#include "graph.cpp"
+#include "graph.inl"
 
 #endif // CG3_GRAPH_H

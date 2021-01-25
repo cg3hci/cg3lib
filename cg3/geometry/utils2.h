@@ -70,6 +70,6 @@ inline double polygonArea(const Container<Point2<T>, Args...>& polygon);
 
 } //namespace cg3
 
-#include "utils2.cpp"
+#include "utils2.inl"
 
 #endif // CG3_UTILS2_H

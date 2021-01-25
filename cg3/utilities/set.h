@@ -39,6 +39,6 @@ bool contains(
 
 } //namespace cg3
 
-#include "set.cpp"
+#include "set.inl"
 
 #endif // CG3_SET_H

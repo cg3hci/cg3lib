@@ -101,6 +101,6 @@ public:
 
 } //namespace cg3
 
-#include "nested_initializer_lists.cpp"
+#include "nested_initializer_lists.inl"
 
 #endif // CG3_NESTED_INITIALIZER_LISTS_H

@@ -38,6 +38,6 @@ std::set<unsigned int> floodBFS(const Dcel& d, unsigned int seed, Comp c);
 } //namespace cg3::dcelAlgorithms
 } //namespace cg3
 
-#include "dcel_flooding.cpp"
+#include "dcel_flooding.inl"
 
 #endif // CG3_DCEL_FLOODING_H

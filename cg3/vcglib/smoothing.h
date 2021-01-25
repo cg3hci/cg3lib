@@ -53,6 +53,6 @@ void laplacianSmoothing(
 }
 }
 
-#include "smoothing.cpp"
+#include "smoothing.inl"
 
 #endif // CG3_VCGLIB_SMOOTHING_H

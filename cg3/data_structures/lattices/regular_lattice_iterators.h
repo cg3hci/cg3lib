@@ -135,6 +135,6 @@ protected:
 
 } //namespace cg3
 
-#include "regular_lattice_iterators.cpp"
+#include "regular_lattice_iterators.inl"
 
 #endif // CG3_REGULAR_LATTICE_ITERATORS_H

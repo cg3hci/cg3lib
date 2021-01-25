@@ -67,7 +67,7 @@ std::string typeName(
 
 } //namespace cg3
 
-#include "utils.cpp"
+#include "utils.inl"
 
 #endif // CG3_UTILS_H
 

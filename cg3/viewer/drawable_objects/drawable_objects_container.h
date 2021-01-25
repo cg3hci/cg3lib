@@ -65,6 +65,6 @@ private:
 
 }
 
-#include "drawable_objects_container.cpp"
+#include "drawable_objects_container.inl"
 
 #endif // DRAWABLEDCELVECTOR_H

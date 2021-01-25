@@ -83,6 +83,6 @@ private:
 }
 
 
-#include "graph_nodeiterator.cpp"
+#include "graph_nodeiterator.inl"
 
 #endif // CG3_GRAPH_NODEITERATOR_H

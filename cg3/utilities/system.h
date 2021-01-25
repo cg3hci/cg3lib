@@ -24,6 +24,6 @@ bool executeCommand(const char* cmd, std::string& output);
 
 } //namespace cg3
 
-#include "system.cpp"
+#include "system.inl"
 
 #endif // CG3_SYSTEM_H

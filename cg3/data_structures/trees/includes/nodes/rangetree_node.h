@@ -68,6 +68,6 @@ private:
 
 #include "../../rangetree.h"
 
-#include "rangetree_node.cpp"
+#include "rangetree_node.inl"
 
 #endif // CG3_RANGETREENODE_H

@@ -17,7 +17,7 @@
 namespace cg3 {
 namespace viewer {
 
-CG3_INLINE DrawableObjectDrawListManager::DrawableObjectDrawListManager(
+DrawableObjectDrawListManager::DrawableObjectDrawListManager(
         QWidget *parent,
         const DrawableObject* object,
         const std::string& name,
@@ -68,29 +68,29 @@ CG3_INLINE DrawableObjectDrawListManager::DrawableObjectDrawListManager(
     }
 }
 
-CG3_INLINE DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
+DrawableObjectDrawListManager::~DrawableObjectDrawListManager()
 {
     delete ui;
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::setDrawableObjectVisibility(bool vis, bool alsoSubframe)
+void DrawableObjectDrawListManager::setDrawableObjectVisibility(bool vis, bool alsoSubframe)
 {
     ui->checkBox->setChecked(vis);
     if (alsoSubframe)
         setSubFrameVisibility(vis);
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::setDrawableObjectName(const std::string& newName)
+void DrawableObjectDrawListManager::setDrawableObjectName(const std::string& newName)
 {
     ui->objectName->setText(QString::fromStdString(newName));
 }
 
-CG3_INLINE std::string DrawableObjectDrawListManager::drawableObjectName() const
+std::string DrawableObjectDrawListManager::drawableObjectName() const
 {
     return  ui->objectName->text().toStdString();
 }
 
-CG3_INLINE bool DrawableObjectDrawListManager::isContainer() const
+bool DrawableObjectDrawListManager::isContainer() const
 {
     return container;
 }
@@ -99,7 +99,7 @@ CG3_INLINE bool DrawableObjectDrawListManager::isContainer() const
  * @brief Allows to update the properties of the DrawableObject according to the properties
  * setted in the user interface.
  */
-CG3_INLINE void DrawableObjectDrawListManager::updateObjectProperties()
+void DrawableObjectDrawListManager::updateObjectProperties()
 {
 	mw.setDrawableObjectVisibility(object, ui->checkBox->isChecked());
     if (subframe)
@@ -110,7 +110,7 @@ CG3_INLINE void DrawableObjectDrawListManager::updateObjectProperties()
  * @brief Allows to update the properties setted in the user interface according to the
  * properties of the DrawableObject.
  */
-CG3_INLINE void DrawableObjectDrawListManager::updateManagerProperties()
+void DrawableObjectDrawListManager::updateManagerProperties()
 {
     if (object->isVisible() == ! ui->checkBox->isChecked())
         setDrawableObjectVisibility(object->isVisible());
@@ -118,7 +118,7 @@ CG3_INLINE void DrawableObjectDrawListManager::updateManagerProperties()
         subframe->updateManagerProperties();
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::toggleSelection()
+void DrawableObjectDrawListManager::toggleSelection()
 {
     if (selected){
         selected = false;
@@ -130,7 +130,7 @@ CG3_INLINE void DrawableObjectDrawListManager::toggleSelection()
     }
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::setSelection(bool b)
+void DrawableObjectDrawListManager::setSelection(bool b)
 {
     if (b){
         selected = true;
@@ -142,12 +142,12 @@ CG3_INLINE void DrawableObjectDrawListManager::setSelection(bool b)
     }
 }
 
-CG3_INLINE bool DrawableObjectDrawListManager::isSelected() const
+bool DrawableObjectDrawListManager::isSelected() const
 {
     return selected;
 }
 
-CG3_INLINE std::vector<const DrawableObject*> DrawableObjectDrawListManager::containedSelectedObjects() const
+std::vector<const DrawableObject*> DrawableObjectDrawListManager::containedSelectedObjects() const
 {
     std::vector<const DrawableObject*> vec;
     if (!container)
@@ -157,7 +157,7 @@ CG3_INLINE std::vector<const DrawableObject*> DrawableObjectDrawListManager::con
 
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::setSubFrame(SubManager* frame, bool vis)
+void DrawableObjectDrawListManager::setSubFrame(SubManager* frame, bool vis)
 {
     subframe = frame;
     subframe->setParent(this);
@@ -165,7 +165,7 @@ CG3_INLINE void DrawableObjectDrawListManager::setSubFrame(SubManager* frame, bo
     setSubFrameVisibility(vis);
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
+void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
 {
     if (subframe){
         if (vis){
@@ -178,28 +178,28 @@ CG3_INLINE void DrawableObjectDrawListManager::setSubFrameVisibility(bool vis)
     }
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)
+void DrawableObjectDrawListManager::on_checkBox_stateChanged(int state)
 {
 	mw.setDrawableObjectVisibility(object, state == Qt::Checked);
 	mw.updateCanvas();
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::on_closePushButton_clicked()
+void DrawableObjectDrawListManager::on_closePushButton_clicked()
 {
     mw.deleteDrawableObject(object);
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::on_subFrameCheckBox_stateChanged(int state)
+void DrawableObjectDrawListManager::on_subFrameCheckBox_stateChanged(int state)
 {
     subframe->setVisible(state == Qt::Checked);
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::on_objectName_clicked()
+void DrawableObjectDrawListManager::on_objectName_clicked()
 {
     toggleSelection();
 }
 
-CG3_INLINE void DrawableObjectDrawListManager::on_objectType_clicked()
+void DrawableObjectDrawListManager::on_objectType_clicked()
 {
     toggleSelection();
 }

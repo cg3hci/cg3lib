@@ -42,6 +42,6 @@ public:
 
 } //namespace cg3
 
-#include "array3d.cpp"
+#include "array3d.inl"
 
 #endif // CG3_ARRAY3D_H

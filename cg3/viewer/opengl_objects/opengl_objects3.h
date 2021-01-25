@@ -104,6 +104,6 @@ void drawBox3(
 } //namespace cg3::opengl
 } //namespace cg3
 
-#include "opengl_objects3.cpp"
+#include "opengl_objects3.inl"
 
 #endif // CG3_OPENGL_OBJECTS3_H

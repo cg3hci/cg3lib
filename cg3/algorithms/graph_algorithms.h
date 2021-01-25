@@ -115,7 +115,7 @@ void fillIndexedData(
 
 } //namespace cg3
 
-#include "graph_algorithms.cpp"
+#include "graph_algorithms.inl"
 
 #endif
 

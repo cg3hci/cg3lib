@@ -164,7 +164,7 @@ void swap(BSTLeaf<K,T,C>& b1, BSTLeaf<K,T,C>& b2);
 }
 
 
-#include "bstleaf.cpp"
+#include "bstleaf.inl"
 
 #endif // CG3_BSTLEAF_H
 

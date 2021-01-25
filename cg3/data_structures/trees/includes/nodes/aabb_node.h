@@ -75,6 +75,6 @@ private:
 
 }
 
-#include "aabb_node.cpp"
+#include "aabb_node.inl"
 
 #endif // CG3_AABBNODE_H

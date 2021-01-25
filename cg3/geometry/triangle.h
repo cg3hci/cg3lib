@@ -59,6 +59,6 @@ protected:
 
 } // namespace cg3
 
-#include "triangle.cpp"
+#include "triangle.inl"
 
 #endif // CG3_TRIANGLE_H

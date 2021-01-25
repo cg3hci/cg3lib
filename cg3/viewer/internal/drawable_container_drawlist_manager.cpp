@@ -14,7 +14,7 @@
 namespace cg3 {
 namespace viewer {
 
-CG3_INLINE DrawableContainerDrawListManager::DrawableContainerDrawListManager(
+DrawableContainerDrawListManager::DrawableContainerDrawListManager(
         QWidget *parent,
         const DrawableContainer* cont,
         bool visible,
@@ -64,12 +64,12 @@ CG3_INLINE DrawableContainerDrawListManager::DrawableContainerDrawListManager(
                      bool)));
 }
 
-CG3_INLINE DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
+DrawableContainerDrawListManager::~DrawableContainerDrawListManager()
 {
     delete ui;
 }
 
-CG3_INLINE std::vector<const DrawableObject*> DrawableContainerDrawListManager::selectedDrawableObjects() const
+std::vector<const DrawableObject*> DrawableContainerDrawListManager::selectedDrawableObjects() const
 {
     std::vector<const DrawableObject*> vec;
     for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter){
@@ -84,19 +84,19 @@ CG3_INLINE std::vector<const DrawableObject*> DrawableContainerDrawListManager::
     return vec;
 }
 
-CG3_INLINE void DrawableContainerDrawListManager::updateObjectProperties()
+void DrawableContainerDrawListManager::updateObjectProperties()
 {
     for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter)
         iter->second->updateObjectProperties();
 }
 
-CG3_INLINE void DrawableContainerDrawListManager::updateManagerProperties()
+void DrawableContainerDrawListManager::updateManagerProperties()
 {
     for (auto iter = mapSubManagers.begin(); iter != mapSubManagers.end(); ++iter)
         iter->second->updateManagerProperties();
 }
 
-CG3_INLINE void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(
+void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer(
         const std::string& name,
         bool visible)
 {
@@ -110,7 +110,7 @@ CG3_INLINE void DrawableContainerDrawListManager::addCheckBoxOfDrawableContainer
     mapSubManagers[(*cont)[elem]] = manager;
 }
 
-CG3_INLINE void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContainer(
+void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContainer(
         const DrawableObject* obj)
 {
 
@@ -121,7 +121,7 @@ CG3_INLINE void DrawableContainerDrawListManager::removeCheckBoxOfDrawableContai
 	mw.updateCanvas();
 }
 
-CG3_INLINE void DrawableContainerDrawListManager::changeVisibilityObject(
+void DrawableContainerDrawListManager::changeVisibilityObject(
         const DrawableObject* obj,
         bool vis)
 {
@@ -130,7 +130,7 @@ CG3_INLINE void DrawableContainerDrawListManager::changeVisibilityObject(
 	mw.updateCanvas();
 }
 
-CG3_INLINE void DrawableContainerDrawListManager::on_visibleButton_clicked()
+void DrawableContainerDrawListManager::on_visibleButton_clicked()
 {
     for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p : mapSubManagers){
 		mw.setDrawableObjectVisibility(p.first, true);
@@ -139,7 +139,7 @@ CG3_INLINE void DrawableContainerDrawListManager::on_visibleButton_clicked()
 	mw.updateCanvas();
 }
 
-CG3_INLINE void DrawableContainerDrawListManager::on_hiddenButton_clicked()
+void DrawableContainerDrawListManager::on_hiddenButton_clicked()
 {
     for (const std::pair<const DrawableObject*, DrawableObjectDrawListManager*>& p : mapSubManagers){
 		mw.setDrawableObjectVisibility(p.first, false);

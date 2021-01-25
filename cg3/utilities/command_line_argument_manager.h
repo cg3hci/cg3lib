@@ -44,6 +44,6 @@ private:
 
 }
 
-#include "command_line_argument_manager.cpp"
+#include "command_line_argument_manager.inl"
 
 #endif // CG3_COMMAND_LINE_ARGUMENT_MANAGER_H

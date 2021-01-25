@@ -25,6 +25,6 @@ Dcel convexHull(InputIterator first, InputIterator end);
 
 } //namespace cg3
 
-#include "convex_hull3.cpp"
+#include "convex_hull3.inl"
 
 #endif // CG3_CONVEXHULL_H

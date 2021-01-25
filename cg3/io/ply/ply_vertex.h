@@ -57,6 +57,6 @@ bool loadVertices(
 } //namespace cg3::ply
 } //namespace cg3
 
-#include "ply_vertex.cpp"
+#include "ply_vertex.inl"
 
 #endif // CG3_PLY_VERTEX_H

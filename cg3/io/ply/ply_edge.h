@@ -54,6 +54,6 @@ bool loadEdges(
 } //namespace cg3::ply
 } //namespace cg3
 
-#include "ply_edge.cpp"
+#include "ply_edge.inl"
 
 #endif // CG3_PLY_EDGE_H
