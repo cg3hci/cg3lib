@@ -4,7 +4,7 @@
 
 [![Actions Status](https://github.com/cg3hci/cg3lib/workflows/MacOSExamples/badge.svg)](https://github.com/cg3hci/cg3lib/actions)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4431778.svg)](https://doi.org/10.5281/zenodo.4431778)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4431777.svg)](https://doi.org/10.5281/zenodo.4431777)
 
 Cg3Lib is a C++ geometry processing library developed by the CG3HCI Group of the University of Cagliari.
 It is composed of different modules:
@@ -47,7 +47,7 @@ make
 
 ## Citation
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4431778.svg)](https://doi.org/10.5281/zenodo.4431778)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4431777.svg)](https://doi.org/10.5281/zenodo.4431777)
 
 If you use cg3lib in your research projects, please cite the library using this BibTeX entry:
 
@@ -59,9 +59,8 @@ If you use cg3lib in your research projects, please cite the library using this 
   month        = jan,
   year         = 2021,
   publisher    = {Zenodo},
-  version      = {v0.5},
-  doi          = {10.5281/zenodo.4431778},
-  url          = {https://doi.org/10.5281/zenodo.4431778}
+  doi          = {10.5281/zenodo.4431777},
+  url          = {https://doi.org/10.5281/zenodo.4431777}
 }
 ```
 
