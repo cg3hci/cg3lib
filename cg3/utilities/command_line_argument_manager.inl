@@ -76,7 +76,7 @@ inline unsigned long CommandLineArgumentManager::size() const
 	return arguments.size();
 }
 
-inline const std::string& CommandLineArgumentManager::operator[](std::string& arg) const
+inline const std::string& CommandLineArgumentManager::operator[](const std::string& arg) const
 {
 	return arguments.at(arg);
 }

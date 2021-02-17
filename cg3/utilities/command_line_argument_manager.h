@@ -33,7 +33,7 @@ public:
 	iterator end() const;
 
 	unsigned long int size() const ;
-	const std::string& operator[](std::string& arg) const;
+	const std::string& operator[](const std::string& arg) const;
 	const std::string& operator[](unsigned int i) const;
 
 private:
