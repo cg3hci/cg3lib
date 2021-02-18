@@ -53,14 +53,12 @@ If you use cg3lib in your research projects, please cite the library using this 
 
 ```
 @software{cg3lib,
-  author       = {Alessandro Muntoni and
-                  Stefano Nuvoli},
-  title        = {CG3Lib: A C++ geometry processing library},
+  author       = {Alessandro Muntoni and Stefano Nuvoli},
+  title        = {{CG3Lib: A C++ geometry processing library}},
   month        = jan,
   year         = 2021,
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.4431777},
-  url          = {https://doi.org/10.5281/zenodo.4431777}
+  doi          = {10.5281/zenodo.4431777}
 }
 ```
 
