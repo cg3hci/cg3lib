@@ -13,7 +13,7 @@ jobs:
       run: |
             brew install qt@5 cgal llvm
             #install libQGLViewer
-            export QTDIR=/usr/local/opt/qt
+            export QTDIR=/usr/local/opt/qt@5
             export PATH=$QTDIR/bin:$PATH
             export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
             export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH
@@ -31,7 +31,7 @@ jobs:
             git clone https://github.com/mlivesu/cinolib.git
     - name: compiling examples
       run: |
-            export QTDIR=/usr/local/opt/qt
+            export QTDIR=/usr/local/opt/qt@5
             export PATH=$QTDIR/bin:$PATH
             export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
             export PKG_CONFIG_PATH=$QTDIR/lib:$PKG_CONFIG_PATH
