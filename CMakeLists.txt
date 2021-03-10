@@ -16,12 +16,12 @@ option(CG3_VIEWER_STATIC "Build just what is necessary to be built in the viewer
 
 option(CG3_BUILD_EXAMPLES "" OFF)
 
-option(CG3_CGAL "Enable the CGAL module (requires CGAL)" ON)
-option(CG3_CINOLIB "Enable the CinoLib module (requires CinoLib)" ON)
-option(CG3_LIBIGL "Enable the LibIGL module (requires LibIGL)" ON)
-option(CG3_VCGLIB "Enable the VCGLib module (requires VCGLib)" ON)
-option(CG3_VORO++ "Enable the Voro++ module (requires Voro++)" ON)
-option(CG3_VIEWER "Enable the Viewer module (requires QGLViewer)" ON)
+option(CG3_CGAL "Enable the CGAL module (requires CGAL)" OFF)
+option(CG3_CINOLIB "Enable the CinoLib module (requires CinoLib)" OFF)
+option(CG3_LIBIGL "Enable the LibIGL module (requires LibIGL)" OFF)
+option(CG3_VCGLIB "Enable the VCGLib module (requires VCGLib)" OFF)
+option(CG3_VORO++ "Enable the Voro++ module (requires Voro++)" OFF) # todo
+option(CG3_VIEWER "Enable the Viewer module (requires QGLViewer)" OFF)
 option(CG3_DEVELOPEMENT "" OFF)
 
 add_definitions(-DCG3_QMAKE) #todo: remove this
