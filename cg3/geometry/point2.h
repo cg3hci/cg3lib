@@ -12,9 +12,7 @@
 #include <ostream>
 #include <cmath>
 
-#ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
-#endif //CG3_WITH_EIGEN
 
 #include "../io/serialize.h"
 #include "../utilities/hash.h"
@@ -42,9 +40,7 @@ class Point2 : public SerializableObject
 {
 public:
 	Point2(T x = 0.0, T y = 0.0);
-    #ifdef CG3_WITH_EIGEN
 	Point2(const Eigen::VectorXd &v);
-    #endif
 
     const T& x() const;
     const T& y() const;

@@ -30,7 +30,6 @@ CG3_INLINE CGAL::Mean_curvature_flow_skeletonization<PolyhedronWithId>::Skeleton
     return skeleton;
 }
 
-#ifdef  CG3_EIGENMESH_DEFINED
 namespace internal {
 static std::vector<std::vector<size_t>> dummyBirthVertices;
 static std::vector<std::vector<size_t>> dummyPolylines;
@@ -109,7 +108,6 @@ CG3_INLINE std::vector<cg3::Point3d> skeleton(
 
     return skeletonPoints;
 }
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

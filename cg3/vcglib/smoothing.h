@@ -7,9 +7,7 @@
 #ifndef CG3_VCGLIB_SMOOTHING_H
 #define CG3_VCGLIB_SMOOTHING_H
 
-#ifdef CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
 
 namespace cg3 {
 namespace vcglib {
@@ -18,14 +16,12 @@ namespace internal {
 static std::vector<size_t> dummySelectedVertices;
 }
 
-#ifdef CG3_EIGENMESH_DEFINED
 cg3::EigenMesh taubinSmoothing(
         const cg3::EigenMesh& mesh,
         const int iterations,
         const float lambda,
         const float mu,
         const std::vector<size_t>& selectedVertices = internal::dummySelectedVertices);
-#endif
 
 template <class TriangleEdgeMeshType>
 void taubinSmoothing(
@@ -36,13 +32,11 @@ void taubinSmoothing(
         bool selectedVertices);
 
 
-#ifdef CG3_EIGENMESH_DEFINED
 inline cg3::EigenMesh laplacianSmoothing(
         const cg3::EigenMesh& mesh,
         const int iterations,
         const std::vector<size_t>& selectedVertices = internal::dummySelectedVertices);
 
-#endif
 
 template <class TriangleEdgeMeshType>
 void laplacianSmoothing(

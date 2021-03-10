@@ -9,42 +9,34 @@
 EIGEN_ENV_VARIABLE = $$(EIGEN_HOME)
 
 isEmpty(EIGEN_PATH):!isEmpty(EIGEN_ENV_VARIABLE):exists($$EIGEN_ENV_VARIABLE) {
-    EIGEN_PATH = $$EIGEN_ENV_VARIABLE
+	EIGEN_PATH = $$EIGEN_ENV_VARIABLE
 }
 
 !isEmpty(EIGEN_PATH):exists($$EIGEN_PATH) {
-    DEFINES += CG3_WITH_EIGEN
-    MODULES += CG3_WITH_EIGEN
-    INCLUDEPATH += -I $$EIGEN_PATH
+	INCLUDEPATH += -I $$EIGEN_PATH
 }
 else {
-    unix{
-        exists(/usr/include/eigen3){ #linux apt default
-            DEFINES += CG3_WITH_EIGEN
-            MODULES += CG3_WITH_EIGEN
-            INCLUDEPATH += -I /usr/include/eigen3
-        }
-        else{
-            exists(/usr/local/include/eigen3){ #mac brew default
-                DEFINES += CG3_WITH_EIGEN
-                MODULES += CG3_WITH_EIGEN
-                INCLUDEPATH += -I /usr/local/include/eigen3/
-            }
-            else {
-                MODULES += CG3_WITHOUT_EIGEN
-            }
-        }
-    }
+	unix{
+		exists(/usr/include/eigen3){ #linux apt default
+			INCLUDEPATH += -I /usr/include/eigen3
+		}
+		else{
+			exists(/usr/local/include/eigen3){ #mac brew default
+				INCLUDEPATH += -I /usr/local/include/eigen3/
+			}
+			else {
+				error(Eigen required and not found.)
+			}
+		}
+	}
 
-    win32 {
-        exists(C:/libs/eigen3){
-            DEFINES += CG3_WITH_EIGEN
-            MODULES += CG3_WITH_EIGEN
-            INCLUDEPATH += -I "C:/libs/eigen3"
-            EIGEN_PATH = C:/libs/eigen3
-        }
-        else{
-            MODULES += CG3_WITHOUT_EIGEN
-        }
-    }
+	win32 {
+		exists(C:/libs/eigen3){
+			INCLUDEPATH += -I "C:/libs/eigen3"
+			EIGEN_PATH = C:/libs/eigen3
+		}
+		else{
+			error(Eigen required and not found.)
+		}
+	}
 }

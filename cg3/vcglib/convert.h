@@ -10,9 +10,7 @@
 #include <Eigen/Core>
 #include <vector>
 
-#ifdef CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
 
 namespace cg3 {
 namespace vcglib {
@@ -24,8 +22,6 @@ template<class EdgeMesh>
 void edgesToVCG(
 		const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
         EdgeMesh& edgeMesh);
-
-#ifdef CG3_WITH_EIGEN
 
 template<class PolyMeshType>
 void VCGToEigen(
@@ -44,10 +40,7 @@ void eigenToVCG(
         const Eigen::MatrixXi& F,
         PolyMeshType& vcgMesh);
 
-#endif
 
-
-#ifdef CG3_EIGENMESH_DEFINED
 
 template<class PolyMeshType>
 cg3::EigenMesh VCGToEigenMesh(
@@ -62,8 +55,6 @@ template<class PolyMeshType>
 void eigenMeshToVCG(
         const cg3::EigenMesh& eigenMesh,
         PolyMeshType& vcgMesh);
-
-#endif
 
 }
 }

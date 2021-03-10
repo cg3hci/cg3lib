@@ -14,9 +14,7 @@
 
 #include "polyhedron.h"
 
-#ifdef  CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/simpleeigenmesh.h>
-#endif
 
 namespace cg3 {
 namespace cgal {
@@ -24,10 +22,8 @@ namespace cgal {
 std::vector<int> skeletonSdfSegmentation(PolyhedronWithId& mesh);
 std::vector<int> sdfSegmentation(const Polyhedron& mesh);
 
-#ifdef  CG3_EIGENMESH_DEFINED
 std::vector<int> sdfSegmentation(const SimpleEigenMesh& m);
 std::vector<int> skeletonSdfSegmentation(const SimpleEigenMesh& m);
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

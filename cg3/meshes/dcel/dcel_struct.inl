@@ -17,9 +17,7 @@
 #include <cg3/cgal/triangulation3.h>
 #endif //CGAL_DEFINED
 
-#ifdef  CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif //EIGENMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
 #include <cinolib/meshes/trimesh.h>
@@ -262,7 +260,6 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(TemplatedDcel<V, HE, F>&& dcel)
 
 }
 
-#ifdef  CG3_EIGENMESH_DEFINED
 template <class V, class HE, class F>
 TemplatedDcel<V, HE, F>::TemplatedDcel(const cg3::SimpleEigenMesh& eigenMesh)
 {
@@ -275,7 +272,6 @@ TemplatedDcel<V, HE, F>::TemplatedDcel(const cg3::EigenMesh& eigenMesh)
 {
     copyFrom(eigenMesh);
 }
-#endif // CG3_EIGNEMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
 template <class V, class HE, class F>
@@ -1504,7 +1500,6 @@ void TemplatedDcel<V, HE, F>::scale(const BoundingBox3& newBoundingBox)
     bBox = newBoundingBox;
 }
 
-#ifdef CG3_WITH_EIGEN
 template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d& matrix)
 {
@@ -1524,7 +1519,6 @@ void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d &matrix, const Point3
     updateVertexNormals();
     updateBoundingBox();
 }
-#endif
 
 template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::rotate(const Vec3d& axis, double angle, const Point3d& centroid)
@@ -2692,7 +2686,6 @@ void TemplatedDcel<V, HE, F>::afterLoadFile(
         updateVertexNormals();
 }
 
-#ifdef  CG3_EIGENMESH_DEFINED
 template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::copyFrom(const SimpleEigenMesh& eigenMesh)
 {
@@ -2797,7 +2790,6 @@ void TemplatedDcel<V, HE, F>::copyFrom(const EigenMesh& eigenMesh)
         v->setColor(eigenMesh.vertexColor(v->id()));
     }
 }
-#endif // CG3_EIGENMESH_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
 template <class V, class HE, class F>

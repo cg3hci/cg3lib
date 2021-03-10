@@ -24,7 +24,6 @@ inline Point2<T>::Point2(T x, T y):
 {
 }
 
-#ifdef CG3_WITH_EIGEN
 /**
  * @brief Constructor using the values of an EigenVector.
  *
@@ -33,7 +32,6 @@ inline Point2<T>::Point2(T x, T y):
 template <class T>
 Point2<T>::Point2(const Eigen::VectorXd& v) : xCoord(v(0)), yCoord(v(1)){
 }
-#endif
 
 /**
  * @brief Returns a const reference of the x coordinate.

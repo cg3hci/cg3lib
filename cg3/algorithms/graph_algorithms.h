@@ -7,8 +7,6 @@
 #ifndef CG3_GRAPH_ALGORITHMS_H
 #define CG3_GRAPH_ALGORITHMS_H
 
-#ifdef CG3_DATA_STRUCTURES_DEFINED
-
 #include <map>
 #include <list>
 
@@ -116,7 +114,5 @@ void fillIndexedData(
 } //namespace cg3
 
 #include "graph_algorithms.inl"
-
-#endif
 
 #endif // CG3_GRAPH_ALGORITHMS_H

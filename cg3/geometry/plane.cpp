@@ -10,9 +10,7 @@
 
 #include "line3.h"
 #include <cg3/utilities/utils.h>
-#ifdef CG3_WITH_EIGEN
 #include <Eigen/QR>
-#endif
 
 namespace cg3 {
 
@@ -85,7 +83,6 @@ CG3_INLINE bool Plane::pointLiesOnPlane(const Point3d &p, double epsilon) const
 
 }
 
-#ifdef CG3_WITH_EIGEN
 CG3_INLINE bool Plane::intersection(Point3d& inters, const Line3& l) const
 {
     Vec3d n(_normal);
@@ -110,7 +107,6 @@ CG3_INLINE bool Plane::intersection(Point3d& inters, const Line3& l) const
 
     return true;
 }
-#endif
 
 CG3_INLINE double Plane::pointDistance(const Point3d& p) const
 {

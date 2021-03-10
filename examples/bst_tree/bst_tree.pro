@@ -1,4 +1,4 @@
-CONFIG += CG3_CORE CG3_DATA_STRUCTURES
+CONFIG += CG3_CORE
 
 include (../../cg3.pri)
 

@@ -4,7 +4,6 @@
  *
  * @author Stefano Nuvoli (stefano.nuvoli@gmail.com)
  */
-#ifdef CG3_DATA_STRUCTURES_DEFINED
 
 #include <queue>
 #include <utility>
@@ -513,5 +512,3 @@ inline GraphPath<T> getShortestPath(
 } //namespace internal
 
 } //namespace cg3
-
-#endif

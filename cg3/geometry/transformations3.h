@@ -12,11 +12,9 @@
 
 namespace cg3 {
 
-#ifdef CG3_WITH_EIGEN
 void rotationMatrix(Vec3d axis, double angle, Eigen::Matrix3d &m);
 
 Eigen::Matrix3d rotationMatrix(Vec3d axis, double angle);
-#endif
 
 void rotationMatrix(Vec3d axis, double angle, double m[][3]);
 

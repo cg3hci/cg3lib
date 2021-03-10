@@ -9,21 +9,16 @@
 #define CG3_CGAL_AABBTREE3_H
 
 #include <cg3/geometry/bounding_box3.h>
-
-#ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
 
 #ifdef TRIMESH_DEFINED
 class Trimesh;
 #endif
 
-#ifdef  CG3_EIGENMESH_DEFINED
 namespace cg3 {
 class SimpleEigenMesh;
 class EigenMesh;
 }
-#endif
 
 #include <CGAL/Simple_cartesian.h>
 #include <CGAL/AABB_tree.h>
@@ -48,15 +43,11 @@ public:
 	AABBTree3();
 	AABBTree3(const AABBTree3& other);
 	AABBTree3(AABBTree3&& other);
-    #ifdef  CG3_DCEL_DEFINED
 	AABBTree3(const Dcel &d, bool forDistanceQueries = false);
-    #endif
     #ifdef TRIMESH_DEFINED
 	AABBTree3(const Trimesh<double> &t, bool forDistanceQueries = false);
     #endif
-    #ifdef  CG3_EIGENMESH_DEFINED
 	AABBTree3(const SimpleEigenMesh& m, bool forDistanceQueries = false);
-    #endif
 	AABBTree3& operator=(const AABBTree3& other);
 
     int numberIntersectedPrimitives(const Point3d& p1, const Point3d &p2) const;
@@ -65,7 +56,6 @@ public:
     Point3d nearestPoint(const Point3d &p) const;
     bool isInside(const Point3d &p, int numberOfChecks = 7) const;
     bool isInsidePseudoRandom(const Point3d &p, int numberOfChecks = 7) const;
-    #ifdef  CG3_DCEL_DEFINED
     void containedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox3 &b) const;
     std::list<const Dcel::Face*> containedDcelFaces(const BoundingBox3 &b) const;
     void completelyContainedDcelFaces(std::list<const Dcel::Face*> &outputList, const BoundingBox3 &b) const;
@@ -75,12 +65,8 @@ public:
     std::list<const Dcel::Face*> intersectedDcelFaces(const Point3d& p1, const Point3d& p2) const;
     const Dcel::Face* nearestDcelFace(const Point3d &p) const;
     const Dcel::Vertex* nearestDcelVertex(const Point3d &p) const;
-    #endif
-
-    #ifdef  CG3_EIGENMESH_DEFINED
     void getIntersectedEigenFaces(const Point3d& p1, const Point3d &p2, std::list<int> &outputList);
     unsigned int getNearestEigenFace(const Point3d& p) const;
-    #endif
 
 protected:
     typedef enum {DCEL, EIGENMESH} TreeType;
@@ -110,15 +96,11 @@ protected:
     Tree tree;
     bool forDistanceQueries;
     TreeType treeType;
-    #ifdef CG3_DCEL_DEFINED
     std::map<const Dcel::Vertex*, CGALPoint> mapDcelVerticesToCgalPoints;
     std::map<CGALPoint, const Dcel::Vertex*> mapCgalPointsToDcelVertices;
     std::map<CGALTriangle, const Dcel::Face*, cmpCGALTriangle> mapCgalTrianglesToDcelFaces;
-    #endif
-    #if defined(TRIMESH_DEFINED) || defined( CG3_EIGENMESH_DEFINED)
     std::map<int, CGALPoint> mapIdVerticesToCgalPoints;
     std::map<CGALTriangle, int, cmpCGALTriangle> mapCgalTrianglesToIdTriangles;
-    #endif
     std::list<CGALTriangle> triangles;
     BoundingBox3 bb;
 };

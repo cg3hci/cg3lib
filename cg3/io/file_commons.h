@@ -12,9 +12,7 @@
 #include <vector>
 #include "../utilities/color.h"
 
-#ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
-#endif
 
 namespace cg3 {
 namespace io {
@@ -106,11 +104,9 @@ static std::list<float> dummyListFloat;
 static std::list<double> dummyListDouble;
 static std::list<Color> dummyListColor;
 
-#ifdef CG3_WITH_EIGEN
 static Eigen::MatrixXf dummyEigenFloat;
 static Eigen::MatrixXd dummyEigenDouble;
 static Eigen::MatrixXi dummyEigenInt;
-#endif
 
 template <typename T>
 Color colorFromArray(

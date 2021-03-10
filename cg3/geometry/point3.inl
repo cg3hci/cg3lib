@@ -31,7 +31,6 @@ inline Point3<T>::Point3(T x, T y, T z) :
 {
 }
 
-#ifdef  CG3_WITH_EIGEN
 template <class T>
 Point3<T>::Point3(const Eigen::VectorXd& v) :
     xCoord(v(0)),
@@ -39,7 +38,6 @@ Point3<T>::Point3(const Eigen::VectorXd& v) :
     zCoord(v(2))
 {
 }
-#endif
 
 #ifdef CG3_CINOLIB_DEFINED
 template <class T>
@@ -512,7 +510,6 @@ Point3<T> Point3<T>::normalized() const
 	return Point3<T>(xCoord/len, yCoord/len, zCoord/len);
 }
 
-#ifdef CG3_WITH_EIGEN
 template <class T>
 Eigen::Vector3d Point3<T>::toEigenVector() const
 {
@@ -527,7 +524,6 @@ void Point3<T>::rotate(const Eigen::Matrix3d& matrix, const Point3<T>& centroid)
     *this = mul(matrix, *this);
     *this += centroid;
 }
-#endif //CG3_WITH_EIGEN
 
 /**
  * \~Italian
@@ -715,7 +711,6 @@ inline Point3<T> mul(const T m[][3], const Point3<T>& point)
     return tmp;
 }
 
-#ifdef CG3_WITH_EIGEN
 template <class T>
 inline Point3<T> mul(const Eigen::Matrix3d &m, const Point3<T>& point)
 {
@@ -725,7 +720,6 @@ inline Point3<T> mul(const Eigen::Matrix3d &m, const Point3<T>& point)
     tmp.setZ(m(2,0)*point.x() + m(2,1)*point.y() + m(2,2)*point.z());
     return tmp;
 }
-#endif //CG3_WITH_EIGEN
 
 /**
  * \~Italian

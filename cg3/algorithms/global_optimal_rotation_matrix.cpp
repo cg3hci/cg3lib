@@ -11,13 +11,9 @@
 
 #include <cg3/geometry/transformations3.h>
 
-#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
 
-#ifdef CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/simpleeigenmesh.h>
-#endif
 
 namespace cg3 {
 
@@ -32,8 +28,6 @@ CG3_INLINE void defineRotation(const cg3::Vec3d& zAxis,
 	assert(!std::isnan(angle));
 }
 
-#ifdef CG3_WITH_EIGEN
-#ifdef CG3_DCEL_DEFINED
 /**
  * @ingroup cg3Algorithms
  * @brief Computes the rotation matrix that, if applied to the mesh,
@@ -81,9 +75,7 @@ CG3_INLINE Eigen::Matrix3d globalOptimalRotationMatrix(const Dcel &inputMesh, co
 
 	return cg3::rotationMatrix(axis, angle);
 }
-#endif
 
-#ifdef CG3_EIGENMESH_DEFINED
 /**
  * @ingroup cg3Algorithms
  * @brief Computes the rotation matrix that, if applied to the mesh,
@@ -132,8 +124,5 @@ CG3_INLINE Eigen::Matrix3d globalOptimalRotationMatrix(
 
 	return cg3::rotationMatrix(axis, angle);
 }
-
-#endif
-#endif
 
 } //namespace cg3

@@ -72,7 +72,6 @@ bool loadMeshFromPly(
 		Con5<Color, ArgsColor...>& faceColors = internal::dummyVectorColor2,
         Con6<W, ArgsW...>& faceSizes = internal::dummyVectorUnsignedInt);
 
-#ifdef CG3_WITH_EIGEN
 template <typename T, typename V>
 bool loadTriangleMeshFromPly(
 		const std::string& filename,
@@ -88,7 +87,6 @@ bool loadTriangleMeshFromPly(
 		Eigen::PlainObjectBase<C>& verticesNormals,
 		Eigen::PlainObjectBase<W>& verticesColors,
 		Eigen::PlainObjectBase<X>& triangleColors);
-#endif
 
 /*
  * Save

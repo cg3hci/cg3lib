@@ -24,23 +24,11 @@ else {
 }
 
 CG3_ALL {
-    CONFIG += CG3_CORE CG3_DATA_STRUCTURES CG3_MESHES CG3_ALGORITHMS CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VCGLIB CG3_VORO++ CG3_VIEWER
+	CONFIG += CG3_CORE CG3_CGAL CG3_CINOLIB CG3_LIBIGL CG3_VCGLIB CG3_VORO++ CG3_VIEWER
 }
 
 CG3_CORE {
     include (cg3/core.pri)
-}
-
-CG3_DATA_STRUCTURES {
-    include (cg3/data_structures.pri)
-}
-
-CG3_MESHES {
-    include (cg3/meshes.pri)
-}
-
-CG3_ALGORITHMS {
-    include (cg3/algorithms.pri)
 }
 
 CG3_CGAL {

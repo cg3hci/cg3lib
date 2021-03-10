@@ -7,17 +7,12 @@
 
 #include "cinolib_mesh_conversions.h"
 
-#ifdef CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif //CG3_EIGENMESH_DEFINED
 
-#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif //CG3_DCEL_DEFINED
 
 namespace cg3 {
 
-#ifdef CG3_EIGENMESH_DEFINED
 CG3_INLINE void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh& simpleEigenMesh)
 {
     unsigned int nVertices=simpleEigenMesh.numberVertices();
@@ -44,9 +39,7 @@ CG3_INLINE void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const SimpleEigenMesh&
     }
     m = cinolib::Trimesh<>(coords, tris);
 }
-#endif
 
-#ifdef CG3_DCEL_DEFINED
 CG3_INLINE void dcelToTrimesh(cinolib::Trimesh<>& m, const Dcel& d)
 {
     unsigned int nVertices=d.numberVertices();
@@ -84,6 +77,5 @@ CG3_INLINE void dcelToTrimesh(cinolib::Trimesh<>& m, const Dcel& d)
     }
     m = cinolib::Trimesh<>(coords, tris);
 }
-#endif
 
 }

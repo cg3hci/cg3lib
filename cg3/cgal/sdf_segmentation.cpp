@@ -55,14 +55,12 @@ CG3_INLINE std::vector<int> sdfSegmentation(const Polyhedron &mesh)
     return association;
 }
 
-#ifdef  CG3_EIGENMESH_DEFINED
 
 CG3_INLINE std::vector<int> sdfSegmentation(const SimpleEigenMesh &m)
 {
     Polyhedron mesh = polyhedronFromEigenMesh(m);
     return sdfSegmentation(mesh);
 }
-#endif
 
 
 template<class ValueType>
@@ -159,15 +157,11 @@ CG3_INLINE std::vector<int> skeletonSdfSegmentation(PolyhedronWithId& mesh)
     return association;
 }
 
-#ifdef  CG3_EIGENMESH_DEFINED
-
 CG3_INLINE std::vector<int> skeletonSdfSegmentation(const SimpleEigenMesh &mesh)
 {
     PolyhedronWithId pmesh = polyhedronFromEigenMesh<PolyhedronWithId>(mesh);
     return skeletonSdfSegmentation(pmesh);
 }
-
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

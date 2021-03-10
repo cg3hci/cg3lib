@@ -42,9 +42,7 @@ public:
     EigenMesh(const SimpleEigenMesh &m);
     EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F);
     EigenMesh(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F, const Eigen::MatrixXf& CV, const Eigen::MatrixXf& CF);
-    #ifdef  CG3_DCEL_DEFINED
     EigenMesh(const Dcel& dcel);
-    #endif
     #ifdef TRIMESH_DEFINED
     template<typename T>
     EigenMesh(const Trimesh<T>& trimesh);
@@ -104,9 +102,7 @@ public:
     static void merge(EigenMesh &result, const EigenMesh &m1, const EigenMesh &m2);
     static EigenMesh merge(const EigenMesh &m1, const EigenMesh &m2);
 
-    #ifdef  CG3_DCEL_DEFINED
     EigenMesh& operator= (const Dcel& dcel);
-    #endif
 
     void serialize(std::ofstream& binaryFile) const;
     void deserialize(std::ifstream& binaryFile);

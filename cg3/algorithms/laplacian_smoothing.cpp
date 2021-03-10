@@ -6,13 +6,9 @@
  */
 #include "laplacian_smoothing.h"
 
-#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
 
 namespace cg3 {
-
-#ifdef CG3_DCEL_DEFINED
 
 /**
  * @brief Computes nIt iterations of laplacian smoothing on the mesh
@@ -58,8 +54,5 @@ CG3_INLINE Dcel laplacianSmoothing(const Dcel& mesh, unsigned int nIt)
 	laplacianSmoothing(output, nIt);
 	return output;
 }
-
-#endif
-
 
 }

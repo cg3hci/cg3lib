@@ -10,9 +10,7 @@
 #include <cg3/io/load_save_file.h>
 #include <cg3/geometry/transformations3.h>
 
-#ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
 
 #ifdef TRIMESH_DEFINED
 #include "trimesh/trimesh.h"
@@ -20,7 +18,6 @@
 
 namespace cg3 {
 
-#ifdef  CG3_DCEL_DEFINED
 SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel)
 {
     clear();
@@ -42,7 +39,6 @@ SimpleEigenMesh::SimpleEigenMesh(const Dcel& dcel)
         i++;
     }
 }
-#endif // CG3_DCEL_DEFINED
 
 #ifdef CG3_CINOLIB_DEFINED
 SimpleEigenMesh::SimpleEigenMesh(const cinolib::Trimesh<>& trimesh)

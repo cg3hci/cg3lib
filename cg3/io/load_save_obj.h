@@ -57,7 +57,6 @@ bool loadTriangleMeshFromObj(
 		std::vector<Color>& verticesColors = internal::dummyVectorColor,
 		std::vector<Color>& triangleColors = internal::dummyVectorColor);
 
-#ifdef CG3_WITH_EIGEN
 template <typename T, typename V>
 bool loadTriangleMeshFromObj(
 		const std::string& filename,
@@ -73,7 +72,6 @@ bool loadTriangleMeshFromObj(
 		Eigen::PlainObjectBase<C>& verticesNormals,
 		Eigen::PlainObjectBase<W>& verticesColors,
 		Eigen::PlainObjectBase<X>& triangleColors);
-#endif
 
 /*
  * Save

@@ -77,16 +77,8 @@
 #ifndef CG3_QMAKE
 
 #define CG3_CORE_DEFINED
-#define CG3_ALGORITHMS_DEFINED
-#define CG3_DATA_STRUCTURES_DEFINED
-#define CG3_DCEL_DEFINED
 
 #ifdef __has_include //try to include libraries that can be included in CG3
-
-#if __has_include("Eigen/Core")
-#define CG3_WITH_EIGEN
-#define CG3_EIGENMESH_DEFINED
-#endif //has include eigen
 
 #if __has_include("boost/version.hpp")
 #define CG3_WITH_BOOST

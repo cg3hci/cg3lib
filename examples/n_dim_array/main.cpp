@@ -7,7 +7,6 @@
 
 #include <iostream>
 
-#include <cg3/cg3lib.h>
 #include <cg3/data_structures/arrays/arrays.h>
 
 int main(int argc, char *argv[])

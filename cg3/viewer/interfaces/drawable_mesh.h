@@ -18,9 +18,7 @@
 #include <GL/gl.h>
 #endif
 
-#ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
-#endif
 
 #include <cg3/meshes/mesh.h>
 

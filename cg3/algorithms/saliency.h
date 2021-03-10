@@ -8,8 +8,6 @@
 #ifndef CG3_SALIENCY_H
 #define CG3_SALIENCY_H
 
-#ifdef CG3_EIGENMESH_DEFINED
-
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
@@ -47,8 +45,6 @@ std::vector<double> computeSaliencyMultiScale(
 #endif
 
 } //namespace cg3
-
-#endif
 
 #ifndef CG3_STATIC
 #define  CG3_SALIENCY_CPP "saliency.cpp"

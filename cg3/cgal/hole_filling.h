@@ -19,14 +19,10 @@ void holeFillingFileOff(const std::string& input, const std::string& output);
 void holeFilling(Polyhedron& poly);
 void holeFillingTriangulation(cgal::Polyhedron& poly);
 
-#ifdef CG3_DCEL_DEFINED
 void holeFilling(Dcel & d);
-#endif //CG3_DCEL_DEFINED
 
-#ifdef CG3_EIGENMESH_DEFINED
 SimpleEigenMesh holeFilling(const SimpleEigenMesh& d);
 SimpleEigenMesh holeFillingTriangulation(const SimpleEigenMesh& poly);
-#endif //CG3_EIGENMESH_DEFINED
 
 } //namespace cg3::cgal
 } //namespace cg3

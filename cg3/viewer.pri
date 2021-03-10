@@ -101,6 +101,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		$$PWD/viewer/drawable_objects/drawable_bounding_box2.h \
 		$$PWD/viewer/drawable_objects/drawable_bounding_box3.h \
 		$$PWD/viewer/drawable_objects/drawable_cylinder.h \
+		$$PWD/viewer/drawable_objects/drawable_dcel.h \
+		$$PWD/viewer/drawable_objects/drawable_eigenmesh.h \
 		$$PWD/viewer/drawable_objects/drawable_mixed_objects.h \
 		$$PWD/viewer/drawable_objects/drawable_objects_container.h \
 		$$PWD/viewer/drawable_objects/drawable_objects_container.inl \
@@ -118,10 +120,14 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		$$PWD/viewer/interfaces/manipulable_object.h \
 		$$PWD/viewer/interfaces/pickable_object.h \
 		$$PWD/viewer/interfaces/drawable_mesh.h \
+		$$PWD/viewer/managers/dcel_manager.h \
+		$$PWD/viewer/managers/eigenmesh_manager.h \
 		$$PWD/viewer/opengl_objects/opengl_objects2.h \
 		$$PWD/viewer/opengl_objects/opengl_objects2.inl \
 		$$PWD/viewer/opengl_objects/opengl_objects3.h \
 		$$PWD/viewer/opengl_objects/opengl_objects3.inl \
+		$$PWD/viewer/pickable_objects/pickable_dcel.h \
+		$$PWD/viewer/pickable_objects/pickable_eigenmesh.h \
 		$$PWD/viewer/utilities/loadersaver.h \
 		$$PWD/viewer/utilities/console_stream.h \
 		$$PWD/viewer/utilities/utils.h \
@@ -139,6 +145,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		$$PWD/viewer/drawable_objects/drawable_bounding_box2.cpp \
 		$$PWD/viewer/drawable_objects/drawable_bounding_box3.cpp \
 		$$PWD/viewer/drawable_objects/drawable_cylinder.cpp \
+		$$PWD/viewer/drawable_objects/drawable_dcel.cpp \
+		$$PWD/viewer/drawable_objects/drawable_eigenmesh.cpp \
 		$$PWD/viewer/drawable_objects/drawable_mixed_objects.cpp \
 		$$PWD/viewer/drawable_objects/drawable_plane.cpp \
 		$$PWD/viewer/drawable_objects/drawable_point2.cpp \
@@ -151,10 +159,12 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		$$PWD/viewer/interfaces/drawable_container.cpp \
 		$$PWD/viewer/interfaces/drawable_mesh.cpp \
 		$$PWD/viewer/interfaces/manipulable_object.cpp \
+		$$PWD/viewer/pickable_objects/pickable_dcel.cpp \
+		$$PWD/viewer/pickable_objects/pickable_eigenmesh.cpp \
 		$$PWD/viewer/utilities/console_stream.cpp \
 		$$PWD/viewer/utilities/loadersaver.cpp \
-		$$PWD/viewer/utilities/utils.cpp \
-		$$PWD/viewer/widgets/qclickablelabel.cpp
+		$$PWD/viewer/utilities/utils.cpp
+
 	}
 
 	CG3_STATIC|CG3_VIEWER_STATIC {
@@ -164,14 +174,19 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		$$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
 		$$PWD/viewer/internal/drawable_mesh_drawlist_manager.cpp \
 		$$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
-		$$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp 
+		$$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp \
+		$$PWD/viewer/managers/dcel_manager.cpp \
+		$$PWD/viewer/managers/eigenmesh_manager.cpp \
+		$$PWD/viewer/widgets/qclickablelabel.cpp
 
 	FORMS += \
 		$$PWD/viewer/mainwindow.ui \
 		$$PWD/viewer/internal/drawable_mesh_drawlist_manager.ui \
 		$$PWD/viewer/internal/drawable_container_drawlist_manager.ui \
 		$$PWD/viewer/internal/drawable_object_drawlist_manager.ui \
-		$$PWD/viewer/internal/manipulable_object_drawlist_manager.ui
+		$$PWD/viewer/internal/manipulable_object_drawlist_manager.ui \
+		$$PWD/viewer/managers/dcel_manager.ui \
+		$$PWD/viewer/managers/eigenmesh_manager.ui
 
 	RESOURCES += \
 		$$PWD/viewer/internal/icons/icons.qrc
@@ -186,58 +201,18 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		}
 	}
 
-	contains(DEFINES, CG3_DCEL_DEFINED) {
-		HEADERS += \
-			$$PWD/viewer/drawable_objects/drawable_dcel.h \
-			$$PWD/viewer/pickable_objects/pickable_dcel.h \
-			$$PWD/viewer/managers/dcel_manager.h
+	contains(DEFINES, CG3_CGAL_DEFINED){
+		contains(DEFINES, CG3_LIBIGL_DEFINED){
+			HEADERS += \
+				$$PWD/viewer/managers/booleans_manager.h
 
-		CG3_STATIC {
-		SOURCES += \
-			$$PWD/viewer/drawable_objects/drawable_dcel.cpp \
-			$$PWD/viewer/pickable_objects/pickable_dcel.cpp
-		}
-		CG3_STATIC|CG3_VIEWER_STATIC {
-		SOURCES += \
-			$$PWD/viewer/managers/dcel_manager.cpp
-
-		FORMS += \
-			$$PWD/viewer/managers/dcel_manager.ui
-		}
-	}
-
-	contains(DEFINES, CG3_EIGENMESH_DEFINED) {
-		HEADERS += \
-			$$PWD/viewer/drawable_objects/drawable_eigenmesh.h \
-			$$PWD/viewer/pickable_objects/pickable_eigenmesh.h \
-			$$PWD/viewer/managers/eigenmesh_manager.h
-
-		CG3_STATIC {
-		SOURCES += \
-			$$PWD/viewer/drawable_objects/drawable_eigenmesh.cpp \
-			$$PWD/viewer/pickable_objects/pickable_eigenmesh.cpp
-		}
-		CG3_STATIC|CG3_VIEWER_STATIC {
-		SOURCES += \
-			$$PWD/viewer/managers/eigenmesh_manager.cpp
-
-		FORMS += \
-			$$PWD/viewer/managers/eigenmesh_manager.ui
-		}
-
-		contains(DEFINES, CG3_CGAL_DEFINED){
-			contains(DEFINES, CG3_LIBIGL_DEFINED){
-				HEADERS += \
-					$$PWD/viewer/managers/booleans_manager.h
-
-				CG3_STATIC|CG3_VIEWER_STATIC {
-				SOURCES += \
-					$$PWD/viewer/managers/booleans_manager.cpp
-				}
-
-				FORMS += \
-					$$PWD/viewer/managers/booleans_manager.ui
+			CG3_STATIC|CG3_VIEWER_STATIC {
+			SOURCES += \
+				$$PWD/viewer/managers/booleans_manager.cpp
 			}
+
+			FORMS += \
+				$$PWD/viewer/managers/booleans_manager.ui
 		}
 	}
 

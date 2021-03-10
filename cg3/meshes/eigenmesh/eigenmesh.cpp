@@ -8,9 +8,7 @@
 #include "eigenmesh.h"
 #include <cg3/io/load_save_file.h>
 
-#ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
 
 #ifdef TRIMESH_DEFINED
 #include "trimesh/trimesh.h"
@@ -60,7 +58,6 @@ EigenMesh::EigenMesh(
     updateBoundingBox();
 }
 
-#ifdef  CG3_DCEL_DEFINED
 EigenMesh::EigenMesh(const Dcel& dcel)
 {
     clear();
@@ -94,7 +91,6 @@ EigenMesh::EigenMesh(const Dcel& dcel)
         i++;
     }
 }
-#endif
 
 bool EigenMesh::loadFromObj(const std::string& filename)
 {
@@ -384,7 +380,6 @@ EigenMesh EigenMesh::merge(const EigenMesh& m1, const EigenMesh& m2)
     return result;
 }
 
-#ifdef  CG3_DCEL_DEFINED
 EigenMesh& EigenMesh::operator=(const Dcel& dcel)
 {
     clear();
@@ -418,7 +413,6 @@ EigenMesh& EigenMesh::operator=(const Dcel& dcel)
     }
     return *this;
 }
-#endif
 
 void EigenMesh::updateFaceColorsSize()
 {

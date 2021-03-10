@@ -10,25 +10,17 @@
 
 #include "polyhedron.h"
 
-#ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
-#ifdef  CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/simpleeigenmesh.h>
-#endif
 
 namespace cg3 {
 namespace cgal {
 
 std::vector<double> SDFMap(const Polyhedron& mesh);
 
-#ifdef  CG3_DCEL_DEFINED
 std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel);
-#endif
 
-#ifdef  CG3_EIGENMESH_DEFINED
 std::vector<double> SDFMap(const SimpleEigenMesh& m);
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

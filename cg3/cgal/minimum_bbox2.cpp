@@ -6,9 +6,7 @@
  */
 #include "minimum_bbox2.h"
 
-#ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif // CG3_DCEL_DEFINED
 
 #include <CGAL/Polygon_2.h>
 #include <CGAL/min_quadrilateral_2.h>
@@ -25,7 +23,6 @@ typedef CGAL::Polygon_2<CK>                                     CK_Polygon_2;
 
 } //namespace cg3::cgal::internal
 
-#ifdef CG3_DCEL_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief getMinRectangle2D
@@ -41,7 +38,6 @@ CG3_INLINE std::vector<Point2d> minRectangle2D(const Dcel& dcel)
 
     return minRectangle2D(points);
 }
-#endif //CG3_DCEL_DEFINED
 
 /**
  * @ingroup cg3cgal

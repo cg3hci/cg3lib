@@ -342,7 +342,6 @@ bool loadTriangleMeshFromObj(
 	return r;
 }
 
-#ifdef CG3_WITH_EIGEN
 /**
  * @ingroup cg3core
  * @brief loadTriangleMeshFromObj
@@ -498,7 +497,6 @@ bool loadTriangleMeshFromObj(
 	}
 	return r;
 }
-#endif
 
 /**
  * @ingroup cg3core

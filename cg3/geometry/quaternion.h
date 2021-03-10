@@ -25,9 +25,7 @@ public:
     void matrix4x4(double m[4][4]) const;
     const double* matrix4x4() const;
     void rotationMatrix(double m[3][3]) const;
-    #ifdef CG3_WITH_EIGEN
     Eigen::Matrix3d rotationMatrix() const;
-    #endif
 
     void setAxisAngle(const Vec3d& axis, double angle);
     void setValue(double q1, double q2, double q3, double q4);

@@ -14,14 +14,11 @@
 #include <string>
 #include <algorithm>
 
-#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel_builder.h>
-#endif
 
 namespace cg3 {
 namespace cgal {
 
-#ifdef  CG3_DCEL_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief cgal::polyhedron::getPolyhedronFromDcel
@@ -118,9 +115,7 @@ Dcel dcelFromPolyhedron(const P& poly)
 
 	return d.dcel();
 }
-#endif
 
-#ifdef  CG3_EIGENMESH_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief cgal::polyhedron::getPolyhedronFromEigenMesh
@@ -206,8 +201,6 @@ SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly)
 
     return d;
 }
-
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

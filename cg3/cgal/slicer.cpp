@@ -82,7 +82,6 @@ CG3_INLINE std::vector<std::vector<Point3d>> polylines(
     return result;
 }
 
-#ifdef CG3_DCEL_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief getPolylines
@@ -113,7 +112,6 @@ CG3_INLINE std::vector<std::vector<Point3d> > polylines(
     SurfaceMesh m = cgal::surfaceMeshFromDcel(mesh);
     return polylines(m, norm, d);
 }
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

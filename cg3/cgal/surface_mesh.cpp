@@ -7,13 +7,9 @@
 
 #include "surface_mesh.h"
 
-#ifdef  CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
 
-#ifdef  CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
 
 namespace cg3 {
 namespace cgal {
@@ -24,7 +20,6 @@ typedef SurfaceMesh::Vertex_index VertexDescriptor;
 
 } //namespace cg3::cgal::internal
 
-#ifdef CG3_DCEL_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief getSurfaceMeshFromDcel
@@ -48,7 +43,6 @@ CG3_INLINE SurfaceMesh surfaceMeshFromDcel(const Dcel &d)
     }
     return mesh;
 }
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

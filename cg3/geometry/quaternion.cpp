@@ -131,7 +131,6 @@ CG3_INLINE void Quaternion::rotationMatrix(double m[][3]) const
             m[i][j] = mat[j][i];
 }
 
-#ifdef CG3_WITH_EIGEN
 CG3_INLINE Eigen::Matrix3d Quaternion::rotationMatrix() const
 {
     Eigen::Matrix3d m;
@@ -142,7 +141,6 @@ CG3_INLINE Eigen::Matrix3d Quaternion::rotationMatrix() const
             m(i,j) = mat[j][i];
     return m;
 }
-#endif
 
 CG3_INLINE void Quaternion::setAxisAngle(const Vec3d& axis, double angle)
 {

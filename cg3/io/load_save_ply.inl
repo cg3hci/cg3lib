@@ -184,7 +184,6 @@ bool loadMeshFromPly(
 	return b;
 }
 
-#ifdef CG3_WITH_EIGEN
 /**
  * @ingroup cg3core
  * @brief loadTriangleMeshFromPly
@@ -444,7 +443,5 @@ inline bool saveMeshOnPly(
 	fp.close();
 	return true;
 }
-
-#endif
 
 } //namespace std

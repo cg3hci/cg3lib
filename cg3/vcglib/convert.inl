@@ -35,7 +35,6 @@ void edgesToVCG(
     vcg::tri::Allocator<EdgeMesh>::CompactEveryVector(edgeMesh);
 }
 
-#ifdef CG3_WITH_EIGEN
 
 template<class PolyMeshType>
 void VCGToEigen(
@@ -117,10 +116,6 @@ void eigenToVCG(
     }
 }
 
-#endif
-
-#ifdef CG3_EIGENMESH_DEFINED
-
 template<class PolyMeshType>
 cg3::EigenMesh VCGToEigenMesh(
         PolyMeshType& vcgMesh,
@@ -148,8 +143,6 @@ void eigenMeshToVCG(
 
     eigenToVCG(V, F, vcgMesh);
 }
-
-#endif
 
 }
 }

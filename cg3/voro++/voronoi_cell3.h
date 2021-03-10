@@ -11,9 +11,7 @@
 
 namespace cg3 {
 
-#ifdef CG3_DCEL_DEFINED
 class Dcel;
-#endif
 
 namespace voro {
 
@@ -28,9 +26,7 @@ public:
 
 	bool operator<(const VoronoiCell3& o) const;
 
-    #ifdef CG3_DCEL_DEFINED
 	cg3::Dcel geometry() const;
-    #endif
 
     std::vector<int>::const_iterator begin() const;
     std::vector<int>::const_iterator end() const;

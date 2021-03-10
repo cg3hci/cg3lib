@@ -14,9 +14,7 @@ namespace cg3 {
 class Dcel;
 namespace cgal {
 
-#ifdef  CG3_DCEL_DEFINED
 std::vector<Point2d> minRectangle2D(const Dcel &dcel);
-#endif
 
 std::vector<Point2d> minRectangle2D(
         const std::vector<Point2d>& pointVec,

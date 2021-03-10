@@ -16,9 +16,6 @@ option(CG3_VIEWER_STATIC "Build just what is necessary to be built in the viewer
 
 option(CG3_BUILD_EXAMPLES "" OFF)
 
-option(CG3_DATA_STRUCTURES "Enable the data structures module" ON)
-option(CG3_MESHES "Enable the meshes module" ON)
-option(CG3_ALGORITHMS "Enable the algorithms module" ON)
 option(CG3_CGAL "Enable the CGAL module (requires CGAL)" ON)
 option(CG3_CINOLIB "Enable the CinoLib module (requires CinoLib)" ON)
 option(CG3_LIBIGL "Enable the LibIGL module (requires LibIGL)" ON)
@@ -52,18 +49,6 @@ set(CG3_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 include(${CMAKE_CURRENT_SOURCE_DIR}/external/external.cmake)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/core.cmake)
-
-if (CG3_DATA_STRUCTURES)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/data_structures.cmake)
-endif()
-
-if (CG3_MESHES)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/meshes.cmake)
-endif()
-
-if (CG3_ALGORITHMS)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/algorithms.cmake)
-endif()
 
 if (CG3_CGAL AND TARGET CGAL::CGAL)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cg3/cgal.cmake)
