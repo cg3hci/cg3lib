@@ -77,9 +77,6 @@
 #ifndef CG3_QMAKE
 
 #define CG3_CORE_DEFINED
-#define CG3_ALGORITHMS_DEFINED
-#define CG3_DATA_STRUCTURES_DEFINED
-#define CG3_DCEL_DEFINED
 
 #ifdef __has_include //try to include libraries that can be included in CG3
 
