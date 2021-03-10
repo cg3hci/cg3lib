@@ -116,8 +116,6 @@ void eigenToVCG(
     }
 }
 
-#ifdef CG3_EIGENMESH_DEFINED
-
 template<class PolyMeshType>
 cg3::EigenMesh VCGToEigenMesh(
         PolyMeshType& vcgMesh,
@@ -145,8 +143,6 @@ void eigenMeshToVCG(
 
     eigenToVCG(V, F, vcgMesh);
 }
-
-#endif
 
 }
 }

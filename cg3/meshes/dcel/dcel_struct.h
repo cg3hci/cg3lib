@@ -15,12 +15,10 @@
 #include "dcel_data.h"
 #include "dcel_iterators.h"
 
-#ifdef  CG3_EIGENMESH_DEFINED
 namespace cg3 {
     class SimpleEigenMesh;
     class EigenMesh;
 } //namespace cg3
-#endif
 
 #ifdef CG3_CINOLIB_DEFINED
 #ifdef __GNUC__
@@ -114,10 +112,8 @@ public:
     TemplatedDcel(const std::string& filename);
     TemplatedDcel(const TemplatedDcel& dcel);
     TemplatedDcel(TemplatedDcel&& dcel);
-    #ifdef  CG3_EIGENMESH_DEFINED
     TemplatedDcel(const cg3::SimpleEigenMesh &eigenMesh);
     TemplatedDcel(const cg3::EigenMesh &eigenMesh);
-    #endif // CG3_EIGENMESH_DEFINED
     #ifdef CG3_CINOLIB_DEFINED
     TemplatedDcel(const cinolib::Trimesh<> &trimesh);
     #endif //CG3_CINOLIB_DEFINED
@@ -277,10 +273,8 @@ protected:
             const std::list<Color>& fcolor,
             const std::list<unsigned int>& fsizes);
 
-    #ifdef  CG3_EIGENMESH_DEFINED
     void copyFrom(const SimpleEigenMesh &eigenMesh);
     void copyFrom(const EigenMesh &eigenMesh);
-    #endif // CG3_EIGENMESH_DEFINED
     #ifdef CG3_CINOLIB_DEFINED
     void copyFrom(const cinolib::Trimesh<> &trimesh);
 #endif //CG3_CINOLIB_DEFINED

@@ -15,7 +15,6 @@
 namespace cg3 {
 namespace vcglib {
 
-#ifdef CG3_EIGENMESH_DEFINED
 inline cg3::EigenMesh taubinSmoothing(
         const cg3::EigenMesh& mesh,
         const int iterations,
@@ -43,7 +42,6 @@ inline cg3::EigenMesh taubinSmoothing(
 	tmp.setFacesColorMatrix(mesh.facesColorMatrix());
 	return tmp;
 }
-#endif
 
 template <class TriangleEdgeMeshType>
 void taubinSmoothing(
@@ -56,7 +54,6 @@ void taubinSmoothing(
     vcg::tri::Smooth<TriangleMesh>::VertexCoordTaubin(mesh, iterations, lambda, mu, selectedVertices);
 }
 
-#ifdef CG3_EIGENMESH_DEFINED
 inline cg3::EigenMesh laplacianSmoothing(
         const cg3::EigenMesh& mesh,
         const int iterations,
@@ -82,7 +79,6 @@ inline cg3::EigenMesh laplacianSmoothing(
     tmp.setFacesColorMatrix(mesh.facesColorMatrix());
     return tmp;
 }
-#endif
 
 template <class TriangleEdgeMeshType>
 void laplacianSmoothing(

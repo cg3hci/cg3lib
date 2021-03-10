@@ -116,7 +116,6 @@ Dcel dcelFromPolyhedron(const P& poly)
 	return d.dcel();
 }
 
-#ifdef  CG3_EIGENMESH_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief cgal::polyhedron::getPolyhedronFromEigenMesh
@@ -202,8 +201,6 @@ SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly)
 
     return d;
 }
-
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

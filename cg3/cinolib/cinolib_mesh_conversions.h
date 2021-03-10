@@ -12,10 +12,8 @@
 
 namespace cg3 {
 
-#ifdef CG3_EIGENMESH_DEFINED
 class SimpleEigenMesh;
 void eigenMeshToTrimesh(cinolib::Trimesh<>& m, const cg3::SimpleEigenMesh& simpleEigenMesh);
-#endif //CG3_EIGENMESH_DEFINED
 
 class Dcel;
 void dcelToTrimesh(cinolib::Trimesh<>& m, const cg3::Dcel &d);

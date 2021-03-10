@@ -8,8 +8,6 @@
 #ifndef CG3_MESH_FUNCTION_SMOOTHING_H
 #define CG3_MESH_FUNCTION_SMOOTHING_H
 
-#ifdef CG3_EIGENMESH_DEFINED
-
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 
 namespace cg3 {
@@ -52,8 +50,6 @@ std::vector<double> vertexFunctionLaplacianSmoothing(
 #endif
 
 } //namespace cg3
-
-#endif
 
 #include "mesh_function_smoothing.inl"
 

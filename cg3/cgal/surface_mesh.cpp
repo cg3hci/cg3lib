@@ -9,9 +9,7 @@
 
 #include <cg3/meshes/dcel/dcel.h>
 
-#ifdef  CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
 
 namespace cg3 {
 namespace cgal {

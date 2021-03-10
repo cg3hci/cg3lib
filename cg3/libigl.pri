@@ -13,9 +13,6 @@ isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_ENV_VARIABLE):exists($$LIBIGL_ENV_VARIABLE)
 }
 
 !isEmpty(LIBIGL_PATH):exists($$LIBIGL_PATH) {
-    !contains(DEFINES, CG3_EIGENMESH_DEFINED){
-        error(Igl module requires Meshes module!)
-    }
 
     DEFINES += CG3_LIBIGL_DEFINED
     MODULES += CG3_LIBIGL

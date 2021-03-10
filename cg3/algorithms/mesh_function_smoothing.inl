@@ -13,8 +13,6 @@
 
 namespace cg3 {
 
-#ifdef CG3_EIGENMESH_DEFINED
-
 /**
  * @brief Smooth of a function over a mesh (defined on vertices), using a gaussian weighted
  * function
@@ -178,8 +176,6 @@ std::vector<T> vertexFunctionLaplacianSmoothing(
     std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
     return vertexFunctionLaplacianSmoothing(mesh, function, iterations, weight, vvAdj);
 }
-
-#endif
 
 #endif
 

@@ -15,8 +15,6 @@
 namespace cg3 {
 namespace vcglib {
 
-#ifdef CG3_EIGENMESH_DEFINED
-
 inline cg3::EigenMesh curveOnManifold(
         const cg3::EigenMesh& mesh,
         const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
@@ -128,8 +126,6 @@ inline cg3::EigenMesh curveOnManifold(
 
     return cg3::vcglib::VCGToEigenMesh(resultMesh);
 }
-
-#endif
 
 template <class TriangleEdgeMeshType>
 bool curveOnManifold(

@@ -14,9 +14,7 @@ namespace cg3 {
 
 class Dcel;
 
-#ifdef  CG3_EIGENMESH_DEFINED
 class SimpleEigenMesh;
-#endif
 
 namespace cgal {
 
@@ -28,10 +26,6 @@ typedef CGAL::Surface_mesh<CGAL::Exact_predicates_inexact_constructions_kernel::
 
 Dcel dcelFromSurfaceMesh(const SurfaceMesh& poly);
 SurfaceMesh surfaceMeshFromDcel(const Dcel& d);
-
-#ifdef  CG3_EIGENMESH_DEFINED
-
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

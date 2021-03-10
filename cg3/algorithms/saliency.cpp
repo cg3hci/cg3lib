@@ -15,7 +15,6 @@
 
 namespace cg3 {
 
-#ifdef CG3_EIGENMESH_DEFINED
 #ifdef CG3_LIBIGL_DEFINED
 /**
  * @brief Compute saliency
@@ -194,7 +193,6 @@ CG3_INLINE std::vector<double> computeSaliencyMultiScale(
     std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
     return computeSaliencyMultiScale(mesh, vvAdj, nRing, nScales, eps);
 }
-#endif
 #endif
 
 }

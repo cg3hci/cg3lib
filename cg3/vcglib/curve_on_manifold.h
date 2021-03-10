@@ -7,14 +7,10 @@
 #ifndef CG3_VCGLIB_CURVE_ON_MANIFOLD_H
 #define CG3_VCGLIB_CURVE_ON_MANIFOLD_H
 
-#ifdef CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
 
 namespace cg3 {
 namespace vcglib {
-
-#ifdef CG3_EIGENMESH_DEFINED
 
 cg3::EigenMesh curveOnManifold(
         const cg3::EigenMesh& mesh,
@@ -25,9 +21,6 @@ cg3::EigenMesh curveOnManifold(
         const double baryCentricThreshold = 0.05,
         bool fixBorders = true,
         bool fixCorners = false);
-
-
-#endif
 
 template <class TriangleEdgeMeshType>
 bool curveOnManifold(

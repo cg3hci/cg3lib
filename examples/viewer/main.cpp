@@ -12,14 +12,12 @@
 #include <cg3/viewer/managers/dcel_manager.h>
 
 //Test eigenmesh module and manger
-#ifdef CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
 ///Test trimeshviewer.pri: uncomment to test trimesh module
 #include <cg3/viewer/managers/eigenmesh_manager.h>
 #ifdef CG3_CGAL_DEFINED
 #ifdef CG3_LIBIGL_DEFINED
 #include <cg3/viewer/managers/booleans_manager.h>
-#endif
 #endif
 #endif
 
@@ -34,7 +32,6 @@ int main(int argc, char *argv[])
 	CG3_SUPPRESS_WARNING(id);
 
 	//The EigenMesh manager will be added only if eigen is correctly included
-#ifdef CG3_EIGENMESH_DEFINED
 	cg3::viewer::EigenMeshManager em(&gui);
 	id = gui.addManager(&em, "EigenMesh");
 
@@ -43,7 +40,6 @@ int main(int argc, char *argv[])
 #if defined(CG3_LIBIGL_DEFINED) && defined(CG3_CGAL_DEFINED)
 	cg3::viewer::BooleansManager bm(&gui);
 	id = gui.addManager(&bm, "Booleans");
-#endif
 #endif
 
 	cg3::viewer::DcelManager dm(&gui);

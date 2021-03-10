@@ -15,16 +15,11 @@
 #include <CGAL/Simple_cartesian.h>
 
 #include <cg3/meshes/dcel/dcel.h>
-
-#ifdef CG3_EIGENMESH_DEFINED
 #include <cg3/meshes/eigenmesh/eigenmesh.h>
-#endif
 
 
 namespace cg3 {
-#ifdef  CG3_EIGENMESH_DEFINED
 class SimpleEigenMesh;
-#endif
 
 namespace cgal {
 
@@ -50,12 +45,10 @@ P polyhedronFromDcel(const Dcel& dcel,
 template<class P = Polyhedron>
 Dcel dcelFromPolyhedron(const P& poly);
 
-#ifdef  CG3_EIGENMESH_DEFINED
 template<class P = Polyhedron>
 P polyhedronFromEigenMesh(const SimpleEigenMesh& mesh);
 template<class P = Polyhedron>
 SimpleEigenMesh eigenMeshFromPolyhedron(const P& poly);
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

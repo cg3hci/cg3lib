@@ -106,7 +106,6 @@ CG3_INLINE std::map<const Dcel::Face*, double> SDFMap(const Dcel& dcel)
     return sdfMap;
 }
 
-#ifdef  CG3_EIGENMESH_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief cgal::sdf::getSDFMap
@@ -118,7 +117,6 @@ CG3_INLINE std::vector<double> SDFMap(const SimpleEigenMesh &m)
     Polyhedron mesh = polyhedronFromEigenMesh(m);
     return SDFMap(mesh);
 }
-#endif
 
 } //namespace cg3::cgal
 } //namespace cg3

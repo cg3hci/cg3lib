@@ -21,10 +21,8 @@ void holeFillingTriangulation(cgal::Polyhedron& poly);
 
 void holeFilling(Dcel & d);
 
-#ifdef CG3_EIGENMESH_DEFINED
 SimpleEigenMesh holeFilling(const SimpleEigenMesh& d);
 SimpleEigenMesh holeFillingTriangulation(const SimpleEigenMesh& poly);
-#endif //CG3_EIGENMESH_DEFINED
 
 } //namespace cg3::cgal
 } //namespace cg3

@@ -8,10 +8,6 @@
 
 DEFINES += CG3_CORE_DEFINED
 
-# todo: remove
-DEFINES += CG3_EIGENMESH_DEFINED
-MODULES += CG3_MESHES
-
 CONFIG += CG3_OPENMP
 
 include(find_boost.pri)

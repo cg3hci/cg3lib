@@ -15,12 +15,10 @@
 class Trimesh;
 #endif
 
-#ifdef  CG3_EIGENMESH_DEFINED
 namespace cg3 {
 class SimpleEigenMesh;
 class EigenMesh;
 }
-#endif
 
 #include <CGAL/Simple_cartesian.h>
 #include <CGAL/AABB_tree.h>
@@ -49,9 +47,7 @@ public:
     #ifdef TRIMESH_DEFINED
 	AABBTree3(const Trimesh<double> &t, bool forDistanceQueries = false);
     #endif
-    #ifdef  CG3_EIGENMESH_DEFINED
 	AABBTree3(const SimpleEigenMesh& m, bool forDistanceQueries = false);
-    #endif
 	AABBTree3& operator=(const AABBTree3& other);
 
     int numberIntersectedPrimitives(const Point3d& p1, const Point3d &p2) const;
@@ -69,11 +65,8 @@ public:
     std::list<const Dcel::Face*> intersectedDcelFaces(const Point3d& p1, const Point3d& p2) const;
     const Dcel::Face* nearestDcelFace(const Point3d &p) const;
     const Dcel::Vertex* nearestDcelVertex(const Point3d &p) const;
-
-    #ifdef  CG3_EIGENMESH_DEFINED
     void getIntersectedEigenFaces(const Point3d& p1, const Point3d &p2, std::list<int> &outputList);
     unsigned int getNearestEigenFace(const Point3d& p) const;
-    #endif
 
 protected:
     typedef enum {DCEL, EIGENMESH} TreeType;
@@ -106,10 +99,8 @@ protected:
     std::map<const Dcel::Vertex*, CGALPoint> mapDcelVerticesToCgalPoints;
     std::map<CGALPoint, const Dcel::Vertex*> mapCgalPointsToDcelVertices;
     std::map<CGALTriangle, const Dcel::Face*, cmpCGALTriangle> mapCgalTrianglesToDcelFaces;
-    #if defined(TRIMESH_DEFINED) || defined( CG3_EIGENMESH_DEFINED)
     std::map<int, CGALPoint> mapIdVerticesToCgalPoints;
     std::map<CGALTriangle, int, cmpCGALTriangle> mapCgalTrianglesToIdTriangles;
-    #endif
     std::list<CGALTriangle> triangles;
     BoundingBox3 bb;
 };
