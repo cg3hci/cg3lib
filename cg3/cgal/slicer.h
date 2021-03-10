@@ -28,7 +28,6 @@ std::vector<std::vector<Point3d> > polylines(
         const Vec3d& norm,
         double d);
 
-#ifdef CG3_DCEL_DEFINED
 std::vector<std::vector<Point3d> > polylines(
         const Dcel& mesh,
         const cg3::Plane& p);
@@ -37,7 +36,6 @@ std::vector<std::vector<Point3d> > polylines(
         const Dcel& mesh,
         const Vec3d& norm,
         double d);
-    #endif
 
 } //namespace cg3::cgal
 } //namespace cg3

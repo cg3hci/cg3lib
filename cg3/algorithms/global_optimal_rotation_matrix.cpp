@@ -11,9 +11,7 @@
 
 #include <cg3/geometry/transformations3.h>
 
-#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel.h>
-#endif
 
 #include <cg3/meshes/eigenmesh/simpleeigenmesh.h>
 

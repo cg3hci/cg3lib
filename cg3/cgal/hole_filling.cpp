@@ -106,7 +106,6 @@ CG3_INLINE void holeFillingTriangulation(cgal::Polyhedron& poly)
     std::cout << nb_holes << " holes have been filled" << std::endl;
 }
 
-#ifdef CG3_DCEL_DEFINED
 /**
  * @ingroup cg3cgal
  * @brief holeFilling
@@ -118,7 +117,6 @@ CG3_INLINE void holeFilling(Dcel& d)
     holeFilling(p);
     d = cgal::dcelFromPolyhedron(p);
 }
-#endif //CG3_DCEL_DEFINED
 
 #ifdef CG3_EIGENMESH_DEFINED
 CG3_INLINE SimpleEigenMesh holeFilling(const SimpleEigenMesh& d)

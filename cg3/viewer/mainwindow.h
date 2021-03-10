@@ -29,10 +29,8 @@
 #include "utilities/console_stream.h"
 #include "drawable_objects/drawable_mixed_objects.h"
 
-#ifdef CG3_DCEL_DEFINED
 #include "drawable_objects/drawable_dcel.h"
 #include "drawable_objects/drawable_objects_container.h"
-#endif
 
 class QToolBox;
 class QVBoxLayout;
@@ -170,9 +168,7 @@ private slots:
     void on_actionReset_Point_of_View_triggered();
     void on_actionPerspective_Orthographic_Camera_Mode_triggered();
     void on_actionShow_Unit_Box_triggered();
-    #ifdef CG3_DCEL_DEFINED
     void on_actionLoad_Mesh_triggered();
-    #endif
 
 private:
 
@@ -198,10 +194,8 @@ private:
     bool first;
     bool debugObjectsEnabled;
 
-    #ifdef CG3_DCEL_DEFINED
     cg3::DrawableObjectsContainer<cg3::DrawableDcel> openedDcels;
     cg3::viewer::LoaderSaver meshLS;
-    #endif
 
 public:
 

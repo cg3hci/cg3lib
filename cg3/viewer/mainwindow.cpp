@@ -67,11 +67,7 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->console->hide();
 
     povLS.addSupportedExtension("cg3pov");
-    #ifdef CG3_DCEL_DEFINED
-    meshLS.addSupportedExtension("obj", "ply", "dcel");
-    #else
-    ui->actionLoad_Mesh->setVisible(false);
-    #endif
+	meshLS.addSupportedExtension("obj", "ply", "dcel");
 
 	QMainWindow::showMaximized();
 
@@ -576,7 +572,6 @@ void MainWindow::on_actionShow_Unit_Box_triggered()
     canvas.update();
 }
 
-#ifdef CG3_DCEL_DEFINED
 void MainWindow::on_actionLoad_Mesh_triggered()
 {
     std::string filename = meshLS.loadDialog("Open Mesh");
@@ -595,7 +590,6 @@ void MainWindow::on_actionLoad_Mesh_triggered()
         console.setCoutOutput(true);
     }
 }
-#endif
 
 } //namespace cg3::viewer
 } //namespace cg3

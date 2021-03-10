@@ -8,9 +8,7 @@
 
 #include <cg3/utilities/const.h>
 
-#ifdef CG3_DCEL_DEFINED
 #include <cg3/meshes/dcel/dcel_builder.h>
-#endif
 
 namespace cg3 {
 namespace voro {
@@ -35,7 +33,6 @@ CG3_INLINE bool VoronoiCell3::operator<(const VoronoiCell3& o) const
     return _id < o._id;
 }
 
-#ifdef CG3_DCEL_DEFINED
 CG3_INLINE cg3::Dcel VoronoiCell3::geometry() const
 {
     DcelBuilder builder;
@@ -48,7 +45,6 @@ CG3_INLINE cg3::Dcel VoronoiCell3::geometry() const
     builder.finalize();
     return builder.dcel();
 }
-#endif
 
 CG3_INLINE std::vector<int>::const_iterator VoronoiCell3::begin() const
 {

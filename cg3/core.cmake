@@ -8,7 +8,6 @@
 
 ## module definitions
 list(APPEND CG3_MODULE_DEFINITIONS CG3_CORE_DEFINED) # this should be mandatory
-list(APPEND CG3_MODULE_DEFINITIONS CG3_DCEL_DEFINED) #to be removed
 list(APPEND CG3_MODULE_DEFINITIONS CG3_EIGENMESH_DEFINED) # to be removed
 
 set(CG3_CORE_HEADERS

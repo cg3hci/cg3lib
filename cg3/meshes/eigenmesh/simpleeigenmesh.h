@@ -33,9 +33,7 @@ class EigenMeshLibIglAlgorithms;
 } //namespace cg3::libigl
 #endif
 
-#ifdef  CG3_DCEL_DEFINED
 class Dcel;
-#endif
 
 #ifdef TRIMESH_DEFINED
 template<typename T>
@@ -57,9 +55,7 @@ public:
 	SimpleEigenMesh(const char* filename);
     SimpleEigenMesh(const std::string& filename);
     template <typename T, typename U> SimpleEigenMesh(const Eigen::PlainObjectBase<T> &V, const Eigen::PlainObjectBase<U> &F);
-    #ifdef  CG3_DCEL_DEFINED
     SimpleEigenMesh(const Dcel& dcel);
-    #endif
     #ifdef TRIMESH_DEFINED
     template<typename T> SimpleEigenMesh(const Trimesh<T>& trimesh);
     #endif

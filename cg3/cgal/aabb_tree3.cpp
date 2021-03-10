@@ -37,11 +37,9 @@ CG3_INLINE AABBTree3::AABBTree3(const AABBTree3& other) :
     triangles(other.triangles),
     bb(other.bb)
 {
-    #ifdef  CG3_DCEL_DEFINED
     mapDcelVerticesToCgalPoints = other.mapDcelVerticesToCgalPoints;
     mapCgalPointsToDcelVertices = other.mapCgalPointsToDcelVertices;
     mapCgalTrianglesToDcelFaces = other.mapCgalTrianglesToDcelFaces;
-    #endif
     #if defined(TRIMESH_DEFINED) || defined( CG3_EIGENMESH_DEFINED)
     mapIdVerticesToCgalPoints = other.mapIdVerticesToCgalPoints;
     mapCgalTrianglesToIdTriangles = other.mapCgalTrianglesToIdTriangles;
@@ -62,11 +60,9 @@ CG3_INLINE AABBTree3::AABBTree3(AABBTree3 &&other) :
     triangles(other.triangles),
     bb(other.bb)
 {
-    #ifdef  CG3_DCEL_DEFINED
     mapDcelVerticesToCgalPoints = std::move(other.mapDcelVerticesToCgalPoints);
     mapCgalPointsToDcelVertices = std::move(other.mapCgalPointsToDcelVertices);
     mapCgalTrianglesToDcelFaces = std::move(other.mapCgalTrianglesToDcelFaces);
-    #endif
     #if defined(TRIMESH_DEFINED) || defined( CG3_EIGENMESH_DEFINED)
     mapIdVerticesToCgalPoints = std::move(other.mapIdVerticesToCgalPoints);
     mapCgalTrianglesToIdTriangles = std::move(other.mapCgalTrianglesToIdTriangles);
@@ -109,7 +105,6 @@ CG3_INLINE AABBTree3::AABBTree3(const Trimesh<double>& t, bool forDistanceQuerie
 }
 #endif
 
-#ifdef  CG3_EIGENMESH_DEFINED
 /**
  * @brief Constructor that creates an AABBTree with the triangles of the input mesh.
  * @param[in] m: the eigenmesh on which is constructed the tree.
@@ -142,9 +137,7 @@ CG3_INLINE AABBTree3::AABBTree3(const SimpleEigenMesh& m, bool forDistanceQuerie
 
     bb  = m.boundingBox();
 }
-#endif
 
-#ifdef  CG3_DCEL_DEFINED
 /**
  * @brief Constructor that creates an AABBTree with the triangles of the input mesh.
  * @param[in] d: the Dcel on which is constructed the tree.
@@ -177,7 +170,6 @@ CG3_INLINE AABBTree3::AABBTree3(const Dcel& d, bool forDistanceQueries) :
 
     bb = d.boundingBox();
 }
-#endif
 
 /**
  * @brief Assignment operator.
@@ -189,11 +181,9 @@ CG3_INLINE AABBTree3& AABBTree3::operator=(const cgal::AABBTree3& other)
     forDistanceQueries = other.forDistanceQueries;
     treeType = other.treeType;
     triangles = other.triangles;
-    #ifdef  CG3_DCEL_DEFINED
-    mapDcelVerticesToCgalPoints = other.mapDcelVerticesToCgalPoints;
+	mapDcelVerticesToCgalPoints = other.mapDcelVerticesToCgalPoints;
     mapCgalPointsToDcelVertices = other.mapCgalPointsToDcelVertices;
     mapCgalTrianglesToDcelFaces = other.mapCgalTrianglesToDcelFaces;
-    #endif
     #if defined(TRIMESH_DEFINED) || defined( CG3_EIGENMESH_DEFINED)
     mapIdVerticesToCgalPoints = other.mapIdVerticesToCgalPoints;
     mapCgalTrianglesToIdTriangles = other.mapCgalTrianglesToIdTriangles;
@@ -383,7 +373,6 @@ CG3_INLINE bool AABBTree3::isInsidePseudoRandom(const Point3d& p, int numberOfCh
     return inside > outside;
 }
 
-#ifdef  CG3_DCEL_DEFINED
 /**
  * @brief AABBTree::getContainedDcelFaces
  * @param outputList
@@ -541,7 +530,6 @@ CG3_INLINE const Dcel::Vertex* AABBTree3::nearestDcelVertex(const Point3d& p) co
     assert(closest != nullptr);
     return closest;
 }
-#endif
 
 #ifdef  CG3_EIGENMESH_DEFINED
 /**
