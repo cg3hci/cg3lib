@@ -7,9 +7,11 @@
 #
 
 ## module definitions
-list(APPEND CG3_MODULE_DEFINITIONS CG3_CORE_DEFINED)
+list(APPEND CG3_MODULE_DEFINITIONS CG3_CORE_DEFINED) # this should be mandatory
 list(APPEND CG3_MODULE_DEFINITIONS CG3_DATA_STRUCTURES_DEFINED) #to be removed
 list(APPEND CG3_MODULE_DEFINITIONS CG3_ALGORITHMS_DEFINED) # to be removed
+list(APPEND CG3_MODULE_DEFINITIONS CG3_DCEL_DEFINED) #to be removed
+list(APPEND CG3_MODULE_DEFINITIONS CG3_EIGENMESH_DEFINED) # to be removed
 
 set(CG3_CORE_HEADERS
 	#core
@@ -202,6 +204,34 @@ set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.h
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.inl
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.h
+
+	#meshes
+	${CMAKE_CURRENT_LIST_DIR}/meshes/mesh.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_data.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_face.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_face_iterators.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_half_edge.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_iterators.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_struct.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_struct.inl
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex_iterators.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_algorithms.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_bounding_boxes.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_bounding_boxes.inl
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_edge_flip.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_flooding.inl
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_to_vectors.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_flooding.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_coloring.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_connected_components.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_connected_components.inl
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_robustness.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_builder.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/simpleeigenmesh.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/eigenmesh.h
+	${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/algorithms/eigenmesh_algorithms.h
 	)
 
 set(CG3_CORE_SOURCES
@@ -231,6 +261,19 @@ set(CG3_CORE_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.cpp
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.cpp
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.cpp
+
+	#meshes
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_coloring.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_edge_flip.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_robustness.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_to_vectors.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_builder.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_face.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_half_edge.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/dcel_vertex.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/simpleeigenmesh.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/eigenmesh.cpp
+	${CMAKE_CURRENT_LIST_DIR}/meshes/eigenmesh/algorithms/eigenmesh_algorithms.cpp
 	)
 
 if (CG3_STATIC)
@@ -242,9 +285,7 @@ endif()
 target_include_directories(cg3-core ${CG3_TARGET_MOD} ${CG3_INCLUDE_DIR})
 target_compile_definitions(cg3-core ${CG3_TARGET_MOD} CG3_QMAKE)
 
-if (TARGET Eigen)
-	target_link_libraries(cg3-core ${CG3_TARGET_MOD} Eigen)
-endif()
+target_link_libraries(cg3-core ${CG3_TARGET_MOD} Eigen)
 if (TARGET Qt5::Gui)
 	target_link_libraries(cg3-core ${CG3_TARGET_MOD} Qt5::Gui)
 endif()

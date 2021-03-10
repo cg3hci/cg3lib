@@ -18,10 +18,6 @@ if (TARGET cg3-libigl)
 	target_compile_definitions(cg3-libigl ${CG3_TARGET_MOD} ${CG3_MODULE_DEFINITIONS})
 endif()
 
-if (TARGET cg3-meshes)
-	target_compile_definitions(cg3-meshes ${CG3_TARGET_MOD} ${CG3_MODULE_DEFINITIONS})
-endif()
-
 if (TARGET cg3-vcglib)
 	target_compile_definitions(cg3-vcglib ${CG3_TARGET_MOD} ${CG3_MODULE_DEFINITIONS})
 endif()
