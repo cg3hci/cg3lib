@@ -6,12 +6,12 @@ jobs:
   build:
 
     runs-on: macos-latest
-    
+
     steps:
     - uses: actions/checkout@v1
     - name: installing dependencies
       run: |
-            brew install qt cgal llvm
+            brew install qt@5 cgal llvm
             #install libQGLViewer
             export QTDIR=/usr/local/opt/qt
             export PATH=$QTDIR/bin:$PATH
@@ -21,8 +21,8 @@ jobs:
             git clone https://github.com/GillesDebunne/libQGLViewer.git
             cd libQGLViewer/QGLViewer
             qmake
-            make 
-            make install            
+            make
+            make install
             cd ..
             cd ..
             #install libigl
