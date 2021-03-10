@@ -8,10 +8,15 @@
 
 ## module definitions
 list(APPEND CG3_MODULE_DEFINITIONS CG3_CORE_DEFINED)
+list(APPEND CG3_MODULE_DEFINITIONS CG3_DATA_STRUCTURES_DEFINED) #to be removed
+list(APPEND CG3_MODULE_DEFINITIONS CG3_ALGORITHMS_DEFINED) # to be removed
 
 set(CG3_CORE_HEADERS
-	${CMAKE_CURRENT_LIST_DIR}/cg3lib.h #core
-	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.h #geometry
+	#core
+	${CMAKE_CURRENT_LIST_DIR}/cg3lib.h
+
+	#geometry
+	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.h
 	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box3.h
 	${CMAKE_CURRENT_LIST_DIR}/geometry/cylinder.h
 	${CMAKE_CURRENT_LIST_DIR}/geometry/intersections2.h
@@ -40,7 +45,9 @@ set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/geometry/utils2.inl
 	${CMAKE_CURRENT_LIST_DIR}/geometry/utils3.h
 	${CMAKE_CURRENT_LIST_DIR}/geometry/utils3.inl
-	${CMAKE_CURRENT_LIST_DIR}/io/file_commons.h #io
+
+	#io
+	${CMAKE_CURRENT_LIST_DIR}/io/file_commons.h
 	${CMAKE_CURRENT_LIST_DIR}/io/load_save_obj.h
 	${CMAKE_CURRENT_LIST_DIR}/io/load_save_obj.inl
 	${CMAKE_CURRENT_LIST_DIR}/io/load_save_ply.h
@@ -64,7 +71,9 @@ set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/io/ply/ply_face.inl
 	${CMAKE_CURRENT_LIST_DIR}/io/ply/ply_vertex.h
 	${CMAKE_CURRENT_LIST_DIR}/io/ply/ply_vertex.inl
-	${CMAKE_CURRENT_LIST_DIR}/utilities/cg3_config_folder.h #utilities
+
+	#utilities
+	${CMAKE_CURRENT_LIST_DIR}/utilities/cg3_config_folder.h
 	${CMAKE_CURRENT_LIST_DIR}/utilities/color.h
 	${CMAKE_CURRENT_LIST_DIR}/utilities/command_line_argument_manager.h
 	${CMAKE_CURRENT_LIST_DIR}/utilities/command_line_argument_manager.inl
@@ -93,10 +102,111 @@ set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/utilities/vector.h
 	${CMAKE_CURRENT_LIST_DIR}/utilities/vector.inl
 	${CMAKE_CURRENT_LIST_DIR}/utilities/utils.h
-	${CMAKE_CURRENT_LIST_DIR}/utilities/utils.inl)
+	${CMAKE_CURRENT_LIST_DIR}/utilities/utils.inl
+
+	#arrays
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/arrays.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array2d.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array2d.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array3d.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array3d.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array4d.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array4d.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_bool.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/arrays/array_bool.inl
+
+	#graphs
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/graph.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/graph.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/nodes/graph_node.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/nodes/graph_node.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_genericnodeiterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_genericnodeiterator.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_nodeiterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_nodeiterator.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_adjacentiterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_adjacentiterator.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_edgeiterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/includes/iterators/graph_edgeiterator.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/bipartite_graph.h #bipartite graph
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/bipartite_graph.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/bipartite_graph_iterators.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/bipartite_graph_iterators.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/graphs/undirected_node.h
+
+	#lattices
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/lattices/regular_lattice.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/lattices/regular_lattice.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/lattices/regular_lattice_iterators.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/lattices/regular_lattice_iterators.inl
+
+	#trees
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/tree_common.h  #tree common
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_genericiterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_insertiterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_insertiterator.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_iterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_iterator.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_reverseiterator.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_reverseiterator.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_rangebased_iterators.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/iterators/tree_rangebased_iterators.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/bst_helpers.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/bst_helpers.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/bstinner_helpers.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/bstinner_helpers.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/bstleaf_helpers.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/bstleaf_helpers.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/avl_helpers.h  #bst trees
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/avl_helpers.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/bst.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/bstinner.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/bstinner.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/bstleaf.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/bstleaf.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/bst_node.h  # avl trees
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/bst_node.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/avlinner.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/avlinner.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/avlleaf.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/avlleaf.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/avl_node.h  # range tree
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/avl_node.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/rangetree.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/rangetree.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/rangetree_node.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/rangetree_node.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/rangetree_types.h  #aabb tree
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/aabbtree.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/aabbtree.inl
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/aabb_node.h
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/nodes/aabb_node.inl
+
+	#algorithms
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2.inl
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2_incremental.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull2_incremental.inl
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull3.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/convex_hull3.inl
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/graph_algorithms.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/graph_algorithms.inl
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/mesh_function_smoothing.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/mesh_function_smoothing.inl
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.h
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.inl
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.h
+	)
 
 set(CG3_CORE_SOURCES
-	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box3.cpp #geometry
+	#geometry
+	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box3.cpp
 	${CMAKE_CURRENT_LIST_DIR}/geometry/bounding_box2.cpp
 	${CMAKE_CURRENT_LIST_DIR}/geometry/cylinder.cpp
 	${CMAKE_CURRENT_LIST_DIR}/geometry/intersections2.cpp
@@ -106,9 +216,21 @@ set(CG3_CORE_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/geometry/polygon2.cpp
 	${CMAKE_CURRENT_LIST_DIR}/geometry/quaternion.cpp
 	${CMAKE_CURRENT_LIST_DIR}/geometry/sphere.cpp
-	${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.cpp #io
+	${CMAKE_CURRENT_LIST_DIR}/geometry/transformations3.cpp
+	#io
 	${CMAKE_CURRENT_LIST_DIR}/io/ply/ply_header.cpp
-	${CMAKE_CURRENT_LIST_DIR}/utilities/color.cpp #utilities
+	#utilities
+	${CMAKE_CURRENT_LIST_DIR}/utilities/color.cpp
+
+	#trees
+	${CMAKE_CURRENT_LIST_DIR}/data_structures/trees/includes/rangetree_types.cpp  # aabb tree
+
+	#algorithms
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.cpp
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.cpp
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.cpp
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.cpp
+	${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.cpp
 	)
 
 if (CG3_STATIC)

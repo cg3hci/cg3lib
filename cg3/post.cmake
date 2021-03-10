@@ -14,10 +14,6 @@ if (TARGET cg3-cinolib)
 	target_compile_definitions(cg3-cinolib ${CG3_TARGET_MOD} ${CG3_MODULE_DEFINITIONS})
 endif()
 
-if (TARGET cg3-data-structures)
-	target_compile_definitions(cg3-data-structures ${CG3_TARGET_MOD} ${CG3_MODULE_DEFINITIONS})
-endif()
-
 if (TARGET cg3-libigl)
 	target_compile_definitions(cg3-libigl ${CG3_TARGET_MOD} ${CG3_MODULE_DEFINITIONS})
 endif()
