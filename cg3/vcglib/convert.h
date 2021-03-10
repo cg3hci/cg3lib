@@ -25,8 +25,6 @@ void edgesToVCG(
 		const std::vector<std::pair<cg3::Point3d, cg3::Point3d>>& edges,
         EdgeMesh& edgeMesh);
 
-#ifdef CG3_WITH_EIGEN
-
 template<class PolyMeshType>
 void VCGToEigen(
         PolyMeshType& vcgMesh,
@@ -43,8 +41,6 @@ void eigenToVCG(
         const Eigen::MatrixXd& V,
         const Eigen::MatrixXi& F,
         PolyMeshType& vcgMesh);
-
-#endif
 
 
 #ifdef CG3_EIGENMESH_DEFINED

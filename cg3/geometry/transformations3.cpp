@@ -9,7 +9,6 @@
 
 namespace cg3 {
 
-#ifdef CG3_WITH_EIGEN
 /**
  * @ingroup cg3core
  * @brief this function computes a rotation matrix given the axis of the rotation and the angle
@@ -57,7 +56,6 @@ CG3_INLINE Eigen::Matrix3d rotationMatrix(Vec3d axis, double angle)
     m(2,2) = cosa + (axis.z() * axis.z())*(1-cosa);
     return m;
 }
-#endif
 
 /**
  * @ingroup cg3core

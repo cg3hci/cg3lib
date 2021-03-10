@@ -52,7 +52,6 @@ inline bool areCollinear(
         double epsilon = CG3_EPSILON);
 
 /* Others */
-#ifdef CG3_WITH_EIGEN
 template<class T>
 inline bool isPointLyingInCircle(
         const Point2<T>& a,
@@ -60,7 +59,6 @@ inline bool isPointLyingInCircle(
         const Point2<T>& c,
         const Point2<T>& p,
         const bool includeBorders);
-#endif
 
 template <template < class ... > class Container, class T, class ... Args>
 inline bool isPolygonCounterClockwise(const Container<Point2<T>, Args...>& polygon);

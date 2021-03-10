@@ -112,7 +112,6 @@ CG3_INLINE void ManipulableObject::resetRotation()
 	setRotation(qglviewer::Quaternion(0,0,0,1));
 }
 
-#ifdef CG3_WITH_EIGEN
 CG3_INLINE void ManipulableObject::rotationMatrix(Eigen::Matrix3d &m) const
 {
 	qglviewer::Vec axis = orientation().axis();
@@ -131,7 +130,6 @@ CG3_INLINE Eigen::Matrix3d ManipulableObject::rotationMatrix() const
 		return  Eigen::Matrix3d::Identity();
 	return cg3::rotationMatrix(cg3::Vec3d(axis.x, axis.y, axis.z), angle);
 }
-#endif //CG3_WITH_EIGEN
 
 CG3_INLINE void ManipulableObject::checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera)
 {

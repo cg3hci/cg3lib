@@ -37,9 +37,7 @@ public:
     void normalize();
 
     bool pointLiesOnPlane(const Point3d& p, double epsilon = cg3::CG3_EPSILON) const;
-    #ifdef CG3_WITH_EIGEN
     bool intersection(Point3d& inters, const Line3 &l) const;
-    #endif
     double pointDistance(const Point3d& p) const;
 
     // SerializableObject interface

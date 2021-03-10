@@ -206,10 +206,8 @@ public:
     void scale(double scaleFactor);
     void scale(const cg3::Vec3d& scaleVector);
 	void scale(const BoundingBox3 &newBoundingBox);
-    #ifdef CG3_WITH_EIGEN
     void rotate(const Eigen::Matrix3d& matrix);
     void rotate(const Eigen::Matrix3d& matrix, const Point3d& centroid);
-    #endif
     void rotate(const Vec3d& axis, double angle, const Point3d& centroid = Point3d());
     void rotate(double matrix[3][3], const Point3d& centroid = Point3d());
     void translate(const Vec3d &c);

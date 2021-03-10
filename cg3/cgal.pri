@@ -108,9 +108,8 @@ contains(DEFINES, CG3_CGAL_DEFINED) { #if CGAL was found, depending on the archi
 		DEFINES+=CGAL_DISABLE_ROUNDING_MATH_CHECK=ON
 	}
 
-	contains(DEFINES, CG3_WITH_EIGEN){
-		DEFINES += CGAL_EIGEN3_ENABLED
-	}
+
+	DEFINES += CGAL_EIGEN3_ENABLED
 
 	HEADERS += \
 		$$PWD/cgal/cgal.h \

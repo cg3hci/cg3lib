@@ -13,9 +13,7 @@
 #include "../io/serialize.h"
 #include "../utilities/hash.h"
 
-#ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
-#endif //CG3_WITH_EIGEN
 
 #ifdef CG3_CINOLIB_DEFINED
 #ifdef __GNUC__
@@ -52,9 +50,7 @@ class Point3 : public SerializableObject
 public:
 
 	Point3(T xCoord = 0.0, T yCoord = 0.0, T zCoord = 0.0);
-    #ifdef CG3_WITH_EIGEN
 	Point3(const Eigen::VectorXd &v);
-    #endif
     #ifdef CG3_CINOLIB_DEFINED
 	Point3(const cinolib::vec3<T> &v);
     #endif
@@ -98,10 +94,8 @@ public:
     void set(const T& x, const T& y, const T& z);
     double normalize();
 	Point3<T> normalized() const;
-    #ifdef CG3_WITH_EIGEN
     Eigen::Vector3d toEigenVector() const;
 	void rotate(const Eigen::Matrix3d &matrix, const Point3<T>& centroid = Point3<T>());
-    #endif //CG3_WITH_EIGEN
 	void rotate(double matrix[3][3], const Point3<T>& centroid = Point3<T>());
 
     // SerializableObject interface
@@ -134,10 +128,8 @@ Point3<T> operator * (const T& scalar, const Point3<T>& point);
 template <class T>
 Point3<T> mul(const T m[][3], const Point3<T>& point);
 
-#ifdef CG3_WITH_EIGEN
 template <class T>
 Point3<T> mul(const Eigen::Matrix3d &m, const Point3<T>& point);
-#endif //CG3_WITH_EIGEN
 
 template <class T>
 std::ostream& operator<< (std::ostream& inputStream, const Point3<T>& p);

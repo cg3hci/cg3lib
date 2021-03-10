@@ -9,7 +9,6 @@
 
 namespace cg3 {
 
-#ifdef CG3_WITH_EIGEN
 /**
  * @ingroup cg3core
  * @brief eigenVectorToStdVector
@@ -63,6 +62,5 @@ inline void removeColumnFromEigenMatrix(Eigen::Matrix<T, A...>& m, unsigned int 
 
     m.conservativeResize(numRows,numCols);
 }
-#endif
 
 } //namespace cg3

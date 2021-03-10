@@ -7,7 +7,6 @@
 
 #include "serialize_eigen.h"
 
-#ifdef CG3_WITH_EIGEN
 namespace cg3 {
 
 template <typename T>
@@ -130,4 +129,3 @@ inline void deserialize(Eigen::Matrix<int, -1, 3, 1, -1, 3>& m, std::ifstream& b
 }
 
 } //namespace cg3
-#endif //CG3_WITH_EIGEN*/

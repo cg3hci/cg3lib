@@ -8,7 +8,6 @@
 #ifndef CG3_SERIALIZE_EIGEN_H
 #define CG3_SERIALIZE_EIGEN_H
 
-#ifdef CG3_WITH_EIGEN
 #include <Eigen/Core>
 
 #include "serialize.h"
@@ -47,6 +46,5 @@ void serialize(const Eigen::Matrix<int, -1, 3, 1, -1, 3>& m, std::ofstream& bina
 void deserialize(Eigen::Matrix<int, -1, 3, 1, -1, 3>& m, std::ifstream& binaryFile);
 
 } //namespace cg3
-#endif //CG3_WITH_EIGEN
 
 #endif // CG3_SERIALIZE_EIGEN_H

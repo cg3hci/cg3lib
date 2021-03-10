@@ -1504,7 +1504,6 @@ void TemplatedDcel<V, HE, F>::scale(const BoundingBox3& newBoundingBox)
     bBox = newBoundingBox;
 }
 
-#ifdef CG3_WITH_EIGEN
 template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d& matrix)
 {
@@ -1524,7 +1523,6 @@ void TemplatedDcel<V, HE, F>::rotate(const Eigen::Matrix3d &matrix, const Point3
     updateVertexNormals();
     updateBoundingBox();
 }
-#endif
 
 template <class V, class HE, class F>
 void TemplatedDcel<V, HE, F>::rotate(const Vec3d& axis, double angle, const Point3d& centroid)

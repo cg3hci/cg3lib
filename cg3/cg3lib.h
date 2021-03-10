@@ -83,11 +83,6 @@
 
 #ifdef __has_include //try to include libraries that can be included in CG3
 
-#if __has_include("Eigen/Core")
-#define CG3_WITH_EIGEN
-#define CG3_EIGENMESH_DEFINED
-#endif //has include eigen
-
 #if __has_include("boost/version.hpp")
 #define CG3_WITH_BOOST
 #endif //has include boost
