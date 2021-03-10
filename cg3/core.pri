@@ -16,6 +16,10 @@ MODULES += CG3_DATA_SRUCTURES
 DEFINES += CG3_ALGORITHMS_DEFINED
 MODULES += CG3_ALGORITHMS
 
+# todo: remove
+DEFINES += CG3_DCEL_DEFINED CG3_EIGENMESH_DEFINED
+MODULES += CG3_MESHES
+
 CONFIG += CG3_OPENMP
 
 include(find_boost.pri)
@@ -124,26 +128,6 @@ HEADERS += \
 	$$PWD/utilities/utils.h \
 	$$PWD/utilities/utils.inl
 
-#algorithms
-HEADERS += \
-	$$PWD/algorithms/convex_hull2.h \
-	$$PWD/algorithms/convex_hull2.inl \
-	$$PWD/algorithms/convex_hull2_incremental.h \
-	$$PWD/algorithms/convex_hull2_incremental.inl \
-	$$PWD/algorithms/convex_hull3.h \
-	$$PWD/algorithms/convex_hull3.inl \
-	$$PWD/algorithms/graph_algorithms.h \
-	$$PWD/algorithms/graph_algorithms.inl \
-	$$PWD/algorithms/laplacian_smoothing.h \
-	$$PWD/algorithms/marching_cubes.h \
-	$$PWD/algorithms/mesh_function_smoothing.h \
-	$$PWD/algorithms/mesh_function_smoothing.inl \
-	$$PWD/algorithms/normalization.h \
-	$$PWD/algorithms/saliency.h \
-	$$PWD/algorithms/sphere_coverage.h \
-	$$PWD/algorithms/sphere_coverage.inl \
-	$$PWD/algorithms/global_optimal_rotation_matrix.h
-
 #data_structures
 HEADERS += \
 	$$PWD/data_structures/graphs/graph.h \ #graphs
@@ -208,6 +192,55 @@ HEADERS += \
 	$$PWD/data_structures/trees/includes/nodes/aabb_node.h \
 	$$PWD/data_structures/trees/includes/nodes/aabb_node.inl
 
+#algorithms
+HEADERS += \
+	$$PWD/algorithms/convex_hull2.h \
+	$$PWD/algorithms/convex_hull2.inl \
+	$$PWD/algorithms/convex_hull2_incremental.h \
+	$$PWD/algorithms/convex_hull2_incremental.inl \
+	$$PWD/algorithms/convex_hull3.h \
+	$$PWD/algorithms/convex_hull3.inl \
+	$$PWD/algorithms/graph_algorithms.h \
+	$$PWD/algorithms/graph_algorithms.inl \
+	$$PWD/algorithms/laplacian_smoothing.h \
+	$$PWD/algorithms/marching_cubes.h \
+	$$PWD/algorithms/mesh_function_smoothing.h \
+	$$PWD/algorithms/mesh_function_smoothing.inl \
+	$$PWD/algorithms/normalization.h \
+	$$PWD/algorithms/saliency.h \
+	$$PWD/algorithms/sphere_coverage.h \
+	$$PWD/algorithms/sphere_coverage.inl \
+	$$PWD/algorithms/global_optimal_rotation_matrix.h
+
+#meshes
+HEADERS += \
+	$$PWD/meshes/mesh.h \
+	$$PWD/meshes/dcel/dcel.h \
+	$$PWD/meshes/dcel/dcel_data.h \
+	$$PWD/meshes/dcel/dcel_face.h \
+	$$PWD/meshes/dcel/dcel_face_iterators.h \
+	$$PWD/meshes/dcel/dcel_half_edge.h \
+	$$PWD/meshes/dcel/dcel_iterators.h \
+	$$PWD/meshes/dcel/dcel_struct.h \
+	$$PWD/meshes/dcel/dcel_struct.inl \
+	$$PWD/meshes/dcel/dcel_vertex.h \
+	$$PWD/meshes/dcel/dcel_vertex_iterators.h \
+	$$PWD/meshes/dcel/algorithms/dcel_algorithms.h  \
+	$$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.h \
+	$$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.inl \
+	$$PWD/meshes/dcel/algorithms/dcel_edge_flip.h \
+	$$PWD/meshes/dcel/algorithms/dcel_to_vectors.h \
+	$$PWD/meshes/dcel/algorithms/dcel_flooding.h \
+	$$PWD/meshes/dcel/algorithms/dcel_flooding.inl \
+	$$PWD/meshes/dcel/algorithms/dcel_coloring.h \
+	$$PWD/meshes/dcel/algorithms/dcel_connected_components.h \
+	$$PWD/meshes/dcel/algorithms/dcel_connected_components.inl \
+	$$PWD/meshes/dcel/algorithms/dcel_robustness.h \
+	$$PWD/meshes/dcel/dcel_builder.h \
+	$$PWD/meshes/eigenmesh/simpleeigenmesh.h \
+	$$PWD/meshes/eigenmesh/eigenmesh.h \
+	$$PWD/meshes/eigenmesh/algorithms/eigenmesh_algorithms.h
+
 CG3_STATIC {
 SOURCES += \
 	$$PWD/geometry/bounding_box3.cpp \ #geometry
@@ -235,4 +268,28 @@ SOURCES += \
 	$$PWD/algorithms/normalization.cpp \
 	$$PWD/algorithms/saliency.cpp \
 	$$PWD/algorithms/laplacian_smoothing.cpp
+
+#meshes
+SOURCES += \
+	$$PWD/meshes/dcel/algorithms/dcel_coloring.cpp \
+	$$PWD/meshes/dcel/algorithms/dcel_edge_flip.cpp \
+	$$PWD/meshes/dcel/algorithms/dcel_robustness.cpp \
+	$$PWD/meshes/dcel/algorithms/dcel_to_vectors.cpp \
+	$$PWD/meshes/dcel/dcel_builder.cpp \
+	$$PWD/meshes/dcel/dcel_face.cpp \
+	$$PWD/meshes/dcel/dcel_half_edge.cpp \
+	$$PWD/meshes/dcel/dcel_vertex.cpp
+
+
+# unneeded?
+unix:!macx {
+	LIBS += -lboost_system -DBOOST_LOG_DYN_LINK -lboost_log -lboost_thread -lpthread
 }
+
+}
+
+# todo: make these inline!!
+SOURCES += \
+	$$PWD/meshes/eigenmesh/simpleeigenmesh.cpp \
+	$$PWD/meshes/eigenmesh/eigenmesh.cpp \
+	$$PWD/meshes/eigenmesh/algorithms/eigenmesh_algorithms.cpp
