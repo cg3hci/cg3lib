@@ -8,17 +8,17 @@
 #include <cg3/utilities/const.h>
 #include <cg3/cg3lib.h>
 
-CG3_INLINE QClickableLabel::QClickableLabel(QWidget* parent, Qt::WindowFlags f)
+QClickableLabel::QClickableLabel(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent)
 {
     CG3_SUPPRESS_WARNING(f);
 }
 
-CG3_INLINE QClickableLabel::~QClickableLabel()
+QClickableLabel::~QClickableLabel()
 {
 }
 
-CG3_INLINE void QClickableLabel::mousePressEvent(QMouseEvent* event)
+void QClickableLabel::mousePressEvent(QMouseEvent* event)
 {
     CG3_SUPPRESS_WARNING(event);
     emit clicked();

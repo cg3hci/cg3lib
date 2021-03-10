@@ -153,8 +153,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		$$PWD/viewer/interfaces/manipulable_object.cpp \
 		$$PWD/viewer/utilities/console_stream.cpp \
 		$$PWD/viewer/utilities/loadersaver.cpp \
-		$$PWD/viewer/utilities/utils.cpp \
-		$$PWD/viewer/widgets/qclickablelabel.cpp
+		$$PWD/viewer/utilities/utils.cpp
+
 	}
 
 	CG3_STATIC|CG3_VIEWER_STATIC {
@@ -164,7 +164,8 @@ contains(DEFINES, CG3_VIEWER_DEFINED){
 		$$PWD/viewer/internal/drawable_container_drawlist_manager.cpp \
 		$$PWD/viewer/internal/drawable_mesh_drawlist_manager.cpp \
 		$$PWD/viewer/internal/drawable_object_drawlist_manager.cpp \
-		$$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp 
+		$$PWD/viewer/internal/manipulable_object_drawlist_manager.cpp \
+		$$PWD/viewer/widgets/qclickablelabel.cpp
 
 	FORMS += \
 		$$PWD/viewer/mainwindow.ui \

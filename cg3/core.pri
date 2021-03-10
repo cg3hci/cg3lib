@@ -8,6 +8,14 @@
 
 DEFINES += CG3_CORE_DEFINED
 
+# todo: remove
+DEFINES += CG3_DATA_STRUCTURES_DEFINED
+MODULES += CG3_DATA_SRUCTURES
+
+# todo: remove
+DEFINES += CG3_ALGORITHMS_DEFINED
+MODULES += CG3_ALGORITHMS
+
 CONFIG += CG3_OPENMP
 
 include(find_boost.pri)
@@ -116,6 +124,90 @@ HEADERS += \
 	$$PWD/utilities/utils.h \
 	$$PWD/utilities/utils.inl
 
+#algorithms
+HEADERS += \
+	$$PWD/algorithms/convex_hull2.h \
+	$$PWD/algorithms/convex_hull2.inl \
+	$$PWD/algorithms/convex_hull2_incremental.h \
+	$$PWD/algorithms/convex_hull2_incremental.inl \
+	$$PWD/algorithms/convex_hull3.h \
+	$$PWD/algorithms/convex_hull3.inl \
+	$$PWD/algorithms/graph_algorithms.h \
+	$$PWD/algorithms/graph_algorithms.inl \
+	$$PWD/algorithms/laplacian_smoothing.h \
+	$$PWD/algorithms/marching_cubes.h \
+	$$PWD/algorithms/mesh_function_smoothing.h \
+	$$PWD/algorithms/mesh_function_smoothing.inl \
+	$$PWD/algorithms/normalization.h \
+	$$PWD/algorithms/saliency.h \
+	$$PWD/algorithms/sphere_coverage.h \
+	$$PWD/algorithms/sphere_coverage.inl \
+	$$PWD/algorithms/global_optimal_rotation_matrix.h
+
+#data_structures
+HEADERS += \
+	$$PWD/data_structures/graphs/graph.h \ #graphs
+	$$PWD/data_structures/graphs/graph.inl \
+	$$PWD/data_structures/graphs/includes/nodes/graph_node.h \
+	$$PWD/data_structures/graphs/includes/nodes/graph_node.inl \
+	$$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.h \
+	$$PWD/data_structures/graphs/includes/iterators/graph_genericnodeiterator.inl \
+	$$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.h \
+	$$PWD/data_structures/graphs/includes/iterators/graph_nodeiterator.inl \
+	$$PWD/data_structures/graphs/includes/iterators/graph_adjacentiterator.h \
+	$$PWD/data_structures/graphs/includes/iterators/graph_adjacentiterator.inl \
+	$$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.h \ #bipartite graph
+	$$PWD/data_structures/graphs/includes/iterators/graph_edgeiterator.inl \
+	$$PWD/data_structures/graphs/bipartite_graph.h \
+	$$PWD/data_structures/graphs/bipartite_graph.inl \
+	$$PWD/data_structures/graphs/bipartite_graph_iterators.h \
+	$$PWD/data_structures/graphs/bipartite_graph_iterators.inl \
+	$$PWD/data_structures/graphs/undirected_node.h \
+	$$PWD/data_structures/lattices/regular_lattice.h \ #lattices
+	$$PWD/data_structures/lattices/regular_lattice.inl \
+	$$PWD/data_structures/lattices/regular_lattice_iterators.h \
+	$$PWD/data_structures/lattices/regular_lattice_iterators.inl \
+	$$PWD/data_structures/trees/includes/tree_common.h \ #tree common
+	$$PWD/data_structures/trees/includes/iterators/tree_genericiterator.h \
+	$$PWD/data_structures/trees/includes/iterators/tree_insertiterator.h \
+	$$PWD/data_structures/trees/includes/iterators/tree_insertiterator.inl \
+	$$PWD/data_structures/trees/includes/iterators/tree_iterator.h \
+	$$PWD/data_structures/trees/includes/iterators/tree_iterator.inl \
+	$$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.h \
+	$$PWD/data_structures/trees/includes/iterators/tree_reverseiterator.inl \
+	$$PWD/data_structures/trees/includes/iterators/tree_rangebased_iterators.h \
+	$$PWD/data_structures/trees/includes/iterators/tree_rangebased_iterators.inl \
+	$$PWD/data_structures/trees/includes/bst_helpers.h \
+	$$PWD/data_structures/trees/includes/bst_helpers.inl \
+	$$PWD/data_structures/trees/includes/bstinner_helpers.h \
+	$$PWD/data_structures/trees/includes/bstinner_helpers.inl \
+	$$PWD/data_structures/trees/includes/bstleaf_helpers.h \
+	$$PWD/data_structures/trees/includes/bstleaf_helpers.inl \
+	$$PWD/data_structures/trees/includes/avl_helpers.h \ #bst trees
+	$$PWD/data_structures/trees/includes/avl_helpers.inl \
+	$$PWD/data_structures/trees/bst.h \
+	$$PWD/data_structures/trees/bstinner.h \
+	$$PWD/data_structures/trees/bstinner.inl \
+	$$PWD/data_structures/trees/bstleaf.h \
+	$$PWD/data_structures/trees/bstleaf.inl \
+	$$PWD/data_structures/trees/includes/nodes/bst_node.h \ # avl trees
+	$$PWD/data_structures/trees/includes/nodes/bst_node.inl \
+	$$PWD/data_structures/trees/avlinner.h \
+	$$PWD/data_structures/trees/avlinner.inl \
+	$$PWD/data_structures/trees/avlleaf.h \
+	$$PWD/data_structures/trees/avlleaf.inl \
+	$$PWD/data_structures/trees/includes/nodes/avl_node.h \ # range tree
+	$$PWD/data_structures/trees/includes/nodes/avl_node.inl \
+	$$PWD/data_structures/trees/rangetree.h \
+	$$PWD/data_structures/trees/rangetree.inl \
+	$$PWD/data_structures/trees/includes/nodes/rangetree_node.h \
+	$$PWD/data_structures/trees/includes/nodes/rangetree_node.inl \
+	$$PWD/data_structures/trees/includes/rangetree_types.h \ #aabb tree
+	$$PWD/data_structures/trees/aabbtree.h \
+	$$PWD/data_structures/trees/aabbtree.inl \
+	$$PWD/data_structures/trees/includes/nodes/aabb_node.h \
+	$$PWD/data_structures/trees/includes/nodes/aabb_node.inl
+
 CG3_STATIC {
 SOURCES += \
 	$$PWD/geometry/bounding_box3.cpp \ #geometry
@@ -131,4 +223,16 @@ SOURCES += \
 	$$PWD/geometry/transformations3.cpp \
 	$$PWD/io/ply/ply_header.cpp \ #io
 	$$PWD/utilities/color.cpp #utilities
+
+#data_structures
+SOURCES += \
+	$$PWD/data_structures/trees/includes/rangetree_types.cpp  # aabb tree
+
+#algorithms
+SOURCES += \
+	$$PWD/algorithms/global_optimal_rotation_matrix.cpp \
+	$$PWD/algorithms/marching_cubes.cpp \
+	$$PWD/algorithms/normalization.cpp \
+	$$PWD/algorithms/saliency.cpp \
+	$$PWD/algorithms/laplacian_smoothing.cpp
 }

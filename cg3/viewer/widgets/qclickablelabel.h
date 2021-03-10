@@ -34,10 +34,4 @@ protected:
     void mousePressEvent(QMouseEvent* event);
 };
 
-#ifndef CG3_STATIC
-#define CG3_QCLICKABLELABEL_CPP "qclickablelabel.cpp"
-#include CG3_QCLICKABLELABEL_CPP
-#undef CG3_QCLICKABLELABEL_CPP
-#endif //CG3_STATIC
-
 #endif // CG3_QCLICKABLELABEL_H
