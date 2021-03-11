@@ -196,7 +196,6 @@ set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/mesh_function_smoothing.h
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/mesh_function_smoothing.inl
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.h
-	${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.h
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.h
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/sphere_coverage.inl
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.h
@@ -255,7 +254,6 @@ set(CG3_CORE_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/global_optimal_rotation_matrix.cpp
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/marching_cubes.cpp
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/normalization.cpp
-	${CMAKE_CURRENT_LIST_DIR}/algorithms/saliency.cpp
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.cpp
 
 	#meshes

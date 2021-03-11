@@ -22,8 +22,10 @@ set(CG3_LIBIGL_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/libigl/mesh_distance.h 
 	${CMAKE_CURRENT_LIST_DIR}/libigl/remove_duplicate_vertices.h 
 	${CMAKE_CURRENT_LIST_DIR}/libigl/remove_unreferenced_vertices.h 
+	${CMAKE_CURRENT_LIST_DIR}/libigl/saliency.h
 	${CMAKE_CURRENT_LIST_DIR}/libigl/internal/booleans_algorithms.h 
-	${CMAKE_CURRENT_LIST_DIR}/libigl/internal/eigenmesh_libigl_algorithms.h)
+	${CMAKE_CURRENT_LIST_DIR}/libigl/internal/eigenmesh_libigl_algorithms.h
+	)
 
 set(CG3_LIBIGL_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/libigl/internal/booleans_algorithms.cpp 
@@ -46,7 +48,9 @@ set(CG3_LIBIGL_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/libigl/mesh_adjacencies.cpp 
 	${CMAKE_CURRENT_LIST_DIR}/libigl/mesh_distance.cpp 
 	${CMAKE_CURRENT_LIST_DIR}/libigl/remove_duplicate_vertices.cpp 
-	${CMAKE_CURRENT_LIST_DIR}/libigl/remove_unreferenced_vertices.cpp)
+	${CMAKE_CURRENT_LIST_DIR}/libigl/remove_unreferenced_vertices.cpp
+	${CMAKE_CURRENT_LIST_DIR}/libigl/saliency.cpp
+	)
 
 if (CG3_STATIC)
 	add_library(

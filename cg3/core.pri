@@ -65,7 +65,7 @@ HEADERS += \
 	$$PWD/io/load_save_obj.h \
 	$$PWD/io/load_save_obj.inl \
 	$$PWD/io/load_save_ply.h \
-	$$PWD/io/load_save_ply.inl \ 
+	$$PWD/io/load_save_ply.inl \
 	$$PWD/io/load_save_file.h \
 	$$PWD/io/serializable_object.h \
 	$$PWD/io/serialize.h \
@@ -195,7 +195,6 @@ HEADERS += \
 	$$PWD/algorithms/mesh_function_smoothing.h \
 	$$PWD/algorithms/mesh_function_smoothing.inl \
 	$$PWD/algorithms/normalization.h \
-	$$PWD/algorithms/saliency.h \
 	$$PWD/algorithms/sphere_coverage.h \
 	$$PWD/algorithms/sphere_coverage.inl \
 	$$PWD/algorithms/global_optimal_rotation_matrix.h
@@ -254,7 +253,6 @@ SOURCES += \
 	$$PWD/algorithms/global_optimal_rotation_matrix.cpp \
 	$$PWD/algorithms/marching_cubes.cpp \
 	$$PWD/algorithms/normalization.cpp \
-	$$PWD/algorithms/saliency.cpp \
 	$$PWD/algorithms/laplacian_smoothing.cpp
 
 #meshes

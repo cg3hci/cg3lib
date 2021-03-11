@@ -7,15 +7,15 @@
  */
 #include "saliency.h"
 
-#include <cg3/libigl/mesh_adjacencies.h>
-#include <cg3/libigl/curvature.h>
-
 #include <cg3/algorithms/mesh_function_smoothing.h>
 #include <cg3/algorithms/normalization.h>
 
-namespace cg3 {
+#include "mesh_adjacencies.h"
+#include "curvature.h"
 
-#ifdef CG3_LIBIGL_DEFINED
+namespace cg3 {
+namespace libigl {
+
 /**
  * @brief Compute saliency
  * @param mesh Input mesh
@@ -54,7 +54,7 @@ CG3_INLINE std::vector<double> computeSaliency(
 {
     std::vector<double> meanCurvature = cg3::libigl::meanVertexCurvature(mesh, nRing);
 
-    return cg3::computeSaliency(mesh, meanCurvature, sigma);
+    return cg3::libigl::computeSaliency(mesh, meanCurvature, sigma);
 }
 
 
@@ -83,7 +83,7 @@ CG3_INLINE std::vector<double> computeSaliencyMultiScale(
     //Calculate saliencies for each scale
     std::vector<std::vector<double>> saliencies(nScales);
     for(size_t i = 0; i < nScales; i++){
-        saliencies[i] = cg3::computeSaliency(mesh, meanCurvature, sigma[i]);
+        saliencies[i] = cg3::libigl::computeSaliency(mesh, meanCurvature, sigma[i]);
     }
 
     //Find min and max saliencies
@@ -193,6 +193,6 @@ CG3_INLINE std::vector<double> computeSaliencyMultiScale(
     std::vector<std::vector<int>> vvAdj = cg3::libigl::vertexToVertexAdjacencies(mesh);
     return computeSaliencyMultiScale(mesh, vvAdj, nRing, nScales, eps);
 }
-#endif
 
-}
+} //namespace cg3::libigl
+} //namespace cg3

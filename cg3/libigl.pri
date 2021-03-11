@@ -46,6 +46,7 @@ isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_ENV_VARIABLE):exists($$LIBIGL_ENV_VARIABLE)
         $$PWD/libigl/mesh_distance.h \
         $$PWD/libigl/remove_duplicate_vertices.h \
         $$PWD/libigl/remove_unreferenced_vertices.h \
+        $$PWD/libigl/saliency.h \
         $$PWD/libigl/internal/booleans_algorithms.h \
         $$PWD/libigl/internal/eigenmesh_libigl_algorithms.h
 
@@ -71,10 +72,10 @@ isEmpty(LIBIGL_PATH):!isEmpty(LIBIGL_ENV_VARIABLE):exists($$LIBIGL_ENV_VARIABLE)
         $$PWD/libigl/mesh_adjacencies.cpp \
         $$PWD/libigl/mesh_distance.cpp \
         $$PWD/libigl/remove_duplicate_vertices.cpp \
-        $$PWD/libigl/remove_unreferenced_vertices.cpp
+        $$PWD/libigl/remove_unreferenced_vertices.cpp \
+        $$PWD/libigl/saliency.cpp
     }
 }
 else {
     message(LibIGL not installed properly!)
 }
-
