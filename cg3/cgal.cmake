@@ -63,7 +63,11 @@ endif()
 target_link_libraries(
 	cg3-cgal
 	${CG3_TARGET_MOD} 
-		cg3-core mpfr gmp)
+		CGAL::CGAL 
+		cg3-core 
+		#mpfr 
+		#gmp
+		)
 
-list(APPEND CG3_LINK_LIBRARIES cg3-cgal gmp)
+list(APPEND CG3_LINK_LIBRARIES cg3-cgal)
 

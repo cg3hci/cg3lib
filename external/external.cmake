@@ -63,7 +63,11 @@ endif()
 if (CG3_CINOLIB_FOUND)
 	add_library(cinolib INTERFACE)
 	target_include_directories(cinolib INTERFACE ${CINOLIB_DIR})
-	target_link_libraries(cinolib INTERFACE GL GLU)
+	if(APPLE)
+		target_link_libraries(cinolib INTERFACE "-framework OpenGL" "-framework GLUT")
+	else()
+		target_link_libraries(cinolib INTERFACE GL GLU)
+	endif()
 endif()
 
 #LibIGL

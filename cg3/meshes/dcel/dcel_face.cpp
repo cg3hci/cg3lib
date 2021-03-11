@@ -7,6 +7,7 @@
 
 #include "dcel_face.h"
 #include "dcel_vertex.h"
+#include "algorithms/dcel_cgal_triangulation.h"
 #include <cg3/geometry/transformations3.h>
 #include <cg3/geometry/utils3.h>
 #ifdef CG3_CGAL_DEFINED
@@ -422,7 +423,7 @@ CG3_INLINE void Face::triangulation(std::vector<std::array<const Vertex*, 3> > &
     }
 
     #ifdef NDEBUG
-	std::vector<std::array<Point3d, 3> > trianglesP = cgal::triangulate3(parent->faceNormals[_id], borderCoordinates, innerBorderCoordinates);
+	std::vector<std::array<Point3d, 3> > trianglesP = internal::triangulate3(parent->faceNormals[_id], borderCoordinates, innerBorderCoordinates);
     #else
     std::vector<std::array<Point3d, 3> > trianglesP = cgal::triangulate3(_normal, borderCoordinates, innerBorderCoordinates);
     #endif

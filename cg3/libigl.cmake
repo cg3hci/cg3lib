@@ -61,6 +61,9 @@ else()
 endif()
 
 target_include_directories(cg3-libigl ${CG3_TARGET_MOD} ${CG3_INCLUDE_DIR})
+if (TARGET CGAL::CGAL)
+	target_link_libraries(cg3-libigl ${CG3_TARGET_MOD} CGAL::CGAL)
+endif()
 
 target_link_libraries(
 	cg3-libigl
@@ -68,5 +71,7 @@ target_link_libraries(
 		libigl
 		cg3-core
 		pthread)
+
+
 
 list(APPEND CG3_LINK_LIBRARIES cg3-libigl)

@@ -215,6 +215,7 @@ set(CG3_CORE_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_algorithms.h
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_bounding_boxes.h
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_bounding_boxes.inl
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_cgal_triangulation.h
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_edge_flip.h
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_flooding.inl
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_to_vectors.h
@@ -257,6 +258,7 @@ set(CG3_CORE_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/algorithms/laplacian_smoothing.cpp
 
 	#meshes
+	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_cgal_triangulation.cpp
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_coloring.cpp
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_edge_flip.cpp
 	${CMAKE_CURRENT_LIST_DIR}/meshes/dcel/algorithms/dcel_robustness.cpp
@@ -285,6 +287,11 @@ if (TARGET Qt5::Gui)
 endif()
 if (TARGET cinolib)
 	target_link_libraries(cg3-core ${CG3_TARGET_MOD} cinolib)
+endif()
+if (TARGET CGAL::CGAL)
+	target_compile_definitions(cg3-core ${CG3_TARGET_MOD} CGAL_EIGEN3_ENABLED)
+	target_link_libraries(cg3-core ${CG3_TARGET_MOD} 
+		CGAL::CGAL)
 endif()
 
 list(APPEND CG3_LINK_LIBRARIES cg3-core)
