@@ -64,9 +64,7 @@ target_link_libraries(
 	cg3-cgal
 	${CG3_TARGET_MOD} 
 		CGAL::CGAL 
-		cg3-core 
-		#mpfr 
-		#gmp
+		cg3-core
 		)
 
 list(APPEND CG3_LINK_LIBRARIES cg3-cgal)

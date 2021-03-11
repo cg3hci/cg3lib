@@ -72,6 +72,4 @@ target_link_libraries(
 		cg3-core
 		pthread)
 
-
-
 list(APPEND CG3_LINK_LIBRARIES cg3-libigl)
