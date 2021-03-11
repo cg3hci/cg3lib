@@ -62,6 +62,7 @@ target_link_libraries(
 	cg3-libigl
 	${CG3_TARGET_MOD}
 		libigl
-		cg3-core)
+		cg3-core
+		pthread)
 
 list(APPEND CG3_LINK_LIBRARIES cg3-libigl)
