@@ -215,7 +215,7 @@ HEADERS += \
 	$$PWD/meshes/dcel/algorithms/dcel_algorithms.h  \
 	$$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.h \
 	$$PWD/meshes/dcel/algorithms/dcel_bounding_boxes.inl \
-	$$PWD/meshes/dcel/algorithms/dcel_cgal_triangulation.h
+	$$PWD/meshes/dcel/algorithms/dcel_cgal_triangulation.h \
 	$$PWD/meshes/dcel/algorithms/dcel_edge_flip.h \
 	$$PWD/meshes/dcel/algorithms/dcel_to_vectors.h \
 	$$PWD/meshes/dcel/algorithms/dcel_flooding.h \
