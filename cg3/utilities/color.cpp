@@ -136,7 +136,7 @@ CG3_INLINE float Color::alphaF() const
 
 /**
  * @brief Color::hsvHue
- * Returns the hue color component of this color [0-255]
+ * Returns the hue color component of this color [0-359]
  * @return hue color component of this color
  */
 CG3_INLINE int Color::hsvHue() const
@@ -275,7 +275,7 @@ CG3_INLINE void Color::setRgb(
  * @param[in] alpha: default 255
  */
 CG3_INLINE void Color::setHsv(
-        unsigned char h,
+        unsigned int h,
         unsigned char s,
         unsigned char v,
         unsigned char alpha)
@@ -287,6 +287,7 @@ CG3_INLINE void Color::setHsv(
         b = v;
     }
     else {
+        h = (h/360.0) * 255;
         unsigned char region, remainder, p, q, t;
         region = h / 43;
         remainder = (h - (region * 43)) * 6;

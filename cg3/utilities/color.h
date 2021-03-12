@@ -55,7 +55,7 @@ public:
     void setGreen(unsigned char green);
     void setBlue(unsigned char blue);
     void setRgb(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
-    void setHsv(unsigned char h, unsigned char s, unsigned char v, unsigned char alpha = 255);
+    void setHsv(unsigned int h, unsigned char s, unsigned char v, unsigned char alpha = 255);
     void setAlphaF(float alpha);
     void setRedF(float red);
     void setGreenF(float green);
